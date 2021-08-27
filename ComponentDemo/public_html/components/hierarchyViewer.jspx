@@ -1,0 +1,237 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=windows-1252"/>
+    <f:view>
+        <af:document title="hierarchyViewer" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="component"/>
+                <f:attribute name="tagDocPrefix" value="dvt"/>
+                <f:attribute name="gmChrome" value="shown"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Hierarchy Viewer Demo"/>
+                <!-- Tag Name -->
+                <f:attribute name="tagName" value="hierarchyViewer"/>
+                <f:facet name="center">
+                    <af:panelStretchLayout id="psl1" topHeight="auto" bottomHeight="auto">
+                        <f:facet name="top">
+                            <!-- START TAG DEMO -->
+                            <af:panelGroupLayout layout="horizontal" id="pg1">
+                                <f:facet name="separator">
+                                    <af:separator id="s1"/>
+                                </f:facet>
+                                <!-- START TAG DEMO -->
+                                <af:outputFormatted value="Demonstrates an Organization Chart in the Hierarchy Viewer component along with key features like expand, collapse, double-click to set anchor, navigate up the hierarchy and display ancestors above the root node. Expand on one of the 2nd level nodes and then double click on a 3rd level node. This demonstrates 'setAnchorListener' which changes the root. Then click on the 'Go Up' button, above the top node to see 'navigateUpListener' in action."
+                                                    id="of1"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <dvt:hierarchyViewer binding="#{extEditor.component}" id="hv1"
+                                                 controlPanelBehavior="initExpanded" var="node"
+                                                 displayLevelsAncestor="1" displayLevelsChildren="1"
+                                                 value="#{hvTagGuide.hvModel}" contentDelivery="immediate"
+                                                 navigateUpListener="#{hvTagGuide.doNavigateUp}">
+                                <dvt:link linkType="orthogonalRounded" id="l1"/>
+                                <!-- KEY POINTS: 
+             o This demo uses a single node template and doesn't specify the 'type' or 'rendered' properties.
+             o The node templates gets used for all the rows of data including the root, children, and the ancestors
+             o The model returns an ancestor, root node and then children. Different node templates can be used for different types of model nodes.
+          -->
+                                <dvt:node width="233" height="330" setAnchorListener="#{hvTagGuide.doSetAnchor}"
+                                          showNavigateUp="#{node.parent != null}" id="n1">
+                                    <f:facet name="zoom100">
+                                        <af:panelGroupLayout inlineStyle="padding:5px;" layout="vertical" id="pgl1"
+                                                             styleClass="AFStretchWidth">
+                                            <af:panelGroupLayout layout="horizontal" id="pgl2">
+                                                <af:panelGroupLayout id="pgl3">
+                                                    <af:image rendered="true"
+                                                              inlineStyle="width:108px;height:120px;"
+                                                              source="/resources/images/hv/#{node.personId}.png"
+                                                              id="i1"/>
+                                                </af:panelGroupLayout>
+                                                <af:spacer width="5" height="5" id="s2"/>
+                                                <af:panelGroupLayout layout="vertical" id="pgl4">
+                                                    <af:outputText value="#{node.firstName}"
+                                                                   inlineStyle="font-weight:bold;font-size:20px;color:#383A47"
+                                                                   id="ot1"/>
+                                                    <af:outputText value="#{node.lastName}"
+                                                                   inlineStyle="font-size:20px;color:#383A47" id="ot2"/>
+                                                    <af:outputText value="#{node.title}"
+                                                                   inlineStyle="font-size:11px;color:#383A47" id="ot3"/>
+                                                </af:panelGroupLayout>
+                                            </af:panelGroupLayout>
+                                            <af:spacer height="5" id="s3"/>
+                                            <dvt:panelCard effect="slide_horz"
+                                                           inlineStyle="padding:5px;border-width:1px;border-color:#CCCCCC;font-size:16px;font-weight:bold;color:#5a6a7a"
+                                                           id="pc1">
+                                                <af:showDetailItem text="Contact "
+                                                                   inlineStyle="font-weight:bold;font-size:16px;color:#5a6a7a"
+                                                                   id="sdi1">
+                                                    <af:panelFormLayout inlineStyle="padding:5px" id="pfl1"
+                                                                        styleClass="AFStretchWidth">
+                                                        <af:panelLabelAndMessage label="Work Phone"
+                                                                                 labelStyle="font-size:14px;color:#5A6A7A"
+                                                                                 id="plam1">
+                                                            <af:outputText value="#{node.workPhone}"
+                                                                           inlineStyle="font-size:14px;color:#383A47"
+                                                                           id="ot4"/>
+                                                        </af:panelLabelAndMessage>
+                                                        <af:panelLabelAndMessage label="E-mail"
+                                                                                 labelStyle="font-size:14px;color:#5A6A7A"
+                                                                                 id="plam2">
+                                                            <af:goLink destination="mailto:#{node.email}"
+                                                                       text="#{node.email}"
+                                                                       inlineStyle="font-size:14px;color:#383A47"
+                                                                       id="gl1"/>
+                                                        </af:panelLabelAndMessage>
+                                                    </af:panelFormLayout>
+                                                </af:showDetailItem>
+                                                <af:showDetailItem text="Address " id="sdi2">
+                                                    <af:spacer height="2" id="s4"/>
+                                                    <af:panelFormLayout inlineStyle="padding:5px" id="pfl2"
+                                                                        styleClass="AFStretchWidth">
+                                                        <af:panelLabelAndMessage label="Address"
+                                                                                 labelStyle="font-size:14px;color:#5A6A7A"
+                                                                                 id="plam3">
+                                                            <af:outputText value="#{node.workAddr1}"
+                                                                           inlineStyle="font-size:14px;color:#383A47"
+                                                                           id="ot5"/>
+                                                        </af:panelLabelAndMessage>
+                                                        <af:panelLabelAndMessage label="City/State"
+                                                                                 labelStyle="font-size:14px;color:#5A6A7A"
+                                                                                 id="plam4">
+                                                            <af:outputText value="#{node.workCity}, #{node.workState}"
+                                                                           inlineStyle="font-size:14px;color:#383A47"
+                                                                           id="ot6"/>
+                                                        </af:panelLabelAndMessage>
+                                                    </af:panelFormLayout>
+                                                </af:showDetailItem>
+                                            </dvt:panelCard>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                    <f:facet name="zoom75">
+                                        <af:panelGroupLayout inlineStyle="padding:5px;" layout="vertical" id="pgl5"
+                                                             styleClass="AFStretchWidth">
+                                            <af:panelGroupLayout layout="horizontal" id="pgl6">
+                                                <af:panelGroupLayout id="pgl7">
+                                                    <af:image rendered="true"
+                                                              inlineStyle="width:81px;height:90px;"
+                                                              source="/resources/images/hv/#{node.personId}.png"
+                                                              id="i3"/>
+                                                </af:panelGroupLayout>
+                                                <af:spacer width="5" height="5" id="s5"/>
+                                                <af:panelGroupLayout layout="vertical" id="pgl8">
+                                                    <af:outputText value="#{node.firstName}"
+                                                                   inlineStyle="font-weight:bold;font-size:17px;color:#383A47"
+                                                                   id="ot7"/>
+                                                    <af:outputText value="#{node.lastName}"
+                                                                   inlineStyle="font-size:17px;color:#383A47" id="ot8"/>
+                                                    <af:outputText value="#{node.title}"
+                                                                   inlineStyle="font-size:10px;color:#383A47" id="ot9"/>
+                                                </af:panelGroupLayout>
+                                            </af:panelGroupLayout>
+                                            <af:spacer height="5" id="s6"/>
+                                            <dvt:panelCard effect="slide_horz"
+                                                           inlineStyle="padding:5px;border-width:1px;border-color:#CCCCCC;font-size:16px;font-weight:bold;color:#5a6a7a"
+                                                           id="pc2">
+                                                <af:showDetailItem text="Contact "
+                                                                   inlineStyle="font-weight:bold;font-size:16px;color:#5a6a7a"
+                                                                   id="sdi3">
+                                                    <af:panelFormLayout inlineStyle="padding:5px" id="pfl3"
+                                                                        styleClass="AFStretchWidth">
+                                                        <af:panelLabelAndMessage label="Work Phone"
+                                                                                 labelStyle="font-size:11px;color:#5A6A7A"
+                                                                                 id="plam5">
+                                                            <af:outputText value="#{node.workPhone}"
+                                                                           inlineStyle="font-size:11px;color:#383A47"
+                                                                           id="ot10"/>
+                                                        </af:panelLabelAndMessage>
+                                                        <af:panelLabelAndMessage label="email"
+                                                                                 labelStyle="font-size:11px;color:#5A6A7A"
+                                                                                 id="plam6">
+                                                            <af:goLink destination="mailto:#{node.email}"
+                                                                       text="#{node.email}"
+                                                                       inlineStyle="font-size:11px;color:#383A47"
+                                                                       id="gl2"/>
+                                                        </af:panelLabelAndMessage>
+                                                    </af:panelFormLayout>
+                                                </af:showDetailItem>
+                                                <af:showDetailItem text="Address " id="sdi4">
+                                                    <af:spacer height="2" id="s7"/>
+                                                    <af:panelFormLayout inlineStyle="padding:5px" id="pfl4"
+                                                                        styleClass="AFStretchWidth">
+                                                        <af:panelLabelAndMessage label="Address"
+                                                                                 labelStyle="font-size:11px;color:#5A6A7A"
+                                                                                 id="plam7">
+                                                            <af:outputText value="#{node.workAddr1}"
+                                                                           inlineStyle="font-size:11px;color:#383A47"
+                                                                           id="ot11"/>
+                                                        </af:panelLabelAndMessage>
+                                                        <af:panelLabelAndMessage label="City/State"
+                                                                                 labelStyle="font-size:11px;color:#5A6A7A"
+                                                                                 id="plam8">
+                                                            <af:outputText value="#{node.workCity}, #{node.workState}"
+                                                                           inlineStyle="font-size:11px;color:#383A47"
+                                                                           id="ot12"/>
+                                                        </af:panelLabelAndMessage>
+                                                    </af:panelFormLayout>
+                                                </af:showDetailItem>
+                                            </dvt:panelCard>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                    <f:facet name="zoom50">
+                                        <af:panelGroupLayout inlineStyle="padding:5px" layout="horizontal"
+                                                             valign="middle" id="pgl9" styleClass="AFStretchWidth">
+                                            <af:panelGroupLayout layout="vertical" halign="center" id="pgl10"
+                                                                 styleClass="AFStretchWidth">
+                                                <af:image rendered="true"
+                                                          inlineStyle="width:72px;height:80px;"
+                                                          source="/resources/images/hv/#{node.personId}.png" id="i5"/>
+                                                <af:spacer height="2" id="s8"/>
+                                                <af:outputText value="#{node.firstName}"
+                                                               inlineStyle="font-size:13px;font-weight:bold;color:#383A47"
+                                                               id="ot13"/>
+                                                <af:outputText value="#{node.lastName}"
+                                                               inlineStyle="font-size:13px;color:#383A47" id="ot14"/>
+                                            </af:panelGroupLayout>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                    <f:facet name="zoom25">
+                                        <af:panelGroupLayout inlineStyle="padding:2px" layout="horizontal"
+                                                             valign="middle" id="pgl11" styleClass="AFStretchWidth">
+                                            <af:panelGroupLayout layout="vertical" halign="center" id="pgl12"
+                                                                 styleClass="AFStretchWidth">
+                                                <af:outputText value="#{node.firstName}"
+                                                               inlineStyle="font-size:11px;color:#383A47" id="ot15"/>
+                                                <af:outputText value="#{node.lastName}"
+                                                               inlineStyle="font-size:11px;color:#383A47" id="ot16"/>
+                                            </af:panelGroupLayout>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                </dvt:node>
+                            </dvt:hierarchyViewer>
+                        </f:facet>
+                        <!-- END TAG DEMO -->
+                    </af:panelStretchLayout>
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                    <af:panelGroupLayout layout="scroll" id="pgl13">
+                        <!-- START SEE ALSO LINKS -->
+                        <af:outputText value="See also:" id="ot17"/>
+                        <af:panelList id="pl1">
+                            <af:goLink text="Hierarchy Viewer Index" destination="/feature/hv/index.jspx" id="gl15"/>
+                        </af:panelList>
+                        <!-- END SEE ALSO LINKS -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

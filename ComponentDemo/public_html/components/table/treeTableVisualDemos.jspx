@@ -1,0 +1,668 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="TreeTable visual Demos" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="brandingTitle" value="TreeTable visual Demos"/>
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll">
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with a body context menu and empty text.&lt;/b>"
+                                  id="of1"/>
+              <af:treeTable rowSelection="single" inlineStyle="height:150px" summary="treeTable with a body context menu and empty text"
+                            var="directory"
+                            emptyText=" Empty TreeTable. Right mouse click for context menu."
+                            value="#{testEmptyTable.data}" id="tt1">
+                <f:facet name="bodyContextMenu">
+                  <af:popup id="myPopup">
+                    <af:menu id="m2">
+                      <af:commandMenuItem text="Menu Item 1" id="cmi1"/>
+                      <af:commandMenuItem text="Menu Item 2" id="cmi2"/>
+                      <af:commandMenuItem text="Menu Item 3" id="cmi3"/>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column width="40" rowHeader="true" headerText="Number" id="c1">
+                  <af:outputText value="rh" id="ot1"/>
+                </af:column>
+                <af:column headerText="Size" id="c2">
+                  <af:outputText value="size" id="ot2"/>
+                </af:column>
+                <af:column headerText="Date Modified" id="c3">
+                  <af:outputText value="date" id="ot3"/>
+                </af:column>
+                <af:column headerText="Col5" id="c4">
+                  <af:outputText value="col5" id="ot4"/>
+                </af:column>
+                <af:column headerText="Col6" id="c5">
+                  <af:outputText value="col6" id="ot5"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s3"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with contentDelivery='immediate'.&lt;/b>"
+                                  id="of2"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with contentDelivery='immediate'"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt2">
+                <af:column width="20" rowHeader="true" id="c5"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c6" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl5">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i2"/>
+                      <af:outputText value="#{directory.name}" id="ot4"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c7">
+                  <af:outputText value="#{directory.icon}" id="ot5"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c8">
+                  <af:outputText value="#{directory.lastModified}" id="ot6"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl6">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s4"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with no column selection.&lt;/b>"
+                                  id="of3"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with no column selection"
+                            inlineStyle="height:150px" rowSelection="multiple"
+                            columnSelection="none" contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt3">
+                <af:column width="20" rowHeader="true" id="c9"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c10" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl7">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i3"/>
+                      <af:outputText value="#{directory.name}" id="ot7"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c11">
+                  <af:outputText value="#{directory.icon}" id="ot8"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c12">
+                  <af:outputText value="#{directory.lastModified}" id="ot9"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl8">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s5"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with single column selection. Note: Other treeTables in this page have multiple column selection.&lt;/b>"
+                                  id="of4"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with single column selection"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" columnSelection="single"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt4">
+                <af:column width="20" rowHeader="true" id="c13"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c14" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl9">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i4"/>
+                      <af:outputText value="#{directory.name}" id="ot10"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c15">
+                  <af:outputText value="#{directory.icon}" id="ot11"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c16">
+                  <af:outputText value="#{directory.lastModified}" id="ot12"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl10">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s6"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with columnStretching='last'.&lt;/b>"
+                                  id="of5"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with columnStretching='last'"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" columnStretching="last"
+                            columnSelection="multiple" contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt5">
+                <af:column width="20" rowHeader="true" id="c17"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c18" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl11">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i5"/>
+                      <af:outputText value="#{directory.name}" id="ot13"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c19">
+                  <af:outputText value="#{directory.icon}" id="ot14"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c20">
+                  <af:outputText value="#{directory.lastModified}" id="ot15"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl12">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s7"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with context menu.&lt;/b>"
+                                  id="of6"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with context menu"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt6">
+                <f:facet name="contextMenu">
+                  <af:popup id="myPopup">
+                    <af:menu id="m3">
+                      <af:commandMenuItem text="Context Menu Item 1" id="cmi4"/>
+                      <af:commandMenuItem text="Context Menu Item 2" id="cmi5"/>
+                      <af:commandMenuItem text="Context Menu Item 3" id="cmi6"/>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column width="20" rowHeader="true" id="c21"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c22" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl13">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i6"/>
+                      <af:outputText value="#{directory.name}" id="ot16"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c23">
+                  <af:outputText value="#{directory.icon}" id="ot17"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c24">
+                  <af:outputText value="#{directory.lastModified}" id="ot18"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl14">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s8"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with column reordering disabled.&lt;/b>"
+                                  id="of7"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with column reordering disabled"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" disableColumnReordering="true"
+                            columnSelection="multiple" contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt7">
+                <af:column width="20" rowHeader="true" id="c25"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c26" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl15">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i7"/>
+                      <af:outputText value="#{directory.name}" id="ot19"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c27">
+                  <af:outputText value="#{directory.icon}" id="ot20"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c28">
+                  <af:outputText value="#{directory.lastModified}" id="ot21"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl16">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s9"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with no horizontal and vertical grid lines.&lt;/b>"
+                                  id="of8"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with no horizontal and vertical grid lines"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" horizontalGridVisible="false"
+                            verticalGridVisible="false" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt8">
+                <af:column width="20" rowHeader="true" id="c29"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c30" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl17">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i8"/>
+                      <af:outputText value="#{directory.name}" id="ot22"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c31">
+                  <af:outputText value="#{directory.icon}" id="ot23"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c32">
+                  <af:outputText value="#{directory.lastModified}" id="ot24"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl18">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s10"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with no column banding or row banding.&lt;/b>"
+                                  id="of9"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with no column banding or row banding"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" columnBandingInterval="0"
+                            rowBandingInterval="0" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt9">
+                <af:column width="20" rowHeader="true" id="c33"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c34" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl19">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i9"/>
+                      <af:outputText value="#{directory.name}" id="ot25"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c35">
+                  <af:outputText value="#{directory.icon}" id="ot26"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c36">
+                  <af:outputText value="#{directory.lastModified}" id="ot27"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl20">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s11"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with single row selection. Note: Other treeTables in this page have multiple row selection.&lt;/b>"
+                                  id="of10"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with single row selection"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="single" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt10">
+                <af:column width="20" rowHeader="true" id="c37"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c38" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl21">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i10"/>
+                      <af:outputText value="#{directory.name}" id="ot28"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c39">
+                  <af:outputText value="#{directory.icon}" id="ot29"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c40">
+                  <af:outputText value="#{directory.lastModified}" id="ot30"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl22">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s12"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with no row selection.&lt;/b>"
+                                  id="of11"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with no row selection"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="none" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt11">
+                <af:column width="20" rowHeader="true" id="c41"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c42" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl23">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i11"/>
+                      <af:outputText value="#{directory.name}" id="ot31"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c43">
+                  <af:outputText value="#{directory.icon}" id="ot32"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c44">
+                  <af:outputText value="#{directory.lastModified}" id="ot33"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl24">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s13"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with width='98%'.&lt;/b>"
+                                  id="of12"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with width='98%'"
+                            inlineStyle="height:150px" width="98%"
+                            rowSelection="multiple" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt12">
+                <af:column width="20" rowHeader="true" id="c45"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c46" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl25">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i12"/>
+                      <af:outputText value="#{directory.name}" id="ot34"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c47">
+                  <af:outputText value="#{directory.icon}" id="ot35"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c48">
+                  <af:outputText value="#{directory.lastModified}" id="ot36"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl26">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s14"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with fetchSize='5'.&lt;/b>"
+                                  id="of13"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with fetchSize='5'"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" fetchSize="5"
+                            columnSelection="multiple" contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt13">
+                <af:column width="20" rowHeader="true" id="c49"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c50" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl27">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i13"/>
+                      <af:outputText value="#{directory.name}" id="ot37"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c51">
+                  <af:outputText value="#{directory.icon}" id="ot38"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c52">
+                  <af:outputText value="#{directory.lastModified}" id="ot39"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl28">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s15"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with focusRowKey (right click on a node to make it the root).&lt;/b>"
+                                  id="of14"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with focusRowKey"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple"
+                            focusRowKey="#{fs.defaultFocusRowKey}"
+                            columnSelection="multiple" contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt14">
+                <af:column width="20" rowHeader="true" id="c53"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c54" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl29">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i14"/>
+                      <af:outputText value="#{directory.name}" id="ot40"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <f:facet name="pathStamp">
+                  <af:panelGroupLayout id="pgl30">
+                    <af:image source="#{directory.icon}"
+                              inlineStyle="vertical-align:middle;" id="i15"/>
+                    <af:outputFormatted value="&lt;b> #{directory.name} &lt;/b>"
+                                        id="of15"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <af:column headerText="Icon" id="c55">
+                  <af:outputText value="#{directory.icon}" id="ot41"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c56">
+                  <af:outputText value="#{directory.lastModified}" id="ot42"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl31">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s16"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with a frozen column.&lt;/b>"
+                                  id="of16"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with a frozen column"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt15">
+                <af:column width="20" rowHeader="true" id="c57"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" frozen="true" rowHeader="unstyled"
+                             id="c58">
+                    <af:panelGroupLayout id="pgl32">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i16"/>
+                      <af:outputText value="#{directory.name}" id="ot43"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c59">
+                  <af:outputText value="#{directory.icon}" id="ot44"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c60">
+                  <af:outputText value="#{directory.lastModified}" id="ot45"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl33">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s17"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with column data wrapping and header not wrapping.&lt;/b>"
+                                  id="of17"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with column data wrapping and header not wrapping"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt16">
+                <af:column width="20" rowHeader="true" id="c61"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c62" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl34">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i17"/>
+                      <af:outputText value="#{directory.name}" id="ot46"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c63">
+                  <af:outputText value="#{directory.icon}" id="ot47"/>
+                </af:column>
+                <af:column headerText="Last Modified Header Text that is Long"
+                           noWrap="false" headerNoWrap="true" width="100"
+                           id="c64">
+                  <af:outputText value="#{directory.lastModified}" id="ot48"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl35">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s18"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with an end aligned column(Icon column).&lt;/b>"
+                                  id="of18"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with an end aligned column"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt17">
+                <af:column width="20" rowHeader="true" id="c65"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Directory Name" width="200" id="c66" rowHeader="unstyled">
+                    <af:panelGroupLayout id="pgl36">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i18"/>
+                      <af:outputText value="#{directory.name}" id="ot49"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" align="end" id="c67">
+                  <af:outputText value="#{directory.icon}" id="ot50"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c68">
+                  <af:outputText value="#{directory.lastModified}" id="ot51"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl37">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s19"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with column header with custom components.&lt;/b>"
+                                  id="of19"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with column header with custom components"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt18">
+                <af:column width="20" rowHeader="true" id="c69"/>
+                <f:facet name="nodeStamp">
+                  <af:column width="200" frozen="true" id="c70" rowHeader="unstyled">
+                    <f:facet name="header">
+                      <af:goLink destination="http://www.google.com" id="gl3">
+                        <af:outputText value="Goto Google  " id="ot52"/>
+                        <af:image shortDesc="http://www.google.com"
+                                  source="/images/guy.gif" id="i19"/>
+                      </af:goLink>
+                    </f:facet>
+                    <af:panelGroupLayout id="pgl38">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i20"/>
+                      <af:outputText value="#{directory.name}" id="ot53"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c71">
+                  <af:outputText value="#{directory.icon}" id="ot54"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c72">
+                  <af:outputText value="#{directory.lastModified}" id="ot55"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl39">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s20"/>
+              </f:facet>
+              <![CDATA[
+                <style>
+                .headerCell {
+                  text-align: left;
+                  font-size:9pt;
+                  font-weight: bold;
+                  background-image: url('../../../../images/th_bg_s.png');
+                  background-repeat: repeat-x;
+                  background-position: bottom;
+                }
+                .dataCell {
+                  text-align: left;
+                  font-size:7pt;
+                  font-weight: 100;
+                  font-style:italic;
+                  background-color: #EFF4F9;
+                }
+                </style>
+              ]]>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the treeTable with custom data cell and header class.&lt;/b>"
+                                  id="of20"/>
+              <af:treeTable var="directory" value="#{fs.treeModel}" summary="treeTable with custom data cell and header class"
+                            inlineStyle="height:150px; width:600px"
+                            rowSelection="multiple" columnSelection="multiple"
+                            contentDelivery="immediate"
+                            rowDisclosureListener="#{fs.toggle}" id="tt19">
+                <af:column width="20" rowHeader="true" id="c73"/>
+                <f:facet name="nodeStamp">
+                  <af:column headerClass="headerCell" styleClass="dataCell" rowHeader="unstyled"
+                             headerText="Directory Name" width="200" id="c74">
+                    <af:panelGroupLayout id="pgl40">
+                      <af:image source="#{directory.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i21"/>
+                      <af:outputText value="#{directory.name}" id="ot56"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Icon" id="c75">
+                  <af:outputText value="#{directory.icon}" id="ot57"/>
+                </af:column>
+                <af:column headerText="Last Modified" width="300" id="c76">
+                  <af:outputText value="#{directory.lastModified}" id="ot58"/>
+                </af:column>
+              </af:treeTable>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

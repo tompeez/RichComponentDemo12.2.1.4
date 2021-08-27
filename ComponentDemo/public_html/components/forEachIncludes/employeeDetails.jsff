@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved. -->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  version="2.1"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:c="http://java.sun.com/jsp/jstl/core">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef
+    var="attrs"
+    componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Employee details fragment for the for each demo pages</description>
+        <facet>
+          <facet-name>
+            actions
+          </facet-name>
+        </facet>
+        <attribute>
+          <attribute-name>
+            rows
+          </attribute-name>
+          <attribute-class>
+            int
+          </attribute-class>
+          <default-value>
+            1
+          </default-value>
+        </attribute>
+        <attribute>
+          <attribute-name>
+            employee
+          </attribute-name>
+          <attribute-class>
+            oracle.adfdemo.view.tags.foreachdata.Employee
+          </attribute-class>
+          <required>
+            true
+          </required>
+        </attribute>
+        <attribute>
+          <attribute-name>
+            styleClass
+          </attribute-name>
+          <attribute-class>
+            java.lang.String
+          </attribute-class>
+        </attribute>
+        <attribute>
+          <attribute-name>
+            varStatus
+          </attribute-name>
+          <attribute-class>
+            java.lang.Object
+          </attribute-class>
+          <required>
+            true
+          </required>
+        </attribute>
+        <attribute>
+          <attribute-name>
+            allowDnd
+          </attribute-name>
+          <attribute-class>
+            boolean
+          </attribute-class>
+          <default-value>
+            false
+          </default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelGroupLayout id="dc_pgl1" styleClass="employee #{attrs.styleClass}" layout="vertical">
+      <af:panelFormLayout id="ed_pfl" rows="#{attrs.rows}" labelWidth="100px" fieldWidth="100px"
+                          maxColumns="6"
+                          labelAlignment="top">
+        <c:if test="${attrs.allowDnd}">
+          <af:clientAttribute name="empid" value="#{attrs.employee.id}" />
+          <af:attributeDragSource attribute="empid" />
+          <af:dropTarget dropListener="#{forEachBean.employeeIdDrop}">
+            <af:dataFlavor flavorClass="java.lang.Number"/>
+          </af:dropTarget>
+        </c:if>
+        <af:panelLabelAndMessage label="ID:" for="id" id="ed_plam1"
+                                 labelStyle="#{attrs.varStatus.count eq 1 ? '' : 'display:none;'}">
+          <af:outputText id="id" value="#{attrs.employee.id}">
+            <af:convertNumber integerOnly="true"/>
+          </af:outputText>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="First:" for="fn" id="ed_plam2"
+                                 labelStyle="#{attrs.varStatus.count eq 1 ? '' : 'display:none;'}">
+          <af:outputText id="fn" value="#{attrs.employee.firstName}"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="Last:" for="fn" id="ed_plam3"
+                                 labelStyle="#{attrs.varStatus.count eq 1 ? '' : 'display:none;'}">
+          <af:outputText id="ln" value="#{attrs.employee.lastName}"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="Salay:" for="s" id="ed_plam4"
+                                 labelStyle="#{attrs.varStatus.count eq 1 ? '' : 'display:none;'}">
+          <af:outputText id="s" value="#{attrs.employee.salary}">
+            <af:convertNumber type="currency"/>
+          </af:outputText>
+        </af:panelLabelAndMessage>
+        <af:link id="ed_l1" icon="/images/icons-large/help.png" styleClass="help"
+                 shortDesc="Show details (for each technical details)"
+                 clientComponent="true">
+          <af:showPopupBehavior popupId="ed_pop" alignId="ed_l1" align="beforeStart"/>
+        </af:link>
+        <af:facetRef facetName="actions"/>
+      </af:panelFormLayout>
+      <af:popup id="ed_pop" launcherVar="source" eventContext="launcher">
+        <af:noteWindow id="dc_nw1">
+          <af:panelFormLayout maxColumns="2" rows="4">
+            <af:panelLabelAndMessage label="Client ID:">
+              <af:outputText value=" #{component.parent.parent.parent.parent.parent.clientId}" />
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="Index:">
+              <af:outputText value=" #{attrs.varStatus.index}" />
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="Key:">
+              <af:outputText value=" #{attrs.varStatus.key}" />
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="Count:">
+              <af:outputText value=" #{attrs.varStatus.count}" />
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="Begin:">
+              <af:outputText value=" #{attrs.varStatus.begin}" />
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="End:">
+              <af:outputText value=" #{attrs.varStatus.end}" />
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="First:">
+              <af:outputText value=" #{attrs.varStatus.first}" />
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="Last:">
+              <af:outputText value=" #{attrs.varStatus.last}" />
+            </af:panelLabelAndMessage>
+          </af:panelFormLayout>
+        </af:noteWindow>
+      </af:popup>
+    </af:panelGroupLayout>
+  </af:componentDef>
+</jsp:root>

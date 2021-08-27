@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="MenuBar with MenuModel Implementation Demo" theme="dark"
+                 id="d1" smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate viewId="#{templates.visualDesignTemplate}"       id="pt1">
+        <f:attribute name="headerGlobalSize" value="60"/>
+        <f:attribute name="navigation2Size" value="40"/>
+        <f:attribute name="navigation3Size" value="1"/>
+        <f:attribute name="header2Size" value="15"/>
+        <f:attribute name="footer2Size" value="1"/>
+        <f:attribute name="footerGlobalSize" value="1"/>
+        <f:facet name="branding">
+          <af:outputText value="MenuBar with MenuModel Implementation Demo - Bathroom Furniture"
+                         id="otA2"/>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools"
+                                   viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/panelPageTemplate.jspx.source"></af:declarativeComponent>
+        </f:facet>
+        
+        <f:facet name="location">
+          <af:commandLink id="cmdlink11" action="guide.menuBar"
+                                          text="Go Back to MenuBar Demo"/>
+        </f:facet>
+        
+        <f:facet name="navigation2">
+          <af:menuBar id="mnuBr" var="item" value="#{menuBarMenuModel_menu}">
+            <f:facet name="nodeStamp">
+              <af:commandNavigationItem id="cmdNav" text="#{item.label}" icon="#{item.icon}"
+                                        action="#{item.doAction}" disabled="#{item.disabled}"/>
+            </f:facet>
+          </af:menuBar>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="vertical" id="pglt1">
+            
+            <af:spacer height="10px"/>
+            <af:outputFormatted id="outfor1" value="&lt;b>Bathroom Accessories are listed below&lt;/b>" />
+            <af:spacer height="10px"/>
+            
+            <af:commandLink id="cmdlink1" text="Bath Coordinates" action="menuBarDemo.bathCoordinates"/>
+            <af:commandLink id="cmdlink2" text="Shower Curtains" action="menuBarDemo.showerCurtains"/>
+            <af:commandLink id="cmdlink3" text="Mirrors" action="menuBarDemo.mirrors"/>
+            
+            <af:spacer height="50" id="spa1"/>
+            <af:goLink text="Click to see MenuModel used with the this menuBar feature Demo" targetFrame="_blank"
+                               shortDesc="menuModel used for menuBar"
+                               destination="/faces/components/menuBar/menuBarMenuModel_menu.xml"
+                               id="modelgl"/>
+          </af:panelGroupLayout>          
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

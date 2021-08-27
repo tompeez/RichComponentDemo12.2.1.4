@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+    <jsp:directive.page contentType="text/html;charset=utf-8"/>
+    <f:view>
+        <af:document title="Updateable TreeTable Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     smallIconSource="#{aboutBean.smallIconSource}" largeIconSource="#{aboutBean.largeIconSource}"
+                     id="d1">
+            <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+                <f:attribute name="tagName" value="treeTable"/>
+                <f:attribute name="visualDesignName" value="treeTable"/>
+                <f:attribute name="demoKind" value="component"/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:facet name="center">
+                    <af:panelStretchLayout topHeight="auto" bottomHeight="auto" id="psl1" dimensionsFrom="auto">
+                        <f:facet name="top">
+                            <af:panelGroupLayout layout="vertical" id="pgl1">
+                                <af:outputFormatted value="&lt;b>TreeTable with optimized row insert/update/delete support - Select a row and perform insert/update/delete operations&lt;/b>"
+                                                    id="of1"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelCollection id="pc2" styleClass="AFStretchWidth">
+                                <f:facet name="menus">
+                                    <af:menu text="Actions">
+                                        <af:group id="g1">
+                                            <af:commandMenuItem id="cmic" text="Create"
+                                                                actionListener="#{updateableTreeTableBean.insertExpandedRow}"/>
+                                        </af:group>
+                                        <af:group id="g2">
+                                            <af:commandMenuItem id="cmiif" text="Insert First"
+                                                                actionListener="#{updateableTreeTableBean.insertStart}"/>
+                                            <af:commandMenuItem id="cmiib" text="Insert Before"
+                                                                actionListener="#{updateableTreeTableBean.insertBefore}"/>
+                                            <af:commandMenuItem id="cmiia" text="Insert After"
+                                                                actionListener="#{updateableTreeTableBean.insertAfter}"/>
+                                            <af:commandMenuItem id="cmiil" text="Insert Last"
+                                                                actionListener="#{updateableTreeTableBean.insertEnd}"/>
+                                        </af:group>
+                                        <af:group id="g3">
+                                            <af:commandMenuItem id="cmidel" text="Delete"
+                                                                actionListener="#{updateableTreeTableBean.deleteRow}"/>
+                                        </af:group>
+                                    </af:menu>
+                                </f:facet>
+                                <f:facet name="toolbar">
+                                    <af:toolbar id="t1">
+                                        <af:group id="gtb3">
+                                            <af:commandToolbarButton id="ctbc" shortDesc="Create"
+                                                                     icon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_ena.png' : '/images/new_ena.png'}"
+                                                                     depressedIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_dwn.png' : '/images/new_dwn.png'}"
+                                                                     disabledIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_dis.png' : '/images/new_dis.png'}"
+                                                                     hoverIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_ovr.png' : '/images/new_ovr.png'}"
+                                                                     actionListener="#{updateableTreeTableBean.insertExpandedRow}"/>
+                                            <af:commandToolbarButton id="ctbdel" shortDesc="Delete"
+                                                                     icon="/images/delete_ena.png"
+                                                                     depressedIcon="/images/delete_dwn.png"
+                                                                     disabledIcon="/images/delete_dis.png"
+                                                                     hoverIcon="/images/delete_ovr.png"
+                                                                     actionListener="#{updateableTreeTableBean.deleteRow}"/>
+                                        </af:group>
+                                        <af:group id="gtb5">
+                                            <af:commandToolbarButton id="ctbif" shortDesc="Insert First"
+                                                                     icon="/images/insertabove.png"
+                                                                     actionListener="#{updateableTreeTableBean.insertStart}"/>
+                                            <af:commandToolbarButton id="ctbib" shortDesc="Insert Before"
+                                                                     icon="/images/insertbefore_ena.png"
+                                                                     depressedIcon="/images/insertbefore_dwn.png"
+                                                                     disabledIcon="/images/insertbefore_dis.png"
+                                                                     hoverIcon="/images/insertbefore_ovr.png"
+                                                                     actionListener="#{updateableTreeTableBean.insertBefore}"/>
+                                            <af:commandToolbarButton id="ctbia" shortDesc="Insert After"
+                                                                     icon="/images/insertafter_ena.png"
+                                                                     depressedIcon="/images/insertafter_dwn.png"
+                                                                     disabledIcon="/images/insertafter_dis.png"
+                                                                     hoverIcon="/images/insertafter_ovr.png"
+                                                                     actionListener="#{updateableTreeTableBean.insertAfter}"/>
+                                            <af:commandToolbarButton id="ctbie" shortDesc="Insert Last"
+                                                                     icon="/images/insertbelow.png"
+                                                                     actionListener="#{updateableTreeTableBean.insertEnd}"/>
+                                        </af:group>
+                                    </af:toolbar>
+                                </f:facet>
+                                <af:treeTable rowSelection="single" id="tt1" var="row" rowBandingInterval="0" fetchSize="10"
+                                              value="#{updateableTreeTableBean.model}" columnSelection="single"
+                                              rowDisclosureListener="#{fs.toggle}"
+                                              binding="#{updateableTreeTableBean.component}">
+                                    <af:column width="20" rowHeader="true" headerText="" id="c1"/>
+                                    <f:facet name="nodeStamp">
+                                        <af:column headerText="Value" id="c2">
+                                            <af:panelGroupLayout id="pglt1">
+                                                <af:image source="#{row.icon}"
+                                                          inlineStyle="vertical-align:middle;padding-right:3px;"
+                                                          shortDesc="Status" id="i1"/>
+                                                <af:outputText id="ot1" value="#{row.value}"/>
+                                            </af:panelGroupLayout>
+                                        </af:column>
+                                    </f:facet>
+                                    <af:column headerText="Name" id="c3">
+                                        <af:outputText id="ot2" value="#{row.name}"/>
+                                    </af:column>
+                                    <af:column headerText="Size" id="c4">
+                                        <af:outputText value="#{row.size}" id="ot3"/>
+                                    </af:column>
+                                    <af:column headerText="Key" id="c5">
+                                        <af:outputText value="#{row.key}" id="ot4"/>
+                                    </af:column>
+                                </af:treeTable>
+                            </af:panelCollection>
+                        </f:facet>
+                        <f:facet name="bottom">
+                            <af:panelGroupLayout layout="vertical" id="pgl3">
+                                <af:toolbar id="tb1">
+                                    <af:commandToolbarButton text="Export All Rows to Excel" immediate="true"
+                                                             id="exportAll">
+                                        <af:exportCollectionActionListener type="excelHTML" exportedId="pc1:tt1"
+                                                                           filename="export.xls"
+                                                                           title="ADF Faces Export - All"
+                                                                           exportedRows="all"/>
+                                    </af:commandToolbarButton>
+                                    <af:commandToolbarButton text="Export Selected Rows to Excel"
+                                                             immediate="true" id="exportSelected">
+                                        <af:exportCollectionActionListener type="excelHTML" exportedId="pc1:tt1"
+                                                                           filename="export.xls"
+                                                                           title="ADF Faces Export - Selected Rows"
+                                                                           exportedRows="selected"/>
+                                    </af:commandToolbarButton>
+                                    <af:commandToolbarButton text="Print Splitter Content" id="ctb">
+                                        <af:showPrintablePageBehavior/>
+                                    </af:commandToolbarButton>
+                                </af:toolbar>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>
+

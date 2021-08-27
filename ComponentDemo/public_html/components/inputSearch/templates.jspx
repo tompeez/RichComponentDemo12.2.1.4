@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2016, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Dynamic template picker demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="tagName" value="InputSearch: Dynamic template picker"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:outputFormatted value="&lt;span style='font-size: 1.1em'>This demo is to showcase
+              dynamically changing the client template of the inputSearch component.
+              Use the 'Enable Table Mode' and the Gear icon to update the template
+              &lt;/span>" id="ot1"/>
+            <af:separator id="s1"/>
+            <af:panelGroupLayout id="pgl13" layout="horizontal">
+              <af:inputSearch id="person1" displayAttributes="fName lName"
+                              valueAttribute="id" styleClass="AFDemoDay"
+                              label="Choose a Person"
+                              filterAttributes="#{templateDemo.filterAttributes}"
+                              partialTriggers="attrs mode"
+                              contentMode="#{templateDemo.contentMode}"
+                              selectionConverter="#{inputSearchDemo.selectionConverter}"
+                              autoSubmit="true"
+                              value="#{templateDemo.employeesSet}">
+                <af:searchSection type="default"
+                                  dataUrl="/rest/employees?cache=expiry&amp;"/>
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                <f:facet name="contentHeader">
+                  <af:sanitized rendered="#{templateDemo.tableMode}"
+                                value="#{templateDemo.headerTemplate}"/>
+                </f:facet>
+                <f:facet name="contentStamp">
+                  <af:sanitized value="#{templateDemo.clientTemplate}"/>
+                </f:facet>
+              </af:inputSearch>
+              <af:commandImageLink icon="../../images/gear.png"
+                              shortDesc="Customize suggestions display">
+                <af:showPopupBehavior popupId="sel" align="afterStart"/>
+              </af:commandImageLink>
+              <af:popup id="sel" animate="true">
+                <af:selectManyCheckbox id="attrs"
+                    value="#{templateDemo.displayInclusions}"
+                    autoSubmit="true" simple="true"
+                    valueChangeListener="#{templateDemo.displayInclusionsChanged}">
+                  <af:selectItem label="Name" value="name"
+                                 shortDesc="Check to display names"
+                                 disabled="true"/>
+                  <af:selectItem label="Profile picture" value="photo"
+                                 shortDesc="Check to display the profile picture"/>
+                  <af:selectItem label="Designation" value="jobTitle"
+                                 shortDesc="Check to display job title"/>
+                  <af:selectItem label="Department" value="deptName"
+                                 shortDesc="Check to display names"/>
+                  <af:selectItem label="Location" value="deptLocation"
+                                 shortDesc="Check to display work location"/>
+                  <af:selectItem label="Email" value="email"
+                                 shortDesc="Check to display email"/>
+                </af:selectManyCheckbox>
+              </af:popup>
+            </af:panelGroupLayout>
+            <af:selectBooleanCheckbox id="mode" label="Enable table mode"
+                                     value="#{templateDemo.tableMode}"
+                                     autoSubmit="true"
+                                     shortDesc="Check to show suggestions in tabular format"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

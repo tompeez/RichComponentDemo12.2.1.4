@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map Keyboard Model"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demoTemplate"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <!--<f:attribute name="documentTitle" value="Show And Hide Series"/>-->
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Keyboard Model"/>
+        <f:facet name="center">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth"
+                                 topHeight="25px">
+            <f:facet name="bottom"/>
+            <f:facet name="center">
+                  
+                    <af:panelSplitter orientation="horizontal" 
+                                    splitterPosition="600" positionedFromEnd="false"
+                                    styleClass="AFStretchWidth" id="ps1">
+                        <f:facet name="first">
+                        <af:panelGroupLayout layout="vertical" id="pgl5">
+                                    <dvt:thematicMap id="thematicMap" basemap="usa" drilling="on">
+                                      <af:transition transition="auto" triggerType="display"/>
+                                      <af:transition transition="auto" triggerType="drill"/>
+                                      <dvt:legend label="Category">
+                                        <dvt:legendSection source="al1:regionLayer1:area1"/>
+                                      </dvt:legend>
+                                      <dvt:areaLayer layer="states" id="al1">
+                                        <dvt:areaDataLayer id="regionLayer1" selectionMode="multiple"
+                                                           contentDelivery="immediate"
+                                                           value="#{stateData.colorModel}"
+                                                           var="row" varStatus="rowStatus"
+                                                           disclosedRowKeys="#{stateData.disclosedSet}">
+                                          <dvt:areaLocation name="#{row.name}" id="al2">
+                                            <dvt:marker fillColor="#66CCCC" opacity="1.0"
+                                                        scaleX="#{row.size/2}"
+                                                        scaleY="#{row.size/2}" shape="human"
+                                                        id="m1">
+                                            </dvt:marker>
+                
+                                            <dvt:area id="area1" fillColor="#{row.color}">                                      
+                                              <f:attribute name="legendLabel" value="#{row.category}"/>                                        
+                                            </dvt:area>
+                                        </dvt:areaLocation>
+                                        </dvt:areaDataLayer>
+                                      </dvt:areaLayer>
+                
+                                      <dvt:areaLayer layer="counties" id="al3">
+                                        <dvt:areaDataLayer id="regionLayer2" selectionMode="multiple"
+                                                           contentDelivery="immediate"
+                                                           value="#{tmapBean.countyModel}"
+                                                           var="row" varStatus="rowStatus">
+                                          <dvt:areaLocation name="#{row.name}" id="al4">
+                                            <dvt:area id="area2" fillColor="#{row.color}"/>
+                                          </dvt:areaLocation>
+                                        </dvt:areaDataLayer>
+                                      </dvt:areaLayer>
+                
+                                    </dvt:thematicMap>
+                        </af:panelGroupLayout>
+                        
+                        </f:facet>
+                        <f:facet name="second">
+                        <af:panelGroupLayout layout="scroll" id="pgl6">
+                                    <table>
+                                        <tr>
+                                        <th> Keystroke </th>
+                                        <th> Action </th>
+                                        </tr>
+                                        <tr>
+                                        <td > Tab </td>
+                                        <td > Move focus to map and then to next component </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Shift+Tab </td>
+                                        <td > Move focus to map and then to previous component </td>
+                                        </tr>
+                                        <tr>
+                                        <td > / </td>
+                                        <td > Show/hide control panel </td>
+                                        </tr>
+                                        <tr>
+                                        <td > \ </td>
+                                        <td > Show/hide legend </td>
+                                        </tr>
+                                        <tr>
+                                        <td > = or + </td>
+                                        <td > Zoom in one level </td>
+                                        </tr>
+                                        <tr>
+                                        <td > - or _ </td>
+                                        <td > Zoom out one level </td>
+                                        </tr>
+                                        <tr>
+                                        <td > 0 </td>
+                                        <td > Zoom to fit map </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+Alt+0 </td>
+                                        <td > Zoom to fit region with focus </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+0 </td>
+                                        <td > Zoom to fit selected regions </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+Shift+0 </td>
+                                        <td > Reset map </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+Shift+NumPad 1-9 </td>
+                                        <td > Quick navigate </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Page Up </td>
+                                        <td > Pan up </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Page Down </td>
+                                        <td > Pan down </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Shift+Page Up </td>
+                                        <td > Pan left (<b>RTL</b>: Pan right) </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Shift+Page Down </td>
+                                        <td > Pan right (<b>RTL</b>: Pan left) </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Enter </td>
+                                        <td > Drill down one level on selection </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Shift+Enter </td>
+                                        <td > Drill up one level on selection </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Left Arrow </td>
+                                        <td > Move focus and selection to nearest base map region or marker to the left in same layer </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Right Arrow </td>
+                                        <td > Move focus and selection to nearest base map region or marker to the right in same layer </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Up Arrow </td>
+                                        <td > Move focus and selection to nearest base map region or marker above in same layer </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Down Arrow </td>
+                                        <td > Move focus and selection to nearest base map region or marker below in same layer </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Shift+Left Arrow </td>
+                                        <td > Move focus and multi-select nearest base map region or marker to the left in same layer </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Shift+Right Arrow </td>
+                                        <td > Move focus and multi-select nearest base map region or marker to the right in same layer </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Shift+Up Arrow </td>
+                                        <td > Move focus and multi-select nearest base map region or marker above in same layer </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Shift+Down Arrow </td>
+                                        <td > Move focus and multi-select nearest base map region or marker below in same layer </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+Left Arrow </td>
+                                        <td > Move focus to nearest base map region or marker to the left in same layer but do not select </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+Right Arrow </td>
+                                        <td > Move focus to nearest base map region or marker to the right in same layer but do not select </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+Up Arrow </td>
+                                        <td > Move focus to nearest base map region or marker above in same layer but do not select </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+Down Arrow </td>
+                                        <td > Move focus to nearest base map region or marker below in same layer but do not select </td>
+                                        </tr>
+                                        <tr>
+                                        <td > ] </td>
+                                        <td > Move focus and selection to nearest marker in the next layer above </td>
+                                        </tr>
+                                        <tr>
+                                        <td > [ </td>
+                                        <td > Move focus and selection to nearest base map region or marker in the next layer below </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Shift+] </td>
+                                        <td > Move focus to nearest marker in the next layer above and multi-select </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Shift+[ </td>
+                                        <td > Move focus to nearest base map region or marker in the next layer below and multi-select </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+] </td>
+                                        <td > Move focus to nearest marker in the next layer above but do not select </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+[ </td>
+                                        <td > Move focus to nearest base map region or marker in the next layer below but do not select </td>
+                                        </tr>
+                                        <tr>
+                                        <td > Ctrl+Spacebar </td>
+                                        <td > Multi-select base map region or marker with focus </td>
+                                        </tr>
+                                    </table>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelSplitter>
+            </f:facet>
+            <f:facet name="start"/>
+            <f:facet name="end"/>
+            <f:facet name="top"></f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

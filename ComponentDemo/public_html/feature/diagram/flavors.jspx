@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram dataFlavor Features Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram DataFlavor Features Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Diagram DataFlavor Features"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout id="psl1" topHeight="auto">
+            <f:facet name="top">
+              <af:panelGroupLayout id="pgl1" layout="vertical">
+                <f:verbatim>                   <b>Demontrates the DataFlavors feature for diagram</b>                   <br/>                                         <ul>
+                    <li>Drag and drop containers and nodes to the diagram</li>
+                    <li>Red Nodes can only be dropped in red containers and blue nodes can only be dropped in blue
+                        containers.</li>
+                    <li>Containers can only be dropped in the background.</li>
+                  </ul>                 </f:verbatim>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <!-- START FEATURE DEMO -->
+              <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="275"
+                                dimensionsFrom="auto">
+                <f:facet name="first">
+                  <dvt:diagram id="dg1" binding="#{FlavorsEditor.diagrammer}" layout="gridLayout" selection="single"
+                               readOnly="#{FlavorsEditor.readOnly}" minZoom="0" maxZoom="3"
+                               summary="Diagram Editor Demo" panning="none" zooming="none" controlPanelBehavior="hidden"
+                               dropFlavors="javax.faces.component.UIComponent/blueContainer javax.faces.component.UIComponent/redContainer">
+                    <af:transition transition="auto" triggerType="dataChange"/>
+                    <dvt:clientLayout name="gridLayout" method="DemoGridLayout.gridLayout" featureName="DemoGridLayout"></dvt:clientLayout>
+                    <dvt:clientLayout name="horizontalLayout" featureName="TutorialLayouts"
+                                      method="DemoContainersLayout.layout"/>
+                    <af:dropTarget dropListener="#{FlavorsEditor.diagramDropListener}" actions="COPY LINK MOVE">
+                      <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet"
+                                     discriminant="fromDiagram"/>
+                      <af:dataFlavor flavorClass="javax.faces.component.UIComponent" discriminant="imageA"/>
+                      <af:dataFlavor flavorClass="javax.faces.component.UIComponent" discriminant="imageB"/>
+                    </af:dropTarget>
+                    <dvt:palette maxWidth="200px" disclosed="false">
+                      <dvt:paletteSection label="Containers" value="#{FlavorsEditor.paletteNodes}" var="node">
+                        <dvt:paletteItem typeHint="#{node.Type}" label="#{node.Label}"
+                                         rendered="#{node.Type == 'Node2'}" dragFlavor="blueContainer">
+                          <af:panelGroupLayout layout="vertical">
+                            <dvt:marker width="80" height="30" source="/resources/svg/blueContainer.svg"/>
+                          </af:panelGroupLayout>
+                        </dvt:paletteItem>
+                        <dvt:paletteItem typeHint="#{node.Type}" label="#{node.Label}"
+                                         rendered="#{node.Type == 'Node3'}" dragFlavor="redContainer">
+                          <af:panelGroupLayout layout="vertical">
+                            <dvt:marker width="80" height="30" source="/resources/svg/redContainer.svg"/>
+                          </af:panelGroupLayout>
+                        </dvt:paletteItem>
+                      </dvt:paletteSection>
+                      <!-- second section has collection and multiple items (we could not render multiple items before) -->
+                      <dvt:paletteSection label="Nodes" value="#{FlavorsEditor.paletteNodes}" var="node">
+                        <dvt:paletteItem typeHint="#{node.Type}" label="#{node.Label}"
+                                         rendered="#{node.Type == 'Node4'}" dragFlavor="blueNode">
+                          <dvt:marker width="80" height="30" shape="square" fillColor="#267db3" borderStyle="solid"
+                                      borderWidth="1" borderColor="#444444"></dvt:marker>
+                        </dvt:paletteItem>
+                        <dvt:paletteItem typeHint="#{node.Type}" label="#{node.Label}"
+                                         rendered="#{node.Type == 'Node5'}" dragFlavor="redNode">
+                          <dvt:marker width="80" height="30" shape="square" fillColor="#ed6647" borderStyle="solid"
+                                      borderWidth="1" borderColor="#444444"></dvt:marker>
+                        </dvt:paletteItem>
+                      </dvt:paletteSection>
+                    </dvt:palette>
+                    <dvt:diagramNodes id="dn1" value="#{FlavorsEditor.nodes}" var="node"
+                                      nodeDeleteListener="#{FlavorsEditor.nodeDeleteListener}"
+                                      selectionListener="#{FlavorsEditor.nodesSelectedEdit}"
+                                      selectedRowKeys="#{FlavorsEditor.selectedNodes}"
+                                      binding="#{FlavorsEditor.UIDiagramNodes}"
+                                      nodeCreateListener="#{FlavorsEditor.nodeCreateListener}"
+                                      disclosedRowKeys="#{FlavorsEditor.disclosedNodes}">
+                      <af:dragSource actions="COPY LINK MOVE" defaultAction="MOVE" discriminant="fromDiagram"/>
+                      <af:dropTarget dropListener="#{FlavorsEditor.diagramDropListener}" actions="COPY LINK MOVE">
+                        <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet"
+                                       discriminant="fromDiagram"/>
+                        <af:dataFlavor flavorClass="javax.faces.component.UIComponent" discriminant="imageC"/>
+                        <af:dataFlavor flavorClass="javax.faces.component.UIComponent" discriminant="imageD"/>
+                      </af:dropTarget>
+                      <dvt:diagramNode id="nstep2" nodeId="#{node.Nodeid}" containerId="#{node.Containerid}"
+                                       showDrill="false" readOnly="#{FlavorsEditor.nodeReadOnly}"
+                                       rendered="#{node.Type =='Node2'}" showIsolate="false" shortDesc="#{node.Label}"
+                                       layout="horizontalLayout" dragFlavor="blueContainer" showDisclose="false"
+                                       dropFlavors="javax.faces.component.UIComponent/imageC javax.faces.component.UIComponent/blueNode"
+                                       containerStyle="border-color:#444444;border-width:2px;border-radius:0">
+                        <f:facet name="containerTop">
+                          <af:panelGroupLayout layout="vertical" halign="center"
+                                               inlineStyle="background-color:#267db3;border-color:#444444;border-width:1px;"
+                                               styleClass="AFStretchWidth">
+                            <af:outputText value="#{node.Nodeid}: #{node.Label}" inlineStyle="color:white;"/>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="zoom100">
+                          <af:panelGroupLayout layout="vertical">
+                            <dvt:marker width="80" height="15" shape="square" fillColor="#267db3" borderStyle="solid"
+                                        borderWidth="1" borderColor="#444444" labelPosition="center"
+                                        value="#{node.Nodeid}: #{node.Label}"
+                                        labelStyle="color:white; font-weight:normal"></dvt:marker>
+                            <dvt:marker width="80" height="30" shape="square" fillColor="#f9f9f9" borderStyle="solid"
+                                        borderWidth="1" borderColor="#444444"></dvt:marker>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </dvt:diagramNode>
+                      <dvt:diagramNode id="nstep3" nodeId="#{node.Nodeid}" containerId="#{node.Containerid}"
+                                       showDisclose="false" readOnly="#{FlavorsEditor.nodeReadOnly}"
+                                       rendered="#{node.Type =='Node3'}" showIsolate="false" shortDesc="#{node.Label}"
+                                       layout="horizontalLayout" dragFlavor="redContainer" showDrill="false"
+                                       dropFlavors="javax.faces.component.UIComponent/imageD javax.faces.component.UIComponent/redNode"
+                                       containerStyle="border-color:#444444;border-width:2px;border-radius:0">
+                        <f:facet name="containerTop">
+                          <af:panelGroupLayout layout="vertical" halign="center"
+                                               inlineStyle="background-color:#ed6647;border-color:#444444;border-width:1px;"
+                                               styleClass="AFStretchWidth">
+                                                <af:outputText value="#{node.Nodeid}: #{node.Label}" inlineStyle="color:#444444;"/>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="zoom100">
+                          <af:panelGroupLayout layout="vertical">
+                            <dvt:marker width="80" height="15" shape="square" fillColor="#ed6647" borderStyle="solid"
+                                        borderWidth="1" borderColor="#444444" labelPosition="center"
+                                        value="#{node.Nodeid}: #{node.Label}"
+                                        labelStyle="color:#444444; font-weight:normal"></dvt:marker>
+                            <dvt:marker width="80" height="30" shape="square" fillColor="#f9f9f9" borderStyle="solid"
+                                        borderWidth="1" borderColor="#444444"></dvt:marker>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </dvt:diagramNode>
+                      <dvt:diagramNode id="nstep4" nodeId="#{node.Nodeid}" containerId="#{node.Containerid}"
+                                       showDrill="false" readOnly="#{FlavorsEditor.nodeReadOnly}"
+                                       rendered="#{node.Type =='Node4'}" shortDesc="#{node.Label}" dragFlavor="blueNode"
+                                       dropFlavors="javax.faces.component.UIComponent/DummyNode" showDisclose="false"
+                                       showIsolate="false">
+                        <f:facet name="zoom100">
+                          <af:panelGroupLayout layout="vertical" halign="center">
+                            <dvt:marker width="80" height="30" shape="square" fillColor="#267db3" borderStyle="solid"
+                                        borderWidth="1" borderColor="#444444" value="#{node.Nodeid}: #{node.Label}"
+                                        labelStyle="color:white"></dvt:marker>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </dvt:diagramNode>
+                      <dvt:diagramNode id="nstep5" nodeId="#{node.Nodeid}" containerId="#{node.Containerid}"
+                                       showIsolate="false" readOnly="#{FlavorsEditor.nodeReadOnly}"
+                                       rendered="#{node.Type =='Node5'}" shortDesc="#{node.Label}" dragFlavor="redNode"
+                                       dropFlavors="javax.faces.component.UIComponent/DummyNode" showDisclose="false"
+                                       showDrill="false">
+                        <f:facet name="zoom100">
+                          <af:panelGroupLayout layout="vertical" halign="center">
+                            <dvt:marker width="80" height="30" shape="square" fillColor="#ed6647" borderStyle="solid"
+                                        borderWidth="1" borderColor="#444444" value="#{node.Nodeid}: #{node.Label}"
+                                        labelStyle="color:#444444"></dvt:marker>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </dvt:diagramNode>
+                    </dvt:diagramNodes>
+                  </dvt:diagram>
+                </f:facet>
+                <f:facet name="second">
+                <af:panelFormLayout>
+                    <af:panelLabelAndMessage id="pfl2" label="Blue Container:">
+                      <af:image source="/resources/svg/blueContainer.svg" inlineStyle="width:60px;height:23px"
+                                longDescURL="imageA">
+                        <af:componentDragSource discriminant="imageA"/>
+                      </af:image>
+                    </af:panelLabelAndMessage>
+                    <af:panelLabelAndMessage id="pfl3" label="Red Container:">
+                      <af:image source="/resources/svg/redContainer.svg" inlineStyle="width:60px;height:23px"
+                                longDescURL="imageB">
+                        <af:componentDragSource discriminant="imageB"/>
+                      </af:image>
+                    </af:panelLabelAndMessage>
+                    <af:panelLabelAndMessage id="pfl4" label="Blue Node:">
+                      <af:image source="/resources/svg/blueNode.svg" inlineStyle="width:60px;height:23px"
+                                longDescURL="imageC">
+                        <af:componentDragSource discriminant="imageC"/>
+                      </af:image>
+                    </af:panelLabelAndMessage>
+                    <af:panelLabelAndMessage id="pfl5" label="Red Node:">
+                      <af:image source="/resources/svg/redNode.svg" inlineStyle="width:60px;height:23px"
+                                longDescURL="imageD">
+                        <af:componentDragSource discriminant="imageD"/>
+                      </af:image>
+                    </af:panelLabelAndMessage>
+                    </af:panelFormLayout>
+                </f:facet>
+              </af:panelSplitter>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <!-- END FEATURE DEMO -->
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

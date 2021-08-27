@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2010, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{ganttFeatureLinks.resourceUtilizationGanttSelectionTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Resource Utilization Gantt Selection"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Resource Utilization Gantt Selection"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <af:outputText id="ot11" value="This page demonstrates Selection Model feature.  Click a time bucket to select it.  Or, select a time bucket from the 'Select' drop-down.  To view the selected time bucket date, click the 'Show Selection' button."/>
+          <af:panelGroupLayout layout="horizontal" id="layout1">
+            <af:selectOneChoice id="soc1" value="#{resourceUtilizationGanttSelection.select}" label="Select" autoSubmit="true" valueChangeListener="#{resourceUtilizationGanttSelection.handleValueChange}">
+              <f:selectItem id="si1" itemLabel="" itemValue=""/>
+              <f:selectItem id="si2" itemLabel="David - Jan 10" itemValue="David - Jan 10"/>
+              <f:selectItem id="si3" itemLabel="Glen - Jan 10" itemValue="Glen - Jan 10"/>
+            </af:selectOneChoice>
+            <af:commandButton id="cb1" actionListener="#{resourceUtilizationGanttSelection.handleShowSelectionAction}" text="Show Selection" partialSubmit="true"/>
+          </af:panelGroupLayout>
+        <!-- START FEATURE DEMO -->
+        <dvt:resourceUtilizationGantt id="resourceUtilizationGanttSelection"
+                                      inlineStyle="height: 300px;"
+                                      startTime="2008-01-06" 
+                                      endTime="2008-01-31"
+                                      value="#{resourceUtilizationGanttSelection.model}"
+                                      var="resourceObj" 
+                                      resourceSelectionListener="#{resourceUtilizationGanttSelection.handleSelectedResource}"
+                                      timeBucketSelectionListener="#{resourceUtilizationGanttSelection.handleSelectedTimeBucket}"
+                                      metrics="#{resourceUtilizationGanttSelection.metrics}"
+                                      summary="Resource Utilization Gantt Selection Demo">
+          <f:facet name="major">
+            <dvt:timeAxis scale="weeks" id="ta1"/>
+          </f:facet>
+          <f:facet name="minor">
+            <dvt:timeAxis scale="days" id="ta2"/>
+          </f:facet>
+          <f:facet name="nodeStamp">
+            <af:column headerText="Resource Name" id="c1">
+              <af:outputText value="#{resourceObj.resourceName}" id="ot1"/>
+            </af:column>
+          </f:facet>
+          <af:column headerText="Department" id="c2">
+            <af:outputText value="#{resourceObj.department}" id="ot2"/>
+          </af:column>
+        </dvt:resourceUtilizationGantt>
+        <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/gantt/ganttFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

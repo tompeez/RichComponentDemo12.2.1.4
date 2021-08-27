@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="clientAttribute Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+/**
+ * Shows the popup
+ **/
+function showPopup(event)
+{
+  event.cancel();
+  var popup = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:popup");
+  // You can use this to find the component
+  // var button = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:button");
+  // or you can use this to find the component.
+  var source = event.getSource();
+  var align = source.getProperty("align");
+  var clientId = source.getClientId();
+
+  if (align == "before_start")
+    popup.show({align:AdfRichPopup.ALIGN_BEFORE_START, alignId:clientId});
+  else
+    popup.show({align:AdfRichPopup.ALIGN_AFTER_END, alignId:clientId});
+}
+      </af:resource>
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="clientAttribute"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="misc"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="top">
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:popup id="popup" binding="#{editor.component}">
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:outputText value="aligned popup" id="ot1"/>
+              </af:panelGroupLayout>
+            </af:popup>
+                <af:outputText value="This page demonstrates how to use the af:clientAttribute tag.
+                The clientAttribute's name is set to 'align' and the value is 'after_end' or 'before_start'.
+                The client-side action listener can read these values and align the popup accordingly."
+                               id="ot2"/>
+            <af:commandButton text="Press me for popup aligned before_start..." id="button">
+              <af:clientAttribute name="align" value="before_start"/>
+              <af:clientListener type="action" method="showPopup"/>
+            </af:commandButton>
+            <af:commandButton text="Press me for popup aligned after_end.." id="button2">
+              <af:clientAttribute name="align" value="after_end"/>
+              <af:clientListener type="action" method="showPopup"/>
+            </af:commandButton>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

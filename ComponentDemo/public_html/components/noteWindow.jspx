@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="noteWindow Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="noteWindow"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout id="pgl1">
+            <f:verbatim>Demonstrates using the af:noteWindow component
+                        as a server-side component contained within an af:popup.
+                        Mouse over the red boldfaced words in the paragraph below
+                        to display a popup note window. The note window will be
+                        aligned to the associated word. The note window will not
+                        seal focus and will be dismissed when focus is taken from
+                        the launching word or from the windows content.  The first
+                        note window triggered on mouse over of word "scavenger" is bound
+                        to the component attributes panel. The content in the demo below
+                        was taken from a Wikipedia.</f:verbatim>
+          <af:popup id="popupScavenger" contentDelivery="lazyUncached">
+            <af:noteWindow inlineStyle="width:300px;" binding="#{editor.component}"
+                           id="nw1">
+              <p style="padding:0px;margin:0px;">Scavengers are animals that consume already dead animals
+                 (carrion). Scavengers play an important role in the ecosystem by
+                 contributing to the decomposition of dead animal remains.
+                 Decomposers complete this process, by consuming the remains left
+                 by scavengers.</p>
+              <p>Well known scavengers include vultures, burying beetles,
+                 blowflies, yellowjackets, and raccoons. Many large carnivores
+                 that hunt regularly--such as hyenas and lions--will scavenge if
+                 given the chance.</p>
+              <p>Animals which consume feces, such as dung beetles, are also
+                 referred to as scavengers. Animals which primarily consume dead
+                 plants (litter) are referred to as detritivores.</p>
+            </af:noteWindow>
+          </af:popup>
+          <af:popup id="popupAntartica" contentDelivery="lazyUncached">
+            <af:noteWindow inlineStyle="width:300px;" id="nw2">
+              <p>Antarctica is Earth's southernmost continent, overlying the South
+                 Pole. It is situated in the southern hemisphere, almost entirely
+                 south of the Antarctic Circle, and is surrounded by the Southern
+                 Ocean. At 14.4 million km² (5.4 million sq mi), it is the
+                 fifth-largest continent in area after Asia, Africa, North
+                 America, and South America. Some 98% of Antarctica is covered by
+                 ice, which averages at least 1.6 kilometres (1.0 mi) in thickness.</p>
+            </af:noteWindow>
+          </af:popup>
+          <af:popup id="popupHead" contentDelivery="lazyUncached">
+            <af:noteWindow inlineStyle="width:200px;" id="nw3">
+              <p>In anatomy, the head of an animal is the rostral part (from
+                 anatomical position) that usually comprises the brain, eyes,
+                 ears, nose, and mouth (all of which aid in various sensory
+                 functions, such as sight, hearing, smell, and taste). Some very
+                 simple animals may not have a head, but many bilaterally
+                 symmetric forms do.</p>
+            </af:noteWindow>
+          </af:popup>
+          <af:popup id="popupFeathers" contentDelivery="lazyUncached">
+            <af:noteWindow inlineStyle="width:200px;" id="nw4">
+              <p>Feathers are one of the epidermal growths that form the
+                 distinctive outer covering, or plumage, on birds. They are the
+                 outstanding characteristic that distinguishes the Class Aves from
+                 all other living groups. Other Theropoda also had feathers (see
+                 Feathered dinosaurs).</p>
+            </af:noteWindow>
+          </af:popup>
+          <p style="margin-left:30px;width:500px;margin-right:30px;line-height:16px">
+            Vultures are
+            <af:commandLink id="scavenger" text="scavenging"
+                           inlineStyle="color:red; font-weight:bold">
+              <af:showPopupBehavior popupId="popupScavenger"
+                                    triggerType="mouseHover" alignId="scavenger"/>
+              <af:showPopupBehavior popupId="popupScavenger"
+                                    triggerType="action" alignId="scavenger"/>
+            </af:commandLink>
+             birds, feeding mostly on the carcasses of dead animals. Vultures are
+            found in every continent except
+            <af:commandLink id="antarctica" text="Antarctica"
+                           inlineStyle="color:red; font-weight:bold">
+              <af:showPopupBehavior popupId="popupAntartica"
+                                    triggerType="mouseHover" alignId="antarctica"/>
+              <af:showPopupBehavior popupId="popupAntartica"
+                                    triggerType="action" alignId="antarctica"/>
+            </af:commandLink>
+             and in Oceania.
+          </p>
+          <p style="margin-left:30px;width:500px;margin-right:30px;line-height:16px">
+            A particular characteristic of many vultures is a bald
+            <af:commandLink id="head" text="head"
+                           inlineStyle="color:red; font-weight:bold">
+              <af:showPopupBehavior popupId="popupHead" triggerType="mouseHover"
+                                    alignId="head"/>
+              <af:showPopupBehavior popupId="popupHead" triggerType="action"
+                                    alignId="head"/>
+            </af:commandLink>
+             devoid of feathers. This is likely because a
+            <af:commandLink id="feather" text="feathered"
+                           inlineStyle="color:red; font-weight:bold">
+              <af:showPopupBehavior popupId="popupFeathers"
+                                    triggerType="mouseHover" alignId="feather"/>
+              <af:showPopupBehavior popupId="popupFeathers"
+                                    triggerType="action" alignId="feather"/>
+            </af:commandLink>
+             head would become spattered with blood and other fluids, and thus be
+            difficult to keep clean.
+          </p>
+
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

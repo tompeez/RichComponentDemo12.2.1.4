@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Calendar Demo of showActivityTypes" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="calendar"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" inlineStyle="margin:0 10px 0 10px" id="pgl2">
+              <af:outputText value="The demos on this page shows some usages of the showActivityTypes attribute to control activites displayed by the calendar by their TimeType attribute. By default, all activities (TimeType.TIME, TimeType.ALLDAY, TimeType.DURATION) are displayed." id="ot1"/>
+              <af:spacer height="25px" id="s3"/>
+              <af:outputText value="showActivityTypes='time allday duration'" id="ot2"/>
+              <af:panelList id="pl1">
+                <af:outputText value="The following calendar displays all the activities." id="ot3"/>
+                <af:outputText value="Calendar displays all-day grid and timed activities grid separated by a splitter." id="ot4"/>
+                <af:outputText value="Duration activities are shown in all-day grid alongside all-day and multi-day activities." id="ot5"/>
+              </af:panelList>
+              <af:calendar binding="#{editor.component}" id="cal1" value="#{calendarBean.calendarModel}" 
+                           toolboxLayout="views dates" view="week" inlineStyle="width:600px; height: 400px" 
+                           activityStyles="#{calendarBean.activityStyles}" 
+                          calendarActivityDurationChangeListener="#{calendarBean.activityDurationChangeListener}" />
+                           
+              <af:spacer height="50px" id="s4"/>
+              <af:outputText value="showActivityTypes='allday duration'" id="ot6"/>
+              <af:panelList id="pl2">
+                <af:outputText value="The following calendar displays all-day and duration activities. Timed activities are not displayed." id="ot7"/>
+                <af:outputText value="Calendar displays all-day grid and duration grid (in place of time grid), separated by a splitter" id="ot8"/>
+              </af:panelList>
+              <af:calendar id="cal2" value="#{calendarBean.calendarModel}" 
+                           toolboxLayout="views dates" view="week" inlineStyle="width:600px; height: 400px" 
+                           activityStyles="#{calendarBean.activityStyles}" showActivityTypes="allday duration"
+                           calendarActivityDurationChangeListener="#{calendarBean.activityDurationChangeListener}"  />
+
+                           
+              <af:spacer height="50px" id="s5"/>
+              <af:outputText value="showActivityTypes='duration time'" id="ot9"/>
+              <af:panelList id="pl3">
+                <af:outputText value="The following calendar displays time and duration activities. All-day activities are not displayed." id="ot10"/>
+                <af:outputText value="Duration activities are displayed in the top region in place of all-day activities. A splitter separates the time region and duration regions" id="ot11"/>
+              </af:panelList>
+              <af:calendar id="cal3" value="#{calendarBean.calendarModel}" 
+                           toolboxLayout="views dates" view="week" inlineStyle="width:600px; height: 400px" 
+                           activityStyles="#{calendarBean.activityStyles}" showActivityTypes="time duration"
+                           calendarActivityDurationChangeListener="#{calendarBean.activityDurationChangeListener}"/>
+
+
+              <af:spacer height="50px" id="s6"/>
+              <af:outputText value="showActivityTypes='duration'" id="ot12"/>
+              <af:panelList id="pl4">
+                <af:outputText value="The following calendar displays duration activities. Timed and all-day activities are not displayed." id="ot13"/>
+                <af:outputText value="Duration grid takes over the whole calendar area. All-day region and the splitter are not rendered" id="ot14"/>
+              </af:panelList>
+              <af:calendar id="cal4" value="#{calendarBean.calendarModel}" 
+                           toolboxLayout="views dates" view="week" inlineStyle="width:600px; height: 400px" 
+                           activityStyles="#{calendarBean.activityStyles}" showActivityTypes="duration"
+                           calendarActivityDurationChangeListener="#{calendarBean.activityDurationChangeListener}"/>
+                           
+
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputText value="See also:" id="ot15"/>
+              <af:panelList id="pl5">
+                <af:goLink destination="../calendar.jspx" text="calendar" id="gl2"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

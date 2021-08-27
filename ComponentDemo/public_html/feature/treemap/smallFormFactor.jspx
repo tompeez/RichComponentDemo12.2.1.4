@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Treemap and Sunburst Small Form Factor Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Treemap and Sunburst Small Form Factor Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Treemap and Sunburst Small Form Factor"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:panelGridLayout>
+                            <af:gridRow>
+                                <af:gridCell valign="middle">
+                                    <dvt:treemap inlineStyle="width:175px;height:30px;border:none;" partialTriggers="::ins2 ::it3"
+                                             value="#{treemap.data}" var="row" displayLevelsChildren="1"
+                                             layout="sliceAndDiceHorizontal" nodeSelection="none"
+                                             animationOnDisplay="alphaFade" animationOnDataChange="auto">
+                                        <dvt:treemapNode value="#{row.size}" label="#{row.text}"
+                                                     shortDesc="#{row.text}: #{row.size}">
+                                            <dvt:attributeGroups type="color" value="#{row.text}"/>
+                                        </dvt:treemapNode>
+                                    </dvt:treemap>
+                                </af:gridCell>
+                                <af:gridCell marginStart="4px" valign="middle">
+                                    <dvt:sunburst inlineStyle="width:50px;height:50px;" partialTriggers="::ins2 ::it3"
+                                              value="#{treemap.data}" var="row" displayLevelsChildren="1"
+                                              nodeSelection="none" rotation="off" animationOnDisplay="fan"
+                                              animationOnDataChange="auto">
+                                        <dvt:sunburstNode value="#{row.size}" label="#{row.text}"
+                                                      shortDesc="#{row.text}: #{row.size}">
+                                            <dvt:attributeGroups type="color" value="#{row.text}"/>
+                                        </dvt:sunburstNode>
+                                    </dvt:sunburst>
+                                </af:gridCell>
+                            </af:gridRow>
+                            <af:gridRow marginTop="4px">
+                                <af:gridCell>
+                                    <af:outputLabel value="Treemap"/>
+                                </af:gridCell>
+                                <af:gridCell marginStart="4px">
+                                    <af:outputLabel value="Sunburst"/>
+                                </af:gridCell>
+                            </af:gridRow>
+                        </af:panelGridLayout>
+                        <af:group>
+                            <af:spacer height="10"/>
+                            <af:outputText value="Use the input controls to update the Treemap and Sunburst data models."/>
+                            <af:panelFormLayout>
+                                <af:inputNumberSlider label="# of Nodes" id="ins2" minimum="1" maximum="12"
+                                                      value="#{treemap.breadth}" autoSubmit="true" majorIncrement="3"
+                                                      minimumIncrement="1" minorIncrement="1"/>
+                                <af:inputNumberSpinbox label="Seed" id="it3" value="#{treemap.seed}" autoSubmit="true">
+                                    <af:validateLongRange/>
+                                </af:inputNumberSpinbox>
+                            </af:panelFormLayout>
+                        </af:group>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

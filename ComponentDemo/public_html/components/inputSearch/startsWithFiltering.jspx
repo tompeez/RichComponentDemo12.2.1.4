@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2016, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="startsWith criteria demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Starts with based suggestions filtering"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer height="25px" id="s3"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction" value="&lt;b>&lt;/b>"
+                                  id="of2"/>
+              <af:panelGroupLayout layout="vertical" id="pgl7">
+                <af:outputFormatted value="This demo shows inputSearch with &lt;b>startsWith&lt;/b> based
+                 filtering in the inputSearch component. InputSearch has an attribute named
+                 &lt;b>criteria&lt;/b> to control this. Highlighting of the matched text is supported in
+                 this filtering mode too."
+                                    id="ot4"/>
+                <af:inputSearch id="iSearch1"
+                                label="Select a person from the list (Filter by name and job title): "
+                                valueAttribute="id"
+                                displayAttributes="fName lName"
+                                filterAttributes="fName lName jobTitle tags"
+                                selectionConverter="#{inputSearchDemo.selectionConverter}"
+                                contentMode="table"
+                                criteria="startsWith">
+                  <af:searchSection type="default"
+                                    dataUrl="/rest/employees?cache=expiry&amp;limit=5000"/>
+                  <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                  <f:facet name="contentStamp">
+                    <af:sanitized >
+                      <td>{{fName}} {{lName}}</td> <td>{{jobTitle}}</td> <td><span style="font-style: italic;">{{tags}}</span></td>
+                    </af:sanitized>
+                  </f:facet>
+                </af:inputSearch>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

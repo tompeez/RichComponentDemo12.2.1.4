@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Calendar Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="calendar"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchChildren" value="first"/>
+        <f:attribute name="centerBottomCollapsibleHeight" value="70"/>
+        <f:facet name="centerBottomCollapsible">
+
+        </f:facet>
+        <f:facet name="centerSplitStart">
+          <af:panelGroupLayout layout="vertical" inlineStyle="padding:2px"
+                               id="pgl1">
+            <af:outputText value="NOTE: This legend area is for demo purposes only, it is not part of the built in functionality of the calendar."
+                           id="ot3"/>
+            <af:spacer height="10" id="s2"/>
+            <af:forEach items="#{calendarBean.calendarModel.providers}" var="provider">
+              <af:panelGroupLayout layout="horizontal">
+              <!-- Bug 8973571 : facelets doesn't handle clientId generation correctly,
+               removing attribute id="ic1" on inputColor until fixed. -->
+                <af:inputColor compact="true" simple="true" autoSubmit="true"
+                               label="#{provider.displayName}"
+                               valueChangeListener="#{calendarBean.providerColorChange}"
+                               value="#{calendarBean.providerData[provider].color}"
+                               width="4" colorData="#{calendarBean.colorData}"
+                               customVisible="false" defaultVisible="false"
+                               lastUsedVisible="false"
+                               >
+                  <f:attribute name="providerId" value="#{provider.id}"/>
+                </af:inputColor>
+              <!-- Bug 8973571 : facelets doesn't handle clientId generation correctly,
+               removing attribute id="sbc1" on selectBooleanCheckbox until fixed. -->
+                <af:selectBooleanCheckbox autoSubmit="true"
+                                          valueChangeListener="#{calendarBean.providerEnabledChange}"
+                                          text="#{provider.displayName}"
+                                          value="#{calendarBean.providerData[provider].enabled}"
+                                          />
+              </af:panelGroupLayout>
+            </af:forEach>
+            <af:spacer height="5" id="s3"/>
+            <af:outputLabel value="Time Zone Picker:" for="timezoneId"
+                            id="ol1"/>
+
+            <af:selectOneChoice id="timezoneId"
+                                shortDesc="NOTE: This timeZone picker is for demo purposes only, it is not part of the built in functionality of the calendar."
+                                value="#{calendarBean.timeZoneString}" autoSubmit="true"
+                                contentStyle="width:190px">
+               <f:selectItems value="#{af:getMergedTimeZoneSelectItems(calendarBean.timeZoneString)}" id="tzones" />
+            </af:selectOneChoice>
+            <af:spacer height="30px"/>
+            <af:panelGroupLayout layout="scroll" id="pgl3">
+            <af:showDetail disclosedText="More Calendar Demos"
+                           undisclosedText="More Calendar Demos"
+                           id="sd1">
+                  <af:panelList id="pl1">
+                    <af:goLink destination="calendar/basicCalendar.jspx"
+                               text="Basic calendar demo" id="gl0"/>
+                    <af:goLink destination="calendar/calendarActivityStylesFromRamps.jspx"
+                               text="Calendar activityStyles set to CalendarActivityRamp objects" id="gl0sa"/>
+                    <af:goLink destination="calendar/calendarShowActivityTypes.jspx"
+                               text="Show/hide activities by TimeType using showActivityTypes" id="gl1"/>
+                    <af:goLink destination="calendar/calendarAllDayActivityOrder.jspx"
+                               text="Customize display order of all day activities using allDayActivityOrder" id="gl2"/>
+                    <af:goLink destination="calendar/calendarAvailableViews.jspx"
+                               text="Customize availableViews" id="gl3"/>
+                    <af:goLink destination="calendar/dateCustomizerCalendar.jspx"
+                               text="Customize date text" id="gl4"/>
+                    <af:goLink destination="calendar/calendarDecorativeBox.jspx"
+                               text="Calendar and themes" id="gl5"/>
+                    <af:goLink destination="calendarDropTarget.jspx"
+                               text="Drag activities from outside a calendar"
+                               id="gl6"/>
+                    <af:goLink destination="calendar/calendarDropTargetPopup.jspx"
+                               text="Show popup after calendar drag and drop"
+                               id="gl7"/>
+                    <af:goLink destination="calendar/calendarProviderGrouping.jspx"
+                               text="Provider grouping enabled"
+                               id="gl14"/>
+                    <af:panelGroupLayout id="pgl4">
+                      <af:outputText value="Toolbar Demos" id="ot11"/>
+                      <af:panelList id="pl2">
+                        <af:goLink destination="calendar/customButtonsCalendar.jspx"
+                                   text="Add custom toolbars to default toolbar"
+                                   id="gl8"/>
+                        <af:goLink destination="calendar/customGroupButtonsCalendar.jspx"
+                                   text="Add custom buttons to default toolbar"
+                                   id="gl9"/>
+                        <af:goLink destination="calendar/customSplitButtonsCalendar.jspx"
+                                   text="Split up the view buttons and date(next, prev, today) buttons in the toolbar"
+                                   id="gl10"/>
+                        <af:goLink destination="calendar/customDatePickerStrategy1.jspx"
+                                   text="Add an inputDate in the toolbar - strategy 1"
+                                   id="gl11"/>
+                        <af:goLink destination="calendar/customDatePickerStrategy2.jspx"
+                                   text="Add an inputDate in the toolbar - strategy 2"
+                                   id="gl12"/>
+                      </af:panelList>
+                    </af:panelGroupLayout>
+                  </af:panelList>
+            </af:showDetail>
+            <af:showDetail disclosedText="Related Tags"
+                           undisclosedText="Related Tags"
+                           id="sd2">
+              <af:panelList id="pl3">
+                <af:commandLink immediate="true" text="ChooseDate Demo"
+                                action="guide.chooseDate" id="cl1"/>
+                    <af:commandLink immediate="true" text="InputDate Demo"
+                                    action="guide.inputDate" id="cl2"/>
+                    <af:goLink text="CalendarDropTarget Demo"
+                               destination="calendarDropTarget.jspx" id="gl13"/>
+                  </af:panelList>
+                </af:showDetail>
+              </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:calendar binding="#{editor.component}" id="cal"
+                       partialTriggers="::timezoneId"
+                       value="#{calendarBean.calendarModel}"
+                       timeZone="#{calendarBean.timeZone}"
+                       activityStyles="#{calendarBean.activityStyles}"
+                       availableViews="day week month flexList"
+                       calendarDisplayChangeListener="#{calendarBean.displayChangeListener}"
+                       calendarActivityListener="#{calendarBean.activityListener}"
+                       calendarActivityDurationChangeListener="#{calendarBean.activityDurationChangeListener}"
+                       calendarListener="#{calendarBean.calendarListener}">
+            <af:calendarDropTarget actions="MOVE" dropListener="#{calendarBean.handleDrop}"/>
+            <f:facet name="activityContextMenu">
+              <af:popup id="p1">
+                <af:menu id="m1">
+                  <af:commandMenuItem text="Edit" id="cmi1">
+                    <af:showPopupBehavior popupId="edit" triggerType="action"/>
+                  </af:commandMenuItem>
+                  <af:commandMenuItem text="Delete" id="cmi2">
+                    <af:showPopupBehavior popupId="delete" triggerType="action"/>
+                  </af:commandMenuItem>
+                </af:menu>
+              </af:popup>
+            </f:facet>
+            <f:facet name="contextMenu">
+              <af:popup id="p2">
+                <af:menu id="m2">
+                  <af:commandMenuItem text="Create new activity" id="cmi3" action="#{calendarBean.newActivity}">
+                  </af:commandMenuItem>
+                  <af:commandMenuItem text="Create new task" id="cmi4" action="#{calendarBean.newTask}">
+                  </af:commandMenuItem>
+                  <af:commandMenuItem text="nothing for now" id="cmi5" />
+                </af:menu>
+              </af:popup>
+            </f:facet>
+            <f:facet name="activityDelete">
+              <af:popup id="delete" contentDelivery="lazyUncached" autoCancel="disabled">
+                <!-- don't render if the activity is null -->
+                <af:dialog dialogListener="#{calendarBean.deleteListener}"
+                           title="#{calendarBean.currActivity.title}"
+                           affirmativeTextAndAccessKey="Yes" cancelTextAndAccessKey="No"
+                           rendered="#{calendarBean.currActivity != null}"
+                           id="d2">
+                  <af:outputText value="NOTE: This popup is for demo purposes only, it is not part of the built in functionality of the calendar."
+                                 id="ot4"/>
+                  <af:spacer height="20" id="s4"/>
+                  <af:outputText value="Are you sure you want to delete this #{(calendarBean.currActivity.duration)? 'task' : 'activity'}?"
+                                 id="ot5"/>
+                  <af:panelFormLayout id="pfl1">
+                    <af:inputText label="Title"
+                                  value="#{calendarBean.currActivity.title}"
+                                  readOnly="true" id="it0"/>
+                    <af:inputDate label="From" value="#{calendarBean.currActivity.from}"
+                                  readOnly="true" id="id1">
+                      <af:convertDateTime type="#{(calendarBean.currActivity.time) ? 'both' : 'date'}"
+                                          timeZone="#{calendarBean.timeZone}"/>
+                    </af:inputDate>
+                    <af:inputDate label="To" value="#{calendarBean.currActivity.to}"
+                                  readOnly="true" id="id2">
+                      <af:convertDateTime type="#{(calendarBean.currActivity.time) ? 'both' : 'date'}"
+                                          timeZone="#{calendarBean.timeZone}"/>
+                    </af:inputDate>
+                    <af:inputText label="Duration" readOnly="true"
+                                  rendered="#{calendarBean.currActivity.duration}"
+                                  value="#{calendarBean.currActivity.durationText}"
+                                  id="it1"/>
+                    <af:inputText label="Location" readOnly="true"
+                                  rendered="#{calendarBean.currActivity.location != null}"
+                                  value="#{calendarBean.currActivity.location}"
+                                  id="it2"/>
+                  </af:panelFormLayout>
+                </af:dialog>
+              </af:popup>
+            </f:facet>
+            <f:facet name="activityHover">
+              <af:popup contentDelivery="lazyUncached" id="p3">
+                <!-- don't render if the activity is null -->
+                <af:noteWindow inlineStyle="width:300px"
+                               rendered="#{calendarBean.currActivity != null}"
+                               id="nw1">
+                  <af:outputText value="NOTE: This popup is for demo purposes only; it is not part of the built in functionality of the calendar."
+                                 id="ot6"/>
+                  <af:spacer height="20" id="s5"/>
+                  <af:panelFormLayout id="pfl2">
+                    <af:inputText label="Title"
+                                  value="#{calendarBean.currActivity.title}"
+                                  readOnly="true" id="it3"/>
+                    <af:inputDate label="From" value="#{calendarBean.currActivity.from}"
+                                  readOnly="true" id="id3">
+                      <af:convertDateTime type="#{(calendarBean.currActivity.time)? 'both' : 'date'}"
+                                          timeZone="#{calendarBean.timeZone}"/>
+                    </af:inputDate>
+                    <af:inputDate label="To" value="#{calendarBean.currActivity.to}"
+                                  readOnly="true" id="id4">
+                      <af:convertDateTime type="#{(calendarBean.currActivity.time)? 'both' : 'date'}"
+                                          timeZone="#{calendarBean.timeZone}"/>
+                    </af:inputDate>
+                    <af:inputText label="Duration" readOnly="true"
+                                  rendered="#{calendarBean.currActivity.duration}"
+                                  value="#{calendarBean.currActivity.durationText}"
+                                  id="it4"/>
+                    <af:inputText label="Location" readOnly="true"
+                                  rendered="#{calendarBean.currActivity.location != null}"
+                                  value="#{calendarBean.currActivity.location}"
+                                  id="it5"/>
+                    <af:inputText label="Calendar" readOnly="true"
+                                  value="#{calendarBean.currActivity.providerName}"
+                                  id="providerName"/>
+                  </af:panelFormLayout>
+                </af:noteWindow>
+              </af:popup>
+            </f:facet>
+            <f:facet name="activityDetail">
+              <af:popup id="edit" contentDelivery="lazyUncached" autoCancel="disabled">
+                <af:dialog title="#{(calendarBean.currActivity.title != null)? calendarBean.currActivity.title : 'This activity does not exist anymore'}"
+                        type="okCancel" dialogListener="#{calendarBean.editDialogListener}" id="d4">
+                  <af:outputText value="NOTE: This popup is for demo purposes only, it is not part of the built in functionality of the calendar."
+                                 id="ot8"/>
+                  <af:spacer height="20" id="s6"/>
+
+                  <!-- display a message when activity is null -->
+                  <af:outputText value="The activity has been deleted and is no longer available."
+                                 id="ot7" rendered="#{calendarBean.currActivity == null}"/>
+
+                  <!-- and don't render the form if the activity is null -->
+                  <af:panelFormLayout id="pfl3" rendered="#{calendarBean.currActivity != null}">
+                    <af:selectOneChoice label="Owner"
+                                        value="#{calendarBean.currActivity.providerId}"
+                                        id="socSt"
+                                        valueChangeListener="#{calendarBean.providerChanged}">
+                      <f:selectItems value="#{calendarBean.providerSelectItems}" id="siSt"/>
+                    </af:selectOneChoice>
+                    <af:inputText label="Title" value="#{calendarBean.currActivity.title}" id="it6"/>
+                    <af:inputText label="Location" value="#{calendarBean.currActivity.location}" id="it7"/>
+
+                    <af:separator id="s7"/>
+
+                    <af:selectBooleanCheckbox id="allDayFlagId" text="All-Day" value="#{calendarBean.currActivity.allDay}"
+                      autoSubmit="true" rendered="#{!calendarBean.currActivity.duration}"/>
+                    <af:inputDate label="From" value="#{calendarBean.currActivity.from}" partialTriggers="allDayFlagId" id="id5">
+                      <af:convertDateTime type="#{(calendarBean.currActivity.duration || calendarBean.currActivity.allDay)? 'date' : 'both'}"
+                        timeZone="#{calendarBean.timeZone}"/>
+                    </af:inputDate>
+                    <af:inputDate label="To" value="#{calendarBean.currActivity.to}" partialTriggers="allDayFlagId" id="id6">
+                      <af:convertDateTime type="#{(calendarBean.currActivity.duration || calendarBean.currActivity.allDay)? 'date' : 'both'}"
+                        timeZone="#{calendarBean.timeZone}"/>
+                    </af:inputDate>
+
+                    <af:panelLabelAndMessage for="pg12" label="Duration" rendered="#{calendarBean.currActivity.duration}">
+                    <af:panelGridLayout id="pgl2" >
+                      <af:gridRow id="gr1">
+                        <af:gridCell marginEnd="5px" id="gc1" >
+                          <af:inputNumberSpinbox value="#{calendarBean.currActivity.durHours}" id="insb1" maximum="999" minimum="0" simple="true"/>
+                        </af:gridCell>
+                        <af:gridCell id="gc2" valign="bottom" >
+                          <af:outputLabel for="insb1" value="Hours"/>
+                        </af:gridCell>
+                        <af:gridCell marginEnd="5px" id="gc3" >
+                          <af:inputNumberSpinbox value="#{calendarBean.currActivity.durMinutes}" id="insb2" maximum="60" minimum="0" simple="true"/>
+                        </af:gridCell>
+                        <af:gridCell id="gc4" valign="bottom">
+                          <af:outputLabel for="insb2" value="Minutes"/>
+                        </af:gridCell>
+                      </af:gridRow>
+                    </af:panelGridLayout>
+                    </af:panelLabelAndMessage>
+                    <af:selectBooleanCheckbox text="Recurring" value="#{calendarBean.currActivity.recurring}" id="sbc2"/>
+                    <af:selectBooleanCheckbox text="Reminder" value="#{calendarBean.currActivity.reminder}" id="sbc3"/>
+
+                    <af:separator id="s8"/>
+
+                    <af:selectOneChoice label="Priority" value="#{calendarBean.currActivity.customAttributes['priority']}" id="soc1">
+                      <f:selectItems value="#{calendarBean.prioritySelectItems}" id="si6"/>
+                    </af:selectOneChoice>
+                    <af:selectOneChoice label="Status" value="#{calendarBean.currActivity.customAttributes['status']}" id="soc2">
+                      <f:selectItems value="#{calendarBean.statusSelectItems}" id="si7"/>
+                    </af:selectOneChoice>
+                    <af:selectOneChoice label="Access" value="#{calendarBean.currActivity.customAttributes['access']}" id="soc3">
+                      <f:selectItems value="#{calendarBean.accessSelectItems}" id="si8"/>
+                    </af:selectOneChoice>
+                  </af:panelFormLayout>
+                </af:dialog>
+              </af:popup>
+            </f:facet>
+            <f:facet name="create">
+              <af:popup id="create" contentDelivery="lazyUncached" popupFetchListener="#{calendarBean.createPopupListener}" autoCancel="disabled">
+                <af:dialog title="Create New Activity" type="okCancel"
+                           dialogListener="#{calendarBean.createDialogListener}"
+                           id="d5">
+                  <af:outputText value="NOTE: This popup is for demo purposes only, it is not part of the built in functionality of the calendar."
+                                 id="ot9"/>
+                  <af:spacer height="20" id="s9"/>
+                  <af:outputText value="Create a new activity." id="ot10"/>
+                  <af:panelFormLayout id="pfl4">
+                    <af:selectOneChoice label="Owner"
+                                        value="#{calendarBean.newActivity.providerId}"
+                                        id="socStn">
+                      <f:selectItems value="#{calendarBean.providerSelectItems}"
+                                     id="siStn"/>
+                    </af:selectOneChoice>
+                    <af:inputText label="Title" value="#{calendarBean.newActivity.title}" id="it9"/>
+                    <af:inputText label="Location" value="#{calendarBean.newActivity.location}" id="it10"/>
+
+                    <af:separator id="s10"/>
+
+                    <af:selectBooleanCheckbox id="allDayNewFlagId" text="All-Day" value="#{calendarBean.newActivity.allDay}"
+                      autoSubmit="true" rendered="#{!calendarBean.newActivity.duration}"/>
+                    <af:inputDate label="From" value="#{calendarBean.newActivity.from}" partialTriggers="allDayNewFlagId" id="id7">
+                      <af:convertDateTime type="#{(calendarBean.newActivity.duration || calendarBean.newActivity.allDay)? 'date' : 'both'}"
+                        timeZone="#{calendarBean.timeZone}"/>
+                    </af:inputDate>
+                    <af:inputDate label="To" value="#{calendarBean.newActivity.to}" partialTriggers="allDayNewFlagId" id="id8">
+                      <af:convertDateTime type="#{(calendarBean.newActivity.duration || calendarBean.newActivity.allDay)? 'date' : 'both'}"
+                        timeZone="#{calendarBean.timeZone}"/>
+                    </af:inputDate>
+
+                    <af:panelLabelAndMessage for="pg13" label="Duration" rendered="#{calendarBean.newActivity.duration}">
+                    <af:panelGridLayout id="pgl6" >
+                      <af:gridRow id="gr10">
+                        <af:gridCell marginEnd="5px" id="gc8" >
+                          <af:inputNumberSpinbox value="#{calendarBean.newActivity.durHours}" id="insb3" maximum="999" minimum="0" simple="true"/>
+                        </af:gridCell>
+                        <af:gridCell id="gc9" valign="bottom" >
+                          <af:outputLabel for="insb1" value="Hours"/>
+                        </af:gridCell>
+                        <af:gridCell marginEnd="5px" id="gc6" >
+                          <af:inputNumberSpinbox value="#{calendarBean.newActivity.durMinutes}" id="insb4" maximum="60" minimum="0" simple="true"/>
+                        </af:gridCell>
+                        <af:gridCell id="gc7" valign="bottom">
+                          <af:outputLabel for="insb2" value="Minutes"/>
+                        </af:gridCell>
+                      </af:gridRow>
+                    </af:panelGridLayout>
+                    </af:panelLabelAndMessage>
+
+                    <af:selectBooleanCheckbox text="Recurring" value="#{calendarBean.newActivity.recurring}" id="sbc4"/>
+                    <af:selectBooleanCheckbox text="Reminder" value="#{calendarBean.newActivity.reminder}" id="sbc5"/>
+
+                    <af:separator id="s11"/>
+
+                    <af:selectOneChoice label="Priority" value="#{calendarBean.newActivity.customAttributes['priority']}" id="soc4">
+                      <f:selectItems value="#{calendarBean.prioritySelectItems}" id="si9"/>
+                    </af:selectOneChoice>
+                    <af:selectOneChoice label="Status" value="#{calendarBean.newActivity.customAttributes['status']}" id="soc5">
+                      <f:selectItems value="#{calendarBean.statusSelectItems}" id="si10"/>
+                    </af:selectOneChoice>
+                    <af:selectOneChoice label="Access" value="#{calendarBean.newActivity.customAttributes['access']}" id="soc6">
+                      <f:selectItems value="#{calendarBean.accessSelectItems}" id="si11"/>
+                    </af:selectOneChoice>
+                  </af:panelFormLayout>
+                </af:dialog>
+              </af:popup>
+            </f:facet>
+          </af:calendar>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

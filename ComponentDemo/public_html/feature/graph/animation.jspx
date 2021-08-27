@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view><af:document title="Graph Animation Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo"
+                     viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Graph Animation Demo"/>
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Graph Animation"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+
+          <!-- START PIE DEMO -->
+          <af:outputText id="otPie" inlineStyle="font-size:large;" value="Pie Graph Animation"/>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgPie2">
+            <af:commandButton id="updateButtonPie" text="Update Data Values" partialSubmit="true"
+                              actionListener="#{animationPie.update}"/>
+            <af:commandButton id="insertButtonPie" text="Insert Slice" partialSubmit="true"
+                              actionListener="#{animationPie.insertSeries}"/>
+            <af:commandButton id="deleteButtonPie" text="Delete Slice" partialSubmit="true"
+                              actionListener="#{animationPie.deleteSeries}"/>
+          </af:panelGroupLayout>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgPie1">
+            <dvt:pieGraph animationOnDisplay="AUTO" animationOnDataChange="ON"
+                          
+                          value="#{animationPie.dataModel}"
+                          partialTriggers="::updateButtonPie ::insertButtonPie ::deleteButtonPie" id="pieGraph1" shortDesc="Pie Graph 1"/>
+            <dvt:pieGraph animationOnDisplay="AUTO" animationOnDataChange="ON"
+                          
+                          value="#{animationPie.dataModel}"
+                          partialTriggers="::updateButtonPie ::insertButtonPie ::deleteButtonPie" id="pieGraph2" shortDesc="Pie Graph 2"
+                          threeDEffect="true"/>
+          </af:panelGroupLayout>
+
+
+
+          <!-- START AREA DEMO -->
+          <af:outputText id="otArea" inlineStyle="font-size:large;" value="Area Graph Animation"/>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgArea2">
+            <af:commandButton id="updateButtonArea" text="Update Data Values" partialSubmit="true"
+                              actionListener="#{animationArea.update}"/>
+            <af:commandButton id="insertSeriesButtonArea" text="Insert Series" partialSubmit="true"
+                              actionListener="#{animationArea.insertSeries}"/>
+            <af:commandButton id="deleteSeriesButtonArea" text="Delete Series" partialSubmit="true"
+                              actionListener="#{animationArea.deleteSeries}"/>
+            <af:commandButton id="insertGroupButtonArea" text="Insert Group" partialSubmit="true"
+                              actionListener="#{animationArea.insertGroups}"/>
+            <af:commandButton id="deleteGroupButtonArea" text="Delete Group" partialSubmit="true"
+                              actionListener="#{animationArea.deleteGroups}"/>
+          </af:panelGroupLayout>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgArea1">
+            <dvt:areaGraph animationOnDisplay="auto" animationOnDataChange="ON"
+                           
+                           value="#{animationArea.dataModel}"
+                           partialTriggers="::updateButtonArea ::insertSeriesButtonArea ::deleteSeriesButtonArea ::insertGroupButtonArea ::deleteGroupButtonArea" shortDesc="Area Graph 1"
+                           id="areaGraph1" subType="AREA_VERT_ABS"/>
+          </af:panelGroupLayout>
+
+
+
+          <!-- START BAR DEMO -->
+          <af:outputText id="otBar" inlineStyle="font-size:large;" value="Bar Graph Animation"/>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgBar2">
+            <af:commandButton id="updateButtonBar" text="Update Data Values" partialSubmit="true"
+                              actionListener="#{animationBar.update}"/>
+            <af:commandButton id="insertSeriesButtonBar" text="Insert Series" partialSubmit="true"
+                              actionListener="#{animationBar.insertSeries}"/>
+            <af:commandButton id="deleteSeriesButtonBar" text="Delete Series" partialSubmit="true"
+                              actionListener="#{animationBar.deleteSeries}"/>
+            <af:commandButton id="insertGroupButtonBar" text="Insert Group" partialSubmit="true"
+                              actionListener="#{animationBar.insertGroups}"/>
+            <af:commandButton id="deleteGroupButtonBar" text="Delete Group" partialSubmit="true"
+                              actionListener="#{animationBar.deleteGroups}"/>
+          </af:panelGroupLayout>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgBar1">
+            <dvt:barGraph animationOnDisplay="AUTO" animationOnDataChange="ON"
+                          
+                          value="#{animationBar.dataModel}"
+                          partialTriggers="::updateButtonBar ::insertSeriesButtonBar ::deleteSeriesButtonBar ::insertGroupButtonBar ::deleteGroupButtonBar" shortDesc="Bar Graph 1"
+                          id="barGraph1" subType="BAR_VERT_CLUST" threeDEffect="true"/>
+            <dvt:barGraph animationOnDisplay="AUTO" animationOnDataChange="ON"
+                          
+                          value="#{animationBar.dataModel}"
+                          partialTriggers="::updateButtonBar ::insertSeriesButtonBar ::deleteSeriesButtonBar ::insertGroupButtonBar ::deleteGroupButtonBar" shortDesc="Bar Graph 2"
+                          id="barGraph2" subType="BAR_VERT_STACK"/>
+          </af:panelGroupLayout>
+
+
+
+          <!-- START LINE DEMO -->
+          <af:outputText id="otLine" inlineStyle="font-size:large;" value="Line Graph Animation"/>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgLine2">
+            <af:commandButton id="updateButtonLine" text="Update Data Values" partialSubmit="true"
+                              actionListener="#{animationLine.update}"/>
+            <af:commandButton id="insertSeriesButtonLine" text="Insert Series" partialSubmit="true"
+                              actionListener="#{animationLine.insertSeries}"/>
+            <af:commandButton id="deleteSeriesButtonLine" text="Delete Series" partialSubmit="true"
+                              actionListener="#{animationLine.deleteSeries}"/>
+            <af:commandButton id="insertGroupButtonLine" text="Insert Group" partialSubmit="true"
+                              actionListener="#{animationLine.insertGroups}"/>
+            <af:commandButton id="deleteGroupButtonLine" text="Delete Group" partialSubmit="true"
+                              actionListener="#{animationLine.deleteGroups}"/>
+          </af:panelGroupLayout>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgLine1">
+            <dvt:lineGraph animationOnDisplay="AUTO" animationOnDataChange="ON"
+                           
+                           value="#{animationLine.dataModel}"
+                           partialTriggers="::updateButtonLine ::insertSeriesButtonLine ::deleteSeriesButtonLine ::insertGroupButtonLine ::deleteGroupButtonLine" shortDesc="Line Graph 1"
+                           id="lineGraph1" subType="LINE_VERT_ABS"/>
+          </af:panelGroupLayout>
+
+
+
+          <!-- START COMBO DEMO -->
+          <af:outputText id="otCombo" inlineStyle="font-size:large;" value="Combo Graph Animation"/>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgCombo2">
+            <af:commandButton id="updateButtonCombo" text="Update Data Values" partialSubmit="true"
+                              actionListener="#{animationCombo.update}"/>
+            <af:commandButton id="insertSeriesButtonCombo" text="Insert Series" partialSubmit="true"
+                              actionListener="#{animationCombo.insertSeries}"/>
+            <af:commandButton id="deleteSeriesButtonCombo" text="Delete Series" partialSubmit="true"
+                              actionListener="#{animationCombo.deleteSeries}"/>
+            <af:commandButton id="insertGroupButtonCombo" text="Insert Group" partialSubmit="true"
+                              actionListener="#{animationCombo.insertGroups}"/>
+            <af:commandButton id="deleteGroupButtonCombo" text="Delete Group" partialSubmit="true"
+                              actionListener="#{animationCombo.deleteGroups}"/>
+          </af:panelGroupLayout>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgCombo1">
+            <dvt:comboGraph animationOnDisplay="AUTO" animationOnDataChange="ON"
+                            
+                            value="#{animationCombo.dataModel}"
+                            partialTriggers="::updateButtonCombo ::insertSeriesButtonCombo ::deleteSeriesButtonCombo ::insertGroupButtonCombo ::deleteGroupButtonCombo" shortDesc="Combo Graph 1"
+                            id="comboGraph1" subType="COMBINATION_VERT_ABS"/>
+          </af:panelGroupLayout>
+
+
+          <!-- START BUBBLE DEMO -->
+          <af:outputText id="otBubble" inlineStyle="font-size:large;" value="Bubble Graph Animation"/>
+
+          <af:panelGroupLayout layout="horizontal" id="pgBubble2">
+            <af:commandButton id="updateButtonBubble" text="Update Data Values" partialSubmit="true"
+                              actionListener="#{animationBubble.update}"/>
+            <af:commandButton id="insertSeriesButtonBubble" text="Insert Series" partialSubmit="true"
+                              actionListener="#{animationBubble.insertSeries}"/>
+            <af:commandButton id="deleteSeriesButtonBubble" text="Delete Series" partialSubmit="true"
+                              actionListener="#{animationBubble.deleteSeries}"/>
+            <af:commandButton id="insertGroupButtonBubble" text="Insert Group" partialSubmit="true"
+                              actionListener="#{animationBubble.insertGroups}"/>
+            <af:commandButton id="deleteGroupButtonBubble" text="Delete Group" partialSubmit="true"
+                              actionListener="#{animationBubble.deleteGroups}"/>
+          </af:panelGroupLayout>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgBubble1">
+            <dvt:bubbleGraph animationOnDisplay="AUTO" animationOnDataChange="ON"
+                       
+                       value="#{animationBubble.dataModel}" subType="BUBBLE"
+                       partialTriggers="::updateButtonBubble ::insertSeriesButtonBubble ::deleteSeriesButtonBubble ::insertGroupButtonBubble ::deleteGroupButtonBubble" shortDesc="Bubble Graph 1"
+                       id="bubbleGraph1"/>
+            <dvt:bubbleGraph animationOnDisplay="AUTO" animationOnDataChange="ON"
+                       
+                       value="#{animationBubble.dataModel}" subType="BUBBLE"
+                       partialTriggers="::updateButtonBubble ::insertSeriesButtonBubble ::deleteSeriesButtonBubble ::insertGroupButtonBubble ::deleteGroupButtonBubble" shortDesc="Bubble Graph 2"
+                       id="bubbleGraph2">
+              <dvt:seriesSet defaultMarkerShape="MS_HUMAN"/>
+            </dvt:bubbleGraph>
+          </af:panelGroupLayout>
+
+
+
+
+          <!-- START SCATTER DEMO -->
+          <af:outputText id="otScatter" inlineStyle="font-size:large;" value="Scatter Graph Animation"/>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgScatter2">
+            <af:commandButton id="updateButtonScatter" text="Update Data Values" partialSubmit="true"
+                                  actionListener="#{animationScatter.update}"/>
+            <af:commandButton id="insertSeriesButtonScatter" text="Insert Series" partialSubmit="true"
+                                  actionListener="#{animationScatter.insertSeries}"/>
+            <af:commandButton id="deleteSeriesButtonScatter" text="Delete Series" partialSubmit="true"
+                                  actionListener="#{animationScatter.deleteSeries}"/>
+            <af:commandButton id="insertGroupButtonScatter" text="Insert Group" partialSubmit="true"
+                                  actionListener="#{animationScatter.insertGroups}"/>
+            <af:commandButton id="deleteGroupButtonScatter" text="Delete Group" partialSubmit="true"
+                                  actionListener="#{animationScatter.deleteGroups}"/>
+          </af:panelGroupLayout>
+	  
+          <af:panelGroupLayout layout="horizontal" id="pgScatter1">
+            <dvt:scatterGraph animationOnDisplay="AUTO" animationOnDataChange="ON"
+                           
+                           value="#{animationScatter.dataModel}" subType="SCATTER"
+                           partialTriggers="::updateButtonScatter ::insertSeriesButtonScatter ::deleteSeriesButtonScatter ::insertGroupButtonScatter ::deleteGroupButtonScatter" shortDesc="Scatter Graph 1"
+                           id="scatterGraph1"/>
+            <dvt:scatterGraph animationOnDisplay="AUTO" animationOnDataChange="ON"
+                           
+                           value="#{animationScatter.dataModel}" subType="SCATTER"
+                           partialTriggers="::updateButtonScatter ::insertSeriesButtonScatter ::deleteSeriesButtonScatter ::insertGroupButtonScatter ::deleteGroupButtonScatter" shortDesc="Scatter Graph 2"
+                           id="scatterGraph2">
+              <dvt:seriesSet defaultMarkerShape="MS_HUMAN"/>
+            </dvt:scatterGraph>
+          </af:panelGroupLayout>
+
+
+
+          <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

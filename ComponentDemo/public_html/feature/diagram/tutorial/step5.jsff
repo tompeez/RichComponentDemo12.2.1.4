@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <af:panelGroupLayout layout="scroll">
+    <af:panelGridLayout id="step5_grid" inlineStyle="background-color:#F4F4F8">
+      <af:gridRow id="step5_row1" marginTop="4px" marginBottom="4px">
+        <af:gridCell id="step5_header" marginStart="5px" marginEnd="5px" width="100%" halign="stretch" valign="top">
+          <af:outputText value="Containers" inlineStyle="font-size:large;"/>
+          <af:spacer width="10"/>
+          <af:outputText value="Simple layout for the container nodes that places the nodes horizontally. See the layout code below."/>
+        </af:gridCell>
+      </af:gridRow>
+      <af:gridRow id="step5_row2" height="auto" marginTop="4px" marginBottom="4px">
+        <af:gridCell id="step5_diagram_container" valign="middle" marginStart="5px" marginEnd="4px" halign="stretch"
+                     inlineStyle="background-color:white">
+          <dvt:diagram id="step5_diagram" layout="containersLayout" summary="summary" controlPanelBehavior="hidden"
+                       panning="none" zooming="none"
+                       inlineStyle="width:100%;">
+            <dvt:clientLayout name="containersLayout" featureName="TutorialLayouts" method="DemoContainersLayout.layout"/>
+            <dvt:diagramNodes value="#{tutorialBikeSample.containerNodes}" var="node"
+                              disclosedRowKeys="#{tutorialBikeSample.disclosedNodes}">
+              <dvt:diagramNode id="step5_n" nodeId="#{node.id}" containerId="#{node.container}"
+                               shortDesc="#{node.label}" rendered="#{node.type =='NoLinks'}" showNodeActions="false"
+                               selectable="false">
+                <f:facet name="containerTop">
+                  <af:panelGroupLayout layout="horizontal" id="step5_pgl3"
+                                       inlineStyle="background-color:#f9f9f9;border-color:#abb3b9;border-width:.5px;padding-top:2px;padding-bottom:2px;padding-left:20px;"
+                                       styleClass="AFStretchWidth">
+                    <af:outputText value="#{node.label}" inlineStyle="font-size:10pt;"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="zoom100">
+                  <af:panelGroupLayout id="pgl13" layout="vertical">
+                    <dvt:marker id="step5_m1" width="120" height="60" value="#{node.label}" labelDisplay="on"
+                                shape="square" labelPosition="center" borderStyle="solid" borderColor="#abb3b9"
+                                labelStyle="font-size:10pt;" fillColor="#f9f9f9" shortDesc="#{node.label}"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </dvt:diagramNode>
+            </dvt:diagramNodes>
+          </dvt:diagram>
+        </af:gridCell>
+      </af:gridRow>
+      <af:gridRow id="step5_row3" height="auto" marginTop="4px" marginBottom="4px">
+        <af:gridCell id="step5_bottom" width="100%" halign="stretch" valign="top" marginStart="5px" marginEnd="5px"
+                     inlineStyle="background-color:#F4F4F8">
+          <af:outputText value="Layout implementation" inlineStyle="font-size:large;"/>
+          <af:spacer width="40"/>
+          <af:codeEditor value="#{tutorialJavascriptReader.source}" language="javascript" rows="#{tutorialJavascriptReader.rows * 1.36 + 2.64}" id="step5_ce2"
+                         dimensionsFrom="auto" inlineStyle="width:100%" readOnly="true"/>
+        </af:gridCell>
+      </af:gridRow>
+    </af:panelGridLayout>
+  </af:panelGroupLayout>
+</jsp:root>
+

@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Graph Hide And Show Series Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Chart Hide And Show Series Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Hide and Show Series"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:outputText value="Click on a legend item below to hide its associated series." id="ot1"/>
+            <af:outputText value='hideAndShowBehavior = "withRescale"'
+                           inlineStyle="font-size:medium; font-weight:bold;"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row" hideAndShowBehavior="withRescale">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:barChart>
+              <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row" hideAndShowBehavior="withRescale">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:lineChart>
+            </af:panelGroupLayout>
+            <af:outputText value='hideAndShowBehavior = "withoutRescale"'
+                           inlineStyle="font-size:medium; font-weight:bold;"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl3">
+              <dvt:horizontalBarChart value="#{chartDataSource.defaultBarData}" var="row"
+                                      hideAndShowBehavior="withoutRescale">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:horizontalBarChart>
+              <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row" hideAndShowBehavior="withoutRescale">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:areaChart>
+            </af:panelGroupLayout>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root
+  xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Content for Revenue.</description>
+        <attribute>
+          <description>Flag for whether this fragment is being displayed in a maximized mode.</description>
+          <attribute-name>maximized</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:switcher facetName="#{attrs.maximized ? 'maximized' : 'restored'}"
+                 id="dcs1">
+      <f:facet name="restored">
+        <af:panelGroupLayout layout="scroll" id="dcpgl1">
+          <af:panelGroupLayout layout="vertical" inlineStyle="padding: 4px"
+                               id="dcpgl2">
+            <f:facet name="separator">
+              <af:separator id="dcs2"/>
+            </f:facet>
+            <af:group id="dcg1">
+              <af:outputText value="Aquatic lasers" id="dcot1"/>
+              <af:panelFormLayout id="dcpfl1">
+                <af:inputText readOnly="true" label="Revenue" value="$500,000 (1000 licenses x $500)"
+                              id="dcit1"/>
+                <af:inputText readOnly="true" label="Status" value="Closed on 12/20/2006"
+                              id="dcit2"/>
+              </af:panelFormLayout>
+            </af:group>
+            <af:group id="dcg2">
+              <af:outputText value="Shark teeth" id="dcot2"/>
+              <af:panelFormLayout id="dcpfl2">
+                <af:inputText readOnly="true" label="Revenue" value="$500,000 (1000 licenses x $500)"
+                              id="dcit3"/>
+                <af:inputText readOnly="true" label="Status" value="Closed on 12/20/2006"
+                              id="dcit4"/>
+              </af:panelFormLayout>
+            </af:group>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="maximized">
+        <af:outputText value="Revenue would be displayed here (larger, maximized size)."
+                       id="dcot3"/>
+      </f:facet>
+    </af:switcher>
+  </af:componentDef>
+</jsp:root>

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Choice Comparison" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="brandingTitle" value="Choice Comparison"/>
+        <f:attribute name="demoKind" value="confusedComponents"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:popup id="popupId">
+              <af:dialog title="Create" id="d2">
+                <af:panelGroupLayout id="pgl2">
+                  <af:outputText value="output" id="ot1"/>
+                  <af:outputText value="output" id="ot2"/>
+                </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+            <!-- inputComboboxListOfValues -->
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <af:outputFormatted value="&lt;b>af:inputComboboxListOfValues&lt;/b>"
+                                  id="of1"/>
+              <af:panelList id="pl1">
+                <af:outputText value="LOVs are editable components that are model-driven and should be
+                used with larger datasets as they allow the user to launch a popup and further restrict
+                the dataset by filtering it." id="ot3"/>
+                <af:outputText value="LOV components support functionalities such as auto-complete and
+                provide developers the ability to create new data by wiring their own popup components."
+                               id="ot4"/>
+              </af:panelList>
+              <af:spacer height="5" id="s2"/>
+              <af:inputComboboxListOfValues label="Ename" id="idInputComboboxListOfValues"
+                                            value="#{demoComboboxLOV.ename}" autoSubmit="true"
+                                            popupTitle="Search and Select: Ename"
+                                            searchDesc="Choose a name"
+                                            validator="#{demoComboboxLOV.validate}"
+                                            createPopupId="popupId"
+                                            model="#{demoComboboxLOV.listOfValuesModel}"
+
+                                            inlineStyle="margin-left:30px;"/>
+            </af:panelGroupLayout>
+            <!-- selectOneChoice -->
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputFormatted value="&lt;b>af:selectOneChoice&lt;/b>"
+                                  id="of2"/>
+              <af:panelList id="pl2">
+                <af:outputText value="The selectOneChoice component creates a menu-style component,
+                which allows the user to select a single value from a list of items."
+                               id="ot5"/>
+                <af:outputText value="It can contain any number of &lt;f:selectItem>,
+                &lt;f:selectItems>, or &lt;af:selectItem> components, each of which represents
+                an available option that the user may select." id="ot6"/>
+                <af:outputText value="af:selectOneChoice can be model-driven or data-driven but should be used
+                with smaller datasets. If a large number of items is desired, it is
+                recommended to use af:inputComboboxListOfValues instead."
+                               id="ot7"/>
+              </af:panelList>
+              <af:spacer height="5" id="s3"/>
+              <af:selectOneChoice id="targetselectOneChoice" label="Values"
+                                  inlineStyle="margin-left:30px;">
+                <af:selectItem label="Value 1" value="1" id="si1"/>
+                <f:selectItem itemLabel="Value 2" itemValue="2" id="si2"/>
+                <af:selectItem disabled="true" label="Value 3" value="3"
+                               id="si3"/>
+              </af:selectOneChoice>
+            </af:panelGroupLayout>
+            <!-- inputListOfValues -->
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <af:outputFormatted value="&lt;b>af:inputListOfValues&lt;/b>"
+                                  id="of3"/>
+              <af:panelList id="pl3">
+                <af:outputText value="LOVs are editable components that are model-driven and should be
+                used with larger datasets as they allow the user to launch a popup and further restrict
+                the dataset by filtering it." id="ot8"/>
+                <af:outputText value="LOV components support functionalities such as auto-complete and
+                provide developers the ability to create new data by wiring their own popup components."
+                               id="ot9"/>
+                <af:outputText value="af:inputComboboxListOfValues supports a most-recently-used
+                (aka MRU or Favorites) feature that allows it to remember a pre-configured number of
+                selections in the drop-down." id="ot10"/>
+              </af:panelList>
+              <af:spacer height="5" id="s4"/>
+              <af:inputListOfValues label="Ename" id="idInputText" value="#{demoLOV.ename}"
+                                    autoSubmit="true" popupTitle="Search and Select: Ename"
+                                    searchDesc="Choose a name" model="#{demoLOV.listOfValuesModel}"
+                                    validator="#{demoLOV.validate}" createPopupId="popupId"
+                                    inlineStyle="margin-left:30px;"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl6">
+              <af:outputText value="See also:" id="ot11"/>
+              <af:panelList id="pl4">
+                <af:goLink text="inputListOfValues"
+                           destination="../components/inputListOfValues.jspx"
+                           id="gl1"/>
+                <af:goLink text="selectOneChoice" destination="../components/selectOneChoice.jspx"
+                           id="gl2"/>
+                <af:goLink text="inputComboboxListOfValues"
+                           destination="../components/inputComboboxListOfValues.jspx"
+                           id="gl3"/>
+                <af:goLink text="editableTable"
+                           destination="../components/table/editableTable.jspx"
+                           id="gl4"/>
+                <af:goLink text="af:query (selectOneChoice is used for operator and saved query selection)"
+                           destination="../components/query.jspx"
+                           id="gl5"/>
+                <af:goLink text="af:inputDate (selectOneChoice is used for month selection)"
+                           destination="../components/inputDate.jspx"
+                           id="gl6"/>
+                <af:goLink text="af:richTextEditor (selectOneChoice is used for font selection)"
+                           destination="../components/richTextEditor.jspx"
+                           id="gl7"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

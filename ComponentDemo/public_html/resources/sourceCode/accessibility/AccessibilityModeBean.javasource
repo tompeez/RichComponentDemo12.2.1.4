@@ -1,0 +1,72 @@
+/* Copyright (c) 2006, 2009, Oracle and/or its affiliates. 
+All rights reserved. */
+
+package oracle.adfdemo.view.accessibility;
+
+import org.apache.myfaces.trinidad.context.AccessibilityProfile;
+
+/**
+ * Bean used to store session-specific accessibility mode.
+ */
+public class AccessibilityModeBean
+{
+  public String getAccessibilityMode()
+  {
+    return _accessibilityMode;
+  }
+
+  public void setAccessibilityMode(String accessibilityMode)
+  {
+    _accessibilityMode = accessibilityMode;
+  }
+
+  public AccessibilityProfile getAccessibilityProfile()
+  {
+    if (_accessibilityProfile == null)
+    {
+      _accessibilityProfile =
+        AccessibilityProfile.getInstance(
+          _accessibilityProfileColorContrast,
+          _accessibilityProfileFontSize);
+    }
+    return _accessibilityProfile;
+  }
+
+  public String getColorContrast()
+  {
+    return _colorContrast;
+  }
+
+  public void setColorContrast(String colorContrast)
+  {
+    if (colorContrast != null && !_colorContrast.equals(colorContrast))
+    {
+      _colorContrast = colorContrast;
+      _accessibilityProfileColorContrast = AccessibilityProfile.ColorContrast.valueOf(_colorContrast);
+      _accessibilityProfile = null; // clear the cache
+    }
+  }
+
+  public String getFontSize()
+  {
+    return _fontSize;
+  }
+
+  public void setFontSize(String fontSize)
+  {
+    if (fontSize != null && !_fontSize.equals(fontSize))
+    {
+      _fontSize = fontSize;
+      _accessibilityProfileFontSize = AccessibilityProfile.FontSize.valueOf(fontSize);
+      _accessibilityProfile = null; // clear the cache
+    }
+  }
+
+  private String _accessibilityMode = "default";
+  private String _colorContrast = AccessibilityProfile.getDefaultInstance().getColorContrast().toString();
+  private String _fontSize = AccessibilityProfile.getDefaultInstance().getFontSize().toString();
+  private AccessibilityProfile _accessibilityProfile = null;
+  private AccessibilityProfile.ColorContrast _accessibilityProfileColorContrast = null;
+  private AccessibilityProfile.FontSize _accessibilityProfileFontSize = null;
+    
+}

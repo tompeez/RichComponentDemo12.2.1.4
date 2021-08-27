@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="World Population" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="World Population"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="World Population"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <dvt:lineChart value="#{worldPopulation.worldPop}" timeAxisType="enabled" var="row" dataCursor="on" 
+                inlineStyle="height:400px;width:650px" >
+              <f:facet name="dataStamp">
+                <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value*1000000}"
+                    shortDesc="#{row.series}\\n#{row.group}\\n#{row.value*1000000}"/>
+              </f:facet>
+              <f:facet name="seriesStamp">
+                <af:group>
+                  <dvt:chartSeriesStyle series="World" color="#FF0000" lineWidth="2"/>
+                  <dvt:chartSeriesStyle series="WorldM" color="#FF0000" lineWidth="2" lineStyle="dashed"/>
+                  <dvt:chartSeriesStyle series="WorldH" color="#FF0000" lineWidth="1"/>
+                  <dvt:chartSeriesStyle series="WorldL" color="#FF0000" lineWidth="1"/>
+                </af:group>
+              </f:facet>
+              <dvt:chartYAxis>
+                <dvt:referenceArea color="#FFAAAA" displayInLegend="off">
+                   <af:iterator id="it1" value="#{worldPopulation.worldRange}" var="row">
+                     <dvt:referenceAreaItem x="#{row.group}" minimum="#{row.min*1000000}" maximum="#{row.max*1000000}"/>
+                   </af:iterator>
+                </dvt:referenceArea>
+              </dvt:chartYAxis>
+            </dvt:lineChart>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

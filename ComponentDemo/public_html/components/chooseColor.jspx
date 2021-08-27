@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          version="1.2" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:jsp="http://java.sun.com/JSP/Page">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="chooseColor Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="chooseColor"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a chooseColor is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>A chooseColor with default properties.&lt;/b>"
+                                id="otA"/>
+            <af:outputText value="Update its properties from the attributes editor to the right."
+                           id="otB"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:chooseColor id="cp1" binding="#{editor.component}"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:spacer id="sp1" height="4px"/>
+            <af:inputColor id="sic1" chooseId="cp1"
+                           shortDesc="Select color from palette"
+                           label="Click in field and select color from the palette above"
+                           value="#{demoColor.colorValue1}"/>
+            <af:inputColor id="sic2" chooseId="cp1"
+                           shortDesc="Select color from pallette"
+                           label="Click in field and select color from the palette above"
+                           value="#{demoColor.colorValue2}"/>
+            <af:outputText value="A chooseColor with attribute 'colorData' and attribute 'customColorData' specified but customVisible set to 'false'"
+                           id="ot2"/>
+            <af:chooseColor id="cp2" lastUsedVisible="false" defaultVisible="false"
+                            customVisible="false" colorData="#{demoColor.colorList}"
+                            customColorData="#{demoColor.customColorList}" width="11"/>
+            <af:inputColor id="sic3" chooseId="cp2"
+                           shortDesc="Select color from palette"
+                           label="Click in field and select color from the palette above"
+                           value="#{demoColor.colorValue3}"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <af:popup id="popupDialog">
+                <af:dialog title="Pick Your Favorite Color" id="d2">
+                  <af:inputColor label="Choose a color" chooseId="chooseMe"
+                  value="#{demoColor.colorValue2}" id="ic1"/>
+                  <af:chooseColor id="chooseMe"/>
+                </af:dialog>
+              </af:popup>
+              <af:outputText value="This demo shows the chooseColor inside of a popup."
+                             id="ot3"/>
+              <af:spacer width="5" id="s2"/>
+              <af:commandButton immediate="true" text="Show ChooseColor" clientComponent="true"
+                                id="popupButton">
+                <af:showPopupBehavior popupId="popupDialog" alignId="popupButton"
+                                      align="afterStart"/>
+              </af:commandButton>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

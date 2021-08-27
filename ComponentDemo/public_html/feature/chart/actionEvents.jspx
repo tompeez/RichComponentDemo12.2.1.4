@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Chart Action Events Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Action Events Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Action Events"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+             <af:panelGroupLayout layout="vertical">
+              <af:outputText value="Clicking on data items in the first chart will navigate away to the chart gallery. 
+                            Clicking on the second chart will update this text: #{chartSample.actionString}" id="ot1" partialTriggers="bc2"/>
+              <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row" id="bc1">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}" action="feature.chartGallery"/>
+                  </f:facet>
+                </dvt:barChart>
+              <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row" id="bc2">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}" z="#{row.z}" action="#{chartSample.chartAction}"/>
+                </f:facet>
+              </dvt:bubbleChart>
+             </af:panelGroupLayout>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

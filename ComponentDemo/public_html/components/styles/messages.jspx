@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="messages Style Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="messages"/>
+        <f:attribute name="visualDesignName" value="messaging"/>
+        <f:attribute name="demoKind" value="styles"/>
+        <f:attribute name="editorSize" value="350"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:outputText styleClass="AFInstructionText"
+                           value="This page demos the effect various contentStyle and inlineStyle parameters have on this component."
+                           id="ot1"/>
+            <af:messages binding="#{styleChanger.components['messages']}"
+                         message="Please read this carefully:" shortDesc="Sample shortDesc text"
+                         id="messages1" inline="true"/>
+            <af:outputText value="The messages component has the 'inline' attribute set to true, so the errors display inline instead of in a popup."
+                           id="ot2"/>
+            <af:panelFormLayout id="pfl1">
+              <af:outputText value="By checking on the boxes, a message of each selected type will be added to global scope."
+                             id="ot3"/>
+              <af:selectManyCheckbox label="Page Level" id="pageLevel"
+                                     validator="#{messageTest.validateMultipleGlobalMessages}"
+                                     autoSubmit="true" partialTriggers="compLevel">
+                <af:selectItem label="fatal" value="fatal" id="si1"/>
+                <af:selectItem label="error" value="error" id="si2"/>
+                <af:selectItem label="warning" value="warning" id="si3"/>
+                <af:selectItem label="confirmation" value="confirmation"
+                               id="si4"/>
+                <af:selectItem label="info" value="info" id="si5"/>
+              </af:selectManyCheckbox>
+              <af:outputText value="By checking on the boxes, a message of each selected type will be added for the component."
+                             id="ot4"/>
+              <af:selectManyCheckbox label="Component Level" autoSubmit="true" id="compLevel"
+                                     validator="#{messageTest.validateMultipleValues}"
+                                     partialTriggers="pageLevel">
+                <af:selectItem label="fatal" value="fatal" id="si6"/>
+                <af:selectItem label="error" value="error" id="si7"/>
+                <af:selectItem label="warning" value="warning" id="si8"/>
+                <af:selectItem label="confirmation" value="confirmation"
+                               id="si9"/>
+                <af:selectItem label="info" value="info" id="si10"/>
+              </af:selectManyCheckbox>
+            </af:panelFormLayout>
+            <af:panelFormLayout id="pfl2">
+              <af:outputText value="The content of these global scope messages are formatted, for example the message contains bold text."
+                             id="ot5"/>
+              <af:selectManyCheckbox label="Page Level Formatted Message" id="pageLevel2"
+                                     validator="#{messageTest.validateMultipleGlobalFormattedMessages}"
+                                     autoSubmit="true" partialTriggers="compLevel2">
+                <af:selectItem label="fatal" value="fatal" id="si11"/>
+                <af:selectItem label="error" value="error" id="si12"/>
+                <af:selectItem label="warning" value="warning" id="si13"/>
+                <af:selectItem label="confirmation" value="confirmation"
+                               id="si14"/>
+                <af:selectItem label="info" value="info" id="si15"/>
+              </af:selectManyCheckbox>
+              <af:outputText value="The content of these component scope messages are formatted, for example  the message contains bold text."
+                             id="ot6"/>
+              <af:selectManyCheckbox label="Component Level Formatted Message" autoSubmit="true"
+                                     id="compLevel2"
+                                     validator="#{messageTest.validateMultipleValuesFormattedMessage}"
+                                     partialTriggers="pageLevel2">
+                <af:selectItem label="fatal" value="fatal" id="si16"/>
+                <af:selectItem label="error" value="error" id="si17"/>
+                <af:selectItem label="warning" value="warning" id="si18"/>
+                <af:selectItem label="confirmation" value="confirmation"
+                               id="si19"/>
+                <af:selectItem label="info" value="info" id="si20"/>
+              </af:selectManyCheckbox>
+            </af:panelFormLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

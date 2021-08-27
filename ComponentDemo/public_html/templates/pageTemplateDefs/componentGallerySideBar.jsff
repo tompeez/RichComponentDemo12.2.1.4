@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='utf-8'?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="2.1">
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Dynamic declarative component for the gallery accordion.</description>
+        <attribute>
+          <description>Default display mode</description>
+          <attribute-name>mode</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Whether to allow all panels to be undisclosed.</description>
+          <attribute-name>allowAllUndisclosed</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelStretchLayout id="psl" topHeight="0px" dimensionsFrom="auto">
+      <f:facet name="top">
+        <af:resource type="css">
+        .GalleryIcon {
+          width: 16px;
+          height: 16px;
+          margin-right: 2px;
+          vertical-align: middle;
+        }
+        HTML[dir=rtl] .GalleryIcon {
+          margin-right: 0px;
+          margin-left: 2px;
+        }
+        </af:resource>
+      </f:facet>
+      <f:facet name="center">
+        <af:panelAccordion id="acc" discloseMany="false" discloseNone="#{attrs.allowAllUndisclosed}" dimensionsFrom="auto">
+          <af:showDetailItem id="sdiTG" flex="1" text="Tag Guide" stretchChildren="first"
+                             disclosed="#{attrs.mode == 'component'}" partialTriggers="guideOrder">
+            <f:facet name="toolbar">
+              <af:commandImageLink id="guideOrder" text="#{tgToggle.text}"
+                                   actionListener="#{tgToggle.toggle}" partialSubmit="true"
+                                   icon="#{tgToggle.icon}" disabledIcon="#{tgToggle.iconDisabled}"
+                                   hoverIcon="#{tgToggle.iconHover}"
+                                   depressedIcon="#{tgToggle.iconDown}"/>
+            </f:facet>
+            <af:switcher id="tagToggle" facetName="#{tgToggle.grouping}">
+              <f:facet name="group">
+                <af:declarativeComponent id="tagGrouped" menuModel="#{DemoTGGroupMenuModel}"
+                                         summary="Tag guide organized in groups"
+                                         viewId="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff"/>
+              </f:facet>
+              <f:facet name="alphabetical">
+                <af:declarativeComponent id="tagAlpha" menuModel="#{DemoTGAlphaMenuModel}"
+                                         summary="Tag guide organized alphabetically"
+                                         viewId="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff"/>
+              </f:facet>
+            </af:switcher>
+          </af:showDetailItem>
+          <af:showDetailItem id="sdiFD" flex="1" text="Feature Demos" stretchChildren="first"
+                             disclosed="#{attrs.mode == 'feature'}" partialTriggers="featureOrder">
+            <f:facet name="toolbar">
+              <af:commandImageLink id="featureOrder" text="#{tgToggle.text}"
+                                   actionListener="#{tgToggle.toggle}" partialSubmit="true"
+                                   icon="#{tgToggle.icon}" disabledIcon="#{tgToggle.iconDisabled}"
+                                   hoverIcon="#{tgToggle.iconHover}"
+                                   depressedIcon="#{tgToggle.iconDown}"/>
+            </f:facet>
+            <af:switcher id="feaToggle" facetName="#{tgToggle.grouping}">
+              <f:facet name="group">
+                <af:declarativeComponent id="feaGrouped" menuModel="#{DemoCombinedMenuModel}"
+                                         summary="Features organized in groups"
+                                         viewId="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff"/>
+              </f:facet>
+              <f:facet name="alphabetical">
+                <af:declarativeComponent id="feaAlpha" menuModel="#{DemoFeaturesAlphaMenuModel}"
+                                         summary="Features organized alphabetically"
+                                         viewId="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff"/>
+              </f:facet>
+            </af:switcher>
+          </af:showDetailItem>
+          <af:showDetailItem id="sdiVD" flex="1" text="Visual Designs" stretchChildren="first"
+                             disclosed="#{attrs.mode == 'visualDesign'}" partialTriggers="visOrder">
+            <f:facet name="toolbar">
+              <af:commandImageLink id="visOrder" text="#{tgToggle.text}"
+                                   actionListener="#{tgToggle.toggle}" partialSubmit="true"
+                                   icon="#{tgToggle.icon}" disabledIcon="#{tgToggle.iconDisabled}"
+                                   hoverIcon="#{tgToggle.iconHover}"
+                                   depressedIcon="#{tgToggle.iconDown}"/>
+            </f:facet>
+            <af:switcher id="visToggle" facetName="#{tgToggle.grouping}">
+              <f:facet name="group">
+                <af:declarativeComponent id="visGrouped" menuModel="#{DemoVisualDesignsMenuModel}"
+                                         summary="Visual designs organized in groups"
+                                         viewId="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff"/>
+              </f:facet>
+              <f:facet name="alphabetical">
+                <af:declarativeComponent id="visAlpha" menuModel="#{DemoVisualDesignsAlphaMenuModel}"
+                                         summary="Visual designs organized alphabetically"
+                                         viewId="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff"/>
+              </f:facet>
+            </af:switcher>
+          </af:showDetailItem>
+          <af:showDetailItem id="sdiSt" flex="1" text="Styles" stretchChildren="first"
+                             disclosed="#{attrs.mode == 'styles'}" partialTriggers="stylesOrder">
+            <f:facet name="toolbar">
+              <af:commandImageLink id="stylesOrder" text="#{tgToggle.text}"
+                                   actionListener="#{tgToggle.toggle}" partialSubmit="true"
+                                   icon="#{tgToggle.icon}" disabledIcon="#{tgToggle.iconDisabled}"
+                                   hoverIcon="#{tgToggle.iconHover}"
+                                   depressedIcon="#{tgToggle.iconDown}"/>
+            </f:facet>
+            <af:switcher id="styToggle" facetName="#{tgToggle.grouping}">
+              <f:facet name="group">
+                <af:declarativeComponent id="styGrouped" menuModel="#{DemoStyleMenuModel}"
+                                         summary="Styles organized in groups"
+                                         viewId="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff"/>
+              </f:facet>
+              <f:facet name="alphabetical">
+                <af:declarativeComponent id="styAlpha" menuModel="#{DemoStyleAlphaMenuModel}"
+                                         summary="Styles organized alphabetically"
+                                         viewId="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff"/>
+              </f:facet>
+            </af:switcher>
+          </af:showDetailItem>
+          <af:showDetailItem id="sdiCC" flex="1" text="Commonly Confused" stretchChildren="first"
+                             disclosed="#{attrs.mode == 'confusedComponents'}">
+            <af:declarativeComponent id="huhGrouped" menuModel="#{DemoConfusedComponentsMenuModel}"
+                                     summary="Commonly confused organized in groups"
+                                     viewId="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff"/>
+          </af:showDetailItem>
+        </af:panelAccordion>
+      </f:facet>
+    </af:panelStretchLayout>
+  </af:componentDef>
+</jsp:root>

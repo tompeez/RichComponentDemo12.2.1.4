@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="popup Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        /**
+         * Handles a dialog event
+         */
+        function popupOpeningMethod(event)
+        {
+          var div = document.getElementById("maskingDiv");
+
+          if(!div){
+            div = document.createElement("div");
+            div.id = "maskingDiv";
+            div.style.left = "0";
+            div.style.top = "0";
+            div.style.height = "100%";
+            div.style.width = "100%";
+            div.style.position = "absolute";
+            div.style.background= "#b1b2b5";
+            div.style.opacity =".4";
+            document.body.appendChild(div);
+          }
+
+          div.style.display = "block";
+       
+          // To hide browser scroll bar
+          document.documentElement.style.overflow = 'hidden';  // firefox, chrome
+          document.body.scroll = "no"; // ie only
+        }
+        
+        function popupClosedMethod(event)
+        {
+          // To hide masking scroll bar
+          var div = document.getElementById("maskingDiv").style
+          div.display = "none";
+          
+          // To show browser scroll bar
+          document.documentElement.style.overflow = 'auto';  // firefox, chrome
+          document.body.scroll = "yes"; // ie only
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:popup id="popup-navigator" contentDelivery="lazyUncached" animate="true" autoCancel="enabled">
+              <div style="width: 400px; height: calc(100vh - 19px);overflow-y: auto;">
+                <div>
+                  <h3>Popup Animations</h3>
+                  <p>The popup open and close transition can be animated by configuring &lt;af:transition&gt; tag within a popup. The af:transition tag will let you choose an animation style and what kind of transition will trigger what type of animation.</p>
+                  <b>Transition Trigger Types</b>
+                  <ul>
+                    <li>open - Transitioning popup to open popup</li>
+                    <li>close - Transitioning popup from open state to close state.</li>
+                  </ul>
+                  <b>Transition Animations</b>
+                  <ul>
+                    <li>none - No animation while transitioning popup from one state to other. Also the type used if another specified animation type is not supported by popup transition.</li>
+                    <li>auto - The default transition animation type. The popup animation grows diagonally while transitioning popup to open state. No animation while transitioning popup from open to close state</li>
+                    <li>horizontally - While popup transitioning to open state, if popup is aligned right to the alignment element, then the popup open sliding animation will start from right and end towards left, and if popup is aligned left to the alignment element, then the popup open sliding animation will start from left and end towards right. When popup transitioning from open to close state, if popup is aligned right to the alignment element, then the popup close sliding animation will start from left and end towards right, and if popup is aligned left to the alignment element, then the popup close sliding animation will start from right and end towards left. If popup is configured not to be aligned with other element, then popup open sliding animation will start from left and end towards right, and close sliding animation will start from right and end towards left. (see note 1)</li>
+                    <li>vertically - While popup transitioning to open state, if popup is aligned top to the alignment element, then the popup open sliding animation will start from bottom and end towards top, and if popup is aligned bottom to the alignment element, then the popup open sliding animation will start from top and end towards bottom. When popup transitioning from open to close state, if popup is aligned top to the alignment element, then the popup close sliding animation will start from top and end towards bottom, and if popup is aligned bottom to the alignment element, then the popup close sliding animation will start from bottom and end towards top. If popup is configured not to be aligned with other element, then popup open sliding animation will start from top and end towards bottom, and close sliding animation will start from bottom and end towards top. (see note 1)</li>
+                  </ul>
+                  Note:
+                  <ol>
+                    <li>= Popup alignment element can be configured in af:showPopupBehavior tag, with "align" and "alignId" properties.</li>
+                  </ol>
+                </div>
+              </div>
+              <af:transition triggerType="open" transition="horizontally"/>
+              <af:transition triggerType="close" transition="horizontally"/>
+              <af:clientListener method="popupOpeningMethod" type="popupOpening"/>
+              <af:clientListener method="popupClosedMethod" type="popupClosed"/>
+            </af:popup>
+            <af:commandButton text="Show Navigator" id="button-popup-navigator" clientComponent="true">
+              <af:showPopupBehavior popupId="popup-navigator"/>
+            </af:commandButton>
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <af:spacer height="20px" id="s2"/>
+              <af:separator id="s3"/>
+              <af:outputText value="See also:" id="ot5"/>
+              <af:panelList id="pl1">
+                <af:goLink text="popup" destination="/faces/components/popup.jspx" id="gl1"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

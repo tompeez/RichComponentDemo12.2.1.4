@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="dialog Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        /**
+         * Resets the field shwoing the dialog event status.
+         */
+        function resetEventStatus(event)
+        {
+          _setStatus(event, "Dialog event results will appear here.");
+        }
+
+        /**
+         * Handles a dialog event
+         */
+        function buttonClicked(event)
+        {
+          _setStatus(
+            event,
+            (new Date()) + " - A dialog button was clicked: " + event.getOutcome());
+        }
+
+        function _setStatus(event, status)
+        {
+          var resultComponent = event.getSource().findComponent("dialogEventResult");
+          if (resultComponent == null)
+          {
+            AdfLogger.LOGGER.severe("Dialog page error - trouble finding the resultComponent");
+          }
+          else
+          {
+            resultComponent.setValue(status);
+          }
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="dialog"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:popup id="popupDialog" contentDelivery="lazyUncached">
+              <af:dialog id="dialog" title="Test Dialog" affirmativeTextAndAccessKey="Y&amp;eah"
+                         cancelTextAndAccessKey="&amp;Oops" noTextAndAccessKey="N&amp;ah"
+                         binding="#{editor.component}"  helpTopicId="TOPICID_ALL">
+                <af:clientListener type="dialog" method="buttonClicked"/>
+                <af:panelGroupLayout layout="vertical" id="pgl2">
+                  <af:inputText required="true" label="Required" id="it1"/>
+                  <af:showDetailHeader text="Details" disclosed="false"
+                                       id="sdh1">
+                    <af:panelGroupLayout layout="vertical" id="pgl3">
+                      <af:outputText value="All rights reserved." id="ot1"/>
+                      <af:outputText value="Subject to terms and conditions."
+                                     id="ot2"/>
+                      <af:outputText value="Not applicable on weekends."
+                                     id="ot3"/>
+                    </af:panelGroupLayout>
+                  </af:showDetailHeader>
+                </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:commandButton immediate="true" text="Show Dialog" id="cb1">
+                <af:clientListener method="resetEventStatus" type="action"/>
+                <af:showPopupBehavior popupId="popupDialog"/>
+              </af:commandButton>
+              <af:outputText id="dialogEventResult" value="Dialog event results will appear here."
+                             clientComponent="true"/>
+              <af:separator id="s1"/>
+              <af:panelGroupLayout layout="vertical" id="pgl5">
+                <af:outputText value="See also:" id="ot4"/>
+                <af:goLink text="Dialog With Custom Buttons"
+                           destination="/faces/components/secondaryWindows/dialogCustomButtons.jspx"
+                           id="gl1"/>
+                <af:goLink text="Dialog With Custom And Standard Buttons"
+                           destination="/faces/components/secondaryWindows/dialogCustomAndStandardButtons.jspx"
+                           id="gl2"/>
+                <af:goLink text="Dialog With table"
+                           destination="/faces/components/secondaryWindows/tableInDialog.jspx"
+                           id="gl3"/>
+                <af:goLink text="Dialog With panelTabbed" destination="/faces/components/secondaryWindows/tabbedDialog.jspx"
+                           id="gl4"/>
+                <af:goLink text="Dialogs Launched Within Dialogs" destination="/faces/components/secondaryWindows/nestedDialogs.jspx"
+                           id="gl5"/>
+
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

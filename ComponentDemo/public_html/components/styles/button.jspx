@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="button Style Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="button"/>
+        <f:attribute name="visualDesignName" value="toolbar"/>
+        <f:attribute name="demoKind" value="styles"/>
+        <f:attribute name="editorSize" value="350"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:outputText styleClass="AFInstructionText"
+                           value="This page demos the effect various contentStyle and inlineStyle parameters have on this component."
+                           id="ot1"/>
+
+            <af:toolbar id="t1">
+              <af:button id="boundButton2" text="Popup" partialSubmit="true"
+                                       binding="#{styleChanger.components['button1']}">
+                <f:facet name="popup">
+                  <af:panelGroupLayout id="pgl2">
+                    <af:selectManyListbox value="#{demoInput.manyListValue1}" label="Drinks"
+                                          simple="true" id="sml1">
+                      <af:selectItem label="coffee" value="bean" id="si1"/>
+                      <f:selectItem itemLabel="tea" itemValue="leaf"
+                                    itemDescription="Tea from China" id="si2"/>
+                      <af:selectItem disabled="true" label="orange juice" value="orange"
+                                     id="si3"/>
+                      <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                                    id="si4"/>
+                      <af:selectItem label="milk" value="moo" id="si5"/>
+                      <f:selectItems value="#{demoInput.selectItems}" id="si6"/>
+                    </af:selectManyListbox>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:button>
+            </af:toolbar>
+
+            <af:toolbar id="t2">
+              <af:button icon="/images/guy.gif" text="Regular Button" accessKey="R"
+              binding="#{styleChanger.components['button2']}"
+                                       id="ctb1"/>
+            </af:toolbar>
+            <af:toolbar id="t3">
+              <af:button text="Disabled Button" disabled="true" icon="/images/guy.gif"
+                                       disabledIcon="/images/delete.gif"
+                                       binding="#{styleChanger.components['button3']}"
+                                       id="ctb2"/>
+            </af:toolbar>
+            <af:toolbar id="t4">
+              <af:button id="alignLeft" shortDesc="align left"
+                                       icon="/images/alignleft.gif" type="radio" selected="true"
+                                       binding="#{styleChanger.components['button4']}"/>
+              <af:button id="alignCenter" shortDesc="align center"
+                                       icon="/images/aligncenter.gif" type="radio" selected="false"/>
+              <af:button id="alignRight" shortDesc="align right"
+                                       icon="/images/alignright.gif" type="radio" selected="false"/>
+            </af:toolbar>
+            <af:toolbar id="t5">
+              <af:button id="boundButton" text="Popup Button" icon="/images/guy.gif"
+                                       partialSubmit="true"
+                                       binding="#{styleChanger.components['button5']}">
+                <f:facet name="popup">
+                  <af:panelGroupLayout id="pgl3">
+                    <af:selectManyListbox value="#{demoInput.manyListValue1}" label="More Drinks"
+                                          simple="true" id="sml2">
+                      <af:selectItem label="coffee" value="bean" id="si7"/>
+                      <f:selectItem itemLabel="tea" itemValue="leaf"
+                                    itemDescription="Tea from China" id="si8"/>
+                      <af:selectItem disabled="true" label="orange juice" value="orange"
+                                     id="si9"/>
+                      <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                                    id="si10"/>
+                      <af:selectItem label="milk" value="moo" id="si11"/>
+                      <f:selectItems value="#{demoInput.selectItems}"
+                                     id="si12"/>
+                    </af:selectManyListbox>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:button>
+            </af:toolbar>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

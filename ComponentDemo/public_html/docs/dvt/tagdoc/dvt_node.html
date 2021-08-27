@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:node&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:node&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:node node node</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.hierarchyViewer.Node<br>
+<b>Component type:</b> oracle.dss.adf.hierarchyViewer.Node<br></p>
+<p>The node component is used to stamp out nodes in the hierarchy.</p>
+<p>The "zoom100", "zoom75", "zoom50", and "zoom25" facets are used to specify the stamps for different zoom levels of the hierarchy. The "zoom100" facet is typically the most detailed, showing the most information, because the nodes are larger at 100% size. The "zoom25" facet is typically the least detailed, showing the least information, because the nodes are smaller at 25% size. All zoom facets only support a single child component.</p>
+<p>The following tags are allowed as children of the zoom facets:</p>
+<ul>
+<li>af:button</li>
+<li>af:image</li>
+<li>af:link</li>
+<li>af:outputFormatted</li>
+<li>af:outputText</li>
+<li>af:panelFormLayout</li>
+<li>af:panelGroupLayout</li>
+<li>af:panelLabelAndMessage</li>
+<li>af:separator</li>
+<li>af:showPopupBehavior</li>
+<li>af:spacer</li>
+<li>dvt:panelCard</li>
+</ul>
+<p>Usage of the following tags has been deprecated.</p>
+<ul>
+<li>af:commandButton</li>
+<li>af:commandImageLink</li>
+<li>af:commandLink</li>
+<li>af:commandMenuItem</li>
+<li>af:goButton</li>
+<li>af:goLink</li>
+<li>af:menu</li>
+</ul>
+<h4>Relationship with other tags</h4>
+<p>This component must be a child of the <a href="dvt_hierarchyViewer.html">&lt;dvt:hierarchyViewer&gt;</a> component.</p>
+<p>The node component can have the following children: facet.</p>
+<h4>Example</h4>
+<p>The following example shows XML for a node tag.<br>
+<code>&lt;dvt:hierarchyViewer&gt;<br>
+&lt;dvt:node width="233" height="233"&gt;<br>
+&lt;f:facet name="zoom100"&gt;<br>
+&lt;af:panelGroupLayout layout="vertical" inlineStyle="width:100%;height:100%;padding:5px"&gt;<br>
+&lt;af:panelGroupLayout layout="horizontal"&gt;<br>
+&lt;af:panelGroupLayout inlineStyle="width:85px;height:120px"&gt;<br>
+&lt;af:image source="#{node.Thumburl}"/&gt;<br>
+&lt;/af:panelGroupLayout&gt;<br>
+&lt;af:spacer width="5" height="5"/&gt;<br>
+&lt;af:panelGroupLayout layout="vertical"&gt;<br>
+&lt;af:outputText value="#{node.Firstname}" inlineStyle="font-weight:bold;font-size:20px;color:#383A47"/&gt;<br>
+&lt;af:outputText value="#{node.Lastname}" inlineStyle="font-size:20px;color:#383A47"/&gt;<br>
+&lt;af:outputText value="#{node.Title}" inlineStyle="font-size:11px;font-style:italic;color:#383A47"/&gt;<br>
+&lt;/af:panelGroupLayout&gt;<br>
+&lt;/af:panelGroupLayout&gt;<br>
+&lt;/af:panelGroupLayout&gt;<br>
+&lt;/f:facet&gt;<br>
+&lt;/dvt:node&gt;<br>
+&lt;/dvt:hierarchyViewer&gt;<br></code></p>
+<h4>Gradient background and border</h4>
+<p>By default, the node displays a gradient background that transitions from its background-color to white. The gradient can be turned off so that the background is a solid color by specifying the custom attribute "fill-type:solid" in the inlineStyle attribute on the &lt;dvt:node&gt; tag.</p>
+<p>Similarly, by default, the node displays a gradient border based on its border-color. The gradient can be turned off so that the border is a solid color by specifying the custom attribute "border-type:solid" in the inlineStyle attribute on the &lt;dvt:node&gt; tag.</p>
+<h4>Popups</h4>
+<p>Popups launched from components in hierarchy viewer nodes can be configured to show contextual information about the node. The application can use &lt;af:setPropertyListener&gt; in the &lt;af:popup&gt; to get information from the data row associated with the node when the popup launches and transfer it to a managed bean. The components in the popup can then refer to that information stored in the managed bean when the popup renders.</p>
+<p>Note that the desired information must be retrieved when the popup launches and stored away because the node context is only temporarily set during the popup launch. The node context on hierarchy viewer may change by the time the popup renders, but the information stored in the managed bean will not be affected.</p>
+<p>In the above example, note that:</p>
+<ul>
+<li>contentDelivery must be set to "lazyUncached" so that the popup content will be fetched again each time the popup renders, because the content may change each time</li>
+<li>eventContext must be set to "launcher" so that the source component context, the hierarchy viewer, will be set when the popup launches</li>
+<li>launcherVar must be set to something so that the source component, the hierarchy viewer, can be referenced in the setPropertyListener</li>
+<li>the type attribute of the setPropertyListener must be set to "popupFetch" so that it is executed when the popup launches</li>
+<li>the from attribute of the setPropertyListener should use the launcherVar set on the popup to refer to the hierarchy viewer to get the desired information</li>
+</ul>
+<p>In this example, the setPropertyListener uses the special hierarchy viewer property "currentRowData" to transfer the entire data row for the node to a managed bean. The popup contents can then refer to any item in the data row, such as "Empno", "Ename", and "Job". Alternatively, multiple setPropertyListeners could be used to retrieve and store each data item separately.</p>
+<p>Instead of getting the data for the row, the application can get the row key to use to lookup data outside of the hierarchy viewer model. In that case, the from attribute of the setPropertyListener should be set to "#{source.rowKey}".</p>
+<h4>Hover window</h4>
+<p>By default, when a node is zoomed out to 75% or below and the mouse hovers over the node, a built-in hover window is displayed showing the node at 100%. This behavior can be overridden by specifying an &lt;af:showPopupBehavior&gt; tag with triggerType="mouseHover" in the node stamp, most likely as a child of the outermost container element, to show a custom ADF Faces popup instead.</p>
+<p>The following example shows XML for such a case.<br></p>
+<pre>
+<code>       &lt;dvt:node width="233" height="233" id="n0"&gt;
+         ...
+         &lt;f:facet name="zoom75"&gt;
+           &lt;af:panelGroupLayout inlineStyle="width:100%;height:100%;padding:3px;"
+                                layout="vertical" id="pgl1"&gt;
+             &lt;af:showPopupBehavior popupid="O__popup1" triggerType="mouseHover"
+                                   alignid="pgl1" align="beforeEnd"/&gt;
+             ...
+           &lt;/af:panelGroupLayout&gt;
+         &lt;/f:facet&gt;
+         ...
+       &lt;/dvt:node&gt;
+       </code>
+</pre>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Supported Facets</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="27%" align="left" valign="bottom" id="fcName">Name</th>
+<th width="73%" align="left" valign="bottom" id="fcDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="fcName">zoom100</td>
+<td align="left" headers="fcDesc">The template used to stamp out nodes at 100% zoom. This will typically be the most detailed template.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">zoom25</td>
+<td align="left" headers="fcDesc">The template used to stamp out nodes at 25% zoom. This will typically be the least detailed template.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">zoom50</td>
+<td align="left" headers="fcDesc">The template used to stamp out nodes at 50% zoom. This will typically be less detailed than the zoom75 template.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">zoom75</td>
+<td align="left" headers="fcDesc">The template used to stamp out nodes at 75% zoom. This will typically be less detailed than the zoom100 template.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.hierarchyViewer.Node</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">an EL reference that will store the component instance on a bean. This can be used to give programmatic access to a component from a backing bean, or to move creation of the component to a backing bean.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">clickBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> focus, expandCollapse, isolateRestore, none<br>
+<strong>Default Value:</strong> focus<br>
+<br>
+<p>Specifies the override build-in action. The default value is focus. Valid values are:</p>
+<ul>
+<li>"focus" - set focus on the node</li>
+<li>"expandCollapse" - toggle between expand and collapse</li>
+<li>"isolateRestore" - toggle between isolate and restore</li>
+<li>"none" - no action</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">draggable</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> on, off, yes, no<br>
+<strong>Default Value:</strong> on<br>
+<br>
+Specifies if a node is draggable. Valid values are "on" (default) and "off". The values "yes" and "no" are deprecated.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">facetName</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">For internal use only</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">height</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the height of the node, in pixels, at full size</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The inline style of the hierarchy viewer node. Can be used to control the colors/fonts of the hierarchy viewer node.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered. This is used in conjunction with the type attribute to determine which node template to stamp out for a given data element. The first node component whose type matches that of the data element will be stamped for that data element. If no type matches, then the first node whose rendered attributes evaluates to true will be stamped for that data element.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">setAnchorListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a set anchor action listener, the method is invoked when the end user marks a node as the new anchor of the HierarchyViewer, normally via a double-click mouse action</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shape</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> rect, roundedRect, ellipse<br>
+<strong>Default Value:</strong> roundedRect<br>
+<br>
+<p>Specifies the shape of the node. Valid values are:</p>
+<ul>
+<li>"rect" - rectangular</li>
+<li>"roundedRect" - rectangular with rounded corners</li>
+<li>"ellipse" - elliptical</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shortDesc</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a short description of this node for user agents rendering to non-visual media (e.g. screen readers)</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">showExpandChildren</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the Expand Children action is rendered</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">showIsolate</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the Isolate action is rendered</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">showNavigateUp</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the Navigate Up action is rendered.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">type</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the types of nodes this stamp should be used for. This is used in conjunction with the rendered attribute to determine which node template to stamp out for a given data element. The first node component whose type matches that of the data element will be stamped for that data element. If no type matches, then the first node whose rendered attributes evaluates to true will be stamped for that data element.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">width</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the width of the node, in pixels, at full size</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

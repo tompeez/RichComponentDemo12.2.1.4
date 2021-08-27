@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          version="1.2"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="xmlContent demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+    <!--
+    ! This is the usage of the page template.
+    ! In order to view the source of the weatherBox xmlContent itself,
+    ! you must click on the view weatherBox source link lower down on the page.
+    -->
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="xmlContent"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="rootInlineStyle" value="position: relative; height: 250px;"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelList id="pl1">
+              <af:outputText value="This demo illustrates an af:xmlContent tag inside of a
+                pageTemplate named weatherBox.jspx."
+                             id="outputText1"/>
+              <af:outputText value="The weather template shown below is placed outside of the
+                component demo normal page chrome because this page chrome is provided by another
+                template and nesting of templates is not supported." id="ot1"/>
+            </af:panelList>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+
+    <af:decorativeBox theme="light" styleClass="AFStretchWidth" id="db1">
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="pgl2">
+          <f:facet name="separator">
+            <af:separator id="s2"/>
+          </f:facet>
+
+          <af:group id="g1">
+            <af:outputText value="Weather template:" id="ot2"/>
+            <af:goLink id="goLink1" text="View the weatherBox pageTemplate source."
+                       destination="/components/pagefragments/weatherBox.jspx.source"/>
+            <af:pageTemplate id="weather" viewId="pagefragments/weatherBox.jspx">
+              <f:attribute name="zip" value="94065"/>
+              <f:attribute name="description" value="Redwood Shores, CA"/>
+              <f:facet name="forecastSummary">
+                <af:outputText value="Partly Cloudy" id="ot3"/>
+              </f:facet>
+              <f:facet name="forecastDetail">
+                <af:panelGroupLayout layout="vertical" id="pgl3">
+                  <af:outputText value="72 Degrees F" id="ot4"/>
+                  <af:outputText value="Partly Cloudy" id="ot5"/>
+                  <af:outputText value="Wind: W at 16 mph" id="ot6"/>
+                  <af:outputText value="Humidity: 46%" id="ot7"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:pageTemplate>
+          </af:group>
+
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:decorativeBox>
+
+  </f:view>
+</jsp:root>

@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="Custom Bar Theme Styles" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/><f:attribute name="tagDocPrefix" value="dvt"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Custom Bar Theme Styles"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="mapBarGraphTheme"/>    
+      
+      <f:facet name="center">
+          <af:group id="g1">
+            <!-- START TAG DEMO -->
+            <af:panelStretchLayout id="psl1" topHeight="auto"
+                                   bottomHeight="80px">
+              <f:facet name="center">
+                <dvt:map id="map1" binding="#{elocationBean.component}"
+                         startingY="0.0" startingX="0.0" mapZoom="0"
+                         mapServerConfigId="mapConfig1"
+                         baseMapName="ELOCATION_MERCATOR.WORLD_MAP"
+                         autoZoomThemeId="mapBarTheme1">
+                  <dvt:mapBarGraphTheme id="mapBarTheme1"
+                                        themeName="MAP_STATES_NAME"
+                                        locationColumn="POLYGON_NAME"
+                                        value="#{geoMapBacking.barPieModel}">
+                    <!-- Specify the color of each bar of the graph with a mapBarSeriesItem tag and wrap them all in a mapBarSeriesSet -->
+                    <dvt:mapBarSeriesSet>
+                      <dvt:mapBarSeriesItem color="#0000ff" id="bar1"/>
+                      <dvt:mapBarSeriesItem color="#00ff00" id="bar2"/>
+                      <dvt:mapBarSeriesItem color="#ff0000" id="bar3"/>
+                    </dvt:mapBarSeriesSet>
+                  </dvt:mapBarGraphTheme>
+                  <dvt:mapOverview initialShown="false"/>
+                </dvt:map>
+              </f:facet>
+              <f:facet name="start"/>
+              <f:facet name="end"/>
+              <f:facet name="top"/>
+            </af:panelStretchLayout>
+            <!-- END TAG DEMO -->
+          </af:group>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+            <af:panelGroupLayout layout="scroll" id="pgl1">
+              <!-- START SEE ALSO LINKS -->
+              <af:outputText value="See also:" id="ot1"/>
+              <af:panelList id="pl1">
+                <af:goLink text="Map with Bar Graph Theme"
+                           destination="/components/mapBarGraphTheme.jspx"
+                           id="gl1"/>
+              </af:panelList>
+              <!-- END SEE ALSO LINKS -->
+            </af:panelGroupLayout>
+        </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

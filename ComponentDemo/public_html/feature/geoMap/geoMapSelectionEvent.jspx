@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="Map Theme Selection Events" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/><f:attribute name="tagDocPrefix" value="dvt"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Map Theme Selection Events"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="map"/>    
+      
+      <f:facet name="center">
+          <af:group id="g1">
+          <!-- START TAG DEMO -->
+            <af:panelStretchLayout id="psl1" topHeight="auto"
+                                   bottomHeight="80px" endWidth="200px">
+              <f:facet name="center">
+                <!-- Control the color of selected theme items with the selectionFillColor, selectionStrokeColor and selectionOpacity attributes-->
+                <!-- Add listener code through selectionListener to be fired when a selection event occurs -->
+                <dvt:map id="map1" binding="#{elocationBean.component}"
+                         startingY="0.0" startingX="0.0" mapZoom="0"
+                         mapServerConfigId="mapConfig1"
+                         selectionFillColor="#ff0000" selectionOpacity="10"
+                         selectionStrokeColor="#ffff00"
+                         baseMapName="ELOCATION_MERCATOR.WORLD_MAP"
+                         autoZoomThemeId="mapColorTheme1"
+                         selectionListener="#{eventBean.processSelection}">
+                  <dvt:mapColorTheme id="mapColorTheme1"
+                                     themeName="MAP_STATES_NAME"
+                                     value="#{geoMapBacking.colorModel}"
+                                     minColor="#33FF33" maxColor="#FF3333"
+                                     bucketCount="5" minZoom="0" maxZoom="3"
+                                     locationColumn="POLYGON_NAME"/>
+                  <dvt:mapPieGraphTheme id="mapPieTheme1"
+                                        themeName="MAP_STATES_NAME"
+                                        pieRadius="10"
+                                        locationColumn="POLYGON_NAME"
+                                        value="#{geoMapBacking.barPieModel}"
+                                        minZoom="4" maxZoom="4"/>
+                  <dvt:mapPointTheme id="pointTheme"
+                                     value="#{geoMapBacking.pointModel}"
+                                     minZoom="5"/>
+                  <dvt:mapOverview initialShown="false"/>
+                </dvt:map>
+              </f:facet>
+              <f:facet name="start"/>
+              <f:facet name="end">
+                <af:panelGroupLayout layout="vertical" id="pgl3">
+                  <af:table id="table1" var="row" value="#{eventBean.data}"
+                            inlineStyle="width:200px;"
+                            partialTriggers="::map1"
+                            summary="Selection Events Table">
+                    <af:column sortable="false"
+                               headerText="Selected Region Name" id="c1"
+                               rowHeader="true" width="200px" align="left">
+                      <af:outputText value="#{row}" id="ot2"/>
+                    </af:column>
+                  </af:table>
+                </af:panelGroupLayout>
+              </f:facet>
+              <f:facet name="top">
+                <af:panelGroupLayout layout="vertical" id="pgl2">
+                  <af:outputText value="Use the selection tools in the toolbar to select items of the theme
+              and test the selection event listener" id="ot1"/>
+                  <f:facet name="separator">
+                    <af:separator id="s1"/>
+                  </f:facet>
+                  <dvt:mapToolbar mapId="map1" id="mt1"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:panelStretchLayout>
+            <!-- END TAG DEMO -->
+          </af:group>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+           <af:panelGroupLayout layout="scroll" id="pgl4">
+            <!-- START SEE ALSO LINKS -->
+            <af:outputText value="See also:" id="ot3"/>
+              <af:panelList id="pl3">
+                <af:goLink text="Geographic Map"
+                           destination="/feature/geoMap/geoMap.jspx"
+                           id="gl1"/>
+                <af:goLink text="Map with Multiple Themes"
+                           destination="/components/map.jspx"
+                           id="gl2"/>
+                <af:goLink text="Map with Point Theme"
+                           destination="/components/mapPointTheme.jspx"
+                           id="gl3"/>
+                <af:goLink text="Map with Color Theme"
+                           destination="/components/mapColorTheme.jspx"
+                           id="gl4"/>
+                <af:goLink text="Map with Bar Graph Theme"
+                           destination="/components/mapBarGraphTheme.jspx"
+                           id="gl5"/>
+                <af:goLink text="Map with Pie Graph Theme"
+                           destination="/components/mapPieGraphTheme.jspx"
+                           id="gl6"/>
+              </af:panelList>
+            <!-- END SEE ALSO LINKS -->
+          </af:panelGroupLayout>
+          </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

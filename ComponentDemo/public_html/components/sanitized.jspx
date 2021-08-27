@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2016, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Sanitized Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="sanitized"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+
+            <!--
+              af:sanitized does not always render a client id and
+              as such we are better off ppr-replacing the parent
+              component when updating component properties.  Use
+              the magical "partialTargetParent" attribute to cause the
+              parent to be used as the partial target.  See
+              ComponentEditorHandler.update() for more details.
+            -->
+            <af:panelGroupLayout id="pg10">
+              <f:attribute name="partialTargetParent" value="true"/>
+              <af:sanitized binding="#{editor.component}" value="This line is an example of &lt;b>Sanitized&lt;/b>"
+                             id="ot1"/>
+            </af:panelGroupLayout>
+
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <af:sanitized id="ot2">
+                The value can also be provided by inlining text within the <b>af:sanitized</b> tag. <br />
+                <span style="color: red">The component takes in html content as value.</span> <br />
+                <i>The HTML content passed as value is sanitized before being rendered.</i>
+                <script> This is never rendered </script>
+              </af:sanitized>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

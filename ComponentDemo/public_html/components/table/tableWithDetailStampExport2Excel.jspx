@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Table export To Excel with a detailStamp Facet " binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="25" id="psl1" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:outputFormatted value="&lt;b>table export To Excel with detailStamp Facet Demo&lt;/b>"
+                                  id="of1"/>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelCollection id="panelCollection">
+                <f:facet name="toolbar">
+                  <af:toolbar id="tb">
+                    <af:commandToolbarButton text="Export All Rows" immediate="true"
+                                         id="exportAll">
+                          <af:exportCollectionActionListener type="excelHTML" exportedId="table"
+                                                             filename="export.xls"
+                                                             title="ADF Faces Export - All" exportedRows="all"/>
+                    </af:commandToolbarButton>
+                    <af:commandToolbarButton text="Export Selected Rows" immediate="true"
+                                         id="exportSel">
+                          <af:exportCollectionActionListener type="excelHTML" exportedId="table"
+                                                             filename="export.xls"
+                                                             title="ADF Faces Export - Selected" exportedRows="selected"/>
+                    </af:commandToolbarButton>
+                      <af:commandToolbarButton text="Export All Rows Without Details" immediate="true"
+                                           id="exportAllDetail">
+                            <af:exportCollectionActionListener type="excelHTML" exportedId="table"
+                                                               filename="export.xls"
+                                                               title="ADF Faces Export - All Without Detail" exportedRows="allWithoutDetails"/>
+                      </af:commandToolbarButton>
+                      <af:commandToolbarButton text="Export Selected Rows Without Details" immediate="true"
+                                           id="exportSelDetail">
+                            <af:exportCollectionActionListener type="excelHTML" exportedId="table"
+                                                               filename="export.xls"
+                                                               title="ADF Faces Export - Selected Without Details" exportedRows="selectedWithoutDetails"/>
+                      </af:commandToolbarButton>
+                      <af:commandToolbarButton text="Export All Rows Without Details" immediate="true"
+                                           id="exportAllDetail">
+                            <af:exportCollectionActionListener type="excelHTML" exportedId="table"
+                                                               filename="export.xls"
+                                                               title="ADF Faces Export - All Without Detail" exportedRows="allWithoutDetails"/>
+                      </af:commandToolbarButton>
+                      <af:commandToolbarButton text="Export Selected Rows Without Details" immediate="true"
+                                           id="exportSelDetail">
+                            <af:exportCollectionActionListener type="excelHTML" exportedId="table"
+                                                               filename="export.xls"
+                                                               title="ADF Faces Export - Selected Without Details" exportedRows="selectedWithoutDetails"/>
+                      </af:commandToolbarButton>
+
+
+                    <af:goButton text="view page source" destination="#{facesContext.viewRoot.viewId}.source"/>
+                    <af:commandToolbarButton immediate="true" text="TagGuide" action="guide"/>
+
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="statusbar">
+                  <af:toolbar id="t3">
+                    <af:outputText id="statusText"
+                                   inlineStyle="margin-left:5px; white-space:nowrap"
+                                   value="Custom Statusbar Message"/>
+                  </af:toolbar>
+                </f:facet>
+                <af:table var="test1" value="#{smallDataSet}" id="table" rowSelection="multiple"
+                          columnSelection="multiple" summary="table data">
+                  <f:facet name="detailStamp">
+                    <af:panelFormLayout rows="4" labelWidth="33%" fieldWidth="67%"
+                                        inlineStyle="width:400px" id="pfl1">
+                      <af:inputText label="Name" value="#{test1.name}" required="true"
+                                    id="it1"/>
+                      <af:group id="g1">
+                        <af:commandLink partialSubmit="true"
+                        text="Click Me" id="cl1"/>
+                        <af:inputText label="Size" value="#{test1.size}"
+                                      id="it2"/>
+                        <af:inputText label="Date Modified" value="#{test1.inputDate}"
+                                      id="it3"/>
+                        <af:inputText label="Created by" id="it4"/>
+                      </af:group>
+                    </af:panelFormLayout>
+                  </f:facet>
+                  <af:column width="40" rowHeader="true" headerText="Row Number"
+                             id="c1">
+                    <af:outputText value="#{test1.no}" id="ot1"/>
+                  </af:column>
+                  <af:column headerText="Number" displayIndex="1" align="end"
+                             id="c2">
+                    <af:outputText value="#{test1.no}" id="ot2"/>
+                  </af:column>
+                  <af:column sortProperty="name" headerText="Name" sortable="true"
+                             displayIndex="2" id="c3">
+                    <af:panelGroupLayout id="pgl1">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                shortDesc="icon" id="i1"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                     id="ot3"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size" frozen="true" displayIndex="0" align="center"
+                             id="c4">
+                    <af:column headerText="Size In KB width some more text to make it wrap"
+                               noWrap="false" align="end" id="c5">
+                      <af:outputText value="#{test1.size}" id="ot4"/>
+                    </af:column>
+                    <af:column headerText="Date Modified" align="center"
+                               id="c6">
+                      <af:outputText value="#{test1.date}" id="ot5"/>
+                    </af:column>
+                  </af:column>
+                  <af:column headerText="Parent Col5/6" align="center" id="c7">
+                    <af:column headerText="Col5 (Sortable)" align="center" sortProperty="col5"
+                               sortable="true" id="c8">
+                      <af:outputText value="#{test1.col5}" id="ot6"/>
+                    </af:column>
+                    <af:column headerText="Col6" align="center" id="c9">
+                      <af:outputText value="#{test1.col6}" id="ot7"/>
+                    </af:column>
+                  </af:column>
+                  <af:column headerText="Parent Col7/8/9/10" align="center"
+                             id="c10">
+                    <af:column headerText="Parent Col7/8" align="center"
+                               id="c11">
+                      <af:column align="end" headerText="Col7 (Sortable)" noWrap="false"
+                                 sortProperty="col7" sortable="true" id="c12">
+                        <af:outputText value="#{test1.col7}" id="ot8"/>
+                      </af:column>
+                      <af:column headerText="Col8 (Sortable)" align="end" sortProperty="col8"
+                                 sortable="true" id="c13">
+                        <af:outputText value="#{test1.col8}" id="ot9"/>
+                      </af:column>
+                    </af:column>
+                    <af:column headerText="Parent Col9/10" align="center"
+                               id="c14">
+                      <af:column headerText="Col9" align="center" id="c15">
+                        <af:outputText value="#{test1.col9}" id="ot10"/>
+                      </af:column>
+                      <af:column headerText="Col10" align="center" id="c16">
+                        <af:outputText value="#{test1.col10}" id="ot11"/>
+                      </af:column>
+                    </af:column>
+                  </af:column>
+                  <af:column headerText="Parent Col11/12" align="center"
+                             id="c17">
+                    <af:column headerText="Col11" align="end" noWrap="false"
+                               id="c18">
+                      <af:outputText value="#{test1.col11}" id="ot12"/>
+                    </af:column>
+                    <af:column headerText="Col12" align="end" id="c19">
+                      <af:outputText value="#{test1.col12}" id="ot13"/>
+                    </af:column>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

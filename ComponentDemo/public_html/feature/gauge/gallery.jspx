@@ -1,0 +1,389 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Gauge Gallery" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Gauge Gallery Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Gauge Gallery"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:panelAccordion id="pa1" dimensionsFrom="children" styleClass="AFStretchWidth" discloseMany="true">
+              <af:showDetailItem text="LED Gauge" disclosed="true">
+                <af:panelGroupLayout layout="horizontal">
+                  <dvt:ledGauge value="23" type="circle"/>
+                  <dvt:ledGauge value="23" type="diamond"/>
+                  <dvt:ledGauge value="23" type="rectangle"/>
+                  <dvt:ledGauge value="23" type="rectangle" inlineStyle="height:40px;width:60px;"/>
+                  <dvt:ledGauge value="23" type="star"/>
+                  <dvt:ledGauge value="23" type="human">
+                    <dvt:gaugeMetricLabel rendered="false"/>
+                  </dvt:ledGauge>
+                  <dvt:ledGauge value="23" type="triangle" rotation="90"/>
+                  <dvt:ledGauge value="23" type="triangle" rotation="0"/>
+                  <dvt:ledGauge value="23" type="triangle" rotation="270"/>
+                  <dvt:ledGauge value="23" type="triangle" rotation="180"/>
+                  <dvt:ledGauge value="23" type="arrow" rotation="90"/>
+                  <dvt:ledGauge value="23" type="arrow" rotation="0"/>
+                  <dvt:ledGauge value="23" type="arrow" rotation="270"/>
+                  <dvt:ledGauge value="23" type="arrow" rotation="180"/>
+                </af:panelGroupLayout>
+                <af:outputLabel value="Shapes"/>
+                <af:spacer height="10"/>
+                <af:panelGroupLayout layout="horizontal">
+                  <dvt:ledGauge value="23" size="1"/>
+                  <dvt:ledGauge value="23" size="0.75"/>
+                  <dvt:ledGauge value="23" size="0.5"/>
+                  <dvt:ledGauge value="23" size="0.25"/>
+                </af:panelGroupLayout>
+                <af:outputLabel value="Size"/>
+                <af:spacer height="10"/>
+                <af:panelGroupLayout layout="horizontal">
+                  <dvt:ledGauge value="25">
+                    <dvt:gaugeThreshold maximum="33"/>
+                    <dvt:gaugeThreshold maximum="67"/>
+                    <dvt:gaugeThreshold/>
+                  </dvt:ledGauge>
+                  <dvt:ledGauge value="50">
+                    <dvt:gaugeThreshold maximum="33"/>
+                    <dvt:gaugeThreshold maximum="67"/>
+                    <dvt:gaugeThreshold/>
+                  </dvt:ledGauge>
+                  <dvt:ledGauge value="75">
+                    <dvt:gaugeThreshold maximum="33"/>
+                    <dvt:gaugeThreshold maximum="67"/>
+                    <dvt:gaugeThreshold/>
+                  </dvt:ledGauge>
+                </af:panelGroupLayout>
+                <af:outputLabel value="Thresholds: showPopupBehavior on click"/>
+                <af:panelGroupLayout>
+                  <dvt:ledGauge value="23" type="circle">
+                    <af:showPopupBehavior popupId="noteWindowPopup" triggerType="click" align="endAfter"/>
+                  </dvt:ledGauge>
+                </af:panelGroupLayout>
+                <af:outputLabel value="Action Event"/>
+                <af:panelGroupLayout>
+                  <dvt:ledGauge value="23" type="circle" action="feature.gaugeIndex">
+                  </dvt:ledGauge>
+                </af:panelGroupLayout>
+              </af:showDetailItem>
+              <af:showDetailItem text="Rating Gauge" disclosed="true">
+               <af:panelGroupLayout layout="horizontal" valign="top">
+               <af:panelGroupLayout layout="vertical" valign="top">
+                <af:outputLabel value="Static"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:ratingGauge inlineStyle="width:90px;" value="3"/>
+                      <af:outputLabel value="Default"/>
+                    </af:panelGroupLayout>
+                    <af:panelGroupLayout layout="horizontal">
+                      <af:spacer height="10"/>
+                      <dvt:ratingGauge inlineStyle="width:90px;" value="3" changed="true"/>
+                      <af:outputLabel value="changed: true"/>
+                    </af:panelGroupLayout>
+                    <af:panelGroupLayout layout="horizontal">
+                      <af:spacer height="10"/>
+                      <dvt:ratingGauge inlineStyle="width:90px;" value="4" unselectedShape="dot"/>
+                      <af:outputLabel value="unselectedShape: dot"/>
+                    </af:panelGroupLayout>
+                    <af:panelGroupLayout layout="horizontal">
+                      <af:spacer height="10"/>
+                      <dvt:ratingGauge inlineStyle="width:90px;" value="2" shape="diamond"/>
+                      <af:outputLabel value="shape: diamond"/>
+                    </af:panelGroupLayout>
+                </af:panelGroupLayout>
+                <af:spacer width="10"/>
+                <af:panelGroupLayout layout="vertical" valign="top">
+                <af:outputLabel value="Editable"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:ratingGauge inlineStyle="width:90px;" value="1" readOnly="false"/>
+                      <af:outputLabel value="readOnly: false"/>
+                      <af:spacer height="10"/>
+                    </af:panelGroupLayout>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:ratingGauge inlineStyle="width:90px;" value="2" readOnly="false" inputIncrement="half"/>
+                      <af:outputLabel value="readOnly: false, inputIncrement: half"/>
+                      <af:spacer height="10"/>
+                    </af:panelGroupLayout>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:ratingGauge inlineStyle="width:90px;" value="4" unselectedShape="dot" readOnly="false">
+                        <dvt:gaugeThreshold shortDesc="Poor" maximum="1"/>
+                        <dvt:gaugeThreshold shortDesc="Average" maximum="4"/>
+                        <dvt:gaugeThreshold shortDesc="Good"/>
+                      </dvt:ratingGauge>
+                      <af:outputLabel value="Custom Tooltip"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                <af:spacer width="10"/>
+                <af:panelGroupLayout layout="vertical" valign="top">
+                <af:outputLabel value="Vertical"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:ratingGauge inlineStyle="width:20px;height:90px;" value="4" orientation="vertical"/>
+                      <af:spacer width="10"/>
+                      <dvt:ratingGauge inlineStyle="width:20px;height:90px;" value="3" orientation="vertical" changed="true"/>
+                      <af:spacer width="10"/>
+                      <dvt:ratingGauge inlineStyle="width:20px;height:90px;" value="2" orientation="vertical" readOnly="false"/>
+                      <af:spacer width="10"/>
+                      <dvt:ratingGauge inlineStyle="width:20px;height:90px;" value="1" orientation="vertical" shape="human" readOnly="false" inputIncrement="half"/>
+                    </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+              </af:showDetailItem>
+              <af:showDetailItem text="Status Meter Gauge" disclosed="true">
+                <af:panelGroupLayout layout="horizontal">
+                  <af:panelGroupLayout layout="vertical">
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge value="25" readOnly="false">
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                      <af:outputLabel value="(defaults)"/>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge value="40" readOnly="false" thresholdDisplay="onIndicator" plotArea="on">
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                      <af:outputLabel value="(thresholdDisplay: onIndicator, plotArea: on)"/>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge value="50" readOnly="false" thresholdDisplay="currentOnly">
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                      <af:outputLabel value="(thresholdDisplay: currentOnly)"/>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge value="75" readOnly="false" thresholdDisplay="all" indicatorSize="0.6">
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                      <af:outputLabel value="(thresholdDisplay: all, indicatorSize: 0.6)"/>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge value="80" readOnly="false" indicatorSize="0.5" plotArea="on">
+                        <dvt:referenceLine color="#FFFFFF" value="75"/>
+                        <dvt:referenceLine color="#000000" value="95"/>
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                        <af:showPopupBehavior popupId="noteWindowPopup" triggerType="click" align="endAfter"/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                      <af:outputLabel value="(reference lines, showPopupBehavior on click)"/>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge value="90" readOnly="false" plotArea="on" title="SALES"
+                                            titlePosition="center" borderRadius="0%">
+                        <dvt:gaugeMetricLabel position="center"/>
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                      <af:outputLabel value="(labelPosition, title, borderRadius)"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                  <af:spacer width="10"/>
+                    <af:panelGroupLayout layout="vertical">
+                      <af:spacer width="10"/>
+                      <af:panelGroupLayout layout="horizontal">
+                        <dvt:statusMeterGauge inlineStyle="width:20px;height:200px;" readOnly="false" orientation="vertical" value="25">
+                          <dvt:gaugeThreshold maximum="33"/>
+                          <dvt:gaugeThreshold maximum="67"/>
+                          <dvt:gaugeThreshold/>
+                        </dvt:statusMeterGauge>
+                        <af:spacer width="5"/>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="vertical">
+                      <af:spacer width="10"/>
+                      <af:panelGroupLayout layout="horizontal">
+                        <dvt:statusMeterGauge value="40" inlineStyle="width:20px;height:200px;" readOnly="false" orientation="vertical" thresholdDisplay="onIndicator" plotArea="on">
+                          <dvt:gaugeThreshold maximum="33"/>
+                          <dvt:gaugeThreshold maximum="67"/>
+                          <dvt:gaugeThreshold/>
+                        </dvt:statusMeterGauge>
+                        <af:spacer width="5"/>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="vertical">
+                      <af:spacer width="10"/>
+                      <af:panelGroupLayout layout="horizontal">
+                        <dvt:statusMeterGauge value="50" inlineStyle="width:20px;height:200px;" readOnly="false" orientation="vertical" thresholdDisplay="currentOnly">
+                          <dvt:gaugeThreshold maximum="33"/>
+                          <dvt:gaugeThreshold maximum="67"/>
+                          <dvt:gaugeThreshold/>
+                        </dvt:statusMeterGauge>
+                        <af:spacer width="5"/>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="vertical">
+                      <af:spacer width="10"/>
+                      <af:panelGroupLayout layout="horizontal">
+                        <dvt:statusMeterGauge value="75" inlineStyle="width:20px;height:200px;" readOnly="false" orientation="vertical" thresholdDisplay="all" indicatorSize="0.6">
+                          <dvt:gaugeThreshold maximum="33"/>
+                          <dvt:gaugeThreshold maximum="67"/>
+                          <dvt:gaugeThreshold/>
+                        </dvt:statusMeterGauge>
+                        <af:spacer width="5"/>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                     <af:panelGroupLayout layout="vertical">
+                      <af:spacer width="10"/>
+                      <af:panelGroupLayout layout="horizontal">
+                       <dvt:statusMeterGauge value="80" inlineStyle="width:20px;height:200px;" readOnly="false" orientation="vertical" indicatorSize="0.5" plotArea="on">
+                          <dvt:referenceLine color="#FFFFFF" value="75"/>
+                          <dvt:referenceLine color="#000000" value="95"/>
+                          <dvt:gaugeThreshold maximum="33"/>
+                          <dvt:gaugeThreshold maximum="67"/>
+                          <dvt:gaugeThreshold/>
+                        <af:showPopupBehavior popupId="noteWindowPopup" triggerType="click" align="endAfter"/>
+                        </dvt:statusMeterGauge>
+                        <af:spacer width="5"/>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="vertical">
+                      <af:spacer width="10"/>
+                      <af:panelGroupLayout layout="horizontal">
+                        <dvt:statusMeterGauge value="90" inlineStyle="width:20px;height:200px;" readOnly="false" orientation="vertical" plotArea="on">
+                          <dvt:gaugeMetricLabel position="center"/>
+                          <dvt:gaugeThreshold maximum="33"/>
+                          <dvt:gaugeThreshold maximum="67"/>
+                          <dvt:gaugeThreshold/>
+                        <af:showPopupBehavior popupId="noteWindowPopup" triggerType="click" align="endAfter"/>
+                        </dvt:statusMeterGauge>
+                        <af:spacer width="5"/>
+                        <af:outputLabel value="(orientation: vertical)"/>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  <af:spacer width="10"/>
+                  <af:panelGroupLayout layout="vertical">
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge inlineStyle="width:50px;height:50px;" readOnly="false" orientation="circular" value="25"
+                                            inputIncrement="5">
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                      <af:outputLabel value="(orientation: circular)"/>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge inlineStyle="width:50px;height:50px;" readOnly="false" orientation="circular" value="30">
+                        <dvt:gaugeMetricLabel textType="percent"/>
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                      <af:outputLabel value="(orientation: circular, percentage labels)"/>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge inlineStyle="width:50px;height:50px;" readOnly="false" orientation="circular" value="75">
+                        <dvt:referenceLine color="#000000" value="65"/>
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                    <af:showPopupBehavior popupId="noteWindowPopup" triggerType="click" align="beforeStart"/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                      <af:outputLabel value="(orientation: circular, reference lines, showPopupBehavior on click)"/>
+                    </af:panelGroupLayout>
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="horizontal">
+                                          <dvt:statusMeterGauge inlineStyle="width:120px;height:60px;" readOnly="false" orientation="circular" value="50"
+                                            angleExtent="180" startAngle="180" title="SALES" plotArea="on">
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                      <af:outputLabel value="(orientation: circular, start angle, angle extent, title)"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:showDetailItem>
+              <af:showDetailItem text="Dial Gauge" disclosed="true" id="sdh1">
+                <af:panelGroupLayout layout="horizontal" id="pgl1">
+                  <dvt:dialGauge id="dg1" readOnly="false" value="63"/>
+                  <dvt:dialGauge id="dg2" readOnly="false" background="domeAlta"  value="63"/>
+                  <dvt:dialGauge id="dg3" readOnly="false" background="rectangleAlta"  value="63"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="horizontal" id="pgl2">
+                  <dvt:dialGauge id="dg4" readOnly="false" background="circleAntique"  value="63"/>
+                  <dvt:dialGauge id="dg5" readOnly="false" background="domeAntique"  value="63"/>
+                  <dvt:dialGauge id="dg6" readOnly="false" background="rectangleAntique"  value="63"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="horizontal" id="pgl3">
+                  <dvt:dialGauge id="dg7" readOnly="false" background="circleLight"  value="63"/>
+                  <dvt:dialGauge id="dg8" readOnly="false" background="domeLight"  value="63"/>
+                  <dvt:dialGauge id="dg9" readOnly="false" background="rectangleLight"  value="63"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="horizontal" id="pgl4">
+                  <dvt:dialGauge id="dg10" readOnly="false" background="circleDark"  value="63">
+                    <dvt:gaugeMetricLabel labelStyle="color:white"/>
+                    <dvt:gaugeTickLabel labelStyle="color:white"/>
+                  </dvt:dialGauge>
+                  <dvt:dialGauge id="dg11" readOnly="false" background="domeDark"  value="63">
+                    <dvt:gaugeMetricLabel labelStyle="color:white"/>
+                    <dvt:gaugeTickLabel labelStyle="color:white"/>
+                  </dvt:dialGauge>
+                  <dvt:dialGauge id="dg12" readOnly="false" background="rectangleDark" value="63">
+                    <dvt:gaugeMetricLabel labelStyle="color:white"/>
+                    <dvt:gaugeTickLabel labelStyle="color:white"/>
+                  </dvt:dialGauge>
+                </af:panelGroupLayout>
+              </af:showDetailItem>
+            </af:panelAccordion>
+              <af:popup id="noteWindowPopup" launcherVar="source" eventContext="launcher"
+                      clientComponent="true" contentDelivery="lazyUncached">
+                <af:noteWindow id="nw1">
+                    <af:outputFormatted value="Hello!" id="of"/>
+                </af:noteWindow>
+              </af:popup>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Header help demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Header help"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="pgl1">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <af:outputText value="Help on header components: see javadoc
+            on ResourceBundleHelpProvider for details on how to access help, also see
+            DemoHelpProvider for details on how to implement external URL."
+                         id="ot1"/>
+          <af:panelGroupLayout layout="vertical" id="pgl2">
+            <f:facet name="separator">
+              <af:spacer height="10px" id="s2"/>
+            </f:facet>
+            <af:outputText value="panelHeader with helpTopicId." id="ot2"/>
+            <af:panelHeader helpTopicId="TOPICID_ALL" shortDesc="shortDesc text" binding="#{editor.component}" text="Panel Header"
+                            id="ph1">
+             <af:outputText value="Header details..." id="ot3"/>
+            </af:panelHeader>
+
+            <af:spacer height="10px" id="s3"/>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout layout="vertical" id="pgl3">
+            <f:facet name="separator">
+              <af:spacer height="10px" id="s4"/>
+            </f:facet>
+            <af:outputText value="showDetailHeader with helpTopicId." id="ot4"/>
+            <af:showDetailHeader helpTopicId="TOPICID_ALL" shortDesc="shortDesc text" text="Show Detail Header" disclosed="true"
+                                 id="sdh1">
+             <af:outputText value="Header details..." id="ot5"/>
+            </af:showDetailHeader>
+
+            <af:spacer height="10px" id="s5"/>
+          </af:panelGroupLayout>
+
+          <af:panelGroupLayout layout="vertical" id="pgl4">
+            <f:facet name="separator">
+              <af:spacer height="10px" id="s6"/>
+            </f:facet>
+            <af:outputFormatted styleUsage="instruction" value="query with helpTopicId."
+                                id="of1"/>
+            <af:query id="empqry"
+                          disclosed="true"
+                          headerText="Search" inlineStyle="width:500px"
+                          helpTopicId="TOPICID_ALL"
+                          value="#{demoQuery.queryDescriptor}"
+                          model="#{demoQuery.queryModel}"
+                          queryListener="#{demoQuery.processQuery}"/>
+
+          </af:panelGroupLayout>
+
+        </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Thematic Map Click Events Demo"
+                     binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle"
+                             value="Thematic Map Click Events Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Thematic Map Click Events"/>
+                <f:facet name="center">
+                    <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth"
+                                           topHeight="auto" endWidth="200px">
+                        <f:facet name="top">
+                            <af:panelGroupLayout layout="vertical">
+                                <f:verbatim>
+                                    <b>Demonstrates click events on markers in a
+                                       Thematic Map</b>
+                                    <ul>
+                                        <li>Click on any human marker to see the
+                                            use of actionListener. The
+                                            actionListener will update the
+                                            detail text shown on the page.</li>
+                                         
+                                        <li>Click on any circle marker to see
+                                            the use of the action attribute for
+                                            navigating to another page.</li>
+                                    </ul>
+                                </f:verbatim>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <f:facet name="center">
+                            <dvt:thematicMap id="thematicMap"
+                                             basemap="usa"
+                                             inlineStyle="width:98%;" 
+                                             summary="Thematic map showing action events">
+                                <af:transition transition="auto" triggerType="display"/>
+                                <dvt:areaLayer id="areaLayer" layer="states"
+                                               labelDisplay="off">
+                                    <dvt:areaDataLayer id="dataLayer"
+                                                       contentDelivery="immediate"
+                                                       value="#{tmapBean.colorModel}"
+                                                       var="row"
+                                                       varStatus="rowStatus"
+                                                       selectionMode="single">
+                                        <dvt:areaLocation id="dataLoc"
+                                                          name="#{row.name}">
+                                            <dvt:marker id="marker1"
+                                                        shape="human" scaleX="3"
+                                                        scaleY="3"
+                                                        fillColor="#666699"
+                                                        actionListener="#{tmapEventBean.processClick}"
+                                                        rendered="#{row.category == 'category1'}" 
+                                                        shortDesc="Human shape"/>
+                                            <dvt:marker id="marker2"
+                                                        shape="circle"
+                                                        scaleX="2" scaleY="2"
+                                                        fillColor="#006666"
+                                                        action="mapAction"
+                                                        rendered="#{row.category == 'category2'}" 
+                                                        shortDesc="Circle shape"/>
+                                        </dvt:areaLocation>
+                                    </dvt:areaDataLayer>
+                                </dvt:areaLayer>
+                            </dvt:thematicMap>
+                        </f:facet>
+                        <f:facet name="end">
+                            <af:outputText value="#{tmapEventBean.clickString}"
+                                           id="ot1"
+                                           partialTriggers="thematicMap:areaLayer:dataLayer:marker1"/>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

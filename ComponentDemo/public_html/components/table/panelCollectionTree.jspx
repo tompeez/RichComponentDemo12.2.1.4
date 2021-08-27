@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="PanelCollection Tree Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="tree"/>
+        <f:attribute name="visualDesignName" value="tree"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="25" bottomHeight="150" id="psl1">
+            <f:facet name="top">
+              <af:outputFormatted value="&lt;b>PanelCollection Tree Demo&lt;/b>"
+                                  id="of1"/>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelCollection id="pc1">
+                <f:facet name="secondaryToolbar">
+                  <af:menuBar>
+                    <af:goMenuItem text="Tree Demo" destination="../tree.jspx"/>
+                    <af:commandMenuItem immediate="true" text="Tag Guide" action="guide"/>
+                    <af:goMenuItem text="view page source" destination="#{facesContext.viewRoot.viewId}.source"/>
+                  </af:menuBar>
+                </f:facet>
+                <af:tree id="folderTree" var="directory" summary="panel collection tree demo"
+                         rowSelection="multiple" value="#{fs.treeModel}"
+                         focusListener="#{fs.onTreeFocus}"
+                         disclosedRowKeys="#{fs.treeDisclosedRowKeys}"
+                         binding="#{editor.component}" rowDisclosureListener="#{fs.toggle}">
+                  <f:facet name="nodeStamp">
+                    <af:panelGroupLayout id="pgl1">
+                      <af:image source="#{directory.icon}" id="nodeIcon"
+                                inlineStyle="#{demoSkin.altaBased 
+                                       ? 'padding-left:4px; padding-right:8px; vertical-align:middle; height:16px; width:16px;'
+                                       : 'margin-right:3px; vertical-align:middle; height:16px; width:16px;'}"
+                                shortDesc="directory icon"/>
+                      <af:outputText id="directoryStamp" value="#{directory.name}"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <f:facet name="pathStamp">
+                    <af:panelGroupLayout id="pgl2">
+                      <af:outputFormatted value="#{directory.name}" id="of2"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:tree>
+              </af:panelCollection>
+            </f:facet>
+            <f:facet name="bottom">
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <af:outputText value="See also:" id="ot1"/>
+                <af:panelList id="pl1">
+                  <af:goLink text="panelCollection with tree showing default menu and toolbar"
+                             destination="panelCollectionTree2.jspx" id="gl3"/>
+                  <af:goLink text="tree demo" destination="/components/tree.jspx"
+                             id="gl4"/>
+                  <af:goLink text="panelCollection demo"
+                             destination="/components/panelCollection.jspx"
+                             id="gl5"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

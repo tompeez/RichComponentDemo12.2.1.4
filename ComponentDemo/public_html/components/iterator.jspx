@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2" >
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Iterator Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="iterator"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:messages id="m1"/>
+            <af:outputFormatted styleUsage="instruction" value="&lt;b>Iterated Data with VarStatus&lt;/b>"
+                                id="of1"/>
+
+            <af:panelFormLayout rows="10" labelWidth="33%"
+                                fieldWidth="67%" id="panelFormLayout1">
+              <!--
+              <af:iterator var="row" first="3" rows="3" varStatus="stat"
+                        binding="#{editor.component}"
+                        value="#{periodicTable.tableData}" >
+                <af:switcher facetName="#{(stat.index &lt; 4) ? 'start' : 'end'}">
+                  <f:facet name="start">
+                    <af:iterator var="row2" first="1" rows="2" value="#{periodicTable.tableData}">
+                      <af:inputText label="Name" value="#{row2.name}" readOnly="true"/>
+                      <af:inputText label="Atomic #" value="#{row2.number}" readOnly="true"/>
+                    </af:iterator>
+                  </f:facet>
+                  <f:facet name="end">
+                    <af:iterator var="row3" first="10" rows="3" value="#{periodicTable.tableData}">
+                      <af:inputText label="Symbol" value="#{row3.symbol}" readOnly="true"/>
+                      <af:inputText label="Group" value="#{row3.group}" readOnly="true"/>
+                    </af:iterator>
+                  </f:facet>
+                </af:switcher>
+                <af:group>
+                  <af:outputText value="#{stat.count}. Index:#{stat.index} of #{stat.model.rowCount}"/>
+                  <af:inputText label="Element Name" value="#{row.name}"/>
+                  <af:inputText label="Atomic Number" value="#{row.number}"/>
+                  <af:inputText label="Symbol" value="#{row.symbol}"/>
+                  <af:inputText label="Group" value="#{row.group}"/>
+                </af:group>
+              </af:iterator>
+              <-->
+             <af:iterator id="it0" first="5" rows="2" value="#{periodicTable.tableData}" varStatus="outerStat">
+               <af:iterator var="row" first="3" rows="3" varStatus="innerStat"
+                        binding="#{editor.component}"
+                        value="#{periodicTable.tableData}" id="it">
+                  <af:group id="g1">
+                    <af:outputText value="#{innerStat.count}. Outer Index:#{outerStat.index} Inner Index:#{innerStat.index} of #{innerStat.model.rowCount}"
+                                 id="ot1"/>
+                    <af:inputText label="Element Name" value="#{row.name}" id="elementName"/>
+                    <af:inputText label="Atomic Number" value="#{row.number}"
+                                id="it1"/>
+                    <af:inputText label="Symbol" value="#{row.symbol}" id="it2"/>
+                    <af:inputText label="Group" value="#{row.group}" id="it3"/>
+                  </af:group>
+                </af:iterator>
+              </af:iterator>
+             </af:panelFormLayout>
+
+            <af:outputText value="Use the editor to change the range."
+                           id="ot2"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

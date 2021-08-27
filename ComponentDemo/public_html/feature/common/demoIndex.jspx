@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Displays the common UI of the index page for Feature demos</description>
+        <attribute>
+          <description>Component name to display in the header and the Overview section</description>
+          <attribute-name>compName</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Data model to be used by the table and iterator components</description>
+          <attribute-name>demoList</attribute-name>
+          <attribute-class>[[Ljava.lang.String;</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Data model to be used by the table and iterator components</description>
+          <attribute-name>categoryList</attribute-name>
+          <attribute-class>[[Ljava.lang.String;</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Path to the component's sample</description>
+          <attribute-name>samplePath</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>        
+    <af:panelStretchLayout id="pgl1">
+        <f:facet name="top">
+        <af:panelHeader text="Introduction to #{attrs.compName}"  styleClass="AFIEOverflowWorkaround" id="ph1">
+          <f:facet name="toolbar">
+            <af:toolbar id="t1">
+              <af:commandToolbarButton text="Print Content" icon="/images/print.png"
+                        partialSubmit="true" id="ctb1">
+                <af:showPrintablePageBehavior/>
+              </af:commandToolbarButton>
+            </af:toolbar>
+          </f:facet>
+          <af:panelGroupLayout layout="vertical" id="pgl2">
+            <af:outputText escape="false" value="This page lists out various UI features of the #{attrs.compName} component." />                        
+          </af:panelGroupLayout>
+        </af:panelHeader>
+        </f:facet>
+        <f:facet name="center">
+            <af:panelGroupLayout layout="scroll" id="mdl1">
+              <af:spacer height="2" id="sp1"/>
+              <af:panelHeader text="Overview" size="2" id="phoverw">
+                <af:outputText value="For an overview of a #{attrs.compName} component see this " id="ot2"/>  
+                <af:goLink text="sample" id="compsmpl" destination="#{attrs.samplePath}"/>
+                <af:outputText value=". Additional feature demos are available below." id="ot4"/>
+              </af:panelHeader>
+              <af:spacer height="18" id="s1"/>
+              <af:panelHeader text="Feature List" size="2" id="ph2">
+                  <af:spacer height="6" id="s2"/>
+                  
+                  <!-- View type radio button -->
+                  <af:selectOneRadio label="View" autoSubmit="true" value="#{featureIndexBean.viewType}"
+                        layout="horizontal" id="viewRadio">
+                    <af:selectItem label="List" value="list" />
+                    <af:selectItem label="Detail" value="detail"/>
+                  </af:selectOneRadio>
+                  <af:spacer height="6" />    
+                  
+                  <!-- Table (Detail) View -->                      
+                  <af:table rowSelection="multiple" styleClass="AFStretchWidth" 
+                    columnSelection="multiple" filterVisible="true" visible="#{featureIndexBean.viewType == 'list' ? 'false' : 'true'}"
+                    var="data" value="#{attrs.demoList}" id="tableView"
+                    summary="table data" columnStretching="multiple" partialTriggers="viewRadio">
+                       <af:column headerText="Category" id="c1" displayIndex="0" width="40%" rowHeader="unstyled"
+                                sortable="true" sortProperty="category" filterable="true">
+                            <af:outputText value="#{data.category}" id="ot3"/>
+                        </af:column>
+                        <af:column displayIndex="1" headerText="Demo Name" filterable="true" sortable="true"
+                                sortProperty="label" width="100%" id="c2">                               
+                            <af:commandLink action="#{data.actionOutcome}" text="#{data.label}" id="cl1"/>
+                        </af:column>
+                        <af:column displayIndex="2" headerText="Description" filterable="true" width="120%"
+                                    id="c3" noWrap="false">
+                            <af:outputText value="#{data.shortDesc}" id="ot5"/>                                
+                        </af:column>
+                        <af:column filterable="true" headerText="Page Source" width="100%"
+                                   displayIndex="3" id="c4">                              
+                             <af:goLink destination="#{data.source}" text="#{data.sourceFileName}"
+                                        id="gl1"/>
+                        </af:column>                                    
+                        <af:column visible="true" filterable="true" headerText="Backing Bean" width="100%"
+                                   displayIndex="4" id="c5">                            
+                            <af:goLink destination="#{data.backingBean}" text="#{data.beanFileName}" id="gl3"/>
+                        </af:column>
+                        <af:column headerText="Bookmarkable Link" width="50%" displayIndex="5" id="c6">
+                            <af:goImageLink id="lnkBook" destination="/faces#{data.focusViewId}"
+                                icon="/images/link-e.png" hoverIcon="/images/link-h.png" depressedIcon="/images/link-p.png"/>                            
+                        </af:column>                           
+                    </af:table>
+                    
+                    <!-- List View -->
+                    <af:spacer height="20"/>
+                    <af:panelGroupLayout id="listView" layout="scroll"  visible="#{featureIndexBean.viewType == 'list' ? 'true' : 'false'}"
+                                         partialTriggers="viewRadio">
+                      <af:iterator value="#{attrs.categoryList}" var="data" id="i1">                           
+                          <af:panelGroupLayout id="categoryGroup" layout="vertical">
+                              <af:outputText styleClass="MyStrongText" value="#{data.name}" inlineStyle="font-size:16px;text-decoration:underline"/>      
+                              <af:spacer height="5"/>
+                              <af:iterator value="#{data.list}" var="data2" id="i2">                           
+                                  <af:panelGroupLayout layout="vertical" id="g22">
+                                                                       
+                                      <af:commandLink action="#{data2.actionOutcome}" text="#{data2.label}" inlineStyle="font-weight:bold;font-size:11px"/>
+                                      <af:outputText value="#{data2.shortDesc}" inlineStyle="font-size:11px"/>    
+                                      <af:spacer height="10"/>
+                                  </af:panelGroupLayout>      
+                                </af:iterator>
+                                <af:spacer height="20"/>
+                            </af:panelGroupLayout>
+                        </af:iterator>
+                    </af:panelGroupLayout>  
+              </af:panelHeader>
+            </af:panelGroupLayout>
+        </f:facet>
+      </af:panelStretchLayout>        
+  </af:componentDef>
+</jsp:root>   

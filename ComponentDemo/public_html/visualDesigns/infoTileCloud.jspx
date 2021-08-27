@@ -1,0 +1,410 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="infoTile Cloud Services Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:resource type="javascript">
+        function tileLinkSelected(evt)
+        {
+          var tile = evt.getSource().findComponent("::dc1:tile");
+          var index = tile.getProperty("index");
+          var selected = tile.getProperty("selected");
+          
+          // trigger an event to select the appropriate tile
+          if(!selected)
+          {
+            var source = evt.getSource().findComponent("::pglinfoTl");
+            (new AdfCustomEvent(source, "tileSelected", {"index": index}, false)).queue();
+          }
+        }
+        function tileSelected(evt)
+        {
+          // PPR both the info tile as well as the detail component
+          AdfPage.PAGE.addPartialTargets(AdfPage.PAGE.findComponent("pt:pglinfoTl"), AdfPage.PAGE.findComponent("pt:pglDet"));
+        }
+      </af:resource>
+      <af:resource type="css" source="/visualDesigns/infoTile/infoTileSamplePage.css"/>
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="infoTile Discreet Tile Content"/>
+        <f:attribute name="visualDesignName" value="infoTile Discreet Tile Content"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="galleryEnabled" value="false"/>
+        <f:attribute name="gmStretchChildren" value="false"/>
+        <f:facet name="center">
+          <trh:tableLayout id="pgll" width="100%">
+            <trh:rowLayout id="gr" width="100%">
+              <trh:cellFormat id="gc1" width="100%" height="20px" columnSpan="2" valign="top">
+                <af:breadCrumbs  id="bcs1" styleClass="ServicesBC">
+                  <af:commandNavigationItem text="Services"
+                                            id="cni1" styleClass="ServicesBCItem"/>
+                  <af:commandNavigationItem text="Henry's Services (Java)" id="cni2"/>
+                </af:breadCrumbs>
+              </trh:cellFormat>
+            </trh:rowLayout>
+            <trh:rowLayout id="gr2" width="100%">
+              <trh:cellFormat id="gc12" width="100%" height="40px" columnSpan="2" valign="top">
+                <af:panelGroupLayout  id="cldpgl" layout="horizontal">
+                  <af:image id="cldimg" source="/images/cloud.png" shortDesc="Could Services"/>
+                  <af:outputFormatted  styleClass="CloudSepText" value="&lt;b>Henry's Services (Java)&lt;/b>&lt;br>Subscription: Trial" id="of2"/>
+                </af:panelGroupLayout>
+              </trh:cellFormat>
+            </trh:rowLayout>
+            <trh:rowLayout id="grh3" width="100%">
+            </trh:rowLayout>
+            <trh:rowLayout id="gr3" width="100%" >
+              <trh:cellFormat id="gc2" valign="top" styleClass="CloudVerticalInfoTileCell">
+                <af:panelGroupLayout id="pglvcont" styleClass="CloudVerticalInfoTileContainer">
+                  <af:panelGroupLayout id="pglinfoTl" styleClass="InfoTileComp" clientComponent="true">
+                    <!-- Set the rows  to a large number so that all rows are rendered -->
+                    <af:iterator id="infolv"  rows="1000" value="#{infoTileBean.infoTileCloudItemModel}"  var="tile" varStatus="vs">
+                      <af:declarativeComponent  viewId="infoTile/infoTile.jsff" id="dc1">
+                        <f:attribute name="selected" value="#{infoTileBean.infoTileSelectedCloudItemIndex == vs.index ? true : false}"/>
+                        <f:attribute name="index" value="#{vs.index}"/>
+                        <!-- Specify a consistent height for the tile -->
+                        <f:attribute name="tileHeight" value="130px"/>
+                        <f:attribute name="tileWidth" value="220px"/>
+                        <f:facet name="tileContent">
+                          <af:panelGroupLayout layout="vertical" id="tcon">
+                            <af:outputText value="#{tile.title}" id="title" styleClass="CloudItemTitle"/>
+                            <af:switcher facetName="#{tile.itemType}">
+                              <f:facet name="OVERVIEW">
+                                <trh:tableLayout id="tblo1" styleClass="CloudOverview" width="100%" cellSpacing="5">
+                                  <trh:rowLayout id="rlo1" valign="middle">
+                                    <trh:cellFormat id="cfo1" halign="start" valign="middle">
+                                      <af:panelGroupLayout id="pglperut">
+                                        <af:image id="perut" shortDesc="Percent Utilization" source="/images/alta_v1/percentutilization.png"/>
+                                        <af:outputText id="otper1" value="&#160; Utilization"  styleClass="CloudPercentText"/>
+                                      </af:panelGroupLayout>                                    
+                                    </trh:cellFormat>
+                                    <trh:cellFormat id="cfo2" halign="start" valign="middle" inlineStyle="padding-bottom: 5px">
+                                      <af:outputText id="ofper1" value= "0 Overages" styleClass="CloudPercentDetail"/>
+                                    </trh:cellFormat>                  
+                                  </trh:rowLayout>
+                                  
+                                  <trh:rowLayout id="rlo2" valign="middle" >
+                                    <trh:cellFormat id="cfo3" halign="start" valign="middle">
+                                      <af:panelGroupLayout id="pglperup">
+                                        <af:image id="perup" shortDesc="Uptime" source="/images/alta_v1/percentuptime.png"/>
+                                        <af:outputText id="otper2" value="&#160; Uptime" styleClass="CloudPercentText"/>
+                                      </af:panelGroupLayout>                                    
+                                    </trh:cellFormat>
+                                    <trh:cellFormat id="cf04" halign="start" valign="middle" inlineStyle="padding-bottom: 5px">
+                                      <af:outputText id="ofper2" value="2 Outages" styleClass="CloudPercentDetailError"/>
+                                    </trh:cellFormat>                  
+                                  </trh:rowLayout>
+                                </trh:tableLayout>
+                              </f:facet>
+                              <f:facet name="ADMIN">
+                                <af:panelGroupLayout layout="vertical" id="gpladmin">
+                                  <af:panelLabelAndMessage id="pgmadm1" label="Deployed Applications:">
+                                    <af:outputLabel id="lbladm1" value="3"/>
+                                  </af:panelLabelAndMessage>
+                                  <af:panelLabelAndMessage id="pgmadm2" label="Jobs In Progress:">
+                                    <af:outputLabel id="lbladm2" value="5"/>
+                                  </af:panelLabelAndMessage>
+                                  <af:spacer id="spadm1" height="10px"/>
+                                  <af:link id="lnkadm1" text="Lock/Unlock Service" partialSubmit="true">
+                                    <af:clientListener type="action" method="tileLinkSelected"/>
+                                    <!-- TODO this should take you to the shortcut for the task in the detail through actionListener -->
+                                  </af:link>
+                                  <af:link id="lnkadm2" text="Application Archiving" partialSubmit="true">
+                                    <af:clientListener type="action" method="tileLinkSelected"/>
+                                  </af:link>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                              <f:facet name="METRICS">
+                                <af:panelGroupLayout layout="vertical" id="gplmet">
+                                  <af:panelLabelAndMessage id="pgmmet1" label="CPU Usage:">
+                                    <af:outputLabel id="lblmet1" value="74%"/>
+                                  </af:panelLabelAndMessage>
+                                  <af:panelLabelAndMessage id="pgmmet2" label="Deployed Applications:">
+                                    <af:outputLabel id="lblmet2" value="63"/>
+                                  </af:panelLabelAndMessage>
+                                  <af:panelLabelAndMessage id="pgmmet3" label="Memory Usage:">
+                                    <af:outputLabel id="lblmet3" value="52.0MB"/>
+                                  </af:panelLabelAndMessage>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                              <f:facet name="SERVICES">
+                                <af:panelGroupLayout layout="vertical" id="gplsrv">
+                                  <af:outputText id="lnksrv1" value="CRM(CRM)"/>
+                                  <af:outputText id="lnksrv2" value="HCM(HCM)"/>
+                                  <af:outputText id="lnksrv3" value="DB1(Database)"/>
+                                  <af:outputText id="lnksrv4" value="CRM(CRM)"/>
+                                </af:panelGroupLayout>
+                              </f:facet>
+                            </af:switcher>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </af:declarativeComponent>
+                    </af:iterator>
+                    <!-- Client Listener for tile selection -->
+                    <af:clientListener type="tileSelected" method="tileSelected"/>
+                    <af:serverListener type="tileSelected" method="#{infoTileBean.infoTileCloudItemSelected}"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </trh:cellFormat>
+              <trh:cellFormat id="gc3" valign="top" styleClass="CloudVerticalContentCell">
+                <af:deck id="pglDet" displayedChild="#{infoTileBean.cloudItemFirstChild}" inlineStyle="overflow:hidden">
+                  <af:transition triggerType="replace" transition="slideEnd"/>
+                  <af:transition triggerType="forward" transition="slideEnd"/>
+                  <af:transition triggerType="backward" transition="slideEnd"/>
+                  <af:switcher id="dtlswt" facetName="#{infoTileBean.selectedInfoTileCloudItem.itemType}">
+                    <f:facet name="OVERVIEW">
+                      <af:decorativeBox id="dbovw" styleClass="CloudDetailContainer">
+                        <f:facet name="center">
+                          <af:panelGroupLayout layout="vertical" id="pglss">
+                          
+                            <af:panelHeader id="phss" text="Service Status - June 2013">
+                              <f:facet name="toolbar">
+                                <af:toolbar id="tbss">
+                                  <af:link text="Month View" id="lnss1"/>
+                                  <af:group id="grpss">
+                                    <af:link text="Year View" id="lnss2"/>
+                                    <af:button text="Previous" id="btnss"/>
+                                    <af:outputText id="otss" value="Current Month"/>
+                                    <af:button text="Next" id="btnss2"/>
+                                  </af:group>
+                                </af:toolbar>
+                              </f:facet>
+                              <af:table id="tblss" value="#{infoTileBean.infoTileCloudItemListSS}" summary="Cloud Services">
+                                <af:column id="clmss1" headerText="Service Name" width="50" rowHeader="true" noWrap="false" align="start">
+                                  <af:outputText id="otsn" value="Services"/>
+                                </af:column>
+                                <af:forEach items="#{infoTileBean.infoTileCloudItemColumns}" varStatus="vsfe">
+                                  <af:column id="clmfe" styleClass="CloudServiceCell" rowHeader="{vsfe.index == 0 ? 'unstyled' : false}" headerText="#{vsfe.index+1}" width="20">
+                                    <af:outputText id="otdtss" value="&#160;"/>
+                                  </af:column>
+                                </af:forEach>
+                              </af:table>
+                              
+                              <af:panelGroupLayout id="pglsslg" layout="vertical" styleClass="CloudServiesLegendContainer">
+                                <af:panelGroupLayout layout="horizontal" id="pglsslgc" valign="middle">
+                                  <af:outputLabel id="olsslg" value="&#160;&#160;Legend:"/>
+                                  <af:outputText id="otsslg1" value="Active"/>
+                                  <af:panelGroupLayout id="pgllact" layout="vertical" styleClass="CloudServiesLegendActive"/>
+                                  <af:outputText id="otssl2" value="Disrupted"/>
+                                  <af:panelGroupLayout id="pgllids" layout="vertical" styleClass="CloudServiesLegendDisabled"/>
+                                  <af:outputText id="otssl3" value="Lockout"/>
+                                  <af:panelGroupLayout id="pglllck" layout="vertical" styleClass="CloudServiesLegendDecommission"/>
+                                  
+                                </af:panelGroupLayout>
+                              </af:panelGroupLayout>
+                            </af:panelHeader>
+                            
+                            <af:panelHeader id="phcpu" text="CPU Utilization">
+                              <af:panelGroupLayout id="pglcpu" inlineStyle="display: block; text-align: center">
+                                <af:image inlineStyle="padding-left: 50px" id="imgcpu" source="/images/alta_v1/overview_chart.png"/>
+                              </af:panelGroupLayout>
+                            </af:panelHeader>
+                            
+                            <af:panelHeader id="phssai" text="Additional Information">
+                              <af:panelFormLayout id="pflai" rows="4" maxColumns="2" inlineStyle="padding-left: 15%">
+                                <af:panelLabelAndMessage id="pfmai1" label="Account:">
+                                  <af:outputText id="otssai1" value="Customer6"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmai2" label="CSI Number:">
+                                  <af:outputText id="otssai2" value="CSI6"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmai3" label="Plan:">
+                                  <af:outputText id="otssai3" value="Trial6"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmai4" label="Service Start Date:">
+                                  <af:outputText id="otssai4" value="04/08/2013"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmai5" label="SPFT Account:">
+                                  <af:outputText id="otssai5" value="SFT6"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmai6" label="Service Version:">
+                                  <af:outputText id="otssai6" value="Version 6"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmai7" label="Status:">
+                                  <af:outputText id="otssai7" value="Active"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmai8" label="Service End Date:">
+                                  <af:outputText id="otssai8" value="05/20/2013"/>
+                                </af:panelLabelAndMessage>
+                              </af:panelFormLayout>
+                            </af:panelHeader>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </af:decorativeBox>
+                    </f:facet>
+                    <f:facet name="ADMIN">
+                      <af:decorativeBox id="dboadmn" styleClass="CloudDetailContainer">
+                        <f:facet name="center">
+                          <af:panelGroupLayout layout="vertical" id="pgladm">
+                            <af:panelHeader id="phgi" text="General Information">
+                              <af:panelFormLayout id="pflgi" rows="4" maxColumns="2" inlineStyle="padding-left: 15%">
+                                <af:panelLabelAndMessage id="pfmgi1" label="Status:">
+                                  <af:outputText id="otsgi1" value="Active"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmgi2" label="Serial Version:">
+                                  <af:outputText id="otsgi2" value="Version6"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmgi3" label="Plan:">
+                                  <af:outputText id="otsgi3" value="Trial6"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmgi4" label="Service Start Date:">
+                                  <af:outputText id="otsgi4" value="04/08/2013"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmgi5" label="Active Sessions:">
+                                  <af:outputText id="otsgi5" value="0"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmgi6" label="Open JDBC Connections:">
+                                  <af:outputText id="otsgi6" value="1"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmgi7" label="JDBC Connection Creates:">
+                                  <af:outputText id="otsgi7" value="0"/>
+                                </af:panelLabelAndMessage>
+                                <af:panelLabelAndMessage id="pfmgi8" label="Service End Date:">
+                                  <af:outputText id="otsgi8" value="05/20/2013"/>
+                                </af:panelLabelAndMessage>
+                              </af:panelFormLayout>
+                            </af:panelHeader>
+                            
+                            <af:panelHeader id="phtsj" text="Tasks">
+                              <af:panelGroupLayout layout="horizontal" id="pgltsk" valign="top">
+                                <af:navigationPane hint="list" id="nptsk">
+                                  <af:commandNavigationItem id="cnitsk1" text="Manage Application" selected="true"/>
+                                  <af:commandNavigationItem id="cnitsk2" text="Jobs(5)"/>
+                                  <af:commandNavigationItem id="cnitsk3" text="Data Sources(2)"/>
+                                  <af:commandNavigationItem id="cnitsk4" text="Lock/Unlock Service"/>
+                                  <af:commandNavigationItem id="cnitsk5" text="Application Archiving"/>
+                                </af:navigationPane>
+                                <af:panelGroupLayout layout="vertical" id="pgltskin" halign="right" styleClass="AFStretchWidth">
+                                  <af:button id="btndpl" text="Deploy Application"/>
+                                  <af:spacer height="5px" id="spdep"/>
+                                  <af:listView id="lvDep" value="#{infoTileBean.infoTileCloudListData}" varStatus="vs">
+                                    <af:listItem id="lvidep">
+                                      <trh:tableLayout id="tldep" width="100%">
+                                        <trh:rowLayout id="grtldep">
+                                          <trh:cellFormat id="gcdep1" rowSpan="4" valign="top"
+                                                          inlineStyle="min-width: 125px; padding-right: 20px">
+                                            <af:outputText id="depot1" value="Application #{vs.index}"/>
+                                          </trh:cellFormat>
+                                          <trh:cellFormat id="gcdep3" width="35%">
+                                            <af:outputText id="outputText1" value="Status: Active" />
+                                          </trh:cellFormat>
+                                          <trh:cellFormat id="gcdep8" rowSpan="4" valign="top"
+                                                          inlineStyle="min-width: 100px; padding-left:10px; padding-right:10px">
+                                            <af:image source="/images/alta_v1/cpu_usage.png" shortDesc="CPU Usage" id="idep3"/>
+                                          </trh:cellFormat>
+                                          <trh:cellFormat id="gcdep4" rowSpan="4" valign="middle" width="100px" halign="end"
+                                                          inlineStyle="padding-right:20px">
+                                            <af:image id="idep4"  source="/images/alta_v1/heap.png" shortDesc="heap"/>
+                                          </trh:cellFormat>
+                                          
+                                          <trh:cellFormat id="gc4" rowSpan="4" valign="middle" width="100px" halign="end"
+                                                          inlineStyle="padding-right:20px">
+                                            <af:image id="idep5"  source="/images/settings.png"  shortDesc="Action"/>
+                                          </trh:cellFormat>
+                                        </trh:rowLayout>
+                                        <trh:rowLayout id="grdep2">
+                                          <trh:cellFormat id="gcdep5">
+                                            <af:outputText id="outputText2" value="Active Sessions: #{vs.index + 4}"/>
+                                          </trh:cellFormat>
+                                        </trh:rowLayout>
+                                        <trh:rowLayout id="grdep3">
+                                          <trh:cellFormat id="gc6">
+                                            <af:outputText id="outputText3" value="Request Processing Time: 0:0#{vs.index + 4}"/>
+                                          </trh:cellFormat>
+                                        </trh:rowLayout>
+                                        <trh:rowLayout id="grdep4">
+                                          <trh:cellFormat id="gcdep7">
+                                            <af:outputText id="outputText4" value="Requests Per Minute: #{45 + vs.index}"/>
+                                          </trh:cellFormat>
+                                        </trh:rowLayout>
+                                      </trh:tableLayout>
+                                    </af:listItem>
+                                  </af:listView>
+                                </af:panelGroupLayout>
+                              </af:panelGroupLayout>
+                            </af:panelHeader>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </af:decorativeBox>
+                    </f:facet>
+                    <f:facet name="METRICS">
+                      <af:decorativeBox id="dbomet" styleClass="CloudDetailContainer">
+                        <f:facet name="center">
+                          <af:panelGroupLayout id="pglmet">
+                            <af:panelHeader id="phmet1" headerLevel="2" text="CPU Utilization" styleClass="CloudMetricHeader">
+                              <af:image shortDesc="CPU Utilization"  source="/images/alta_v1/metrics_chart1.png" id="imgmet1"/>
+                            </af:panelHeader>
+                            <af:panelHeader id="phmet2" headerLevel="2" text="Deployed Applications" styleClass="CloudMetricHeader">
+                              <af:image shortDesc="Deployed Applications"  source="/images/alta_v1/metrics_chart2.png" id="imgmet2"/>
+                            </af:panelHeader>
+                            <af:panelHeader id="phmet3" headerLevel="2" text="Memory Usage" styleClass="CloudMetricHeader">
+                              <af:image shortDesc="Memory Usage"  source="/images/alta_v1/metrics_chart3.png" id="imgmet3"/>
+                            </af:panelHeader>
+                            <af:panelHeader id="phmet4" headerLevel="2" text="Request Rate" styleClass="CloudMetricHeader">
+                              <af:image shortDesc="Request Rate"  source="/images/alta_v1/metrics_chart4.png" id="imgmet4"/>
+                            </af:panelHeader>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </af:decorativeBox>                        
+                    </f:facet>
+                    <f:facet name="SERVICES">
+                      <af:decorativeBox id="dbosvc" styleClass="CloudDetailContainer">
+                        <f:facet name="center">
+                          <af:panelGroupLayout layout="vertical" id="pglsvc">
+                            <af:panelHeader id="phass" headerLevel="2" text="Associated Services">
+                              <af:panelGroupLayout layout="horizontal" id="pglass2" halign="center" valign="top">
+                                <af:image shortDesc="Associated Services"  source="/images/alta_v1/as_diagrammer.png" id="imgass1"/>
+                                <af:button id="btnAss" text="Associate"/>
+                              </af:panelGroupLayout>
+                              <af:listView id="lvass" value="#{infoTileBean.infoTileCloudListData}" varStatus="vs">
+                                <af:listItem id="lviass">
+                                  <trh:tableLayout id="tlass" width="100%">
+                                    <trh:rowLayout id="grtass">
+                                      <trh:cellFormat id="gcass2" rowSpan="2" valign="middle"
+                                              inlineStyle="min-width: 45px; padding-left:20px; padding-right:10px">
+                                        <af:image source="/images/cloud.png" shortDesc="Cloud Image" id="i2"/>
+                                      </trh:cellFormat>
+                                      <trh:cellFormat id="gcass3" width="25%">
+                                        <af:outputFormatted id="atass1" value="&lt;b>#{vs.index == 1? 'HCM': vs.index == 2?'DB1':'CRM'}&lt;b/> (#{vs.index == 1? 'HCM': vs.index == 2?'Database':'CRM'})" />
+                                      </trh:cellFormat>
+                                      <trh:cellFormat id="gcass8" rowSpan="2" width="25%" valign="top">
+                                        <af:outputFormatted id="atass2" value="#{vs.index == 2? 'Memory Usage:': 'Object Count'} #{vs.index == 2? '52.0MB': vs.index == 2?'12': vs.index +20}" />
+                                      </trh:cellFormat>
+                                      <trh:cellFormat id="gcass4" rowSpan="2" valign="top" width="25%" halign="end">
+                                        <af:outputFormatted id="atass3" value="Storage Used: #{vs.index == 1? '63': vs.index == 2?'27':'76'}%" />
+                                      </trh:cellFormat>
+                                      
+                                      <trh:cellFormat id="gcass5" rowSpan="2" valign="middle" width="100px" halign="end"
+                                                      inlineStyle="padding-right:20px">
+                                        <af:image id="iass5"  source="/images/settings.png"  shortDesc="Action"/>
+                                      </trh:cellFormat>
+                                    </trh:rowLayout>
+                                    <trh:rowLayout id="grass2">
+                                      <trh:cellFormat id="gcass6">
+                                        <af:outputText id="otass2" value="Subscription: Production"/>
+                                      </trh:cellFormat>
+                                    </trh:rowLayout>
+                                  </trh:tableLayout>
+                                </af:listItem>
+                              </af:listView>
+                            </af:panelHeader>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </af:decorativeBox> 
+                    </f:facet>
+                  </af:switcher>
+                </af:deck>
+              </trh:cellFormat>
+            </trh:rowLayout>
+          </trh:tableLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

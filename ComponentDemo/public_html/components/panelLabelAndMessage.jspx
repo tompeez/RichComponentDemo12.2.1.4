@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelLabelAndMessage Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelLabelAndMessage"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a panelLabelAndMessage is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="centerHeader">
+          <af:panelGroupLayout layout="vertical" id="pglA">
+            <af:outputFormatted value="&lt;b>Use the editor to the right to adjust the attributes for the first demo.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="s"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelLabelAndMessage binding="#{editor.component}" for="foo"
+                                   labelAndAccessKey="La&amp;bel"
+                                   helpTopicId="TOPICID_ALL" id="panelLabelAndMessage">
+            <f:facet name="end">
+              <af:outputText value="End facet text" id="ot1"/>
+            </f:facet>
+            <af:inputText simple="true" id="foo"/>
+          </af:panelLabelAndMessage>
+        </f:facet>
+        <f:facet name="centerFooter">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:spacer width="10" id="s2"/>
+            <af:panelLabelAndMessage label="Label" id="panelLabelAndMessage2">
+              <af:outputText value="This is an outputText to ensure that text will wrap inside of a panelLabelAndMessage if necessary."
+                             id="ot2"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="Flowing children" id="panelLabelAndMessage3">
+              <af:outputText value="Child 1" id="child1"/>
+              <af:outputText value="Child 2" id="child2"/>
+              <af:outputText value="Child 3" id="child3"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="Vertical children" id="panelLabelAndMessage4">
+              <af:panelGroupLayout id="pglV" layout="vertical">
+                <af:outputText value="Child V1" id="childV1"/>
+                <af:outputText value="Child V2" id="childV2"/>
+                <af:outputText value="Child V3" id="childV3"/>
+              </af:panelGroupLayout>
+            </af:panelLabelAndMessage>
+            <af:outputText value="panelLabelAndMessage in a panelFormLayout with input and output text components" id="ot3"/>
+            <af:panelFormLayout id="pfl1" rows="5">
+              <af:panelLabelAndMessage id="it4plm" label="inputText" for="it4">
+                <af:inputText id="it4" simple="true" value="Testing" editable="onAccess"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage id="ot4plm" label="outputText">
+                <af:outputText id="ot4" value="Testing"/>
+              </af:panelLabelAndMessage>
+              <af:iterator var="row" first="3" rows="3" varStatus="stat"
+                           value="#{periodicTable.tableData}" id="it">
+                <af:panelLabelAndMessage id="otit1plm" label="Element Name">
+                  <af:switcher defaultFacet="Oxigen" facetName="#{row.name}"
+                               id="sw1">
+                    <f:facet name="Oxigen">
+                      <af:inputText label="Element Name" simple="true"
+                                    value="#{row.name}" id="itelementName" editable="onAccess"/>
+                    </f:facet>
+                    <f:facet name="Phosphorus">
+                      <af:outputText value="#{row.name}" id="otelementName"/>
+                    </f:facet>
+                    <f:facet name="Sulphur">
+                      <af:outputFormatted value="#{row.name}"
+                                          id="ofelementName"/>
+                    </f:facet>
+                  </af:switcher>
+                </af:panelLabelAndMessage>
+              </af:iterator>
+            </af:panelFormLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

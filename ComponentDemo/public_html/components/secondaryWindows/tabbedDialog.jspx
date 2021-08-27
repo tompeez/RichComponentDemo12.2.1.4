@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+     <jsp:directive.page contentType="text/html;charset=utf-8"/>
+     <f:view>
+    <af:document title="tabbed Dialog Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+          <af:pageTemplate id="dmoTpl"
+                           viewId="#{templates.componentTemplate}">
+               <f:attribute name="tagName" value="dialog"/>
+               <f:attribute name="visualDesignName" value=""/>
+               <f:attribute name="demoKind" value="component"/>
+               <f:attribute name="customEditorPresent" value="true"/>
+               <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                         <af:popup id="popup1" contentDelivery="lazyUncached"
+                                   popupFetchListener="#{tabbedDialog.launchListener}">
+                              <af:dialog id="dialog" title="Profile"
+                                         type="okCancel"
+                                         affirmativeTextAndAccessKey="Save"
+                                         dialogListener="#{tabbedDialog.dialogListener}"
+                                         stretchChildren="first" resize="on" contentWidth="300" contentHeight="300">
+                                   <af:panelTabbed id="personPanelTabbed" >
+                                        <af:showDetailItem id="personTab"
+                                                           textAndAccessKey="Personal Info"
+                                                           shortDesc="Personal Info Panel">
+                                             <af:panelFormLayout id="pfl1">
+                                                  <af:inputText id="firstName"
+                                                                label="First"
+                                                                value="#{tabbedDialog.person.firstName}"
+                                                                readOnly="true"/>
+                                                  <af:inputText id="middleName"
+                                                                label="Middle"
+                                                                value="#{tabbedDialog.person.middleName}"
+                                                                readOnly="true"/>
+                                                  <af:inputText id="lastName"
+                                                                label="Last"
+                                                                value="#{tabbedDialog.person.lastName}"
+                                                                readOnly="true"/>
+                                             </af:panelFormLayout>
+                                        </af:showDetailItem>
+                                        <af:showDetailItem id="demographicsTab"
+                                                           textAndAccessKey="Demographics"
+                                                           shortDesc="Demographics Panel">
+                                             <af:showDetailHeader text="Address"
+                                                                  id="sdh1">
+                                                  <af:panelFormLayout id="pfl2">
+                                                       <af:inputText id="address1"
+                                                                     label="Address 1" required="true"
+                                                                     value="#{tabbedDialog.person.contactInfo.address.address1}"/>
+                                                       <af:inputText id="address2"
+                                                                     label="Address 2"
+                                                                     value="#{tabbedDialog.person.contactInfo.address.address2}"/>
+                                                       <af:inputText id="city" required="true"
+                                                                     label="City"
+                                                                     value="#{tabbedDialog.person.contactInfo.address.city}"/>
+                                                       <af:selectOneChoice id="state" required="true"
+                                                                           label="State"
+                                                                           value="#{tabbedDialog.person.contactInfo.address.state}">
+                                                            <af:selectItem value="AL"
+                                                                           label="Alabama"
+                                                                           id="si1"/>
+                                                            <af:selectItem value="AK"
+                                                                           label="Alaska"
+                                                                           id="si2"/>
+                                                            <af:selectItem value="AZ"
+                                                                           label="Arizona"
+                                                                           id="si3"/>
+                                                            <af:selectItem value="AR"
+                                                                           label="Arkansas"
+                                                                           id="si4"/>
+                                                            <af:selectItem value="CA"
+                                                                           label="California"
+                                                                           id="si5"/>
+                                                            <af:selectItem value="CO"
+                                                                           label="Colorado"
+                                                                           id="si6"/>
+                                                            <af:selectItem value="IL"
+                                                                           label="Illinois"
+                                                                           id="si7"/>
+                                                       </af:selectOneChoice>
+                                                       <af:inputText id="zip" required="true"
+                                                                     label="Zip"
+                                                                     value="#{tabbedDialog.person.contactInfo.address.zip}"/>
+                                                  </af:panelFormLayout>
+                                             </af:showDetailHeader>
+                                             <af:showDetailHeader text="Phone Email"
+                                                                  id="sdh2">
+                                                  <af:panelFormLayout id="pfl3">
+                                                       <af:inputText id="homePhone"
+                                                                     label="Home Phone"
+                                                                     value="#{tabbedDialog.person.contactInfo.phoneEmail.home}"/>
+                                                       <af:inputText id="cellPhone"
+                                                                     label="Cell Phone"
+                                                                     value="#{tabbedDialog.person.contactInfo.phoneEmail.cell}"/>
+                                                       <af:inputText id="emailPhone" required="true"
+                                                                     label="Phone"
+                                                                     value="#{tabbedDialog.person.contactInfo.phoneEmail.email}"/>
+                                                  </af:panelFormLayout>
+                                             </af:showDetailHeader>
+                                        </af:showDetailItem>
+                                        <af:showDetailItem id="employeeTab"
+                                                           textAndAccessKey="Employee Info"
+                                                           shortDesc="Employee Panel">
+                                             <af:panelFormLayout id="pfl4">
+                                                  <af:inputText id="empId"
+                                                                label="ID"
+                                                                value="#{tabbedDialog.person.employeeInfo.empId}"/>
+                                                  <af:inputText id="category"
+                                                                label="Category"
+                                                                value="#{tabbedDialog.person.employeeInfo.category}"/>
+                                                  <af:inputText id="grade"
+                                                                label="Grade"
+                                                                value="#{tabbedDialog.person.employeeInfo.grade}"/>
+                                             </af:panelFormLayout>
+                                        </af:showDetailItem>
+                                   </af:panelTabbed>
+                              </af:dialog>
+                         </af:popup>
+                         <af:panelGroupLayout layout="vertical" id="pgl2">
+                              <af:commandImageLink text="Rogers, Shaggy"
+                                                   shortDesc="Show Tabbed Dialog"
+                                                   icon="../../images/go_demo_ena.png"
+                                                   depressedIcon="../../images/go_demo_dwn.png"
+                                                   hoverIcon="../../images/go_demo_ovr.png"
+                                                   id="cil1">
+                                   <af:showPopupBehavior popupId="popup1"/>
+                                   <af:clientAttribute name="rowid" value="0"/>
+                              </af:commandImageLink>
+                              <af:commandImageLink text="Jones, Freddy"
+                                                   shortDesc="Show Tabbed Dialog"
+                                                   icon="../../images/go_demo_ena.png"
+                                                   depressedIcon="../../images/go_demo_dwn.png"
+                                                   hoverIcon="../../images/go_demo_ovr.png"
+                                                   id="cil2">
+                                   <af:showPopupBehavior popupId="popup1"/>
+                                   <af:clientAttribute name="rowid" value="1"/>
+                              </af:commandImageLink>
+                              <af:commandImageLink text="Blake, Daphne"
+                                                   shortDesc="Show Tabbed Dialog"
+                                                   icon="../../images/go_demo_ena.png"
+                                                   depressedIcon="../../images/go_demo_dwn.png"
+                                                   hoverIcon="../../images/go_demo_ovr.png"
+                                                   id="cil3">
+                                   <af:showPopupBehavior popupId="popup1"/>
+                                   <af:clientAttribute name="rowid" value="2"/>
+                              </af:commandImageLink>
+                              <af:commandImageLink text="Dinkley, Velma"
+                                                   shortDesc="Show Tabbed Dialog"
+                                                   icon="../../images/go_demo_ena.png"
+                                                   depressedIcon="../../images/go_demo_dwn.png"
+                                                   hoverIcon="../../images/go_demo_ovr.png"
+                                                   id="cil4">
+                                   <af:showPopupBehavior popupId="popup1"/>
+                                   <af:clientAttribute name="rowid" value="3"/>
+                              </af:commandImageLink>
+                              <af:commandImageLink text="Rogers, Scooby"
+                                                   shortDesc="Show Tabbed Dialog"
+                                                   icon="../../images/go_demo_ena.png"
+                                                   depressedIcon="../../images/go_demo_dwn.png"
+                                                   hoverIcon="../../images/go_demo_ovr.png"
+                                                   id="cil5">
+                                   <af:showPopupBehavior popupId="popup1"/>
+                                   <af:clientAttribute name="rowid" value="4"/>
+                              </af:commandImageLink>
+                         </af:panelGroupLayout>
+
+                         <af:panelGroupLayout layout="vertical" inlineStyle="margin-top:10px"
+                                              id="pgl3">
+                              <af:outputText value="See also:" id="ot1"/>
+                              <af:goLink text="Dialogs Launched Within Dialogs"
+                                         destination="nestedDialogs.jspx"
+                                         id="gl1"/>
+                         </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+               </f:facet>
+          </af:pageTemplate>
+    </af:document>
+     </f:view>
+</jsp:root>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <af:pageTemplate viewId="componentsTemplate.jspx">
+    <f:attribute name="sectionTitle" value="Treemap"/>
+    <f:facet name="dashboard">
+      <af:panelGroupLayout>
+        <af:declarativeComponent viewId="componentsItem.jsff" title="Treemap" action="guide.treemap"
+                                 linkText="Tag Guide">
+          <f:facet name="content">
+            <dvt:treemap value="#{treemap.censusData}" var="row" displayLevelsChildren="2" groupGaps="none"
+                         inlineStyle="border:none;">
+              <dvt:treemapNode value="#{row.size}" label="#{row.text}"
+                               shortDesc="#{row.text}&lt;br/>Median Income: #{row.income}">
+                <dvt:treemapNodeHeader isolate="off"/>
+                <dvt:attributeGroups id="ag2" type="color" value="#{row.income > 50000}"
+                                     label="#{row.income > 50000 ? 'Low Income' : 'High Income'}">
+                  <f:attribute name="color1" value="#007CC8"/>
+                  <f:attribute name="color2" value="#F9C000"/>
+                </dvt:attributeGroups>
+              </dvt:treemapNode>
+            </dvt:treemap>
+          </f:facet>
+        </af:declarativeComponent>
+        <af:declarativeComponent viewId="componentsItem.jsff" title="Layout Options" action="feature.treemapLayout"
+                                 linkText="Feature Demo">
+          <f:facet name="content">
+            <dvt:treemap value="#{treemap.censusData}" var="row" displayLevelsChildren="2"
+                         layout="sliceAndDiceHorizontal" inlineStyle="border:none;">
+              <dvt:treemapNode value="#{row.size}" label="#{row.text}"
+                               shortDesc="#{row.text}&lt;br/>Median Income: #{row.income}">
+                <dvt:treemapNodeHeader isolate="off"/>
+                <dvt:attributeGroups type="color" value="#{row.income > 50000}"
+                                     label="#{row.income > 50000 ? 'Low Income' : 'High Income'}">
+                  <f:attribute name="color1" value="#007CC8"/>
+                  <f:attribute name="color2" value="#F9C000"/>
+                </dvt:attributeGroups>
+              </dvt:treemapNode>
+            </dvt:treemap>
+          </f:facet>
+        </af:declarativeComponent>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="inputListOfValues Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputListOfValues"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:popup id="popupId">
+              <af:dialog id="d2">
+                <af:panelGroupLayout id="pgl2">
+                  <af:outputText value="output" id="ot1"/>
+                  <af:outputText value="output" id="ot2"/>
+                </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+            <af:messages id="m1"/>
+            <!-- Using rich renderkit, this generates no UI -->
+            <af:panelGroupLayout layout="vertical" partialTriggers="idInputTextWithTable"
+                                 id="pgl3">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:outputText value="This is an example of inputListOfValues with auto-complete feature using custom content in search and select dialog."
+                             id="ot3"/>
+              <af:inputListOfValues label="Ename" id="idInputTextWithTable" binding="#{editor.component}"
+                                    value="#{demoLOV.ename}" autoSubmit="true"
+                                    popupTitle="Search and Select: Ename" searchDesc="Choose a name"
+                                    model="#{demoLOV.listOfValuesModel}"
+                                    returnPopupDataValue="#{demoLOV.returnPopupDataValue}"
+                                    validator="#{demoLOV.validate}" createPopupId="popupId"
+                                    returnPopupListener="#{demoLOV.returnPopupListener}"
+                                    launchPopupListener="#{demoLOV.launchPopupListener}">
+                  <f:facet name="searchContent">
+                    <af:table id="t1" value="#{demoLOV.listModel}" var="row" contentDelivery="immediate"
+                            rowSelection="single" selectionListener="#{demoLOV.selected}">
+                      <af:column width="20" headerText="Empno" id="c1">
+                        <af:outputText value="#{row.empno}"/>
+                      </af:column>
+                      <af:column headerText="Ename" id="c2">
+                        <af:outputText value="#{row.ename}"/>
+                      </af:column>
+                      <af:column width="20" headerText="Job" id="c3">
+                        <af:outputText value="#{row.job}"/>
+                      </af:column>
+                      <af:column headerText="Mgr" id="c4">
+                        <af:outputText value="#{row.mgr}"/>
+                      </af:column>
+                      <af:column width="20" headerText="hireDate" id="c5">
+                        <af:outputText value="#{row.hireDate}"/>
+                      </af:column>
+                      <af:column headerText="Sal" id="c6">
+                        <af:outputText value="#{row.sal}"/>
+                      </af:column>
+                      <af:column headerText="Comm" id="c7">
+                        <af:outputText value="#{row.comm}"/>
+                      </af:column>
+                      <af:column headerText="Dept" id="c8">
+                        <af:outputText value="#{row.deptno}" id="ot8"/>
+                      </af:column>
+                  </af:table>
+                </f:facet>
+              </af:inputListOfValues>
+              
+              <af:panelFormLayout id="pfl1">
+                <af:inputText label="Empno" value="#{demoLOV.empno}" id="it1"/>
+                <af:inputText label="Deptno" value="#{demoLOV.deptno}"
+                              id="it2"/>
+                <af:inputText label="HireDate" value="#{demoLOV.hireDate}"
+                              id="it3"/>
+                <af:inputText label="Manager" value="#{demoLOV.mgr}" id="it4"/>
+                <af:inputText label="Salary" value="#{demoLOV.sal}" id="it5"/>
+                <af:inputText label="Commision" value="#{demoLOV.comm}"
+                              id="it6"/>
+              </af:panelFormLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl4">
+                <f:facet name="separator">
+                  <af:spacer height="5px" id="s2"/>
+                </f:facet>
+                <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+                <af:commandButton text="full postback" id="coreCommand"/>
+                <af:panelGroupLayout id="pgl5">
+                  <af:outputText value="The submitted value was: " id="ot4"/>
+                  <af:outputText id="result" value="#{demoLOV.ename}"
+                                 partialTriggers="richCommand idInputTextWithTable"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              
+              <af:panelGroupLayout id="pgl8">
+                <af:outputText value="This is an example of inputListOfValues."
+                               id="ot7"/>
+                <af:inputListOfValues label="Ename" id="idInputTextWithInputText" 
+                                      value="#{demoLOV.ename1}" autoSubmit="true"
+                                      popupTitle="Search and Select: Ename" searchDesc="Choose a name"
+                                      returnPopupDataValue="#{demoLOV.returnPopupDataValue1}"
+                                      createPopupId="popupId"
+                                      returnPopupListener="#{demoLOV.inputReturnPopupListener}">
+                    <f:facet name="searchContent">
+                      <af:group id="g1">
+                    <af:panelGroupLayout id="pgl7"/>
+                    <af:inputText label="Label 1" id="it7" value="#{demoLOV.returnPopupDataValue1}"/>
+                  </af:group>
+                  </f:facet>
+                </af:inputListOfValues>
+              </af:panelGroupLayout>
+              
+              <af:panelGroupLayout layout="vertical" id="pgl9">
+                <f:facet name="separator">
+                  <af:spacer height="5px" id="s4"/>
+                </f:facet>
+                <af:outputText value="See also demos of inputListOfValues:"
+                               id="ot5"/>
+                <af:navigationPane hint="list" id="np1">
+                  <af:commandNavigationItem immediate="true" text="in click-to-edit treetable"
+                    destination="/components/table/clickToEditTreeTable.jspx" id="cni1"/>
+                  <af:commandNavigationItem immediate="true" text="in editable table"
+                    destination="/components/table/editableTable.jspx" id="cni2"/>
+                  <af:commandNavigationItem immediate="true" text="in editable treetable"
+                    destination="/components/table/editableTreeTable.jspx" id="cni3"/>
+                  <af:commandNavigationItem immediate="true" text="in click-to-edit table"
+                    destination="/components/table/clickToEditTable.jspx" id="cni4"/>
+                </af:navigationPane>
+              </af:panelGroupLayout>
+              <af:outputText value="Disclaimer: On this demo page, the search functionality inside the search and select dialog
+              is not completely implemented" id="ot6"/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

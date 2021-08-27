@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Separator Visual Design Demo" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="pt" viewId="#{templates.visualDesignTemplate}">
+        <f:attribute name="headerGlobalSize" value="100"/>
+        <f:attribute name="header1Size" value="100"/>
+        <f:attribute name="header2Size" value="100"/>
+        <f:attribute name="footer2Size" value="0"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:attribute name="auxiliaryGlobalSize" value="200"/>
+        <f:attribute name="auxiliaryGlobalCollapsed" value="true"/>
+
+        <f:facet name="branding">
+          <af:outputText value="Separator Visual Design Demo" id="pgTitle"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:navigationPane hint="buttons" id="gLinks">
+            <af:commandNavigationItem destination="index.jspx" text="Visual Designs" id="vds"/>
+          </af:navigationPane>
+        </f:facet>
+
+        <f:facet name="auxiliaryGlobal">
+          <af:panelGroupLayout id="auxScroll" layout="scroll">
+            <af:panelGroupLayout id="auxPgl" inlineStyle="padding:5px" layout="vertical">
+              <af:spacer height="10px" id="auxSp"/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="navigation1">
+          <af:panelStretchLayout endWidth="40px" id="psl1">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation1" hint="tabs" id="np2">
+                <af:commandNavigationItem partialSubmit="true" text="Primary/Medium Theme"
+                                          selected="true" id="priLnk"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"/>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+
+        <f:facet name="navigation2">
+          <af:panelStretchLayout endWidth="40px" id="psl2">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation2" hint="tabs" id="np3">
+                <af:commandNavigationItem partialSubmit="true" text="Secondary/Light Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="secLnk"/>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/panelPageTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc">
+                <af:commandNavigationItem
+                  destination="index.jspx"
+                  text="Visual Designs" id="cni2"/>
+                <af:commandNavigationItem
+                  text="Separator Visual Design Demo" id="cni3"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+
+        <f:facet name="contextGlobal">
+          <af:panelGroupLayout id="gPgl" layout="scroll">
+            <af:outputText id="ot1" value="text before separator"/>
+            <af:separator id="s1"/>
+            <af:outputText id="ot2" value="text after separator"/>
+          </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="toolbar1">
+          <af:panelGroupLayout id="pPgl" layout="scroll">
+            <af:outputText id="ot3" value="text before separator"/>
+            <af:separator id="s2"/>
+            <af:outputText id="ot4" value="text after separator"/>
+          </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="toolbar2">
+          <af:panelGroupLayout id="sTb" layout="scroll">
+            <af:outputText id="ot5" value="text before separator"/>
+            <af:separator id="s3"/>
+            <af:outputText id="ot6" value="text after separator"/>
+          </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="center">
+          <af:panelHeader id="mPH" text="Default Theme">
+            <af:panelGroupLayout layout="scroll" id="mPgl">
+            <af:outputText id="ot7" value="text before separator"/>
+            <af:separator id="s4"/>
+            <af:outputText id="ot8" value="text after separator"/>
+              <af:spacer height="10px" id="mSp2"/>
+              <af:panelHeader text="Related Links" id="ph1">
+                <af:panelList id="pl1">
+                  <af:goLink id="gl" text="Component - separator" destination="/components/separator.jspx"/>
+                </af:panelList>
+              </af:panelHeader>
+
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

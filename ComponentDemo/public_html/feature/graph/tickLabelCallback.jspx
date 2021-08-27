@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view><af:document title="Graph Tick Label and Tick Mark Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo"
+                     viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Graph Tick Label and Tick Mark"/>
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Graph Tick Label and Tick Mark"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+         <af:panelGroupLayout layout="vertical" id="pgl1">
+              <af:outputText inlineStyle="font-size:large;" value="Graph Tick Label and Tick Mark"
+                             id="ot4"/>
+              
+              
+              <af:panelGroupLayout layout="horizontal" id="pgl2">
+                <af:panelGroupLayout layout="vertical" id="pgl3">
+                  <af:outputText value="In this graph, the tick labels have been customized to show the axis name before the value."
+                                 id="ot3"/>
+                  <dvt:scatterGraph shortDesc="Graph" binding="#{tickLabelCallback.graph}" inlineStyle="width:500px; height:300px;"
+                                   
+                                    id="sg2"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl4">
+                  <af:outputText value="In this graph, the tick marks are customized."
+                                 id="ot2"/>
+                  <dvt:scatterGraph shortDesc="Graph" subType="SCATTER_2Y" inlineStyle="width:500px; height:300px;"
+                                   
+                                    id="sg1">
+                    <dvt:y1Axis majorIncrement="10" minorIncrement="3"/>
+                    <dvt:y2Axis majorIncrement="15" minorIncrement="4"/>
+                    <dvt:x1Axis majorIncrement="14" minorIncrement="5"/>
+                    <dvt:y1MajorTick tickStyle="GS_OUT" lineColor="#ff0000"/>
+                    <dvt:y2MajorTick tickStyle="GS_OUT" lineColor="#ff0000"/>
+                    <dvt:x1MajorTick tickStyle="GS_OUT" lineColor="#ff0000"/>
+                    <dvt:y1MinorTick tickStyle="GS_IN" lineColor="#840000"/>
+                    <dvt:y2MinorTick tickStyle="GS_IN" lineColor="#840000"/>
+                    <dvt:x1MinorTick tickStyle="GS_IN" lineColor="#840000"/>
+                  </dvt:scatterGraph>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              <af:outputText value="The text rotation attribute controls the rotation angle. The angle can be any integer between 0-360."
+                             id="ot1"/>
+              <af:panelGroupLayout layout="horizontal" id="pgl5" >
+                    <dvt:barGraph shortDesc="Graph" inlineStyle="width:500px; height:300px;" tabularData="#{tickLabelCallback.barGraphData}"
+                                 
+                                  id="bg1">
+                      <dvt:o1TickLabel automaticRotation="AR_NO_ROTATE" textRotation="30"/>
+                    </dvt:barGraph>
+                    <dvt:areaGraph shortDesc="Graph" inlineStyle="width:500px; height:300px;"
+                                  
+                                   id="ag1">
+                      <dvt:o1TickLabel automaticRotation="AR_NO_ROTATE" textRotation="315"/>
+                    </dvt:areaGraph>
+              </af:panelGroupLayout> 
+            </af:panelGroupLayout>
+          <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">
+        <af:panelGroupLayout layout="scroll">            
+            <!-- START SEE ALSO LINKS --> 
+            <af:outputText value="See also:" />
+            <af:panelList id="pl1">
+                <af:goLink text="Tick Label Callback Backing Bean" destination="/resources/sourceCode/feature/rich/graph/TickLabelCallbackSample.javasource" id="gl1"/>
+            </af:panelList>
+         </af:panelGroupLayout>
+      </f:facet>  
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Gauge Set" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Gauge Set"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Gauge Set"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="vertical" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <dvt:gauge shortDesc="Gauge" id="gauge2" gaugeType="DIAL" binding="#{editor.component}"
+                                   inlineStyle="height:500px;width:100%" dynamicResize="DYNAMIC_SIZE"
+                                   gaugeSetColumnCount="-1" tabularData="#{gaugeData.gaugeSetData}" minValue="0"
+                                   maxValue="150.0">
+                            <dvt:gaugeBackground>
+                                <dvt:specialEffects fillType="FT_GRADIENT">
+                                    <dvt:gradientStopStyle/>
+                                </dvt:specialEffects>
+                            </dvt:gaugeBackground>
+                            <dvt:thresholdSet>
+                                <dvt:threshold fillColor="#008284" thresholdMaxValue="50"/>
+                                <dvt:threshold fillColor="#ff0000" thresholdMaxValue="100"/>
+                                <dvt:threshold fillColor="#000000"/>
+                            </dvt:thresholdSet>
+                            <dvt:topLabel/>
+                        </dvt:gauge>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                        <!-- START SEE ALSO LINKS -->
+                        <af:outputText value="See also:"/>
+                        <af:panelList>                            
+                            <af:goLink text="Multiple Indicators Gauge Backing Bean"
+                                   destination="/resources/sourceCode/feature/rich/gauge/MultipleIndicators.javasource"
+                                   id="gl1"/>
+                       </af:panelList>
+                        <!-- END SEE ALSO LINKS -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

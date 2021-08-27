@@ -1,0 +1,549 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Drawer In PanelStretchLayout Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelDrawer"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelStretchLayout>
+            <f:facet name="top">
+              <af:panelList>
+                <af:outputText value="In this example we're stretching the content the drawer is opening over. 
+                                    We're also binding the width of the drawer depending on which drawer item is open. 
+                                    When the first tab is opened we set the width of the drawer to null, therefore
+                                    the width of the first drawer is determined by the content in the drawer.
+                                    When the second tab is opened we set the width of the drawer to 75%. 
+                                    That way the content of the second drawer can stretch."/>
+                <af:outputText value="The panelStretchLayout will try to stretch the content of the end facet. 
+                                      To put the drawer directly in the panelStretchLayout's end facet 
+                                      set the 'endWidth' attribute to 'auto'."/>
+              </af:panelList>
+            </f:facet>
+            <f:facet name="center">
+              <!-- endWidth="auto" needs to be set or the drawer won't show up -->
+              <af:panelStretchLayout id="psl" endWidth="auto" topHeight="auto"
+                                     inlineStyle="border:black 1px solid">
+                <f:facet name="center">
+                  <af:calendar id="cal2" value="#{calendarBean.calendarModel}"/>
+                </f:facet>
+                <f:facet name="end">
+                  <af:panelDrawer binding="#{editor.component}" height="100%"
+                                  width="#{drawer.width}" id="drawer"
+                                  alignId="psl">
+                    <af:showDetailItem textAndAccessKey="tab &amp;3"
+                                       icon="/images/icon_pie_24X24_ena.png"
+                                       hoverIcon="/images/icon_pie_24X24_ovr.png"
+                                       depressedIcon="/images/icon_pie_24X24_sel.png"
+                                       disabledIcon="/images/icon_pie_24X24_dis.png"
+                                       shortDesc="tab short desc" id="sdi3"
+                                       disclosureListener="#{drawer.widthListener}">
+                      <af:outputText value="Tab Child Text"/>
+                      <af:commandButton text="launch popup" id="binky">
+                        <af:showPopupBehavior popupId="hello" alignId="binky"/>
+                      </af:commandButton>
+                      <af:popup id="hello">
+                        <af:showDetail>
+                          <af:outputText value="ShowDetail content"/>
+                        </af:showDetail>
+                      </af:popup>
+                      <af:spacer height="150px"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="panelStretchLayout"
+                                       stretchChildren="first"
+                                       icon="/images/icon_library_24X24_ena.png"
+                                       hoverIcon="/images/icon_library_24X24_ovr.png"
+                                       depressedIcon="/images/icon_library_24X24_sel.png"
+                                       disabledIcon="/images/icon_library_24X24_dis.png"
+                                       shortDesc="Calendar short desc" id="sdi1"
+                                       disclosureListener="#{drawer.widthListener}">
+                      <af:panelStretchLayout id="pane3Stretcha" topHeight="20"
+                                             startWidth="100" endWidth="100"
+                                             bottomHeight="20">
+                        <f:facet name="top">
+                          <af:outputText value="Top"
+                                         inlineStyle="background-color: #FF6666;"
+                                         id="ot5a"/>
+                        </f:facet>
+                        <f:facet name="start">
+                          <af:outputText value="Start"
+                                         inlineStyle="background-color: #FFFF66;"
+                                         id="ot6a"/>
+                        </f:facet>
+                        <f:facet name="end">
+                          <af:outputText value="End"
+                                         inlineStyle="background-color: #66FF66;"
+                                         id="ot7a"/>
+                        </f:facet>
+                        <f:facet name="center">
+                          <af:outputText value="Center" id="ot8a"/>
+                        </f:facet>
+                        <f:facet name="bottom">
+                          <af:outputText value="Bottom"
+                                         inlineStyle="background-color: #6666FF;"
+                                         id="ot9a"/>
+                        </f:facet>
+                      </af:panelStretchLayout>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="listView"
+                                       stretchChildren="first"
+                                       icon="/images/icon_briefcase_24X24_ena.png"
+                                       hoverIcon="/images/icon_briefcase_24X24Ovr.png"
+                                       depressedIcon="/images/icon_briefcase_24X24_sel.png"
+                                       disabledIcon="/images/icon_briefcase_24X24_dis.png"
+                                       shortDesc="listView short desc"
+                                       id="sdilv"
+                                       disclosureListener="#{drawer.widthListener}">
+                      <af:listView id="listView" var="item" varStatus="vs"
+                                   value="#{demolistView.taskModel}"
+                                   selectionListener="#{demolistView.selectionChange}"
+                                   selection="multiple">
+                        <af:listItem id="lvi" shortDesc="#{item.taskName}">
+                          <af:showPopupBehavior popupId="::ctxtMenu"
+                                                triggerType="contextMenu"/>
+                          <af:panelGroupLayout id="panelGroupLayout1"
+                                               layout="horizontal"
+                                               styleClass="AFStretchWidth">
+                            <af:panelGroupLayout id="panelGroupLayout2"
+                                                 layout="horizontal"
+                                                 inlineStyle="margin-left:20px; width:45px"
+                                                 halign="center"
+                                                 valign="middle">
+                              <af:image rendered="#{vs.index %6 ==1}"
+                                        source="/images/error.png" id="i1"
+                                        shortDesc="Error at Line #{vs.index + 1}"/>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout id="pgl5" layout="horizontal"
+                                                 inlineStyle="width:100%">
+                              <af:panelGroupLayout id="panelGroupLayout3"
+                                                   layout="vertical"
+                                                   inlineStyle="min-width:300px">
+                                <af:outputText id="outputText1"
+                                               value="#{item.taskName}"
+                                               styleClass="taskName"/>
+                                <af:outputText id="outputText2"
+                                               value="#{item.projectDesc}"
+                                               styleClass="taskProjectDesc"/>
+                                <af:outputText id="outputText3"
+                                               value="#{item.created}"
+                                               styleClass="taskCreated"/>
+                              </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout id="panelGroupLayout4"
+                                                 layout="horizontal"
+                                                 halign="end" valign="middle"
+                                                 inlineStyle="margin-right:20px">
+                              <af:commandButton id="cb1" text="Action"
+                                                shortDesc="Click To Invoke Action for Item #{vs.index + 1}">
+                                <af:showPopupBehavior popupId="popupDialog"
+                                                      alignId="cb1"
+                                                      align="afterStart"/>
+                              </af:commandButton>
+                              <af:popup id="popupDialog"
+                                        contentDelivery="lazyUncached"
+                                        eventContext="launcher">
+                                <af:setPropertyListener from="#{vs.current}"
+                                                        to="#{pageFlowScope.currentRow}"
+                                                        type="popupFetch"/>
+                                <af:dialog title="Text" id="d2">
+                                  <af:outputLabel id="ol" for="ot1"
+                                                  value="You clicked on Action Item for: "/>
+                                  <af:outputText value="#{pageFlowScope.currentRow.taskName}"
+                                                 id="ot1"/>
+                                </af:dialog>
+                              </af:popup>
+                            </af:panelGroupLayout>
+                          </af:panelGroupLayout>
+                        </af:listItem>
+                      </af:listView>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="panelTabbed with overflow"
+                                       shortDesc="panelTabbed with overflow short desc"
+                                       id="sdipt"
+                                       disclosureListener="#{drawer.widthListener}"
+                                       stretchChildren="first"
+                                       icon="/images/icon_chat_24X24_ena.png"
+                                       hoverIcon="/images/icon_chat_24X24_ovr.png"
+                                       depressedIcon="/images/icon_chat_24X24_sel.png"
+                                       disabledIcon="/images/icon_chat_24X24_dis.png">
+                      <af:panelTabbed inlineStyle="margin:5px"
+                                      dimensionsFrom="parent"
+                                      styleClass="AFStretchWidth"
+                                      childCreation="lazy" id="ShowOneTab">
+                        <af:showDetailItem text="1 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="2 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="3 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="4 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="5 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="6 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="7 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="8 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="9 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="10 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="11 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="12 long text to cause overflow">
+                          <af:outputText value="child content"/>
+                        </af:showDetailItem>
+                      </af:panelTabbed>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="panelAccordion with overflow"
+                                       shortDesc="panelAccordion with overflow short desc"
+                                       id="sdipa"
+                                       disclosureListener="#{drawer.widthListener}"
+                                       stretchChildren="first"
+                                       icon="/images/icon_subscriptions2_24X24_ena.png"
+                                       hoverIcon="/images/icon_subscriptions2_24X24_ovr.png"
+                                       depressedIcon="/images/icon_subscriptions2_24X24_sel.png"
+                                       disabledIcon="/images/icon_subscriptions2_24X24_dis.png">
+                      <af:panelAccordion id="sampleAccordion"
+                                         discloseNone="false"
+                                         discloseMany="false"
+                                         dimensionsFrom="parent">
+                        <af:showDetailItem id="firstPane" disclosed="true"
+                                           inflexibleHeight="120"
+                                           textAndAccessKey="&amp;First Pane"
+                                           flex="0" stretchChildren="first">
+                          <f:facet name="toolbar">
+                            <af:outputText id="toolbar1" value="Toolbar 1"/>
+                          </f:facet>
+                          <af:panelGroupLayout layout="scroll" id="pgl1">
+                            <af:outputText value="This pane and the last pane have flex set to 0 meaning they are inflexible."
+                                           id="ot1a"/>
+                            <af:outputText value="Flexibility applies when the accordion has discloseMany set to true and dimensionsFrom=parent."
+                                           id="ot2a"/>
+                            <af:outputText value="Flexibility is also relative among panes so to see this in effect, you will need to disclose two or more panes."
+                                           id="ot3a"/>
+                            <af:commandButton text="Print Pane" id="cb1a">
+                              <af:showPrintablePageBehavior/>
+                            </af:commandButton>
+                          </af:panelGroupLayout>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="resizeNotifyPane"
+                                           disclosed="false"
+                                           textAndAccessKey="&amp;ResizeNotify Pane"
+                                           flex="1" stretchChildren="first">
+                          <f:facet name="toolbar">
+                            <af:toolbar id="t1">
+                              <af:group id="g1">
+                                <af:commandToolbarButton shortDesc="Create"
+                                                         icon="/images/new_ena.png"
+                                                         disabled="true"
+                                                         id="ctb1"/>
+                                <af:commandToolbarButton shortDesc="Update"
+                                                         icon="/images/update_ena.png"
+                                                         disabled="true"
+                                                         id="ctb2"/>
+                                <af:commandToolbarButton shortDesc="Delete"
+                                                         icon="/images/delete_ena.png"
+                                                         disabled="true"
+                                                         id="ctb3"/>
+                              </af:group>
+                              <af:group id="g2">
+                                <af:commandToolbarButton shortDesc="E-mail"
+                                                         icon="/images/email.gif"
+                                                         disabled="true"
+                                                         id="ctb4"/>
+                                <af:commandToolbarButton shortDesc="Snapshot"
+                                                         icon="/images/snapshot.gif"
+                                                         disabled="true"
+                                                         id="ctb5"/>
+                              </af:group>
+                            </af:toolbar>
+                          </f:facet>
+                          <aftest:panelResizeNotify id="resizeNotify"
+                                                    inlineStyle="padding:0px;border-width:0px;margin:0px"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="panelStretchLayoutPane"
+                                           disclosed="false"
+                                           textAndAccessKey="PanelS&amp;tretchLayout Pane"
+                                           flex="1" stretchChildren="first">
+                          <f:facet name="toolbar">
+                            <af:outputText value="Toolbar 3" id="ot4"/>
+                          </f:facet>
+                          <af:panelStretchLayout id="pane3Stretch"
+                                                 partialTriggers="stretchUpdater"
+                                                 topHeight="20" startWidth="100"
+                                                 endWidth="100"
+                                                 bottomHeight="20"
+                                                 dimensionsFrom="auto">
+                            <f:facet name="top">
+                              <af:outputText value="Top"
+                                             inlineStyle="background-color: #FF6666;"
+                                             id="ot5"/>
+                            </f:facet>
+                            <f:facet name="start">
+                              <af:outputText value="Start"
+                                             inlineStyle="background-color: #FFFF66;"
+                                             id="ot6"/>
+                            </f:facet>
+                            <f:facet name="end">
+                              <af:outputText value="End"
+                                             inlineStyle="background-color: #66FF66;"
+                                             id="ot7"/>
+                            </f:facet>
+                            <f:facet name="center">
+                              <af:panelStretchLayout topHeight="auto" id="psl1"
+                                                     dimensionsFrom="auto">
+                                <f:facet name="top">
+                                  <af:panelGroupLayout layout="vertical"
+                                                       id="pgl2">
+                                    <af:outputText value="Clicking the button causes the
+                          panelStretchLayout to be replaced via partial page
+                          rendering. The contents of the pane should fill the
+                          pane after the partial page replacement (if the accordion is stretched)."
+                                                   id="ot8"/>
+                                    <af:commandButton text="Update PanelStretchLayout"
+                                                      partialSubmit="true"
+                                                      id="stretchUpdater"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="center">
+                                  <aftest:panelResizeNotify id="prn1"/>
+                                </f:facet>
+                              </af:panelStretchLayout>
+                            </f:facet>
+                            <f:facet name="bottom">
+                              <af:outputText value="Bottom"
+                                             inlineStyle="background-color: #6666FF;"
+                                             id="ot9"/>
+                            </f:facet>
+                          </af:panelStretchLayout>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="invisiblePane" disclosed="false"
+                                           text="Invisible Pane" flex="0"
+                                           visible="false">
+                          <f:facet name="toolbar">
+                            <af:outputText value="Invisible Toolbar" id="ot10"/>
+                          </f:facet>
+                          <af:outputText value="Invisible Body" id="ot11"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="notRenderedPane"
+                                           disclosed="false"
+                                           text="Not Rendered Pane" flex="0"
+                                           rendered="false">
+                          <f:facet name="toolbar">
+                            <af:outputText value="Not Rendered Toolbar"
+                                           id="ot12"/>
+                          </f:facet>
+                          <af:outputText value="Not Rendered Body" id="ot13"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="panelSplitterPane"
+                                           disclosed="false"
+                                           textAndAccessKey="PanelS&amp;plitter Pane"
+                                           flex="1" stretchChildren="first">
+                          <af:panelSplitter partialTriggers="splitUpdater"
+                                            id="ps1" dimensionsFrom="auto">
+                            <f:facet name="first">
+                              <af:outputText value="First Pane" id="ot14"/>
+                            </f:facet>
+                            <f:facet name="second">
+                              <af:panelStretchLayout topHeight="auto" id="psl2"
+                                                     dimensionsFrom="auto">
+                                <f:facet name="top">
+                                  <af:panelGroupLayout layout="vertical"
+                                                       id="pgl3">
+                                    <af:outputText value="Clicking the button causes the
+                              panelSplitter to be replaced via partial page
+                              rendering. The contents of the pane should fill the
+                              pane after the partial page replacement if the accordion is stretched."
+                                                   id="ot15"/>
+                                    <af:commandButton text="Update PanelSplitter"
+                                                      partialSubmit="true"
+                                                      id="splitUpdater"/>
+                                  </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="center">
+                                  <aftest:panelResizeNotify id="prn2"/>
+                                </f:facet>
+                              </af:panelStretchLayout>
+                            </f:facet>
+                          </af:panelSplitter>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="overflowPane" disclosed="false"
+                                           textAndAccessKey="&amp;Overflow Pane"
+                                           flex="1">
+                          <af:panelGroupLayout layout="scroll" id="pgl4">
+                            <f:subview id="overflowPaneSubview">
+                              <jsp:include page="/includes/overflowContent.jspx"/>
+                            </f:subview>
+                          </af:panelGroupLayout>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="tablePane" disclosed="false"
+                                           textAndAccessKey="T&amp;able Pane"
+                                           flex="1" stretchChildren="first">
+                          <f:subview id="tablePaneSubview">
+                            <jsp:include page="/includes/stretchedTableContent.jspx"/>
+                          </f:subview>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="disabledPane" disabled="true"
+                                           textAndAccessKey="D&amp;isabled Pane"
+                                           stretchChildren="first">
+                          <af:panelGroupLayout layout="scroll" id="scrolDis">
+                            <af:outputText value="This pane is disabled and thus its disclosed state cannot be modified directly by the user."
+                                           id="disTxt1"/>
+                            <af:outputText value="The disclosed state can only be changed programmatically or as a result of another showDetailItem's disclosure state forcing this disclosed state to change because of the rules specified in discloseMany and discloseNone."
+                                           id="disTxt2"/>
+                          </af:panelGroupLayout>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="doubleFlexPane" disclosed="false"
+                                           textAndAccessKey="D&amp;ouble Flex Pane"
+                                           flex="2" stretchChildren="first">
+                          <af:panelGroupLayout layout="scroll">
+                            <af:outputText value="This pane has flex set to 2 meaning it is flexible."
+                                           id="ot16"/>
+                            <af:outputText value="Most other flexible panes in this demo have flex set to either 0 or 1."
+                                           id="ot17"/>
+                            <af:outputText value="Flexibility applies when the accordion has discloseMany set to true and dimensionsFrom=parent."
+                                           id="ot18"/>
+                            <af:outputText value="Flexibility is also relative among panes so to see this in effect, you will need to disclose two or more panes."
+                                           id="ot19"/>
+                          </af:panelGroupLayout>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="nestedAccordionPane"
+                                           disclosed="false"
+                                           textAndAccessKey="Pane co&amp;ntaining a nested accordion"
+                                           flex="1" stretchChildren="first">
+                          <!-- begin nested accordion -->
+                          <af:panelAccordion id="nestedAccordion"
+                                             discloseNone="true"
+                                             dimensionsFrom="auto">
+                            <af:showDetailItem id="onlyPane" disclosed="false"
+                                               textAndAccessKey="N&amp;ested accordion's only pane"
+                                               flex="1" stretchChildren="first">
+                              <f:facet name="toolbar">
+                                <af:outputText value="Toolbar" id="ot20"/>
+                              </f:facet>
+                              <aftest:panelResizeNotify id="nestedResizeNotify"
+                                                        inlineStyle="padding:0px;border-width:0px;margin:0px"/>
+                            </af:showDetailItem>
+                          </af:panelAccordion>
+                          <!-- end nested accordion -->
+                        </af:showDetailItem>
+                        <af:showDetailItem id="inlineFramePane"
+                                           disclosed="false" text="InlineFrame"
+                                           flex="0" stretchChildren="first">
+                          <af:inlineFrame source="http://www.w3.org/TR/REC-CSS2/"
+                                          inlineStyle="border: 0px;"
+                                          shortDesc="Sample shortDesc text"
+                                          id="if1"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem id="lastPane" disclosed="false"
+                                           icon="/images/error.png"
+                                           shortDesc="Sample shortDesc text"
+                                           textAndAccessKey="&amp;Last Pane"
+                                           flex="0" stretchChildren="first">
+                          <af:panelGroupLayout layout="scroll" id="pgl6">
+                            <af:outputText value="This pane and the first pane have flex set to 0 meaning they are inflexible."
+                                           id="ot21"/>
+                            <af:outputText value="Flexibility applies when the accordion has discloseMany set to true."
+                                           id="ot22"/>
+                            <af:outputText value="Flexibility is also relative among panes so to see this in effect, you will need to disclose two or more panes."
+                                           id="ot23"/>
+                          </af:panelGroupLayout>
+                        </af:showDetailItem>
+                      </af:panelAccordion>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="breadCrumbs with overflow"
+                                       shortDesc="breadCrumbs" id="sdibc"
+                                       disclosureListener="#{drawer.widthListener}"
+                                       stretchChildren="first"
+                                       icon="/images/icon_stats24X24_ena.png"
+                                       hoverIcon="/images/icon_stats24X24_ovr.png"
+                                       depressedIcon="/images/icon_stats24X24_sel.png"
+                                       disabledIcon="/images/icon_stats24X24_dis.png">
+                      <af:panelGroupLayout layout="scroll" id="pgl1a">
+                        <af:panelGroupLayout layout="vertical"
+                                             inlineStyle="margin:0 10px 0 10px"
+                                             id="pgl2a">
+                          <af:breadCrumbs id="bc1">
+                            <af:commandNavigationItem text="Tag Guide"
+                                                      action="guide" id="cni1"/>
+                            <af:commandNavigationItem text="Oracle.com"
+                                                      destination="http://www.oracle.com"
+                                                      targetFrame="_new"
+                                                      id="cni2"/>
+                            <af:commandNavigationItem text="Disabled Item"
+                                                      disabled="true"
+                                                      action="guide.tree"
+                                                      id="cni3"/>
+                            <af:commandNavigationItem text="NavigationPane Demo"
+                                                      action="guide.navigationPane"
+                                                      id="cni4"/>
+                            <af:commandNavigationItem text="Current Page"
+                                                      action="guide.breadCrumbs"
+                                                      id="cni5"/>
+                            <af:commandNavigationItem text="1 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                            <af:commandNavigationItem text="2 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                            <af:commandNavigationItem text="3 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                            <af:commandNavigationItem text="4 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                            <af:commandNavigationItem text="5 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                            <af:commandNavigationItem text="6 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                            <af:commandNavigationItem text="7 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                            <af:commandNavigationItem text="8 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                            <af:commandNavigationItem text="9 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                            <af:commandNavigationItem text="10 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                            <af:commandNavigationItem text="11 long text for overflow"
+                                                      action="guide.breadCrumbs"/>
+                          </af:breadCrumbs>
+                          <af:outputText value="breadcrumbs with overflow"/>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </af:showDetailItem>
+                  </af:panelDrawer>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

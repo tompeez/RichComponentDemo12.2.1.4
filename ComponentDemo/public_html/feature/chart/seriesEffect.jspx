@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Chart Series Effect" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Chart Series Effect Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Series Effect"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:selectOneChoice label="Select a Series Effect:" id="soc1" value="#{chartSample.seriesEffectType}"
+                                autoSubmit="true">
+              <f:selectItems value="#{chartSample.seriesEffectList}" id="si1"/>
+            </af:selectOneChoice>
+            <af:panelDashboard columns="3" rowHeight="240px" styleClass="AFStretchWidth" id="pgl3"
+                               partialTriggers="soc1" inlineStyle="height:600px">
+              <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row"
+                             seriesEffect="#{chartSample.seriesEffectType}">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:areaChart>
+              <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row"
+                            seriesEffect="#{chartSample.seriesEffectType}">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:barChart>
+              <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row"
+                               seriesEffect="#{chartSample.seriesEffectType}">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"
+                                     z="#{row.z}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:bubbleChart>
+              <dvt:comboChart value="#{chartDataSource.defaultComboData}" var="row"
+                              seriesEffect="#{chartSample.seriesEffectType}">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:comboChart>
+              <dvt:horizontalBarChart value="#{chartDataSource.defaultBarData}" var="row"
+                                      seriesEffect="#{chartSample.seriesEffectType}">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:horizontalBarChart>
+              <dvt:pieChart value="#{chartDataSource.defaultPieData}" var="row"
+                            seriesEffect="#{chartSample.seriesEffectType}">
+                <dvt:pieDataItem label="#{row.series}" value="#{row.value}"/>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:pieChart>
+            </af:panelDashboard>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

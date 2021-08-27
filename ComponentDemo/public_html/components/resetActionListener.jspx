@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="resetActionListener Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="resetActionListener"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="behavior"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:group>
+            This tag is deprecated.  Use the more general-purpose
+            <af:goLink destination="resetListener.jspx" text="af:resetListener"/> tag.</af:group>            
+            <af:panelGroupLayout layout="vertical" id="pg12">
+              <af:outputText value="This is a demo page for resetActionListener." id="ot1"/>
+              <af:outputText value="Change the value of the component." id="ot2"/>
+              <af:outputText value="Then click the link to reset the component to its original value." id="ot3"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:inputText id="it1" label="inputText" value="#{demoInput.value}" />
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pg14">
+              <af:commandLink text="commandLink with resetActionListener"
+                              id="cl1" immediate="true" actionListener="#{demoInput.reset}">
+                <af:resetActionListener />
+              </af:commandLink>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <af:outputText value="See also:" id="ot4"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem immediate="true" text="ResetButton Demo"
+                  action="guide.resetButton" id="cni6"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

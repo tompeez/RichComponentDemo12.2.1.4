@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2"
+          xmlns:h="http://java.sun.com/jsf/html">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Table Cell PPR Demo" id="d1" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelStretchLayout id="pgl1" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:panelGroupLayout layout="vertical" id="pg1">
+                <af:outputFormatted value="&lt;b>Choose the column, specify the rowKey, cellValue and then click on the 'PPR Cell' button.&lt;/b>"
+                                    id="of1"/>
+                <af:panelGroupLayout layout="horizontal" id="pgl2">
+                  <af:commandButton partialSubmit="true" actionListener="#{treeTableTestData.PPRCell}"
+                                    text="PPR Cell" id="cb1"/>
+                  <af:selectOneRadio id="columnName" layout="horizontal" value="selectOneValue"
+                                     label="&#160;&#160;Select A Column">
+                    <af:selectItem label="Choice List" value="selectOneValue" shortDesc="Choice List"
+                                   id="si1"/>
+                    <af:selectItem label="Select One Radio" value="selectOneValue2"
+                                   shortDesc="Select One Radio" id="si2"/>
+                    <af:selectItem label="Check Box" value="isDirectory" shortDesc="Check Box"
+                                   id="si3"/>
+                    <af:selectItem label="Spin Box" value="testSpinbox" shortDesc="Spin Box"
+                                   id="si4"/>
+                    <af:selectItem label="Date Picker" value="inputDate" shortDesc="Date Picker"
+                                   id="si5"/>
+                    <af:selectItem label="Text" value="name" shortDesc="Text"
+                                   id="si6"/>
+                  </af:selectOneRadio>
+                  <af:inputText label="&#160;&#160;&#160;rowKey" value="2"
+                                contentStyle="width:50px" id="rowKeyValue"/>
+                  <af:inputText label="&#160;&#160;cellVaue" value="Speaker"
+                                contentStyle="width:60px" id="cellValue"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:table var="row" styleClass="AFStretchWidth"
+                        id="tableCellPPR" varStatus="vs" rowSelection="single" value="#{tableTestData}">
+                <af:column width="80" rowHeader="true" headerText="RowKey" id="c1">
+                  <af:outputText value="#{vs.model.rowKey}" id="ot1"/>
+                </af:column>
+                <af:column align="start" headerText="List Box" id="c2">
+                  <af:selectOneListbox id="selectOneValue" value="#{row.selectOneValue}"
+                                       valueChangeListener="#{row.selectOneValueChanged}"
+                                       autoSubmit="true" simple="true"
+                                       partialTriggers="selectOneValue2">
+                    <af:selectItem label="Mouse" value="Mouse" shortDesc="mouse from China"
+                                   id="si7"/>
+                    <af:selectItem label="Speaker" value="Speaker" shortDesc="Speaker from Taiwan"
+                                   id="si8"/>
+                    <af:selectItem label="Head Phone" value="Head Phone"
+                                   shortDesc="Head Phone from China" id="si9"/>
+                  </af:selectOneListbox>
+                </af:column>
+                <af:column align="start" headerText="Select One Radio" id="c3">
+                  <af:selectOneRadio id="selectOneValue2" value="#{row.selectOneValue2}" simple="true"
+                                     autoSubmit="true" partialTriggers="selectOneValue">
+                    <af:selectItem label="Mouse" value="Mouse" shortDesc="mouse from China"
+                                   id="si10"/>
+                    <af:selectItem label="Speaker" value="Speaker" shortDesc="Speaker from Taiwan"
+                                   id="si11"/>
+                    <af:selectItem label="Head Phone" value="Head Phone"
+                                   shortDesc="Head Phone from China" id="si12"/>
+                  </af:selectOneRadio>
+                </af:column>
+                <af:column align="start" headerText="Check Box" width="40" id="c4">
+                  <af:selectBooleanCheckbox simple="true" autoSubmit="true" value="#{row.isDirectory}"
+                                            id="isDirectory"/>
+                </af:column>
+                <af:column align="start" headerText="Spin Box" width="70" id="c5">
+                  <af:inputNumberSpinbox id="testSpinbox" value="#{row.testSpinbox}"
+                                         converter="javax.faces.Integer" autoSubmit="true" simple="true"
+                                         minimum="0"></af:inputNumberSpinbox>
+                </af:column>
+                <af:column align="start" headerText="Date Picker" width="100"
+                           id="c6">
+                  <af:inputDate columns="10" value="#{row.inputDate}" autoSubmit="true" id="inputDate"
+                                contentStyle="width:70px"></af:inputDate>
+                </af:column>
+                <af:column align="start" headerText="Text" id="c7">
+                  <af:inputText id="name" value="#{row.name}"/>
+                </af:column>
+              </af:table>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

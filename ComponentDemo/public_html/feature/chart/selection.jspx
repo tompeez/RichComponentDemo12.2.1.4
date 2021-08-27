@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Chart Selection" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Chart Selection Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Selection"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:panelGroupLayout layout="vertical">
+              <af:selectOneChoice label="Selection" value="#{chartSample.dataSelection}" id="sel" autoSubmit="true">
+                <af:selectItem label="multiple" id="sel1"/>
+                <af:selectItem label="single" id="sel2"/>
+                <af:selectItem label="none" id="sel3"/>
+              </af:selectOneChoice>
+            
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:lineChart value="#{chartDataSource.yearlyTimeData}" var="row" partialTriggers="::sel" dataSelection="#{chartSample.dataSelection}" timeAxisType="enabled">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:lineChart>
+                <af:spacer width="20px"/>
+                <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row" partialTriggers="::sel" dataSelection="#{chartSample.dataSelection}">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:barChart>
+                <af:spacer width="20px"/>
+                <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row" partialTriggers="::sel" dataSelection="#{chartSample.dataSelection}">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}" z="#{row.z}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:bubbleChart>
+              </af:panelGroupLayout>
+              
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:pieChart value="#{chartDataSource.defaultPieData}" var="row" partialTriggers="::sel" selectionEffect="highlightAndExplode" dataSelection="#{chartSample.dataSelection}">
+                  <dvt:pieDataItem label="#{row.series}" value="#{row.value}"/>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:pieChart>
+                <af:spacer width="20px"/>
+                <dvt:funnelChart value="#{chartDataSource.defaultPieData}" orientation="horizontal" sliceGaps="1" var="row" partialTriggers="::sel" dataSelection="#{chartSample.dataSelection}">
+                  <dvt:funnelDataItem label="#{row.series}" value="#{row.value}" targetValue="100"/>
+                </dvt:funnelChart>
+              </af:panelGroupLayout>
+              
+            </af:panelGroupLayout>
+            
+            <af:group>
+              <af:outputText inlineStyle="font-size:large;" value="Selection Listener"/>
+              <af:spacer width="50px"/>
+              <af:outputText partialTriggers="chartSelect" value="#{chartSample.selectionState}" inlineStyle="font-size:larger;"/>
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row" id="chartSelect" dataSelection="multiple" selectionListener="#{chartSample.selectionListener}">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:barChart>
+              </af:panelGroupLayout>
+            </af:group>
+            
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

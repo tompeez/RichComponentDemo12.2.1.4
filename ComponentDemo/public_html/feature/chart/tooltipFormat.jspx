@@ -1,0 +1,422 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Tooltip Format Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Tooltip Format"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Tooltip Format"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:outputText inlineStyle="font-size:large; display:block;" value="Chart Tooltip Format" id="ot1"/>
+                        <af:panelGroupLayout layout="vertical" id="pgl2">
+                            <af:selectOneChoice label="Select a Chart:" id="soc1" value="#{chartSample.chartType}"
+                                                autoSubmit="true">
+                                <af:selectItem label="Bar Chart" value="barChart"/>
+                                <af:selectItem label="Bubble Chart" value="bubbleChart"/>
+                                <af:selectItem label="Funnel Chart" value="funnelChart"/>
+                                <af:selectItem label="Line Chart" value="lineChart"/>
+                                <af:selectItem label="Pie Chart" value="pieChart"/>
+                                <af:selectItem label="Range Chart" value="rangeChart"/>
+                                <af:selectItem label="Stock Chart" value="stockChart"/>
+                            </af:selectOneChoice>
+                            <af:panelGroupLayout layout="vertical" id="pgl3" partialTriggers="soc1 button">
+                                <af:outputText value="Series 2 is assigned to Y2 Axis for bar and line charts. Note that the type has to be set to 'currency' for the currency symbol or code to be displayed."
+                                               id="ot3"/>
+                                <af:switcher facetName="#{chartSample.chartType}" defaultFacet="barChart">
+                                    <f:facet name="barChart">
+                                        <dvt:barChart id="c1" value="#{chartDataSource.defaultBarData}" var="row">
+                                            <f:facet name="dataStamp">
+                                                <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                                   value="#{row.series == 'Series 2'? row.value *10000 : row.value}"/>
+                                            </f:facet>
+                                            <dvt:chartLegend rendered="false"/>
+                                            <f:facet name="seriesStamp">
+                                                <af:group>
+                                                    <dvt:chartSeriesStyle assignedToY2="true" series="Series 2"/>
+                                                </af:group>
+                                            </f:facet>
+                                            <dvt:chartValueFormat type="y" tooltipDisplay="#{chartSample.yFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.yFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="y2" tooltipDisplay="#{chartSample.y2Format.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.y2Format.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="series" tooltipDisplay="#{chartSample.seriesFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.seriesFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="group" tooltipDisplay="#{chartSample.groupFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.groupFormat.tooltipLabel}"/>
+                                        </dvt:barChart>
+                                    </f:facet>
+                                    <f:facet name="bubbleChart">
+                                        <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row">
+                                            <f:facet name="dataStamp">
+                                                <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                                   x="#{row.x}" y="#{row.y}" z="#{row.z}"
+                                                                   label="#{row.z}"/>
+                                            </f:facet>
+                                            <dvt:chartValueFormat type="x" tooltipDisplay="#{chartSample.xFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.xFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="y" tooltipDisplay="#{chartSample.yFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.yFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="z" tooltipDisplay="#{chartSample.zFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.zFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="series" tooltipDisplay="#{chartSample.seriesFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.seriesFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="group" tooltipDisplay="#{chartSample.groupFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.groupFormat.tooltipLabel}"/>
+                                        </dvt:bubbleChart>
+                                    </f:facet>
+                                    <f:facet name="lineChart">
+                                        <dvt:lineChart value="#{chartDataSource.yearlyTimeData}" var="row"
+                                                       timeAxisType="enabled">
+                                            <f:facet name="dataStamp">
+                                                <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                                   value="#{row.series == 'Series 2'? row.value *10000 : row.value}"/>
+                                            </f:facet>
+                                            <f:facet name="seriesStamp">
+                                                <af:group>
+                                                    <dvt:chartSeriesStyle assignedToY2="true" series="Series 2"/>
+                                                </af:group>
+                                            </f:facet>
+                                            <dvt:chartLegend rendered="false"/>
+                                            <dvt:chartValueFormat type="x" tooltipDisplay="#{chartSample.xFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.xFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="y" tooltipDisplay="#{chartSample.yFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.yFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="y2" tooltipDisplay="#{chartSample.y2Format.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.y2Format.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="series" tooltipDisplay="#{chartSample.seriesFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.seriesFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="group" tooltipDisplay="#{chartSample.groupFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.groupFormat.tooltipLabel}"/>
+                                        </dvt:lineChart>
+                                    </f:facet>
+                                    <f:facet name="pieChart">
+                                        <dvt:pieChart value="#{chartDataSource.defaultPieData}" var="row">
+                                            <dvt:pieDataItem label="#{row.series}" value="#{row.value}"/>
+                                            <dvt:chartLegend rendered="false"/>
+                                            <dvt:chartValueFormat type="value" tooltipDisplay="#{chartSample.valueLabelFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.valueLabelFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="series" tooltipDisplay="#{chartSample.seriesFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.seriesFormat.tooltipLabel}"/>
+                                        </dvt:pieChart>
+                                    </f:facet>
+                                    <f:facet name="funnelChart">
+                                        <dvt:funnelChart value="#{chartDataSource.defaultPieData}"
+                                                         orientation="horizontal" sliceGaps="1" var="row">
+                                            <dvt:funnelDataItem label="#{row.series}" value="#{row.value}"
+                                                                targetValue="100"/>
+                                            <dvt:chartValueFormat type="value" tooltipDisplay="#{chartSample.valueLabelFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.valueLabelFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="targetValue" tooltipDisplay="#{chartSample.targetValueFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.targetValueFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="series" tooltipDisplay="#{chartSample.seriesFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.seriesFormat.tooltipLabel}"/>
+                                        </dvt:funnelChart>
+                                    </f:facet>
+                                    <f:facet name="rangeChart">
+                                      <dvt:barChart value="#{chartDataSource.defaultRangeData}" var="row">
+                                        <f:facet name="dataStamp">
+                                          <dvt:chartDataItem series="#{row.series}" group="#{row.group}" high="#{row.high}" low="#{row.low}"/>
+                                        </f:facet>
+                                            <dvt:chartValueFormat type="high" tooltipDisplay="#{chartSample.highFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.highFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="low" tooltipDisplay="#{chartSample.lowFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.lowFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="series" tooltipDisplay="#{chartSample.seriesFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.seriesFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="group" tooltipDisplay="#{chartSample.groupFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.groupFormat.tooltipLabel}"/>
+                                      </dvt:barChart>
+                                      </f:facet>
+                                    <f:facet name="stockChart">
+                                        <dvt:stockChart value="#{chartDataSource.defaultStockData}" var="row"
+                                                       timeAxisType="enabled">
+                                            <dvt:stockDataItem series="#{row.series}" group="#{row.group}" volume ="#{row.volume}" 
+                                                               high="#{row.high}" low = "#{row.low}" close="#{row.close}" open="#{row.open}"/>
+                                            <dvt:chartLegend rendered="false"/>
+                                            <dvt:chartValueFormat type="low" tooltipDisplay="#{chartSample.lowFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.lowFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="high" tooltipDisplay="#{chartSample.highFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.highFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="open" tooltipDisplay="#{chartSample.openFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.openFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="close" tooltipDisplay="#{chartSample.closeFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.closeFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="volume" tooltipDisplay="#{chartSample.volumeFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.volumeFormat.tooltipLabel}"/>
+                                            <dvt:chartValueFormat type="group" tooltipDisplay="#{chartSample.groupFormat.tooltipDisplay}"
+                                                                  tooltipLabel="#{chartSample.groupFormat.tooltipLabel}"/>
+                                        </dvt:stockChart>
+                                    </f:facet>
+                                </af:switcher>
+                            </af:panelGroupLayout>
+                            <af:panelGridLayout id="pgl1" partialTriggers="soc1" dimensionsFrom="children">
+                                <af:gridRow rendered="#{chartSample.chartType !='stockChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Series Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socstd" label="Tooltip Display"
+                                                            value="#{chartSample.seriesFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socstl" label="Tooltip Label"
+                                                      value="#{chartSample.seriesFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType !='funnelChart' and chartSample.chartType !='pieChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Group Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socgtd" label="Tooltip Display"
+                                                            value="#{chartSample.groupFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socgtl" label="Tooltip Label"
+                                                      value="#{chartSample.groupFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='bubbleChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="X Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socxtd" label="Tooltip Display"
+                                                            value="#{chartSample.xFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socxtl" label="Tooltip Label"
+                                                      value="#{chartSample.xFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType !='funnelChart' and chartSample.chartType !='pieChart' and chartSample.chartType !='rangeChart' and chartSample.chartType !='stockChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Y Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socytd" label="Tooltip Display"
+                                                            value="#{chartSample.yFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socytl" label="Tooltip Label"
+                                                      value="#{chartSample.yFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='barChart' || chartSample.chartType=='lineChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Y2 Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socy2td" label="Tooltip Display"
+                                                            value="#{chartSample.y2Format.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socy2tl" label="Tooltip Label"
+                                                      value="#{chartSample.y2Format.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='bubbleChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Z Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socztd" label="Tooltip Display"
+                                                            value="#{chartSample.zFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socztl" label="Tooltip Label"
+                                                      value="#{chartSample.zFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='rangeChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Low Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socltd" label="Tooltip Display"
+                                                            value="#{chartSample.lowFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socltl" label="Tooltip Label"
+                                                      value="#{chartSample.lowFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='rangeChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="High Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="sochtd" label="Tooltip Display"
+                                                            value="#{chartSample.highFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="sochtl" label="Tooltip Label"
+                                                      value="#{chartSample.highFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='funnelChart'|| chartSample.chartType=='pieChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Value Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socvtd" label="Tooltip Display"
+                                                            value="#{chartSample.valueLabelFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socvtl" label="Tooltip Label"
+                                                      value="#{chartSample.valueLabelFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='funnelChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Target Value Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soctvtd" label="Tooltip Display"
+                                                            value="#{chartSample.targetValueFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soctvtl" label="Tooltip Label"
+                                                      value="#{chartSample.targetValueFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='stockChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Open Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socotd" label="Tooltip Display"
+                                                            value="#{chartSample.openFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socotl" label="Tooltip Label"
+                                                      value="#{chartSample.openFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='stockChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Close Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socctd" label="Tooltip Display"
+                                                            value="#{chartSample.closeFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socctl" label="Tooltip Label"
+                                                      value="#{chartSample.closeFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='stockChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Low Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soclotd" label="Tooltip Display"
+                                                            value="#{chartSample.lowFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soclotl" label="Tooltip Label"
+                                                      value="#{chartSample.lowFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='stockChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="High Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="sochitd" label="Tooltip Display"
+                                                            value="#{chartSample.highFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="sochitl" label="Tooltip Label"
+                                                      value="#{chartSample.highFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='stockChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Volume Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socvotd" label="Tooltip Display"
+                                                            value="#{chartSample.volumeFormat.tooltipDisplay}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="off" value="off"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socvotl" label="Tooltip Label"
+                                                      value="#{chartSample.volumeFormat.tooltipLabel}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                            </af:panelGridLayout>
+                            <af:commandButton text="Submit" id="button"/>
+                        </af:panelGroupLayout>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

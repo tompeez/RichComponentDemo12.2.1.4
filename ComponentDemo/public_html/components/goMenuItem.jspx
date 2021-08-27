@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2017, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="goMenuItem Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="goMenuItem"/>
+        <f:attribute name="visualDesignName" value="menu"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:outputText value="Some goMenuItem components inside of a menuBar and menu:"
+                           id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:menuBar id="mb1">
+                <af:menu textAndAccessKey="&amp;Browsers" id="m1">
+                  <af:group id="g1">
+                    <af:goMenuItem textAndAccessKey="&amp;Google" accelerator="control G"
+                                   icon="/images/copy.gif" destination="http://www.google.com"
+                                   id="gmi1"/>
+                    <af:goMenuItem textAndAccessKey="&amp;Yahoo" accelerator="control Y" shortDesc="shortDesc"
+                                   icon="/images/copy.gif" destination="http://www.yahoo.com"
+                                   id="gmi2"/>
+                    <af:goMenuItem textAndAccessKey="&amp;Yahoo" accelerator="control Y" shortDesc="inline SVG"
+                                   icon="/images/circle.svg" destination="http://www.yahoo.com"
+                                   id="gmi3" iconDelivery="inline"/>
+                    <af:goMenuItem textAndAccessKey="&amp;Yahoo" accelerator="control Y" shortDesc="Fetch and inline SVG"
+                                   icon="/images/circle.svg" destination="http://www.yahoo.com"
+                                   id="gmi4" iconDelivery="fetchAndInline"/>
+                    <af:goMenuItem textAndAccessKey="M&amp;SN" accelerator="control M"
+                                   icon="/images/copy.gif" destination="http://www.msn.com"
+                                   id="gmi5"/>
+                  </af:group>
+                  <!-- Note that if PPRNavigation is enabled, destination URLs (specified by a hash, '#')
+                       don't work. So this section is enabled only when PPRNavigation is off. For more
+                       information, see bug 7514668. -->
+                  <af:goMenuItem text="Jump to Bottom Section" destination="#dmoTpl:bottomSection"
+                                 rendered="#{demoInput.PPRNavigationOff}"
+                                 shortDesc="only rendered if PPRNavigation is off"
+                                 id="gmi6"/>
+                  <af:goMenuItem text="Back to Oracle" destination="http://www.oracle.com"
+                                 binding="#{editor.component}" id="gmi7"/>
+
+                </af:menu>
+                <af:commandMenuItem textAndAccessKey="Component G&amp;uide"
+                                    shortDesc="this is a commandMenuItem"
+                                    action="guide" id="cmi1"/>
+                <af:commandMenuItem textAndAccessKey="Disabled C&amp;MI" disabled="true"
+                                    action="guide" id="cmi2"/>
+                <af:goMenuItem textAndAccessKey="Gi&amp;zmo" destination="http://www.gizmo.com" disabled="true"
+                               shortDesc="I'm disabled" id="gmi8"/>
+                <af:goMenuItem text="Oracle" accessKey="r" destination="http://www.oracle.com"
+                               shortDesc="shortDesc" icon="/images/copy.gif" id="gmi9"/>
+                <!-- Note that if PPRNavigation is enabled, destination URLs (specified by a hash, '#')
+                     don't work. So this section is enabled only when PPRNavigation is off. For more
+                     information, see bug 7514668. -->
+                <af:goMenuItem text="Jump to Bottom Section" destination="#dmoTpl:bottomSection"
+                               rendered="#{demoInput.PPRNavigationOff}"
+                               shortDesc="only rendered if PPRNavigation is off"
+                               id="gmi10"/>
+
+              </af:menuBar>
+              <!--  See NOTE above about PPRNavigation -->
+              <af:spacer height="800px" rendered="#{demoInput.PPRNavigationOff}"
+                         id="s1"/>
+              <af:outputText id="bottomSection" value="You've reached the bottom section" clientComponent="true"
+                             rendered="#{demoInput.PPRNavigationOff}"/>
+            </af:panelGroupLayout>
+            <af:separator id="sep"/>
+            <af:panelGroupLayout id="pgl3" layout="default">
+              <af:outputText id="ot2" value="The goMenuitem component does not have a container geometry test as a menu item is always contained on either a menu or menuBar."/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

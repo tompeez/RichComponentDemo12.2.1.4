@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="matchMediaBehavior Demo" smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" binding="#{templateBindings.documentComponent}"
+                 theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="matchMediaBehavior"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="behavior"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="Resize the viewport to see the behavior in action. Also this page can be viewed in any 
+                        mobile or tablet to get a better picture" id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:outputText value="A panelList that realigns rows and columns to fit into appropriate screen size. The breakpoint is 768px in this case." id="ot2"/>
+              <af:panelList maxColumns="5" id="pl1" shortDesc="Links" rows="1" inlineStyle="text-align:left;">
+                <af:matchMediaBehavior propertyName="maxColumns" matchedPropertyValue="2"
+                                       mediaQuery="screen and (max-width: 768px)"/>
+                <af:matchMediaBehavior propertyName="rows" matchedPropertyValue="3"
+                                       mediaQuery="screen and (max-width: 768px)"/>
+                <af:link id="link_id_1">Item 1</af:link>
+                <af:link id="link_id_2">Item 2</af:link>
+                <af:link id="link_id_3">Item 3</af:link>
+                <af:link id="link_id_4">Item 4</af:link>
+                <af:link id="link_id_5">Item 5</af:link>
+              </af:panelList>
+              <af:spacer height="5px"/>
+              <af:separator/>
+	      <af:outputText value="A panelFormLayout that realigns top to fit into appropriate screen size. The breakpoint is 768px in this case." id="ot3"/>
+              <af:panelFormLayout id="pfl1" clientComponent="true" labelAlignment="start">
+                <af:matchMediaBehavior propertyName="labelAlignment" matchedPropertyValue="top"
+                                       mediaQuery="screen and (max-width: 768px)"/>
+                <af:inputText label="InputText component 1" placeholder="Enter some thing here." id="it0"/>
+                <af:selectBooleanRadio id="rb" group="rbGroup" shortDesc="shortDesc text" label="A Radio Option"/>
+                <af:selectManyListbox id="rs" label="Select Many List Box" shortDesc="Select Option">
+                  <af:selectItem label="option 1" id="si5"/>
+                  <af:selectItem label="option 2" id="si6"/>
+                  <af:selectItem label="option 3" id="si7"/>
+                  <af:selectItem label="option 4" id="si8"/>
+                </af:selectManyListbox>
+                <af:inputText label="InputText component 2" placeholder="Enter some thing here." id="it1"/>
+                <af:inputText label="InputText component 3" placeholder="Enter some thing here." id="it2"/>
+                <f:facet name="footer"></f:facet>
+              </af:panelFormLayout>
+              <af:spacer height="5px"/>
+              <af:separator/>
+	      <af:outputText value="A panelGroupLayout that realigns vertically to fit into appropriate screen size. The breakpoint is 1024px in this case." id="ot4"/>
+              <af:panelGroupLayout id="pgl5" clientComponent="true" layout="horizontal">
+                <af:matchMediaBehavior propertyName="layout" matchedPropertyValue="#{demoPanelGroupLayout.layout}"
+                                       mediaQuery="screen and (max-width: #{demoPanelGroupLayout.maxWidth})"/>
+                <af:panelStretchLayout id="psl1" dimensionsFrom="children">
+                  <f:facet name="center">
+                    <af:panelGroupLayout id="pgl3">
+                      <af:panelHeader text="First Part of the Panel Group Layout" id="ph7" headerLevel="6"></af:panelHeader>
+                      <af:outputText value="This will come on top in case screen size goes below 1024px." id="ot5"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:panelStretchLayout>
+                <af:panelStretchLayout id="psl2" dimensionsFrom="children">
+                  <f:facet name="center">
+                    <af:panelGroupLayout id="pgl4">
+                      <af:panelHeader text="Second Part of the Panel Group Layout" id="ph8" headerLevel="6"/>
+                      <af:outputText value="This will go down in case screen size goes below 1024px." id="ot6"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:panelStretchLayout>
+              </af:panelGroupLayout>
+               <af:separator/>
+	      <af:panelHeader text="A panelGroupLayout that realigns vertically according to the screen orientation" id="ph10" />
+              <af:outputText value="orientation:Landscape - horizontal and for orientation:portrait - vertical. 
+                          This can be tested with a device which supports orientation" id="ot10"/>
+              <af:panelGroupLayout id="pgl6" clientComponent="true" layout="horizontal">
+                <af:matchMediaBehavior propertyName="layout" matchedPropertyValue="vertical"
+                                       mediaQuery="screen and (orientation: portrait)"/>
+                <af:matchMediaBehavior propertyName="layout" matchedPropertyValue="horizontal"
+                                       mediaQuery="screen and (orientation: landscape)"/>
+                <af:panelStretchLayout id="psl3" dimensionsFrom="children">
+                  <f:facet name="center">
+                    <af:panelGroupLayout id="pgl7">
+                      <af:button id="bold2" shortDesc="bold" icon="/images/bold16.png"
+                                           type="check" selected="false" />
+                      <af:button id="italic2" shortDesc="italic" icon="/images/italic16.png"
+                                               type="check" selected="false" />
+                      <af:button id="underline2" shortDesc="underline"
+                                               icon="/images/underline16.png" type="check" selected="false"
+                                               />
+                      <af:button id="alignLeft2" shortDesc="align left"
+                                               icon="/images/alignleft16.png" type="radio" selected="true"
+                                               />
+                      <af:button id="alignCenter2" shortDesc="align center"
+                                               icon="/images/aligncenter16.png" type="radio" selected="false"
+                                               />
+                      <af:button id="alignRight2" shortDesc="align right"
+                                               icon="/images/alignright16.png" type="radio" selected="false"
+                                               />
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:panelStretchLayout>
+                <af:panelStretchLayout id="psl4" dimensionsFrom="children">
+                  <f:facet name="center">
+                    <af:panelGroupLayout id="pgl8">
+                       <af:button id="arrange2" visible="true" text="Arrange" shortDesc="arrange"
+                                         icon="/images/arrange.gif" partialSubmit="true">
+                        <f:facet name="popup">
+                          <af:panelGroupLayout id="pgl15">
+                            <af:selectManyListbox label="Drink choices" value="#{demoInput.manyListValue1}"
+                                                  simple="true" size="7" id="sml20">
+                              <af:selectItem label="coffee" value="bean" id="si71"/>
+                              <f:selectItem itemLabel="tea" itemValue="leaf"
+                                            itemDescription="Tea from China" id="si81"/>
+                              <af:selectItem disabled="true" label="orange juice" value="orange"
+                                             id="si9"/>
+                              <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                                            id="si10"/>
+                              <af:selectItem label="milk" value="moo" id="si11"/>
+                              <f:selectItems value="#{demoInput.selectItems}"
+                                             id="si12"/>
+                            </af:selectManyListbox>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </af:button>
+                      <af:button text="menuButton" actionDelivery="none"
+                                               partialSubmit="true">
+                        <f:facet name="popup">
+                          <af:menu text="Edit">
+                            <af:commandMenuItem text="Cut"/>
+                            <af:commandMenuItem text="Copy"/>
+                            <af:commandMenuItem text="Paste"/>
+                          </af:menu>
+                        </f:facet>
+                      </af:button>
+                      <af:button text="Go to Tag Guide page" immediate="true" action="guide"
+                                 accessKey="C" />
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:panelStretchLayout>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

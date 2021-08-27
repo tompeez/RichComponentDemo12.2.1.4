@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2019, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Date Format Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="calendar"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" inlineStyle="margin:0 10px 0 10px" id="pgl2">
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The demo on this page shows customization of date strings using calendar's dateCustomizer attribute. To see an more fully featured demo see the "
+                               id="ot1"/>
+                <af:goLink destination="../calendar.jspx" text="calendar component demo." id="gl1"/>
+              </af:panelGroupLayout>
+              <af:spacer height="20px" id="s2"/>
+              <af:outputText value="The demo code has been written to show the following examples of date customizations"
+                             id="ot2"/>
+              <af:panelList id="pl1">
+                <af:outputText value="In month view in the cell header on the first day of the week the week number is shown, for example it says 'Week 25', or 'Week 43'. This demo happens to only return text for one day of the week, but text can be added to any cell."
+                               id="ot3"/>
+                <af:outputText value="In month view in the cell header instead of seeing the day of the month, like '5', '6', etc. there is an offset like '+10' or '-7'"
+                               id="ot4"/>
+                <af:outputText value="In month view , or in list view when listType=month, customize the date string on the toolbar" id="otmtb"/>
+                <af:outputText value="In week view in the column header instead of seeing the day of the month, like 'Wed 7/1' there is an offset and '(W)' like '+10(W)' or '-7(W)'"
+                               id="ot4a"/>
+                <af:outputText value="in week view, or in list view when listType=week, customize the date string on the toolbar" id="otwtb"/>
+                <af:outputText value="In day view in the header instead of seeing the day of the week, like 'Wednesday' there is an offset and '(D)' like '+10(D)' or '-7(D)'"
+                               id="ot4b"/>
+                <af:outputText value="in day view, or in list view when listType=day, customize the date string on the toolbar" id="otdtb"/>
+                <af:outputText value="In list view in the row header instead of seeing the day of the week, like 'Wednesday' there is an offset and '(L1)' like '+10(L1)' or '-7(L1)'"
+                               id="ot4c"/>
+                <af:outputText value="In list view in the row header instead of seeing the day of the month, like 'Jul 1' there is an offset and '(L2)' like '+10(L2)' or '-7(L2)'"
+                               id="ot4d"/>
+                <af:outputText value="in list view when listType=daycount, customize the date string on the toolbar" id="otltb"/>
+              </af:panelList>
+              <af:spacer height="20px" id="s3"/>
+              <af:calendar binding="#{editor.component}" id="cal"
+                           dateCustomizer="#{calendarBean.dateCustomizer}"
+                           value="#{calendarBean.calendarModel}">
+                <f:facet name="dateHeaderStamp">
+                  <af:image rendered="#{calendarBean.dateCustomizer.USHoliday}"
+                    source="/images/holidayStar_16X16.png"
+                    shortDesc="#{calendarBean.dateCustomizer.dateHeaderDesc}"
+                    inlineStyle="height:13px;margin:0px 4px;vertical-align: middle;"/>
+                </f:facet>
+              </af:calendar>
+              <af:spacer height="20px" id="s12"/>
+              <af:calendar id="cal2"
+                           dateCustomizer="#{calendarBean.dateCustomizer}"
+                           availableViews="flexList"
+                           view="list"
+                           value="#{calendarBean.calendarModel}">
+                <f:facet name="dateHeaderStamp">
+                  <af:image rendered="#{calendarBean.dateCustomizer.USHoliday}"
+                    source="/images/holidayStar_16X16.png"
+                    shortDesc="#{calendarBean.dateCustomizer.dateHeaderDesc}"
+                    inlineStyle="height:13px;margin:0px 4px;"/>
+                </f:facet>
+              </af:calendar>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputText value="See also:" id="ot5"/>
+              <af:panelList id="pl2">
+                <af:goLink destination="../calendar.jspx" text="calendar" id="gl2"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

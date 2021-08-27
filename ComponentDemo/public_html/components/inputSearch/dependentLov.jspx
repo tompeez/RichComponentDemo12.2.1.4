@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2016, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Dependency based filtering demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        var filterKey = "deptName";
+        var filterValue;
+        function valueChangeListener(event)
+        {
+          var component = event.getSource();
+          filterValue = component.getSelectItems()[component.getValue()].getLabel();
+
+          var dependentComp = AdfPage.PAGE.findComponent("dmoTpl:inputSearch2");
+          var url = dependentComp.getSearchSections()["default"].getDataUrl();
+          var baseUrl = url.substring(0, url.indexOf('&amp;')+1);
+          dependentComp
+            .getSearchSections()["default"]
+            .setDataUrl(baseUrl + filterKey + "=" + filterValue);
+        }
+        function filterEmpForDept(rowObj, collectionIndex)
+        {
+          // var component = this;
+          if (collectionIndex == 0)
+          {
+            // get the filterValue once for the zeroth row
+            // and use the same for subsequent row filtering
+            var parentComp = AdfPage.PAGE.findComponent('dmoTpl:soc1');
+            var parentCompValue = parentComp.getValue();
+            filterValue = parentCompValue ? parentComp.getSelectItems()[parentComp.getValue()].getLabel() : null;
+          }
+
+          return (filterValue &amp;&amp; rowObj.data[filterKey] == filterValue);
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="tagName" value="InputSearch: Dependency based filtering"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputFormatted value="&lt;span style='font-size: 1.1em'> This demo is to showcase dependency based
+            filtering in inputSearch component. The usecase is to demonstrate
+            choosing an employee belonging to a specific deparment.&lt;/span>"  id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:outputFormatted value="&lt;b>Demo 1: Have a single form field - the inputSearch component.&lt;/b>
+              Department is displayed as one of the attributes in the suggestions.
+              Using space as AND operator, the type-ahead filtering of inputSearch
+              can be used for selecting an employee belonging to a department.
+              e.g. 'Operations Je' displays employees with name starting with Je belonging to
+              Operations department"  id="ot2"/>
+              <af:inputSearch label="Employee" id="inputSearch"
+                                            valueAttribute="id"
+                                            displayAttributes="fName lName"
+                                            filterAttributes="fName lName deptName"
+                                            selectionConverter="#{inputSearchDemo.selectionConverter}">
+                <af:searchSection type="default" dataUrl="/rest/employees?cache=expiry&amp;" />
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                <f:facet name="contentStamp">
+                  <af:sanitized>
+                    {{fName}} {{lName}} <span style="font-size: 10px">{{deptName}}</span>
+                  </af:sanitized>
+                </f:facet>
+              </af:inputSearch>
+              <af:outputFormatted value="&lt;b>Demo 2: Two form fields, with client side filtering.&lt;/b>
+              Have two form fields, one for selecting
+              departments and other for displaying employees belonging to the department
+              chosen from the department field. The Employees suggestion list
+              is filtered on the client using the 'filter' tag attribute."  id="ot3"/>
+              <af:selectOneChoice id="soc1" label="Department">
+                <af:selectItem value="Accounting" label="Accounting" />
+                <af:selectItem value="Payroll" label="Payroll" />
+                <af:selectItem value="Human Resources" label="Human Resources" />
+                <af:selectItem value="Sales" label="Sales" />
+                <af:selectItem value="Marketing" label="Marketing" />
+                <af:selectItem value="Customer Support" label="Customer Support" />
+                <af:selectItem value="Logistics" label="Logistics" />
+                <af:selectItem value="After sales" label="After sales" />
+                <af:selectItem value="Professional Services" label="Professional Services" />
+                <af:selectItem value="Billing" label="Billing" />
+                <af:selectItem value="IT" label="IT" />
+                <af:selectItem value="Real Estate" label="Real Estate" />
+                <af:selectItem value="Security" label="Security" />
+                <af:selectItem value="Public Relations" label="Public Relations" />
+                <af:selectItem value="Front Desk" label="Front Desk" />
+                <af:selectItem value="Legal" label="Legal" />
+                <af:selectItem value="Inventory" label="Inventory" />
+                <af:selectItem value="Purchasing" label="Purchasing" />
+                <af:selectItem value="Licenses" label="Licenses" />
+                <af:selectItem value="Operations" label="Operations" />
+              </af:selectOneChoice>
+              <af:inputSearch label="Employee" id="inputSearch1"
+                                            valueAttribute="id"
+                                            displayAttributes="fName lName deptName"
+                                            filter="filterEmpForDept"
+                                            selectionConverter="#{inputSearchDemo.selectionConverter}">
+                <af:searchSection type="default" dataUrl="/rest/employees?cache=expiry&amp;" />
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+              </af:inputSearch>
+              <af:outputFormatted value="&lt;b>Demo 3: Two form fields, with filtering on server.&lt;/b>
+              Have two form fields, one for selecting
+              departments and other for displaying employees belonging to the department
+              chosen from the department field. On value change of department field,
+              update the URL of the REST service for employees field so that the employees
+              list is filtered on the server"  id="ot4"/>
+              <af:selectOneChoice id="soc2" label="Department">
+                <af:selectItem value="Accounting" label="Accounting" />
+                <af:selectItem value="Payroll" label="Payroll" />
+                <af:selectItem value="Human Resources" label="Human Resources" />
+                <af:selectItem value="Sales" label="Sales" />
+                <af:selectItem value="Marketing" label="Marketing" />
+                <af:selectItem value="Customer Support" label="Customer Support" />
+                <af:selectItem value="Logistics" label="Logistics" />
+                <af:selectItem value="After sales" label="After sales" />
+                <af:selectItem value="Professional Services" label="Professional Services" />
+                <af:selectItem value="Billing" label="Billing" />
+                <af:selectItem value="IT" label="IT" />
+                <af:selectItem value="Real Estate" label="Real Estate" />
+                <af:selectItem value="Security" label="Security" />
+                <af:selectItem value="Public Relations" label="Public Relations" />
+                <af:selectItem value="Front Desk" label="Front Desk" />
+                <af:selectItem value="Legal" label="Legal" />
+                <af:selectItem value="Inventory" label="Inventory" />
+                <af:selectItem value="Purchasing" label="Purchasing" />
+                <af:selectItem value="Licenses" label="Licenses" />
+                <af:selectItem value="Operations" label="Operations" />
+                <af:clientListener type="valueChange" method="valueChangeListener" />
+              </af:selectOneChoice>
+              <af:inputSearch label="Employee" id="inputSearch2"
+                                            valueAttribute="id"
+                                            displayAttributes="fName lName"
+                                            selectionConverter="#{inputSearchDemo.selectionConverter}">
+                <af:searchSection type="default" dataUrl="/rest/employees?cache=expiry&amp;" />
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+              </af:inputSearch>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

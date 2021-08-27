@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:componentDef var="attrs" definition="private">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>An item in the featured demos dashboard.</description>
+        <facet>
+          <description>content</description>
+          <facet-name>content</facet-name>
+        </facet>
+        <attribute>
+          <description>the title of the item</description>
+          <attribute-name>title</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>the action for the item's link</description>
+          <attribute-name>action</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelBox>
+      <af:panelStretchLayout bottomHeight="20px">
+        <f:facet name="bottom">
+          <af:panelGroupLayout layout="vertical" halign="center" styleClass="AFStretchWidth">
+            <af:spacer height="5"/>
+            <af:commandLink text="#{attrs.title}" action="#{dvtGallery.actionHelper[attrs.action].action}"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:facetRef facetName="content"/>
+        </f:facet>
+      </af:panelStretchLayout>
+    </af:panelBox>
+  </af:componentDef>
+</jsp:root>

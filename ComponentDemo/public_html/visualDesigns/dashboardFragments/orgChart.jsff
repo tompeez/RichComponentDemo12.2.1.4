@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root
+  xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Content for Org. Chart.</description>
+        <attribute>
+          <description>Flag for whether this fragment is being displayed in a maximized mode.</description>
+          <attribute-name>maximized</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:switcher facetName="#{attrs.maximized ? 'maximized' : 'restored'}"
+                 id="dcs1">
+      <f:facet name="restored">
+        <af:panelGroupLayout layout="scroll" id="dcpgl1">
+          <af:panelGroupLayout layout="vertical" inlineStyle="padding: 4px"
+                               id="dcpgl2">
+            <af:panelList maxColumns="1" id="dcpl1">
+              <af:group id="dcg1">
+                <af:commandLink partialSubmit="true" text="James - Founder and CEO"
+                                id="dccl1"/>
+                <af:panelList maxColumns="1" id="dcpl2">
+                  <af:commandLink partialSubmit="true" text="Jane - CFO"
+                                  id="dccl2"/>
+                  <af:group id="dcg2">
+                    <af:commandLink partialSubmit="true" text="Thomas - CTO"
+                                    id="dccl3"/>
+                    <af:panelList maxColumns="1" id="dcpl3">
+                      <af:commandLink partialSubmit="true" text="Fred - Aquariums"
+                                      id="dccl4"/>
+                      <af:commandLink partialSubmit="true" text="Martha - Optics"
+                                      id="dccl5"/>
+                      <af:commandLink partialSubmit="true" text="Mildred - Power"
+                                      id="dccl6"/>
+                    </af:panelList>
+                  </af:group>
+                  <af:commandLink partialSubmit="true" text="Ruth - Marketing"
+                                  id="dccl7"/>
+                  <af:group id="dcg3">
+                    <af:commandLink partialSubmit="true" text="Rocky - Sales"
+                                    id="dccl8"/>
+                    <af:panelList maxColumns="1" id="dcpl4">
+                      <af:commandLink partialSubmit="true" text="Doug - East"
+                                      id="dccl9"/>
+                      <af:commandLink partialSubmit="true" text="Shane - West"
+                                      id="dccl10"/>
+                    </af:panelList>
+                  </af:group>
+                </af:panelList>
+              </af:group>
+            </af:panelList>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="maximized">
+        <af:outputText value="Org. Chart would be displayed here (larger, maximized size)."
+                       id="dcot1"/>
+      </f:facet>
+    </af:switcher>
+  </af:componentDef>
+</jsp:root>

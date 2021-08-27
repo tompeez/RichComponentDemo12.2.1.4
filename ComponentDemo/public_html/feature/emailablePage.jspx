@@ -1,0 +1,446 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Emailable Page"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:pageTemplate id="dmoTpl"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Emailable Page"/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelGroupLayout layout="horizontal" id="pgl6">
+              <f:facet name="separator">
+                <af:spacer width="10" height="10" id="s2a"/>
+              </f:facet>
+
+              <af:goLink id="go11" text="Emailable Page (renders a page that can be emailed)"
+                         destination="/faces/feature/emailablePage.jspx?org.apache.myfaces.trinidad.agent.email=true"/>
+
+              <af:goLink id="emailMultipartLinkId" text="Emailable Page (renders a page that is in email mode and multipart/related). You must view the source to see the output since it does not render HTML"
+                         destination="/faces/feature/emailablePage.jspx?org.apache.myfaces.trinidad.agent.email=true&amp;oracle.adf.view.rich.render.emailContentType=multipart/related"/> 
+
+              <af:inputText label="Email From" id="it6" value="#{emailerBean.from}" required="true"/>
+              <af:inputText label="Email To" id="it7" value="#{emailerBean.to}" required="true"/>
+              <af:inputText label="Email Subject" id="it8" value="#{emailerBean.subject}" required="true"/>
+              <af:inputText label="Email Mail Server" id="it9" value="#{emailerBean.mailServer}" required="true"/>
+              <!--<af:inputText label="URL to send" id="urlToSendId" value="#{emailerBean.targetUrl}" />-->
+              <af:commandButton id="commandSendEmail" text="Send this page as an email"
+                  action="#{emailerBean.sendMimeMultipartMail}" />
+
+              <af:commandButton id="cbq1" immediate="true" text="Printable Page">
+                <af:showPrintablePageBehavior/>
+              </af:commandButton>
+              <af:commandButton id="commandButton1" text="Reject"
+                                partialSubmit="true"></af:commandButton>
+              <af:selectOneChoice id="navList1" autoSubmit="true"
+                                  label="Actions">
+                <af:selectItem value="Option1" label="Option 1" id="si1"/>
+                <af:selectItem value="Option2" label="Option 2" id="si2"/>
+              </af:selectOneChoice>
+            </af:panelGroupLayout>
+
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="s2"/>
+                </f:facet>
+                <af:panelHeader icon="/images/guy.gif" text="Level 1 Header" size="0"
+                                id="panelHeader4">
+                  <af:outputText value="panelHeader Level 1 content."
+                                 id="ot8"/>
+                  <af:panelHeader text="Level 2 Header" size="2"
+                                  id="panelHeader5">
+                    <af:outputText value="panelHeader Level 2 content."
+                                   id="ot9"/>
+                  </af:panelHeader>
+                </af:panelHeader>
+                <af:showDetailHeader text="showDetailHeader - Details panelLabelAndMessage and outputText"
+                                     shortDesc="Header Details" disclosed="true"
+                                     id="sdh2">
+                  <trh:tableLayout width="100%" id="tl2">
+                    <trh:rowLayout id="rl2">
+                      <trh:cellFormat width="50%" valign="top" id="cf4">
+                        <af:panelFormLayout id="pfl2" styleClass="AFStretchWidth">
+                          <af:panelLabelAndMessage label="Assignee" id="plam1">
+                            <af:outputText value="mtwain" id="ot17"/>
+                          </af:panelLabelAndMessage>
+                          <af:panelLabelAndMessage label="From" id="plam2">
+                            <af:outputText value="cunderwood" id="ot18"/>
+                          </af:panelLabelAndMessage>
+                          <af:panelLabelAndMessage label="Date" id="plam3">
+                            <af:outputText value="Jan 31, 2009 2:19 AM"
+                                           id="ot19"/>
+                          </af:panelLabelAndMessage>
+                          <af:panelLabelAndMessage label="Expiration Date"
+                                                   id="plam4">
+                            <af:outputText value="Feb 1, 2009 2:12 AM"
+                                           id="ot20"/>
+                          </af:panelLabelAndMessage>
+                          <af:panelLabelAndMessage label="GoLink Label"
+                                                   id="plam5">
+                            <af:goLink text="200038"
+                                       destination="http://www.oracle.com"
+                                       targetFrame="_blank" id="gl6"/>
+                          </af:panelLabelAndMessage>
+                        </af:panelFormLayout>
+                      </trh:cellFormat>
+                      <trh:cellFormat id="cf5">
+                        <af:spacer width="10" height="10" id="s6"/>
+                      </trh:cellFormat>
+                      <trh:cellFormat width="50%" valign="top" id="cf6">
+                        <af:panelFormLayout id="pfl3">
+                          <af:panelLabelAndMessage label="Buyer" id="plam6">
+                            <af:outputText value="Underwood, Ms. Carroll"
+                                           id="ot21"/>
+                          </af:panelLabelAndMessage>
+                          <af:panelLabelAndMessage label="Procurement BU"
+                                                   id="plam7">
+                            <af:outputText value="Vision Operations" id="ot22"/>
+                          </af:panelLabelAndMessage>
+                          <af:panelLabelAndMessage label="Order" id="plam8">
+                            <af:outputText value="5468" id="ot23"/>
+                          </af:panelLabelAndMessage>
+                        </af:panelFormLayout>
+                      </trh:cellFormat>
+                    </trh:rowLayout>
+                  </trh:tableLayout>
+                </af:showDetailHeader>
+                <af:showDetailHeader text="Order Details with InputText"
+                                     shortDesc="Order Details Short Desc"
+                                     disclosed="true" id="sdh1">
+                  <trh:tableLayout width="100%" id="tl1">
+                    <trh:rowLayout id="rl1">
+                      <trh:cellFormat width="50%" valign="top" id="cf1">
+                        <af:panelFormLayout id="pfl1" styleClass="AFStretchWidth">
+                          <af:inputText label="Requisitioning BU" id="it2"/>
+                          <af:inputText label="Ordered" value="300.00"
+                                        id="it3"/>
+                          <af:inputText label="Supplier"
+                                        value="General Electric" id="it4"/>
+                          <af:inputText label="Supplier Site" value="GE"
+                                        id="it5"/>
+                          <af:inputText value="This should be rendered as a read-only field"
+                                        label="ReadOnly" required="true"
+                                        shortDesc="foo" readOnly="true"
+                                        id="it1"/>
+                        </af:panelFormLayout>
+                      </trh:cellFormat>
+                      <trh:cellFormat id="cf2">
+                        <af:spacer width="10" height="10" id="s1"/>
+                      </trh:cellFormat>
+                      <trh:cellFormat width="50%" valign="top" id="cf3">
+                        <af:image shortDesc="pear"
+                                  source="/components/images/pear.jpg" id="i2"/>
+                      </trh:cellFormat>
+                    </trh:rowLayout>
+                  </trh:tableLayout>
+                </af:showDetailHeader>
+                <af:showDetailHeader text="Order Lines Table" disclosed="true"
+                                     helpTopicId="PO_EXAMPLE_INSTRUCTION"
+                                     id="sdh3">
+                  <af:panelGroupLayout layout="vertical" id="pgl4">
+                    <af:table rowSelection="multiple" columnSelection="multiple"
+                              columnBandingInterval="0" var="test1"
+                              value="#{tableTestData}" id="table"
+                              summary="table data" rowBandingInterval="0">
+                      <f:facet name="contextMenu">
+                        <af:popup id="myPopup">
+                          <af:menu id="m1">
+                            <af:commandMenuItem text="Context Menu Item 1"
+                                                id="cmi1"/>
+                            <af:commandMenuItem text="Context Menu Item 2"
+                                                id="cmi2"/>
+                            <af:commandMenuItem text="Context Menu Item 3"
+                                                id="cmi3"/>
+                          </af:menu>
+                        </af:popup>
+                      </f:facet>
+
+                      <af:column width="40" align="center" rowHeader="true"
+                                 headerText="Number" id="c1">
+                        <af:outputText value="#{test1.no}" id="ot1"/>
+                      </af:column>
+
+                      <af:column displayIndex="3" headerText="Number" align="right"
+                                 sortProperty="no" sortable="true" id="c2">
+                        <af:outputText value="#{test1.no}" id="ot2"/>
+                      </af:column>
+
+                      <af:column displayIndex="1" headerText="Name" width="150px"
+                                 sortProperty="name" sortable="true" id="c3">
+                        <af:panelGroupLayout id="pgl2">
+                          <af:image source="#{test1.icon}"
+                                    inlineStyle="width:16px; height:14px;"
+                                    shortDesc="icon" id="i1"/>
+                          <af:outputText inlineStyle="margin-left:8px"
+                                         value="#{test1.name}" id="ot3"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+
+                      <af:column headerText="Size in Kilo Bytes"
+                                 headerNoWrap="false" displayIndex="2"
+                                 align="end" id="c4">
+                        <af:outputText value="#{test1.size}" id="ot4"/>
+                      </af:column>
+
+                      <af:column align="center" headerText="Date Modified"
+                                 id="c5">
+                        <af:outputText value="#{test1.date}" id="ot5"/>
+                      </af:column>
+
+                      <af:column headerText="Col5" id="c6">
+                        <af:outputText value="#{test1.col5}" id="ot6"/>
+                      </af:column>
+
+                      <af:column headerText="Col6" id="c7">
+                        <af:outputText value="#{test1.col6}" id="ot7"/>
+                      </af:column>
+
+                      <af:column headerText="Col7" align="end" id="c8">
+                        <af:outputText value="#{test1.col7}" id="outputText1"/>
+                      </af:column>
+
+                      <af:column headerText="Col8" align="end" id="c9">
+                        <af:outputText value="#{test1.col8}" id="outputText2"/>
+                      </af:column>
+
+                      <af:column headerText="Col9" id="c10">
+                        <af:outputText value="#{test1.col9}" id="ot10"/>
+                      </af:column>
+
+                      <af:column headerText="Col10" id="c11">
+                        <af:outputText value="#{test1.col10}" id="ot11"/>
+                      </af:column>
+
+                      <af:column headerText="Col11" align="end" id="c12">
+                        <af:outputText value="#{test1.col11}" id="ot12"/>
+                      </af:column>
+
+                      <af:column headerText="Col12" align="end" id="c13">
+                        <af:outputText value="#{test1.col12}" id="ot13"/>
+                      </af:column>
+                    </af:table>
+                    <af:panelGroupLayout layout="horizontal" id="pgl5">
+                      <af:goLink text="GoLink 1"
+                                 destination="http://www.oracle.com"
+                                 targetFrame="_blank" id="gl1"/>
+                      <af:goLink text="GoLink 2"
+                                 destination="http://www.oracle.com"
+                                 targetFrame="_blank" id="gl2"/>
+                      <af:goLink text="GoLink 3" targetFrame="_blank"
+                                 destination="http://www.oracle.com" id="gl3"/>
+                      <f:facet name="separator">
+                        <af:group id="g1">
+                          <af:spacer width="10" height="10" id="s3"/>
+                          <af:outputText value="|" id="ot14"/>
+                          <af:spacer width="10" height="10" id="s4"/>
+                        </af:group>
+                      </f:facet>
+                    </af:panelGroupLayout>
+                    
+                    <f:facet name="separator">
+                      <af:spacer width="10" height="10" id="s5"/>
+                    </f:facet>
+                  </af:panelGroupLayout>
+                </af:showDetailHeader>                
+                
+
+                <af:showDetailHeader text="File Folder Tree Table" disclosed="true"
+                                     id="treeTableSDH">                
+                  <af:panelGroupLayout layout="vertical" id="treeTablePGL">                   
+                    <af:treeTable id="folderTreeTable" var="directory" value="#{fs.treeModel}"
+                        columnSelectionListener="#{fs.handleColumnSelection}"
+                        binding="#{editor.component}" rowSelection="multiple"
+                        columnSelection="multiple" focusRowKey="#{fs.defaultFocusRowKey}"
+                        focusListener="#{fs.onTreeFocus}" autoHeightRows="0"
+                        disclosedRowKeys="#{fs.treeDisclosedRowKeys}"
+                        rowDisclosureListener="#{fs.toggle}" summary="treeTable data" styleClass="AFStretchWidth"
+                        rowBandingInterval="0">
+                      <f:facet name="nodeStamp">
+                        <af:column headerText="Directory Name" width="200" sortable="true" rowHeader="unstyled"
+                           sortProperty="name" id="ttc2">
+                           <af:panelGroupLayout id="ttpgl2">
+                             <af:image source="#{directory.icon}" id="ttnodeIcon"
+                               inlineStyle="margin-right:3px; vertical-align:middle; height:16px; width:16px;"
+                               shortDesc="directory"/>
+                             <af:outputText id="ttdirectoryStamp" inlineStyle="vertical-align:middle" value="#{directory.name}"/>
+                             </af:panelGroupLayout>
+                        </af:column>
+                      </f:facet>
+                      <f:facet name="pathStamp">
+                        <af:panelGroupLayout id="ttpgl3">
+                           <af:image source="#{directory.icon}" inlineStyle="vertical-align:middle;"
+                              shortDesc="directory" id="tti1"/>
+                           <af:outputText value="#{directory.name}" id="ttot1"/>
+                        </af:panelGroupLayout>
+                      </f:facet>
+                      <af:column headerText="Icon" id="ttc3">
+                        <af:outputText id="tticonStamp" value="#{directory.icon}"/>
+                        </af:column>
+                      <af:column headerText="Last Modified" width="300" id="ttc4">
+                      <af:outputText id="ttmodifiedStamp" value="#{directory.lastModified}"/>
+                      </af:column>
+                    </af:treeTable>                    
+                  </af:panelGroupLayout>
+                </af:showDetailHeader>       
+                
+                <af:showDetailHeader text="PanelList, Text, and Links" disclosed="true"
+                                     id="sdh4">
+                  <af:panelList id="pl1">
+                    <af:outputText value="panelList with outputText: Attempt to reschedule outputText"
+                                   id="ot15"/>
+                    <af:outputText value="Substitute outputText" id="ot16"/>
+                    <af:goLink text="View All Past Due GoLink"
+                               targetFrame="_blank"
+                               destination="http://www.oracle.com" id="gl4"/>
+                    <af:goLink text="Past Due GoLink"
+                               destination="http://www.oracle.com"
+                               targetFrame="_blank" id="gl5"/>
+                  </af:panelList>
+                </af:showDetailHeader>
+                <af:showDetailHeader text="Input Components" disclosed="true"
+                                     id="sdh5">
+                  <af:panelFormLayout id="inputComponentsPGL">
+                    <af:inputComboboxListOfValues id="inputCBLOfValuesID1"
+                                                  searchDesc="search description"
+                                                  label="inputComboboxListOfValues"
+                                                  value="John"/>
+                    <af:inputDate id="inputDateID1" label="InputDate"
+                                  value="05/15/92"/>
+                    <af:inputListOfValues id="inputListOfValuesID1"
+                                          label="InputListOfValues"
+                                          searchDesc="Search Desc"
+                                          value="Flower"/>
+                    <af:inputNumberSlider id="inputNumberSliderID1"
+                                          label="InputNumberSlider" value="15"/>
+                    <af:inputNumberSpinbox id="inputNumberSpinboxID1"
+                                           label="inputNumberSpinbox"
+                                           value="10"/>
+                    <af:inputRangeSlider id="inputRangeSliderID1"
+                                         label="inputRangeSlider" value="5"/>
+                    <af:inputText id="inputTextID1" label="InputText"
+                                  value="text"/>
+                  </af:panelFormLayout>
+                </af:showDetailHeader>
+                
+                <af:showDetailHeader text="Horizontal Tabs" disclosed="true">
+                  <af:panelTabbed childCreation="lazy" styleClass="AFStretchWidth" id="ShowOneTab" 
+                  dimensionsFrom="auto" maxTabSize="100px" minTabSize="36px" truncationStyle="none">
+                    <af:showDetailItem id="tab1" textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                       itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}"
+                                       shortDesc="Info Panel" depressedIcon="/images/warning_status.png"
+                                       hoverIcon="/images/error_status.png" >
+                      <af:outputText value="Tab 1 First Child" id="tot1"/>
+                      <af:outputText value="Tab 1 Second Child" id="tot2"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem id="tab2" text="Tab 2" disclosed="true"
+                                       itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      <af:outputText value="Tab 2 First Child" id="tot3"/>
+                      <af:outputText value="Tab 2 Second Child" id="tot4"/>
+                      <af:commandButton text="Button inside tab 2" shortDesc="shouldn't render in emailable mode"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem id="tab3" textAndAccessKey="Disabled tab &amp;3" disabled="true"
+                                       itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 4 Long text" id="stab4"
+                                       itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      <af:outputText value="Tab 4 First Child" id="tot5"/>
+                      <af:outputText value="Tab 4 Second Child" id="tot6"/>
+                    </af:showDetailItem>
+                  </af:panelTabbed>
+                </af:showDetailHeader>
+                
+                <af:showDetailHeader text="Vertical Tabs" disclosed="true">
+                  <af:panelTabbed position="start" id="binky">
+                    <af:showDetailItem textAndAccessKey="Disabled tab &amp;1" disabled="true" 
+                                 icon="/images/icon_stats24X24_ena.png"
+                                 hoverIcon="/images/icon_stats24X24_ovr.png"
+                                 depressedIcon="/images/icon_stats24X24_sel.png" 
+                                 disabledIcon="/images/icon_stats24X24_dis.png" >
+                      <af:outputText value="Tab 1 Only Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 2" 
+                                 icon="/images/icon_subscriptions2_24X24_ena.png"
+                                 hoverIcon="/images/icon_subscriptions2_24X24_ovr.png"
+                                 depressedIcon="/images/icon_subscriptions2_24X24_sel.png" 
+                                 disabledIcon="/images/icon_subscriptions2_24X24_dis.png" >
+                      <af:outputText value="Tab 2 First Child"/>
+                      <af:outputText value="Tab 2 Second Child"/>
+                      <af:commandButton text="Button inside tab 2" shortDesc="shouldn't render in emailable mode"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 3" disclosed="true"
+                         icon="/images/icon_chat_24X24_ena.png"
+                         hoverIcon="/images/icon_chat_24X24_ovr.png"
+                         depressedIcon="/images/icon_chat_24X24_sel.png" 
+                         disabledIcon="/images/icon_chat_24X24_dis.png" 
+                        stretchChildren="#{requestScope.showDetailItemStretchChildren}">
+                      <af:outputText value="Tab 3 First Child"/>
+                      <af:outputText value="Tab 3 Second Child"/>
+                      <af:commandButton text="Button inside tab 3" shortDesc="shouldn't render in emailable mode"/>
+                      <af:panelDrawer partialTriggers="sbc1 drawerToggle" id="myDrawer">
+                        <af:showDetailItem textAndAccessKey="Drawer 1" 
+                                 icon="/images/icon_library_24X24_ena.png"
+                                 hoverIcon="/images/icon_library_24X24_ovr.png"
+                                 depressedIcon="/images/icon_library_24X24_sel.png" 
+                                 disabledIcon="/images/icon_library_24X24_dis.png" 
+                                 id="sdi1">
+                          <af:outputText value="Drawer 1 First Child"/>
+                          <af:outputText value="Drawer 1 Second Child"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="Drawer 2" 
+                                   icon="/images/icon_chat_24X24_ena.png"
+                                   hoverIcon="/images/icon_chat_24X24_ovr.png"
+                                   depressedIcon="/images/icon_chat_24X24_sel.png" 
+                                   disabledIcon="/images/icon_chat_24X24_dis.png" 
+                                   id="sdi2">
+                          <af:outputText value="Drawer 2 First Child"/>
+                          <af:outputText value="Drawer 2 Second Child"/>
+                          <af:showDetail disclosed="false">
+                            <af:inputText required="true" label="inside 1" id="drawerIt1"/>
+                            <af:inputText required="true" label="inside 2" id="drawerIt2"/>
+                            <af:inputText id="drawerIt3" validator="#{demoInput.validateServerOnly}" label="inside 3"/>
+                            <af:inputText id="drawerIt4" validator="#{demoInput.validateServerOnly}" label="inside 4"/>
+                          </af:showDetail>
+                        </af:showDetailItem>
+                        <af:showDetailItem textAndAccessKey="Disabled Drawer 3" disabled="true" 
+                                   icon="/images/icon_pie_24X24_ena.png"
+                                   hoverIcon="/images/icon_pie_24X24_ovr.png"
+                                   depressedIcon="/images/icon_pie_24X24_sel.png" 
+                                   disabledIcon="/images/icon_pie_24X24_dis.png" 
+                                   id="sdi3">
+                          <af:outputText value="Drawer 3 Only Child"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="Drawer 4" 
+                                           icon="/images/icon_briefcase_24X24_ena.png"
+                                           hoverIcon="/images/icon_briefcase_24X24Ovr.png"
+                                           depressedIcon="/images/icon_briefcase_24X24_sel.png" 
+                                           disabledIcon="/images/icon_briefcase_24X24_dis.png" 
+                                           id="sdi4">
+                          <af:outputText value="Drawer 4 First Child"/>
+                          <af:outputText value="Drawer 4 Second Child"/>
+                        </af:showDetailItem>
+                      </af:panelDrawer>     
+                    </af:showDetailItem>
+                  </af:panelTabbed>  
+                </af:showDetailHeader>
+                
+                <af:showDetailHeader text="Components that shouldn't render" disclosed="true">
+                  <af:panelGroupLayout>
+                      <af:commandButton text="Button - shouldn't render"/>
+                  </af:panelGroupLayout>
+                </af:showDetailHeader>
+              </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

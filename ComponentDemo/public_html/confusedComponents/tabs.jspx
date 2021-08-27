@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Tabs Comparison" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="brandingTitle" value="Tabs Comparison"/>
+        <f:attribute name="demoKind" value="confusedComponents"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- panelTabbed -->
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:outputFormatted value="&lt;b>af:panelTabbed&lt;/b>" id="of1"/>
+              <af:panelList id="pl1">
+                <af:outputText value="The panelTabbed control can be used to display a group of contents
+                that belongs to a showDetailItem. " id="ot1"/>
+                <af:outputText value="Tab bar(s) with tabs representing the showDetailItem children
+                are displayed. " id="ot2"/>
+                <af:outputText value="Selecting a tab, displays the associated showDetailItem."
+                               id="ot3"/>
+                <af:outputText value="If none of the showDetailItem children are selected, the first
+                showDetailItem that is enabled is selected." id="ot4"/>
+                <af:outputText value="Typically you would put one or more showDetailItem components
+                inside of the panelTabbed." id="ot5"/>
+                <af:outputText value="Alternatively place a facetRef, group, iterator, or switcher
+                inside of the panelTabbed as long as these wrappers provide showDetailItem components
+                as a result of their execution." id="ot6"/>
+              </af:panelList>
+              <af:spacer height="5" id="s2"/>
+              <af:panelTabbed inlineStyle="width:50%;margin-left:30px; height:100px;" id="ShowOneTab"
+                             >
+                <af:showDetailItem id="tab1" textAndAccessKey="Ta&amp;b 1" icon="/images/info.png"
+                                   shortDesc="Info Panel">
+                  <af:outputText value="Tab 1 First Child" id="ot7"/>
+                  <af:outputText value="Tab 1 Second Child" id="ot8"/>
+                </af:showDetailItem>
+                <af:showDetailItem id="tab2" text="Tab 2" disclosed="true">
+                  <af:outputText value="Tab 2 First Child" id="ot9"/>
+                  <af:outputText value="Tab 2 Second Child" id="ot10"/>
+                </af:showDetailItem>
+                <af:showDetailItem id="tab3" textAndAccessKey="Disabled tab &amp;3" disabled="true"/>
+                <af:showDetailItem text="Tab 4" id="sdi1">
+                  <af:outputText value="Tab 4 First Child" id="ot11"/>
+                  <af:outputText value="Tab 4 Second Child" id="ot12"/>
+                </af:showDetailItem>
+              </af:panelTabbed>
+            </af:panelGroupLayout>
+            <!-- navigationPane -->
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <af:outputFormatted value="&lt;b>af:navigationPane&lt;/b> with hint='tabs'"
+                                  id="of2"/>
+              <af:panelList id="pl2">
+                <af:outputText value="The navigationPane component creates a series of navigation items
+                representing one level in a navigation hierarchy." id="ot13"/>
+                <af:outputText value="These items may either be explicitly added as children using the
+                commandNavigationItem component or a model of type org.apache.myfaces.trinidad.model.MenuModel
+                may be bound to the navigationPane component." id="ot14"/>
+                <af:outputText value="If a MenuModel is bound, a level along the focus path, or the
+                next level down, will be rendered. A node that is on the focus path will be rendered
+                as 'selected'." id="ot15"/>
+              </af:panelList>
+              <af:spacer height="5" id="s3"/>
+              <af:navigationPane hint="tabs" id="tabsEx"
+                                 inlineStyle="width:50%;margin-left:30px;">
+                <af:commandNavigationItem text="Tab 1" partialSubmit="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni1"/>
+                <af:commandNavigationItem text="Tab 2" partialSubmit="true" selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni2"/>
+                <af:commandNavigationItem text="Tab 3" partialSubmit="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni3"/>
+                <af:commandNavigationItem text="Disabled Item" partialSubmit="true" disabled="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni4"/>
+                <af:commandNavigationItem text="Tag Guide" immediate="true" action="guide"
+                                          id="cni5"/>
+                <af:commandNavigationItem text="Destination - Google" shortDesc="tab 6 shortDesc"
+                                          icon="/images/backarrow.gif"
+                                          destination="http://www.google.com"
+                                          id="cni6"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputText value="See also:" id="ot16"/>
+              <af:panelList id="pl3">
+                <af:goLink text="panelTabbed" destination="../components/panelTabbed.jspx"
+                           id="gl1"/>
+                <af:goLink text="navigationPane" destination="../components/navigationPane.jspx"
+                           id="gl2"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

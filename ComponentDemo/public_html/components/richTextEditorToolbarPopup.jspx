@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="richTextEditor Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="richTextEditor"/>
+        <f:attribute name="visualDesignName" value="richTextEditor"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a richTextEditor is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:attribute name="centerBottomCollapsibleHeight" value="125"/>
+        <f:facet name="centerHeader">
+          <af:outputText value="Place focus on the RTE's editing region to popup the toolbar."
+                         id="ot1"/>
+        </f:facet>
+        <f:facet name="center">
+          <af:richTextEditor id="idRichTextEditor" binding="#{editor.component}" toolbarDisplay="popup" 
+                             label="Rich text value" value="#{demoInput.richValue}"/>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+          <af:panelTabbed partialTriggers="idRichTextEditor"
+                          id="pt1">
+            <af:showDetailItem disclosed="true" icon="/images/designmode_ena.png"
+                               text="Submitted Value" stretchChildren="first"
+                               id="sdi1">
+              <af:panelGroupLayout layout="scroll" id="pgl6">
+                <af:richTextEditor id="result" label="Submitted value"
+                                   value="#{demoInput.richValue}" simple="true" readOnly="true"
+                                   clientComponent="true"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem icon="/images/codemode_ena.png" text="Submitted Value Source"
+                               stretchChildren="first" id="sdi2">
+              <af:panelGroupLayout layout="scroll" id="pgl7">
+                <af:outputText value="#{demoInput.richValue}" id="ot4"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

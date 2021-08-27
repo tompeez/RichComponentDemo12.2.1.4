@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelDrawer scrolling"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelDrawer"/>
+        <f:attribute name="visualDesignName" value="tabs"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <!--af:panelStretchLayout inlineStyle="width:400px;height:500px;">
+            <f:facet name="center"-->
+          <af:panelTabbed partialTriggers="sor2 sor3 sor4 sor5"
+                          styleClass="RemoveTabBodyPadding"
+                          position="#{sessionScope.panelTabbedPosition == null? 'start' : sessionScope.panelTabbedPosition}"
+                          dimensionsFrom="#{sessionScope.panelTabbedDimensionsFrom}"
+                          id="binky">
+            <af:showDetailItem textAndAccessKey="Disabled tab &amp;3"
+                               disabled="true"
+                               icon="/images/icon_stats24X24_ena.png"
+                               hoverIcon="/images/icon_stats24X24_ovr.png"
+                               depressedIcon="/images/icon_stats24X24_sel.png"
+                               disabledIcon="/images/icon_stats24X24_dis.png">
+              <af:outputText value="Tab 3 Only Child"/>
+              <af:spacer height="250px"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tab 4"
+                               icon="/images/icon_subscriptions2_24X24_ena.png"
+                               hoverIcon="/images/icon_subscriptions2_24X24_ovr.png"
+                               depressedIcon="/images/icon_subscriptions2_24X24_sel.png"
+                               disabledIcon="/images/icon_subscriptions2_24X24_dis.png">
+              <af:outputText value="Tab 4 First Child"/>
+              <af:outputText value="Tab 4 Second Child"/>
+              <af:commandButton partialSubmit="true"
+                                text="Cause Partial Submit"/>
+              <af:spacer height="280px"/>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="Ta&amp;b 1"
+                               icon="/images/icon_pie_24X24_ena.png"
+                               hoverIcon="/images/icon_pie_24X24_ovr.png"
+                               depressedIcon="/images/icon_pie_24X24_sel.png"
+                               disabledIcon="/images/icon_pie_24X24_dis.png">
+              <af:outputText value="Tab 1 First Child"/>
+              <af:outputText value="Tab 1 Second Child"/>
+              <af:spacer height="300px"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tab 2" disclosed="true"
+                               icon="/images/icon_chat_24X24_ena.png"
+                               hoverIcon="/images/icon_chat_24X24_ovr.png"
+                               depressedIcon="/images/icon_chat_24X24_sel.png"
+                               disabledIcon="/images/icon_chat_24X24_dis.png"
+                               stretchChildren="#{requestScope.showDetailItemStretchChildren}">
+              <af:panelGroupLayout layout="scroll" id="layout"
+                                   clientComponent="true">
+                <af:declarativeComponent id="myDrawer" partialTriggers="cb1"
+                                         viewId="panelDrawerDeclarative.jsff"></af:declarativeComponent>
+                <af:panelGroupLayout layout="vertical"
+                                     styleClass="AddTabBodyPadding">
+                  <af:outputText value="There is normally padding inside of a tab, however in this example that was causing problems because the scroll bar and drawer weren't flush against the side. In order to fix this we have "/>
+                  <af:panelList>
+                    <af:outputText value="set styleClass attribute on the panelTabbed to 'RemoveTabBodyPadding', then in the skin we remove the padding with a style '.RemoveTabBodyPadding af|panelTabbed::body:vertical {padding:0px;}'"/>
+                    <af:outputText value="set styleClass to 'AddTabBodyPadding' on a panelGroupLayout that's inside the scrollable area, in the skin we have '.AddTabBodyPadding {padding:5px;}'"/>
+                  </af:panelList>
+                  <af:outputText value="Wide text 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 "/>
+                  <af:spacer height="100" width="50"
+                             rendered="#{!requestScope.hideSpacer}"
+                             inlineStyle="border:1px solid red"/>
+                  <af:outputText value="Wide text 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 "/>
+                  <af:commandButton partialSubmit="true" id="cb1"
+                                    text="Cause Partial Submit"/>
+                  <af:showDetail disclosed="true"
+                                 disclosedText="hide vertical spacer"
+                                 undisclosedText="show vertical spacer">
+                    <af:spacer height="1000" width="50"
+                               rendered="#{!requestScope.hideSpacer}"
+                               inlineStyle="border:1px solid blue"/>
+                  </af:showDetail>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+          <!--/f:facet>
+          </af:panelStretchLayout-->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

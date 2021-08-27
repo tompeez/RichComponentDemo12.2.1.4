@@ -1,0 +1,211 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2017, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelBox Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelBox"/>
+        <f:attribute name="visualDesignName" value="contentContainer"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="centerMode" value="tabs"/>
+        <f:attribute name="gmFlowNotes" value="If you use type=&quot;stretch&quot; when flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmFlowWithZeroWidthNotes" value="If you use type=&quot;stretch&quot; when flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmStretchNotes" value="When flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="demoTabHeader">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <f:facet name="separator">
+              <af:spacer height="5px" id="s2"/>
+            </f:facet>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This is a demo for the panelBox component. Use the editor to the right to adjust the attributes for this demo.&lt;/b>"
+                                id="ofA"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="demoTab">
+          <af:panelBox id="pb" text="Title Text" binding="#{editor.component}" type="default"
+                       icon="/images/folder.png" helpTopicId="TOPICID_ALL">
+            <f:facet name="toolbar">
+              <af:toolbox id="tbox">
+                <af:toolbar id="tbar">
+                  <af:commandToolbarButton icon="/images/new_ena.png" partialSubmit="true"
+                                           shortDesc="New" id="new"/>
+                  <af:commandToolbarButton icon="/images/update_ena.png" partialSubmit="true"
+                                           shortDesc="Update" id="upd"/>
+                  <af:commandToolbarButton icon="/images/delete_ena.png" partialSubmit="true"
+                                           shortDesc="Delete" id="del"/>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+            <af:outputText value="panel box content" id="ot"/>
+          </af:panelBox>
+        </f:facet>
+        <f:facet name="otherTab">
+          <af:panelGroupLayout layout="scroll" id="pgl1B">
+            <h:panelGrid id="panelBoxGrid" columns="2" cellspacing="0" summary="">
+              <af:panelGroupLayout id="dropBoxA1" layout="scroll"
+                                   inlineStyle="width: 265px; min-height: 210px; padding: 5px;">
+                <af:dropTarget actions="MOVE"
+                               dropListener="#{panelBoxDropHandler.handleComponentMove}">
+                  <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                </af:dropTarget>
+                <af:panelBox id="panelBoxA1" text="Core Default"
+                             ramp="core" background="default"
+                             contentStyle="height: 150px; vertical-align: top;"
+                             showDisclosure="false" showMaximize="always">
+                  <af:outputText value="panel box content" id="ot1"/>
+                  <af:componentDragSource/>
+                </af:panelBox>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="dropBoxA2" layout="scroll"
+                                   inlineStyle="width: 265px; min-height: 210px; padding: 5px;">
+                <af:dropTarget actions="MOVE"
+                               dropListener="#{panelBoxDropHandler.handleComponentMove}">
+                  <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                </af:dropTarget>
+                <af:panelBox id="panelBoxA2" text="Core Light"
+                             ramp="core" background="light" icon="/images/folder.png"
+                             clientComponent="true"
+                             contentStyle="height: 150px; vertical-align: top;"
+                             helpTopicId="TOPICID_ALL">
+                  <af:componentDragSource/>
+                  <f:facet name="toolbar">
+                    <af:toolbox id="t1">
+                      <af:toolbar id="t2">
+                        <af:commandToolbarButton icon="/images/new_ena.png" partialSubmit="true"
+                                                 shortDesc="New" id="ctb1"/>
+                        <af:commandToolbarButton icon="/images/update_ena.png" partialSubmit="true"
+                                                 shortDesc="Update" id="ctb2"/>
+                      </af:toolbar>
+                    </af:toolbox>
+                  </f:facet>
+                  <!--
+                  <f:facet name="menu">
+                    <af:menuBar>
+                      <af:menu text="Menu">
+                        <af:commandMenuItem text="New..."/>
+                        <af:commandMenuItem text="Update.."/>
+                        <af:commandMenuItem text="Delete.."/>
+                        <af:commandMenuItem text="Copy..." disabled="true"/>
+                      </af:menu>
+                    </af:menuBar>
+                  </f:facet>
+                   -->
+                  <af:outputText value="panel box content" id="ot2"/>
+                </af:panelBox>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="dropBoxA3" layout="scroll"
+                                   inlineStyle="width: 255px; min-height: 210px; padding: 5px;">
+                <af:dropTarget actions="MOVE"
+                               dropListener="#{panelBoxDropHandler.handleComponentMove}">
+                  <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                </af:dropTarget>
+                  <af:panelBox id="panelBoxA3" text="Core Medium" icon="/images/circle.svg"
+                             ramp="core" background="medium"  iconDelivery="inline"
+                             contentStyle="height: 150px; vertical-align: top;">
+                  <af:outputText value="panel box content - inline svg" id="ot3"/>
+                  <!---
+                  <f:facet name="menu">
+                    <af:commandToolbarButton id="menuButton">
+                      <f:facet name="popup">
+                        <af:menu>
+                          <af:commandMenuItem text="New..."/>
+                          <af:commandMenuItem text="Update.."/>
+                          <af:commandMenuItem text="Delete.."/>
+                          <af:commandMenuItem text="Copy..." disabled="true"/>
+                        </af:menu>
+                      </f:facet>
+                    </af:commandToolbarButton>
+                  </f:facet>
+                  -->
+                  <af:componentDragSource/>
+                </af:panelBox>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="dropBoxB1" layout="scroll"
+                                   inlineStyle="width: 265px; min-height: 210px; padding: 5px;">
+                <af:dropTarget actions="MOVE"
+                               dropListener="#{panelBoxDropHandler.handleComponentMove}">
+                  <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                </af:dropTarget>
+                <af:panelBox id="panelBoxB1" text="Core Dark" icon="/images/circle.svg"
+                             ramp="core" background="dark" iconDelivery="fetchAndInline"
+                             contentStyle="height: 150px; vertical-align: top;">
+                  <af:outputText value="panel box content- fetchAndInline SVG" id="ot4"/>
+                  <af:componentDragSource/>
+                </af:panelBox>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="dropBoxB2" layout="scroll"
+                                   inlineStyle="width: 265px; min-height: 210px; padding: 5px;">
+                <af:dropTarget actions="MOVE"
+                               dropListener="#{panelBoxDropHandler.handleComponentMove}">
+                  <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                </af:dropTarget>
+                <af:panelBox id="panelBoxB2"
+                             text="Highight Default" ramp="highlight" background="default"
+                             contentStyle="height: 150px; vertical-align: top;">
+                  <af:outputText value="panel box content" id="ot5"/>
+                  <af:componentDragSource/>
+                </af:panelBox>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="dropBoxB3" layout="scroll"
+                                   inlineStyle="width: 265px; min-height: 210px; padding: 5px;">
+                <af:dropTarget actions="MOVE"
+                               dropListener="#{panelBoxDropHandler.handleComponentMove}">
+                  <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                </af:dropTarget>
+                <af:panelBox id="panelBoxB3" text="Highlight Light"
+                             ramp="highlight" background="light"
+                             contentStyle="height: 150px; vertical-align: top;">
+                  <af:outputText value="panel box content" id="ot6"/>
+                  <af:componentDragSource/>
+                </af:panelBox>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="dropBoxC1" layout="scroll"
+                                   inlineStyle="width: 265px; min-height: 210px; padding: 5px;">
+                <af:dropTarget actions="MOVE"
+                               dropListener="#{panelBoxDropHandler.handleComponentMove}">
+                  <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                </af:dropTarget>
+                <af:panelBox id="panelBoxC1"
+                             text="Highlight Medium" ramp="highlight" background="medium"
+                             contentStyle="height: 150px; vertical-align: top;">
+                  <af:outputText value="panel box content" id="ot7"/>
+                  <af:componentDragSource/>
+                </af:panelBox>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="dropBoxC2" layout="scroll"
+                                   inlineStyle="width: 265px; min-height: 210px; padding: 5px;">
+                <af:dropTarget actions="MOVE"
+                               dropListener="#{panelBoxDropHandler.handleComponentMove}">
+                  <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                </af:dropTarget>
+                <af:panelBox id="panelBoxC2" text="Highlight Dark"
+                             ramp="highlight" background="dark"
+                             contentStyle="height: 150px; vertical-align: top;">
+                  <af:outputText value="panel box content" id="ot8"/>
+                  <af:componentDragSource/>
+                </af:panelBox>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="dropBoxC3" layout="scroll"
+                                   inlineStyle="width: 265px; height: 210px; padding: 5px;">
+                <af:dropTarget actions="MOVE"
+                               dropListener="#{panelBoxDropHandler.handleComponentMove}">
+                  <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                </af:dropTarget>
+              </af:panelGroupLayout>
+              </h:panelGrid>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

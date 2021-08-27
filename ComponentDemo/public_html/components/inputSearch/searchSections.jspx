@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2018, 2019, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Multiple Search Sections demo" binding="#{templateBindings.documentComponent}" id="d1"
+      smallIconSource="#{aboutBean.smallIconSource}" largeIconSource="#{aboutBean.largeIconSource}">
+
+      <af:resource type="javascript">
+        function subsetListFilter(rowObj, collectionIndex)
+        {
+          // var searchSection = this;
+          return rowObj.data['tags'] != '';
+        }
+
+        var filterValue;
+        function filterEmpForDept(rowObj, collectionIndex)
+        {
+          // var inputSeach = this;
+          if (collectionIndex == 0)
+          {
+            // get the filterValue once for the zeroth row
+            // and use the same for subsequent row filtering
+            var parentComp = AdfPage.PAGE.findComponent('dmoTpl:soc1');
+            var parentCompValue = parentComp.getValue();
+            filterValue = parentCompValue ? parentComp.getSelectItems()[parentComp.getValue()].getLabel() : null;
+          }
+
+          return rowObj.data["deptName"] == filterValue;
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputSearch"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="Demo showcasing multiple af:searchSection for a inputSearch component" id="ot1"/>
+
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:outputText value="Simple case of one non-default searchSection" id="ot2"/>
+              <af:inputSearch id="iSearch"
+                            label="Select a person from the list: "
+                            valueAttribute="id"
+                            displayAttributes="fName lName id"
+                            value="#{inputSearchDemo.employeesSet}"
+                            selectionConverter="#{inputSearchDemo.selectionConverter}">
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                <af:searchSection type="favs" dataUrl="/rest/employees?cache=expiry&amp;limit=10" />
+                <af:searchSection type="default" dataUrl="/rest/employees?cache=expiry&amp;limit=5000" />
+              </af:inputSearch>
+            </af:panelGroupLayout>
+
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s3"/>
+              </f:facet>
+              <af:outputText value="Multiple SearchSections with headers. Suggestions are displayed in table mode" id="ot3"/>
+              <af:inputSearch id="iSearch1"
+                            label="Select a person from the list (Filter by name): "
+                            valueAttribute="id"
+                            displayAttributes="fName lName"
+                            filterAttributes="fName lName jobTitle tags"
+                            selectionConverter="#{inputSearchDemo.selectionConverter}"
+                            autoSubmit="true"
+                            contentMode="table">
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                <af:searchSection type="xs" dataUrl="/#{request.contextPath}/rest/employees?cache=expiry&amp;limit=3">
+                  <f:facet name="header">
+                    <af:sanitized>
+                      <th colspan="4">Extra Small Favoured List</th>
+                    </af:sanitized>
+                  </f:facet>
+                </af:searchSection>
+                <af:searchSection type="s" dataUrl="/#{request.contextPath}/rest/employees?cache=expiry&amp;limit=10">
+                  <f:facet name="header">
+                    <af:sanitized>
+                      <th colspan="4">Smaller Favoured List</th>
+                    </af:sanitized>
+                  </f:facet>
+                </af:searchSection>
+                <af:searchSection type="m" dataUrl="/#{request.contextPath}/rest/employees?cache=expiry&amp;limit=3000">
+                  <f:facet name="header">
+                    <af:sanitized>
+                      <th colspan="4">Medium Size Favoured List</th>
+                    </af:sanitized>
+                  </f:facet>
+                </af:searchSection>
+                <af:searchSection type="default" dataUrl="/rest/employees?cache=expiry&amp;limit=5000" />
+                <f:facet name="contentHeader">
+                  <af:sanitized >
+                    <th>Name</th> <th>Title</th> <th>Contact Email</th> <th><span style="font-style: italic;">Specializations</span></th>
+                  </af:sanitized>
+                </f:facet>
+                <f:facet name="contentStamp">
+                  <af:sanitized >
+                    <td>{{fName}} {{lName}}</td> <td>{{jobTitle}}</td> <td>{{email}}</td> <td><span style="font-style: italic;">{{tags}}</span></td>
+                  </af:sanitized>
+                </f:facet>
+              </af:inputSearch>
+            </af:panelGroupLayout>
+
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s5"/>
+              </f:facet>
+              <af:outputText value="Suggestions Section and Multiple Search Sections in list display. One of the searchSection use 'filter' attribute." id="ot5"/>
+              <af:inputSearch id="iSearch2"
+                        label="Select a person from the list (Filter by name and job title): "
+                        valueAttribute="id"
+                        displayAttributes="fName lName"
+                        filterAttributes="fName lName jobTitle"
+                        selectionConverter="#{inputSearchDemo.selectionConverter}"
+                        autoSubmit="true"
+                        contentMode="list">
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                <af:searchSection type="default" dataUrl="/rest/employees?cache=expiry&amp;limit=5000" />
+                <af:suggestionsSection dontCache="lName jobTitle" displayCount="15" cacheKeyGenerator="ignoreCacheAttr">
+                  <f:facet name="header">
+                    <af:sanitized>
+                      <b>Recently Used</b>
+                    </af:sanitized>
+                  </f:facet>
+                </af:suggestionsSection>
+                <af:searchSection type="xs" dataUrl="/#{request.contextPath}/rest/employees?cache=expiry&amp;limit=3">
+                  <f:facet name="header">
+                    <af:sanitized>
+                      <b>Extra Small Favoured List</b>
+                    </af:sanitized>
+                  </f:facet>
+                </af:searchSection>
+                <af:searchSection type="s" dataUrl="/#{request.contextPath}/rest/employees?cache=expiry&amp;limit=10">
+                  <f:facet name="header">
+                    <af:sanitized>
+                      <b>Smaller Favoured List</b>
+                    </af:sanitized>
+                  </f:facet>
+                </af:searchSection>
+                <af:searchSection type="m" filter="subsetListFilter">
+                  <f:facet name="header">
+                    <af:sanitized>
+                      <b>Medium Size Favoured List</b>
+                    </af:sanitized>
+                  </f:facet>
+                </af:searchSection>
+                <f:facet name="contentStamp">
+                  <af:sanitized>
+                    <div style="height: 68px; line-height: 18px; white-space: nowrap">
+                      <div style="padding: 0px; margin: 0px; width: 64px; display: inline-block;">
+                        <img src="../../images/people/{{profileKey}}" height="56" width="56" style="vertical-align: bottom; border: 2px solid #B8AE07; padding: 2px; border-radius: 10px;"/>
+                      </div>
+                      <div style="padding-left: 10px; display: inline-block;">
+                        <div style="color: #4646D0;font-size: medium;">{{fName}} {{lName}}</div>
+                        {{#jobTitle}}<div style="color: #4F4F4F;">{{jobTitle}}</div>{{/jobTitle}}
+                        <div style="color: #4F4F4F; font-size: smaller;font-style: italic;">{{email}}</div>
+                      </div>
+                    </div>
+                  </af:sanitized>
+                </f:facet>
+              </af:inputSearch>
+            </af:panelGroupLayout>
+
+            <af:panelGroupLayout layout="vertical" id="pgl6">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s6"/>
+              </f:facet>
+              <af:outputText value="Dependent inputSearch and multiple sections" id="ot6"/>
+              <af:selectOneChoice id="soc1" label="Department">
+                <af:selectItem value="Accounting" label="Accounting" />
+                <af:selectItem value="Payroll" label="Payroll" />
+                <af:selectItem value="Human Resources" label="Human Resources" />
+                <af:selectItem value="Sales" label="Sales" />
+                <af:selectItem value="Marketing" label="Marketing" />
+                <af:selectItem value="Customer Support" label="Customer Support" />
+                <af:selectItem value="Logistics" label="Logistics" />
+                <af:selectItem value="After sales" label="After sales" />
+                <af:selectItem value="Professional Services" label="Professional Services" />
+                <af:selectItem value="Billing" label="Billing" />
+                <af:selectItem value="IT" label="IT" />
+                <af:selectItem value="Real Estate" label="Real Estate" />
+                <af:selectItem value="Security" label="Security" />
+                <af:selectItem value="Public Relations" label="Public Relations" />
+                <af:selectItem value="Front Desk" label="Front Desk" />
+                <af:selectItem value="Legal" label="Legal" />
+                <af:selectItem value="Inventory" label="Inventory" />
+                <af:selectItem value="Purchasing" label="Purchasing" />
+                <af:selectItem value="Licenses" label="Licenses" />
+                <af:selectItem value="Operations" label="Operations" />
+              </af:selectOneChoice>
+              <af:inputSearch label="Employee" id="inputSearch1"
+                                            valueAttribute="id"
+                                            displayAttributes="fName lName deptName"
+                                            filter="filterEmpForDept"
+                                            selectionConverter="#{inputSearchDemo.selectionConverter}">
+                <af:suggestionsSection dontCache="lName jobTitle" displayCount="15" cacheKeyGenerator="ignoreCacheAttr">
+                  <f:facet name="header">
+                    <af:sanitized>
+                      <b>Recently Used</b>
+                    </af:sanitized>
+                  </f:facet>
+                </af:suggestionsSection>
+                <af:searchSection type="s" dataUrl="/#{request.contextPath}/rest/employees?cache=expiry&amp;limit=10">
+                  <f:facet name="header">
+                    <af:sanitized>
+                      <b>Smaller Favoured List</b>
+                    </af:sanitized>
+                  </f:facet>
+                </af:searchSection>
+                <af:searchSection type="m" filter="subsetListFilter">
+                  <f:facet name="header">
+                    <af:sanitized>
+                      <b>Medium Size Favoured List</b>
+                    </af:sanitized>
+                  </f:facet>
+                </af:searchSection>
+                <af:searchSection type="default" dataUrl="/rest/employees?cache=expiry&amp;" />
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+              </af:inputSearch>
+            </af:panelGroupLayout>
+
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="validateDoubleRange Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="validateDoubleRange"/>
+        <f:attribute name="demoKind" value="validator"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:messages id="m1"/>
+            <af:outputText styleClass="AFInstructionText"
+                           value="Example to demonstrate the double range validator.  Enter a value and tab out of the field."
+                           id="ot1"/>
+            <af:panelFormLayout id="pfl1">
+              <af:inputText value="#{validate.double}" label="Double range validator"
+                            shortDesc="examples of values that will fail validation: '5.1' or '6.8'"
+                            id="it1">
+                <af:validateDoubleRange minimum="5.2" maximum="6.7"/>
+              </af:inputText>
+              <af:inputText value="#{validate.double2}"
+                            label="Double range validator (only minimum)"
+                            shortDesc="examples of values that will fail validation: '5.1' or less"
+                            id="it2">
+                <af:validateDoubleRange minimum="5.2"/>
+              </af:inputText>
+              <af:inputText value="#{validate.double3}"
+                            label="Double range validator (only maximum)"
+                            shortDesc="examples of values that will fail validation: '6.8' or more"
+                            id="it3">
+                <af:validateDoubleRange maximum="6.7"/>
+              </af:inputText>
+              <af:inputText value="#{validate.double4}"
+                            label="Double range validator with custom message"
+                            shortDesc="examples of values that will fail validation: '5.1' or '6.8'"
+                            id="it4">
+                <af:validateDoubleRange messageDetailNotInRange="The value {1} is not between {2} and {3}!"
+                                        minimum="5.2" maximum="6.7"/>
+              </af:inputText>
+              <af:inputText value="#{validate.double5}"
+                            label="Double range validator with custom message (only minimum)"
+                            shortDesc="examples of values that will fail validation: '5.1' or less"
+                            id="it5">
+                <af:validateDoubleRange messageDetailMinimum="The value {1} is less than {2}"
+                                        minimum="5.2"/>
+              </af:inputText>
+              <af:inputText value="#{validate.double6}"
+                            label="Double range validator with custom message (only maximum)"
+                            shortDesc="examples of values that will fail validation: '6.8' or more"
+                            id="it6">
+                <af:validateDoubleRange messageDetailMaximum="The value {1} is more than {2}"
+                                        maximum="6.7"/>
+              </af:inputText>
+              <af:inputText value="#{validate.double7}"
+                            label="Double range validator with custom hint message"
+                            shortDesc="examples of values that will fail validation: '5.1' or '6.8'"
+                            id="it7">
+                <af:validateDoubleRange hintNotInRange="The value between {0} and {1}!"
+                                        minimum="5.2" maximum="6.7"/>
+              </af:inputText>
+              <af:inputText value="#{validate.double8}"
+                            label="Double range validator with custom hint message (only minimum)"
+                            shortDesc="examples of values that will fail validation: '5.1' or less"
+                            id="it8">
+                <af:validateDoubleRange hintMinimum="The value after {0}" minimum="5.2"/>
+              </af:inputText>
+              <af:inputText value="#{validate.double9}"
+                            label="Double range validator with custom hint message (only maximum)"
+                            shortDesc="examples of values that will fail validation: '6.8' or more"
+                            id="it9">
+                <af:validateDoubleRange hintMaximum="The value before {0} " maximum="6.7"/>
+              </af:inputText>
+            </af:panelFormLayout>
+            <af:commandButton text="Submit" id="cb1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

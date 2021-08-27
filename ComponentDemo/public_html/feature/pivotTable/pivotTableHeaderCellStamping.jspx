@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{pivotTableFeatureLinks.headerCellStampingPivotTableTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Pivot Table Header Cell Stamping Demo"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="Pivot Table Header Cell Stamping"/>    
+      
+      <f:facet name="center">
+        <af:panelGroupLayout id="pgl1" layout="scroll">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+          <!-- START TAG DEMO -->
+          <dvt:pivotTable id="goodPT"
+                   inlineStyle="width:100%;height:600px;"
+                   binding="#{editor.component}"
+                   contentDelivery="immediate"
+                   value="#{pivotTableHeaderCellDemo.dataModel}"
+                   headerFormat="#{pivotTableHeaderCellDemo.getHeaderFormat}"
+                   dataFormat="#{pivotTableHeaderCellDemo.getDataFormat}"
+                   var="cellData"
+                   varStatus="cellStatus"
+                   summary="pivot table"
+                   headerSortMode="none"
+                   splitMode="enabled"
+                   >     
+                  
+            <dvt:headerCell>
+              <af:switcher id="sw" facetName="#{cellData.layerName}" defaultFacet="Other">
+                <f:facet name="Geography">
+                  <af:group id="g1">
+                    <af:icon id="idicon11" name="info" shortDesc="Icon" />
+                    <af:outputText  value="#{cellData.dataValue}" id="ot11" shortDesc="#{cellData.dataValue}" /> 
+                  </af:group>
+                </f:facet>
+                <f:facet name="Channel">
+                  <af:panelGroupLayout id="pgl2" layout="vertical">
+                    <af:group id="g2">
+                      <af:commandImageLink shortDesc="Sample commandImageLink"
+                        icon="/resources/images/pivotTableCSVDemo/smily-normal.gif"                                 
+                        hoverIcon="/resources/images/pivotTableCSVDemo/smily-glasses.gif"
+                        id="cil1"/>
+                      <af:outputText  value="#{cellData.dataValue}" id="ot1" /> 
+                    </af:group>
+                    <af:commandButton text="Go to Tag Guide page" immediate="true"
+                      action="guide" id="cb1"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="Product">
+                  <af:panelGroupLayout id="pgl3" layout="vertical">
+                    <af:outputText value="#{cellData.dataValue}" id="ot12" />
+                    <af:commandButton text="Go to Tag Guide page" immediate="true"
+                                      action="guide" id="cb2"/>                        
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="Other">
+                  <af:commandLink text="#{cellData.dataValue}" shortDesc="#{cellData.dataValue}" immediate="true" action="guide" id="idcommandlink11"/>
+                </f:facet>
+              </af:switcher>
+            </dvt:headerCell>
+
+          </dvt:pivotTable>
+          <!-- END TAG DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/pivotTable/pivotTableFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>  
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

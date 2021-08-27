@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Gauge In Table" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Gauge In Table"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Gauge In Table"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="vertical" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:outputText id="ot0"
+                                       value="The following table compares the population density on the countries with highest population in 2010"/>
+                        <af:table summary="table" value="#{gaugeData.gaugeTableData}" var="testvar"
+                                  rowBandingInterval="0" id="t1" columnStretching="last" inlineStyle="height:400px"
+                                  styleClass="AFStretchWidth">
+                            <af:column rowHeader="true" sortable="false" headerText="Country" align="center" id="c1"
+                                       width="120" inlineStyle="font-weight:bold; font-size: 12px;">
+                                <af:outputText value="#{testvar.name}" id="ot1"/>
+                            </af:column>
+                            <af:column sortable="true" headerText="Density (1/km^2)" align="center" id="c2" width="300"
+                                       sortProperty="density">
+                                <dvt:gauge shortDesc="Gauge" id="gauge77" gaugeType="STATUSMETER"
+                                           binding="#{editor.component}" dynamicResize="DYNAMIC_SIZE"
+                                           value="#{testvar.density}" inlineStyle="height:22px"
+                                           styleClass="AFStretchWidth" minValue="0.0" maxValue="1200.0">
+                                    <dvt:indicatorBar/>
+                                    <dvt:thresholdSet>
+                                        <dvt:threshold fillColor="#00aa00" thresholdMaxValue="300"/>
+                                        <dvt:threshold fillColor="#ffcc00" thresholdMaxValue="700"/>
+                                        <dvt:threshold fillColor="#cc2255"/>
+                                    </dvt:thresholdSet>
+                                    <dvt:topLabel position="LP_NONE"/>
+                                    <dvt:bottomLabel position="LP_NONE"/>
+                                    <dvt:metricLabel position="LP_NONE"/>
+                                </dvt:gauge>
+                            </af:column>
+                            <af:column sortable="false" width="100" inlineStyle="font-size: 12px;"
+                                       headerText="Population" align="center" id="c3">
+                                <af:outputText value="#{testvar.population}" id="ot3">
+                                    <af:convertNumber type="number" pattern="#,##0"/>
+                                </af:outputText>
+                            </af:column>
+                            <af:column sortable="false" width="100" inlineStyle="font-size: 12px;"
+                                       headerText="Percent with world population" align="center" id="c4">
+                                <af:outputText value="#{testvar.percent}" id="ot4">
+                                    <af:convertNumber type="percent" pattern="#.00%"/>
+                                </af:outputText>
+                            </af:column>
+                        </af:table>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

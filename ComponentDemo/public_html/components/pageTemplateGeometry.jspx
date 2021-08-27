@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          version="1.2"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="pageTemplate Geometry Management Demo"
+                 binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="pageTemplate"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="You can only safely stretch a pageTemplate if you can guarantee that inside of it, there is only a single root component and that single component supports being stretched by an ancestor.  Otherwise, you may get different results in different web browsers."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="centerHeader">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <af:outputText value="A pageTemplate component:" id="ot1"/>
+            <af:outputText value="This pageTemplate component has no binding so no editor is available."
+                           id="ot2"/>
+            <af:outputText value="This pageTemplate has a panelTabbed with dimensionsFrom=auto inside of it."
+                           id="ot3"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:pageTemplate id="inner"
+                           viewId="/components/pagefragments/pageTemplateGeometryDef.jsff"/>
+        </f:facet>
+        <f:facet name="centerFooter">
+          <af:panelGroupLayout id="pgl3" layout="default">
+            <af:separator id="sep"/>
+            <af:panelGroupLayout id="pgl4" layout="default">
+              <af:outputText id="ot12" value="See also the "/>
+              <af:commandLink id="cl2" text="tag demo" action="guide.pageTemplate"/>
+              <af:outputText id="ot13" value=" for this component."/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

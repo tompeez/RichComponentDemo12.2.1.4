@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Chart Data Labels" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Chart Data Labels Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Data Labels"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <af:outputText value="Data labels can be used to display information related to the data points. Custom text, position and style can be specified for each one."/>
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:panelGroupLayout layout="vertical">
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row" stack="on">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}" label="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:barChart>
+                <dvt:horizontalBarChart value="#{chartDataSource.defaultBarData}" var="row">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}" label="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:horizontalBarChart>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"
+                                       z="#{row.z}" label="#{row.group}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:bubbleChart>
+                <dvt:scatterChart value="#{chartDataSource.defaultScatterData}" var="row">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}" 
+                                       label="#{row.group == 'Group A'? (row.series == 'Series 1'? 'belowMarker': row.series == 'Series 3'? 'beforeMarker': row.series == 'Series 4'? 'aboveMarker': 'auto'):  ''}" 
+                                       labelPosition="#{row.group == 'Group A'? (row.series == 'Series 1'? 'belowMarker': row.series == 'Series 3'? 'beforeMarker': row.series == 'Series 4'? 'aboveMarker':''):  ''}"
+                                       labelStyle="#{row.series == 'Series 4'? 'font-size: 14px': 'font-size: 11px'}; font-family: Comic Sans MS"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:scatterChart>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:pieChart value="#{chartDataSource.defaultPieData}"  var="row">
+                  <dvt:pieDataItem label="#{row.series}" value="#{row.value}" sliceLabel="#{row.value}" 
+                  sliceLabelPosition="#{row.series == 'Series 1'? 'outside': row.series == 'Series 2'? 'inside': row.series == 'Series 3'? 'none': 'auto'}" 
+                  sliceLabelStyle="#{row.series == 'Series 4'? 'font-size: 14px': 'font-size: 11px'}; font-family: Comic Sans MS"/>
+                </dvt:pieChart>
+                <dvt:funnelChart value="#{chartDataSource.defaultPieData}"  var="row">
+                  <dvt:funnelDataItem label="#{row.series}" value="#{row.value}" 
+                  labelPosition="#{row.series == 'Series 1'? 'center': row.series == 'Series 2'? 'none': 'auto'}"
+                  labelStyle="#{row.series == 'Series 4'? 'font-size: 14px': 'font-size: 11px'}; font-family: Comic Sans MS"/>
+                </dvt:funnelChart>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

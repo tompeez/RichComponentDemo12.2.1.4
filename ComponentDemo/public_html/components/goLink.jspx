@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="goLink Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="goLink"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a goLink is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglA">
+            <af:outputFormatted value="&lt;b>Use the editor to the right to adjust the attributes for the first demo.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="s"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:goLink binding="#{editor.component}" id="gl1" text="A link to oracle.com"
+                     destination="http://oracle.com" shortDesc="Oracle's homepage"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:spacer height="5px" id="s2"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl3">
+              <af:outputLabel value="GoLink around an image:" id="ol1"/>
+              <af:goLink id="gl6" destination="http://www.oracle.com/applications/home.html">
+                <af:image source="/images/uplevel.gif" shortDesc="Up" id="i1"/>
+              </af:goLink>
+            </af:panelGroupLayout>
+            <!-- If PPRNavigation is enabled, destination URLs (specified by a hash, '#')
+             don't work. So this section is rendered only when PPRNavigation is off.-->
+            <af:panelGroupLayout layout="vertical" rendered="#{demoInput.PPRNavigationOff}"
+                                 id="pgl4">
+              <af:goLink id="section1" text="Jump to Useful Tips Section" destination="#dmoTpl:section2"
+                         shortDesc="tips"/>
+              <af:spacer height="5px" id="s3"/>
+              <af:panelBox text="Leave some space to see the jump!" inlineStyle="width:300px"
+                           contentStyle="height:1200px; vertical-align: top;"
+                           id="pb1"/>
+              <af:panelHeader size="0" text="Useful Tips" id="ph1">
+                <af:goLink id="section2"/>
+                <af:panelList id="pl1">
+                <af:outputText value="Interesting information" id="ot1"/>
+                <af:outputText value="More interesting information" id="ot2"/>
+              </af:panelList>
+              </af:panelHeader>
+            </af:panelGroupLayout>
+
+            <af:panelHeader text="Deprecated">
+              <af:spacer height="5px"/>
+              <af:outputText value="Please note that goLink is deprecated. Please use "/>
+              <af:link text="af:link" destination="/components/link.jspx"/>
+              <af:outputText value=" instead."/>
+            </af:panelHeader>  
+
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

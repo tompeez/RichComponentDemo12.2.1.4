@@ -1,0 +1,285 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2019, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          version="1.2" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:jsp="http://java.sun.com/JSP/Page">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="inputDate Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputDate"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch an inputDate is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <f:facet name="separator">
+              <af:spacer height="5px" id="s2"/>
+            </f:facet>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This is a demo for the inputDate component. Use the editor to the right to adjust the attributes for this demo.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:inputDate binding="#{editor.component}" label="Select a date: " id="iDate"
+                        value="#{demoInput.date}"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1B">
+            <f:facet name="separator">
+              <af:separator id="s1B"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl1">
+              <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+              <af:commandButton text="full postback"  id="commandButton1"/>
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The submitted value was: " id="ot1"/>
+                <af:outputText partialTriggers="richCommand iDate" id="result"
+                               value="#{demoInput.date}">
+                  <f:convertDateTime dateStyle="medium"/>
+                </af:outputText>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s3"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction" value="&lt;b>Additional Demos&lt;/b>"
+                                  id="of2"/>
+
+              <af:panelGroupLayout layout="vertical" id="pgl5">
+                <af:outputText value="This demo shows the inputDate with 1)weekends disabled, 2)june, july, and august disabled, and 3) some holidays disabled, for example Dec 25, 2006."
+                               id="ot2"/>
+                <af:inputDate disabledDaysOfWeek="sat sun" value="#{demoInput.date2}"
+                              disabledDays="#{demoDate}" disabledMonths="jun jul aug"
+                              label="date2" simple="true" id="inputDate2"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl6">
+                <af:outputText value="This demo shows the inputDate with a minDate of a year before today, and maxDate a year from today"
+                               id="ot3"/>
+                <af:inputDate maxValue="#{demoInput.maxDate}" minValue="#{demoInput.minDate}"
+                              value="#{demoInput.date3}" label="date3" simple="true" id="inputDate3"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl7">
+                <af:outputText value="This demo shows the inputDate with date converter only."
+                               id="ot4"/>
+                <af:inputDate value="#{demoInput.date4}" label="date4" simple="true" id="inputDate4">
+                  <af:convertDateTime type="date" dateStyle="short"/>
+                </af:inputDate>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl8">
+                <af:outputText value="This demo shows the inputDate with date-time converter."
+                               id="ot5"/>
+                <af:inputDate value="#{demoInput.date5}" label="date5" simple="true" id="inputDate5">
+                  <af:convertDateTime type="both" dateStyle="full"/>
+                </af:inputDate>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl9">
+                <af:outputText value="This demo shows the inputDate with pattern specified for 24h time."
+                               id="ot6"/>
+                <af:inputDate value="#{demoInput.date6}" label="date6" simple="true" id="inputDate6">
+                  <af:convertDateTime type="date" dateStyle="short"
+                                      pattern="yyyy/MM/dd HH:mm:ss"/>
+                </af:inputDate>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl10">
+                <af:outputText value="This demo shows the inputDate with pattern specified for 12h time."
+                               id="ot7"/>
+                <af:inputDate value="#{demoInput.date7}" label="date7" simple="true" id="inputDate7">
+                  <af:convertDateTime type="date" dateStyle="short"
+                                      pattern="yyyy/MM/dd hh:mm:ss a"/>
+                </af:inputDate>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl11">
+                <af:outputText value="This demo shows the inputDate with slashes as time separator character."
+                               id="ot8"/>
+                <af:inputDate value="#{demoInput.date8}" label="date8" simple="true" id="inputDate8">
+                  <af:convertDateTime type="date" dateStyle="short"
+                                      pattern="yyyy/MM/dd hh:mm:ss a"/>
+                </af:inputDate>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl12">
+                <af:outputText value="This demo shows the inputDate with timezone enabled on the converter."
+                               id="ot9"/>
+                <af:inputDate value="#{demoInput.date9}" label="date9" simple="true" id="inputDate9">
+                  <af:convertDateTime type="date" dateStyle="short"
+                                      pattern="yyyy/MM/dd hh:mm:ss a z"/>
+                </af:inputDate>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl13">
+                <af:outputText value="This demo shows the inputDate with timezone EST and timeStyle=full."
+                               id="ot10"/>
+                <af:inputDate value="#{demoInput.date10}" label="date10" simple="true" id="inputDate10">
+                  <af:convertDateTime type="both" timeStyle="full"
+                                      timeZone="#{demoInput.estTimeZone}"/>
+                </af:inputDate>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl14">
+                <af:popup id="popupDialog">
+                  <af:dialog title="Date" id="d2">
+                    <af:inputDate label="Choose a Date" value="#{demoInput.date11}" id="inputDate11"/>
+                  </af:dialog>
+                </af:popup>
+                <af:outputText value="This demo shows the inputDate inside of a popup."
+                               id="ot11"/>
+                <af:spacer width="5" id="s4"/>
+                <af:commandButton immediate="true" text="Show InputDate" clientComponent="true"
+                                  id="popupButton">
+                  <af:showPopupBehavior popupId="popupDialog" alignId="popupButton"
+                                        align="afterStart"/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl15">
+                <af:separator id="s5"/>
+                <af:outputFormatted value="The following outputTexts have their converters' timezone bound to the same TimeZone instance.
+                                           To change the timezone used to display the dates, select a different value from the dropdown (which
+                                           contains a list of commonly used timezones)."
+                                    id="of3"/>
+                <af:outputFormatted value="Note: For this demo, a workaround is needed to ensure the timezone picked takes
+                                           precedence over the individual inputDates' timezones.  See bug 8788871 for more detail."
+                                    id="of4"/>
+                <af:selectOneChoice label="Select a new timezone" value="#{demoInput.preferredTimeZoneId}" autoSubmit="true" id="tzpick" immediate="true">
+                  <f:selectItems value="#{af:getMergedTimeZoneSelectItems(demoInput.preferredTimeZoneId)}" id="tzones" />
+                </af:selectOneChoice>
+
+                <af:inputDate  label="First inputDate with timezone bound" id="bound1"
+                           partialTriggers="tzpick" value="#{demoInput.date12}" binding="#{demoInput.boundDate1}" >
+                  <af:convertDateTime type="both" timeStyle="full" timeZone="#{demoInput.preferredTimeZone}"/>
+                </af:inputDate>
+
+                 <af:inputDate label="Second inputDate with timezone bound"  id="bound2" partialTriggers="tzpick"
+                               value="#{demoInput.date13}" readOnly="true" binding="#{demoInput.boundDate2}">
+                  <af:convertDateTime type="both" timeStyle="long" timeZone="#{demoInput.preferredTimeZone}"/>
+                </af:inputDate>
+              </af:panelGroupLayout>
+              <af:separator id="s7"/>
+              <af:group id="gAlign">
+                <af:button id="bAlign" text="Field Alignment" immediate="true">
+                  <af:showPopupBehavior popupId="pAlign"/>
+                </af:button>
+                <af:popup id="pAlign">
+                  <af:panelWindow id="pwAlign" title="Field Alignment">
+                    <af:panelGroupLayout id="pglAlignV" layout="vertical"
+                      inlineStyle="min-width:310px;min-height:320px;"
+                      partialTriggers="changedSetting disabledSetting helpSetting readOnlySetting requiredSetting">
+                      <af:panelFormLayout id="pflAlign1" maxColumns="2" rows="1">
+                        <af:selectBooleanCheckbox id="changedSetting" label="Changed" text="Changed indicator"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.changed}"/>
+                        <af:selectBooleanCheckbox id="disabledSetting" label="Disabled" text="Disabled"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.disabled}"/>
+                        <af:selectBooleanCheckbox id="helpSetting" label="Has help" text="Help"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.hasHelp}"/>
+                        <af:selectBooleanCheckbox id="readOnlySetting" label="Read-only" text="Read-only"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.readOnly}"/>
+                        <af:selectBooleanCheckbox id="requiredSetting" label="Required" text="Required"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.required}"/>
+                      </af:panelFormLayout>
+                      <af:separator id="sepAlign"/>
+                      <af:spacer id="spAlign1" height="14"/>
+                      <af:outputText id="otAlign1" value="Simple:"/>
+                      <af:inputDate id="alignEx1" label="Example" value="#{demoInput.date}" simple="true"
+                                    changed="#{pageFlowScope.changed}"
+                                    disabled="#{pageFlowScope.disabled}"
+                                    helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                    readOnly="#{pageFlowScope.readOnly}"
+                                    showRequired="#{pageFlowScope.required}"/>
+                      <af:spacer id="spAlign2" height="14"/>
+                      <af:outputText id="otAlign2" value="Labelled:"/>
+                      <af:inputDate id="alignEx2" label="Example" value="#{demoInput.date}"
+                                    changed="#{pageFlowScope.changed}"
+                                    disabled="#{pageFlowScope.disabled}"
+                                    helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                    readOnly="#{pageFlowScope.readOnly}"
+                                    showRequired="#{pageFlowScope.required}"/>
+                      <af:spacer id="spAlign3" height="14"/>
+                      <af:panelGroupLayout id="formWrap" layout="default">
+                        <af:outputText id="otAlign3" value="Form (labelled and panelLabelAndMessage):"/>
+                        <af:spacer id="formSp1" width="8"/>
+                        <af:selectBooleanCheckbox id="labelAlignSetting" label="Top Labels" text="Top Labels"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.topLabels}"/>
+                      </af:panelGroupLayout>
+                      <af:panelFormLayout id="pflAlign2" maxColumns="1" partialTriggers="labelAlignSetting"
+                                          labelAlignment="#{pageFlowScope.topLabels ? 'top' : 'start'}">
+                        <af:inputDate id="alignEx3" label="Example" value="#{demoInput.date}"
+                                      changed="#{pageFlowScope.changed}"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                      readOnly="#{pageFlowScope.readOnly}"
+                                      showRequired="#{pageFlowScope.required}"/>
+                        <af:panelLabelAndMessage id="plmAlign" label="Example"
+                                                 changed="#{pageFlowScope.changed}"
+                                                 helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                 showRequired="#{pageFlowScope.required and (pageFlowScope.disabled != true) and (pageFlowScope.readOnly != true)}"
+                                                 shortDesc="This is a panelLabelAndMessage surrounding a simple field">
+                          <af:inputDate id="alignEx4" label="Example" value="#{demoInput.date}" simple="true"
+                                        changed="#{pageFlowScope.changed}"
+                                        disabled="#{pageFlowScope.disabled}"
+                                        helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                        readOnly="#{pageFlowScope.readOnly}"
+                                        showRequired="#{pageFlowScope.required}"/>
+                        </af:panelLabelAndMessage>
+                      </af:panelFormLayout>
+                    </af:panelGroupLayout>
+                  </af:panelWindow>
+                </af:popup>
+              </af:group>
+			  <af:resource type="javascript">
+              function dateSelectionEventHandler(event)
+              {
+                // app developer handles the date selection event here.
+                var eventSource = event.getSource();
+                var customDate = event.getSelectedDate();
+                customDate.setHours (11);
+                customDate.setMinutes (11);
+                customDate.setSeconds (11);
+                eventSource.setSelectedDate (customDate);
+              }
+              </af:resource>
+              <af:panelGroupLayout layout="vertical" id="pgl17">  
+                <af:separator id="s117"/>
+                <af:inputDate   id="inputDate117" label="Input date with date selection event demo (on date selection time will be set to custom time 11:11:11 set by client listener in event handler" >
+                   <af:clientListener type="dateSelection" method="dateSelectionEventHandler"/>
+                   <af:convertDateTime type="both" dateStyle="short"/>
+                </af:inputDate>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl16">
+                <af:separator id="s6"/>
+                <af:outputFormatted styleUsage="instruction"
+                                    value="&lt;b>Links To other date picker Demos&lt;/b>"
+                                    id="of5"/>
+                <af:panelList id="pl1">
+                  <af:goLink text="Input Date layout demo"
+                             destination="/faces/components/inputDateLayouts.jspx"
+                             id="g00"/>  
+                  <af:goLink text="Choose Date demo"
+                             destination="/faces/components/chooseDate.jspx"
+                             id="gl0"/>  
+                  <af:goLink text="Date restriction validaor"
+                             destination="/faces/feature/validate/validateDateRestriction.jspx"
+                             id="gl1"/>
+                  <af:goLink text="Date and time range validator"
+                             destination="/faces/feature/validate/validateDateTimeRange.jspx"
+                             id="gl2"/>
+                  <af:goLink text="Date and time converter"
+                             destination="/faces/feature/validate/convertDateTime.jspx"
+                             id="gl3"/>                             
+                </af:panelList>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

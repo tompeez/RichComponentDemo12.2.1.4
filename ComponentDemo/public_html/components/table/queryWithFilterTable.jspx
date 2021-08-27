@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Query with Filter Table Demo"
+                 binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="vertical">
+            <af:outputFormatted value="&lt;b>Demo page for Query with a Filterable Table&lt;/b>"/>
+            <af:spacer height="5"/>
+            <af:panelHeader text="Employees" id="ph1" styleClass="AFStretchedWidth">
+              <af:query id="empquery" headerText="Search" resultComponentId="::table"
+                        value="#{tableFilter.queryDescriptor}" model="#{tableFilter.queryModel}"
+                        queryListener="#{tableFilter.processQuery}"/>
+              <af:outputText partialTriggers="table empquery" id="resultTextId"
+                             value="#{tableFilter.sqlString}"/>
+              <af:spacer height="5"/>
+              <af:table rowSelection="multiple" columnSelection="multiple"
+                        styleClass="AFStretchWidth" queryListener="#{tableFilter.processQuery}"
+                        filterModel="#{tableFilter.queryDescriptor}" filterVisible="true"
+                        varStatus="vs" var="test1" value="#{tableFilter.data}" id="table"
+                        summary="table data">
+                <af:column width="20" rowHeader="true" id="c1"/>
+                <af:column displayIndex="1" headerText="Emp Name" filterable="true"
+                           sortProperty="Ename" sortable="true" rowHeader="unstyled" id="c3">
+                  <af:outputText inlineStyle="margin-left:8px" value="#{test1.ename}" id="ot3"/>
+                </af:column>
+                <af:column displayIndex="3" headerText="Employee Number" filterable="true"
+                           sortProperty="Empno" id="c2">
+                  <af:outputText value="#{test1.empno}" id="ot2"/>
+                </af:column>
+                <af:column filterable="true" sortProperty="Salary" headerText="Salary"
+                           displayIndex="2" align="end" id="c4">
+                  <af:outputText value="#{test1.salary}" id="ot4"/>
+                </af:column>
+                <af:column filterable="true" headerText="Hire Date" align="center" id="c5">
+                  <f:facet name="filter">
+                    <af:inputDate value="#{vs.filterCriteria.Hiredate}" simple="true"
+                                  label="Filter: Hire Date" id="id1"/>
+                  </f:facet>
+                  <af:outputText value="#{test1.hireDate}" id="ot5"/>
+                </af:column>
+                <af:column filterable="true" sortProperty="Manager" headerText="Manager" id="c6">
+                  <af:outputText value="#{test1.manager}" id="ot6"/>
+                </af:column>
+                <af:column sortProperty="Deptno" filterable="false" headerText="Dept Number"
+                           align="center" id="c7">
+                  <af:outputText value="#{test1.deptno}" id="ot7"/>
+                </af:column>
+              </af:table>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

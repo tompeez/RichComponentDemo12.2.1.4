@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Presidential Election Results: Using Different Data Visualizations"
+                     binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Presidential Election Results"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Presidential Election Results"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:panelGroupLayout layout="vertical" halign="center">
+                            <f:subview id="yearSelector">
+                                <jsp:include page="election/electionYearSelector.jsff"/>
+                            </f:subview>
+                            <af:spacer width="10"/>
+                            <af:panelTabbed dimensionsFrom="disclosedChild">
+                                <af:showDetailItem text="Electoral Vote by State">
+                                    <f:subview id="electoral">
+                                        <jsp:include page="election/electionAcrossComponentsElectoral.jsff"/>
+                                    </f:subview>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Popular Vote by State">
+                                    <f:subview id="popular">
+                                        <jsp:include page="election/electionAcrossComponentsPopular.jsff"/>
+                                    </f:subview>
+                                </af:showDetailItem>
+                            </af:panelTabbed>
+                        </af:panelGroupLayout>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

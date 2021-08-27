@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="subform Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="subform"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes"
+                     value="Warning: attempting to stretch a subform is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:subform binding="#{editor.component}" id="s3">
+            <af:panelFormLayout labelWidth="20%" id="pfl1">
+              <af:outputText value="If there are errors showing reload the page. Hit the 'Submit 1' button. Only the 'Sub 1' and 'Outside Subform' show an error even though the 'Sub 2' and 'Sub Default' fields are required. This is because the 'Sub 1' field and button are in their own subform."
+                             id="ot1"/>
+              <af:inputText required="true" label="Sub 1" id="it1"  value="#{demoInput.subformValue1}"/>
+              <af:inputText label="Sub 1 Value" id="it1a" value="#{demoInput.subformValue1}"
+                            readOnly="true"/>
+              <af:commandButton text="Submit 1" id="cb1"/>
+            </af:panelFormLayout>
+          </af:subform>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:separator id="s4"/>
+              <af:subform id="s5">
+                <af:panelFormLayout labelWidth="20%" id="pfl2">
+                  <af:outputText value="If there are errors showing reload the page. Hit the 'Submit 2' button. Only the 'Sub 2' and 'Outside Subform' show an error even though the 'Sub 1' and 'Sub Default' fields are required. This is because the 'Sub 2' field and button are in their own subform."
+                                 id="ot2"/>
+                  <af:inputText required="true" label="Sub 2" id="it2" value="#{demoInput.subformValue2}"/>
+                  <af:inputText label="Sub 2 Value" id="it2a" value="#{demoInput.subformValue2}" readOnly="true"/>
+                  <af:commandButton text="Submit 2" id="cb2"/>
+                </af:panelFormLayout>
+              </af:subform>
+              <af:separator id="s6"/>
+              <af:panelGroupLayout id="pgl3">
+                <af:subform default="true" id="s7">
+                  <af:panelFormLayout labelWidth="20%" id="pfl3">
+                    <af:outputText value="If there are errors showing reload the page. Hit the 'Submit Default' button. Only the 'Sub Default' and 'Outside Subform' show an error even though the 'Sub 1' and 'Sub 2' fields are required. This is because the 'Sub Default' field and button are in their own subform."
+                                   id="ot3"/>
+                    <af:inputText required="true" label="Sub Default" id="it3" value="#{demoInput.subformValue3}"/>
+                    <af:inputText label="Sub Default value" id="it3a" value="#{demoInput.subformValue3}" readOnly="true"/>
+                    <af:commandButton text="Submit Default" id="cb3"/>
+                    <af:panelFormLayout id="pfl4"></af:panelFormLayout>
+                  </af:panelFormLayout>
+                </af:subform>
+                <af:separator id="s8"/>
+                <af:panelGroupLayout layout="vertical" id="pgl4">
+                  <af:outputText value="If there are errors showing reload the page. Hit the 'Submit Outside' button, which is not in a subform. Only the 'Sub Default' and 'Outside Subform' show an error even though the 'Sub 1' and 'Sub 2' fields are required. This is because the 'Sub Default' field is in a subform where default is true, so 'submitted' will be considered true since no other subform has been submitted."
+                                 id="ot4"/>
+                  <af:inputText required="true" label="Outside Subform" id="it4"  value="#{demoInput.subformValue4}"/>
+                  <af:inputText label="Outside Subform Value" id="it4a"  value="#{demoInput.subformValue4}" readOnly="true"/>
+                  <af:commandButton text="Submit Outside" id="cb4"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>
+

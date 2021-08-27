@@ -1,0 +1,265 @@
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+          
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  
+
+  <af:panelHeader text="Attributes" id="ph1">
+    <af:panelBox id="ShowTwoTab" ramp="core" disclosed="false" text="Child Tag Inspector" rendered="#{extEditor.childTagListShow}" binding="#{extEditor.panelBox}">
+      <af:panelFormLayout maxColumns="1" id="pfl1" partialTriggers="childTagList">
+
+        <af:selectOneChoice id="childTagList" immediate="true" autoSubmit="true" 
+                        shortDesc="Valid attributes"
+                        label="Choose Child Tag"
+                        contentStyle="width: 150px;"
+                        valueChangeListener="#{childEditor.valueChangeListener}"
+                        binding="#{childEditor.richSelectOneChoice}"
+                        >
+    
+          <af:forEach var="childTags" items="#{childEditor.childTagList}" varStatus="stat">
+            <af:selectItem label="#{childTags.name}" value="#{childTags.name}"
+                           id="hkwsi1"/>
+          </af:forEach>
+        </af:selectOneChoice>
+      <af:forEach var="row" items="#{childEditor.attributes}">
+        <af:inputText immediate="true" autoSubmit="true"
+                      disabled="#{row.name == 'value' ||
+                                 row.name == 'var' ||
+                                 row.name == 'componentVar' ||
+                                 row.name == 'currencyKey' ||
+                                 row.name == 'currencyString' ||
+                                 row.name == 'focusRowKey' ||
+                                 row.name == 'rowKey' ||
+                                 row.name == 'id' ||
+                                 row.name == 'rendererType' ||
+                                 row.name == 'submittedValue'}"
+                      rendered="#{row.type == 'string'}"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"
+                      contentStyle="width: 145px;" 
+                      partialTriggers="childTagList"
+                      id="hkwit1"/>
+        <af:inputText immediate="true" autoSubmit="true"
+                      disabled="#{row.name == 'rowIndex'}"
+                      rendered="#{row.type == 'number' }"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"
+                      contentStyle="width: 145px;"
+                      partialTriggers="childTagList"
+                      id="hkwit2">
+          <f:converter converterId="javax.faces.Number"/>
+          </af:inputText>
+          <af:inputText immediate="true" autoSubmit="true"
+                      disabled="#{row.name == 'rowIndex'}"
+                      rendered="#{row.type == 'integer'}"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"
+                      contentStyle="width: 145px;"
+                      partialTriggers="childTagList"
+                      id="hkwit2n">
+          <f:converter converterId="javax.faces.Integer"/>
+        </af:inputText>
+        <af:inputText immediate="true" autoSubmit="true"
+                      disabled="#{row.name == 'rowIndex'}"
+                      rendered="#{row.type == 'double'}"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"
+                      contentStyle="width: 145px;"
+                      partialTriggers="childTagList"
+                      id="hkwit3">
+           <f:converter converterId="javax.faces.Double"/>
+        </af:inputText>
+        <af:inputDate immediate="true" autoSubmit="true"
+                      rendered="#{row.type == 'date'}"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"
+                      contentStyle="width: 125px;"
+                      partialTriggers="childTagList"
+                      id="hkwid1">
+        </af:inputDate>
+        <af:selectBooleanCheckbox 
+                          immediate="true" autoSubmit="true"
+                          rendered="#{row.type == 'boolean'}"
+                          disabled="#{row.name == 'localValueSet' ||
+                                     row.name == 'valid' ||
+                                     row.name == 'transient'}"
+                          value="#{row.value}"
+                          shortDesc="#{row.description}"
+                          label="#{row.name}" id="hkwsbc1"/>
+        <af:inputText immediate="false" autoSubmit="true"
+                      rendered="#{row.type == 'character'}"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"
+                      contentStyle="width: 145px;" 
+                      partialTriggers="childTagList"
+                      id="hkwit4">
+          <f:converter converterId="javax.faces.Character"/>
+        </af:inputText>
+
+        <af:selectOneChoice immediate="true" autoSubmit="true"
+                            rendered="#{row.type == 'enum'||
+                                        row.type == 'mapEnum'}"
+                            shortDesc="#{row.description}"
+                            label="#{row.name}"
+                            contentStyle="width: 150px;"
+                            value="#{row.value}"
+                            partialTriggers="childTagList"
+                            id="hkwsoc1">
+                            
+            <af:forEach var="attribVal" items="#{row.attribValues}" varStatus="stat">
+                <af:selectItem label="#{attribVal}" value="#{attribVal}"
+                               id="hkwsi2"/>
+            </af:forEach>
+        </af:selectOneChoice>
+        <af:selectManyChoice immediate="true" autoSubmit="true"
+                            rendered="#{row.type == 'enumSet'}"
+                            shortDesc="#{row.description}"
+                            label="#{row.name}"
+                            contentStyle="width: 128px;"
+                            value="#{row.value}"
+                            partialTriggers="childTagList"
+                            id="hkwsmc1">
+                            
+            <af:forEach var="attribVal" items="#{row.attribValues}" varStatus="stat">
+                <af:selectItem label="#{attribVal}" value="#{attribVal}"
+                               id="hkwsi3"/>
+            </af:forEach>
+        </af:selectManyChoice>
+        <af:inputColor immediate="true" autoSubmit="true"
+                       rendered="#{row.type == 'color'}"
+                       shortDesc="#{row.description}"
+                       label="#{row.name}"
+                       contentStyle="width: 112px;"
+                       value="#{row.value}"
+                       partialTriggers="childTagList"
+                       id="hkwic1">
+        </af:inputColor>      
+        <af:inputText immediate="true" autoSubmit="true"
+                      rendered="#{row.type == 'map'}"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"
+                      contentStyle="width: 145px;"
+                      partialTriggers="childTagList"
+                      id="hkwit5">
+          <f:converter converterId="javax.faces.Integer"/>
+        </af:inputText>
+      </af:forEach>
+      <af:commandButton id="updateChildButton" immediate="false" text="Update" action="#{childEditor.update}" partialSubmit="true"/>
+      </af:panelFormLayout>
+    </af:panelBox>
+    <af:panelFormLayout maxColumns="1" id="hkwpfl1">
+      <af:forEach var="row" items="#{extEditor.attributes}">
+        <af:inputText immediate="true"
+                      disabled="#{row.name == 'value' ||
+                                 row.name == 'var' ||
+                                 row.name == 'componentVar' ||
+                                 row.name == 'currencyKey' ||
+                                 row.name == 'currencyString' ||
+                                 row.name == 'focusRowKey' ||
+                                 row.name == 'rowKey' ||
+                                 row.name == 'id' ||
+                                 row.name == 'rendererType' ||
+                                 row.name == 'submittedValue'}"
+                      rendered="#{row.type == 'string'}"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"
+                      contentStyle="width: 145px;" id="hkwit6"/>
+        <af:inputText immediate="true"
+                      disabled="#{row.name == 'rowIndex'}"
+                      rendered="#{row.type == 'number' }"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"                      
+                      contentStyle="width: 145px;" id="hkwit7">
+          <f:converter converterId="javax.faces.Number"/>
+        </af:inputText>
+        <af:inputText immediate="true"
+                      disabled="#{row.name == 'rowIndex'}"
+                      rendered="#{row.type == 'integer'}"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"
+                      
+                      contentStyle="width: 145px;" id="hkwit7n">
+          <f:converter converterId="javax.faces.Integer"/>
+        </af:inputText>
+        <af:inputDate immediate="true"
+                      rendered="#{row.type == 'date'}"
+                      value="#{row.value}"
+                      shortDesc="Type to change '#{row.name}'"
+                      label="#{row.name}"
+                      contentStyle="width: 125px;" id="hkwid2">
+        </af:inputDate>
+        <af:selectBooleanCheckbox rendered="#{row.type == 'boolean'}"
+                                  disabled="#{row.name == 'localValueSet' ||
+                                             row.name == 'valid' ||
+                                             row.name == 'transient'}"
+                                  immediate="true"
+                                  value="#{row.value}"
+                                  shortDesc="#{row.description}"
+                                  label="#{row.name}" id="hkwsbc2"/>
+        <af:inputText immediate="true"
+                      rendered="#{row.type == 'character'}"
+                      value="#{row.value}"
+                      shortDesc="#{row.description}"
+                      label="#{row.name}"
+                      contentStyle="width: 145px;" id="hkwit8">
+          <f:converter converterId="javax.faces.Character"/>
+        </af:inputText>
+
+        <af:selectOneChoice immediate="true"
+                            rendered="#{row.type == 'enum'}"
+                            shortDesc="#{row.description}"
+                            label="#{row.name}"
+                            contentStyle="width: 150px;"
+                            value="#{row.value}"
+                            id="hkwsoc2">
+                            
+            <af:forEach var="attribVal" items="#{row.attribValues}" varStatus="stat">
+                <af:selectItem label="#{attribVal}" value="#{attribVal}"
+                               id="hkwsi4"/>
+            </af:forEach>
+        </af:selectOneChoice>
+        <af:selectManyChoice immediate="true"
+                            rendered="#{row.type == 'enumSet'}"
+                            shortDesc="#{row.description}"
+                            label="#{row.name}"
+                            contentStyle="width: 128px;"
+                            value="#{row.value}"
+                            id="hkwsmc2">
+                            
+            <af:forEach var="attribVal" items="#{row.attribValues}" varStatus="stat">
+                <af:selectItem label="#{attribVal}" value="#{attribVal}"
+                               id="hkwsi5"/>
+            </af:forEach>
+        </af:selectManyChoice>
+        <af:inputColor immediate="true"
+                       rendered="#{row.type == 'color'}"
+                       shortDesc="#{row.description}"
+                       label="#{row.name}"
+                       contentStyle="width: 112px;"
+                       value="#{row.value}"
+                       id="hkwic2">
+        </af:inputColor>
+        
+      </af:forEach>
+      
+      
+      <af:commandButton id="updateButton" text="Update" action="#{extEditor.update}" partialSubmit="true"/>
+     </af:panelFormLayout>
+    </af:panelHeader>
+
+</jsp:root>

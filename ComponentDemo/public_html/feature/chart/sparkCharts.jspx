@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Sparkcharts Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Spark Charts Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Spark Charts"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:panelGroupLayout layout="vertical" id="pgl3">
+                            <af:outputText inlineStyle="font-size:large;" value="Providing Data to Spark Charts"
+                                           id="ot10"/>
+                            <af:outputText value="Using af:iterator to stamp sparkItems:" id="ot9"/>
+                            <dvt:sparkChart subType="bar" id="sc5">
+                                <af:iterator value="#{sparkChart.collection}" var="row" id="i3">
+                                    <dvt:sparkItem value="#{row.close}" id="si9"/>
+                                </af:iterator>
+                            </dvt:sparkChart>
+                            <af:outputText value="Floating bar spark chart that shows the open-close range of stock prices over time:"
+                                           id="ot8"/>
+                            <dvt:sparkChart subType="floatingBar" id="sc7">
+                                <af:iterator value="#{sparkChart.collection}" var="row" id="i1">
+                                    <dvt:sparkItem floatValue="#{row.open lt row.close ? row.open : row.close}"
+                                                   value="#{row.open gt row.close ? row.open - row.close : row.close - row.open}"
+                                                   id="si7"/>
+                                </af:iterator>
+                            </dvt:sparkChart>
+                            <af:outputText value="Spark chart with irregularly spaced time data:" id="ot7"/>
+                            <dvt:sparkChart subType="lineWithArea" id="sc6">
+                                <af:iterator value="#{sparkChart.irregularTimeData}" var="row" id="i2">
+                                    <dvt:sparkItem value="#{row.value}" date="#{row.date}" id="si8"/>
+                                </af:iterator>
+                            </dvt:sparkChart>
+                            <af:outputText value="Spark chart using Click Listener: #{sparkChart.listenerText}" id="ot12" partialTriggers="sc3"/>
+                            <dvt:sparkChart subType="bar" id="sc3"  clickListener="#{sparkChart.clickListener}"/>
+                            <af:outputText value="Spark chart with clickAction"/>
+                            <dvt:sparkChart subType="floatingBar" id="sc10" clickAction="feature.chartGallery"/>
+                            <af:outputText value="Spark chart stamped in af:table: " id="ot6"/>
+                            <af:table summary="Table" value="#{sparkChart.tableData}" var="row" columnStretching="last"
+                                      rowBandingInterval="1" id="t1" width="230" disableColumnReordering="true"
+                                      contentDelivery="immediate" autoHeightRows="8">
+                                <af:column sortable="false" headerText="Stock Symbol" align="start" id="c1"
+                                           rowHeader="true">
+                                    <af:outputText value="#{row[0]}" id="ot4"/>
+                                </af:column>
+                                <af:column sortable="false" headerText="Prices for 2008" id="c2">
+                                    <dvt:sparkChart subType="line" id="sc4" axisScaledFromBaseline="off"
+                                                    inlineStyle="width:80px;">
+                                        <dvt:sparkItem value="#{row[1]}" id="si6"/>
+                                        <dvt:sparkItem value="#{row[2]}" id="si5"/>
+                                        <dvt:sparkItem value="#{row[3]}" id="si4"/>
+                                        <dvt:sparkItem value="#{row[4]}" id="si3"/>
+                                        <dvt:sparkItem value="#{row[5]}" id="si2"/>
+                                        <dvt:sparkItem value="#{row[6]}" id="si1"/>
+                                    </dvt:sparkChart>
+                                </af:column>
+                            </af:table>
+                            <af:spacer height="10" id="s2"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="default" id="pgl2">
+                            <af:outputText inlineStyle="font-size:large; display:block;" value="Spark Charts Inline"
+                                           id="ot5"/>
+                            <af:outputText value="Spark charts can also be used inline with text. For example, look at this sparkChart with
+                            reference objects:" id="ot1" inlineStyle="display: inline;"/>
+                            <dvt:sparkChart subType="line" id="sc9" lineType="curved" shortDesc="Reference Object Demo"
+                                            inlineStyle="display:inline;">
+                                <af:iterator value="#{sparkChart.irregularTimeData}" var="row" id="i4">
+                                    <dvt:sparkItem value="#{row.value}" date="#{row.date}" id="si10"/>
+                                </af:iterator>
+                                <dvt:referenceLine value="20" color="#ff0000" location="front"/>
+                                <dvt:referenceArea color="#A0CEEC" lineType="curved">
+                                    <af:iterator id="it3" value="#{sparkChart.irregularTimeData}" var="row">
+                                        <dvt:referenceAreaItem x="#{row.date}" minimum="#{row.value - 15}"
+                                                               maximum="#{row.value + 15}"/>
+                                    </af:iterator>
+                                </dvt:referenceArea>
+                            </dvt:sparkChart>
+                            <af:outputText value=". There are many different types of spark charts available. Besides the standard bar, line,
+                             and area types, there is also a floating bar sparkChart:" id="ot2" inlineStyle="display: inline;"/>
+                            <dvt:sparkChart tooltip="Threshold Formatting Demo"
+                                            inlineStyle="width:80px;height:20px;display:inline;" subType="floatingBar"
+                                            id="sc2">
+                                <dvt:thresholdSet>
+                                    <dvt:threshold fillColor="#900000" thresholdMaxValue="50"/>
+                                    <dvt:threshold fillColor="#009000"/>
+                                </dvt:thresholdSet>
+                            </dvt:sparkChart>
+                            <af:outputText value=". This floating bar spark chart also demonstrates threshold formatting, which is useful for
+                            highlighting interesting ranges of data. Marker formatting also highlights interesting data,
+                            in the form of the first, last, high value, and low value data markers:" id="ot3"
+                                           inlineStyle="display: inline;"/>
+                            <dvt:sparkChart tooltip="Marker Formatting Demo"
+                                            inlineStyle="width:80px;height:20px;display:inline;" subType="line"
+                                            markers="FIRST LAST HIGH LOW" id="sc1"/>
+                            <af:outputText value=". Spark charts also support showPopupBehavior.  Hover over this spark chart to show a popup:"
+                                           id="ot11" inlineStyle="display: inline;"/>
+                            <dvt:sparkChart inlineStyle="width:80px;height:20px;display:inline;" subType="bar" id="sc8">
+                                <af:showPopupBehavior popupId="::sparkPopup" triggerType="mouseHover"/>
+                            </dvt:sparkChart>
+                            <af:popup id="sparkPopup">
+                                <af:noteWindow>
+                                    <af:outputText value="Spark Chart Popup"/>
+                                </af:noteWindow>
+                            </af:popup>
+                        </af:panelGroupLayout>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

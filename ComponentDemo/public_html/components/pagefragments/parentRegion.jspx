@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:panelHeader text="This is region 1 1 1:#{demo.viewId}" id="ph1">
+    <af:inputText readOnly="true" label="This region was called from"
+      value="#{demo.regionParentViewId}" id="it1"/>
+    <af:inputText readOnly="true" label="The full name for this region is: " 
+      value="#{regionModel.fullName}" id="it2"/>
+
+    <af:spacer height="20" id="s1"/>
+
+    <af:region
+      showHeader="always"
+      text="Child Region"
+      value="#{regionModel.childRegionModel}"
+      regionNavigationListener="#{demoRegionNavigationListener.processRegionNavigation}"
+      shortDesc="This is the child region"
+      id="childRegion" 
+      binding="#{editor.component}"/>
+
+    <af:spacer height="20" id="s2"/>
+
+    <af:commandButton text="Next in Region" action="NEXT1" id="cb1"/>
+    <af:commandButton text="Navigate View Root" actionListener="#{regionModel.parentRegionModel.goGuide}" 
+      shortDesc="Queues outcome on immediate parent"
+      id="cb2"/>
+  </af:panelHeader>
+</jsp:root>
+

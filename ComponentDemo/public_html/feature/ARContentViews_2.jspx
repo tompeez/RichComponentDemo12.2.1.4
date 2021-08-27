@@ -1,0 +1,482 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:panelStretchLayout id="contentViewStretch">
+        <f:facet name="center">
+            <af:decorativeBox id="db" theme="light">
+                <f:facet name="center">
+                    <af:panelSplitter orientation="horizontal" splitterPosition="175" positionedFromEnd="true">
+                        <f:facet name="first">
+                            <!--af:panelGroupLayout layout="scroll" -->
+                            <af:panelStretchLayout topHeight="25">
+                                <f:facet name="top">
+                                    <af:panelHeader text="Create Transaction: Invoice">
+                                        <f:facet name="toolbar">
+                                            <af:toolbar id="t1">
+                                                <af:commandButton text="Save" id="cb4"/>
+                                                <af:commandButton text="Complete and Create Another" id="cb5"/>
+                                                <af:commandButton text="Cancel" id="cb6"/>
+                                            </af:toolbar>
+                                        </f:facet>
+                                    </af:panelHeader>
+                                </f:facet>
+                                <f:facet name="center">
+                                    <af:decorativeBox id="db2" theme="default">
+                                        <f:facet name="center">
+                                            <af:panelGroupLayout layout="scroll">
+                                                <af:panelGroupLayout layout="vertical" id="pg2"
+                                                                     inlineStyle="padding-right:20px">
+                                                    <f:facet name="separator">
+                                                        <af:spacer height="5"/>
+                                                    </f:facet>
+                                                    <af:selectOneChoice label="Transaction Class" value="Invoice">
+                                                        <af:selectItem label="Invoice" value="Invoice"/>
+                                                    </af:selectOneChoice>
+                                                    <af:panelHeader text="Show Less" size="1">
+                                                        <af:panelGroupLayout>
+                                                            <af:panelFormLayout rows="4" maxColumns="3" labelWidth="50%"
+                                                                                fieldWidth="50%">
+                                                                <af:selectOneChoice label="Business Unit" id="soc1"
+                                                                                    value="vision" showRequired="true">
+                                                                    <af:selectItem label="Vision Operations"
+                                                                                   value="vision" shortDesc="unit1"
+                                                                                   id="si9"/>
+                                                                    <f:selectItem itemLabel="Unit2" itemValue="unit2"
+                                                                                  itemDescription="unit2" id="si10"/>
+                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                   value="unit3" id="si11"/>
+                                                                </af:selectOneChoice>
+                                                                <af:selectOneChoice label="Transaction Source" id="soc2"
+                                                                                    showRequired="true">
+                                                                    <af:selectItem label="Source 1" value="source1"
+                                                                                   shortDesc="Source 1" id="si12"/>
+                                                                    <f:selectItem itemLabel="Source 2"
+                                                                                  itemValue="source2"
+                                                                                  itemDescription="Source 2" id="si13"/>
+                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                   value="source3" id="si14"/>
+                                                                </af:selectOneChoice>
+                                                                <af:selectOneChoice label="Transaction Type" id="soc3"
+                                                                                    showRequired="true">
+                                                                    <af:selectItem label="Type 1" value="type1"
+                                                                                   shortDesc="Type 1" id="si15"/>
+                                                                    <f:selectItem itemLabel="Type 2" itemValue="type2"
+                                                                                  itemDescription="Type 2" id="si16"/>
+                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                   value="type3" id="si17"/>
+                                                                </af:selectOneChoice>
+                                                                <af:inputText columns="20" label="Transaction Number"
+                                                                              id="it1" showRequired="true"/>
+                                                                <af:inputText columns="20" label="Document Number"
+                                                                              id="it2"/>
+                                                                <af:inputDate id="df1" label="Transaction Date"
+                                                                              value="06/23/2009" showRequired="true"/>
+                                                                <af:panelLabelAndMessage label="Accounting Date">
+                                                                    <af:outputText value="06/23/2009 "
+                                                                                   inlineStyle="color:Black;"/>
+                                                                </af:panelLabelAndMessage>
+                                                                <af:selectOneChoice label="Salesperson" id="soc4">
+                                                                    <af:selectItem label="Person 1" value="type1"
+                                                                                   shortDesc="Type 1" id="si18"/>
+                                                                    <f:selectItem itemLabel="Person 2" itemValue="type2"
+                                                                                  itemDescription="Type 2" id="si19"/>
+                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                   value="type3" id="si20"/>
+                                                                </af:selectOneChoice>
+                                                                <af:selectOneChoice label="Invoicing Rule" id="soc5">
+                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                   value="type1" shortDesc="Type 1"
+                                                                                   id="si21"/>
+                                                                </af:selectOneChoice>
+                                                                <af:selectOneChoice label="Currency" id="soc6"
+                                                                                    value="USD" showRequired="true">
+                                                                    <af:selectItem label="USD" value="USD"
+                                                                                   shortDesc="USD" id="si22"/>
+                                                                </af:selectOneChoice>
+                                                                <af:panelLabelAndMessage label="Transaction total">
+                                                                    <af:commandLink text="0.00" immediate="true"
+                                                                                    action="guide"/>
+                                                                </af:panelLabelAndMessage>
+                                                                <af:panelLabelAndMessage label="Lines">
+                                                                    <af:outputText value="0.00"
+                                                                                   inlineStyle="color:Black;"/>
+                                                                </af:panelLabelAndMessage>
+                                                                <af:panelLabelAndMessage label="Tax">
+                                                                    <af:outputText value="0.00"
+                                                                                   inlineStyle="color:Black;"/>
+                                                                </af:panelLabelAndMessage>
+                                                                <af:panelLabelAndMessage label="Freight">
+                                                                    <af:outputText value="0.00"
+                                                                                   inlineStyle="color:Black;"/>
+                                                                    <af:image inlineStyle="width:13px; height:13px;"
+                                                                              source="/images/update_ena.png"/>
+                                                                </af:panelLabelAndMessage>
+                                                                <af:panelLabelAndMessage label="Charges">
+                                                                    <af:outputText value="0.00"
+                                                                                   inlineStyle="color:Black;"/>
+                                                                </af:panelLabelAndMessage>
+                                                                <af:panelLabelAndMessage label="Attachment">
+                                                                    <af:outputText value="None"
+                                                                                   inlineStyle="color:Black;"/>
+                                                                    <af:image inlineStyle="width:13px; height:13px;"
+                                                                              source="/images/icon_upload.gif"/>
+                                                                </af:panelLabelAndMessage>
+                                                            </af:panelFormLayout>
+                                                            <af:spacer height="5"/>
+                                                            <af:panelTabbed id="contentViewTab" position="above"
+                                                                            styleClass="AFStretchWidth">
+                                                                <af:showDetailItem id="sd1" text="Customer"
+                                                                                   disclosed="true">
+                                                                    <af:panelGroupLayout layout="horizontal">
+                                                                        <f:facet name="separator">
+                                                                            <af:spacer width="5"/>
+                                                                        </f:facet>
+                                                                        <af:showDetailHeader text="Ship To" size="2"
+                                                                                             disclosed="true"
+                                                                                             clientComponent="true">
+                                                                            <af:panelFormLayout rows="6" maxColumns="1"
+                                                                                                labelWidth="50%"
+                                                                                                fieldWidth="50%">
+                                                                                <af:selectOneChoice label="Name"
+                                                                                                    id="soc10">
+                                                                                    <af:selectItem label="Vision Operations"
+                                                                                                   value="bean"
+                                                                                                   shortDesc="unit1"
+                                                                                                   id="si30"/>
+                                                                                    <f:selectItem itemLabel="Unit2"
+                                                                                                  itemValue="unit2"
+                                                                                                  itemDescription="unit2"
+                                                                                                  id="si31"/>
+                                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                   value="unit3"
+                                                                                                   id="si32"/>
+                                                                                </af:selectOneChoice>
+                                                                                <af:selectOneChoice label="Account Number"
+                                                                                                    id="soc11">
+                                                                                    <af:selectItem label="Source 1"
+                                                                                                   value="source1"
+                                                                                                   shortDesc="Source 1"
+                                                                                                   id="si33"/>
+                                                                                    <f:selectItem itemLabel="Source 2"
+                                                                                                  itemValue="source2"
+                                                                                                  itemDescription="Source 2"
+                                                                                                  id="si34"/>
+                                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                   value="source3"
+                                                                                                   id="si35"/>
+                                                                                </af:selectOneChoice>
+                                                                                <af:selectOneChoice label="Site"
+                                                                                                    id="soc12">
+                                                                                    <af:selectItem label="Type 1"
+                                                                                                   value="type1"
+                                                                                                   shortDesc="Type 1"
+                                                                                                   id="si36"/>
+                                                                                    <f:selectItem itemLabel="Type 2"
+                                                                                                  itemValue="type2"
+                                                                                                  itemDescription="Type 2"
+                                                                                                  id="si37"/>
+                                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                   value="type3"
+                                                                                                   id="si38"/>
+                                                                                </af:selectOneChoice>
+                                                                                <af:selectOneChoice label="Address"
+                                                                                                    id="soc13">
+                                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                   value="type3"
+                                                                                                   id="si39"/>
+                                                                                </af:selectOneChoice>
+                                                                                <af:inputText columns="20" label=" "
+                                                                                              id="it5"/>
+                                                                                <af:inputText columns="20" label=" "
+                                                                                              id="it6"/>
+                                                                                <af:selectOneChoice label="Contact"
+                                                                                                    id="soc15">
+                                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                   value="type3"
+                                                                                                   id="si41"/>
+                                                                                </af:selectOneChoice>
+                                                                            </af:panelFormLayout>
+                                                                        </af:showDetailHeader>
+                                                                        <af:showDetailHeader text="Bill To" size="2"
+                                                                                             disclosed="true"
+                                                                                             clientComponent="true">
+                                                                            <af:panelFormLayout rows="6" maxColumns="1"
+                                                                                                labelWidth="50%"
+                                                                                                fieldWidth="50%">
+                                                                                <af:selectOneChoice label="Name"
+                                                                                                    showRequired="true">
+                                                                                    <af:selectItem label="Vision Operations"
+                                                                                                   value="bean"
+                                                                                                   shortDesc="unit1"/>
+                                                                                    <f:selectItem itemLabel="Unit2"
+                                                                                                  itemValue="unit2"
+                                                                                                  itemDescription="unit2"/>
+                                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                   value="unit3"/>
+                                                                                </af:selectOneChoice>
+                                                                                <af:selectOneChoice label="Account Number"
+                                                                                                    showRequired="true">
+                                                                                    <af:selectItem label="Source 1"
+                                                                                                   value="source1"
+                                                                                                   shortDesc="Source 1"/>
+                                                                                    <f:selectItem itemLabel="Source 2"
+                                                                                                  itemValue="source2"
+                                                                                                  itemDescription="Source 2"/>
+                                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                   value="source3"/>
+                                                                                </af:selectOneChoice>
+                                                                                <af:selectOneChoice label="Site"
+                                                                                                    showRequired="true">
+                                                                                    <af:selectItem label="Type 1"
+                                                                                                   value="type1"
+                                                                                                   shortDesc="Type 1"/>
+                                                                                    <f:selectItem itemLabel="Type 2"
+                                                                                                  itemValue="type2"
+                                                                                                  itemDescription="Type 2"/>
+                                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                   value="type3"/>
+                                                                                </af:selectOneChoice>
+                                                                                <af:selectOneChoice label="Address"
+                                                                                                    id="soc16"
+                                                                                                    showRequired="true">
+                                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                   value="type3"
+                                                                                                   id="si40"/>
+                                                                                </af:selectOneChoice>
+                                                                                <af:inputText columns="20" label=" "
+                                                                                              id="it7"/>
+                                                                                <af:inputText columns="20" label=" "
+                                                                                              id="it8"/>
+                                                                                <af:selectOneChoice label="Contact"
+                                                                                                    id="soc17">
+                                                                                    <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                   value="type3"
+                                                                                                   id="si42"/>
+                                                                                </af:selectOneChoice>
+                                                                            </af:panelFormLayout>
+                                                                        </af:showDetailHeader>
+                                                                        <af:panelGroupLayout layout="vertical">
+                                                                            <af:showDetailHeader text="Sold To" size="2"
+                                                                                                 disclosed="true"
+                                                                                                 clientComponent="true">
+                                                                                <af:panelFormLayout rows="6"
+                                                                                                    maxColumns="1"
+                                                                                                    labelWidth="50%"
+                                                                                                    fieldWidth="50%">
+                                                                                    <af:selectOneChoice label="Name">
+                                                                                        <af:selectItem label="Vision Operations"
+                                                                                                       value="bean"
+                                                                                                       shortDesc="unit1"/>
+                                                                                        <f:selectItem itemLabel="Unit2"
+                                                                                                      itemValue="unit2"
+                                                                                                      itemDescription="unit2"/>
+                                                                                        <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                       value="unit3"/>
+                                                                                    </af:selectOneChoice>
+                                                                                    <af:selectOneChoice label="Account Number">
+                                                                                        <af:selectItem label="Source 1"
+                                                                                                       value="source1"
+                                                                                                       shortDesc="Source 1"/>
+                                                                                        <f:selectItem itemLabel="Source 2"
+                                                                                                      itemValue="source2"
+                                                                                                      itemDescription="Source 2"/>
+                                                                                        <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                       value="source3"/>
+                                                                                    </af:selectOneChoice>
+                                                                                </af:panelFormLayout>
+                                                                            </af:showDetailHeader>
+                                                                            <af:showDetailHeader text="Paying Customer"
+                                                                                                 size="2"
+                                                                                                 disclosed="true"
+                                                                                                 clientComponent="true">
+                                                                                <af:panelFormLayout rows="6"
+                                                                                                    maxColumns="1"
+                                                                                                    labelWidth="50%"
+                                                                                                    fieldWidth="50%">
+                                                                                    <af:selectOneChoice label="Name">
+                                                                                        <af:selectItem label="Vision Operations"
+                                                                                                       value="bean"
+                                                                                                       shortDesc="unit1"/>
+                                                                                        <f:selectItem itemLabel="Unit2"
+                                                                                                      itemValue="unit2"
+                                                                                                      itemDescription="unit2"/>
+                                                                                        <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                       value="unit3"/>
+                                                                                    </af:selectOneChoice>
+                                                                                    <af:selectOneChoice label="Account Number">
+                                                                                        <af:selectItem label="Source 1"
+                                                                                                       value="source1"
+                                                                                                       shortDesc="Source 1"/>
+                                                                                        <f:selectItem itemLabel="Source 2"
+                                                                                                      itemValue="source2"
+                                                                                                      itemDescription="Source 2"/>
+                                                                                        <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                       value="source3"/>
+                                                                                    </af:selectOneChoice>
+                                                                                    <af:selectOneChoice label="Site">
+                                                                                        <af:selectItem label="Type 1"
+                                                                                                       value="type1"
+                                                                                                       shortDesc="Type 1"/>
+                                                                                        <f:selectItem itemLabel="Type 2"
+                                                                                                      itemValue="type2"
+                                                                                                      itemDescription="Type 2"/>
+                                                                                        <af:selectItem label="abcdabcdabcdabcdab"
+                                                                                                       value="type3"/>
+                                                                                    </af:selectOneChoice>
+                                                                                </af:panelFormLayout>
+                                                                            </af:showDetailHeader>
+                                                                        </af:panelGroupLayout>
+                                                                    </af:panelGroupLayout>
+                                                                    <!--/af:panelGroupLayout-->
+                                                                </af:showDetailItem>
+                                                                <af:showDetailItem id="sd2" text="Payment"></af:showDetailItem>
+                                                                <af:showDetailItem id="sd3" text="Miscellaneous"></af:showDetailItem>
+                                                            </af:panelTabbed>
+                                                        </af:panelGroupLayout>
+                                                    </af:panelHeader>
+                                                    <af:panelHeader text="Invoice Lines" size="1">
+                                                        <af:panelCollection featuresOff="freeze wrap detach"
+                                                                            styleClass="AFStretchWidth"
+                                                                            inlineStyle="height:200px" id="pc2">
+                                                            <f:facet name="toolbar">
+                                                                <af:toolbar id="t3">
+                                                                    <af:commandToolbarButton shortDesc="Create"
+                                                                                             icon="/images/field_group_plus_ena.png"
+                                                                                             id="ctb8"></af:commandToolbarButton>
+                                                                    <af:commandToolbarButton shortDesc="Delete"
+                                                                                             icon="/images/field_group_minus_ena.png"
+                                                                                             id="ctb9"></af:commandToolbarButton>
+                                                                    <af:commandToolbarButton shortDesc="Link"
+                                                                                             icon="/images/link-e.png"></af:commandToolbarButton>
+                                                                </af:toolbar>
+                                                            </f:facet>
+                                                            <f:facet name="secondaryToolbar">
+                                                                <af:toolbar id="t4">
+                                                                    <af:commandToolbarButton immediate="true"
+                                                                                             text="Edit Freight"
+                                                                                             action="guide" id="ctb10"/>
+                                                                </af:toolbar>
+                                                            </f:facet>
+                                                            <af:table rowSelection="multiple" columnSelection="multiple"
+                                                                      columnBandingInterval="0" autoHeightRows="0"
+                                                                      columnSelectionListener="#{fs.handleColumnSelection}"
+                                                                      binding="#{editor.component}" var="test1"
+                                                                      value="#{tableTestData}" id="table"
+                                                                      summary="table data" rowBandingInterval="0">
+                                                                <f:facet name="contextMenu">
+                                                                    <af:popup id="myPopup">
+                                                                        <af:menu id="m1">
+                                                                            <af:commandMenuItem text="Context Menu Item 1"
+                                                                                                id="cmi1"/>
+                                                                            <af:commandMenuItem text="Context Menu Item 2"
+                                                                                                id="cmi2"/>
+                                                                            <af:commandMenuItem text="Context Menu Item 3"
+                                                                                                id="cmi3"/>
+                                                                        </af:menu>
+                                                                    </af:popup>
+                                                                </f:facet>
+                                                                <af:column width="40" rowHeader="true"
+                                                                           headerText="Number" id="c1">
+                                                                    <af:outputText value="#{test1.no}" id="ot1"/>
+                                                                </af:column>
+                                                                <af:column displayIndex="3" headerText="Number"
+                                                                           align="right" sortProperty="no"
+                                                                           sortable="true" id="c2">
+                                                                    <af:outputText value="#{test1.no}" id="ot2"/>
+                                                                </af:column>
+                                                                <af:column displayIndex="1" headerText="Name"
+                                                                           sortProperty="name" sortable="true" id="c3">
+                                                                    <af:panelGroupLayout id="pgl2">
+                                                                        <af:image source="#{test1.icon}"
+                                                                                  inlineStyle="width:16px; height:14px;"
+                                                                                  shortDesc="icon" id="i1"/>
+                                                                        <af:outputText inlineStyle="margin-left:8px"
+                                                                                       value="#{test1.name}" id="ot3"/>
+                                                                    </af:panelGroupLayout>
+                                                                </af:column>
+                                                                <af:column headerText="Size of the file in Kilo Bytes"
+                                                                           headerNoWrap="true" displayIndex="2"
+                                                                           align="end" id="c4">
+                                                                    <af:outputText value="#{test1.size}" id="ot4"/>
+                                                                </af:column>
+                                                                <af:column align="center" headerText="Date Modified"
+                                                                           id="c5">
+                                                                    <af:outputText value="#{test1.date}" id="ot5"/>
+                                                                </af:column>
+                                                                <af:column headerText="Col5" id="c6">
+                                                                    <af:outputText value="#{test1.col5}" id="ot6"/>
+                                                                </af:column>
+                                                                <af:column headerText="Col6" id="c7">
+                                                                    <af:outputText value="#{test1.col6}" id="ot7"/>
+                                                                </af:column>
+                                                                <af:column headerText="Col7" align="end" id="c8">
+                                                                    <af:outputText value="#{test1.col7}" id="ot8"/>
+                                                                </af:column>
+                                                                <af:column headerText="Col8" align="end" id="c9">
+                                                                    <af:outputText value="#{test1.col8}" id="ot9"/>
+                                                                </af:column>
+                                                                <af:column headerText="Col9" id="c10">
+                                                                    <af:outputText value="#{test1.col9}" id="ot10"/>
+                                                                </af:column>
+                                                                <af:column headerText="Col10" id="c11">
+                                                                    <af:outputText value="#{test1.col10}" id="ot11"/>
+                                                                </af:column>
+                                                                <af:column headerText="Col11" align="end" id="c12">
+                                                                    <af:outputText value="#{test1.col11}" id="ot12"/>
+                                                                </af:column>
+                                                                <af:column headerText="Col12" align="end" id="c13">
+                                                                    <af:outputText value="#{test1.col12}" id="ot13"/>
+                                                                </af:column>
+                                                            </af:table>
+                                                        </af:panelCollection>
+                                                    </af:panelHeader>
+                                                </af:panelGroupLayout>
+                                            </af:panelGroupLayout>
+                                        </f:facet>
+                                    </af:decorativeBox>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                            <!--/af:panelGroupLayout-->
+                        </f:facet>
+                        <f:facet name="second">
+                            <af:panelAccordion id="contextAccordion" discloseMany="true" discloseNone="true">
+                                <af:showDetailItem text="Customer Information" disclosed="true" flex="1"
+                                                   inflexibleHeight="80">
+                                    <af:panelFormLayout rows="5" maxColumns="1" labelWidth="120" fieldWidth="150">
+                                        <af:panelLabelAndMessage label="Name"></af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="Account Number"></af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="Primary Contact"></af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="Primary Website"></af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="Primary Phone"></af:panelLabelAndMessage>
+                                    </af:panelFormLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Total" disclosed="true" flex="1" inflexibleHeight="80">
+                                    <af:panelFormLayout rows="5" maxColumns="1" labelWidth="120" fieldWidth="150">
+                                        <af:panelLabelAndMessage label="Transaction Total">
+                                            <af:outputText value="0.00" inlineStyle="color:Black;"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="Lines">
+                                            <af:outputText value="0.00" inlineStyle="color:Black;"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="Tax">
+                                            <af:outputText value="0.00" inlineStyle="color:Black;"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="Freight">
+                                            <af:outputText value="0.00" inlineStyle="color:Black;"/>
+                                        </af:panelLabelAndMessage>
+                                        <af:panelLabelAndMessage label="Charges">
+                                            <af:outputText value="0.00" inlineStyle="color:Black;"/>
+                                        </af:panelLabelAndMessage>
+                                    </af:panelFormLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Notes"></af:showDetailItem>
+                            </af:panelAccordion>
+                        </f:facet>
+                    </af:panelSplitter>
+                </f:facet>
+            </af:decorativeBox>
+        </f:facet>
+    </af:panelStretchLayout>
+</jsp:root>

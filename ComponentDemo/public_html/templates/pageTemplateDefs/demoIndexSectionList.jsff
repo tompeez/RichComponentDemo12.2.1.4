@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="2.1">
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Dynamic declarative component for a list of demo links.</description>
+        <attribute>
+          <description>The number of rows for the panelList</description>
+          <attribute-name>rows</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>1</default-value>
+        </attribute>
+        <attribute>
+          <description>The maximum number of columns for the panelList</description>
+          <attribute-name>maxColumns</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>1</default-value>
+        </attribute>
+        <attribute>
+          <description>The list of ItemSection objects that compose the list data</description>
+          <attribute-name>listSections</attribute-name>
+          <attribute-class>java.util.List</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelList id="sections" rows="#{attrs.rows}" maxColumns="#{attrs.maxColumns}">
+      <af:iterator id="secs" var="section" rows="0" value="#{attrs.listSections}">
+        <af:group id="secGrp" rendered="#{section.size != 0}">
+          <af:outputText id="secText" value="#{section.text}"/>
+          <af:panelList id="pl">
+            <af:iterator id="itms" var="item" value="#{section.sectionData}" rows="0">
+              <af:group id="g">
+                <af:panelGroupLayout id="hor" layout="default">
+                  <f:facet name="separator">
+                    <af:spacer id="lSp" width="4"/>
+                  </f:facet>
+                  <af:commandLink id="cmd" text="#{item.text}" action="#{item.getOutcome}"
+                                  inlineStyle="#{item.inlineStyle}" disabled="#{item.disabled}"
+                                  rendered="#{item.outcome != null}"/>
+                  <af:goLink id="go" text="#{item.text}" destination="#{item.destination}"
+                             inlineStyle="#{item.inlineStyle}" disabled="#{item.disabled}"
+                             rendered="#{item.outcome == null}"/>
+                  <af:outputText id="note" value="#{item.linkNote}"
+                                 rendered="#{item.linkNote != null}"/>
+                </af:panelGroupLayout>
+                <af:panelList id="desc" rendered="#{item.description != null}">
+                  <af:outputText value="#{item.description}" id="ot"/>
+                </af:panelList>
+              </af:group>
+            </af:iterator>
+          </af:panelList>
+        </af:group>
+      </af:iterator>
+    </af:panelList>
+  </af:componentDef>
+</jsp:root>

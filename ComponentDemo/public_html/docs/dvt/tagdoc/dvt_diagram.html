@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:diagram&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:diagram&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:diagram diagram diagram</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.diagram.UIDiagram<br>
+<b>Component type:</b> oracle.dss.adf.diagram.Diagram<br></p>
+<h4>Overview</h4>
+<p>Diagrams are used to display a set of Nodes and the Links between them. The nodes and links correspond to the elements and relationships to the data. The component supports pan and zoom operations, opening and closing container nodes, isolate and drilling of nodes, and rendering of ADF components within the nodes.</p>
+<h4>Nodes</h4>
+<p>Diagram nodes can support four zoom facets, label facets, background facets, and overlay facets. The "zoom100", "zoom75", "zoom50", and "zoom25" facets are used to specify the stamps for different zoom levels of the hierarchy. The "zoom100" facet is typically the most detailed, showing the most information, because the nodes are larger at 100% size. The "zoom25" facet is typically the least detailed, showing the least information, because the nodes are smaller at 25% size. The Diagram handles automatic switching between zoom facets. The label facet provides the ability to specify a label that can be independently positioned by the layout. The background facet provides a way to specify a background image or SVG file that will be scaled to the size of this Node. All node content will be stamped on top of this background. This facet supports &lt;af:image&gt; and &lt;dvt:marker&gt;. The overlay facet provides a way to place icons, alerts, and badges on top of the base node content. Multiple overlays can be specified for a single node. They can also be bound to actions.</p>
+<h4>Links</h4>
+<p>Diagram links can support startConnector, endConnector, and label facets. The startConnector and endConnector attributes provide a simple way to choose from the built-in connector styles. The startConnector and endConnector facets, which take precedence over any values specified via attribute, provide a way to specify custom connectors. These facets can contain a &lt;dvt:marker&gt; which indicates the SVG that should be used for the connector. The label attribute provides a simple way to specify a label for a link. The label facet, which takes precedence over any label specified via attribute, provides more ability to customize the label that is displayed. The label facet can support &lt;af:outputText&gt;, &lt;af:outputFormatted&gt;, &lt;af:link&gt;, or &lt;dvt:marker&gt; components as children. The layout algorithm is responsible for label positioning</p>
+<h4>Attribute Groups</h4>
+<p>The &lt;dvt:attributeGroups&gt; tag may apply to more than one component. A common example is to apply &lt;dvt:attributeGroups&gt; to elements in all defined zoom facets so that color stays consistent while zooming. In addition, &lt;dvt:attributeGroups&gt; may apply to more than just markers (e.g. to set the background-color of an &lt;af:panelGroupLayout&gt; ). Use of attribute groups is recommended, as they provide the information necessary to create a legend.</p>
+<h4>Stacks</h4>
+<p>Diagram will support declarative stacking of nodes via the "groupBy" attribute on the &lt;dvt:diagramNodes&gt; tag. This attribute should contain a space-separated list of IDs indicating which attributeGroups should take part in stacking.</p>
+<h4>Containers</h4>
+<p>Containers represent nested topologies and are treated as nodes. They can be linked to other nodes or containers, embedded in other containers, and have a different layout from other containers. When closed, containers look like a node and can have their content specified the same way</p>
+<h4>Layouts</h4>
+<p>The Diagram has no built-in layouts. Applications are expected to provide their own custom pluggable layouts. Layout registration can be done using the &lt;dvt:clientLayout&gt; tag which provides a mapping to an application-provided javascript method. No layouts are registered by default and at least one client layout must be registered.</p>
+<h4>Animations</h4>
+<p>Multiple types of animations are supported. Use the animationOnDisplay attribute to control the initial animation.</p>
+<h4>Legend</h4>
+<p>The Diagram can contain a &lt;dvt:legend&gt; element which can contain a combination of &lt;dvt:legendGroup&gt; and &lt;dvt:legendSection&gt;elements. This is used to display multiple sections of marker and label pairs. Each legend section element will referencethe IDs of the &lt;dvt:attributeGroup&gt; tags that they want to appear in the Legend which will be used to populate the Legend.</p>
+<h4>Overview Window</h4>
+<p>The Overview Window displays a simplified view of the Diagram to provide the user with context and navigation ability and can be added by adding &lt;dvt:overviewWindow&gt; tag as a child of &lt;dvt:diagram&gt;. The Diagram will automatically size and display the Overview Window. The Overview Window viewport can be dragged to pan the Diagram.</p>
+<h4>Context Menus</h4>
+<p>Context menus can be defined by using any of the context menu facets that are defined on the component. The "bodyContextMenu" facet specifies a context menu that is displayed upon right-click when nothing is selected. The "contextMenu" facet specifies a context menu that is displayed upon right-click when a single Node is selected. The "linkContextMenu" facet specifies a context menu that is displayed upon right-click when a single Link is selected. The "multiSelectContextMenu" facet specifies a context menu that is displayed upon right-click when multiple objects (Nodes or Links) are selected. Each facet supports only a single child component. Selection should be enabled when using the contextMenu, linkContextMenu, and multiSelectContextMenu facets.</p>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Supported Facets</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="27%" align="left" valign="bottom" id="fcName">Name</th>
+<th width="73%" align="left" valign="bottom" id="fcDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="fcName">bodyContextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click on any non-selectable object within the component. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">contextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click when a single node is selected within the component. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">linkContextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click when a single link is selected within the component. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">multiSelectContextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click when multiple data objects are selected. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">animationDuration</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 500<br>
+<br>
+Specifies the animation duration in milliseconds. The default value is 500. For data change animations with multiple stages, this attribute defines the duration of each stage. For example, if an animation contains two stages, the total duration will be two times this attribute's value.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnDisplay</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, alphaFade, initAnimElasticExplode, initAnimElasticExplodeGrowLinks, initAnimExplode, initAnimExplodeGrowLinks, initAnimGrowLinks, initAnimPop, initAnimPopGrowLinks<br>
+<strong>Default Value:</strong> none<br>
+<br>
+<p>Specifies the initial display animation for the Diagram</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.diagram.UIDiagram</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">
+<p>Specifies a binding reference to store a specific instance of UIDiagram from a backing bean. Set this attribute only to access code in a backing bean. For example, to reference a diagram component in the sample managed bean, use the following code: <code>binding="#{sample.diagram}"</code></p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">contentDelivery</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> whenAvailable, lazy, immediate<br>
+<strong>Default Value:</strong> whenAvailable<br>
+<br>
+Specifies whether to fetch content with page load or after page load.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">controlPanelBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> initCollapsed, initExpanded, hidden<br>
+<strong>Default Value:</strong> initCollapsed<br>
+<br>
+<p>Specifies the behavior of the control panel. Valid values are:</p>
+<ul>
+<li>"initCollapsed" - initially collapsed (default)</li>
+<li>"initExpanded" - initially expanded</li>
+<li>"hidden" - hidden from view</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dontPersist</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">List of persistent attributes that are restricted from persisting to a registered "Persistent Change Manager". Persistent attributes would still persist to a session.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">emptyText</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The text of the component when empty.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Specifies the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Style of the outer element (enclosing div) of the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">layout</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>Specifies the top-level layout for the Diagram</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">maxZoom</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 2.0<br>
+<br>
+Specifies the maximum zoom level for this diagram. This can be any number greater than zero which indicates the maximum point to which Diagram objects can be scaled. A value of 2.0 implies that the Diagram can be zoomed in until Nodes appear at twice their natural size. By default, maxZoom is 2.0.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">minZoom</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 0<br>
+<br>
+Specifies the minimum zoom level for this diagram. If minZoom is greater than zero, it indicates the minimum point to which Diagram objects can be scaled. A value of 0.1 implies that the Diagram can be zoomed in until Nodes appear at one-tenth their natural size. By default, minZoom is zero, indicating that the Diagram's minimum zoom level should be automatically adjusted to always allow the Diagram to scale to half of the size necessary to perform a zoom-to-fit based on the currently visible Nodes and Links.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">panning</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, none<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+<p>Specifies panning behavior. Valid values are:</p>
+<ul>
+<li>"auto" - panning enabled with device specific gesture (default)</li>
+<li>"none" - panning will be disabled</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">persist</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">List of persistent attributes that are persisting to a registered "Persistent Change Manager". Persistent attributes, by default, always persist to a session.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">readOnly</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether this diagram is read-only (true by default)</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rolloverBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, dim<br>
+<strong>Default Value:</strong> none<br>
+<br>
+<p>Specifies the behavior when the mouse rolls over one object in an attributeGroup. Value valid are:</p>
+<ul>
+<li>"none" - (default) No rollover behavior is enabled</li>
+<li>"dim" - Dims all other objects in the attributeGroup when rollover occurs</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selection</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, single, multiple<br>
+<strong>Default Value:</strong> multiple<br>
+<br>
+<p>Specifies the selection mode. Valid values are:</p>
+<ul>
+<li>"none" - no nodes can be selected</li>
+<li>"single" - a single node can be selected</li>
+<li>"multiple" - (default) multiple nodes can be selected</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">showRestore</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> on, off<br>
+<strong>Default Value:</strong> on<br>
+<br>
+<p>Specifies whether to show the Restore button. Valid values are:</p>
+<ul>
+<li>"on" - show Restore button (default)</li>
+<li>"off" - hide Restore button</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">summary</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">A summary of the component's purpose and structure for user agents rendering to non-visual media (e.g. screen readers).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">zooming</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, none<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+<p>Specifies zooming behavior. Valid values are:</p>
+<ul>
+<li>"auto" - zooming enabled with device specific gesture (default)</li>
+<li>"none" - zooming will be disabled</li>
+</ul>
+</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

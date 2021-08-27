@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+/* $Header: dsstools/modules/dvt-faces-demo/public_html/feature/thematicMap/contextMenus.jspx /bibeans_root/4 2016/08/17 12:49:27 breliu Exp $ */
+
+/* Copyright (c) 2014, 2016, Oracle and/or its affiliates. 
+All rights reserved.*/
+-->
+
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map Context Menu Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demoTemplate"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Context Menus"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Thematic Map Context Menus"/>        
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout id="panelStretch" styleClass="AFStretchWidth"
+                                 topHeight="auto">                                            
+            <f:facet name="top">
+              <af:panelGroupLayout layout="vertical" id="pgl1">
+                <af:panelGroupLayout layout="horizontal" id="pgl3">
+                  <af:spacer width="10px" id="s2"/>
+                  <af:panelGroupLayout id="pgl4">
+                    <f:verbatim>
+                      <b>Demonstrates use of Context Menus on Thematic Map</b>
+                      <ul>
+                        <li>Right click the background to bring up the context menu to reset the election results.</li>
+                        <li>Right click a state to bring up the context menus to change the winner of that state.</li>
+                        <li>Use the slider to select which presidential election to show.</li>
+                      </ul>
+                    </f:verbatim>
+                    <af:spacer height="20px" width="100%"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+            <af:panelGroupLayout layout="scroll">
+              <af:panelGridLayout>
+                <af:gridRow>
+                  <af:gridCell halign="center">
+                    <af:inputNumberSlider id="ins1" value="#{contextMenusBean.electionYear}" minimum="1980" maximum="2012" majorIncrement="4"
+                        minimumIncrement="4" contentStyle="width:800px;" autoSubmit="true"/>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow>
+                  <af:gridCell halign="center">
+                    <dvt:treemap value="#{contextMenusBean.candidateResults}" var="row" layout="sliceAndDiceHorizontal"
+                                 sorting="on" nodeSelection="none" summary="Electoral Voting Results" animationOnDataChange="auto"
+                                 partialTriggers="::cmi1 ::cmi2 ::ins1" inlineStyle="border:none;height:30px;width:800px;">
+                      <dvt:treemapNode value="#{row.tempElectoralVotes}" label="#{row.name}: #{row.tempElectoralVotes}" labelHalign="start"
+                                       shortDesc="#{row.name}: #{row.tempElectoralVotes} Electoral Votes" labelStyle="font-size:16px;">
+                        <dvt:attributeGroups type="color" value="#{row.party}">
+                          <dvt:attributeMatchRule group="Democrat">
+                            <f:attribute name="color" value="#{contextMenusBean.colorDemocrat}"/>
+                          </dvt:attributeMatchRule>
+                          <dvt:attributeMatchRule group="Republican">
+                            <f:attribute name="color" value="#{contextMenusBean.colorRepublican}"/>
+                          </dvt:attributeMatchRule>
+                        </dvt:attributeGroups>
+                      </dvt:treemapNode>
+                    </dvt:treemap>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow>
+                  <af:gridCell halign="center">
+                      <dvt:thematicMap basemap="usa" id="tm1" inlineStyle="height:450px;width:800px;" tooltipDisplay="shortDescOnly"
+                                       summary="Thematic map showing voting data in the United States">
+                        <af:transition transition="auto" triggerType="display"/>                        
+                        <af:showPopupBehavior popupId="::pop1" 
+                                  triggerType="contextMenu"/>
+                        <dvt:areaLayer layer="states" id="al1" labelDisplay="off">
+                          <dvt:areaDataLayer value="#{contextMenusBean.currentModel.stateResults}" var="row" id="adl1"
+                                             partialTriggers="::::cmi1 ::::cmi2 ::::ins1" >
+                            <af:transition transition="auto" triggerType="dataChange"/>
+                            <dvt:areaLocation name="#{row.state}" id="al2">
+                              <dvt:area id="a1" shortDesc="#{row.electoralTooltip}">
+                                <af:showPopupBehavior popupId="::::pop2" 
+                                                      triggerType="contextMenu"/>
+                                <dvt:attributeGroups type="color" id="ag1"
+                                                     value="#{row.tempWinner}">
+                                  <dvt:attributeMatchRule group="Democrat" id="amr1">
+                                    <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+                                  </dvt:attributeMatchRule>
+                                  <dvt:attributeMatchRule group="Republican" id="amr2">
+                                    <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+                                  </dvt:attributeMatchRule>
+                                </dvt:attributeGroups>
+                              </dvt:area>
+                            </dvt:areaLocation>
+                          </dvt:areaDataLayer>
+                        </dvt:areaLayer>
+                      </dvt:thematicMap>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+              <af:popup contentDelivery="lazyUncached" id="pop1" launcherVar="source" 
+                        eventContext="launcher" clientComponent="true">
+                <af:menu id="m1">
+                  <af:group>
+                    <af:commandMenuItem text="Reset Results"
+                                        actionListener="#{contextMenusBean.backgroundContextMenuListener}" id="cmi1"/>                                
+                  </af:group>
+                </af:menu>
+              </af:popup>
+              <af:popup contentDelivery="lazyUncached" id="pop2" launcherVar="source" 
+                eventContext="launcher" clientComponent="true" partialTriggers="">
+                <af:setPropertyListener from="#{source.rowKey}" to="#{contextMenusBean.rowKey}" type="popupFetch"/>          
+                <af:menu id="m2">
+                  <af:group>
+                    <af:commandMenuItem text="Toggle Winner"
+                                        actionListener="#{contextMenusBean.stateContextMenuListener}" id="cmi2"/>                                
+                  </af:group>
+                </af:menu>
+              </af:popup>
+            </af:panelGroupLayout>
+            </f:facet>           
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>
+        
+        
+        

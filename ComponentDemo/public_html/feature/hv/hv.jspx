@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Hierarchy Viewer Features Demo"
+                     binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demoTemplate"
+                             viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- MOD TAG TEMPLATE -->
+                <!-- Document Title -->
+                <f:attribute name="documentTitle"
+                             value="Hierarchy Viewer Features Demo"/>
+                <!-- Tag Name -->
+                <f:attribute name="tagName"
+                             value="Hierarchy Viewer Features"/>
+                <f:facet name="center">
+                  <af:panelSplitter orientation="horizontal" dimensionsFrom="auto"
+                                    splitterPosition="300" positionedFromEnd="true"
+                                    styleClass="AFStretchWidth" id="ps1">
+                    <f:facet name="first">
+                      <dvt:hierarchyViewer id="hv1" binding="#{hvBase.hvComponent}"
+                                           styleClass="AFStretchWidth"
+                                           controlPanelBehavior="#{hvBase.controlPanelBehavior}"
+                                           detailWindow="none"
+                                           var="node"
+                                           emptyText="#{hvBase.emptyText}"
+                                           displayLevelsChildren="#{hvBase.showLevels}"
+                                           value="#{hvBase.hvModel}"                        
+                                           partialTriggers="conpan emptxt it1 nodesel pan zoom levels click shape label linkStyle linkType"
+                                           contentDelivery="immediate"
+                                           nodeSelection="#{hvBase.nodeSelection}"
+                                           panning="#{hvBase.panning}"
+                                           zooming="#{hvBase.zooming}">
+                        <dvt:link
+                                 linkStyle="#{hvBase.linkStyle}"
+                                 linkType="#{hvBase.linkType}"
+                                 label="#{hvBase.linkLabel ? node.firstName : ''}"
+                                 id="l1"/>
+                        <dvt:node width="275" height="130"
+                                  rendered="true"
+                                  showExpandChildren="#{node.hasChildren}"
+                                  clickBehavior="#{hvBase.clickBehavior}"
+                                  shape="#{hvBase.nodeShape}"
+                                  shortDesc="#{node.firstName}"
+                                  id="n1">
+                          <f:facet name="zoom100">                                            
+                            <af:panelGroupLayout inlineStyle="padding:5px;"
+                                                 layout="horizontal"
+                                                 id="pgl11"
+                                                 styleClass="AFStretchWidth">                                                 
+                              <af:spacer height="5" id="s11"/>
+                              <af:panelGroupLayout layout="horizontal"
+                                                   id="pgl14">
+                                <af:panelGroupLayout id="pgl3">
+                                  <af:image rendered="true"
+                                            inlineStyle="width:108px;height:120px;"
+                                            source="/resources/images/hv/#{node.personId}.png"                                                
+                                            shortDesc="Picture of #{node.firstName}"
+                                            id="i1"/>
+                                </af:panelGroupLayout>
+                                <af:spacer width="5"
+                                           height="5" id="s10"/>
+                                <af:panelGroupLayout layout="vertical"
+                                                     id="pgl16">
+                                <af:outputText value="#{node.firstName} #{node.lastName}"
+                                               styleClass="AFHVNodeTitleTextStyle"
+                                               id="ot10"/>
+                                <af:outputText value="#{node.title}"
+                                               styleClass="AFHVNodeSubtitleTextStyle"
+                                               id="ot12"/>
+                                </af:panelGroupLayout>
+                              </af:panelGroupLayout>                                                    
+                            </af:panelGroupLayout>
+                          </f:facet>                                            
+                        </dvt:node>            
+                      </dvt:hierarchyViewer>
+                    </f:facet>
+                    <f:facet name="second">                                                          
+                      <af:panelFormLayout inlineStyle="border-style:solid; border-width:1px; border-color:rgb(148,148,148); padding:5px; background-color:White; "
+                                            partialTriggers="emptxt"
+                                            id="pfl1">                                              
+                        <af:selectOneChoice label="Data Set"
+                                              id="emptxt"
+                                              autoSubmit="true"
+                                              value="#{hvBase.dataType}">
+                            <af:selectItem label="Employee" value="Employee"
+                                           id="si6"/>
+                            <af:selectItem label="Empty Data" value="Empty Data"
+                                           id="si7"/>
+                          </af:selectOneChoice>
+                        <af:switcher id="switcher1" facetName="#{hvBase.dataType}" defaultFacet="Default">
+                          <f:facet name="Employee">
+                            <af:group>
+                              <af:selectOneChoice label="Levels of Children:"
+                                                id="levels"
+                                                autoSubmit="true"
+                                                value="#{hvBase.showLevels}">
+                                <af:selectItem label="1" value="1"
+                                             id="si16"/>
+                                <af:selectItem label="2" value="2"
+                                             id="si17"/>
+                              </af:selectOneChoice>
+                            </af:group>
+                          </f:facet>                         
+                          <f:facet name="Empty Data">
+                              <af:group>
+                                <af:inputText label="Empty Text" id="it1" value="#{hvBase.emptyText}" autoSubmit="true"/>
+                              </af:group>
+                            </f:facet>
+                          <f:facet name="Default"/>
+                        </af:switcher>
+                        <af:group>
+                            <af:selectOneChoice label="ControlPanel Behavior"
+                                                id="conpan"
+                                                autoSubmit="true"
+                                                value="#{hvBase.controlPanelBehavior}">
+                              <af:selectItem label="initExpanded" value="initExpanded"
+                                             id="si3"/>
+                              <af:selectItem label="initCollapsed" value="initCollapsed"
+                                             id="si4"/>
+                              <af:selectItem label="hidden" value="hidden"
+                                             id="si5"/>
+                            </af:selectOneChoice>                          
+                            <af:selectOneChoice label="Panning:"
+                                                id="pan"
+                                                autoSubmit="true"
+                                                value="#{hvBase.panning}">
+                              <af:selectItem label="auto" value="auto"
+                                             id="si10"/>
+                              <af:selectItem label="none" value="none"
+                                             id="si12"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice label="Zooming:"
+                                                id="zoom"
+                                                autoSubmit="true"
+                                                value="#{hvBase.zooming}">
+                              <af:selectItem label="auto" value="auto"
+                                             id="si14"/>
+                              <af:selectItem label="none" value="none"
+                                             id="si15"/>
+                            </af:selectOneChoice>
+                            
+                          </af:group>
+                        <af:group>
+                            <af:selectOneChoice label="Click Behavior:"
+                                                id="click"
+                                                autoSubmit="true"
+                                                value="#{hvBase.clickBehavior}">
+                              <af:selectItem label="focus" value="focus"
+                                             id="si20"/>
+                              <af:selectItem label="expandCollapse" value="expandCollapse"
+                                             id="si21"/>
+                              <af:selectItem label="isolateRestore" value="isolateRestore"
+                                             id="si22"/>
+                              <af:selectItem label="none" value="none"
+                                             id="si23"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice label="Node Shape:"
+                                                id="shape"
+                                                autoSubmit="true"
+                                                value="#{hvBase.nodeShape}">
+                              <af:selectItem label="roundedRect" value="roundedRect"
+                                             id="si24"/>
+                              <af:selectItem label="rect" value="rect"
+                                             id="si25"/>
+                              <af:selectItem label="ellipse" value="ellipse"
+                                             id="si26"/>
+                            </af:selectOneChoice>
+                          </af:group>
+                        <af:group>
+                            <af:selectOneChoice label="Link Type:"
+                                                id="linkType"
+                                                autoSubmit="true"
+                                                value="#{hvBase.linkType}">
+                              <af:selectItem label="orthogonalRounded" value="orthogonalRounded"
+                                             id="si27"/>
+                              <af:selectItem label="orthogonalSmooth" value="orthogonalSmooth"
+                                             id="si28"/>
+                              <af:selectItem label="orthogonal" value="orthogonal"
+                                             id="si29"/>
+                              <af:selectItem label="direct" value="direct"
+                                             id="si30"/>
+                              <af:selectItem label="directRounded" value="directRounded"
+                                             id="si31"/>
+                              <af:selectItem label="directSmooth" value="directSmooth"
+                                             id="si32"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice label="Link Style:"
+                                                id="linkStyle"
+                                                autoSubmit="true"
+                                                value="#{hvBase.linkStyle}">
+                              <af:selectItem label="solid" value="solid"
+                                             id="si33"/>
+                              <af:selectItem label="dash" value="dash"
+                                             id="si34"/>
+                              <af:selectItem label="dot" value="dot"
+                                             id="si35"/>
+                              <af:selectItem label="dashDot" value="dashDot"
+                                             id="si36"/>
+                            </af:selectOneChoice>
+                            <af:selectBooleanCheckbox label="Link Labels"
+                                               id="label"
+                                               autoSubmit="true"
+                                               value="#{hvBase.linkLabel}">
+                            </af:selectBooleanCheckbox>  
+                          </af:group>
+                        <af:group>
+                          <af:selectOneRadio label="Selection:"
+                                             id="nodesel"
+                                             autoSubmit="true"
+                                             value="#{hvBase.nodeSelection}">
+                            <af:selectItem label="none" value="none"
+                                            id="si1"/>
+                            <af:selectItem label="single" value="single"
+                                            id="si8"/>
+                            <af:selectItem label="multiple" value="multiple"
+                                            id="si9"/>
+                          </af:selectOneRadio>                          
+                          <af:button id="cb111" text="Show Selection State">
+                            <af:showPopupBehavior popupId="popup1" triggerType="action" alignId="cb111"/>
+                          </af:button>
+                        </af:group>
+                        <af:popup id="popup1" contentDelivery="lazyUncached">
+                          <af:noteWindow>
+                            <af:outputFormatted value="#{hvBase.selectionState}" clientComponent="true"/>
+                          </af:noteWindow>
+                        </af:popup>
+                      </af:panelFormLayout>                 
+                    </f:facet>
+                  </af:panelSplitter>
+                </f:facet>
+                    <!-- END TAG DEMO -->
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

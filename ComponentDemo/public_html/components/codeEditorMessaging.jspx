@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="codeEditor Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="codeEditor"/>
+        <f:attribute name="visualDesignName" value="codeEditor"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes"
+                     value="Warning: attempting to stretch a codeEditor is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="first"/>
+        <f:attribute name="centerBottomCollapsibleHeight" value="125"/>
+        <f:facet name="centerHeader">
+          <af:panelGroupLayout id="pgl2">
+            <af:outputText value="There is an xml validator running on the server, create an xml error and post back to see the error."
+                           id="ot1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:codeEditor simple="true" id="idCodeEditor" dimensionsFrom="parent"
+                         validator="#{demoCodeEditorMessaging.xmlvalidate}" language="xml"
+                         binding="#{editor.component}" label="Editor value"
+                         value="#{demoCodeEditorMessaging.xmlValue}"/>
+        </f:facet>
+        <f:facet name="centerNotes">
+          <af:panelGroupLayout layout="default" id="pgl3">
+            <f:facet name="separator">
+              <af:spacer width="5px" height="5px" id="s2"/>
+            </f:facet>
+            <af:commandButton text="Submit" id="coreCommand" actionListener="#{demoCodeEditorMessaging.submit}"/>
+            <af:commandButton text="Reset" immediate="true" actionListener="#{demoCodeEditorMessaging.reset}"
+                              id="reset">
+              <af:resetListener type="action"/>
+            </af:commandButton>
+            <af:panelFormLayout>
+              <af:outputText value="add a marker by filling in the values below and pressing the 'add marker' button"/>
+              <af:selectOneChoice label="level" value="#{demoCodeEditorMessaging.severity}">
+                <f:selectItems value="#{demoCodeEditorMessaging.levels}"/>
+              </af:selectOneChoice>
+              <af:inputNumberSpinbox label="startLine" value="#{demoCodeEditorMessaging.startLine}" minimum="1"/>
+              <af:inputNumberSpinbox label="startColumn" value="#{demoCodeEditorMessaging.startColumn}" minimum="1"/>
+              <af:inputNumberSpinbox label="endLine" value="#{demoCodeEditorMessaging.endLine}" minimum="1"/>
+              <af:inputNumberSpinbox label="endColumn" value="#{demoCodeEditorMessaging.endColumn}" minimum="1"/>
+              <af:inputText label="message" value="#{demoCodeEditorMessaging.message}"/>
+            </af:panelFormLayout>
+            <af:panelGroupLayout layout="horizontal">
+              <af:commandButton text="add marker" id="add" actionListener="#{demoCodeEditorMessaging.addMarker}"/>
+              <af:spacer width="5px" height="5px" id="s3"/>
+              <af:commandButton text="clear markers" id="clear" immediate="true"
+                                actionListener="#{demoCodeEditorMessaging.clearMarkers}"/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

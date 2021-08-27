@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="toolbar Style Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="toolbar"/>
+        <f:attribute name="visualDesignName" value="toolbar"/>
+        <f:attribute name="demoKind" value="styles"/>
+        <f:attribute name="editorSize" value="350"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="20" id="s1"/>
+            </f:facet>
+            <af:outputText styleClass="AFInstructionText" value="This page demos the effect various contentStyle and inlineStyle
+                           parameters have on this component." id="ot1"/>
+            <af:toolbox binding="#{styleChanger.parents['toolbox']}" id="t1">
+              <af:group id="g1">
+                <af:toolbar binding="#{styleChanger.components['toolbar1']}" id="toolbar">
+                  <af:group id="g2">
+                    <af:commandToolbarButton text="Forward" icon="/images/fwdarrow_gray.gif"
+                                             disabled="true" id="ctb1"/>
+                    <af:commandToolbarButton icon="/images/uplevel.gif" shortDesc="uplevel icon"
+                                             id="ctb2"/>
+                  </af:group>
+                  <af:commandToolbarButton id="search" text="Search" icon="/images/search.gif"/>
+                  <af:commandToolbarButton text="Folders" icon="/images/folders.gif"
+                                           id="ctb3"/>
+                  <af:commandToolbarButton text="Reports" id="ctb4"/>
+                  <af:commandToolbarButton id="toggleRefresh" text="Refresh:OFF" selected="true"/>
+                  <af:inputColor simple="true" compact="true" label="Color"
+                                 id="ic1"/>
+                  <af:inputNumberSpinbox value="#{demoInput.intSpinbox}" simple="true"
+                                         label="spinbox" id="ins1"/>
+                  <af:group id="g3">
+                    <af:commandToolbarButton icon="/images/arrange.gif" partialSubmit="true"
+                                             shortDesc="arrange" id="ctb5">
+                      <f:facet name="popup">
+                        <af:menu id="m1">
+                          <af:commandMenuItem text="Thumbnails" id="cmi1"/>
+                          <af:commandMenuItem text="Tiles" id="cmi2"/>
+                          <af:commandMenuItem text="Icons" id="cmi3"/>
+                          <af:commandMenuItem text="List" id="cmi4"/>
+                          <af:commandMenuItem text="Details" type="radio" selected="true"
+                                              id="cmi5"/>
+                        </af:menu>
+                      </f:facet>
+                    </af:commandToolbarButton>
+                  </af:group>
+                </af:toolbar>
+              </af:group>
+            </af:toolbox>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

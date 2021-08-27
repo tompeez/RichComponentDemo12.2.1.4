@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="validateLongRange Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="validateLongRange"/>
+        <f:attribute name="demoKind" value="validator"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:messages id="m1"/>
+            <af:outputText styleClass="AFInstructionText"
+                           value="Example to demonstrate the long range validator.  Enter a value and tab out of the field."
+                           id="ot1"/>
+            <af:panelFormLayout id="pfl1">
+              <af:inputText value="#{validate.integer}" label="Long range validator"
+                            shortDesc="examples of values that will fail validation: '4' or '7'"
+                            id="it1">
+                <af:validateLongRange minimum="5" maximum="6"/>
+              </af:inputText>
+              <af:inputText value="#{validate.integer2}"
+                            label="Long range validator (only minimum)"
+                            shortDesc="examples of values that will fail validation: '4' or less"
+                            id="it2">
+                <af:validateLongRange minimum="5"/>
+              </af:inputText>
+              <af:inputText value="#{validate.integer3}"
+                            label="Long range validator (only maximum)"
+                            shortDesc="examples of values that will fail validation: '7' or more"
+                            id="it3">
+                <af:validateLongRange maximum="6"/>
+              </af:inputText>
+              <af:inputText value="#{validate.integer4}"
+                            label="Long range validator with custom message"
+                            shortDesc="examples of values that will fail validation: '4' or '7'"
+                            id="it4">
+                <af:validateLongRange messageDetailNotInRange="The value {1} is not between {2} and {3}!"
+                                      minimum="5" maximum="6"/>
+              </af:inputText>
+              <af:inputText value="#{validate.integer5}"
+                            label="Long range validator with custom message (only minimum)"
+                            shortDesc="examples of values that will fail validation: '4' or less"
+                            id="it5">
+                <af:validateLongRange messageDetailMinimum="The value {1} is less than {2}"
+                                      minimum="5"/>
+              </af:inputText>
+              <af:inputText value="#{validate.integer6}"
+                            label="Long range validator with custom message (only maximum)"
+                            shortDesc="examples of values that will fail validation: '7' or more"
+                            id="it6">
+                <af:validateLongRange messageDetailMaximum="The value {1} is more than {2}"
+                                      maximum="6"/>
+              </af:inputText>
+              <af:inputText value="#{validate.integer7}"
+                            label="Long range validator with custom hint message"
+                            shortDesc="examples of values that will fail validation: '4' or '7'"
+                            id="it7">
+                <af:validateLongRange hintNotInRange="The value between {0} and {1}!" minimum="5"
+                                      maximum="6"/>
+              </af:inputText>
+              <af:inputText value="#{validate.integer8}"
+                            label="Long range validator with custom hint message (only minimum)"
+                            shortDesc="examples of values that will fail validation: '4' or less"
+                            id="it8">
+                <af:validateLongRange hintMinimum="The minimum is {0}" minimum="5"/>
+              </af:inputText>
+              <af:inputText value="#{validate.integer9}"
+                            label="Long range validator with custom hint message (only maximum)"
+                            shortDesc="examples of values that will fail validation: '7' or more"
+                            id="it9">
+                <af:validateLongRange hintMaximum="The maximum is {0}" maximum="6"/>
+              </af:inputText>
+            </af:panelFormLayout>
+            <af:commandButton text="Submit" id="cb1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

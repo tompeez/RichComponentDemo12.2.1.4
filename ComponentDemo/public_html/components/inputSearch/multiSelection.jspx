@@ -1,0 +1,220 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2019, Oracle and/or its affiliates. All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="inputSearch multi-select feature Demo" binding="#{templateBindings.documentComponent}"
+                 theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:resource type="javascript">
+        function _getFilterParams(context)
+        {
+          var searchTerms = context.searchTerms;
+          var isStartsWith = context.criteria == AdfRichInputSearch.CRITERIA_STARTS_WITH;
+          queryString = isStartsWith ? "filter=startsWith;" : "filter=contains;";
+
+          var filterAttributes = context.filterAttributes;
+          for (var i = 0, len = filterAttributes.length; i &lt; len; i++)
+            queryString += filterAttributes[i] + ",";
+
+          // remove trailing comma and append ; separator to append search terms
+          queryString = queryString.substr(0, queryString.length - 1) + ";";
+
+          for (var i = 0, len = searchTerms.length; i &lt; len; i++)
+            queryString += searchTerms[i] + ",";
+
+          // remove trailing comma
+          return queryString.substr(0, queryString.length - 1);
+        }
+
+        // this variable will refer to searchSection component
+        var namespace = {}
+        namespace.simpleQueryParamProvider =function(request, context)
+        {
+          if (context.criteria == AdfRichInputSearch.CRITERIA_VALUE_EQUALS)
+            return selectedQueryParamProvider(request, context);
+
+          // Set query parameters for server filtering based on search terms
+          if (context.searchTerms)
+            request.queryString = _getFilterParams(context);
+          return request;
+        }
+
+        function selectedQueryParamProvider(request, context)
+        {
+          var values = context.searchTerms;
+          var valueAttribute = context.filterAttributes[0];
+          var q = "";
+          for (var i = 0; i &lt; values.length; i++)
+          {
+            if (i == 0)
+              q += valueAttribute + "=" + values[i];
+            else
+              q += "&amp;" + valueAttribute + "=" + values[i];
+          }
+
+          request.queryString = q;
+          return request;
+        }
+
+        /**
+         * Strips off the 'cache' search parameter in the url
+         */
+        function ignoreCacheAttr(normalizedUrl)
+        {
+          return normalizedUrl.replace(/cache=[a-z]+?(?:&amp;|$)/, '');
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputSearch"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s2"/>
+              </f:facet>
+              <af:messages id="m1"/>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This is a simple test case for inputSearch component
+                                          in mult-selection mode&lt;/b>" id="of1"/>
+              <af:inputSearch binding="#{editor.component}"
+                            id="iSearch"
+                            label="Person"
+                            valueAttribute="id"
+                            displayAttributes="fName lName id"
+                            value="#{inputSearchDemo.employeesSet}"
+                            selectionConverter="#{inputSearchDemo.selectionConverter}"
+                            selectionMode="multiple"
+                            partialTriggers="richCommand">
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                <af:searchSection type="default"
+                                  dataUrl="/rest/employees?cache=etag&amp;limit=5000" />
+                <!-- af:clientConverter getAsString="return '+' + value.substr(0,2) + ' ' + value.substr(2,4) + ' ' + value.substr(6,6);"/ -->
+              </af:inputSearch>
+              <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+              <af:commandButton text="full postback" id="commandButton1"/>
+
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The submitted value was: " id="ot1"/>
+                <af:outputText partialTriggers="richCommand iSearch" id="result"
+                                value="#{inputSearchDemo.employeesSet}"/>
+              </af:panelGroupLayout>
+              <af:spacer height="25px" id="s0"/>
+            </af:panelGroupLayout>
+
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer height="25px" id="s3"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction" value="&lt;b>Additional Demos&lt;/b>"
+                                  id="of2"/>
+              <af:panelGroupLayout layout="vertical" id="pgl5">
+                <af:outputFormatted value="This demo shows multi-selection, multiple searchSections, server filtering and table display" id="ot2"/>
+                <af:inputSearch id="iSearch1"
+                              label="Person"
+                              valueAttribute="id"
+                              displayAttributes="fName lName"
+                              filterAttributes="fName lName jobTitle tags"
+                              selectionConverter="#{inputSearchDemo.selectionConverter}"
+                              value="#{inputSearchDemo.employeesSet2}"
+                              autoSubmit="true"
+                              selectionMode="multiple"
+                              contentMode="table">
+                  <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                  <f:converter converterId="oracle.adfdemo.InputSearchDemoConverter" />
+                  <af:suggestionsSection dontCache="lName jobTitle" displayCount="15" cacheKeyGenerator="ignoreCacheAttr">
+                    <f:facet name="header">
+                      <af:sanitized>
+                        <th colspan="4">Recently Used</th>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:suggestionsSection>
+                  <af:searchSection type="s" dataUrl="/rest/employees?cache=expiry&amp;limit=10">
+                    <f:facet name="header">
+                      <af:sanitized>
+                        <th colspan="4">Smaller Favoured List</th>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:searchSection>
+                  <af:searchSection type="m" dataUrl="/rest/employees?cache=expiry&amp;limit=100">
+                    <f:facet name="header">
+                      <af:sanitized>
+                        <th colspan="4">Medium Size Favoured List</th>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:searchSection>
+                  <af:searchSection type="default" dataUrl="/rest/employees?cache=etag&amp;limit=125000"
+                                    filterParameters="namespace.simpleQueryParamProvider">
+                    <f:facet name="header">
+                      <af:sanitized>
+                        <th colspan="4">Selected List</th>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:searchSection>
+                  <f:facet name="contentHeader">
+                    <af:sanitized >
+                      <th>Name</th> <th>Title</th> <th>Contact Email</th> <th><span style="font-style: italic;">Specializations</span></th>
+                    </af:sanitized>
+                  </f:facet>
+                  <f:facet name="contentStamp">
+                    <af:sanitized >
+                      <th scope="row">{{fName}} {{lName}}</th> <td>{{jobTitle}}</td> <td>{{email}}</td> <td><span style="font-style: italic;">{{tags}}</span></td>
+                    </af:sanitized>
+                  </f:facet>
+                </af:inputSearch>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl8">
+                <af:outputText value="MultiSelection demo with list templating and server filtering" id="ot3"/>
+                <af:inputSearch id="iSearch2"
+                          label="Person"
+                          valueAttribute="id"
+                          displayAttributes="fName lName"
+                          filterAttributes="fName lName jobTitle"
+                          selectionConverter="#{inputSearchDemo.selectionConverter}"
+                          value="#{inputSearchDemo.employeesSet3}"
+                          autoSubmit="true"
+                          selectionMode="multiple">
+                  <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                  <f:converter converterId="oracle.adfdemo.InputSearchDemoConverter" />
+                  <af:searchSection type="default" dataUrl="/rest/employees?cache=etag&amp;limit=50000"
+                                    filterParameters="namespace.simpleQueryParamProvider">
+                    <f:facet name="header">
+                      <af:sanitized>
+                        <b>Selected List</b>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:searchSection>
+                  <f:facet name="contentStamp">
+                    <af:sanitized>
+                      <div style="height: 68px; line-height: 18px; white-space: nowrap">
+                        <div style="padding: 0px; margin: 0px; width: 64px; display: inline-block;">
+                          <img src="../../images/people/{{profileKey}}" height="56" width="56" style="vertical-align: bottom; border: 2px solid #B8AE07; padding: 2px; border-radius: 10px;"/>
+                        </div>
+                        <div style="padding-left: 10px; display: inline-block;">
+                          <div style="color: #4646D0;font-size: medium;">{{fName}} {{lName}}</div>
+                          <div style="color: #4F4F4F;">{{jobTitle}}</div>
+                          <div style="color: #4F4F4F; font-size: smaller;font-style: italic;">{{email}}</div>
+                        </div>
+                      </div>
+                    </af:sanitized>
+                  </f:facet>
+                </af:inputSearch>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

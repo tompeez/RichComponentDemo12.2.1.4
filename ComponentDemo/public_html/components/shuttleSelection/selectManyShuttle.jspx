@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="shuttle selection demo (with selectManyShuttle)" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+              function showDetails(event)
+              {
+                if(AdfRichSelectManyShuttle.SELECTION == event.getPropertyName())
+                {
+                  var shuttleComponent = event.getSource();
+                  var lastChangedValue = AdfShuttleUtils.getLastSelectionChange(shuttleComponent, event.getOldValue());
+
+                  if (lastChangedValue)
+                  {
+                    var panelFormLayout = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:panelFormLayout");
+                    panelFormLayout.setVisible(true);
+                    var input1 = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:first");
+                    var input2 = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:second");
+                    var input3 = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:third");
+
+                    if(AdfShuttleUtils.isSelected(shuttleComponent, lastChangedValue))
+                      input1.setProperty("value", "Yes, the item was selected!");
+                    else
+                      input1.setProperty("value", "No, the item was deselected");
+
+                    input2.setProperty("value", lastChangedValue);
+
+                    if(AdfShuttleUtils.isLeading(shuttleComponent, lastChangedValue))
+                      input3.setProperty("value", "leading");
+                    else
+                      input3.setProperty("value", "trailing");
+                  }
+                }
+              }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="selectManyShuttle"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="Select (or deselect) an item on any side of the Shuttle to see some more details under the shuttle"
+                           id="ot1"/>
+            <af:selectManyShuttle binding="#{editor.component}" id="manyShuttle"
+                                  label="Shuttle Selection Test:"
+                                  value="#{demoInput.manyListValue1}"
+                                  valuePassThru="true"
+                                  leadingHeader="Available Values"
+                                  trailingHeader="Selected Values">
+
+              <af:clientListener type="propertyChange" method="showDetails"/>
+
+              <af:selectItem label="coffee" value="bean"
+                             shortDesc="Sample shortDesc text very long text, I mean very very long text.  And even longer shortDesc text."
+                             id="si1"/>
+              <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                            id="si2"/>
+              <af:selectItem disabled="true" label="orange juice" value="orange"
+                             id="si3"/>
+              <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                            id="si4"/>
+              <af:selectItem label="milk" value="moo" id="si5"/>
+              <f:selectItems value="#{demoInput.selectItems}" id="si6"/>
+            </af:selectManyShuttle>
+            <af:panelFormLayout id="panelFormLayout" visible="false" clientComponent="true">
+              <af:inputText id="first" label="Was the item selected ?" clientComponent="true" />
+              <af:inputText id="second" label="The value of the item was" clientComponent="true" />
+              <af:inputText id="third" label="The selected item was on this side" clientComponent="true" />
+            </af:panelFormLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+              <af:commandButton text="full postback" id="cb1"/>
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The submitted value: " id="ot2"/>
+                <af:outputText partialTriggers="richCommand manyShuttle" id="result"
+                               value="#{demoInput.manyListValue1}"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

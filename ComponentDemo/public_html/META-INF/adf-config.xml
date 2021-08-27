@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<adf-config xmlns="http://xmlns.oracle.com/adf/config"
+            xmlns:ads="http://xmlns.oracle.com/adf/activedata/config">
+
+  <ads:adf-activedata-config xmlns="http://xmlns.oracle.com/adf/activedata/config"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://xmlns.oracle.com/adf/activedata/config adf-activedata-config.xsd">
+    <!--
+      transport allows three settings:
+      * streaming (default)
+      * polling
+      * long-polling
+    -->
+    <transport>streaming</transport>
+    
+    <!--
+      Latency threshold (in seconds): active data messages with network delays
+      greater than this threshold will be treated as being 'late'
+    -->
+    <latency-threshold>10000</latency-threshold>
+
+    <!--
+      Frequency (in ms) for sending keep-alive messages when no events
+      are generated
+    -->
+    <keep-alive-interval>10000</keep-alive-interval>
+
+    <!--
+      Frequency (in ms) of the poll request; only used when clients are set
+      to poll (usePolling set to true)
+    -->
+    <polling-interval>3000</polling-interval>
+    
+    <!--
+      Maximum number of times a client will attempt to reconnect the push 
+      channel upon getting disconnected
+    -->
+    <max-reconnect-attempt-time>30000</max-reconnect-attempt-time>
+
+    <!--
+      Time interval (in ms) to wait between reconnect attempts
+    -->
+    <reconnect-wait-time>8000</reconnect-wait-time>
+    
+  </ads:adf-activedata-config>
+
+
+  <adf-faces-config xmlns="http://xmlns.oracle.com/adf/faces/config">
+    <!-- Automation specific configuration properties -->
+    <automation-testing-config>
+      <!--
+        Configuration property to turn off Asynchronous updates (like af:poll)
+        in automation mode
+      -->
+      <!--<asynchronous-updates>onDemand</asynchronous-updates>-->
+    </automation-testing-config>
+
+    <!--
+      Configuration property to enable matching behavior for inputListOfValues/inputComboboxListOfValues
+      on TAB out and any other activity that could result in focus loss.
+    -->
+    <!--<lov-show-searchdialog-onerror>true</lov-show-searchdialog-onerror>-->
+  </adf-faces-config>
+</adf-config>

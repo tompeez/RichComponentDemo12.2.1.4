@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Pie Charts Feature Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Pie Charts Feature Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Pie Chart Features"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:panelAccordion id="pa1" dimensionsFrom="children" styleClass="AFStretchWidth" discloseMany="true">
+                        <af:showDetailItem text="Top Level Customization" disclosed="true">
+                        <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="275"
+                                          dimensionsFrom="children">
+                            <f:facet name="first">
+                                <af:panelGroupLayout clientComponent="true" partialTriggers="soc1 ins0">
+                                    <dvt:pieChart value="#{chartDataSource.dynamicPieData}" var="row" styleClass="AFStretchWidth" inlineStyle="max-width:700px;margin:auto;width:100%;height:500px;"
+                                                  dataSelection="#{chartSample.dataSelection}" 
+                                                  otherColor="#{chartSample.otherColor}"
+                                                  otherThreshold="#{chartSample.otherThreshold}"
+                                                  seriesEffect="#{chartSample.seriesEffectType}"
+                                                  sliceLabelStyle="#{chartSample.sliceLabelStyle}"
+                                                  sliceLabelPosition="#{chartSample.sliceLabelPosition}"
+                                                  sliceGaps = "#{chartSample.sliceGaps}"
+                                                  sorting="#{chartSample.sorting}" 
+                                                  threeDEffect="#{chartSample.threeDEffect}"
+                                                  partialTriggers="::it1 ::it2 ::it5 ::it6 ::ins1 ::ins2 ::ins3 ::sor1 ::sor2 ::sor3 ::sor4"
+                                                  centerLabel="#{chartSample.centerLabel}"
+                                                  centerLabelStyle="#{chartSample.centerLabelStyle}"
+                                                  innerRadius="#{chartSample.innerRadius}">
+                                        <dvt:pieDataItem label="#{row.series}" value="#{row.value}"/>
+                                        <dvt:chartLegend rendered="true"/>
+                                     </dvt:pieChart>
+                                    
+                                </af:panelGroupLayout>
+                            </f:facet>
+                            <f:facet name="second">
+                                <af:panelFormLayout id="pfl1" partialTriggers="">
+                                   <af:group>
+                                       <af:inputNumberSlider label="Number of Slices" id="ins0" value="#{chartDataSource.slices}"
+                                                  minimum="0" maximum="24" majorIncrement="6" minorIncrement="1"
+                                                  minimumIncrement="1"
+                                                  autoSubmit="true"/>
+                                   </af:group>
+                                    <af:group>
+                                        <af:selectOneRadio label="Data Selection" value="#{chartSample.dataSelection}" id="sor1"
+                                                           autoSubmit="true">
+                                            <af:selectItem label="multiple" id="si11"/>
+                                            <af:selectItem label="single" id="si12"/>
+                                            <af:selectItem label="none" id="si13"/>
+                                        </af:selectOneRadio>
+                                        <af:selectOneRadio label="Sorting" id="sor2" value="#{chartSample.sorting}" autoSubmit="true">
+                                          <af:selectItem label="on" id="si21"/>
+                                          <af:selectItem label="off" id="si22"/>
+                                        </af:selectOneRadio>
+                                        <af:selectOneRadio label="3D-Effect" id="sor3" value="#{chartSample.threeDEffect}" autoSubmit="true">
+                                          <af:selectItem label="on" id="si31"/>
+                                          <af:selectItem label="off" id="si32"/>
+                                        </af:selectOneRadio>
+                                        <af:selectOneChoice label="Series Effect" id="soc1" value="#{chartSample.seriesEffectType}"
+                                                            autoSubmit="true">
+                                            <f:selectItems value="#{chartSample.seriesEffectList}" id="sis1"/>
+                                        </af:selectOneChoice>
+                                        <af:inputNumberSlider label="Inner Radius" id="ins1" value="#{chartSample.innerRadius}"
+                                                  minimum="0" maximum="1" majorIncrement="0.2" minorIncrement="0.05"
+                                                  minimumIncrement="0.05"
+                                                  autoSubmit="true"/>
+                                    </af:group>
+                                    <af:group>
+                                        <af:inputText label="Center Label" id="it5" value="#{chartSample.centerLabel}"
+                                                      autoSubmit="true"/>
+                                        <af:inputText label="Center Label Style" id="it6" value="#{chartSample.centerLabelStyle}"
+                                                      autoSubmit="true"/>
+                                    </af:group>
+<af:group>
+                                        <af:selectOneRadio label="Slice Label Position" id="sor4" value="#{chartSample.sliceLabelPosition}" autoSubmit="true">
+                                           <af:selectItem label="auto" id="si40"/>
+                                          <af:selectItem label="outside" id="si41"/>
+                                          <af:selectItem label="inside" id="si42"/>
+                                          <af:selectItem label="none" id="si43"/>
+                                        </af:selectOneRadio>
+                                        <af:inputText label="Slice Label Style" id="it1" value="#{chartSample.sliceLabelStyle}"
+                                                      autoSubmit="true"/>
+                                       <af:inputNumberSlider label="Slice Gaps" id="ins2" value="#{chartSample.sliceGaps}"
+                                                  minimum="0" maximum="1" majorIncrement="0.2" minorIncrement="0.1"
+                                                  minimumIncrement="0.1"
+                                                  autoSubmit="true"/>
+
+                                    </af:group>
+                                    <af:group>
+                                        <af:inputText label="Other Color" id="it2" value="#{chartSample.otherColor}"
+                                                      autoSubmit="true"/>
+                                        <af:inputNumberSlider label="Other Threshold" id="ins3" value="#{chartSample.otherThreshold}"
+                                                  minimum="0" maximum="0.4" majorIncrement="0.08" minorIncrement="0.02"
+                                                  minimumIncrement="0.02"
+                                                  autoSubmit="true"/>
+                                    </af:group>
+                                </af:panelFormLayout>
+                            </f:facet>
+                        </af:panelSplitter>
+                        </af:showDetailItem>
+                        <af:showDetailItem text="Data Item Customization" disclosed="true">
+                        <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="275"
+                                          dimensionsFrom="children">
+                            <f:facet name="first">
+                                <af:panelGroupLayout clientComponent="true" partialTriggers="soc2">
+                                    <dvt:pieChart value="#{chartDataSource.extendedPieData}" var="row" styleClass="AFStretchWidth" 
+                                                  inlineStyle="max-width:700px;margin:auto;width:100%;height:500px;"
+                                                  partialTriggers="::it3 ::it4 ::it5 ::it6 ::ins2 ::ins4">
+                                        <dvt:pieDataItem value="#{row.value}"
+                                                         borderColor="#{row.series == 'Series 1' ? chartSample.borderColor : '' }" 
+                                                         color="#{row.series == 'Series 1' ? chartSample.color : '' }"
+                                                         explode="#{row.series == 'Series 1' ? chartSample.explode : 0 }"
+                                                         label="#{row.series == 'Series 1' ? chartSample.label : row.series }"
+                                                         sliceLabel="#{row.series == 'Series 1' ? chartSample.sliceLabel : ''}" 
+                                                         pattern="#{row.series == 'Series 1' ? chartSample.pattern : ''}"
+                                                         />
+                                        <dvt:chartLegend rendered="true"/>
+                                     </dvt:pieChart>
+                                </af:panelGroupLayout>
+                            </f:facet>
+                            <f:facet name="second">
+                             <af:panelFormLayout id="pfl2" partialTriggers="">
+                                <af:group id="labeling">
+                                    <af:inputText label="Label" id="it3" value="#{chartSample.label}" autoSubmit="true"/>
+                                    <af:inputText label="Slice Label" id="it4" value="#{chartSample.sliceLabel}" autoSubmit="true"/>
+                                </af:group>
+                                <af:group id="appearance">
+                                    <af:inputText label="Color" id="it8" value="#{chartSample.color}" autoSubmit="true"/>
+                                    <af:inputText label="Border Color" id="it9" value="#{chartSample.borderColor}" autoSubmit="true"/>
+                                    <af:inputNumberSlider label="Explode" id="ins4" value="#{chartSample.explode}"
+                                                  minimum="0" maximum="1.0" majorIncrement="0.25" minorIncrement="0.05"
+                                                  minimumIncrement="0.05"
+                                                  autoSubmit="true"/>
+                                    <af:selectOneChoice label="Pattern" id="soc2" value="#{chartSample.pattern}"
+                                                            autoSubmit="true">
+                                        <f:selectItems value="#{chartSample.patternList}" id="sis2"/>
+                                    </af:selectOneChoice>
+                                </af:group>
+                            </af:panelFormLayout>
+                            </f:facet>
+                        </af:panelSplitter>
+                        </af:showDetailItem>
+                        </af:panelAccordion>
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

@@ -1,0 +1,215 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2013, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="deck Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <af:resource type="css">
+          /* adjust the dot image size for hidpi screens */
+          .CustomDot IMG,
+          .CustomPollControl IMG {
+            width: 20px;
+            height: 20px;
+          }
+          .CustomBogus {
+            opacity: 0.25;
+          }
+        </af:resource>
+        <af:resource type="javascript">
+          function handlePoll(event)
+          {
+            try
+            {
+              event.cancel();
+              var deck = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:deck1");
+              if (deck == null)
+                AdfLogger.LOGGER.severe("Unable to locate the deck component in the handlePoll function");
+              else
+              {
+                switch (deck.getDisplayedChild())
+                {
+                  case "child1":
+                    queuePartialActionEvent("dmoTpl:dot2");
+                    break;
+                  case "child2":
+                    queuePartialActionEvent("dmoTpl:dot3");
+                    break;
+                  case "child3":
+                    queuePartialActionEvent("dmoTpl:dot4");
+                    break;
+                  case "child4":
+                    queuePartialActionEvent("dmoTpl:dot1");
+                    break;
+                  default:
+                    queuePartialActionEvent("dmoTpl:dot1");
+                    break;
+                }
+              }
+            }
+            catch (problem)
+            {
+              AdfLogger.LOGGER.severe("Problem in the custom handlePoll function:", problem);
+            }
+          }
+          function startAndStopPoll(event)
+          {
+            event.cancel();
+            var poll = getComponentByAbsoluteId("dmoTpl:poll");
+            var pollStartStop = getComponentByAbsoluteId("dmoTpl:pollStartStop");
+            if (poll == null || pollStartStop == null)
+              return;
+            if (0 > poll.getInterval())
+            {
+              poll.setInterval(3000);
+              pollStartStop.setShortDesc("Stop 3-second poll for progressing the displayChild");
+              pollStartStop.setIcon("/images/poll-pause.png");
+            }
+            else
+            {
+              poll.setInterval(-1);
+              pollStartStop.setShortDesc("Start 3-second poll for progressing the displayChild");
+              pollStartStop.setIcon("/images/poll-play.png");
+            }
+          }
+          function queuePartialActionEvent(absoluteId)
+          {
+            var component = getComponentByAbsoluteId(absoluteId);
+            if (component != null);
+              AdfActionEvent.queue(component, true);
+          }
+          function getComponentByAbsoluteId(absoluteId)
+          {
+            var component = AdfPage.PAGE.findComponentByAbsoluteId(absoluteId);
+            if (component == null)
+              AdfLogger.LOGGER.severe("Unable to locate the " + absoluteId + " component in this page's custom code");
+            return component;
+          }
+        </af:resource>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="deck"/>
+        <f:attribute name="visualDesignName" value="deck"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerFooterHeight" value="2em"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchChildren" value="first"/>
+        <f:facet name="centerHeader">
+          <af:panelGroupLayout layout="horizontal">
+            <af:poll id="poll" interval="-1">
+              <af:clientListener type="poll" method="handlePoll"/>
+            </af:poll>
+            <af:commandImageLink id="pollStartStop" shortDesc="Start 3-second poll for progressing the displayChild"
+                                 styleClass="CustomPollControl" partialSubmit="true" icon="/images/poll-play.png">
+              <af:clientListener type="action" method="startAndStopPoll"/>
+            </af:commandImageLink>
+            <af:spacer id="dotS1" width="20px" height="8px"/>
+                <af:panelGroupLayout id="displayDots" layout="horizontal" partialTriggers="dot1 dot2 dot3 dot4 dotBogus dotBogus2 deck1">
+              <af:commandImageLink id="dot1" shortDesc="Jump to child1" actionListener="#{demoDeck.animateToJumpChild}" styleClass="CustomDot"
+                                   partialSubmit="true" icon="/images/page-dot-#{demoDeck.jumpChild == 'child1' ? 'on' : 'off'}.png">
+                <af:setPropertyListener from="child1" to="#{demoDeck.jumpChild}" type="action"/>
+              </af:commandImageLink>
+              <af:commandImageLink id="dot2" shortDesc="Jump to child2" actionListener="#{demoDeck.animateToJumpChild}" styleClass="CustomDot"
+                                   partialSubmit="true" icon="/images/page-dot-#{demoDeck.jumpChild == 'child2' ? 'on' : 'off'}.png">
+                <af:setPropertyListener from="child2" to="#{demoDeck.jumpChild}" type="action"/>
+              </af:commandImageLink>
+              <af:commandImageLink id="dot3" shortDesc="Jump to child3" actionListener="#{demoDeck.animateToJumpChild}" styleClass="CustomDot"
+                                   partialSubmit="true" icon="/images/page-dot-#{demoDeck.jumpChild == 'child3' ? 'on' : 'off'}.png">
+                <af:setPropertyListener from="child3" to="#{demoDeck.jumpChild}" type="action"/>
+              </af:commandImageLink>
+              <af:commandImageLink id="dot4" shortDesc="Jump to child4" actionListener="#{demoDeck.animateToJumpChild}" styleClass="CustomDot"
+                                   partialSubmit="true" icon="/images/page-dot-#{demoDeck.jumpChild == 'child4' ? 'on' : 'off'}.png">
+                <af:setPropertyListener from="child4" to="#{demoDeck.jumpChild}" type="action"/>
+              </af:commandImageLink>
+              <af:commandImageLink id="dotBogus" shortDesc="Jump to a displayChild value that doesn't exist"
+                                   actionListener="#{demoDeck.animateToJumpChild}" styleClass="CustomDot CustomBogus"
+                                   partialSubmit="true" icon="/images/page-dot-#{demoDeck.jumpChild == 'bogus' ? 'on' : 'off'}.png">
+                <af:setPropertyListener from="bogus" to="#{demoDeck.jumpChild}" type="action"/>
+              </af:commandImageLink>
+              <af:commandImageLink id="dotBogus2" shortDesc="Jump to a different displayChild value that doesn't exist"
+                                   actionListener="#{demoDeck.animateToJumpChild}" styleClass="CustomDot CustomBogus"
+                                   partialSubmit="true" icon="/images/page-dot-#{demoDeck.jumpChild == 'bogus2' ? 'on' : 'off'}.png">
+                <af:setPropertyListener from="bogus2" to="#{demoDeck.jumpChild}" type="action"/>
+              </af:commandImageLink>
+            </af:panelGroupLayout>
+            <af:spacer id="dotS2" width="20px" height="8px"/>
+            <af:selectOneChoice id="animSoc" label="Transition" value="#{demoDeck.transitionPreset}" simple="true"
+                                shortDesc="Set the backNavigate and forwardNavigate of the deck to some preset values">
+              <af:selectItem id="siAnim01" label="none" value="none"/>
+              <af:selectItem id="siAnim02" label="iterate through all values" value="all"/>
+              <af:selectItem id="siAnim03" label="fade" value="fade"/>
+              <af:selectItem id="siAnim04" label="flip end and start" value="flipHorizontal"/>
+              <af:selectItem id="siAnim05" label="flip down and up" value="flipVertical"/>
+              <af:selectItem id="siAnim06" label="flipEnd" value="flipEnd"/>
+              <af:selectItem id="siAnim07" label="flipStart" value="flipStart"/>
+              <af:selectItem id="siAnim08" label="flipDown" value="flipDown"/>
+              <af:selectItem id="siAnim09" label="flipUp" value="flipUp"/>
+              <af:selectItem id="siAnim10" label="slide end and start" value="slideHorizontal"/>
+              <af:selectItem id="siAnim11" label="slide down and up" value="slideVertical"/>
+              <af:selectItem id="siAnim12" label="slideEnd" value="slideEnd"/>
+              <af:selectItem id="siAnim13" label="slideStart" value="slideStart"/>
+              <af:selectItem id="siAnim14" label="slideDown" value="slideDown"/>
+              <af:selectItem id="siAnim15" label="slideUp" value="slideUp"/>
+              <af:selectItem id="siAnim16" label="bogus values" value="bogus"/>
+            </af:selectOneChoice>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+              <af:deck id="deck1" binding="#{editor.component}" displayedChild="#{demoDeck.jumpChild}"
+                       displayChangeListener="#{demoDeck.updateJumpChild}">
+            <af:transition triggerType="backNavigate" transition="#{demoDeck.backNavigate}"/>
+            <af:transition triggerType="forwardNavigate" transition="#{demoDeck.forwardNavigate}"/>
+            <af:panelGroupLayout id="child1" layout="scroll">
+              <af:outputText id="child1OtA" value="Line 1 in child 1."/>
+              <af:outputText id="child1OtB" value="This is another line of text in child 1."/>
+                  <af:inputComboboxListOfValues label="Ename" id="idInputComboboxListOfValues"
+                                          value="#{demoComboboxLOV.ename}"
+                                          popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name"
+                                          validator="#{demoComboboxLOV.validate}"
+                                          createPopupId="popupId"
+                                          model="#{demoComboboxLOV.listOfValuesModel}"/>
+                  <af:inputText id="idInputText" required="true" label="String value" value="#{demoInput.value}"/>
+                  <af:commandButton text="Go to Tag Guide page" accessKey="C" id="commandButton1" partialSubmit="true" />
+            </af:panelGroupLayout>
+            <aftest:panelResizeNotify id="child2" inlineStyle="margin:0px"/>
+            <af:panelSplitter id="child3" partialTriggers="child3CbA">
+              <f:facet name="first">
+                <af:outputText id="child3OtA" value="First Pane"/>
+              </f:facet>
+              <f:facet name="second">
+                <af:panelStretchLayout id="child3PslA" topHeight="auto">
+                  <f:facet name="top">
+                    <af:panelGroupLayout id="child3PglA" layout="vertical">
+                      <af:outputText id="child3OtB" value="Clicking the button causes the
+                        panelSplitter to be replaced via partial page
+                        rendering. The contents of the pane should fill the
+                        pane after the partial page replacement."/>
+                      <af:commandButton id="child3CbA" text="Update PanelSplitter" partialSubmit="true"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <f:facet name="center">
+                    <aftest:panelResizeNotify id="child3PrnA"/>
+                  </f:facet>
+                </af:panelStretchLayout>
+              </f:facet>
+            </af:panelSplitter>
+            <af:panelStretchLayout id="child4">
+              <f:facet name="center">
+                <f:subview id="tablePane">
+                  <jsp:include page="/includes/stretchedTableContent.jspx"/>
+                </f:subview>
+              </f:facet>
+            </af:panelStretchLayout>
+          </af:deck>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

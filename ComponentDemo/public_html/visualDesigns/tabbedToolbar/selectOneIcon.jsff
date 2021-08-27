@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2011, Oracle and/or its affiliates. All rights reserved. -->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Dynamic declarative component for the icon selector.</description>
+        <attribute>
+          <description>the array of arrays of NamedImages</description>
+          <attribute-name>namedImages</attribute-name>
+          <!--
+            Note that the odd Array syntax is due to the Java Class.forName method syntax for
+            specifying an array of reference objects. The rich client may be enhanced at a later
+            date to allow the more friendly syntax of "oracle.adfdemo.view.visualdesigns.TabbedToolbarBean$NamedImage[][]"
+          -->
+          <attribute-class>[[Loracle.adfdemo.view.visualdesigns.TabbedToolbarBean$NamedImage;</attribute-class>
+        </attribute>
+        <attribute>
+          <description>whether this chooser is for styles (vs. types)</description>
+          <attribute-name>styles</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>the currently selected source (used to style the currently selected icon)</description>
+          <attribute-name>currentSource</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <trh:tableLayout id="grid" cellPadding="4" shortDesc="#{attrs.namedImages[0][0].text}">
+      <af:iterator id="rows" var="row" varStatus="rowVS" value="#{attrs.namedImages}">
+        <trh:rowLayout id="row">
+          <af:iterator id="cells" var="cell" varStatus="cellVS" value="#{row}">
+            <trh:cellFormat id="cell" valign="top">
+              <af:commandLink id="link" rendered="#{!cell.spacer}" partialSubmit="true">
+                <af:setActionListener from="#{attrs.namedImages[rowVS.index][cellVS.index]}"
+                                      to="#{attrs.styles ? tabbedToolbarBean.currentChartStyle : tabbedToolbarBean.currentChartType}"/>
+                <af:panelGroupLayout id="pgl" layout="vertical" halign="center">
+                  <af:image id="img" shortDesc="#{cell.text}" source="#{cell.source}"
+                            styleClass="MySelectOneIconImage #{cell.source == attrs.currentSource ? 'MySelected' : ''}"/>
+                  <af:outputText id="ot" value="#{cell.text}" styleClass="MySelectOneIconText"/>
+                </af:panelGroupLayout>
+              </af:commandLink>
+            </trh:cellFormat>
+          </af:iterator>
+        </trh:rowLayout>
+      </af:iterator>
+    </trh:tableLayout>
+  </af:componentDef>
+</jsp:root>

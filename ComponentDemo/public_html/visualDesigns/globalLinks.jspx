@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Global Links Design Demo" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl"
+                       viewId="#{templates.visualDesignTemplate}">
+        <f:attribute name="headerGlobalSize" value="45"/>
+        <f:attribute name="header1Size" value="22"/>
+        <f:attribute name="header2Size" value="20"/>
+        <f:attribute name="footer2Size" value="5"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:attribute name="auxiliaryGlobalSize" value="200"/>
+        <f:attribute name="auxiliary1StartSize" value="200"/>
+        <f:attribute name="auxiliary2Size" value="200"/>
+        <f:attribute name="auxiliaryGlobalCollapsed" value="false"/>
+        <f:attribute name="auxiliary1StartCollapsed" value="false"/>
+        <f:attribute name="auxiliary2Collapsed" value="false"/>
+        <f:facet name="branding">
+          <af:outputText value="Global Links Visual Design Demo" id="ot1"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:navigationPane hint="buttons">
+            <af:commandNavigationItem text="Home" shortDesc="buttons navPane item"/>
+            <af:commandNavigationItem text="Preferences" shortDesc="buttons navPane item"/>
+            <af:commandNavigationItem text="Help" shortDesc="buttons navPane item"/>
+            <af:commandNavigationItem text="About" selected="true"
+                                      shortDesc="buttons navPane item selected"/>
+            <af:commandNavigationItem text="Logout" disabled="true"
+                                      shortDesc="buttons navPane item disabled"/>
+
+            <af:commandNavigationItem destination="index.jspx" text="Visual Designs" id="vds"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/panelPageTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc">
+                <af:commandNavigationItem
+                  destination="index.jspx"
+                  text="Visual Designs" id="cni2"/>
+                <af:commandNavigationItem
+                  text="Global Links Visual Design Demo" id="cni3"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="navigation1">
+          <af:panelStretchLayout endWidth="40px" id="psl1" dimensionsFrom="auto">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation1" hint="tabs" id="np2">
+                <af:commandNavigationItem partialSubmit="true" text="Primary/Medium Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni4"></af:commandNavigationItem>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:panelStretchLayout endWidth="40px" id="psl2" dimensionsFrom="auto">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation2" hint="tabs" id="np3">
+                <af:commandNavigationItem partialSubmit="true" text="Secondary/Light Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni9"/>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="auxiliaryGlobal">
+          <af:panelGroupLayout layout="scroll">
+            <f:facet name="separator">
+              <af:separator/>
+            </f:facet>
+            <af:panelHeader text="Global Links (Global/Dark)">
+              <af:panelGroupLayout layout="scroll">
+                <af:spacer height="15px"/>
+                <af:outputText value="Navigation Pane hint 'buttons' "/>
+                  <af:spacer height="5px"/>
+                  <af:navigationPane hint="buttons">
+                    <af:commandNavigationItem text="Home" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="Preferences" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="Help" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="About" selected="true"
+                                              shortDesc="buttons navPane item selected"/>
+                    <af:commandNavigationItem text="Logout" disabled="true"
+                                              shortDesc="buttons navPane item disabled"/>
+                  </af:navigationPane>
+                <af:spacer height="15px"/>
+                <af:outputText value="Navigation Pane hint 'bar' "/>
+                <af:spacer height="5px"/>
+                <af:navigationPane hint="bar">
+                  <af:commandNavigationItem text="Home" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="Preferences" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="Help" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="About" selected="true"
+                                            shortDesc="bar navPane item selected"/>
+                  <af:commandNavigationItem text="Logout" disabled="true"
+                                            shortDesc="bar navPane item disabled"/>
+                </af:navigationPane>
+                <af:spacer height="15px"/>
+                <af:outputText value="Navigation Pane hint 'list' "/>
+                <af:spacer height="5px"/>
+                <af:navigationPane hint="list">
+                  <af:commandNavigationItem text="Home" shortDesc="list navPane item"/>
+                  <af:commandNavigationItem text="Preferences" shortDesc="list navPane item"/>
+                  <af:commandNavigationItem text="Help" shortDesc="list navPane item"/>
+                  <af:commandNavigationItem text="About" selected="true"
+                                            shortDesc="list navPane item selected"/>
+                  <af:commandNavigationItem text="Logout" disabled="true"
+                                            shortDesc="list navPane item disabled"/>
+                </af:navigationPane>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="auxiliary1Start">
+          <af:panelGroupLayout layout="scroll">
+            <f:facet name="separator">
+              <af:separator/>
+            </f:facet>
+            <af:panelHeader text="Global Links (Primary/Medium)">
+              <af:panelGroupLayout layout="scroll">
+                <af:spacer height="15px"/>
+                <af:outputText value="Navigation Pane hint 'buttons' "/>
+                  <af:spacer height="5px"/>
+                  <af:navigationPane hint="buttons">
+                    <af:commandNavigationItem text="Home" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="Preferences" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="Help" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="About" selected="true"
+                                              shortDesc="buttons navPane item selected"/>
+                    <af:commandNavigationItem text="Logout" disabled="true"
+                                              shortDesc="buttons navPane item disabled"/>
+                  </af:navigationPane>
+                <af:spacer height="15px"/>
+                <af:outputText value="Navigation Pane hint 'bar' "/>
+                <af:spacer height="5px"/>
+                <af:navigationPane hint="bar">
+                  <af:commandNavigationItem text="Home" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="Preferences" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="Help" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="About" selected="true"
+                                            shortDesc="bar navPane item selected"/>
+                  <af:commandNavigationItem text="Logout" disabled="true"
+                                            shortDesc="bar navPane item disabled"/>
+                </af:navigationPane>
+                <af:spacer height="15px"/>
+                <af:outputText value="Navigation Pane hint 'list' "/>
+                <af:spacer height="5px"/>
+                <af:navigationPane hint="list">
+                  <af:commandNavigationItem text="Home" shortDesc="list navPane item"/>
+                  <af:commandNavigationItem text="Preferences" shortDesc="list navPane item"/>
+                  <af:commandNavigationItem text="Help" shortDesc="list navPane item"/>
+                  <af:commandNavigationItem text="About" selected="true"
+                                            shortDesc="list navPane item selected"/>
+                  <af:commandNavigationItem text="Logout" disabled="true"
+                                            shortDesc="list navPane item disabled"/>
+                </af:navigationPane>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="auxiliary2">
+          <af:panelHeader text="Global Links (Secondary/Light)">
+            <af:panelGroupLayout layout="scroll">
+              <af:outputText value="Navigation Pane hint 'buttons' "/>
+                  <af:spacer height="5px"/>
+                  <af:navigationPane hint="buttons">
+                    <af:commandNavigationItem text="Home" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="Preferences" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="Help" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="About" selected="true"
+                                              shortDesc="buttons navPane item selected"/>
+                    <af:commandNavigationItem text="Logout" disabled="true"
+                                              shortDesc="buttons navPane item disabled"/>
+                  </af:navigationPane>
+                <af:spacer height="15px"/>
+              <af:outputText value="Navigation Pane hint 'bar' "/>
+                <af:spacer height="5px"/>
+                <af:navigationPane hint="bar">
+                  <af:commandNavigationItem text="Home" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="Preferences" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="Help" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="About" selected="true"
+                                            shortDesc="bar navPane item selected"/>
+                  <af:commandNavigationItem text="Logout" disabled="true"
+                                            shortDesc="bar navPane item disabled"/>
+                </af:navigationPane>
+                <af:spacer height="15px"/>
+              <af:outputText value="Navigation Pane hint 'list' "/>
+              <af:spacer height="5px"/>
+              <af:navigationPane hint="list">
+                <af:commandNavigationItem text="Home" shortDesc="list navPane item"/>
+                <af:commandNavigationItem text="Preferences" shortDesc="list navPane item"/>
+                <af:commandNavigationItem text="Help" shortDesc="list navPane item"/>
+                <af:commandNavigationItem text="About" selected="true"
+                                          shortDesc="list navPane item selected"/>
+                <af:commandNavigationItem text="Logout" disabled="true"
+                                          shortDesc="list navPane item disabled"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelHeader text="Global Links (Default Theme)">
+              <af:panelGroupLayout layout="scroll">
+                <af:spacer height="15px"/>
+                <af:outputText value="Navigation Pane hint 'buttons' "/>
+                  <af:spacer height="5px"/>
+                  <af:navigationPane hint="buttons">
+                    <af:commandNavigationItem text="Home" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="Preferences" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="Help" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="About" selected="true"
+                                              shortDesc="buttons navPane item selected"/>
+                    <af:commandNavigationItem text="Logout" disabled="true"
+                                              shortDesc="buttons navPane item disabled"/>
+                  </af:navigationPane>
+                <af:spacer height="15px"/>
+                <af:outputText value="Navigation Pane hint 'bar' "/>
+                <af:spacer height="5px"/>
+                <af:navigationPane hint="bar">
+                  <af:commandNavigationItem text="Home" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="Preferences" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="Help" shortDesc="bar navPane item"/>
+                  <af:commandNavigationItem text="About" selected="true"
+                                            shortDesc="bar navPane item selected"/>
+                  <af:commandNavigationItem text="Logout" disabled="true"
+                                            shortDesc="bar navPane item disabled"/>
+                </af:navigationPane>
+                <af:spacer height="15px"/>
+                <af:outputText value="Navigation Pane hint 'list' "/>
+                <af:spacer height="5px"/>
+                <af:navigationPane hint="list">
+                  <af:commandNavigationItem text="Home" shortDesc="list navPane item"/>
+                  <af:commandNavigationItem text="Preferences" shortDesc="list navPane item"/>
+                  <af:commandNavigationItem text="Help" shortDesc="list navPane item"/>
+                  <af:commandNavigationItem text="About" selected="true"
+                                            shortDesc="list navPane item selected"/>
+                  <af:commandNavigationItem text="Logout" disabled="true"
+                                            shortDesc="list navPane item disabled"/>
+                </af:navigationPane>
+                <af:spacer height="15px"/>
+                <af:outputText value="Demonstration of how you could combine Navigation Pane"/>
+                <af:outputText value="hint 'bar' and hint 'choice'. This example is specific to blaf+ skinning."/>
+                <af:spacer height="5px"/>
+                <af:panelGroupLayout inlineStyle="height:auto; position: relative;"
+                                     layout="horizontal" valign="top">
+                  <f:facet name="separator">
+                    <af:icon name="af|navigationPane-bar::separator-icon"/>
+                  </f:facet>
+                  <af:navigationPane hint="bar">
+                    <af:commandNavigationItem text="item 1" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="item 2" shortDesc="buttons navPane item"/>
+                  </af:navigationPane>
+                  <af:navigationPane title="item 3" hint="choice" shortDesc="choice navPane">
+                    <af:commandNavigationItem text="sub item 3-1" partialSubmit="true"
+                                              shortDesc="choice navPane item"
+                                              actionListener="#{demoCommandNavigationItem.navigationItemAction}"/>
+                    <af:commandNavigationItem text="sub item 3-2" partialSubmit="true"
+                                              selected="true"
+                                              shortDesc="choice navPane item selected"
+                                              actionListener="#{demoCommandNavigationItem.navigationItemAction}"/>
+                    <af:commandNavigationItem text="sub item 3-3" partialSubmit="true"
+                                              disabled="true"
+                                              shortDesc="choice navPane item disabled"
+                                              actionListener="#{demoCommandNavigationItem.navigationItemAction}"/>
+                  </af:navigationPane>
+                  <af:navigationPane title="item 4" hint="choice" disabled="true"
+                                     shortDesc="choice navPane disabled">
+                    <af:commandNavigationItem text="sub item 4-1" partialSubmit="true"
+                                              shortDesc="choice navPane item"
+                                              actionListener="#{demoCommandNavigationItem.navigationItemAction}"/>
+                  </af:navigationPane>
+                  <af:navigationPane hint="bar">
+                    <af:commandNavigationItem text="item 5" shortDesc="buttons navPane item"/>
+                    <af:commandNavigationItem text="item 6" shortDesc="buttons navPane item"/>
+                  </af:navigationPane>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="Related Links" id="ph1">
+              <af:panelList id="pl1">
+                <af:goLink text="Visual Design - dataLinks"
+                           destination="/visualDesigns/dataLinks.jspx"/>
+                <af:goLink text="Component - navigationPane"
+                           destination="/components/navigationPane.jspx"/>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2017, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Timeline Multiple Series Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Timeline Multiple Series Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Timeline Multiple Series"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+
+                        <af:panelGroupLayout layout="vertical">
+
+                            <af:panelGroupLayout layout="horizontal">
+                                <af:selectOneChoice id="soc" label="Employee (TOP)" value="#{timeline.firstEmp}" autoSubmit="true" valueChangeListener="#{timeline.handleValueChange}">
+                                    <af:forEach items="#{timeline.employees}" var="ce">
+                                        <af:selectItem label="#{ce.name}" value="#{ce.id}"/>
+                                    </af:forEach>
+                                </af:selectOneChoice>
+                                <af:spacer width="5"/>
+                                <af:outputText value="vs."/>
+                                <af:spacer width="5"/>
+                                <af:selectOneChoice id="soc2" label="Employee (BOTTOM)" value="#{timeline.secondEmp}" autoSubmit="true" valueChangeListener="#{timeline.handleValueChange}">
+                                    <af:forEach items="#{timeline.employees}" var="ce">
+                                        <af:selectItem label="#{ce.name}" value="#{ce.id}"/>
+                                    </af:forEach>
+                                </af:selectOneChoice>
+                            </af:panelGroupLayout>
+
+                            <dvt:timeline id="tl1" startTime="2000-01-01" endTime="2011-12-31" itemSelection="single"
+                                                   inlineStyle="width:1024px;height:500px" currentTime="2010-04-01"
+                                                   summary="Dual Timeline Demo">
+                                <dvt:timeSeries id="ts1" var="evt" value="#{timeline.firstModel}">
+                                    <dvt:timeItem id="ti1" value="#{evt.date}" thumbnail="/resources/images/timeline/#{evt.type}.png"
+                                                  title="#{evt.description}" description="#{evt.date}">
+                                        <f:facet name="overviewItem">
+                                            <dvt:marker id="m1" shape="circle" fillColor="#ff0000"/>
+                                        </f:facet>
+                                    </dvt:timeItem>
+                                </dvt:timeSeries>
+                                <dvt:timeSeries id="ts2" var="evt" value="#{timeline.secondModel}">
+                                    <dvt:timeItem id="ti2" value="#{evt.date}" thumbnail="/resources/images/timeline/#{evt.type}.png"
+                                                  title="#{evt.description}" description="#{evt.date}">
+                                        <f:facet name="overviewItem">
+                                            <dvt:marker id="m2" shape="circle" fillColor="#0000ff"/>
+                                        </f:facet>
+                                    </dvt:timeItem>
+                                </dvt:timeSeries>
+                                <dvt:timeAxis id="ta1" scale="quarters" zoomOrder="years quarters months weeks"/>
+                                <dvt:timelineOverview id="ov1">
+                                    <dvt:timeAxis id="ta2" scale="years"/>
+                                </dvt:timelineOverview>
+                            </dvt:timeline>
+
+                        </af:panelGroupLayout>
+
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                        <!-- START SEE ALSO LINKS -->
+                        <!-- END SEE ALSO LINKS -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

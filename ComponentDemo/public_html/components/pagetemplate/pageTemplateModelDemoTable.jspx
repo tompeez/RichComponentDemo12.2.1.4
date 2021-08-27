@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2009, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  version="2.1"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplateDef var="attrs" componentVar="component">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <display-name>PageTemplateModelDemo</display-name>
+        <facet xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+          <facet-name>editor</facet-name>
+        </facet>
+      </component>
+    </af:xmlContent>
+    <af:declarativeComponent
+      viewId="global.jsff"
+      templateViewId="pageTemplateModelDemoTable.jspx"
+      id="ptdc">
+      <f:facet name="content">
+        <af:panelStretchLayout id="psl1" startWidth="50%">
+          <f:facet name="start">
+            <af:decorativeBox
+              id="firstDB"
+              theme="default"
+              inlineStyle="margin-#{requestContext.rightToLeft ? 'left' : 'right' }: 8px;">
+              <f:facet name="center">
+                <af:facetRef facetName="editor" />
+              </f:facet>
+            </af:decorativeBox>
+          </f:facet>
+          <f:facet name="center">
+            <af:decorativeBox id="secondDB" theme="default">
+              <f:facet name="center">
+                <af:panelStretchLayout id="psl2" topHeight="auto">
+                  <f:facet name="top">
+                    <af:panelHeader id="ph1" text="Page Template Model Demo">
+                      <af:outputText
+                        id="desc"
+                        value="Below is a table of values on the 'context' object that the page template model put into the context. It illustrates how the model can be used to alter EL variables of the page template" />
+                    </af:panelHeader>
+                  </f:facet>
+                  <f:facet name="center">
+                    <af:table id="ctxTbl" var="row" value="#{context}"
+                      summary="Context items" emptyText="No items" contentDelivery="immediate">
+                      <af:column id="keyCol" headerText="Key" rowHeader="true">
+                        <af:outputText id="keyOt" value="#{row.key}" />
+                      </af:column>
+                      <af:column id="valueCol" headerText="Value">
+                        <af:outputText id="valueOt" value="#{row.value}" />
+                      </af:column>
+                    </af:table>
+                  </f:facet>
+                </af:panelStretchLayout>
+              </f:facet>
+            </af:decorativeBox>
+          </f:facet>
+        </af:panelStretchLayout>
+      </f:facet>
+    </af:declarativeComponent>
+  </af:pageTemplateDef>
+</jsp:root>

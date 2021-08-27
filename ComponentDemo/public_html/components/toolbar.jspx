@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="toolbar Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="toolbar"/>
+        <f:attribute name="visualDesignName" value="toolbar"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical">
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>Use the editor to the right to adjust the attributes for this demo.&lt;/b>"/>
+            <af:spacer height="5px"/>
+            <af:outputText value="This is a single toolbar component containing three groups:" id="ot3"/>
+            <af:spacer height="10px" id="sp2"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:toolbar binding="#{editor.component}" id="toolbar">
+            <af:group id="g2">
+              <af:button text="Forward" icon="/images/fwdarrow_gray.gif" disabled="true" id="ctb1"/>
+              <af:button icon="/images/uplevel.gif" shortDesc="uplevel icon" id="ctb2"/>
+            </af:group>
+            <af:group id="g4">
+              <af:button id="search" text="Search" icon="/images/search.gif"/>
+              <af:button text="Folders" icon="/images/folders.gif" id="ctb3"/>
+              <af:button text="Reports" id="ctb4"/>
+              <af:button id="toggleRefresh" text="Refresh:OFF" selected="true"/>
+              <af:inputColor simple="true" compact="true" label="Color"
+                             id="ic1"/>
+              <af:inputNumberSpinbox value="#{demoInput.intSpinbox}" simple="true"
+                                     label="spinbox" id="ins1"/>
+
+            </af:group>
+            <af:group id="g3">
+              <af:button icon="/images/arrange.gif" text="Arrange"
+                                       partialSubmit="true"
+                                       shortDesc="arrange" id="ctb5">
+                <f:facet name="popup">
+                  <af:menu id="m1" text="Arrange Items">
+                    <af:commandMenuItem text="Thumbnails" id="cmi1"/>
+                    <af:commandMenuItem text="Tiles" id="cmi2"/>
+                    <af:commandMenuItem text="Icons" id="cmi3"/>
+                    <af:commandMenuItem text="List" id="cmi4"/>
+                    <af:commandMenuItem text="Details" type="radio" selected="true"
+                                        id="cmi5"/>
+                  </af:menu>
+                </f:facet>
+              </af:button>
+            </af:group>
+          </af:toolbar>
+        </f:facet>
+
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:spacer height="15px"/>
+            <af:panelHeader text="Other examples" id="ph1">
+              <af:spacer height="10px"/>
+              <af:outputText value="Similar toolbar with two groups and a stretch before the last item:" id="ot4"/>
+              <af:spacer height="10px"/>
+              <af:toolbar stretchId="stretch1" id="t2">
+                <af:group id="g5">
+                  <af:button text="Forward" icon="/images/fwdarrow_gray.gif" disabled="true" id="ctb6"/>
+                  <af:button icon="/images/uplevel.gif" shortDesc="uplevel icon" id="ctb7"/>
+                </af:group>
+                <af:group id="g6">
+                  <af:button text="Search" icon="/images/search.gif" id="ctb8"/>
+                  <af:button text="Folders" icon="/images/folders.gif" id="ctb9"/>
+                  <af:button text="Reports" id="ctb10"/>
+                  <af:button text="Refresh:OFF" selected="true" id="ctb11"/>
+                  <af:inputColor simple="true" compact="true" label="Color" id="ic2"/>
+  
+                  <af:inputNumberSpinbox value="#{demoInput.intSpinbox}" simple="true"
+                                         label="spinbox" id="ins2"/>
+                  <af:spacer id="stretch1" clientComponent="true"/>
+                  <af:button icon="/images/arrange.gif" text="Arrange"
+                                           partialSubmit="true"
+                                           shortDesc="arrange" id="ctb12">
+                    <f:facet name="popup">
+                      <af:menu id="m2">
+                        <af:commandMenuItem text="Thumbnails" id="cmi6"/>
+                        <af:commandMenuItem text="Tiles" id="cmi7"/>
+                        <af:commandMenuItem text="Icons" id="cmi8"/>
+                        <af:commandMenuItem text="List" id="cmi9"/>
+                        <af:commandMenuItem text="Details" type="radio" selected="true"
+                                            id="cmi10"/>
+                      </af:menu>
+                    </f:facet>
+                  </af:button>
+                </af:group>
+              </af:toolbar>
+  
+              <af:spacer height="10px"/>
+              <af:outputText value="Toolbar containing compatible content to be a single tab stop toolbar"/>
+              <af:spacer height="10px"/>
+
+              <af:toolbar>
+                <af:button text="button1" id="b6" icon="/images/copy.gif"/>
+                <af:button text="b2" shortDesc="Apply" accessKey="b" >
+                  <f:facet name="popup">
+                    <af:outputText value="popupItem" />
+                  </f:facet>
+                </af:button>
+                <af:button actionDelivery="none" text="b3" shortDesc="Apply" accessKey="p" >
+                  <f:facet name="popup">
+                    <af:outputText value="popupItem" />
+                  </f:facet>
+                </af:button>
+                <af:link text="link" id="link" unsecure="disabled" icon="/images/uplevel.gif"/>
+                <af:commandButton text="cb" id="commandButton" unsecure="disabled"/>
+                <af:commandImageLink text="cil" id="commandImageLink" unsecure="disabled" icon="/images/uplevel.gif"/>
+                <af:commandLink text="cl" id="commandLink" unsecure="disabled"/>
+                <af:commandToolbarButton text="ctb1" icon="/images/copy.gif"/>
+                <af:commandToolbarButton text="ctb2" shortDesc="Apply" accessKey="t" >
+                  <f:facet name="popup">
+                    <af:outputText value="popupItem" />
+                  </f:facet>
+                </af:commandToolbarButton>
+                <af:commandToolbarButton actionDelivery="none" text="ctb3" shortDesc="Apply" >
+                  <f:facet name="popup">
+                    <af:outputText value="popupItem" />
+                  </f:facet>
+                </af:commandToolbarButton>
+                <af:goButton text="gb" id="goButton" unsecure="disabled" clientComponent="true"/>
+                <af:goImageLink text="gil" id="goImageLink" unsecure="disabled" icon="/images/uplevel.gif"/>
+                <af:goLink text="gl" id="goLink" unsecure="disabled"/>
+                <af:resetButton text="resetButton" id="resetButton" unsecure="disabled"/>
+              </af:toolbar>
+
+              <af:spacer height="10px"/>
+              <af:outputText value="Toolbars containing content that consume arrow keys"/>
+              <af:spacer height="10px"/>
+
+              <af:toolbar>
+                <af:inputColor shortDesc="Please input a color value" label="Select a color"
+                               value="#{demoColor.colorValue5}"/>
+                <af:inputDate label="Date" value="#{demoInput.date}"/>
+                <af:inputNumberSpinbox value="#{demoInput.intSpinbox}" label="Number"/>
+              </af:toolbar>
+              <af:toolbar>
+                <!-- inputText on a toolbar must have clientcomponent true or toolbar will handle arrow keys! -->
+                <af:inputText label="Text" value="#{demoInput.value}" clientComponent="true"/>
+                <af:selectManyChoice label="Select Many">
+                  <af:selectItem label="coffee" value="coffee" shortDesc="Coffee from Kona"/>
+                  <f:selectItem itemLabel="tea" itemValue="tea" itemDescription="Tea from China"/>
+                  <af:selectItem label="milk" value="milk" rendered="false"/>
+                  <f:selectItems value="#{demoInput.selectItems}" />
+                  <af:separator id="s2"/>
+                  <af:selectItem label="item6" value="item6" />
+                  <af:selectItem label="item7" value="item7" />
+                </af:selectManyChoice>
+                <af:inputListOfValues label="LOV" value="#{demoLOV.ename}" autoSubmit="true"
+                                      popupTitle="Search and Select: Ename" searchDesc="Choose a name"
+                                      model="#{demoLOV.listOfValuesModel}"
+                                      validator="#{demoLOV.validate}" createPopupId="popupId"/>
+              </af:toolbar>
+              <af:toolbar>
+                <af:selectOneChoice value="#{demoInput.choiceValue}" label="Select One">
+                  <af:selectItem label="coffee" value="coffee" shortDesc="Sample shortDesc text"/>
+                  <f:selectItem itemLabel="tea" itemValue="tea" itemDescription="Tea from China"/>
+                  <af:selectItem label="milk" value="milk" rendered="false"/>
+                  <f:selectItems value="#{demoInput.selectItems}" />
+                </af:selectOneChoice>
+              
+                <af:inputComboboxListOfValues label="ICBLOV" value="#{demoComboboxLOV.ename}" autoSubmit="true"
+                                              popupTitle="Search and Select: Ename"
+                                              searchDesc="Choose a name"
+                                              validator="#{demoComboboxLOV.validate}"
+                                              createPopupId="popupId"
+                                              model="#{demoComboboxLOV.listOfValuesModel}"/>
+                <af:quickQuery label="Quick Query" searchDesc="search"
+                               value="#{demoQuickQuery.queryDescriptor}"
+                               queryListener="#{demoQuickQuery.processQuery}">
+                  <f:facet name="end">
+                    <af:commandLink shortDesc="Sample shortDesc text" text="Advanced" id="queryLink"
+                                    clientComponent="true">
+                      <af:popup id="popup">
+                        <af:panelGroupLayout layout="vertical" id="pgl3">
+                          <af:outputText value="To toggle between quickQuery and query components,"/>
+                          <af:outputText value="please wire up them using a managed-bean."/>
+                        </af:panelGroupLayout>
+                      </af:popup>
+                      <af:showPopupBehavior popupId="popup" align="afterStart" alignId="queryLink"/>
+                    </af:commandLink>
+                  </f:facet>
+                </af:quickQuery>
+                                      
+              </af:toolbar>
+
+
+              <af:spacer height="10px"/>
+              <af:outputText value="Three toolbars inside a toolbox:"/>
+              <af:spacer height="10px"/>
+  
+              <af:toolbox id="t1">
+                <af:group id="g1">
+                  <af:toolbar id="t3">
+                    <af:button text="Search" icon="/images/search.gif" id="ctb13"/>
+                    <af:button text="Folders" icon="/images/folders.gif"
+                                             id="ctb14"/>
+                    <af:button text="Reports" id="ctb15"/>
+                    <af:button text="Refresh:OFF" selected="true" id="ctb16"/>
+                  </af:toolbar>
+  
+                  <af:toolbar id="toolbar2" partialTriggers="quickSearch">
+                    <af:quickQuery id="quickSearch" searchDesc="search"
+                                   value="#{demoQuickQuery.queryDescriptor}"
+                                   queryListener="#{demoQuickQuery.processQuery}"/>
+                  </af:toolbar>
+                  <af:toolbar id="toolbar3">
+  
+                    <af:selectManyChoice label="Mode" contentStyle="width:30px"
+                                         id="smc1">
+                      <af:selectItem label="A" id="si1"/>
+                      <af:selectItem label="B" id="si2"/>
+                      <af:selectItem label="C" id="si3"/>
+                    </af:selectManyChoice>
+                  </af:toolbar>
+                </af:group>
+              </af:toolbox>
+  
+              <af:popup id="popupId">
+              <af:dialog id="d2" title="Custom Create Dialog">
+                <af:panelGroupLayout id="pgl2" layout="vertical">
+                  <af:outputText value="You can put custom content here."/>
+                  <af:outputText value="More content here."/>
+                </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+
+              <af:spacer height="10px" id="s5"/>
+              <af:outputText value="#{demoQuickQuery.sqlString}" partialTriggers="quickSearch"/>
+            </af:panelHeader>                 
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

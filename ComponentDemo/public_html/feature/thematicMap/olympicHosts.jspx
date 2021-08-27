@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Thematic Map Olympic Hosts" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- MOD TAG TEMPLATE -->
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Thematic Map Olympic Hosts"/>
+        <!-- Tag Name -->
+        <f:attribute name="tagName" value="Thematic Map Olympic Hosts"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll">
+          <f:verbatim>                                      
+          <b>This demo shows the hosts of the Olympic Games thru the year 2020 using associated views.</b>             
+          <p>Select a bar from the Chart to filter the grid below by country and season or select a country
+            from the Thematic Map to filter by country. </p>
+            <p>Hosts of the summer and winter Olympics are colored 
+            yellow and blue respectively.  Countries colored green on the world map indicate that they have 
+            hosted both summer and winter Olympics.</p>               </f:verbatim>
+            <af:selectOneRadio id="season" autoSubmit="true" label="Select Olympic Season" layout="horizontal"
+                               value="#{olympicHosts.season}">
+              <af:selectItem label="All"/>
+              <af:selectItem label="Summer"/>
+              <af:selectItem label="Winter"/>
+            </af:selectOneRadio>
+            <af:panelGroupLayout layout="horizontal" valign="middle" partialTriggers="season">
+              <dvt:thematicMap id="tmap2" basemap="world" controlPanelBehavior="hidden"
+                               summary="olympic host map"
+                               inlineStyle="background-color:transparent;width:580px;height:350px;border:none;">
+                <af:transition transition="auto" triggerType="display"/>
+                <dvt:areaLayer id="al2" layer="countries" labelDisplay="off">
+                  <dvt:areaDataLayer binding="#{olympicHosts.dataLayer}" id="adl2"
+                                     value="#{olympicHosts.olympicHostsByFrequencyForMap}" selectionMode="single"
+                                     selectionListener="#{olympicHosts.processSelection}" var="rowData" 
+                                     varStatus="rowStatus">
+                    <af:transition transition="auto" triggerType="dataChange"/>
+                    <dvt:areaLocation id="loc2" name="#{rowData.id}">
+                      <dvt:area id="a2" shortDesc="hosted #{rowData.value} times" fillColor="#{rowData.color}"/>
+                    </dvt:areaLocation>
+                  </dvt:areaDataLayer>
+                </dvt:areaLayer>
+              </dvt:thematicMap>
+              <dvt:barChart id="chart1" value="#{olympicHosts.olympicHostsByFrequency}" stack="on" var="row"
+                            dataSelection="single" inlineStyle="width:420px;height:300px;"
+                            binding="#{olympicHosts.barChart}" selectionListener="#{olympicHosts.processSelection}">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.categories[1]}" group="#{row.id}" value="#{row.value}"
+                                     color="#{row.color}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="false"/>
+                <dvt:chartYAxis minimumIncrement="1"/>
+              </dvt:barChart>
+            </af:panelGroupLayout>
+            <af:panelDashboard inlineStyle="width:1000px;" dimensionsFrom="children" columns="4" rowHeight="250px"
+                               partialTriggers="season" binding="#{olympicHosts.layout}">
+              <af:iterator value="#{olympicHosts.olympicHostsByYear}" var="row">
+                <af:panelBox text="#{row.categories[2]} : #{row.value}" showDisclosure="false"
+                             inlineStyle="width:230px;height:230px;">
+                  <dvt:thematicMap id="tmap1" basemap="#{row.categories[0]}" panning="none" zooming="none"
+                                controlPanelBehavior="hidden"
+                                   summary="olympic host map"
+                                   inlineStyle="background-color:transparent;width:230px;height:200px;border:none;">
+                    <af:transition transition="auto" triggerType="display"/>
+                    <dvt:areaLayer id="al1" layer="countries" areaStyle="border-color:#DDDDDD;" labelDisplay="off">
+                      <dvt:areaDataLayer id="adl1" value="#{row.model}" var="rowData" varStatus="rowStatus">
+                        <dvt:areaLocation id="loc1" name="#{rowData.id}">
+                          <dvt:area id="a1" fillColor="#{rowData.color}"/>
+                        </dvt:areaLocation>
+                      </dvt:areaDataLayer>
+                    </dvt:areaLayer>
+                  </dvt:thematicMap>
+                </af:panelBox>
+              </af:iterator>
+            </af:panelDashboard>
+          </af:panelGroupLayout>
+          <!-- END TAG DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

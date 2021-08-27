@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="query Style Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="query"/>
+        <f:attribute name="visualDesignName" value="query"/>
+        <f:attribute name="demoKind" value="styles"/>
+        <f:attribute name="editorSize" value="350"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:outputText styleClass="AFInstructionText"
+                           value="This page demos the effect various contentStyle and inlineStyle parameters have on this component."
+                           id="ot1"/>
+            <af:panelHeader text="Employees" id="ph1">
+              <f:facet name="toolbar">
+                <af:toolbar id="t1">
+                  <af:commandToolbarButton icon="/images/new_ena.png" partialSubmit="true"
+                                           shortDesc="new" id="ctb1"/>
+                  <af:commandToolbarButton icon="/images/update_ena.png" partialSubmit="true"
+                                           shortDesc="update" id="ctb2"/>
+                  <af:commandToolbarButton icon="/images/delete_ena.png" partialSubmit="true"
+                                           shortDesc="delete" id="ctb3"/>
+                  <af:commandButton text="Cancel" id="cb1"/>
+                  <af:commandButton text="Actions" id="cb2"/>
+                  <af:commandButton text="Apply" id="cb3"/>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:query id="highSalariedClerksQueryId" rows="3" maxColumns="2"
+                          binding="#{styleChanger.components['query']}" headerText="Search"
+                          disclosed="true"
+                          value="#{demoQuery.queryDescriptor}" model="#{demoQuery.queryModel}"
+                          queryListener="#{demoQuery.processQuery}"
+                         />
+              </af:panelGroupLayout>
+            </af:panelHeader>
+
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

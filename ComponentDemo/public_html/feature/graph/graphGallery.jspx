@@ -1,0 +1,219 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>  
+  <f:view><af:document title="Graph Gallery" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Graph Gallery"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Graph Gallery"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="pgl1">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START FEATURE DEMO -->
+        <af:panelGroupLayout id="pgl2" layout="horizontal">
+              <dvt:barGraph shortDesc="Graph" id="graph1" subType="BAR_VERT_CLUST">
+                <dvt:graphTitle text="Bar Graph with Reference Objects"/>
+                <dvt:referenceObjectSet>
+                    <dvt:referenceObject type="RO_AREA" association="Y1AXIS"
+                                   location="RO_BACK" color="#55FFFF00"
+                                   lowValue="10" highValue="30"
+                                   displayedInLegend="true" text="Low">
+                    <dvt:specialEffects fillType="FT_GRADIENT"
+                                    gradientDirection="GD_DOWN"
+                                    gradientNumStops="2">
+                    <dvt:gradientStopStyle stopIndex="0" gradientStopPosition="0" 
+                                         gradientStopColor="#FFFF00"/>
+                    <dvt:gradientStopStyle stopIndex="1"
+                                         gradientStopPosition="100"
+                                         gradientStopColor="#FF0000"/>
+                    </dvt:specialEffects>
+                    </dvt:referenceObject>
+                    <dvt:referenceObject type="RO_AREA" association="Y1AXIS"
+                                   location="RO_BACK" color="#99cc66"
+                                   lowValue="50" highValue="100"
+                                   displayedInLegend="true" text="High"/>
+                </dvt:referenceObjectSet>
+              </dvt:barGraph>
+              <dvt:lineGraph shortDesc="Graph" id="graph2" subType="LINE_VERT_ABS">
+                <dvt:graphTitle text="Line Graph with Annotations"/>
+                <dvt:annotationSet>
+                    <dvt:annotation series="0" group="1"
+                              text="Low Point of Series 1"/>
+                    <dvt:annotation series="2" group="3"
+                              text="Annotation text with formatting">
+                    <dvt:graphFont name="SansSerif" size="10" color="#0000FF"
+                               bold="false" italic="true" underline="false"/>
+                    </dvt:annotation>
+                </dvt:annotationSet>
+              </dvt:lineGraph>
+              <dvt:areaGraph shortDesc="Graph" id="graph3" subType="AREA_VERT_ABS" partialTriggers="::irs1" tabularData="#{alertBean.list}">
+                <dvt:graphTitle text="Area Graph with Alerts"/>
+                <dvt:referenceObjectSet>
+                  <dvt:referenceObject type="RO_AREA" text="Alert Range"
+                                       lowValue="#{alertBean.value.minimum}" 
+                                       highValue="#{alertBean.value.maximum}" 
+                                       color="#60FF0000" location="RO_FRONT"/>
+                </dvt:referenceObjectSet>
+                <dvt:alertSet alertMap="#{alertBean.alertMap}"/>
+                <dvt:graphFootnote text="Alerts assign to group"/>
+              </dvt:areaGraph>
+              <af:inputRangeSlider value="#{alertBean.value}" id="irs1" autoSubmit="true" valueChangeListener="#{alertBean.valueListener}"
+                                   minimum="0" maximum="100" majorIncrement="10" minimumIncrement="1" orientation="vertical"
+                                   label="range"/>
+        </af:panelGroupLayout>
+        <af:panelGroupLayout id="pgl3" layout="horizontal">
+              <dvt:barGraph shortDesc="Graph" id="graph4" subType="BAR_VERT_STACK" hideAndShowBehavior="withoutRescale"
+                            animationOnDisplay="auto">
+                <dvt:graphTitle text="Stacked Bar with Hide and Show Series"/>
+              </dvt:barGraph>
+              <dvt:pieGraph shortDesc="Graph" id="graph5" subType="PIE" threeDEffect="true">
+                <dvt:graphTitle text="Pie Graph with 3-D enabled"/>
+                <dvt:pieLabel rendered="true"/>
+                <dvt:legendArea automaticPlacement="AP_NEVER"/>
+                <dvt:seriesSet>
+                <dvt:series color="#00ff00"/>
+                <dvt:series index="1" pieSliceExplode="100"/>
+                </dvt:seriesSet>
+              </dvt:pieGraph>
+              <dvt:scatterGraph value="#{graphData.rows[5].cols[4].seed[8].random}"
+                                 
+                                  id="scatterGraph" animationOnDataChange="auto"
+                                  dataSelection="multiple" shortDesc="Graph"
+                                  selectionListener="#{graphSelection.selectionListener}">
+                  <dvt:graphTitle text="Scatter Graph with Selection and Custom Markers"/>
+                  <dvt:seriesSet>
+                    <dvt:series index="0" markerShape="MS_HUMAN"/>
+                  </dvt:seriesSet>
+              </dvt:scatterGraph>
+        </af:panelGroupLayout>
+        <af:panelGroupLayout id="pgl4" layout="horizontal">
+              <dvt:stockGraph shortDesc="Graph" id="graph6" subType="STOCK_OHLC_CANDLE">
+                <dvt:graphTitle text="Stock Graph"/>
+              </dvt:stockGraph>
+              <dvt:funnelGraph shortDesc="Graph" id="graph7" subType="FUNNEL">
+                <dvt:graphTitle text="Funnel Graph"/>
+              </dvt:funnelGraph>
+              <dvt:paretoGraph shortDesc="Graph" id="graph8" subType="PARETO">
+                <dvt:graphTitle text="Pareto Graph"/>
+              </dvt:paretoGraph>
+        </af:panelGroupLayout>
+        <!-- END FEATURE DEMO -->
+            
+        </af:panelGroupLayout>
+      </f:facet>
+
+      <f:facet name="centerBottomCollapsible">
+        <af:panelGroupLayout layout="scroll" id="pgl5">
+            <!-- START SEE ALSO LINKS -->            
+        
+            <af:outputText value="See also - click on an image to see other Graph demos:" />
+            <af:spacer width="10" height="3" id="s2"/>
+            <af:panelGroupLayout id="pgl6" layout="horizontal" inlineStyle="padding:3px;">
+              <af:goLink id="gl1" destination="/feature/graph/animation.jspx">
+                <af:image source="/resources/images/graph/animation1.png" shortDesc="Animation for Data Objects"
+                          id="i1" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl2" destination="/feature/graph/animation2.jspx">
+                <af:image source="/resources/images/graph/animation2.png" shortDesc="Animations"
+                          id="i2" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl3" destination="/feature/graph/graphBIDI.jspx">
+                <af:image source="/resources/images/graph/bidi.png" shortDesc="BIDI"
+                          id="i3" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl4" destination="/feature/graph/clickListener.jspx">
+                <af:image source="/resources/images/graph/click_listener.png" shortDesc="Click Listener"
+                          id="i4" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl5" destination="/feature/graph/contextMenu.jspx">
+                <af:image source="/resources/images/graph/context_menu.png" shortDesc="Context Menu"
+                          id="i5" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl6" destination="/feature/graph/customToolTipCallback.jspx">
+                <af:image source="/resources/images/graph/custom_tooltip.png" shortDesc="Custom Tooltip Formatting"
+                          id="i6" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl7" destination="/feature/graph/dragAndDrop.jspx">
+                <af:image source="/resources/images/graph/dnd.png" shortDesc="Drag and Drop"
+                          id="i7" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl8" destination="/feature/graph/drilling.jspx">
+                <af:image source="/resources/images/graph/drilling.png" shortDesc="Drilling"
+                          id="i8" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl9" destination="/feature/graph/dynamicResize.jspx">
+                <af:image source="/resources/images/graph/resize.png" shortDesc="Dynamic Resize"
+                          id="i9" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl10" destination="/feature/graph/hideAndShowSeries.jspx">
+                <af:image source="/resources/images/graph/hide_and_show.png" shortDesc="Hide And Show Series"
+                          id="i10" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+            </af:panelGroupLayout>
+            <af:spacer width="10" height="3" id="s3"/>
+            <af:panelGroupLayout id="pgl7" layout="horizontal" inlineStyle="padding:3px;">
+              <af:goLink id="gl11" destination="/feature/graph/interactiveSliceBehavior.jspx">
+                <af:image source="/resources/images/graph/interactive.png" shortDesc="Interactive Slice Behavior"
+                          id="i11" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl12" destination="/feature/graph/markerShapeColor.jspx">
+                <af:image source="/resources/images/graph/marker_shape.png" shortDesc="Marker Shapes and Colors"
+                          id="i12" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl13" destination="/feature/graph/popupSupport.jspx">
+                <af:image source="/resources/images/graph/popup.png" shortDesc="Popup Support"
+                          id="i13" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl14" destination="/feature/graph/scrollableLegend.jspx">
+                <af:image source="/resources/images/graph/scrollable_legend.png" shortDesc="Scrollable Legend"
+                          id="i14" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl15" destination="/feature/graph/seriesCustomization.jspx">
+                <af:image source="/resources/images/graph/series_customization.png" shortDesc="Series Customization"
+                          id="i15" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl16" destination="/feature/chart/sparkCharts.jspx">
+                <af:image source="/resources/images/graph/spark.png" shortDesc="Spark Charts"
+                          id="i16" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl17" destination="/feature/graph/tickLabelCallback.jspx">
+                <af:image source="/resources/images/graph/tick.png" shortDesc="Tick Label and Tick Mark"
+                          id="i17" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl18" destination="/feature/graph/timeAxis.jspx">
+                <af:image source="/resources/images/graph/timeaxis.png" shortDesc="Time Axis"
+                          id="i18" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl19" destination="/feature/graph/timeSelector.jspx">
+                <af:image source="/resources/images/graph/time_selector.png" shortDesc="Time Selector"
+                          id="i19" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+              <af:goLink id="gl20" destination="/feature/graph/zoomAndScroll.jspx">
+                <af:image source="/resources/images/graph/zoom_and_scroll.png" shortDesc="Zoom and Scroll"
+                          id="i20" inlineStyle="border-color:Silver; border-width:thin; border-style:solid; height:75px; width:100px; padding:2px;"/>
+              </af:goLink>
+            </af:panelGroupLayout>
+            <!-- END SEE ALSO LINKS -->
+        </af:panelGroupLayout>
+      </f:facet>      
+      
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

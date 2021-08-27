@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="listView Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="css">
+      .ABHeader
+      {
+        font-weight: bold;
+        font-size: 14px;
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+      }
+      .ABName
+      {
+        
+        font-weight: bold;
+        font-size: 16px;
+      }
+      .ABJob
+      {        
+        font-size: 14px;
+      }
+      </af:resource>
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="listView"/>
+        <f:attribute name="visualDesignName" value="listView"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:listView id="listView" shortDesc="Employees"
+                       var="item" varStatus="vs" groupDisclosurePolicy="initiallyExpanded" binding="#{editor.component}"
+                       value="#{demolistView.ABTreeModel}">
+              <af:listItem id="listItem1">
+                <af:panelGroupLayout id="pgl3" layout="vertical">
+                  <af:outputText id="ot2" value="#{item.ename}" styleClass="ABName"/>
+                  <af:outputText id="ot3" value="#{item.job}" styleClass="ABJob"/>
+                </af:panelGroupLayout>
+              </af:listItem>
+              <f:facet name="groupHeaderStamp">
+                <af:listItem id="listItem2" styleClass="ABHeader">
+                  <af:outputText id="ot1" value="#{item.alphabetHeading}"/>
+                </af:listItem>
+              </f:facet>
+          </af:listView>
+        </f:facet>
+        <f:facet name="centerSplitBottom">
+          <af:panelGroupLayout id="scroll" layout="scroll">
+            <af:panelHeader id="head" text="Related Demos">
+              <af:panelList id="list">
+                <af:goLink id="related1" text="ListView Component with Groups" destination="/components/listView/listViewWithGroups.jspx"/>
+                <af:goLink id="related3" text="ListView Component with Groups, Disclosure and Incremental Fetch" destination="/components/listView/listViewWithGroupsDisclosureAndIncrementalFetch.jspx"/>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Calendar Demo Using Skyros CalendarActivityRamps" binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="calendar"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchChildren" value="first"/>
+        <f:attribute name="centerBottomCollapsibleHeight" value="70"/>
+        <f:facet name="centerBottomCollapsible">
+         
+        </f:facet>
+        <f:facet name="centerSplitStart">
+          <af:panelGroupLayout layout="vertical" inlineStyle="padding:2px"
+                               id="pgl1">
+            <af:outputText value="NOTE: This demo uses CalendarActivityRamp objects for activity styling. 
+            The legend area is for demo purposes only, it is not part of the built in functionality of the calendar."
+                           id="ot3"/>
+            <af:spacer height="10" id="s2"/>
+            <af:forEach items="#{calendarBean.calendarModel.providers}" var="provider">
+              <af:panelGroupLayout layout="horizontal">
+              <!-- Bug 8973571 : facelets doesn't handle clientId generation correctly,
+               removing attribute id="ic1" on inputColor until fixed. -->
+                <af:inputColor compact="true" simple="true" autoSubmit="true"
+                               label="#{provider.displayName}"
+                               valueChangeListener="#{calendarBean.providerFromRampsColorChange}"
+                               value="#{calendarBean.providerDataFromRamps[provider].color}"
+                               width="4" colorData="#{calendarBean.colorDataFromRamps}"
+                               customVisible="false" defaultVisible="false"
+                               lastUsedVisible="false"
+                               >
+                  <f:attribute name="providerId" value="#{provider.id}"/>
+                </af:inputColor>
+              <!-- Bug 8973571 : facelets doesn't handle clientId generation correctly,
+               removing attribute id="sbc1" on selectBooleanCheckbox until fixed. -->
+                <af:selectBooleanCheckbox autoSubmit="true"
+                                          valueChangeListener="#{calendarBean.providerEnabledChange}"
+                                          text="#{provider.displayName}"
+                                          value="#{calendarBean.providerDataFromRamps[provider].enabled}"
+                                          />
+              </af:panelGroupLayout>
+            </af:forEach>
+            <af:spacer height="5" id="s3"/>
+            <af:panelGroupLayout layout="scroll" id="pgl3">
+            <af:showDetail disclosedText="More Calendar Demos"
+                           undisclosedText="More Calendar Demos"
+                           id="sd1">
+                  <af:panelList id="pl1">
+                  <af:goLink destination="../calendar.jspx" text="Calendar component demo."
+                           id="gl1"/>
+                  </af:panelList>
+            </af:showDetail>
+              </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:calendar binding="#{editor.component}" id="cal"
+                       partialTriggers="::timezoneId"
+                       value="#{calendarBean.calendarModel}"
+                       timeZone="#{calendarBean.timeZone}"
+                       activityStyles="#{calendarBean.activityStylesFromRamps}"
+                       calendarDisplayChangeListener="#{calendarBean.displayChangeListener}"
+                       calendarActivityListener="#{calendarBean.activityListener}" 
+                       calendarActivityDurationChangeListener="#{calendarBean.activityDurationChangeListener}"
+                       calendarListener="#{calendarBean.calendarListener}">
+            <af:calendarDropTarget actions="MOVE" dropListener="#{calendarBean.handleDrop}"/>
+          </af:calendar>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:attributeGroups&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:attributeGroups&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:attributeGroups attributeGroups attribute groups</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.attributeGroups.UIAttributeGroups<br>
+<b>Component type:</b> oracle.dss.adf.attributeGroups.AttributeGroups<br></p>
+<p>The attributeGroups tags are used to generate stylistic attribute values such as colors or shapes based on categorical bucketing of a data set. Given the column in the model to group by, the attributeGroups can produce style values for each unique value ("group") in the data.</p>
+<h4>Types</h4>
+<p>The type of stylistic attribute to produce values for can be specified using the type property on the attributeGroups tag. The currently supported types are: color, shape, pattern, opacity, scaleX, and scaleY. These can be combined in a space-delimited list to generate multiple stylistic attributes for each unique data value.</p>
+<h4>Customization</h4>
+<p>The default style values that get generated are defined using skinning keys. Each attributeGroups type has a default ramp defined in the skin, and these can be customized by setting the index-based selectors to the desired values. For example:</p>
+<pre>
+       af|dvt-attributeGroups::shape1 {
+           -tr-shape: square;
+       }
+       
+       af|dvt-attributeGroups::shape2 {
+           -tr-shape: circle;
+       }
+       
+</pre>
+<p>The style values can also be specified through the tags, by using &lt;f:attribute&gt; child tags to define the styles. In this case, the name attribute specifies the attributeGroups type being overridden and the index of the override, and the value attribute specifies the overridden value. For example, to override the first color of the ramp, an &lt;f:attribute&gt; tags with name="color1" and value="#FF0000" would be used. When &lt;f:attribute&gt; tags are used, they are used instead of, not in addition to, the style definition from the skinning keys.</p>
+<h4>Override Rules</h4>
+<p>The attributeGroups tag has child "rule" tags that can be used to override the values provided by the attributeGroups. There are two types of rules:</p>
+<ul>
+<li>attributeMatchRule: replace an attribute when the data matches a certain value</li>
+<li>attributeExceptionRule: replace an attribute value with another when a particular boolean condition is met</li>
+</ul>
+<h4>Sample</h4>
+<p>This is an example of how attributeGroups can be used with the Thematic Map component:</p>
+<pre>
+       &lt;dvt:thematicMap id="map" basemap="usa"&gt;
+         &lt;dvt:areaLayer id="al1" layer="states"&gt;
+             &lt;dvt:areaDataLayer id="adl1" value="#{bean.model}" var="row" ...&gt;
+                &lt;dvt:areaLocation id="al1" name="#{row.name}"&gt;
+                    &lt;!--Each stamped marker gets assigned a color and shape from the attributeGroups--&gt;
+                    &lt;dvt:marker id="m1"&gt;
+                        &lt;dvt:attributeGroups id="ag1" type="shape color" value="#{row.category}"/&gt;
+                    &lt;/dvt:marker&gt;
+                &lt;/dvt:areaLocation&gt;
+             &lt;/dvt:areaDataLayer&gt;
+         &lt;/dvt:areaLayer&gt;
+       &lt;/dvt:thematicMap&gt;
+       
+</pre>
+<h4>Relationship with other tags</h4>
+<p>The &lt;dvt:attributeGroups&gt; tag can have the following children:</p>
+<ul>
+<li><a href="dvt_attributeMatchRule.html">&lt;dvt:attributeMatchRule&gt;</a></li>
+<li><a href="dvt_attributeExceptionRule.html">&lt;dvt:attributeExceptionRule&gt;</a></li>
+<li>&lt;f:attribute&gt;</li>
+</ul>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeType</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> discrete, continuous<br>
+<strong>Default Value:</strong> discrete<br>
+<br>
+<p>The attribute type for which to generate values. Valid values are:</p>
+<ul>
+<li>"discrete" (default): Indicates that values should be classified into discrete categories.</li>
+<li>"continuous": Indicates that values should be classified across a range of continuous values.</li>
+</ul>
+<p>Only the color attribute is currently supported when using continuous attributes.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.attributeGroups.UIAttributeGroups</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">an EL reference that will store the component instance on a bean. This can be used to give programmatic access to a component from a backing bean, or to move creation of the component to a backing bean.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">discriminant</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>The discriminant of this component. This optional value allows components on the same page using attribute groups to share attribute groupings by setting identical discriminant values. Components with no discriminant specified will not share groupings with any other component.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">label</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">A text label for use in the legend. Not required, but strongly recommended if the component has a legend.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">maxLabel</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>The label for the maximum bounds of the component. This value only applies when the attributeType is set to "continuous". If no value is specified, the maximum value is used instead.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">maxValue</td>
+<td align="left" headers="attrType">Object</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The maximum bounds of this component. This value only applies when the attributeType is set to "continuous". If no value is specified, the maximum data value is used instead.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">minLabel</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>The label for the minimum bounds of the component. This value only applies when the attributeType is set to "continuous". If no value is specified, the minimum value is used instead.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">minValue</td>
+<td align="left" headers="attrType">Object</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The minimum bounds of this component. This value only applies when the attributeType is set to "continuous". If no value is specified, the minimum data value is used instead.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered. The default value is true.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">sectionLabel</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">A section label for use in the legend</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">type</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>A space-delimited list of stylistic attribute types to generate values for. Valid values are:</p>
+<ul>
+<li>"shape"</li>
+<li>"color"</li>
+<li>"pattern"</li>
+<li>"opacity"</li>
+<li>"scaleX"</li>
+<li>"scaleY"</li>
+</ul>
+<p>The valid types may vary depending on the parent of the attributeGroups tag.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The value from the data model to group by</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

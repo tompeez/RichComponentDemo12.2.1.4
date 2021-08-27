@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>dvt_mapPointStyleItem</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<div>
+<table class="oac_no_warn" summary="Layout table... probably." width="100%" border="0">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:mapPointStyleItem&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none">mapPointStyleItem map point style item</p>
+<br>
+<p>The Point Style Item tag provides the ability to stylize each point in a <a href="dvt_mapPointTheme.html">&lt;dvt:mapPointTheme&gt;</a>. As the Point Theme iterates through the set of points it has to render, it will try to find a matching Point Style. Generally, one or more Point Style Item tags would exist inside a Point Theme tag. Then either a data value or a text value of the point can be used to find a corresponding Point Style Item to render that point. See <a href="#bucketingpoints">Point Styles</a> for more details.</p>
+<p>The normal (unselected), selected and hover <a href="#pointStates">states of a point</a> can be changed by either specifying images or by changing the value of the <a href="#builtInImage">built-in-image</a> property.</p>
+<p>The tag also provides the ability to change the <a href="#defpointstyle">default point style</a> that can be used for all the points in the theme.</p>
+<p><b>Important:</b> The Point Style Item tags are ignored by the parent Point Theme tag if the customPointCallback attribute is specified on the theme tag.</p>
+<div class="section">
+<h4><a name="bucketingpoints" id="bucketingpoints">Point Styles</a></h4>
+<p>Depending on the data type of the attribute in the model that is to be used for the point a few different options are available to have the Point Theme pick an appropriate Point Style Item tag to render the point.</p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="75%" class="bodyTable">
+<tr class="a">
+<th>Data Type</th>
+<th>Description &amp; Example</th>
+</tr>
+<tr class="a">
+<td>Numeric Value</td>
+<td>
+<p>Use the <a href="#minValue">minValue</a> &amp; <a href="#maxValue">maxValue</a> attributes.<br>
+<br>
+By using minValue &amp; maxValue a range can be defined. In the example below, a house which is less than a million in value will be represented by the "&lt; Million" Point Style Item tag and a house over a million will use the "&gt; Million" Point Style Item tag. than a million dollor, it will be shown using the mansion icon.</p>
+<pre>
+          &lt;dvt:mapPointTheme id="theme1" value="#{backingBean.geoMapModel}"&gt;
+            &lt;dvt:mapPointStyleItem shortLabel="&lt; Million" minValue="0.0" maxValue="1000000.0"
+               &lt;!-- match on min &amp; max value --&gt;
+               imageURL="/smallHouse.gif" hoverImageURL="/smallHouseHover.gif"
+               selectedImageURL="/smallHouseSelected.gif" /&gt;
+            &lt;dvt:mapPointStyleItem shortLabel="&gt; Million"
+               minValue="1000000.0" &lt;!-- match on min with no upper value value --&gt; 
+               imageURL="/bigHouse.gif"
+               hoverImageURL="/bigHouseHover.gif"
+               selectedImageURL="/bigHouseSelected.gif"/&gt;
+          &lt;/dvt:mapPointTheme&gt;
+          
+</pre></td>
+</tr>
+<tr class="b">
+<td>Non-Numeric Value</td>
+<td>
+<p>Use the <a href="#itemValue">itemValue</a> attribute.<br>
+<br>
+An exact match can be performed via the itemValue property to allow the Point Theme to pick the appropriate Point Style Item. The category value from the data model is used to match with the itemValue attribute of the tag. In the example below, if the point data has "low" as the category value, the map uses the "&lt; Million" Point Style Item to display the point. Otherwise, if the point category value is "high", the Point Theme will use the "&gt; Million" Point Style Item tag.</p>
+<pre>
+          &lt;dvt:mapPointTheme &gt;
+            &lt;dvt:mapPointStyleItem shortLabel="&lt; Million" 
+               itemValue="low" &lt;!-- exact match made with itemValue --&gt; 
+               imageURL="/smallHouse.gif"
+               hoverImageURL="/smallHouseHover.gif"
+               selectedImageURL="/smallHouseSelected.gif" /&gt;
+            &lt;dvt:mapPointStyleItem shortLabel="&gt; Million" 
+               itemValue="high" &lt;!-- exact match made with itemValue --&gt;
+               imageURL="/bigHouse.gif" hoverImageURL="/bigHouseHover.gif"
+               selectedImageURL="/bigHouseSelected.gif"/&gt;
+          &lt;/dvt:mapPointTheme&gt;
+          
+</pre></td>
+</tr>
+</table>
+<h4>Point States <a name="pointStates" id="pointStates"></a></h4>
+<p><a name="pointStates" id="pointStates">Three states: normal, selected and hover can be customized for each point by specifing images.</a></p>
+<ul>
+<li><a name="pointStates" id="pointStates"></a><a name="pointStates" id="pointStates"></a><a href="#imageURL">imageURL</a> -- An image representing the normal display state of the point</li>
+<li><a href="#selectedImageURL">selectedImageURL</a> -- An image for the selected state</li>
+<li><a href="#hoverImageURL">hoverImageURL</a> -- An image that is displayed when the mouse is over the image</li>
+</ul>
+<h4>Default Point Style <a name="defpointstyle" id="defpointstyle"></a></h4>
+<p><a name="defpointstyle" id="defpointstyle">The Point Style Item also provides a simple way to change the rendering of all the points in the Point Theme.</a></p>
+<pre>
+<a name="defpointstyle" id="defpointstyle">       &lt;dvt:mapPointTheme &gt;
+         &lt;dvt:mapPointStyleItem attributes for style 1 using either min/max 
+            or itemValue for matching.... /&gt;
+         &lt;dvt:mapPointStyleItem attributes for style 2 using either min/max 
+            or itemValue for matching.... /&gt;
+         &lt;dvt:mapPointStyleItem isDefault="true" &lt;-- Point Theme will
+            use this when any of the above don't match--&gt; other attributes
+            can go here.../&gt;
+       &lt;/dvt:mapPointTheme&gt;
+       
+</a>
+</pre>
+<h4><a name="defpointstyle" id="defpointstyle">Relationship with other tags</a></h4>
+<p><a name="defpointstyle" id="defpointstyle">The &lt;dvt:mapPointStyleItem&gt; tag is a child of the</a> <a href="dvt_mapPointTheme.html">&lt;dvt:mapPointTheme&gt;</a> tag</p>
+</div>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="tblId_1_1">Name</th>
+<th align="left" valign="bottom" id="tblId_1_2">Type</th>
+<th align="left" valign="bottom" id="tblId_1_3">Supports EL?</th>
+<th align="left" valign="bottom" id="tblId_1_4">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="tblId_1_1">id</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">Specifies the identifier for a point style item</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">isDefault</td>
+<td align="left" headers="tblId_1_2">boolean</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies whether this point style item overrides the default style. For example, to specify a different default image for all the points in the point theme, set this attribute to true, and use the desired imageURL in the imageURL attribute. The default value is false.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">shortLabel</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the label of this pointStyleItem on the legend if no itemValue is specified.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">itemValue</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the value associated with this point style. This attribute will used to match with the category of each GeoRowObject of the GeoModel of the pointTheme. Please use minValue and maxValue if the pointTheme's GeoModel does not have any category.<br>
+The itemValue has higher priority than minValue and maxValue. If the category of a GeoRow Object equals the itemValue of a pointStyle, the pointStyle will be used even if the value of the GeoRowObject lies outside the range of value of the point style.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">minValue</td>
+<td align="left" headers="tblId_1_2">double</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the lower bound value for this point style. Together with maxValue, this two attributes defines the range of value for this point style. ADF Map will check whether if the value of each GeoRowObject of the pointTheme's GeoModel lies within the range of value of each pointStyle.<br>
+The itemValue has higher priority than minValue and maxValue. If the category of a GeoRow Object equals the itemValue of a pointStyle, the pointStyle will be used even if the value of the GeoRowObject lies outside the range of value of the point style.<br>
+The default is Double.MIN_VALUE.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">maxValue</td>
+<td align="left" headers="tblId_1_2">double</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the upper bound value for this point style. Together with minValue, this two attributes defines the range of value for this point style. ADF Map will check whether if the value of each GeoRowObject of the pointTheme's GeoModel lies within the range of value of each pointStyle.<br>
+The itemValue has higher priority than minValue and maxValue. If the category of a GeoRow Object equals the itemValue of a pointStyle, the pointStyle will be used even if the value of the GeoRowObject lies outside the range of value of the point style.<br>
+The default is Double.MAX_VALUE.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">imageURL</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the imageURL for this pointStyleItem. If a GeoRowObject of the point theme matches this pointStyleItem, the point of the GeoRowObject will be displayed using the image in this imageURL.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">selectedImageURL</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the selectedImageURL for this pointStyleItem. If a GeoRowObject of the point theme matches this pointStyleItem, the image will be used as the selected Image for the point of the GeoRowObject. Hence, when the point is lied within the selected region that is defined by the user, the point will be displayed using the image defined in this attribute.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">hoverImageURL</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the selectedImageURL for this pointStyleItem. If a GeoRowObject of the point theme matches this pointStyleItem, the image will be used as the hover Image for the point of the GeoRowObject. Hence, when the user hovers over the point, the image in hoverImageURL will be shown.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">inlineStyle</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the inlineStyle of the image of each point in the pointTheme. This attribute accepts any valid CSS style value. Usually, this attribute is used to set horizontal and vertical offset for the images. (e.g. position:relative;top:20px)</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">styleClass</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Set a CSS style class to use for the points in the pointTheme.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">builtInImage</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">
+<p>Specifies the built-in images for this point style item. Each built in image has a set of normal images, selected images and hovered images</p>
+<p>Built-in image can take the value of <i>shape_color</i> where <i>shape</i> is one of the following:</p>
+<ul>
+<li>SquareBubble</li>
+<li>PointerBubble</li>
+<li>DiagonalSquare</li>
+<li>Bubble</li>
+<li>Flag</li>
+<li>Hexagon</li>
+<li>SignOne</li>
+<li>PushPin</li>
+<li>SignTwo</li>
+<li>TrafficSignDiagonal</li>
+<li>TrafficSign</li>
+<li>3DCube</li>
+</ul>
+<p>whereas <i>color</i> is one of the following:</p>
+<ul>
+<li>Orange</li>
+<li>Blue</li>
+<li>Green</li>
+<li>Red</li>
+<li>Purple</li>
+</ul>
+<p>For example, it can be Bubble_Orange or SignTwo_Blue. Other than those, built-in image can also be one of the following:</p>
+<ul>
+<li>OrangePinLarge</li>
+<li>OrangePinMedium</li>
+<li>OrangePinSmall</li>
+<li>Ball_Orange</li>
+<li>Pin_Large_Orange</li>
+<li>Pin_Medium_Orange</li>
+<li>Pin_Small_Orange</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">overlayText</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies what text will appear over the displayed points. Valid values are: None (Default), RowIndex</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">overlayStyle</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Attribute for defining the inlineStyle of the overlayText</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">overlayClass</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the style class for the overlayText</td>
+</tr>
+</table>
+</div>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+<tr>
+<td align="left" width="86%">Generated: Jul 15 2015</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

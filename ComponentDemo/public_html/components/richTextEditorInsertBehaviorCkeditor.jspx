@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2019, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="richTextEditorInsertBehavior Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="richTextEditorInsertBehavior"/>
+        <f:attribute name="visualDesignName" value="richTextEditor"/>
+        <f:attribute name="demoKind" value="behavior"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="Click the Insert buttons and use either the partial or full postback command button to push the value of the input control into the underlying model (a bean property).  The submitted value will display below."
+                           id="ot1"/>
+            <af:richTextEditor id="idRichTextEditor" label="Rich text value" layout="ckeditor" 
+                               value="#{demoInput.richValue2}"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer width="5px" height="5px" id="s2"/>
+              </f:facet>
+              <af:panelGroupLayout layout="horizontal"
+                inlineStyle="border: 1px solid black; padding: 3px;" id="pgl3">
+                <f:facet name="separator">
+                  <af:spacer width="5px" height="5px" id="s3"/>
+                </f:facet>
+                <af:selectOneChoice id="targetChoice" autoSubmit="true"
+                                  value="#{demoInput.choiceInsertText}" label="Select text to insert">
+                  <af:selectItem label="Some Text." value="Some Text."
+                                 id="si1"/>
+                  <af:selectItem label="0123456789" value="0123456789"
+                                 id="si2"/>
+                  <af:selectItem label="~!@#$%^*" value="~!@#$%^*" id="si3"/>
+                </af:selectOneChoice>
+                <af:commandButton text="Insert Selected Text" id="firstButton" partialTriggers="targetChoice">
+                  <af:richTextEditorInsertBehavior for="idRichTextEditor" value="#{demoInput.choiceInsertText}"/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+              <af:commandButton text="Insert Template Text" id="cb1">
+                <af:richTextEditorInsertBehavior for="idRichTextEditor"
+                                                 value="#{demoInput.richInsertFragment}"/>
+              </af:commandButton>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="default" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer width="5px" height="5px" id="s4"/>
+              </f:facet>
+              <af:commandButton text="Partial Postback" id="richCommand" partialSubmit="true"/>
+              <af:commandButton text="Full Postback" id="coreCommand"/>
+              <af:commandButton text="Reset Sample Value" action="#{demoInput.resetRichValue2}"
+                                id="cb2"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout id="pgl5">
+              <af:outputText value="The submitted value was:" id="ot2"/>
+              <af:spacer width="5" id="s5"/>
+              <af:outputText partialTriggers="richCommand idRichTextEditor" id="result"
+                             value="#{demoInput.richValue2}"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl6">
+              <af:outputText value="See also:" id="ot3"/>
+              <af:panelList id="pl1">
+                <af:goLink text="richTextEditor Demo" destination="richTextEditor.jspx"
+                           id="gl1"/>
+                <af:goLink text="richTextEditor Custom Toolbar Demo"
+                           destination="richTextEditor/richTextEditorCustomToolbar.jspx"
+                           id="gl2"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

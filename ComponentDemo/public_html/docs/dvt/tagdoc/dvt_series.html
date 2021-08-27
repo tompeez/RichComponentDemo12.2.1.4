@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>dvt_series</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<div>
+<table class="oac_no_warn" summary="Layout table... probably." width="100%" border="0">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:series&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none">series series</p>
+<br>
+<p>The &lt;dvt:series&gt; tag is a child tag of a <a href="dvt_seriesSet.html">&lt;dvt:seriesSet&gt;</a> tag used to override attributes of an individual series. Use a set of &lt;dvt:series&gt; tags, within a <a href="dvt_seriesSet.html">&lt;dvt:seriesSet&gt;</a> tag, to change bar or line colors, for instance. Commonly used series attributes are - color, lineWidth (change dataline width on a <a href="dvt_lineGraph.html">Line graph</a> ), marker type (change Marker to either bar, line, or area on a <a href="dvt_combinationGraph.html">Combination graph</a> ), assignedToY2 (change axis assignment on a Dual-Y graph), pieSliceExplode (separate a slice away from the rest of a <a href="dvt_pieGraph.html">Pie graph</a> ), etc.</p>
+<h2>Relationship with other tags</h2>
+<p>The series tag is a child tag of the <a href="dvt_seriesSet.html">seriesSet</a> tag.</p>
+<p>The series tag can have the following child tag: specialEffects.</p>
+<h2>Example</h2>
+<p>The following example shows the XML for creating a dual-Y line graph.</p>
+<p>In the series set tag, it specifies to all series that the data lines are set to 3 pixels wide, and are assigned to the Y1 axis.</p>
+<p>For the first series, the line is red (ff0000) and the line style is dashed.</p>
+<p>For the second series, the line is assigned to the Y2-axis and set to 5 pixels wide.</p>
+<pre>
+   &lt;dvt:lineGraph subType="LINE_VERT_ABS_2Y"&gt; 
+      &lt;dvt:seriesSet defaultLineWidth="3" defaultAssignedToY2="DY2_FALSE"&gt; 
+         &lt;dvt:series color="#ff0000" lineStyle="LS_DASH"/&gt; 
+         &lt;dvt:series assignedToY2="true" lineWidth="5"/&gt; 
+      &lt;/dvt:seriesSet&gt;
+   &lt;/dvt:lineGraph&gt;        
+       
+</pre>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="tblId_1_1">Name</th>
+<th align="left" valign="bottom" id="tblId_1_2">Type</th>
+<th align="left" valign="bottom" id="tblId_1_3">Supports EL?</th>
+<th align="left" valign="bottom" id="tblId_1_4">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="tblId_1_1">id</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">Specifies the identifier for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">shape</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the shape for this series.The predefined shapes are circle,diamond,square,automatic,none,plus,triangle-down,triangle-up.If the shape starts with custom prefix then,the shape will be defined by the svg file specified in the skin file.For example if the shape is customFoo then the skin file should have a .AFDVTShapeCustomFoo:alias selector defined or the graph specific af|dvt-graph::shape-customFoo defined which has the -tr-path property pointing to the svg file.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">shapePath</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">the path to the svg file to use as custom shape</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">index</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">Specifies the zero-based index of the series. This is optional. If index is not specified, the order of series tags in the jspx page is used as index.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">color</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the color that fills the lines, bars, and markers of a series. Valid values are RGB hexadecimal. This color property takes 6 or 8 digit hex as input. When 8 digit hex is used, the first 2 digits represent transparency, otherwise the color is opaque.
+<p><strong>Note:</strong> For line and radar graphs, the markerColor attribute will override this attribute for the color of the markers.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">borderColor</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the color of the border for the series. Enter values in RGB hexadecimal. This color property takes 6 or 8 digit hex as input. When 8 digit hex is used, the first 2 digits represent transparency, otherwise the color is opaque.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">borderTransparent</td>
+<td align="left" headers="tblId_1_2">boolean</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Indicates whether the border of the graph series is transparent. To make the series transparent, set the borderTransparent to true and the color to transparent. Valid values are:
+<ul>
+<li>true - (Default) If the border of the series is transparent.</li>
+<li>false - If the border of the series is visible.</li>
+</ul>
+<strong>Note:</strong> When an attribute or an object is transparent, it is not visible, but you can select it.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">markerColor</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the color of the markers for line and radar graphs. If this attribute is not set, then the color of the markers is the same as the value of the color attribute. This color property takes 6 or 8 digit hex as input. When 8 digit hex is used, the first 2 digits represent transparency, otherwise the color is opaque.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">fitlineType</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the type of fitline, if any, for this series. Valid values are:
+<ul>
+<li>FT_NONE - (Default) Do not use fit lines.</li>
+<li>FT_LINEAR - Use a linear fitline.</li>
+<li>FT_LOGARITHMIC - Use a logarithmic fit line.</li>
+<li>FT_EXPONENTIAL - Use an exponential fit line.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">lineWidth</td>
+<td align="left" headers="tblId_1_2">int</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the default line width of series lines in pixels. This attribute is relevant only for line, scatter, and combination graphs. The default width is specified in the skin.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">lineStyle</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the style for the series line. Valid values are:
+<ul>
+<li>LS_SOLID - (Default) Use a solid line.</li>
+<li>LS_DASH - Use a dash line.</li>
+<li>LS_DOTTED - Use a dotted line.</li>
+<li>LS_DASH_DOT - Use a line with combination of dashes and dots.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">markerShape</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">The default marker shape for each series. This attribute is relevant only for line, scatter, polar, combination, and bubble graphs (bubbles honor only MS_NONE, MS_AUTOMATIC, MS_CIRCLE, and MS_HUMAN setting) Valid values are:
+<ul>
+<li>MS_NONE - Do not use series markers.</li>
+<li>MS_AUTOMATIC - (Default) Use default markers. In this case, the line, scatter, polar or combination graph assigns marker shapes to each series rotating through square, circle, diamond, plus sign, and triangle. The bubble graph assigns marker shapes to circle.</li>
+<li>MS_SQUARE - Use square markers.</li>
+<li>MS_CIRCLE - Use circular markers.</li>
+<li>MS_DIAMOND - Use diamond markers.</li>
+<li>MS_PLUS - Use plus sign markers.</li>
+<li>MS_TRIANGLE_DOWN - Use triangular markers with the point down.</li>
+<li>MS_TRIANGLE_UP - Use triangular markers with the point up.</li>
+<li>MS_HUMAN - Use human shaped markers. When the markerSize is specified, the human marker is scaled so that its width matches the markerSize value.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">markerType</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the default marker type for each series in this graph. This attribute is relevant for combination graphs and line graphs. All types apply to combination graphs. The different line types apply to line graphs. Valid values are:
+<ul>
+<li>MT_AREA - Use area markers.</li>
+<li>MT_BAR - Use bar markers.</li>
+<li>MT_MARKER - Use regular line.</li>
+<li>MT_CURVE_LINE - Use curve line.</li>
+<li>MT_STEPPED_LINE - Use regular stepped line.</li>
+<li>MT_CENTERED_STEPPED_LINE - Use centered stepped line.</li>
+<li>MT_DEFAULT - (Default) Use an appropriate marker based on graph type.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">assignedToY2</td>
+<td align="left" headers="tblId_1_2">boolean</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Indicates whether this series is to be assigned to the Y2-axis. Relevant only for dual-y graphs. Valid values are:
+<ul>
+<li>true - The series is assigned to the Y2-axis.</li>
+<li>false - The series is assigned to the Y1-axis.</li>
+</ul>
+<strong>Note:</strong> The default value for all series is false except the second series.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">pieSliceExplode</td>
+<td align="left" headers="tblId_1_2">int</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">For the pie graph, specifies the percentage of explosion of this slice. The magnitude of explosion of a slice determines how far the slice is separated from other slices. Valid value is:
+<ul>
+<li>An integer from 0 to 100</li>
+<li>0 - (Default) represents no explosion</li>
+<li>100 - represents full explosion</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">displayInLegend</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies Whether this series is shown in the legend.</td>
+</tr>
+</table>
+</div>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+<tr>
+<td align="left" width="86%">Generated: Jul 15 2015</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

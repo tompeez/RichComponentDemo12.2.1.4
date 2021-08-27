@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="Map Legend Customization" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/><f:attribute name="tagDocPrefix" value="dvt"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Map Legend Customization"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="map"/>    
+      
+      <f:facet name="center">
+          <af:group id="g1">
+            <!-- START TAG DEMO -->
+            <af:panelStretchLayout id="psl1" topHeight="auto"
+                                   bottomHeight="80px">
+              <f:facet name="center">
+                <dvt:map id="map1" binding="#{elocationBean.component}"
+                         startingY="0.0" startingX="0.0" mapZoom="0"
+                         mapServerConfigId="mapConfig1"
+                         baseMapName="ELOCATION_MERCATOR.WORLD_MAP"
+                         autoZoomThemeId="mapColorTheme1">
+                  <!-- Use the legendLabels attribute to specify the bucket labels for a color theme -->
+                  <!-- Change a theme's name label in the legend and view menu with the shortLabel and menuLabel attributes -->
+                  <dvt:mapColorTheme id="mapColorTheme1"
+                                     themeName="MAP_STATES_NAME"
+                                     value="#{geoMapBacking.colorModel}"
+                                     minColor="#33FF33" maxColor="#FF3333"
+                                     bucketCount="5" legendLabels="A;B;C;D;E"
+                                     shortLabel="Color Theme Legend Label"
+                                     menuLabel="Color Theme Menu Label"
+                                     locationColumn="POLYGON_NAME"/>
+                  <dvt:mapPieGraphTheme id="mapPieTheme1"
+                                        themeName="MAP_STATES_NAME"
+                                        pieRadius="10"
+                                        locationColumn="POLYGON_NAME"
+                                        shortLabel="Pie Theme Legend Label"
+                                        menuLabel="Pie Theme Menu Label"
+                                        value="#{geoMapBacking.barPieModel}"/>
+                  <dvt:mapPointTheme id="pointTheme"
+                                     value="#{geoMapBacking.pointModel}"
+                                     shortLabel="Point Theme Legend Label"
+                                     menuLabel="Point Theme Menu Label"/>
+                  <dvt:mapLegend height="200" width="250" numberOfColumns="3"
+                                 pointThemeLabel="Point Theme Legend Label"
+                                 initialShown="false" rendered="true"/>
+                 <dvt:mapOverview initialShown="false"/>
+                </dvt:map>
+              </f:facet>
+              <f:facet name="start"/>
+              <f:facet name="end"/>
+              <f:facet name="top">
+                <af:panelGroupLayout layout="scroll" id="pgl2">
+                  <af:outputText value="Click the legend icon in the toolbar or go to 'Themes' in the View menu
+                                  to see the customized labels." id="ot1"/>
+                  <f:facet name="separator">
+                    <af:separator id="s1"/>
+                  </f:facet>
+                  <dvt:mapToolbar mapId="map1" id="mt1"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:panelStretchLayout>
+            <!-- END TAG DEMO -->
+          </af:group>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+            <af:panelGroupLayout layout="scroll" id="pgl1">
+              <!-- START SEE ALSO LINKS -->
+              <af:outputText value="See also:" id="ot2"/>
+              <af:panelList id="pl1">
+                <af:goLink text="Geographic Map"
+                           destination="/feature/geoMap/geoMap.jspx"
+                           id="gl1"/>
+                <af:goLink text="Map with Multiple Themes"
+                           destination="/components/map.jspx"
+                           id="gl2"/>
+                <af:goLink text="Map with Point Theme"
+                           destination="/components/mapPointTheme.jspx"
+                           id="gl3"/>
+                <af:goLink text="Map with Color Theme"
+                           destination="/components/mapColorTheme.jspx"
+                           id="gl4"/>
+                <af:goLink text="Map with Bar Graph Theme"
+                           destination="/components/mapBarGraphTheme.jspx"
+                           id="gl5"/>
+                <af:goLink text="Map with Pie Graph Theme"
+                           destination="/components/mapPieGraphTheme.jspx"
+                           id="gl6"/>
+              </af:panelList>
+              <!-- END SEE ALSO LINKS -->
+            </af:panelGroupLayout>
+          </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

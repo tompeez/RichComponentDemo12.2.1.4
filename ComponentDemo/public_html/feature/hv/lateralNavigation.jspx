@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Hierarchy Viewer - Lateral Navigation Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- MOD TAG TEMPLATE -->
+        <!-- Document Title -->
+        <f:attribute name="documentTitle"
+                     value="Hierarchy Viewer - Lateral Navigation Demo"/>
+        <!-- Tag Name -->
+        <f:attribute name="tagName"
+                     value="Hierarchy Viewer - Lateral Navigation"/>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="auto" id="psl1">
+            <f:facet name="top">
+              <!-- START TAG DEMO -->
+              <af:panelGroupLayout layout="vertical" id="pgl1">
+                <af:spacer height="5px" id="s1"/>
+                <f:verbatim>
+                          <b>Demonstrates lateral navigation for a level.</b>
+                          <ul>
+                            <li>Click on the arrow buttons on the above the 2nd level nodes to navigate.</li>
+                            <li>Adjust the Fetch Size in the pulldown.</li>
+                          </ul>
+                        </f:verbatim>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <!-- START TAG DEMO -->
+              <af:panelSplitter orientation="horizontal" dimensionsFrom="auto"
+                                    splitterPosition="300" positionedFromEnd="true"
+                                    styleClass="AFStretchWidth" id="ps1">
+                <f:facet name="first">
+                  <dvt:hierarchyViewer binding="#{hvLateralNavigation.hvComponent}"
+                                       styleClass="AFStretchWidth" id="hv1"
+                                       var="node" detailWindow="none"
+                                       value="#{hvLateralNavigation.hvModel}"
+                                       partialTriggers="size"
+                                       contentDelivery="immediate"
+                                       levelFetchSize="#{hvLateralNavigation.levelFetchSize}">
+                    <dvt:link id="l1"/>
+                    <dvt:node width="275" height="130"
+                                      rendered="true"
+                                      showExpandChildren="#{node.hasChildren}"
+                                      shortDesc="#{node.firstName}"
+                                      id="n1">
+                              <f:facet name="zoom100">                                            
+                                <af:panelGroupLayout inlineStyle="padding:5px;"
+                                                     layout="horizontal"
+                                                     id="pgl11"
+                                                     styleClass="AFStretchWidth">                                                 
+                                  <af:spacer height="5" id="s11"/>
+                                  <af:panelGroupLayout layout="horizontal"
+                                                       id="pgl14">
+                                    <af:panelGroupLayout id="pgl3">
+                                      <af:image rendered="true"
+                                                inlineStyle="width:108px;height:120px;"
+                                                source="/resources/images/hv/#{node.personId}.png"
+                                                shortDesc="Picture of #{node.firstName}"
+                                                id="i1"/>
+                                    </af:panelGroupLayout>
+                                    <af:spacer width="5"
+                                               height="5" id="s10"/>
+                                    <af:panelGroupLayout layout="vertical"
+                                                         id="pgl16">
+                                    <af:outputText value="#{node.firstName} #{node.lastName}"
+                                                   styleClass="AFHVNodeTitleTextStyle"
+                                                   id="ot10"/>
+                                    <af:outputText value="#{node.title}"
+                                                   styleClass="AFHVNodeSubtitleTextStyle"
+                                                   id="ot12"/>
+                                    </af:panelGroupLayout>
+                                  </af:panelGroupLayout>                                                    
+                                </af:panelGroupLayout>
+                              </f:facet>                                            
+                            </dvt:node>
+                  </dvt:hierarchyViewer>
+                </f:facet>
+                <f:facet name="second">                                                          
+                      <af:panelFormLayout inlineStyle="border-style:solid; border-width:1px; border-color:rgb(148,148,148); padding:5px; background-color:White; "
+                                            id="pfl1"> 
+                        <af:inputNumberSlider id="size" partialTriggers="size" 
+                        label="Fetch Size" 
+                        value="#{hvLateralNavigation.levelFetchSize}" 
+                        minimum="1" 
+                        maximum="4" 
+                        minimumIncrement="1"
+                        majorIncrement="1"                                            
+                        autoSubmit="true" />
+                      </af:panelFormLayout>                 
+                    </f:facet>
+              </af:panelSplitter>
+              <!-- END TAG DEMO -->
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

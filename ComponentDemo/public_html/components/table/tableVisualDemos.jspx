@@ -1,0 +1,777 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Table visual Demos" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+        
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+
+             <af:panelGroupLayout layout="vertical" id="etpgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="ets2"/>
+              </f:facet>       
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with empty text.&lt;/b>"
+                                  id="etof1"/>
+                <af:table rowSelection="single" contentDelivery="immediate"
+                    inlineStyle="height:150px" summary="table with body context menu and empty text"
+                    var="test1" emptyText="#{emptyTable.emptyText}"
+                    value="#{emptyTable.data}" id="ett1">
+                  <af:column width="40" headerText="Number" id="etc1">
+                    <af:outputText value="rh" id="etot1"/>
+                  </af:column>
+                  <af:column headerText="Size" id="etc2">
+                    <af:outputText value="size" id="etot2"/>
+                  </af:column>
+                  <af:column headerText="Date Modified" id="etc3">
+                    <af:outputText value="date" id="etot3"/>
+                  </af:column>
+                  <af:column headerText="Col5" id="etc4">
+                    <af:outputText value="col5" id="etot4"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="etc5">
+                    <af:outputText value="col6" id="etot5"/>
+                  </af:column>
+                </af:table>
+            </af:panelGroupLayout>               
+            
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with a body context menu and formatted empty text beginning with html tag.&lt;/b>"
+                                  id="of1"/>
+                <af:table rowSelection="single" contentDelivery="immediate"
+                    inlineStyle="height:150px" summary="table with body context menu and empty text"
+                    var="test1" emptyText="#{emptyTable.formattedEmptyText}"
+                    value="#{emptyTable.data}" id="t1">
+                  <f:facet name="bodyContextMenu">
+                    <af:popup id="myPopup">
+                      <af:menu id="m2">
+                        <af:commandMenuItem text="Menu Item 1" id="cmi1"/>
+                        <af:commandMenuItem text="Menu Item 2" id="cmi2"/>
+                        <af:commandMenuItem text="Menu Item 3" id="cmi3"/>
+                      </af:menu>
+                    </af:popup>
+                  </f:facet>
+                  <af:column width="40" headerText="Number" id="c1">
+                    <af:outputText value="rh" id="ot1"/>
+                  </af:column>
+                  <af:column headerText="Size" id="c2">
+                    <af:outputText value="size" id="ot2"/>
+                  </af:column>
+                  <af:column headerText="Date Modified" id="c3">
+                    <af:outputText value="date" id="ot3"/>
+                  </af:column>
+                  <af:column headerText="Col5" id="c4">
+                    <af:outputText value="col5" id="ot4"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="c5">
+                    <af:outputText value="col6" id="ot5"/>
+                  </af:column>
+                </af:table>
+            </af:panelGroupLayout>        
+            
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s3"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with contentDelivery='immediate'.&lt;/b>"
+                                  id="of2"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with contentDelivery='immediate'"
+                        rowSelection="multiple"
+                        contentDelivery="immediate"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t2">
+                <af:column headerText="Number" id="c6" rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot6"/>
+                </af:column>
+                <af:column headerText="Name" id="c7">
+                  <af:panelGroupLayout id="pgl4">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i1"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot7"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c8">
+                  <af:outputText value="#{test1.size}" id="ot8"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c9">
+                  <af:outputText value="#{test1.date}" id="ot9"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s4"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with  no column selection.&lt;/b>"
+                                  id="of3"/>
+              <af:table inlineStyle="height:150px" summary="table with no column selection"
+                        rowSelection="multiple"
+                        columnSelection="none"
+                        columnBandingInterval="1"
+                        var="test1" value="#{tableTestData}" id="t3">
+                <af:column headerText="Number" id="c10" rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot10"/>
+                </af:column>
+                <af:column headerText="Name" id="c11">
+                  <af:panelGroupLayout id="pgl6">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i2"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot11"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c12">
+                  <af:outputText value="#{test1.size}" id="ot12"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c13">
+                  <af:outputText value="#{test1.date}" id="ot13"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl7">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s5"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with single column selection. Note: Other tables in this page have multiple column selection. &lt;/b>"
+                                  id="of4"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with single column selection"
+                        rowSelection="multiple"
+                        columnSelection="single"
+                        columnBandingInterval="1"
+                        var="test1" value="#{tableTestData}" id="t4">
+                <af:column headerText="Number" id="c14"  rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot14"/>
+                </af:column>
+                <af:column headerText="Name" id="c15">
+                  <af:panelGroupLayout id="pgl8">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i3"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot15"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c16">
+                  <af:outputText value="#{test1.size}" id="ot16"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c17">
+                  <af:outputText value="#{test1.date}" id="ot17"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl9">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s6"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with columnStretching='last'.&lt;/b>"
+                                  id="of5"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with columnStretching = last"
+                        rowSelection="multiple"
+                        columnStretching="last"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t5">
+                <af:column headerText="Number" id="c18" rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot18"/>
+                </af:column>
+                <af:column headerText="Name" id="c19">
+                  <af:panelGroupLayout id="pgl10">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i4"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot19"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c20">
+                  <af:outputText value="#{test1.size}" id="ot20"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c21">
+                  <af:outputText value="#{test1.date}" id="ot21"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl11">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s7"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with context menu.&lt;/b>"
+                                  id="of6"/>
+              <af:table
+                        inlineStyle="height:150px; width:600px" summary="table with context menu"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t6">
+                <f:facet name="contextMenu">
+                  <af:popup id="myPopup">
+                    <af:menu id="m3">
+                      <af:commandMenuItem text="Context Menu Item 1" id="cmi4"/>
+                      <af:commandMenuItem text="Context Menu Item 2" id="cmi5"/>
+                      <af:commandMenuItem text="Context Menu Item 3" id="cmi6"/>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <af:column width="20" align="center" rowHeader="true" id="c22" headerText="row">
+                    <af:outputText value="#{test1.no}" id="ot22"/>
+                  </af:column>
+                  <af:column displayIndex="3" headerText="Number" id="c23">
+                    <af:outputText value="#{test1.no}" id="ot23"/>
+                  </af:column>
+                  <af:column displayIndex="1" headerText="Name" id="c24">
+                    <af:panelGroupLayout id="pgl12">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                id="i5"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                     id="ot24"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size" displayIndex="2" id="c25">
+                    <af:outputText value="#{test1.size}" id="ot25"/>
+                  </af:column>
+                  <af:column align="center" headerText="Date Modified" id="c26">
+                    <af:outputText value="#{test1.date}" id="ot26"/>
+                  </af:column>
+                  <af:column headerText="Col5" id="c27">
+                    <af:outputText value="#{test1.col5}" id="ot27"/>
+                  </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl13">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s8"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with column reordering disabled.&lt;/b>"
+                                  id="of7"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with column reordering disabled"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        disableColumnReordering="true"
+                        var="test1" value="#{tableTestData}" id="t7">
+                <af:column headerText="Number" id="c28"  rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot28"/>
+                </af:column>
+                <af:column headerText="Name" id="c29">
+                  <af:panelGroupLayout id="pgl14">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i6"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot29"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c30">
+                  <af:outputText value="#{test1.size}" id="ot30"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c31">
+                  <af:outputText value="#{test1.date}" id="ot31"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl15">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s9"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with no horizontal and vertical grid lines.&lt;/b>"
+                                  id="of8"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with no grid lines"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        horizontalGridVisible="false"
+                        verticalGridVisible="false"
+                        var="test1" value="#{tableTestData}" id="t8">
+                <af:column headerText="Number" id="c32" rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot32"/>
+                </af:column>
+                <af:column headerText="Name" id="c33">
+                  <af:panelGroupLayout id="pgl16">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i7"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot33"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c34">
+                  <af:outputText value="#{test1.size}" id="ot34"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c35">
+                  <af:outputText value="#{test1.date}" id="ot35"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl17">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s10"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with no column banding or row banding.&lt;/b>"
+                                  id="of9"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with no banding"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        columnBandingInterval="0"
+                        rowBandingInterval="0"
+                        var="test1" value="#{tableTestData}" id="t9">
+                <af:column headerText="Number" id="c36" rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot36"/>
+                </af:column>
+                <af:column headerText="Name" id="c37">
+                  <af:panelGroupLayout id="pgl18">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i8"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot37"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c38">
+                  <af:outputText value="#{test1.size}" id="ot38"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c39">
+                  <af:outputText value="#{test1.date}" id="ot39"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl19">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s11"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with single row selection. Note: Other tables in this page have multiple row selection.&lt;/b>"
+                                  id="of10"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with single row selection"
+                        rowSelection="single"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t10">
+                <af:column headerText="Number" id="c40" rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot40"/>
+                </af:column>
+                <af:column headerText="Name" id="c41">
+                  <af:panelGroupLayout id="pgl20">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i9"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot41"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c42">
+                  <af:outputText value="#{test1.size}" id="ot42"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c43">
+                  <af:outputText value="#{test1.date}" id="ot43"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl21">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s12"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with no row selection.&lt;/b>"
+                                  id="of11"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with no row selection"
+                        rowSelection="none"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t11">
+                <af:column headerText="Number" id="c44" rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot44"/>
+                </af:column>
+                <af:column headerText="Name" id="c45">
+                  <af:panelGroupLayout id="pgl22">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i10"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot45"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c46">
+                  <af:outputText value="#{test1.size}" id="ot46"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c47">
+                  <af:outputText value="#{test1.date}" id="ot47"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl23">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s13"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with width='98%'.&lt;/b>"
+                                  id="of12"/>
+              <af:table inlineStyle="height:150px" summary="table with width 98%"
+                        width="98%"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t12">
+                <af:column headerText="Number" id="c48" rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot48"/>
+                </af:column>
+                <af:column headerText="Name" id="c49">
+                  <af:panelGroupLayout id="pgl24">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i11"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot49"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c50">
+                  <af:outputText value="#{test1.size}" id="ot50"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c51">
+                  <af:outputText value="#{test1.date}" id="ot51"/>
+                </af:column>
+                <af:column headerText="Col5" id="c52">
+                    <af:outputText value="#{test1.col5}" id="ot52"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="c53">
+                    <af:outputText value="#{test1.col6}" id="ot53"/>
+                  </af:column>
+                  <af:column headerText="Col7" id="c54">
+                    <af:outputText value="#{test1.col7}" id="ot54"/>
+                  </af:column>
+                  <af:column headerText="Col8" id="c55">
+                    <af:outputText value="#{test1.col8}" id="ot55"/>
+                  </af:column>
+                  <af:column headerText="Col9" id="c56">
+                    <af:outputText value="#{test1.col9}" id="ot56"/>
+                  </af:column>
+                  <af:column headerText="Col10" id="c57">
+                    <af:outputText value="#{test1.col10}" id="ot57"/>
+                  </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl25">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s14"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with fetchSize='100'.&lt;/b>"
+                                  id="of13"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with fetchSize 100"
+                        rowSelection="multiple"
+                        fetchSize="100"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t13">
+                <af:column headerText="Number" id="c58"  rowHeader="unstyled">
+                  <af:outputText value="#{test1.no}" id="ot58"/>
+                </af:column>
+                <af:column headerText="Name" id="c59">
+                  <af:panelGroupLayout id="pgl26">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i12"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot59"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" id="c60">
+                  <af:outputText value="#{test1.size}" id="ot60"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c61">
+                  <af:outputText value="#{test1.date}" id="ot61"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl27">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s15"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with filtering enabled.&lt;/b>"
+                                  id="of14"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with filtering enabled"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        filterModel="#{tableFilter.queryDescriptor}" filterVisible="true"
+                        var="test1" value="#{tableFilter.data}" id="t14"
+                        varStatus="vs">
+                <af:column width="20" rowHeader="true" headerText="&#160;"
+                           id="c1"/>
+                <af:column displayIndex="3" headerText="Employee Number" filterable="true" sortProperty="Empno"
+                           id="c2">
+                  <af:outputText value="#{test1.empno}" id="ot2"/>
+                </af:column>
+                <af:column displayIndex="1" headerText="Emp Name" filterable="true" sortProperty="Ename" rowHeader="unstyled"
+                           id="c3">
+                  <af:outputText inlineStyle="margin-left:8px" value="#{test1.ename}"
+                                 id="ot3"/>
+                </af:column>
+                <af:column headerText="Salary" filterable="true" sortProperty="Salary" displayIndex="2" align="end"
+                           id="c4">
+                  <af:outputText value="#{test1.salary}" id="ot4"/>
+                </af:column>
+                <af:column headerText="Hire Date" align="center" id="c5" filterable="true">
+                  <f:facet name="filter">
+                    <af:inputDate value="#{vs.filterCriteria.Hiredate}" label="Filter: Hire Date" simple="true"
+                                  id="id1"/>
+                  </f:facet>
+                  <af:outputText value="#{test1.hireDate}" id="ot5"/>
+                </af:column>
+                <af:column filterable="true" sortProperty="Manager" headerText="Manager"
+                           id="c6">
+                  <af:outputText value="#{test1.manager}" id="ot6"/>
+                </af:column>
+                <af:column sortProperty="Deptno" filterable="true" headerText="Dept Number" align="center"
+                           id="c7">
+                  <af:outputText value="#{test1.deptno}" id="ot7"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl29">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s16"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with a frozen column.&lt;/b>"
+                                  id="of15"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with a frozen column"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t15">
+                <af:column width="30" align="center" rowHeader="true" id="c67" headerText="Row">
+                    <af:outputText value="#{test1.no}" id="ot67"/>
+                </af:column>
+                <af:column displayIndex="3" headerText="Number" id="c68">
+                  <af:outputText value="#{test1.no}" id="ot68"/>
+                </af:column>
+                <af:column displayIndex="1" headerText="Name" id="c69">
+                  <af:panelGroupLayout id="pgl30">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i14"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot69"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" frozen="true" displayIndex="2"
+                           id="c70">
+                  <af:outputText value="#{test1.size}" id="ot70"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c71">
+                  <af:outputText value="#{test1.date}" id="ot71"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl31">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s17"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with sorting enabled.&lt;/b>"
+                                  id="of16"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with sorting enabled"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t16">
+                <af:column width="30" align="center" rowHeader="true" id="c72" headerText="row">
+                    <af:outputText value="#{test1.no}" id="ot72"/>
+                </af:column>
+                <af:column displayIndex="3" headerText="Number" sortable="true" sortProperty="no"
+                           id="c73">
+                  <af:outputText value="#{test1.no}" id="ot73"/>
+                </af:column>
+                <af:column displayIndex="1" headerText="Name" sortable="true" sortProperty="name"
+                           id="c74">
+                  <af:panelGroupLayout id="pgl32">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i15"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot74"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" displayIndex="2" id="c75">
+                  <af:outputText value="#{test1.size}" id="ot75"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c76">
+                  <af:outputText value="#{test1.date}" id="ot76"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl33">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s18"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with column data wrapping and header not wrapping.&lt;/b>"
+                                  id="of17"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with column data wrapping and header not wrapping"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t17">
+                <af:column width="30" align="center" rowHeader="true" id="c77" headerText="row">
+                    <af:outputText value="#{test1.no}" id="ot77"/>
+                </af:column>
+                <af:column displayIndex="3" headerText="Number" id="c78">
+                  <af:outputText value="#{test1.no}" id="ot78"/>
+                </af:column>
+                <af:column displayIndex="1" headerText="Name that is very long and would have wrapped"
+                  headerNoWrap="true" noWrap="false" sortProperty="name" id="c79">
+                  <af:panelGroupLayout id="pgl34">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i16"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot79"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" displayIndex="2" id="c80">
+                  <af:outputText value="#{test1.size}" id="ot80"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c81">
+                  <af:outputText value="#{test1.date}" id="ot81"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl35">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s19"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with an end aligned column.&lt;/b>"
+                                  id="of18"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with an end aligned column"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t18">
+                <af:column width="30" align="center" rowHeader="true" id="c82" headerText="row">
+                    <af:outputText value="#{test1.no}" id="ot82"/>
+                </af:column>
+                <af:column displayIndex="3" headerText="Number" id="c83">
+                  <af:outputText value="#{test1.no}" id="ot83"/>
+                </af:column>
+                <af:column displayIndex="1" headerText="Name" align="end" sortProperty="name"
+                           id="c84">
+                  <af:panelGroupLayout id="pgl36">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i17"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot84"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" displayIndex="2" id="c85">
+                  <af:outputText value="#{test1.size}" id="ot85"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c86">
+                  <af:outputText value="#{test1.date}" id="ot86"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl37">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s20"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with column header with custom components.&lt;/b>"
+                                  id="of19"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with column header with custom components"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t19">
+                <af:column width="30" align="center" rowHeader="true" id="c87" headerText="row">
+                    <af:outputText value="#{test1.no}" id="ot87"/>
+                </af:column>
+                <af:column displayIndex="3" headerText="Number" id="c88">
+                  <af:outputText value="#{test1.no}" id="ot88"/>
+                </af:column>
+                <af:column  displayIndex="1" id="c89">
+                  <f:facet name="header">
+                    <af:goLink destination="http://www.google.com" id="gl3">
+                      <af:outputText value="Goto Google&#160;&#160;" id="ot89"/>
+                      <af:image shortDesc="http://www.google.com"
+                        source="/images/guy.gif" id="i18"/>
+                    </af:goLink>
+                  </f:facet>
+                  <af:panelGroupLayout id="pgl38">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i19"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot90"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" displayIndex="2" id="c90">
+                  <af:outputText value="#{test1.size}" id="ot91"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c91">
+                  <af:outputText value="#{test1.date}" id="ot92"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl39">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s21"/>
+              </f:facet>
+            <![CDATA[
+                <style>
+                .headerCell {
+                  text-align: left;
+                  font-size:9pt;
+                  font-weight: bold;
+                  background-image: url('../../../../images/th_bg_s.png');
+                  background-repeat: repeat-x;
+                  background-position: bottom;
+                }
+                .dataCell {
+                  text-align: left;
+                  font-size:7pt;
+                  font-weight: 100;
+                  font-style:italic;
+                  background-color: #EFF4F9;
+                }
+                </style>
+              ]]>
+
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This demo shows the table with custom data cell and header class.&lt;/b>"
+                                  id="of20"/>
+              <af:table inlineStyle="height:150px; width:600px" summary="table with custom data cell and header class"
+                        rowSelection="multiple"
+                        columnSelection="multiple"
+                        var="test1" value="#{tableTestData}" id="t20">
+                <af:column width="30" align="center" rowHeader="true" id="c92" headerText="row">
+                    <af:outputText value="#{test1.no}" id="ot93"/>
+                </af:column>
+                <af:column displayIndex="3" headerText="Number" id="c93">
+                  <af:outputText value="#{test1.no}" id="ot94"/>
+                </af:column>
+                <af:column  displayIndex="1" styleClass="dataCell" headerText="Name" headerClass="headerCell"
+                           id="c94">
+                  <af:panelGroupLayout id="pgl40">
+                    <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                              id="i20"/>
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                   id="ot95"/>
+                  </af:panelGroupLayout>
+                </af:column>
+                <af:column headerText="Size" displayIndex="2" id="c95">
+                  <af:outputText value="#{test1.size}" id="ot96"/>
+                </af:column>
+                <af:column align="center" headerText="Date Modified" id="c96">
+                  <af:outputText value="#{test1.date}" id="ot97"/>
+                </af:column>
+              </af:table>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+        </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

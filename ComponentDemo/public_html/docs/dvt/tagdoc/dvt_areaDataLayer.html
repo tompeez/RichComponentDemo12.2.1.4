@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:areaDataLayer&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:areaDataLayer&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:areaDataLayer areaDataLayer area data layer</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.thematicMap.UIAreaDataLayer<br>
+<b>Component type:</b> oracle.dss.adf.thematicMap.AreaDataLayer<br></p>
+<p>The areaDataLayer tag is used within the <a href="dvt_areaLayer.html">&lt;dvt:areaLayer&gt;</a> tag to provide the ability to associate different regions in a areaLayer with a row of data. Each row can be shown as a colored region, a marker or an image through stamping. The table belows shows some example</p>
+<table class="oac_no_warn" summary="Layout table... probably." class="bodyTable">
+<tr class="a">
+<th>Type</th>
+<th>Tag Sample</th>
+<th>Sample Image</th>
+</tr>
+<tr class="a">
+<td width='100' height='100' nowrap="true">Area</td>
+<td width='100' height='100'>
+<pre>
+&lt;dvt:areaLayer id="areaLayer" layer="states"&gt;
+  &lt;dvt:areaDataLayer id="dataLayer" contentDelivery="immediate" 
+                        value="#{tmapTargetActualBean.model}" 
+                        var="row" varStatus="rowStatus"&gt;
+    &lt;dvt:areaLocation id="areaLoc" name="#{row.name}"&gt;
+      &lt;dvt:area id="area" fillColor="#{tmapTargetActualBean.colorObj}" 
+                   shortDesc="#{tmapTargetActualBean.tooltip}"/&gt;
+    &lt;/dvt:areaLocation&gt;
+  &lt;/dvt:areaDataLayer&gt;
+&lt;/dvt:areaLayer&gt;           
+           
+</pre></td>
+<td width='360' height='250'><img src="../images/tmapColor.png" width="360" height="250" alt=""></td>
+</tr>
+<tr class="b">
+<td width='100' height='100' nowrap="true">Marker</td>
+<td width='100' height='100'>
+<pre>
+&lt;dvt:areaLayer &gt;
+  &lt;dvt:areaDataLayer id="regionLayer" contentDelivery="lazy" 
+                        value="#{stateData.colorModel}" var="row" 
+                        varStatus="rowStatus"&gt;
+    &lt;dvt:areaLocation name="#{row.name}" id="al2"&gt;
+      &lt;dvt:marker fillColor="#{row.color}" scaleX="#{row.size/2}" 
+                     scaleY="#{row.size/2}" shape="circle" 
+                     id="m1"&gt;
+      &lt;/dvt:marker&gt;
+    &lt;/dvt:areaLocation&gt;           
+  &lt;/dvt:areaDataLayer&gt;       
+&lt;/dvt:areaLayer&gt;               
+           
+</pre></td>
+<td width='360' height='250'><img src="../images/tmapCircle.png" width="360" height="250" alt=""></td>
+</tr>
+</table>
+<h4>Model</h4>
+<p>The areaDataLayer uses a model to access the data in the underlying list. The specific model class is oracle.adf.view.rich.model.CollectionModel. You may also use other model instances, e.g., java.util.List, array, and javax.faces.model.DataModel. The areaDataLayer will automatically convert the instance into a CollectionModel.</p>
+<pre>
+       &lt;dvt:areaDataLayer id="dataLayer" contentDelivery="immediate" 
+                        value="#{tmapTargetActualBean.model}" 
+                        var="row" varStatus="rowStatus"&gt;
+        
+</pre>
+<p>In the areaDataLayer tag above, the model is specified in the value attribute by an EL expression. The stateData JavaBean contains the actual collection model. Each object in the model is accessed by referencing the EL variable specified by the var attribute in the areaLocation and area tags. At a minimum each object in the collection model must specify a region name that maps to a basemap region name. By specifying additional values for objects in the collection model, the fill color, description, and other attributions of a basemap region can be controlled.</p>
+<pre>
+        &lt;dvt:areaLocation id="areaLoc" name="#{row.name}"&gt;
+            &lt;dvt:area id="area" fillColor="#{tmapTargetActualBean.colorObj}" 
+                   shortDesc="#{tmapTargetActualBean.tooltip}"/&gt;
+        
+</pre>
+<h4>Selection</h4>
+<p>The selection feature of an areaDataLayer lets the user select one or more regions or markers in the map. The user can then perform some operation on the selected rows. The application developer can add its own listener code through the selectionListener attribute to work on the selected data.</p>
+<pre>
+        &lt;dvt:areaDataLayer 
+                                       value="#{stateData.employmentData}"
+                                       var="row" varStatus="rowStatus"
+                                       selectionMode="multiple"
+                                       selectionListener="#{tmapEventBean.processSelection}"&lt;
+        
+        public void processSelection(SelectionEvent selectionEvent){
+            UIAreaDataLayer dataLayer = (UIAreaDataLayer)selectionEvent.getSource();
+            CollectionModel model = (CollectionModel)dataLayer.getValue();
+            RowKeySet selectedSet = dataLayer.getSelectedRowKeys();
+             ...
+        }
+        
+</pre>
+<h4>Relationship with other tags</h4>
+<p>The &lt;dvt:areaDataLayer&gt; tag can have the following children:</p>
+<ul>
+<li><a href="dvt_areaLocation.html">&lt;dvt:areaLocation&gt;</a></li>
+</ul>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.RowDisclosureEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">The expansion event is delivered when a region is drilled up or down.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.SelectionEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">The selection event is delivered when the selection on a DataLayer changes.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">animationDuration</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 1000<br>
+<br>
+Specifies the animation duration in milliseconds. The default value is 1000.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnDataChange</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, alphaFade, conveyorFromLeft, conveyorFromRight, cubeToLeft, cubeToRight, flipLeft, flipRight, slideToLeft, slideToRight, transitionToLeft, transitionToRight, zoom<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies the type of animation to apply when the value of this areaDataLayer changes.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">A method reference to an attribute change listener</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">Binding reference to store the UIAreaDataLayer component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">contentDelivery</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> lazy, immediate, whenAvailable<br>
+<strong>Default Value:</strong> whenAvailable<br>
+<br>
+Specifies whether data should be fetched when the component is rendered initially. Valid values are:
+<ul>
+<li>&lt;immediate&gt; - data is fetched and inlined into the component chrome</li>
+<li>&lt;lazy&gt; - data will be fetched and delivered to the client during a subsequent request.</li>
+<li>&lt;whenAvailable&gt; - upon initial rendering, the renderer queries the model for available data. Data is fetched and rendered immediately if model indicates that data is available. So contentDelivery="whenAvailable" behaves like "immediate" if data is available upon initial rendering. This is the default value</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">disclosedRowKeys</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.RowKeySet</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The set of row keys for the disclosed regions of this dataLayer. Each entry in the set is a rowKey.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">emptyText</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The text to display in the legend when the areaDataLayer has no data</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">The identifier for this areaDataLayer</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">isolatedRowKey</td>
+<td align="left" headers="attrType">Object</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The isolated state of this area data layer. If set, only the area corresponding to the isolated row key will be displayed.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too. Identifiers are relative to the source component (this component), and must account for NamingContainers. If your component is already inside of a naming container, you can use a single colon to start the search from the root of the page, or multiple colons to move up through the NamingContainers - "::" will pop out of the component's naming container (or itself if the component is a naming container) and begin the search from there, ":::" will pop out of two naming containers (including itself if the component is a naming container) and begin the search from there, etc.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered. The default value is true.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rowDisclosureListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">A method reference to an ExpansionListener</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectedRowKeys</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.RowKeySet</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The selection state of this data layer</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">A method reference to a selection listener</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionMode</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, single, multiple<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies whether regions/markers in an area data layer can be selected or not. Valid values are:
+<ul>
+<li>&lt;single&gt; - Only one marker/region can be selected at a time</li>
+<li>&lt;multiple&gt; - multiple marker/regions can be selected at a time</li>
+<li>&lt;none&gt; - no selection</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shortDesc</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The short description for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The data model being used by this areaDataLayer. The specific model class is org.apache.myfaces.trinidad.model.CollectionModel. You may also use other model instances, e.g., java.util.List , array, and javax.faces.model.DataModel. The areaDataLayer will automatically convert the instance into a CollectionModel.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">var</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Name of the EL variable used to reference each element of this Collection. Once this component has completed rendering, this variable is removed (or reverted back to its previous value).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">varStatus</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Name of the EL variable used to reference the varStatus information. Once this component has completed rendering, this variable is removed (or reverted back to its previous value). The VarStatus provides contextual information about the state of the component to EL expressions. For components that iterate, varStatus also provides loop counter information. Please see the this component's documentation for the specific properties on the varStatus. The common properties on varStatus include:
+<ul>
+<li>"model" - returns the CollectionModel for this component</li>
+<li>"index" - returns the zero based row index</li>
+</ul>
+</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

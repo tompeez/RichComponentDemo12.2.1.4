@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view><af:document title="Graph Annotations Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo"
+                     viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Graph Annotations Demo"/>
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Graph Annotations"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+          <af:outputText value="Annotations can be used to point out signicant values in the data."
+                         id="ot1"/>
+          <af:panelGroupLayout layout="horizontal" id="pgl2">
+          <dvt:lineGraph shortDesc="Graph" id="lg1" >
+            <dvt:annotationSet>
+              <dvt:annotation series="0" group="1"
+                              text="Low Point of Series 1"/>
+              <dvt:annotation series="2" group="3"
+                              text="Annotation text with formatting">
+                <dvt:graphFont name="SansSerif" size="10" color="#0000FF"
+                               bold="false" italic="true" underline="false"/>
+              </dvt:annotation>
+            </dvt:annotationSet>
+          </dvt:lineGraph>
+          <dvt:scatterGraph shortDesc="Graph" id="sg1" >
+            <dvt:annotationSet>
+                    <dvt:annotation position="absolute" xValue="20" yValue="30"
+                                    horizontalAlignment="LEFT"
+                                    verticalAlignment="BOTTOM"
+                                    text="Left-Bottom aligned at (20,30)"/>
+                    <dvt:annotation position="percentage" xValue="90"
+                                    yValue="20" horizontalAlignment="RIGHT"
+                                    verticalAlignment="TOP"
+                                    text="Right-Top aligned at (90%,20%)"/>
+                  </dvt:annotationSet>
+          </dvt:scatterGraph>
+          </af:panelGroupLayout>
+          <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

@@ -1,0 +1,1215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>AdfSwipeSupport</title>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<script type="text/javascript">
+function handleOnload()
+{
+  if ((""+self.location).indexOf("file://") == 0)
+    return;
+  if (parent.document.documentElement.getAttribute("showprivate")=="true")
+  {
+    document.body.setAttribute("showprivate", "true");
+  }
+  else
+  {
+    document.body.setAttribute("showprivate", "false");
+  }
+  parent.document.title="AdfSwipeSupport";
+}
+function togglePrivate(desiredFlag)
+{
+  var currentFlag = document.body.getAttribute("showprivate")=="true";
+  var newFlag = "" + (!currentFlag);
+  if (desiredFlag != null)
+  {
+    newFlag = desiredFlag;
+  }  document.body.setAttribute("showprivate", newFlag);
+}
+</script>
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body onload="handleOnload()">
+<h1 style="color:#0D4988;font-size:18px;font-weight:bold;font-family:Tahoma, Verdana,Helvetica,sans-serif"><img alt="Oracle" src="../../../../../../.././doc-files/logo-oracle-red.png" align="top">JavaScript API Reference for Oracle ADF Faces</h1>
+<!-- ====== START OF NAVBAR ====== -->
+<p><a name="navbar_top" id="navbar_top"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a name="navbar_top_firstrow" id="navbar_top_firstrow"><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../../../oracle/adfinternal/view/js/data/AdfSvgInMemoryCache.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../../../oracle/adfinternal/view/js/laf/dhtml/rich/AdfSwipeToRevealUtils.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../../../index.html?oracle/adfinternal/view/js/laf/dhtml/rich/AdfSwipeSupport.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfSwipeSupport.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<hr>
+<h1><span style="font-size: smaller">oracle.adfinternal.view.js.laf.dhtml.rich</span><br>
+Class AdfSwipeSupport</h1>
+<div class="InternalClassOrPackageWarning">
+<h2>Warning:</h2>
+<ul>
+<li>This is an unsupported, internal implementation class.</li>
+<li>Use an API class that might provide equivalent functionality instead.</li>
+<li>This class will change without notice.</li>
+<li>It is not recommended that you use anything in this class.</li>
+</ul>
+</div>
+<pre>
+<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">org.ecmascript.object.Object</a>
+   |
+   +--<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">oracle.adf.view.js.base.AdfObject</a>
+         |
+         +--<strong>oracle.adfinternal.view.js.laf.dhtml.rich.AdfSwipeSupport</strong>
+</pre>
+<hr>
+<pre>
+public class <strong>AdfSwipeSupport</strong>
+extends <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>
+</pre>
+<div>Helps you add support for pan actions and swipe gestures. Current implementation supports horizontal or vertical swipe gestures. If there is a need, this class can be enhanced to support both. Note: Vertical swipe gesture would mean preventing default action of page scroll, and hence it isn't the most desired gesture support. Current implementation just invokes the callback. If needed it can be enhanced in future to queue custom DOM events.</div>
+<p><br></p>
+<hr>
+<p><a name="field_summary" id="field_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#CALLBACK_PARAM" title="field in this class">CALLBACK_PARAM</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_callbackParam" title="field in this class">_callbackParam</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_callbacks" title="field in this class">_callbacks</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#DIRECTION_DOWN" title="field in this class">DIRECTION_DOWN</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#DIRECTION_LEFT" title="field in this class">DIRECTION_LEFT</a></strong></code></dt>
+<dd>
+<div>Swipe and PAN direction</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#DIRECTION_RIGHT" title="field in this class">DIRECTION_RIGHT</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#DIRECTION_UP" title="field in this class">DIRECTION_UP</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_element" title="field in this class">_element</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_isVertical" title="field in this class">_isVertical</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#MODE" title="field in this class">MODE</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#MODE_VERTICAL" title="field in this class">MODE_VERTICAL</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_MOUSE_SWIPE_DISTANCE_THRESHOLD" title="field in this class">_MOUSE_SWIPE_DISTANCE_THRESHOLD</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#PANCANCEL_CALLBACK" title="field in this class">PANCANCEL_CALLBACK</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#PANEND_CALLBACK" title="field in this class">PANEND_CALLBACK</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#PANNING_CALLBACK" title="field in this class">PANNING_CALLBACK</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#PANSTART_CALLBACK" title="field in this class">PANSTART_CALLBACK</a></strong></code></dt>
+<dd>
+<div>Callback and event names</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#SUPPORT_MOUSE" title="field in this class">SUPPORT_MOUSE</a></strong></code></dt>
+<dd>
+<div>Optional properties</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_supportMouse" title="field in this class">_supportMouse</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#SWIPE_CALLBACK" title="field in this class">SWIPE_CALLBACK</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_SWIPE_DISTANCE_THRESHOLD" title="field in this class">_SWIPE_DISTANCE_THRESHOLD</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_SWIPE_VELOCITY_THRESHOLD" title="field in this class">_SWIPE_VELOCITY_THRESHOLD</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_TOUCH_ACTION_PANX_CLASS" title="field in this class">_TOUCH_ACTION_PANX_CLASS</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_TOUCH_ACTION_PANY_CLASS" title="field in this class">_TOUCH_ACTION_PANY_CLASS</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_USER_SELECT_NONE_CLASS" title="field in this class">_USER_SELECT_NONE_CLASS</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_usesPointerEvents" title="field in this class">_usesPointerEvents</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from oracle.adf.view.js.base.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#constructor" title="field in oracle.adf.view.js.base.AdfObject">constructor</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#superclass" title="field in oracle.adf.view.js.base.AdfObject">superclass</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_org_ecmascript_object_Object" id="fields_inherited_from_class_org_ecmascript_object_Object"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from org.ecmascript.object.<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../org/ecmascript/object/Object.html#prototype" title="field in org.ecmascript.object.Object">prototype</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="constructor_summary" id="constructor_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%"><code>public</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#AdfSwipeSupport_Object__Object__Object_" title="constructor in this class">AdfSwipeSupport</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> element, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> callbacks, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> options)</code></dt>
+<dd>
+<div>Helps you add support for pan actions and swipe gestures.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="method_summary" id="method_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_cancelPanning_Object__Object_" title="method in this class">_cancelPanning</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> gestureEvent)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_cleanupState__" title="method in this class">_cleanupState</a></strong>()</code></dt>
+<dd>
+<div>Cleans up state at the completion or abort of pan action</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getDirection_Object_" title="method in this class">_getDirection</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> distance)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getGestureEvent_Object__Object__Object_" title="method in this class">_getGestureEvent</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> eventType, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> srcEvent, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> pos)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handleMouseDown_Object_" title="method in this class">_handleMouseDown</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handlePanCancel_Object_" title="method in this class">_handlePanCancel</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd>
+<div>Process the touchcancel event.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handlePanEnd_Object_" title="method in this class">_handlePanEnd</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd>
+<div>Process the touchend/mouseup into panend/swipe</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handlePanning_Object_" title="method in this class">_handlePanning</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd>
+<div>Process Mousemove/touchmove handler into pan action</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handlePointerDown_Object_" title="method in this class">_handlePointerDown</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handleTouchStart_Object_" title="method in this class">_handleTouchStart</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#Init_Object__Object__Object_" title="method in this class">Init</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> element, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> callbacks, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> options)</code></dt>
+<dd>
+<div>Initializes the instance.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#InitClass__" title="method in this class">InitClass</a></strong>()</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_initiatePanning_Object_" title="method in this class">_initiatePanning</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd>
+<div>Sets up the event listeners to handle mousemove/touchmove and touchend/mouseup operations and process them into pan and swipe gesture.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_invokeCallback_Object__Object_" title="method in this class">_invokeCallback</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> type, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> gestureEvent)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_isSwipe_Object_" title="method in this class">_isSwipe</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> gestureEvent)</code></dt>
+<dd>
+<div>Is swipe if the distance and velocity threshold are crossed</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#release__" title="method in this class">release</a></strong>()</code></dt>
+<dd>
+<div>Clears the events registered.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_shouldPreventPanning_Object_" title="method in this class">_shouldPreventPanning</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd>
+<div>Don't initiate swipe if the event is cancelled or a drag is in progress</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Methods inherited from oracle.adf.view.js.base.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#adopt_Object_" title="method in oracle.adf.view.js.base.AdfObject">adopt</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#clone__" title="method in oracle.adf.view.js.base.AdfObject">clone</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createCallback_Object_" title="method in oracle.adf.view.js.base.AdfObject">createCallback</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createInitializedObject__" title="method in oracle.adf.view.js.base.AdfObject">createInitializedObject</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createSubclass_Function__Function__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">createSubclass</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#ensureClassInitialization_Function_" title="method in oracle.adf.view.js.base.AdfObject">ensureClassInitialization</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#equals_Object_" title="method in oracle.adf.view.js.base.AdfObject">equals</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#exportPrototypeSymbol_string__Object_" title="method in oracle.adf.view.js.base.AdfObject">exportPrototypeSymbol</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#getClass_Object_" title="method in oracle.adf.view.js.base.AdfObject">getClass</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyArrayProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyArrayProperty</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyMapProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyMapProperty</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#getTypeName__" title="method in oracle.adf.view.js.base.AdfObject">getTypeName</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#toDebugString__" title="method in oracle.adf.view.js.base.AdfObject">toDebugString</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#toString__" title="method in oracle.adf.view.js.base.AdfObject">toString</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="field_detail" id="field_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="CALLBACK_PARAM" id="CALLBACK_PARAM"><!-- --></a></p>
+<h3 class="DetailHeader">CALLBACK_PARAM</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>CALLBACK_PARAM</strong></code></dt>
+</dl>
+<hr>
+<p><a name="O_callbackParam" id="O_callbackParam"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_callbackParam</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_callbackParam</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_callbacks" id="O_callbacks"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_callbacks</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_callbacks</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="DIRECTION_DOWN" id="DIRECTION_DOWN"><!-- --></a></p>
+<h3 class="DetailHeader">DIRECTION_DOWN</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>DIRECTION_DOWN</strong></code></dt>
+</dl>
+<hr>
+<p><a name="DIRECTION_LEFT" id="DIRECTION_LEFT"><!-- --></a></p>
+<h3 class="DetailHeader">DIRECTION_LEFT</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>DIRECTION_LEFT</strong></code></dt>
+<dd><br>
+<div>Swipe and PAN direction</div>
+</dd>
+</dl>
+<hr>
+<p><a name="DIRECTION_RIGHT" id="DIRECTION_RIGHT"><!-- --></a></p>
+<h3 class="DetailHeader">DIRECTION_RIGHT</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>DIRECTION_RIGHT</strong></code></dt>
+</dl>
+<hr>
+<p><a name="DIRECTION_UP" id="DIRECTION_UP"><!-- --></a></p>
+<h3 class="DetailHeader">DIRECTION_UP</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>DIRECTION_UP</strong></code></dt>
+</dl>
+<hr>
+<p><a name="O_element" id="O_element"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_element</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_element</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_isVertical" id="O_isVertical"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_isVertical</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_isVertical</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="MODE" id="MODE"><!-- --></a></p>
+<h3 class="DetailHeader">MODE</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>MODE</strong></code></dt>
+</dl>
+<hr>
+<p><a name="MODE_VERTICAL" id="MODE_VERTICAL"><!-- --></a></p>
+<h3 class="DetailHeader">MODE_VERTICAL</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>MODE_VERTICAL</strong></code></dt>
+</dl>
+<hr>
+<p><a name="O_MOUSE_SWIPE_DISTANCE_THRESHOLD" id="O_MOUSE_SWIPE_DISTANCE_THRESHOLD"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_MOUSE_SWIPE_DISTANCE_THRESHOLD</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_MOUSE_SWIPE_DISTANCE_THRESHOLD</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="PANCANCEL_CALLBACK" id="PANCANCEL_CALLBACK"><!-- --></a></p>
+<h3 class="DetailHeader">PANCANCEL_CALLBACK</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>PANCANCEL_CALLBACK</strong></code></dt>
+</dl>
+<hr>
+<p><a name="PANEND_CALLBACK" id="PANEND_CALLBACK"><!-- --></a></p>
+<h3 class="DetailHeader">PANEND_CALLBACK</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>PANEND_CALLBACK</strong></code></dt>
+</dl>
+<hr>
+<p><a name="PANNING_CALLBACK" id="PANNING_CALLBACK"><!-- --></a></p>
+<h3 class="DetailHeader">PANNING_CALLBACK</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>PANNING_CALLBACK</strong></code></dt>
+</dl>
+<hr>
+<p><a name="PANSTART_CALLBACK" id="PANSTART_CALLBACK"><!-- --></a></p>
+<h3 class="DetailHeader">PANSTART_CALLBACK</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>PANSTART_CALLBACK</strong></code></dt>
+<dd><br>
+<div>Callback and event names</div>
+</dd>
+</dl>
+<hr>
+<p><a name="SUPPORT_MOUSE" id="SUPPORT_MOUSE"><!-- --></a></p>
+<h3 class="DetailHeader">SUPPORT_MOUSE</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>SUPPORT_MOUSE</strong></code></dt>
+<dd><br>
+<div>Optional properties</div>
+</dd>
+</dl>
+<hr>
+<p><a name="O_supportMouse" id="O_supportMouse"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_supportMouse</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_supportMouse</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="SWIPE_CALLBACK" id="SWIPE_CALLBACK"><!-- --></a></p>
+<h3 class="DetailHeader">SWIPE_CALLBACK</h3>
+<dl>
+<dt><code>public static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>SWIPE_CALLBACK</strong></code></dt>
+</dl>
+<hr>
+<p><a name="O_SWIPE_DISTANCE_THRESHOLD" id="O_SWIPE_DISTANCE_THRESHOLD"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_SWIPE_DISTANCE_THRESHOLD</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_SWIPE_DISTANCE_THRESHOLD</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_SWIPE_VELOCITY_THRESHOLD" id="O_SWIPE_VELOCITY_THRESHOLD"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_SWIPE_VELOCITY_THRESHOLD</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_SWIPE_VELOCITY_THRESHOLD</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_TOUCH_ACTION_PANX_CLASS" id="O_TOUCH_ACTION_PANX_CLASS"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_TOUCH_ACTION_PANX_CLASS</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_TOUCH_ACTION_PANX_CLASS</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_TOUCH_ACTION_PANY_CLASS" id="O_TOUCH_ACTION_PANY_CLASS"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_TOUCH_ACTION_PANY_CLASS</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_TOUCH_ACTION_PANY_CLASS</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_USER_SELECT_NONE_CLASS" id="O_USER_SELECT_NONE_CLASS"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_USER_SELECT_NONE_CLASS</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_USER_SELECT_NONE_CLASS</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_usesPointerEvents" id="O_usesPointerEvents"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_usesPointerEvents</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_usesPointerEvents</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="constructor_detail" id="constructor_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="AdfSwipeSupport_Object__Object__Object_" id="AdfSwipeSupport_Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader">AdfSwipeSupport</h3>
+<dl>
+<dt><code>public <strong>AdfSwipeSupport</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> element,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> callbacks,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> options)</code></dt>
+<dd><br>
+<div>Helps you add support for pan actions and swipe gestures. Current implementation supports horizontal or vertical swipe gestures. If there is a need, this class can be enhanced to support both. Note: Vertical swipe gesture would mean preventing default action of page scroll, and hence it isn't the most desired gesture support. Current implementation just invokes the callback. If needed it can be enhanced in future to queue custom DOM events.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>element</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The element on which the gesture should be recognized</td>
+</tr>
+<tr>
+<td valign="top"><code>callbacks</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Object of gesture name and callback method references See the callbacks supported in the doc. The callbacks needs to be wrapped with AdfObject#createCallback call for the the context to be set correctly on callback invocation.</td>
+</tr>
+<tr>
+<td valign="top"><code>options</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Optional properties for the gesture support a) SUPPORT_MOUSE: True if mouse actions should also results in gesture actions. Note: Text selection will be disabled if mouse actions needs to be supported. b) MODE: MODE_VERTICAL for vertical swipe gesture support. If not set (default), horizontal swipe gesture will be supported. c) CALLBACK_PARAM: The object assigned to this will be passed to the gesture callbacks as the second parameter. Helpful for stateless peers to get hold of component in the callbacks.</td>
+</tr>
+</table>
+</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="method_detail" id="method_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="O_cancelPanning_Object__Object_" id="O_cancelPanning_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_cancelPanning</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _cancelPanning</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> gestureEvent)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>gestureEvent</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_cleanupState__" id="O_cleanupState__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_cleanupState</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _cleanupState</strong>()</code></dt>
+<dd><br>
+<div>Cleans up state at the completion or abort of pan action</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_getDirection_Object_" id="O_getDirection_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getDirection</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _getDirection</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> distance)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>distance</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_getGestureEvent_Object__Object__Object_" id="O_getGestureEvent_Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getGestureEvent</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _getGestureEvent</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> eventType,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> srcEvent,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> pos)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>eventType</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>srcEvent</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>pos</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handleMouseDown_Object_" id="O_handleMouseDown_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handleMouseDown</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handleMouseDown</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handlePanCancel_Object_" id="O_handlePanCancel_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handlePanCancel</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handlePanCancel</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd><br>
+<div>Process the touchcancel event. Can be used for reverting the pan action initiated in UI. Can also be used to support ESC key if required in future.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handlePanEnd_Object_" id="O_handlePanEnd_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handlePanEnd</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handlePanEnd</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd><br>
+<div>Process the touchend/mouseup into panend/swipe</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handlePanning_Object_" id="O_handlePanning_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handlePanning</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handlePanning</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd><br>
+<div>Process Mousemove/touchmove handler into pan action</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handlePointerDown_Object_" id="O_handlePointerDown_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handlePointerDown</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handlePointerDown</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handleTouchStart_Object_" id="O_handleTouchStart_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handleTouchStart</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handleTouchStart</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="Init_Object__Object__Object_" id="Init_Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader">Init</h3>
+<dl>
+<dt><code>protected <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> Init</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> element,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> callbacks,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> options)</code></dt>
+<dd><br>
+<div>Initializes the instance. Subclasses of AdfObject must call their superclass' Init</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>element</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>callbacks</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>options</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#Init__" title="method in oracle.adf.view.js.base.AdfObject">Init()</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="InitClass__" id="InitClass__"><!-- --></a></p>
+<h3 class="DetailHeader">InitClass</h3>
+<dl>
+<dt><code>protected static <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> InitClass</strong>()</code></dt>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_initiatePanning_Object_" id="O_initiatePanning_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_initiatePanning</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _initiatePanning</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd><br>
+<div>Sets up the event listeners to handle mousemove/touchmove and touchend/mouseup operations and process them into pan and swipe gesture.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_invokeCallback_Object__Object_" id="O_invokeCallback_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_invokeCallback</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _invokeCallback</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> type,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> gestureEvent)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>type</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>gestureEvent</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_isSwipe_Object_" id="O_isSwipe_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_isSwipe</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _isSwipe</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> gestureEvent)</code></dt>
+<dd><br>
+<div>Is swipe if the distance and velocity threshold are crossed</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>gestureEvent</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="release__" id="release__"><!-- --></a></p>
+<h3 class="DetailHeader">release</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> release</strong>()</code></dt>
+<dd><br>
+<div>Clears the events registered. To be invoked from ComponentRemoved handler.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_shouldPreventPanning_Object_" id="O_shouldPreventPanning_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_shouldPreventPanning</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _shouldPreventPanning</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd><br>
+<div>Don't initiate swipe if the event is cancelled or a drag is in progress</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<!-- ====== START OF NAVBAR ====== -->
+<hr>
+<p><a name="navbar_bottom" id="navbar_bottom"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../../../oracle/adfinternal/view/js/data/AdfSvgInMemoryCache.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../../../oracle/adfinternal/view/js/laf/dhtml/rich/AdfSwipeToRevealUtils.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../../../index.html?oracle/adfinternal/view/js/laf/dhtml/rich/AdfSwipeSupport.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfSwipeSupport.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div class="CreationTime">Generated on 2018.06.28 06:41 UTC</div>
+<center>Copyright (c) 1998, 2018, Oracle and/or its affiliates. All rights reserved.</center>
+</body>
+</html>

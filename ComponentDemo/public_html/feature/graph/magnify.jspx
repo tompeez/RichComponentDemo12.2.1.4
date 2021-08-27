@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Magnify" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Graph Magnify"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Graph Magnify"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:panelGroupLayout layout="vertical">
+                            <af:outputText value="Magnify" inlineStyle="font-size:16px;"/>
+                            <af:spacer height="10"/>
+                            <af:outputText value="This demo is made for mobile devices" inlineStyle="font-size:14px;"/>
+                            <af:spacer height="10"/>
+                            <dvt:scatterGraph id="hideShowSeriesDemo_ShowMagnify" contentDelivery="immediate"
+                                              inlineStyle="width:800px;height:400px;" imageFormat="HTML5"
+                                              tabularData="#{graphInteractivityBean.manySeriesData}" magnifyLens="auto" />
+                        </af:panelGroupLayout>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="validateByteLength Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="validateByteLength"/>
+        <f:attribute name="demoKind" value="validator"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:messages id="m1"/>
+            <af:outputText styleClass="AFInstructionText"
+                           value="Example to demonstrate the byte length validator.  Enter a value and tab out of the field."
+                           id="ot1"/>
+            <af:panelFormLayout id="pfl1">
+              <af:inputText value="#{validate.byteLengthValue}" label="Byte length validator"
+                            shortDesc="examples of values that will fail validation: 'ffffff' or '777777'"
+                            id="it1">
+                <af:validateByteLength encoding="ISO-8859-1" maximum="4"/>
+              </af:inputText>
+              <af:inputText value="#{validate.byteLengthValue2}"
+                            label="Byte length validator with custom message"
+                            shortDesc="examples of values that will fail validation: 'ffffff' or '777777'"
+                            id="it2">
+                <af:validateByteLength encoding="ISO-8859-1" maximum="4"
+                                       messageDetailMaximum="The value {1} does not fit the number of {2} bytes"/>
+              </af:inputText>
+            </af:panelFormLayout>
+            <af:commandButton text="Submit" id="cb1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

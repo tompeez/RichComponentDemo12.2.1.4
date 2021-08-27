@@ -1,0 +1,423 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelStretchLayout Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript" source="/jsLibs/TestPanelStretchLayout.js"/>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelStretchLayout"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="header2Size" value="auto"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="centerMode" value="tabs"/>
+        <f:attribute name="gmFlowNotes" value="When flowing this component, the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmFlowWithZeroWidthNotes" value="When flowing this component, the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmStretchChildren" value="first"/>
+        <f:facet name="contextLocal">
+          <af:panelGroupLayout layout="horizontal" valign="middle"
+                               inlineStyle="padding-left: 10px; padding-right: 10px;"
+                               id="pgl1">
+            <af:commandButton id="resetVisibilityButton" immediate="true" partialSubmit="true"
+                              text="Reset Visibility Changes"
+                              action="#{demoPanelStretchLayout.resetVisibilities}"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="demoTab">
+          <af:panelStretchLayout binding="#{editor.component}" id="stretchExample" topHeight="120"
+                                 bottomHeight="120" startWidth="150" endWidth="150"
+                                 dimensionsFrom="auto"
+                                 partialTriggers="resetVisibilityButton localVisibleCheckbox">
+            <f:facet name="top">
+              <aftest:panelResizeNotify id="topChild"
+                                        binding="#{demoPanelStretchLayout.topFacet}">
+                <f:facet name="center">
+                  <af:commandButton id="topHideButton" text="Hide"
+                                    action="#{demoPanelStretchLayout.hideTop}"
+                                    partialSubmit="true">
+                    <af:clientListener type="action"
+                                       method="TestPanelStretchLayout.toggleVisibility"/>
+                  </af:commandButton>
+                </f:facet>
+              </aftest:panelResizeNotify>
+            </f:facet>
+            <f:facet name="start">
+              <aftest:panelResizeNotify id="startChild"
+                                        binding="#{demoPanelStretchLayout.startFacet}">
+                <f:facet name="center">
+                  <af:commandButton id="startHideButton" text="Hide"
+                                    action="#{demoPanelStretchLayout.hideStart}"
+                                    partialSubmit="true">
+                    <af:clientListener type="action"
+                                       method="TestPanelStretchLayout.toggleVisibility"/>
+                  </af:commandButton>
+                </f:facet>
+              </aftest:panelResizeNotify>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelSplitter id="centerChild" binding="#{demoPanelStretchLayout.centerFacet}"
+                                dimensionsFrom="auto">
+                <f:facet name="first">
+                  <af:panelGroupLayout layout="scroll" id="pgl2">
+                    <af:panelHeader text="Visibility Tests" id="ph1">
+                      <af:panelGroupLayout layout="vertical" id="pgl3">
+                        <af:selectBooleanCheckbox clientComponent="true" id="localVisibleCheckbox"
+                                                  text="Set visible locally"
+                                                  valueChangeListener="#{demoPanelStretchLayout.visibilityModeChanged}"
+                                                  autoSubmit="true"/>
+                        <af:commandButton id="topShowButton" text="Show Top"
+                                          action="#{demoPanelStretchLayout.showTop}"
+                                          partialSubmit="true">
+                          <af:clientListener type="action"
+                                             method="TestPanelStretchLayout.toggleVisibility"/>
+                        </af:commandButton>
+                        <af:commandButton id="startShowButton" text="Show Start"
+                                          action="#{demoPanelStretchLayout.showStart}"
+                                          partialSubmit="true">
+                          <af:clientListener type="action"
+                                             method="TestPanelStretchLayout.toggleVisibility"/>
+                        </af:commandButton>
+                        <af:commandButton id="endShowButton" text="Show End"
+                                          action="#{demoPanelStretchLayout.showEnd}"
+                                          partialSubmit="true">
+                          <af:clientListener type="action"
+                                             method="TestPanelStretchLayout.toggleVisibility"/>
+                        </af:commandButton>
+                        <af:commandButton id="bottomShowButton" text="Show Bottom"
+                                          action="#{demoPanelStretchLayout.showBottom}"
+                                          partialSubmit="true">
+                          <af:clientListener type="action"
+                                             method="TestPanelStretchLayout.toggleVisibility"/>
+                        </af:commandButton>
+                      </af:panelGroupLayout>
+                    </af:panelHeader>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="second">
+                  <aftest:panelResizeNotify id="prn1">
+                    <f:facet name="center">
+                      <af:commandButton id="centerHideButton" text="Hide"
+                                        action="#{demoPanelStretchLayout.hideCenter}"
+                                        partialSubmit="true">
+                        <af:clientListener type="action"
+                                           method="TestPanelStretchLayout.toggleVisibility"/>
+                      </af:commandButton>
+                    </f:facet>
+                  </aftest:panelResizeNotify>
+                </f:facet>
+              </af:panelSplitter>
+            </f:facet>
+            <f:facet name="end">
+              <aftest:panelResizeNotify id="endChild"
+                                        binding="#{demoPanelStretchLayout.endFacet}">
+                <f:facet name="center">
+                  <af:commandButton id="endHideButton" text="Hide"
+                                    action="#{demoPanelStretchLayout.hideEnd}"
+                                    partialSubmit="true">
+                    <af:clientListener type="action"
+                                       method="TestPanelStretchLayout.toggleVisibility"/>
+                  </af:commandButton>
+                </f:facet>
+              </aftest:panelResizeNotify>
+            </f:facet>
+            <f:facet name="bottom">
+              <aftest:panelResizeNotify id="bottomChild"
+                                        binding="#{demoPanelStretchLayout.bottomFacet}">
+                <f:facet name="center">
+                  <af:commandButton id="bottomHideButton" text="Hide"
+                                    action="#{demoPanelStretchLayout.hideBottom}"
+                                    partialSubmit="true">
+                    <af:clientListener type="action"
+                                       method="TestPanelStretchLayout.toggleVisibility"/>
+                  </af:commandButton>
+                </f:facet>
+              </aftest:panelResizeNotify>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="otherTab">
+          <aftest:testGeometryManagement id="othrGM" stretchChildren="first">
+            <af:panelStretchLayout id="autoHeightExample" topHeight="auto" bottomHeight="auto"
+                                   startWidth="auto" endWidth="auto" dimensionsFrom="auto"
+                                   partialTriggers="resetVisibilityButton localVisibleCheckbox2">
+              <f:facet name="top">
+                <af:panelGroupLayout id="topChild2" clientComponent="true"
+                                     binding="#{demoPanelStretchLayout.top2Facet}" layout="vertical"
+                                     inlineStyle="background-color:#DDDDDD; border:2px solid #999999; padding:5px;">
+                  <af:popup id="popupTopNotes" contentDelivery="lazy">
+                    <af:noteWindow inlineStyle="width:300px" id="nw1">
+                      <af:outputText value="This is content for the top facet of a
+                                            panelStretchLayout that has its topHeight value set to
+                                            auto.  This means that the top facet content will not
+                                            be stretched and instead will be given a size by the
+                                            web browser.  It is much slower to do this than you
+                                            providing a height so it is not recommended that you
+                                            use this type of topHeight unless absolutely
+                                            needed." id="ot1"/>
+                    </af:noteWindow>
+                  </af:popup>
+                  <af:commandLink id="topNotesText" text="Show notes about this facet">
+                    <af:showPopupBehavior popupId="popupTopNotes"
+                                          triggerType="action" alignId="topNotesText"/>
+                  </af:commandLink>
+                  <af:outputText id="topTimestamp"
+                                 value="#{demoPanelStretchLayout.timestamp}"/>
+                  <af:panelBox disclosed="true" text="panelBox" id="pb1">
+                    <af:showDetail disclosed="false" id="sd1">
+                      <af:panelGroupLayout layout="vertical" id="pgl4">
+                        <af:outputText value="To illustrate additional capabilities for automatic heights in the
+                                 panelStretchLayout, this is some extra content that can be shown or
+                                 hidden (from a descendant in the component tree) that will change how
+                                 much height the panelStretchLayout component needs to allocate."
+                                       id="ot2"/>
+                        <af:commandLink text="Perform link style change"
+                                        id="commandLink1">
+                          <af:clientListener type="action"
+                                             method="TestPanelStretchLayout.styleChange"/>
+                        </af:commandLink>
+                        <af:commandLink text="Perform link text change"
+                                        id="commandLink2">
+                          <af:clientListener type="action"
+                                             method="TestPanelStretchLayout.textChange"/>
+                        </af:commandLink>
+                      </af:panelGroupLayout>
+                    </af:showDetail>
+                  </af:panelBox>
+                  <af:commandButton id="topHideButton2" text="Hide"
+                                    action="#{demoPanelStretchLayout.hideTop}" partialSubmit="true">
+                    <af:clientListener type="action"
+                                       method="TestPanelStretchLayout.toggleVisibility2"/>
+                  </af:commandButton>
+                </af:panelGroupLayout>
+              </f:facet>
+              <f:facet name="start">
+                <!-- This content cannot rely on percentage widths or be any component that would
+                     naturally consume the entire width of its surrounding container for the use
+                     of "auto" to be effective.  Instead, the contents must use a stable,
+                     stand-alone width (not dependent upon the width of its parent container) when
+                     "auto" is specified. -->
+                <af:panelLabelAndMessage id="startChild2" clientComponent="true"
+                                         binding="#{demoPanelStretchLayout.start2Facet}"
+                                         label="Some label" for="startField"
+                                         labelStyle="vertical-align: top; padding: 5px;"
+                                         inlineStyle="background-color:#DDDDDD;">
+                  <af:panelGroupLayout id="startVerticalLayout" layout="vertical"
+                                       inlineStyle="padding: 5px;">
+                    <af:inputText id="startField" label="Some label" simple="true" columns="4"
+                                  clientComponent="true"/>
+                    <af:popup id="popupStartNotes" contentDelivery="lazy">
+                      <af:noteWindow inlineStyle="width:300px" id="nw2">
+                        <af:outputText value="This is content for the start facet of a
+                                              panelStretchLayout that has its startWidth value set
+                                              to auto.  This means that the start facet content
+                                              will not be stretched and instead will be given a
+                                              size by the web browser.  It is much slower to do
+                                              this than you providing a CSS length for the
+                                              startWidth so it is not recommended that you use
+                                              this type of startWidth unless absolutely needed.
+                                              Note that the content's width must also be stable
+                                              and not based on the container's width for this to
+                                              work.  Typically you would use auto for this in a
+                                              panelStretchLayout where the center facet contains
+                                              navigationPane tabs and the start facet contains
+                                              something like a search field."
+                                       id="ot3"/>
+                      </af:noteWindow>
+                    </af:popup>
+                    <af:commandLink id="startNotesText" text="Show notes about this facet">
+                      <af:showPopupBehavior popupId="popupStartNotes"
+                                            triggerType="action" alignId="startNotesText"/>
+                    </af:commandLink>
+                    <af:outputText id="startTimestamp"
+                                   value="#{demoPanelStretchLayout.timestamp}"/>
+                    <af:commandLink text="Perform input style change"
+                                    id="startCommandLink1">
+                      <af:clientListener type="action"
+                                         method="TestPanelStretchLayout.styleChangeOnInput"/>
+                    </af:commandLink>
+                    <af:commandLink text="Perform label change"
+                                    id="startCommandLink2">
+                      <af:clientListener type="action"
+                                         method="TestPanelStretchLayout.labelChange"/>
+                    </af:commandLink>
+                    <af:commandButton id="startHideButton2" text="Hide"
+                                      action="#{demoPanelStretchLayout.hideStart}"
+                                      partialSubmit="true">
+                      <af:clientListener type="action"
+                                         method="TestPanelStretchLayout.toggleVisibility2"/>
+                    </af:commandButton>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+              </f:facet>
+              <f:facet name="center">
+                <af:panelSplitter id="centerChild2" dimensionsFrom="auto"
+                                  binding="#{demoPanelStretchLayout.center2Facet}">
+                  <f:facet name="first">
+                    <af:panelGroupLayout layout="scroll" id="pgl5">
+                      <af:panelHeader text="Visibility Tests" id="ph2">
+                        <af:panelGroupLayout layout="vertical" id="pgl6">
+                          <af:selectBooleanCheckbox clientComponent="true"
+                                                    id="localVisibleCheckbox2"
+                                                    text="Set visible locally"
+                                                    valueChangeListener="#{demoPanelStretchLayout.visibilityModeChanged}"
+                                                    autoSubmit="true"/>
+                          <af:commandButton id="topShowButton2" text="Show Top"
+                                            action="#{demoPanelStretchLayout.showTop}"
+                                            partialSubmit="true">
+                            <af:clientListener type="action"
+                                               method="TestPanelStretchLayout.toggleVisibility2"/>
+                          </af:commandButton>
+                          <af:commandButton id="startShowButton2" text="Show Start"
+                                            action="#{demoPanelStretchLayout.showStart}"
+                                            partialSubmit="true">
+                            <af:clientListener type="action"
+                                               method="TestPanelStretchLayout.toggleVisibility2"/>
+                          </af:commandButton>
+                          <af:commandButton id="endShowButton2" text="Show End"
+                                            action="#{demoPanelStretchLayout.showEnd}"
+                                            partialSubmit="true">
+                            <af:clientListener type="action"
+                                               method="TestPanelStretchLayout.toggleVisibility2"/>
+                          </af:commandButton>
+                          <af:commandButton id="bottomShowButton2" text="Show Bottom"
+                                            action="#{demoPanelStretchLayout.showBottom}"
+                                            partialSubmit="true">
+                            <af:clientListener type="action"
+                                               method="TestPanelStretchLayout.toggleVisibility2"/>
+                          </af:commandButton>
+                        </af:panelGroupLayout>
+                      </af:panelHeader>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <f:facet name="second">
+                    <aftest:panelResizeNotify id="prn2">
+                      <f:facet name="center">
+                        <af:commandButton id="centerHideButton2" text="Hide"
+                                          action="#{demoPanelStretchLayout.hideCenter}"
+                                          partialSubmit="true">
+                          <af:clientListener type="action"
+                                             method="TestPanelStretchLayout.toggleVisibility2"/>
+                        </af:commandButton>
+                      </f:facet>
+                    </aftest:panelResizeNotify>
+                  </f:facet>
+                </af:panelSplitter>
+              </f:facet>
+              <f:facet name="end">
+                <af:panelLabelAndMessage id="endChild2" clientComponent="true"
+                                         binding="#{demoPanelStretchLayout.end2Facet}"
+                                         label="Some label" for="endField"
+                                         labelStyle="vertical-align: top; padding: 5px;"
+                                         inlineStyle="background-color:#DDDDDD;">
+                  <af:panelGroupLayout id="endVerticalLayout" layout="vertical"
+                                       inlineStyle="padding: 5px;">
+                    <af:inputText id="endField" label="Some label" simple="true" columns="4"
+                                  clientComponent="true"/>
+                    <af:popup id="popupEndNotes" contentDelivery="lazy">
+                      <af:noteWindow inlineStyle="width:300px" id="nw3">
+                        <af:outputText value="This is content for the end facet of a
+                                              panelStretchLayout that has its endWidth value set
+                                              to auto.  This means that the end facet content
+                                              will not be stretched and instead will be given a
+                                              size by the web browser.  It is much slower to do
+                                              this than you providing a CSS length for the
+                                              endWidth so it is not recommended that you use
+                                              this type of endWidth unless absolutely needed.
+                                              Note that the content's width must also be stable
+                                              and not based on the container's width for this to
+                                              work.  Typically you would use auto for this in a
+                                              panelStretchLayout where the center facet contains
+                                              navigationPane tabs and the end facet contains
+                                              something like a search field."
+                                       id="ot4"/>
+                      </af:noteWindow>
+                    </af:popup>
+                    <af:commandLink id="endNotesText" text="Show notes about this facet">
+                      <af:showPopupBehavior popupId="popupEndNotes"
+                                            triggerType="action" alignId="endNotesText"/>
+                    </af:commandLink>
+                    <af:outputText id="endTimestamp"
+                                   value="#{demoPanelStretchLayout.timestamp}"/>
+                    <af:commandLink text="Perform input style change"
+                                    id="endCommandLink1">
+                      <af:clientListener type="action"
+                                         method="TestPanelStretchLayout.styleChangeOnInput"/>
+                    </af:commandLink>
+                    <af:commandLink text="Perform label change"
+                                    id="endCommandLink2">
+                      <af:clientListener type="action"
+                                         method="TestPanelStretchLayout.labelChange"/>
+                    </af:commandLink>
+                    <af:commandButton id="endHideButton2" text="Hide"
+                                      action="#{demoPanelStretchLayout.hideEnd}"
+                                      partialSubmit="true">
+                      <af:clientListener type="action"
+                                         method="TestPanelStretchLayout.toggleVisibility2"/>
+                    </af:commandButton>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+              </f:facet>
+              <f:facet name="bottom">
+                <af:panelGroupLayout id="bottomChild2" clientComponent="true"
+                                     binding="#{demoPanelStretchLayout.bottom2Facet}"
+                                     layout="vertical"
+                                     inlineStyle="background-color:#DDDDDD; border:2px solid #999999; padding:5px;">
+                  <af:popup id="popupBottomNotes" contentDelivery="lazy">
+                    <af:noteWindow inlineStyle="width:300px" id="nw4">
+                      <af:outputText value="This is content for the bottom facet of a
+                                            panelStretchLayout that has its bottomHeight value set
+                                            to auto.  This means that the bottom facet content
+                                            will not be stretched and instead will be given a size
+                                            by the web browser.  It is much slower to do this than
+                                            you providing a height so it is not recommended that
+                                            you use this type of bottomHeight unless absolutely
+                                            needed." id="ot5"/>
+                    </af:noteWindow>
+                  </af:popup>
+                  <af:commandLink id="bottomNotesText" text="Show notes about this facet">
+                    <af:showPopupBehavior popupId="popupBottomNotes"
+                                          triggerType="action" alignId="bottomNotesText"/>
+                  </af:commandLink>
+                  <af:outputText id="bottomTimestamp"
+                                 value="#{demoPanelStretchLayout.timestamp}"/>
+                  <af:showDetail disclosed="false" id="sd2">
+                    <af:panelGroupLayout layout="vertical" id="pgl7">
+                      <af:outputText value="To illustrate additional capabilities for automatic heights in the
+                               panelStretchLayout, this is some extra content that can be shown or
+                               hidden (from a descendant in the component tree) that will change how
+                               much height the panelStretchLayout component needs to allocate."
+                                     id="ot6"/>
+                      <af:commandLink text="Perform link style change"
+                                      id="commandLink3">
+                        <af:clientListener type="action"
+                                           method="TestPanelStretchLayout.styleChange"/>
+                      </af:commandLink>
+                      <af:commandLink text="Perform link text change"
+                                      id="commandLink4">
+                        <af:clientListener type="action"
+                                           method="TestPanelStretchLayout.textChange"/>
+                      </af:commandLink>
+                    </af:panelGroupLayout>
+                  </af:showDetail>
+                  <af:commandButton id="bottomHideButton2" text="Hide"
+                                    action="#{demoPanelStretchLayout.hideBottom}"
+                                    partialSubmit="true">
+                    <af:clientListener type="action"
+                                       method="TestPanelStretchLayout.toggleVisibility2"/>
+                  </af:commandButton>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:panelStretchLayout>
+          </aftest:testGeometryManagement>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map MapProvider" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Thematic Map MapProvider"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Thematic Map MapProvider"/>
+        <f:facet name="center">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+          <af:panelSplitter orientation="horizontal" splitterPosition="700" styleClass="AFStretchWidth" id="ps1">
+            <f:facet name="first">
+              <dvt:thematicMap id="tm1" summary="Map Provider" basemap="canada"
+                               mapProvider="#{mapProviderBean.callback}" initialZooming="auto">
+                <af:transition transition="auto" triggerType="display"/>
+                <dvt:areaLayer layer="territories" id="al1" labelDisplay="off">
+                  <dvt:areaDataLayer selectionMode="none" id="adl1" value="#{mapProviderBean.territories}" var="row"
+                                     varStatus="rowStatus">
+                    <dvt:areaLocation id="l1" name="#{row.id}">
+                      <dvt:area id="a1" value="#{row.value}">
+                        <dvt:attributeGroups id='ag1' type="color" value="#{row.categories[0]}"
+                                             label="#{row.categories[0] == 'Group 1' ? 'Territory C' : (row.categories[0] == 'Group 2' ? 'Territory A' : 'Territory B')}"/>
+                      </dvt:area>
+                    </dvt:areaLocation>
+                  </dvt:areaDataLayer>
+                </dvt:areaLayer>
+              </dvt:thematicMap>
+            </f:facet>
+            <f:facet name="second">
+              <f:verbatim>                                    
+              <p>This demo displays a custom Canada basemap which uses the MapProvider feature to retrieve geographic 
+              data from a GeoJson formatted zipped file. Using the MapProvider feature, Thematic Map can be configured 
+              to retrieve geographic data from any data source thru the MapProvider APIs, including Oracle eLocation services.</p>
+              <p>The MapProvider APIs allow the custom basemap to be configured and treated like a built-in basemap with all the same functionality
+              including drilling, short/long labels, custom region supprt, pointLocation projections, etc.</p>
+              
+              <b>Here's how to create your own custom basemap using MapProvider: </b><ul>
+              <li><b>Extend <i>oracle.adf.view.faces.bi.component.thematicMap.mapProvider.MapProvider</i></b>
+                <ul><li>This abstract class provides the APIs to render a custom basemap.</li>
+                <li>Using an EL Java callback, pass an implementation of this class to the <i>mapProvider</i> attribute on dvt:thematicMap.</li>
+                <li>See the 
+                <a href="resources/sourceCode/feature/rich/thematicMap/DemoMapProvider.javasource">sample MapProvider implementation</a> used for this demo.</li></ul>
+              </li>
+              <li><b>Use <i>oracle.adf.view.faces.bi.component.thematicMap.mapProvider.MapProviderUtils</i></b>
+                <ul><li>This utility class provides methods for converting various data formats to SVG path commands.</li>
+                <li>Simplifying your geographic data to the correct level of precision and using relative path commands will help speed up rendering.</li></ul>
+              </li>
+              <li><b>Extend <i>orace.adf.view.faces.bi.component.thematicMap.mapProvider.LayerArea</i></b>
+                <ul><li>This abstract class provides APIs to get the data that the Thematic Map component requires to 
+                render a dvt:areaLayer and is used by the getLayerAreas and getChildAreas APIs on the abstract MapProvider class.</li>
+                <li>See the 
+                <a href="/resources/sourceCode/feature/rich/thematicMap/DemoLayerArea.javasource">sample LayerArea implementation</a> used for this demo.</li></ul>
+              </li>
+              <li><b>Extend <i>orace.adf.view.faces.bi.component.thematicMap.mapProvider.Projection</i> if needed. </b>
+                <ul><li>This abstract class provides an API for projecting points from the dvt:pointDataLayer for this 
+                custom basemp and is called by MapProvider.getProjection().</li>
+                <li>An identity projection will be used by default.</li></ul>
+              </li>
+              </ul>
+              </f:verbatim>
+            </f:facet>
+          </af:panelSplitter>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

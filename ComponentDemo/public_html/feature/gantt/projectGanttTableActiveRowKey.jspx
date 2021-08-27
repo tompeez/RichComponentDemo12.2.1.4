@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{ganttFeatureLinks.projectGanttTableActiveRowKeyTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Project Gantt Table Active Row Key"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Project Gantt Table Active Row Key"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START FEATURE DEMO -->
+        <af:outputText id="ot1" value="This page demonstrates the Active Row Key feature. Click the 'Get Active Row Key' button to get the active row key. Click the 'Set Active Row Key' button t set Project 2 as the active row."/>
+          <af:panelGroupLayout id="pg1" layout="horizontal">
+          <af:button text="Set Active Row Key Project 2" id="b2" actionListener="#{projectGanttTableActiveRowKey.handleActionSetActiveData}" />
+          <af:button text="Get Active Row Key" id="b1" actionListener="#{projectGanttTableActiveRowKey.handleActionGetActiveData}" />
+          
+          </af:panelGroupLayout>
+        <dvt:projectGantt id="projectGanttTableActiveRowKey"
+                          startTime="2008-04-01" endTime="2008-09-30"
+                          value="#{projectGanttTableActiveRowKey.model}"
+                          var="task" splitterPosition="350" binding="#{projectGanttTableActiveRowKey.gantt}"
+                          summary="Project Gantt Table Active Row Key">
+          <f:facet name="major">
+            <dvt:timeAxis scale="months" id="ta1"/>
+          </f:facet>
+          <f:facet name="minor">
+            <dvt:timeAxis scale="weeks" id="ta2"/>
+          </f:facet>
+          <f:facet name="nodeStamp">
+            <af:column headerText="Task Name" id="c1">
+              <af:outputText value="#{task.taskName}" id="ot2"/>
+            </af:column>
+          </f:facet>
+          <af:column headerText="Start Date" id="c2">
+            <af:inputDate value="#{projectGanttTableActiveRowKey.taskStartTime}" autoSubmit="true"
+                          valueChangeListener="#{projectGanttTableActiveRowKey.handleStartDateChanged}"
+                          id="id1"/>
+            <!--              <af:outputText value="#{projectGanttClickToEdit.taskStartTime}" id="oust" />-->
+          </af:column>
+          <af:column headerText="End Date" id="c3">
+            <af:inputDate value="#{projectGanttTableActiveRowKey.taskEndTime}" autoSubmit="true"
+                          valueChangeListener="#{projectGanttTableActiveRowKey.handleEndDateChanged}"
+                          id="id2"/>
+          </af:column>
+        </dvt:projectGantt>
+        
+        <!-- END FEATURE DEMO -->        
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/gantt/ganttFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

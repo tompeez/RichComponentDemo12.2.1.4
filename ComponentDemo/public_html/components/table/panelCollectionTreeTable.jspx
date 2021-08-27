@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="PanelCollection TreeTable Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="treeTable"/>
+        <f:attribute name="visualDesignName" value="treeTable"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="25" bottomHeight="150" id="psl1" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:outputFormatted value="&lt;b>PanelCollection TreeTable Demo&lt;/b>"
+                                  id="of1"/>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+                <f:facet name="secondaryToolbar">
+                  <af:menuBar>
+                    <af:goMenuItem text="treeTable" destination="../treeTable.jspx"/>
+                  </af:menuBar>
+                </f:facet>
+                <f:facet name="afterToolbar">
+                  <af:menuBar>
+                    <af:commandMenuItem immediate="true" text="TagGuide" action="guide"/>
+                    <af:goMenuItem text="view page source" destination="#{facesContext.viewRoot.viewId}.source"/>
+                  </af:menuBar>
+                </f:facet>
+                <af:treeTable id="folderTree" focusRowKey="#{fs.defaultFocusRowKey}"
+                               focusListener="#{fs.onTreeFocus}"
+                               disclosedRowKeys="#{fs.treeDisclosedRowKeys}"
+                              var="directory" rowSelection="multiple" columnSelection="multiple"
+                              columnStretching="last" value="#{fs.treeModel}"
+                              binding="#{editor.component}"
+                              rowDisclosureListener="#{fs.toggle}" summary="treeTable data">
+                  <af:column width="40" rowHeader="true" headerText="Row Number"
+                             id="c1"/>
+                  <f:facet name="nodeStamp">
+                    <af:column headerText="Directory Name" width="200" sortable="true" rowHeader="unstyled"
+                               sortProperty="name" id="c2">
+                      <af:panelGroupLayout id="pgl1">
+                        <af:image source="#{directory.icon}" id="nodeIcon"
+                                  inlineStyle="#{demoSkin.altaBased 
+                                       ? 'padding-left:4px; padding-right:8px; vertical-align:middle; height:16px; width:16px;'
+                                       : 'margin-right:3px; vertical-align:middle; height:16px; width:16px;'}"
+                                  shortDesc="directory icon"/>
+                        <af:outputText id="directoryStamp" inlineStyle="vertical-align:middle" value="#{directory.name}"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                  </f:facet>
+                  <f:facet name="pathStamp">
+                    <af:panelGroupLayout id="pgl2">
+                      <af:image source="#{directory.icon}" inlineStyle="#{demoSkin.altaBased 
+                                       ? 'padding-left:4px; padding-right:8px; vertical-align:middle; height:16px; width:16px;'
+                                       : 'margin-right:3px; vertical-align:middle; height:16px; width:16px;'}"
+                                shortDesc="directory icon" id="i1"/>
+                      <af:outputText value="#{directory.name}" id="ot1"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <af:column headerText="Icon" id="c3">
+                    <af:outputText id="iconStamp" value="#{directory.icon}"/>
+                  </af:column>
+                  <af:column headerText="Last Modified" width="200" id="c4">
+                    <af:outputText id="modifiedStamp" value="#{directory.lastModified}"/>
+                  </af:column>
+                  <af:column headerText="Column A" visible="false" id="c5">
+                    <af:outputText id="colA" />
+                  </af:column>
+                  <af:column headerText="Column B" visible="false" id="c6">
+                    <af:outputText id="colB" />
+                  </af:column>
+                  <af:column headerText="Column C" visible="false" id="c7">
+                    <af:outputText id="colC" />
+                  </af:column>
+                  <af:column headerText="Column D" visible="false" id="c8">
+                    <af:outputText id="colD" />
+                  </af:column>
+                  <af:column headerText="Column E" visible="false" id="c9">
+                    <af:outputText id="colE" />
+                  </af:column>
+                  <af:column headerText="Column F" visible="false" id="c10">
+                    <af:outputText id="colF" />
+                  </af:column>
+                </af:treeTable>
+              </af:panelCollection>
+            </f:facet>
+            <f:facet name="bottom">
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <af:outputText value="See also:" id="ot2"/>
+                <af:panelList id="pl1">
+                  <af:goLink text="panelCollection with treeTable showing default menu and toolbar"
+                             destination="panelCollectionTreeTable2.jspx"
+                             id="gl3"/>
+                  <af:goLink text="treeTable demo" destination="/components/treeTable.jspx"
+                             id="gl4"/>
+                  <af:goLink text="panelCollection demo"
+                             destination="/components/panelCollection.jspx"
+                             id="gl5"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

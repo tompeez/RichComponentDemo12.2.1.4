@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:horizontalBarChart&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:horizontalBarChart&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:horizontalBarChart horizontalBarChart horizontal bar chart</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.chart.UIHorizontalBarChart<br>
+<b>Component type:</b> oracle.dss.adf.chart.HorizontalBarChart<br></p>
+<p><img src="../images/chart/horizontalBarChart.png" alt="Horizontal Bar Chart" height="300"><br></p>
+<h2>Overview</h2>
+<p>The horizontalBarChart tag is deprecated. Use the barChart tag with horizontal orientation instead.</p>
+<p>A chart drawn using rectangular bars whose lengths are proportional to the data values being represented. This component differs from <code><a href="dvt_barChart.html">dvt:barChart</a></code> by displaying the y-axes horizontally instead of vertically, and it is generally better for displaying data sets with larger numbers of categorical labels.</p>
+<pre>
+&lt;dvt:horizontalBarChart value="#{chartDataSource.defaultBarData}" var="row"&gt;
+  &lt;f:facet name="dataStamp"&gt;
+    &lt;dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/&gt;
+  &lt;/f:facet&gt;
+&lt;/dvt:horizontalBarChart&gt;
+</pre>
+<h3>Related Tags</h3>
+<ul>
+<li><code><a href="dvt_chartDataItem.html">dvt:chartDataItem</a></code></li>
+<li><code><a href="dvt_chartLegend.html">dvt:chartLegend</a></code></li>
+<li><code><a href="dvt_chartSeriesStyle.html">dvt:chartSeriesStyle</a></code></li>
+<li><code><a href="dvt_chartValueFormat.html">dvt:chartValueFormat</a></code></li>
+<li><code><a href="dvt_chartXAxis.html">dvt:chartXAxis</a></code></li>
+<li><code><a href="dvt_chartYAxis.html">dvt:chartYAxis</a></code></li>
+<li><code><a href="dvt_chartY2Axis.html">dvt:chartY2Axis</a></code></li>
+</ul>
+<h2>Customization Options</h2>
+<h3>Animation</h3>
+<p>Animations can be enabled on data change or on initial display by adding <code>af:transition</code> as a child of this component. The following trigger types and transitions are supported:</p>
+<ul>
+<li><code>dataChange</code>: <code>none</code> (default), <code>auto</code></li>
+<li><code>display</code>: <code>none</code> (default), <code>auto</code></li>
+</ul>
+<p>Indicators can be shown during animations to identify data change using the <code>animationIndicators</code> attribute.</p>
+<h3>Axis Customization</h3>
+<p>The chart axes can be customized using the <code><a href="dvt_chartXAxis.html">dvt:chartXAxis</a></code>, <code><a href="dvt_chartYAxis.html">dvt:chartYAxis</a></code>, and <code><a href="dvt_chartY2Axis.html">dvt:chartY2Axis</a></code> tags. Customization options include titles, axis extents, and tick increments.</p>
+<h3>Conditional Formatting</h3>
+<p>Properties of specific data items or series can be customized using EL expressions for attributes on the <code><a href="dvt_chartDataItem.html">dvt:chartDataItem</a></code> and <code><a href="dvt_chartSeriesStyle.html">dvt:chartSeriesStyle</a></code>.</p>
+<h3>Data Labels</h3>
+<p>Data labels can be specified using the <code>label</code> attribute on <code><a href="dvt_chartDataItem.html">dvt:chartDataItem</a></code>. The position and style of the data labels can also be customized.</p>
+<h3>Dual Y-Axis</h3>
+<p>Dual Y-Axis charts can be used to compare data series requiring distinct axes, such as stock price and volume of shares traded. To configure a chart for dual y, used the <code>assignedToY2</code> attribute on <code><a href="dvt_chartSeriesStyle.html">dvt:chartSeriesStyle</a></code>.</p>
+<h3>Legend</h3>
+<p>The legend can be hidden, positioned, or customized using <code><a href="dvt_chartLegend.html">dvt:chartLegend</a></code>.</p>
+<h3>Number Formatting</h3>
+<p>Number formatting options are available through <code><a href="dvt_chartValueFormat.html">dvt:chartValueFormat</a></code> and <code><a href="dvt_chartTickLabel.html">dvt:chartTickLabel</a></code>.</p>
+<h3>Reference Objects</h3>
+<p>Reference lines and reference areas can be added to the chart through the associated axis. For example, to add a reference line for a y-axis value, a <code><a href="dvt_referenceLine.html">dvt:referenceLine</a></code> should be added as a child of <code><a href="dvt_chartYAxis.html">dvt:chartYAxis</a></code>.</p>
+<h3>Series Customization</h3>
+<p>Series properties can be customized using <code><a href="dvt_chartSeriesStyle.html">dvt:chartSeriesStyle</a></code>, which is supported within the <code>seriesStamp</code> facet. To declaratively specify several <code><a href="dvt_chartSeriesStyle.html">dvt:chartSeriesStyle</a></code> tags, wrap within an <code>af:group</code>:</p>
+<pre>
+&lt;f:facet name="seriesStamp"&gt;
+  &lt;af:group&gt;
+    &lt;dvt:chartSeriesStyle series="Series 1" color="#0000ff"/&gt;
+    &lt;dvt:chartSeriesStyle series="Series 2" color="#ff0000"/&gt;
+  &lt;/af:group&gt;
+&lt;/f:facet&gt;
+</pre>
+<h3>Series Effect</h3>
+<p>The fill effect of the data objects can be customized using the <code>seriesEffect</code> attribute, providing support for gradient, pattern, and solid fills.</p>
+<h3>Stacked Charts</h3>
+<p>Stacked charts can be used to compare cumulative values across groups. Stacking can be enabled by using the <code>stack</code> attribute.</p>
+<h2>Interactivity Features</h2>
+<h3>Data Cursor</h3>
+<p>For charts where selection and other click interactivity is not enabled, the data cursor can be used to provide feedback for the closest data item to the mouse or touch gesture. The data cursor is enabled by default on touch devices, and it can be turned on or off explicitly using the <code>dataCursor</code> attribute.</p>
+<h3>Hide and Show Behavior</h3>
+<p>The <code>hideAndShowBehavior</code> attribute allows the end user to filter the visible data set by clicking on the legend items.</p>
+<h3>Hover Behavior</h3>
+<p>The <code>hoverBehavior</code> attribute provides support for dimming of unrelated data objects as the user hovers on objects in the chart.</p>
+<h3>Popups and Context Menus</h3>
+<p>Popups and context menus can be displayed using <code>af:showPopupBehavior</code>, which is a supported child of <code><a href="dvt_chartDataItem.html">dvt:chartDataItem</a></code>.</p>
+<h3>Selection</h3>
+<p>Selection of data items can be enabled using the <code>dataSelection</code> attribute. Selection can be processed using <code>selectionListener</code> on the server or the <code>selection</code> event type on the client.</p>
+<h3>Zoom and Scroll</h3>
+<p>Zoom and scroll can be enabled using the <code>zoomAndScroll</code> attribute. For horizontal bar charts, only x-axis zoom and scroll is supported; the y-axis will be rescaled automatically based on the visible data in the viewport. The initial viewport of the chart can be set using the <code>viewportMinimum/Maximum/StartGroup/EndGroup</code> attributes in <code><a href="dvt_chartXAxis.html">dvt:chartXAxis</a></code>.</p>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Supported Facets</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="27%" align="left" valign="bottom" id="fcName">Name</th>
+<th width="73%" align="left" valign="bottom" id="fcDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="fcName">dataStamp</td>
+<td align="left" headers="fcDesc">the data item component or components to stamp for each row of the model. To stamp multiple data items, wrap them in a group tag.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">overview</td>
+<td align="left" headers="fcDesc">
+<p>Specifies the rendering of the overview window. Only applicable for charts that have <code>zoomAndScroll</code> not set to <code>off</code>.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">seriesStamp</td>
+<td align="left" headers="fcDesc">the series style component to stamp for each row of the model. The properties of the stamp will be processed once for each unique series. To declaratively define multiple series, wrap them in a group tag.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">animationIndicators</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> all, none<br>
+<strong>Default Value:</strong> all<br>
+<br>
+Specifies the type of data change animation indicators.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">barGapRatio</td>
+<td align="left" headers="attrType">Number</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the gaps between bar groups as a ratio of the total width allocated to each group. Valid values range from 0 to 1.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.chart.UIHorizontalBarChart</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">
+<p>Specifies a binding reference to store a specific instance of UIHorizontalBarChart from a backing bean. Set this attribute only to access code in a backing bean. For example, to reference a chart component in the sample managed bean, use the following code: <code>binding="#{sample.chart}"</code></p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">contentDelivery</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> whenAvailable, lazy, immediate<br>
+<strong>Default Value:</strong> whenAvailable<br>
+<br>
+Specifies whether to fetch content with page load or after page load.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataCursor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, off, on<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+Specifies whether the data cursor is enabled. When set to <code>auto</code>, the data cursor is enabled only for area and line charts on touch devices.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataCursorBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, smooth, snap<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+Specifies the data cursor interaction behavior. When set to <code>auto</code>, the data cursor moves smoothly for line and area charts, and snaps for other chart types.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataLabelPosition</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, center, insideBarEdge, outsideBarEdge<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+Specifies the position of the data labels. Valid values are:
+<ul>
+<li>auto - (default) <code>center</code> for stacked bars, <code>insideBarEdge</code> for non-stacked bars.</li>
+<li>center - centered on the data point.</li>
+<li>insideBarEdge - at the edge of the bar, inside.</li>
+<li>outsideBarEdge - outside the bars, starting at the edge.</li>
+</ul>
+If the position is <code>center</code> or <code>insideBarEdge</code> and the label is too long to fit in the bar, the label is automatically dropped.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataSelection</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, single, multiple<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies the data selection mode for the chart.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">emptyText</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The text of the component when empty.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">footnote</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the footnote for the chart.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">footnoteHalign</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> start, end, center<br>
+<strong>Default Value:</strong> start<br>
+<br>
+Specifies the horizontal alignment of the chart footnote.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">hideAndShowBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, withRescale, withoutRescale<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies the hide/show behavior when clicking on the legend items.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">hoverBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, dim<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies the behavior when hovering over the chart data items.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Specifies the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">initialZooming</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> first, last, none<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Whether automatic initial zooming is enabled. The valid values are "first" to initially zoom to the first data points (after the viewportMin) that can fit in the plot area, "last" to initially zoom to the last data points (before the viewportMax), and "none" to disable initial zooming. Only applies if zoomAndScroll is not off, and if viewportMin and viewportMax are not both specified.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Style of the outer element (enclosing div) of the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">maximumBarWidth</td>
+<td align="left" headers="attrType">Number</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the maximum width of each bar in pixels.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectedRowKeys</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.RowKeySet</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The set of selected rows for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a selection listener, the method is invoked when the selected nodes are changed.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">seriesEffect</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> color, gradient, pattern<br>
+<strong>Default Value:</strong> gradient<br>
+<br>
+Specifies the fill effect for the data items.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">stack</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> off, on<br>
+<strong>Default Value:</strong> off<br>
+<br>
+Specifies whether the data should be stacked.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">subtitle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the subtitle for the chart.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">timeAxisType</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> disabled, enabled, mixedFrequency<br>
+<strong>Default Value:</strong> disabled<br>
+<br>
+Specifies the time axis type for the chart. When set to <code>enabled</code>, <code>java.util.Date</code> instances must be passed as the chart groups. When set to <code>mixedFrequency</code>, the <code>java.util.Date</code> instances must be provided through the x attribute of the the <code><a href="dvt_chartDataItem.html">dvt:chartDataItem</a></code>.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">title</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the title for the chart.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">titleHalign</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> start, end, center<br>
+<strong>Default Value:</strong> start<br>
+<br>
+Specifies the horizontal alignment of the chart title.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The data model for the chart - can be an instance of javax.faces.CollectionModel</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">var</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Name of the EL variable used to reference each element of this collection. Once this component has completed rendering, this variable is removed (or reverted back to its previous value).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">varStatus</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Name of the EL variable used to reference the varStatus information. Once this component has completed rendering, this variable is removed (or reverted back to its previous value). The VarStatus provides contextual information about the state of the component to EL expressions. For components that iterate, varStatus also provides loop counter information. Please see the this component's documentation for the specific properties on the varStatus. The common properties on varStatus include:
+<ul>
+<li><code>model</code> - returns the CollectionModel for this component</li>
+<li><code>index</code> - returns the zero based row index</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">zoomAndScroll</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> off, delayedScrollOnly, liveScrollOnly, delayed, live<br>
+<strong>Default Value:</strong> off<br>
+<br>
+<p>Specifies the zoom and scroll behavior of the graph. "Live" behavior means that the chart will be updated continuously as it is being manipulated, while "delayed" means that the update will wait until the zoom/scroll action is done. The "delayed" behavior is recommended if the chart rendering is slow. Valid values are:</p>
+<ul>
+<li><code>off</code> (default) - no zoom and scroll</li>
+<li><code>delayedScrollOnly</code> - delayed scroll only, no zoom</li>
+<li><code>liveScrollOnly</code> - live scroll only, no zoom</li>
+<li><code>delayed</code> - delayed zoom and scroll</li>
+<li><code>live</code> - live zoom and scroll</li>
+</ul>
+</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

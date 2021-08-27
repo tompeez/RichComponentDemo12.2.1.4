@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Client Converter Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+/**
+   * Formats a given credit card number string into a standard 4 digit space separated grouping. (xxx xxx xxx xxx)
+   * @param {String} The unformatted credit card number string that needs to be formatted   
+   *
+   * @return {String} The formatted credit card number
+   */
+  function formatCreditCardNumber(value)
+  {
+    if (value == null || value.length == 0)
+      return value;
+
+    var retVal = value.substr(0,4) + ' ';
+    retVal += value.substr(4,4) + ' ' 
+    retVal += value.substr(8,4) + ' ' 
+    retVal += value.substr(12,4);
+ 
+    return retVal;
+  }
+
+  /**
+   * Parses the credit card number as formatted by the function <code>formatCreditCardNumber</code> back to a contiguous numeric string for postback.
+   * @param {value} The formatted credit card number string that needs to be parsed                   
+   *
+   * @return {String} The parsed credit card number
+   */
+  function parseCreditCardNumber(value)
+  {
+    if (value == null || value.length == 0)
+      return value;
+
+    return value.replace(/ /g,'');
+  }
+  
+  /**
+   * Prints the value of component with id "inpt1"
+   * @param {AdfActionEvent} actionEvent the event being handled
+   */
+  function printCreditCardNumber(actionEvent)
+  {
+    actionEvent.cancel();
+    var eventSource = actionEvent.getSource();
+  
+    var comp = AdfPage.PAGE.findComponent("dmoTpl:inpt1");
+
+    var outputText = AdfAgent.AGENT.getElementById("dmoTpl:outValue");
+    outputText.innerHTML = "The component value is : <strong>" + comp.getValue() + "</strong>";
+  }
+      </af:resource>
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="clientConverter"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="listener"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+           <af:panelHeader text="Output Text displaying a phone number formatted on the client using af:clientConverter" id="ph0" headerLevel="4">
+              <af:panelGroupLayout layout="vertical" id="pg0">
+                <af:outputText value="918012345678" id="outputText1" clientComponent="true" inlineStyle="font-size: larger;">
+                  <af:clientConverter getAsString="return '+' + value.substr(0,2) + ' ' + value.substr(2,4) + ' ' + value.substr(6,6);"/>
+                </af:outputText>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            
+            <af:spacer height="2em" id="s1"/>
+
+            <af:panelHeader text="Input Text displaying a credit card number formatted using af:clientConverter" id="ph1" headerLevel="4">
+              <af:panelGroupLayout layout="vertical" id="pg1">
+                <af:inputText value="#{demoInput.creditCardNumber}" id="inpt1" protectionKey="pk" inlineStyle="font-size: larger;">
+                  <af:clientConverter getAsStringMethod="formatCreditCardNumber" getAsObjectMethod="parseCreditCardNumber" hint="Credit Card digits"/>
+                  <af:validateLength maximum="16" minimum="16" messageDetailMinimum="Please enter a 16 digit credit card number" messageDetailMaximum="Please enter a 16 digit credit card number" />
+                </af:inputText>                
+              <af:spacer height="1em" id="s2"/>
+                <af:button id="btnCC" text="Get component value">
+                  <af:clientListener type="action" method="printCreditCardNumber"/>
+                </af:button>
+                
+                <af:outputText id="outValue" clientComponent="true" inlineStyle="margin-top: 10px;display: block;"/>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            
+            <af:spacer height="2em" id="s3"/>
+
+            <af:panelHeader text="About this Demo" id="ph2">
+              <af:panelGroupLayout layout="vertical" id="pg2">
+                 <af:outputText value="Demo uses a clientConverter tag to format component value on the client." />                 
+                 <af:panelList listStyle="list-style-type: decimal;" id="pl1">
+                 <af:outputText value="The first example shows an output text's value formatted using JavaScript configured inline 
+                 using the 'getAsString' attribute. Observe the setting clientComponent=true on outputText, this is required since 
+                 the clientConverter can operate only on components which have a client component." />
+                 <af:outputText value="The second example shows a protect component's value formatted using JavaScript method  
+                 supplied to 'getAsStringMethod'. Click on the button 'Get component value' to get back the actual value
+                 by applying the 'getAsObjectMethod' to parse the component input." />
+                 </af:panelList>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+
+            <af:spacer height="1em" id="s4"/>
+
+            <af:panelHeader text="Tip" id="ph3">
+              <af:panelGroupLayout layout="vertical" id="pg3">
+                <af:outputText value="Usually, converters perform formatting and parsing on the server during the validation and rendering 
+        phases. Optionally, ADF converters can also perform basic sanity parsing and formatting within the 
+        client to trap errors early and avoid waiting until the next server round-trips for conversion. 
+        Hence before using the clientConverter tag, be sure to look for any existing converter tags 
+        which might eliminate the need for using custom scripts." id="ot6"/>
+                
+              </af:panelGroupLayout>
+            </af:panelHeader>
+
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

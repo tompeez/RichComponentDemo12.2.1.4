@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2010, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{ganttFeatureLinks.schedulingGanttDropTargetTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Scheduling Gantt Drop Target"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Scheduling Gantt Drop Target"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START FEATURE DEMO -->
+        <af:panelStretchLayout inlineStyle="height: 400px" styleClass="AFStretchWidth"
+                               id="psl1">
+          <f:facet name="center">
+            <dvt:schedulingGantt id="schedulingGanttDropTarget"
+                              startTime="2006-12-21" endTime="2006-12-23"
+                              value="#{schedulingGanttDropTarget.model}"
+                              binding="#{schedulingGanttDropTarget.gantt}"
+                              var="resourceObj"
+                              summary="Scheduling Gantt Drop Target Demo">
+              <f:facet name="major">
+                <dvt:timeAxis scale="days" id="ta1"/>
+              </f:facet>
+              <f:facet name="minor">
+                <dvt:timeAxis scale="hours" id="ta2"/>
+              </f:facet>
+              <f:facet name="nodeStamp">
+                <af:column headerText="Resource Name" id="c1">
+                  <af:outputText value="#{resourceObj.resourceName}" id="ot1"/>
+                </af:column>
+              </f:facet>
+              <af:column headerText="Department" id="c2">
+                <af:outputText value="#{resourceObj.department}" id="ot2"/>
+              </af:column>
+              <af:collectionDropTarget actions="COPY MOVE" modelName="treeModel"  dropListener="#{schedulingGanttDropTarget.onGanttDrop}"/>
+            </dvt:schedulingGantt>
+         </f:facet>
+        </af:panelStretchLayout>
+        <af:panelStretchLayout  inlineStyle="height: 200px" styleClass="AFStretchWidth"
+                               id="psl2">
+          <f:facet name="center">
+              <af:table id="ttdt" summary="Tree Table Summary"
+                  var="task" value="#{schedulingGanttDropTarget.treeTableModel}">
+                  <af:column headerText="Task Name" id="c3">
+                      <af:outputText value="#{task.taskName}" id="ot3"/>
+                  </af:column>
+                  <af:column headerText="Start Date" id="c4">
+                    <af:outputText value="#{task.startTime}" id="ot4"/>
+                  </af:column>
+                  <af:column headerText="End Date" id="c5">
+                    <af:outputText value="#{task.endTime}" id="ot5"/>
+                  </af:column>
+                  <af:collectionDragSource actions="COPY MOVE" modelName="treeModel"/>
+              </af:table>
+          </f:facet>
+        </af:panelStretchLayout>
+        <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/gantt/ganttFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

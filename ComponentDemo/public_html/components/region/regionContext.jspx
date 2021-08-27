@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          version="1.2"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:jsp="http://java.sun.com/JSP/Page">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="region Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="region"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="customEditorPresent" value="false"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+
+            <af:outputFormatted styleUsage="instruction" value="&lt;b>Demo where the child region queues an
+              outcome on the parent region (Next on Parent Region) and the parent region queues an outcome
+              on the view root (Navigate View Root).&lt;/b>" id="of1"/>
+            <af:outputFormatted styleUsage="instruction" value="&lt;b>Also demonstrates recursive invocations
+              on the child region and queueing ActionEvents on the region from outside of it.&lt;/b>" id="of2"/>
+
+            <trh:tableLayout cellSpacing="10" inlineStyle="background-color:#CFDCEB"
+                             id="tl1">
+              <trh:rowLayout id="rl1">
+                <af:commandButton text="Queue ActionEvent" actionListener="#{regionModel.queueActionEvent}" 
+                  shortDesc="Calls queueActionEventInRegion on outer region which causes a navigation on the same region"
+                  id="cb1"/>
+              </trh:rowLayout>
+              <trh:rowLayout id="rl2">
+                <trh:cellFormat id="cf1">
+                  <af:region
+                    showHeader="always"
+                    text="Region"
+                    value="#{regionModel.parentRegionModel}"
+                    regionNavigationListener="#{demoRegionNavigationListener.processRegionNavigation}"
+                    shortDesc="This is the outer region"
+                    id="regionContext"
+                    binding="#{regionModel.parentRegionModel.thisRegion}"/>
+                </trh:cellFormat>
+              </trh:rowLayout>
+            </trh:tableLayout>
+            <af:outputText value="The following will be updated by the regionNavigationListener:"
+                           id="ot1"/>
+            <af:panelFormLayout maxColumns="1" id="pfl1">
+              <af:panelLabelAndMessage label="Old View ID" id="plam1">
+                <af:outputText
+                  id="oldViewIdComponent"
+                  clientComponent="true"
+                  binding="#{demoRegionNavigationListener.oldViewIdComponent}"
+                  value="#{demoRegionNavigationListener.oldViewId}"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="New View ID" id="plam2">
+                <af:outputText
+                  id="newViewIdComponent"
+                  clientComponent="true"
+                  binding="#{demoRegionNavigationListener.newViewIdComponent}"
+                  value="#{demoRegionNavigationListener.newViewId}"/>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Active Data Visual Design Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Active Data Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="gmStretchChildren" value="#{mobileSettings.dimensionsFromChildren ? 'none' : 'first'}" />
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+          <af:panelHeader text="Related Links" id="ph1">
+            <af:panelList id="pl1">
+              <af:goLink text="Component - table" destination="/components/table.jspx"
+                         id="gl1"/>
+              <af:goLink text="Component - tree" destination="/components/tree.jspx"
+                         id="gl2"/>
+              <af:goLink text="Component - treeTable" destination="/components/treeTable.jspx"
+                         id="gl3"/>
+              <af:goLink text="Component - activeOutputText demo with ActiveData" destination="activeCounter.jspx"
+                         id="gl4"/>
+              <af:goLink text="Component - activeImage demo with ActiveData" destination="activeImage.jspx"
+                         id="gl5"/>
+            </af:panelList>
+          </af:panelHeader>
+          <af:outputFormatted value="&lt;span style='color:red'&gt;NOTE:&lt;/span&gt; If ActiveDataService does not work, check that you do not have ad block software preventing any javascript from running on the page.If you get a JavaScript error about not being able to find the parent window, please close the JavaScript error window, then refresh your browser to see active data.  This error is caused by ADF Controller not being used in this demo."/>
+          <af:navigationPane hint="tabs" id="np2">
+            <af:commandNavigationItem
+              text="Twinkle on Table"
+              actionListener="#{activeTableData.showTableDemo}"
+              selected="#{activeTableData.activeDataDemoFacetName=='table'}"
+                                      id="cni2"/>
+            <af:commandNavigationItem
+              text="Twinkle on Tree"
+              actionListener="#{activeTableData.showTreeDemo}"
+              selected="#{activeTableData.activeDataDemoFacetName=='tree'}"
+                                      id="cni3"/>
+            <af:commandNavigationItem
+              text="Twinkle on TreeTable"
+              actionListener="#{activeTableData.showTreeTableDemo}"
+              selected="#{activeTableData.activeDataDemoFacetName=='treeTable'}"
+                                      id="cni4"/>
+          </af:navigationPane>
+          <af:panelGroupLayout layout="horizontal" id="pgl0">
+            <af:outputText value="Active Channel Connection Status:" id="opt0"/>
+            <af:spacer width="10" id="sp0"/>
+            <af:statusIndicator id="si0"/>
+          </af:panelGroupLayout>           
+          <af:switcher
+            defaultFacet="table"
+            facetName="#{activeTableData.activeDataDemoFacetName}" id="s2">
+            <f:facet name="table">           
+              <af:panelCollection id="pc1" inlineStyle="width:90%">             
+                <af:table
+                  columnSelection="multiple" columnStretching="last"
+                  rowSelection="multiple" rowBandingInterval="1"
+                  var="tableData" value="#{activeTableData}" id="table" summary="active table"
+                  shortDesc="Demo showing twinkle on Table" autoHeightRows="0">
+                  <af:column rowHeader="true" width="40" headerText="Row Number"
+                             id="c1">
+                    <af:outputText value="" id="ot3"/>
+                  </af:column>
+                  <af:column headerText="Description" width="300" id="c2">
+                    <af:outputText value="#{tableData.description}" escape="false" noWrap="true"
+                                   id="ot4"/>
+                  </af:column>
+                  <af:column headerText="Price" width="168" align="end" id="c3">
+                    <af:outputText value="#{tableData.price}" noWrap="true"
+                                   id="ot5"/>
+                  </af:column>
+                  
+                  <af:column headerText="*" width="25" align="center" id="c3a">
+                    <af:activeImage source="#{tableData.image}" id="ai1"/>
+                  </af:column>
+                  
+                  <af:column headerText="Detail" id="c4">
+                    <af:activeOutputText value="#{tableData.detail}" escape="false" noWrap="true" id="ot6"/>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </f:facet>
+            <f:facet name="tree">
+              <af:panelCollection id="pc2">
+                <af:tree
+                  var="treeData" value="#{activeTreeData}" id="tree"
+                  shortDesc="Demo showing twinkle on Tree" autoHeightRows="0">
+                  <f:facet name="nodeStamp">
+                    <af:outputText value="#{treeData.value}" id="ot7"/>
+                  </f:facet>
+                </af:tree>
+              </af:panelCollection>
+            </f:facet>
+            <f:facet name="treeTable">
+              <af:panelCollection id="pc3">
+                <af:treeTable
+                  columnSelection="multiple" rowSelection="multiple" rowBandingInterval="1"
+                  var="treeTableData" value="#{activeTreeTableData}" id="treeTable"
+                  summary="active treeTable" autoHeightRows="0"
+                  shortDesc="Demo showing twinkle on TreeTable">
+                  <f:facet name="nodeStamp">
+                    <af:column headerText="Description" width="200" id="c5">
+                      <af:outputText value="#{treeTableData.value}" noWrap="true"
+                                     id="ot8"/>
+                    </af:column>
+                  </f:facet>
+                  <af:column headerText="Price" width="200" align="end" id="c6">
+                    <af:outputText value="#{treeTableData.value}" noWrap="true"
+                                   id="ot9"/>
+                  </af:column>
+                  <!--
+                  <af:column headerText="Detail">
+                    <af:outputText value="detail" noWrap="true"/>
+                  </af:column>
+                  -->
+                </af:treeTable>
+              </af:panelCollection>
+            </f:facet>
+          </af:switcher>
+        </af:panelGroupLayout>
+       </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

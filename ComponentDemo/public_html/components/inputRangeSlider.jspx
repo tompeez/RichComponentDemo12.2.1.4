@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="inputRangeSlider Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputRangeSlider"/>
+        <f:attribute name="visualDesignName" value="slider"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch an inputRangeSlider is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <f:facet name="separator">
+              <af:spacer height="5px" id="s2"/>
+            </f:facet>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This is a demo for the inputRangeSlider component. Use the editor to the right to adjust the attributes for this demo.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:inputRangeSlider binding="#{editor.component}" label="Horizontal Slider"
+                               minorIncrement="1" majorIncrement="5" minimumIncrement="1"
+                               minimum="0" maximum="10" id="rangeSlider1"
+                               value="#{demoInputNumberSlider.rangeValue}"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1B">
+            <af:panelGroupLayout layout="vertical" id="pgl1">
+              <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+              <af:commandButton text="full postback"  id="commandButton1"/>
+              <af:outputText partialTriggers="richCommand rangeSlider1"
+                             value="Submitted minimum: #{demoInputNumberSlider.rangeValue.minimum}"
+                             id="ot1"/>
+              <af:outputText partialTriggers="richCommand rangeSlider1"
+                             value="Submitted maximum: #{demoInputNumberSlider.rangeValue.maximum}"
+                             id="ot2"/>
+            </af:panelGroupLayout>
+            <af:separator id="s1"/>
+            <af:inputRangeSlider label="Vertical Slider" minorIncrement="100" majorIncrement="500"
+                                 minimumIncrement="50" minimum="-1000" maximum="1000"
+                                 orientation="vertical" id="rangeSlider4"/>
+            <af:spacer height="10" id="s5"/>
+            <af:separator id="s6"/>
+            <af:inputRangeSlider label="Horizontal Slider with percent converter"
+                                 minorIncrement="0.01" majorIncrement="0.1" minimumIncrement="0.01"
+                                 minimum="0" maximum="1" value="0.03,0.57" orientation="horizontal"
+                                 contentStyle="width: 50em" id="rangeSlider3">
+              <af:convertNumber type="percent" id="sliderConverter"/>
+            </af:inputRangeSlider>
+            <af:spacer height="10" id="s7"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <af:popup id="popupDialog">
+                <af:dialog title="Slider" id="d2">
+                  <af:inputRangeSlider label="Horizontal Slider" minorIncrement="1" majorIncrement="5"
+                                       minimumIncrement="1" minimum="0" maximum="10" id="rangeSlider2"
+                                       value="#{demoInputNumberSlider.rangeValue2}"/>
+                </af:dialog>
+              </af:popup>
+              <af:outputText value="This demo shows the inputRangeSlider inside of a popup."
+                             id="ot3"/>
+              <af:spacer width="5" id="s8"/>
+              <af:commandButton immediate="true" text="Show InputRangeSlider" clientComponent="true"
+                                id="popupButton">
+                <af:showPopupBehavior popupId="popupDialog" alignId="popupButton" align="afterStart"/>
+              </af:commandButton>
+            </af:panelGroupLayout>
+            <af:separator id="s22"/>
+            <af:group id="gAlign">
+              <af:button id="bAlign" text="Field Alignment" immediate="true">
+                <af:showPopupBehavior popupId="pAlign"/>
+              </af:button>
+              <af:popup id="pAlign">
+                <af:panelWindow id="pwAlign" title="Field Alignment">
+                  <af:panelGroupLayout id="pglAlignV" layout="vertical"
+                    inlineStyle="min-width:300px;min-height:390px;"
+                    partialTriggers="changedSetting disabledSetting helpSetting readOnlySetting requiredSetting verticalSetting">
+                    <af:panelFormLayout id="pflAlign1" maxColumns="2" rows="1">
+                      <af:selectBooleanCheckbox id="changedSetting" label="Changed" text="Changed indicator"
+                                                contentStyle="white-space:nowrap"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.changed}"/>
+                      <af:selectBooleanCheckbox id="disabledSetting" label="Disabled" text="Disabled"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.disabled}"/>
+                      <af:selectBooleanCheckbox id="helpSetting" label="Has help" text="Help"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.hasHelp}"/>
+                      <af:selectBooleanCheckbox id="readOnlySetting" label="Read-only" text="Read-only"
+                                                contentStyle="white-space:nowrap"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.readOnly}"/>
+                      <af:selectBooleanCheckbox id="requiredSetting" label="Required" text="Required"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.required}"/>
+                      <af:selectBooleanCheckbox id="verticalSetting" label="Vertical" text="Vertical"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.vertical}"/>
+                    </af:panelFormLayout>
+                    <af:separator id="sepAlign"/>
+                    <af:spacer id="spAlign1" height="14"/>
+                    <af:outputText id="otAlign1" value="Simple:"/>
+                    <af:inputRangeSlider id="alignEx1" label="Example" simple="true"
+                                         minorIncrement="1" majorIncrement="5" minimumIncrement="1"
+                                         minimum="0" maximum="10" value="#{demoInputNumberSlider.rangeValue}"
+                                         changed="#{pageFlowScope.changed}"
+                                         disabled="#{pageFlowScope.disabled}"
+                                         helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                         orientation="#{pageFlowScope.vertical == true ? 'vertical' : 'horizontal'}"
+                                         readOnly="#{pageFlowScope.readOnly}"
+                                         showRequired="#{pageFlowScope.required}"/>
+                    <af:spacer id="spAlign2" height="14"/>
+                    <af:outputText id="otAlign2" value="Labelled:"/>
+                    <af:inputRangeSlider id="alignEx2" label="Example"
+                                         minorIncrement="1" majorIncrement="5" minimumIncrement="1"
+                                         minimum="0" maximum="10" value="#{demoInputNumberSlider.rangeValue}"
+                                         changed="#{pageFlowScope.changed}"
+                                         disabled="#{pageFlowScope.disabled}"
+                                         helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                         orientation="#{pageFlowScope.vertical == true ? 'vertical' : 'horizontal'}"
+                                         readOnly="#{pageFlowScope.readOnly}"
+                                         showRequired="#{pageFlowScope.required}"/>
+                    <af:spacer id="spAlign3" height="14"/>
+                    <af:panelGroupLayout id="formWrap" layout="default">
+                      <af:outputText id="otAlign3" value="Form (labelled and panelLabelAndMessage):"/>
+                      <af:spacer id="formSp1" width="8"/>
+                      <af:selectBooleanCheckbox id="labelAlignSetting" label="Top Labels" text="Top Labels"
+                                                contentStyle="white-space:nowrap"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.topLabels}"/>
+                    </af:panelGroupLayout>
+                    <af:panelFormLayout id="pflAlign2" maxColumns="1" partialTriggers="labelAlignSetting"
+                                        labelAlignment="#{pageFlowScope.topLabels ? 'top' : 'start'}">
+                      <af:inputRangeSlider id="alignEx3" label="Example"
+                                           minorIncrement="1" majorIncrement="5" minimumIncrement="1"
+                                           minimum="0" maximum="10" value="#{demoInputNumberSlider.rangeValue}"
+                                           changed="#{pageFlowScope.changed}"
+                                           disabled="#{pageFlowScope.disabled}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           orientation="#{pageFlowScope.vertical == true ? 'vertical' : 'horizontal'}"
+                                           readOnly="#{pageFlowScope.readOnly}"
+                                           showRequired="#{pageFlowScope.required}"/>
+                      <af:panelLabelAndMessage id="plmAlign" label="Example" labelStyle="vertical-align:top"
+                                               changed="#{pageFlowScope.changed}"
+                                               helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                               showRequired="#{pageFlowScope.required and (pageFlowScope.disabled != true) and (pageFlowScope.readOnly != true)}"
+                                               shortDesc="This is a panelLabelAndMessage surrounding a simple field">
+                        <af:inputRangeSlider id="alignEx4" label="Example" simple="true"
+                                             minorIncrement="1" majorIncrement="5" minimumIncrement="1"
+                                             minimum="0" maximum="10" value="#{demoInputNumberSlider.rangeValue}"
+                                             changed="#{pageFlowScope.changed}"
+                                             disabled="#{pageFlowScope.disabled}"
+                                             helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                             orientation="#{pageFlowScope.vertical == true ? 'vertical' : 'horizontal'}"
+                                             readOnly="#{pageFlowScope.readOnly}"
+                                             showRequired="#{pageFlowScope.required}"/>
+                      </af:panelLabelAndMessage>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                </af:panelWindow>
+              </af:popup>
+            </af:group>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

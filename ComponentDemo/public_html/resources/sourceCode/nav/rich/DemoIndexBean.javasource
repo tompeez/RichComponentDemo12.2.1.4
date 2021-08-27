@@ -1,0 +1,201 @@
+/** Copyright (c) 2006, 2009 Oracle and/or its affiliates. All rights reserved */
+package oracle.adfdemo.view.nav.rich;
+
+import java.util.List;
+
+import javax.faces.component.UIComponent;
+import javax.faces.event.ActionEvent;
+
+import oracle.adf.view.rich.component.rich.layout.RichPanelList;
+
+import oracle.adf.view.rich.component.rich.nav.RichGoLink;
+import oracle.adf.view.rich.component.rich.output.RichOutputLabel;
+
+import org.apache.myfaces.trinidad.bean.FacesBean;
+import org.apache.myfaces.trinidad.bean.PropertyKey;
+import org.apache.myfaces.trinidad.component.UIXComponent;
+import org.apache.myfaces.trinidad.component.UIXGroup;
+import org.apache.myfaces.trinidad.component.UIXNavigationHierarchy;
+import org.apache.myfaces.trinidad.context.RequestContext;
+
+/**
+ * Bean used with the tag guide menu page.
+ */
+public class DemoIndexBean
+{
+  /**
+   * Retrieves the name of the selected sort option for the tag guide menu page.
+   * @return the name of the selected sort option
+   */
+  public String getTagGuideSortName()
+  {
+    return _tagGuideSortName;
+  }
+  
+  public List<DemoItemNode> getGraphList(){
+      return DemoDVTMenuModel.graphDemoList;
+  }
+  
+  public List<DemoItemNode> getChartList(){
+      return DemoDVTMenuModel.chartDemoList;
+  }
+  
+  public List<DemoDVTMenuModel.DemoDVTCategoryItem> getLegacyCategoryList(){
+      return DemoDVTMenuModel.legacyCategoryList;
+  }
+
+  /**
+   * Changes the selected state of all of the navigation items in the parent component so that the
+   * clicked navigation item becomes selected and the others become deselected.
+   * @param event the ActionEvent associated with the action
+   */
+  public void tagGuideSortAction(ActionEvent event)
+  {
+    UIComponent actionItem = event.getComponent();
+    UIComponent parent = actionItem.getParent();
+    while (! (parent instanceof UIXNavigationHierarchy) )
+    {
+      parent = parent.getParent();
+      if (parent == null)
+      {
+        System.err.println(
+          "Unexpected component hierarchy, no UIXNavigationHierarchy found.");
+        return;
+      }
+    }
+
+    List<UIComponent> children = parent.getChildren();
+    for (UIComponent child : children)
+    {
+      FacesBean childFacesBean = ((UIXComponent) child).getFacesBean();
+      FacesBean.Type type = childFacesBean.getType();
+      PropertyKey selectedKey = type.findKey("selected");
+      if (selectedKey != null)
+      {
+        boolean selected = (child == actionItem);
+        childFacesBean.setProperty(selectedKey, selected);
+        if (selected)
+        {
+          if (child.getId().equals("abcTab"))
+          {
+            _tagGuideSortName = "abc";
+          }
+          else
+          {
+            _tagGuideSortName = "grp";
+          }
+        }
+      }
+    }
+
+    RequestContext adfContext = RequestContext.getCurrentInstance();
+    adfContext.addPartialTarget(parent);
+  }
+  
+    public void setTagPanelList(RichPanelList list){
+    }
+    
+    public RichPanelList getTagPanelList(){
+        
+        // Creates a new list
+        RichPanelList panelList = new RichPanelList();
+        
+        // Grabs the list from Dvt Menu Model
+        List<DemoItemNode> tagList = DemoDVTMenuModel.getTagGuideList();
+        
+        for (DemoItemNode node:tagList){
+            
+            String nodeDestination = node.getFocusViewId();
+            if ( nodeDestination != null ){
+                nodeDestination = nodeDestination.substring(1);
+                
+                String nodeLabel = node.getLabel();
+                RichGoLink golink = new RichGoLink();
+                
+                golink.setDestination(nodeDestination);
+                golink.setText(nodeLabel);
+                panelList.getChildren().add(golink);
+            }
+        }
+        return panelList;
+    }
+    
+    public RichPanelList getPanelList(){
+        
+        // Creates a new list
+        RichPanelList panelList = new RichPanelList();
+        
+        // Grabs the list from Dvt Menu Model
+        List<DemoItemNode> featureList = DemoDVTMenuModel.featureDemoList;
+        
+        for (DemoItemNode node:featureList){
+            List<DemoItemNode> children = node.getChildren();
+            
+            // Put features lists in
+            if ( children != null ){
+                UIXGroup group = new UIXGroup();
+                RichPanelList childPanelList = new RichPanelList();
+                String nodeLabel = node.getLabel();
+                RichOutputLabel label = new RichOutputLabel();
+                label.setValue(nodeLabel);
+                group.getChildren().add(label);
+                group.getChildren().add(childPanelList);
+                panelList.getChildren().add(group);
+                addNodeToPanelList(children, childPanelList);
+            }
+        }
+        return panelList;
+    }
+  
+    public void addNodeToPanelList(List<DemoItemNode> children, RichPanelList childPanelList){
+        
+        for (DemoItemNode node:children){
+            List<DemoItemNode> childList = node.getChildren();
+            
+            // Group Node
+            if ( childList != null ){
+                UIXGroup group = new UIXGroup();
+                RichPanelList childPanelList2 = new RichPanelList();
+                String nodeLabel = node.getLabel();
+                RichOutputLabel label = new RichOutputLabel();
+                label.setValue(nodeLabel);
+                group.getChildren().add(label);
+                group.getChildren().add(childPanelList2);
+                childPanelList.getChildren().add(group);
+                addNodeToPanelList(childList, childPanelList2);
+            }
+            
+            // Link Node
+            else {
+                String nodeLabel = node.getLabel();
+                
+                // Ignoring index pages
+                if ( !nodeLabel.endsWith("Index") ){
+                    String nodeDescription = node.getShortDesc();
+                    if ( nodeDescription == null ){
+                        nodeDescription = "";
+                    }
+                    else {
+                        nodeDescription = " - " + nodeDescription;
+                    }
+                    String nodeDestination = node.getFocusViewId();
+                    if ( nodeDestination != null )
+                        nodeDestination = nodeDestination.substring(1);
+                    else
+                        nodeDestination = "";
+                    RichOutputLabel label = new RichOutputLabel();
+                    RichGoLink golink = new RichGoLink();
+                    UIXGroup group = new UIXGroup();
+                    label.setValue(nodeDescription);
+                    golink.setDestination(nodeDestination);
+                    golink.setText(nodeLabel);
+                    group.getChildren().add(golink);
+                    group.getChildren().add(label);
+                    childPanelList.getChildren().add(group);
+                }
+            }
+        }
+    }
+    
+    private String _tagGuideSortName = "abc";
+}

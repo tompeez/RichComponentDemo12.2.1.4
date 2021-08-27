@@ -1,0 +1,345 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="button Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        function doForceFullSubmit(event)
+        {
+          event.forceFullSubmit();
+          event.noResponseExpected();
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="button"/>
+        <f:attribute name="visualDesignName" value="button"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a button is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical">
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>Use the editor to the right to adjust the attributes for this demo.&lt;/b>"/>
+            <af:spacer height="5px"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:button binding="#{editor.component}" id="btn1" text="Go to Component Guide" icon="/images/uplevel.gif"
+                     immediate="true" action="guide" >
+            <f:facet name="popup">
+              <af:menu text="Edit">
+                <af:commandMenuItem text="Cut"/>
+                <af:commandMenuItem text="Copy"/>
+                <af:commandMenuItem text="Paste"/>
+              </af:menu>
+            </f:facet>
+          </af:button>  
+        </f:facet>        
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:spacer height="5px"/>
+            <af:panelHeader text="Other examples" id="ph1">
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:outputText value="Other demos of the button component."
+                               id="ot1"/>
+                <af:spacer height="5px" id="s2"/>
+                <af:panelList id="pl1">
+                  <af:outputText value="Toggle and radio functionality is implemented through the testButtonBean."
+                                 id="ot2"/>
+                  <af:outputText value="The folders button uses a hover icon."
+                                 id="ot3"/>
+                  <af:outputText value="Bold, Italic and Underline are independant toggle buttons."
+                                 id="ot4"/>
+                  <af:outputText value="The three text alignment buttons are mutually exclusive radio buttons."
+                                 id="ot5"/>
+                  <af:outputText value="The arrange button is bound to the editor, and for now throws a popup when pressed on the arrow."
+                                 id="ot6"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+              <af:outputText value="Buttons not on a toolbar (inside a horizontal panelGroupLayout)"/>
+              <af:panelGroupLayout layout="horizontal" id="pgl4">
+                <af:button text="back" shortDesc="return" disabled="true"
+                                         icon="/images/backarrow.gif"
+                                         disabledIcon="/images/backarrow_gray.gif"
+                                         id="ctb2"/>
+                <af:button text="Link to my.oracle.com" icon="/images/icon_forward_button.gif"
+                             destination="http://my.oracle.com" />
+                <af:button textAndAccessKey="&amp;No icon" shortDesc="No icon"
+                                         id="ctb1"/>
+                
+                <af:button id="search2" text="Search" shortDesc="search" accessKey="r" iconPosition="trailing"
+                                         icon="/images/search.gif" partialSubmit="false"
+                                         action="#{testPostback.doDownload}">
+                  <af:clientListener method="doForceFullSubmit" type="action"/>
+                </af:button>
+                <af:button text="Folders" shortDesc="folders"
+                                         icon="/images/smily-normal16.png"
+                                         depressedIcon="/images/bold16.png"
+                                         hoverIcon="/images/smily-glasses16.png" type="check"
+                                         id="ctb4"/>
+                <af:button id="bold2" shortDesc="bold" icon="/images/bold16.png"
+                                         type="check" selected="false" />
+                <af:button id="italic2" shortDesc="italic" icon="/images/italic16.png"
+                                         type="check" selected="false" />
+                <af:button id="underline2" shortDesc="underline"
+                                         icon="/images/underline16.png" type="check" selected="false"
+                                         />
+                <af:button id="alignLeft2" shortDesc="align left"
+                                         icon="/images/alignleft16.png" type="radio" selected="true"
+                                         />
+                <af:button id="alignCenter2" shortDesc="align center"
+                                         icon="/images/aligncenter16.png" type="radio" selected="false"
+                                         />
+                <af:button id="alignRight2" shortDesc="align right"
+                                         icon="/images/alignright16.png" type="radio" selected="false"
+                                         />
+                <af:button id="arrange2" visible="true" text="Arrange" shortDesc="arrange"
+                                         icon="/images/arrange.gif" partialSubmit="true">
+                  <f:facet name="popup">
+                    <af:panelGroupLayout id="pgl5">
+                      <af:selectManyListbox label="Drink choices" value="#{demoInput.manyListValue1}"
+                                            simple="true" size="7" id="sml2">
+                        <af:selectItem label="coffee" value="bean" id="si7"/>
+                        <f:selectItem itemLabel="tea" itemValue="leaf"
+                                      itemDescription="Tea from China" id="si8"/>
+                        <af:selectItem disabled="true" label="orange juice" value="orange"
+                                       id="si9"/>
+                        <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                                      id="si10"/>
+                        <af:selectItem label="milk" value="moo" id="si11"/>
+                        <f:selectItems value="#{demoInput.selectItems}"
+                                       id="si12"/>
+                      </af:selectManyListbox>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:button>
+                <af:button text="Menu Button" actionDelivery="none"
+                                         partialSubmit="true">
+                  <f:facet name="popup">
+                    <af:menu text="Edit">
+                      <af:commandMenuItem text="Cut"/>
+                      <af:commandMenuItem text="Copy"/>
+                      <af:commandMenuItem text="Paste"/>
+                    </af:menu>
+                  </f:facet>
+                </af:button>
+                
+                <af:button text="Lazy Menu Button" actionDelivery="none" id="lazyBtn"
+                                         partialSubmit="true">
+                  <f:facet name="popup">
+                    <af:menu text="Edit" contentDelivery="lazy">
+                      <af:commandMenuItem text="Cut"/>
+                      <af:commandMenuItem text="Copy"/>
+                      <af:commandMenuItem text="Paste"/>
+                    </af:menu>
+                  </f:facet>
+                </af:button>
+                
+                <af:button text="Go to Tag Guide page" immediate="true" action="guide"
+                           accessKey="C" />
+              </af:panelGroupLayout>
+              <af:outputText value="Buttons on a toolbar"/>
+              <af:toolbox id="t1">
+                <af:toolbar id="t2">
+                  <af:group id="g1">
+                    <af:button text="back" shortDesc="back" disabled="true"
+                                             icon="/images/backarrow.gif"
+                                             disabledIcon="/images/backarrow_gray.gif"/>
+                    <af:button text="Link to oracle.com" icon="/images/icon_forward_button.gif"
+                                 destination="http://oracle.com" />
+                    <af:button textAndAccessKey="&amp;No icon" shortDesc="No icon"/>
+                  </af:group>
+                  <af:group id="g2">
+                    <af:button id="search" text="Search" shortDesc="search" accessKey="r" iconPosition="trailing"
+                                             icon="/images/search.gif" partialSubmit="false"
+                                             action="#{testPostback.doDownload}">
+                      <af:clientListener method="doForceFullSubmit" type="action"/>
+                    </af:button>
+                    <af:button text="Folders" shortDesc="folders"
+                                             icon="/images/smily-normal16.png"
+                                             depressedIcon="/images/bold16.png"
+                                             hoverIcon="/images/smily-glasses16.png" type="check"/>
+                  </af:group>
+                  <af:group id="g3">
+                    <af:button id="bold" shortDesc="bold" icon="/images/bold16.png"
+                                             type="check" selected="false"/>
+                    <af:button id="italic" shortDesc="italic" icon="/images/italic16.png"
+                                             type="check" selected="false"/>
+                    <af:button id="underline" shortDesc="underline"
+                                             icon="/images/underline16.png" type="check"
+                                             selected="false"/>
+                  </af:group>
+                  <af:group id="g4">
+                    <af:button id="alignLeft" shortDesc="align left"
+                                             icon="/images/alignleft16.png"
+                                             type="radio" selected="true"/>
+                    <af:button id="alignCenter" shortDesc="align center"
+                                             icon="/images/aligncenter16.png" type="radio"
+                                             selected="false"/>
+                    <af:button id="alignRight" shortDesc="align right"
+                                             icon="/images/alignright16.png" type="radio"
+                                             selected="false"/>
+                  </af:group>
+                  <af:group id="g5">
+                    <af:button id="boundButton" visible="true" text="Arrange"
+                                             shortDesc="arrange" icon="/images/arrange.gif"
+                                             partialSubmit="true">
+                      <f:facet name="popup">
+                        <af:panelGroupLayout id="pgl3">
+                          <af:selectManyListbox label="Drink choices"
+                                                value="#{demoInput.manyListValue1}" simple="true"
+                                                size="7" id="sml1">
+                            <af:selectItem label="coffee" value="bean" id="si1"/>
+                            <f:selectItem itemLabel="tea" itemValue="leaf"
+                                          itemDescription="Tea from China"
+                                          id="si2"/>
+                            <af:selectItem disabled="true" label="orange juice" value="orange"
+                                           id="si3"/>
+                            <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                                          id="si4"/>
+                            <af:selectItem label="milk" value="moo" id="si5"/>
+                            <f:selectItems value="#{demoInput.selectItems}"
+                                           id="si6"/>
+                          </af:selectManyListbox>
+                        </af:panelGroupLayout>
+                      </f:facet>
+                    </af:button>
+  
+                    <af:button id="menuButton" text="menuButton" actionDelivery="none" shortDesc="dsr"
+                                             partialSubmit="true">
+                      <f:facet name="popup">
+                        <af:menu text="Edit">
+                          <af:commandMenuItem text="Cut"/>
+                          <af:commandMenuItem text="Copy"/>
+                          <af:commandMenuItem text="Paste"/>
+                        </af:menu>
+                      </f:facet>
+                    </af:button>
+                    <af:button text="Go to Tag Guide page" immediate="true" action="guide"
+                               accessKey="C" />
+                  </af:group>          
+  
+                </af:toolbar>
+              </af:toolbox>
+              
+              <af:panelGroupLayout layout="vertical" >
+                <af:outputText value="Example of a button with svg icon and iconDelivery='inline'"/>
+                <af:spacer height="5px" id="svg22"/>
+                <af:button text="SVG Icon" id="svgIconButton" iconDelivery="inline"
+                           icon="/images/circle.svg" iconPosition="trailing"/>
+              </af:panelGroupLayout>
+              
+              <af:panelGroupLayout layout="vertical" >
+                <af:outputText 
+                  value="Example of a button with svg icon and iconDelivery='fetchAndInline'"/>
+                <af:spacer height="5px" id="svgf22"/>
+                <af:button text="SVG Icon" id="svgIconFDButton" iconDelivery="fetchAndInline"
+                           icon="/images/circle.svg" iconPosition="trailing"/>
+              </af:panelGroupLayout>
+              
+              <af:panelGroupLayout layout="vertical" >
+                <af:outputText value="Example of a button with iconPosition='top'"/>
+                <af:spacer height="5px" id="s22"/>
+                <af:button text="Top iconPosition" id="topIconPosition"
+                           icon="/images/happy_computer.gif" iconPosition="top"/>
+                <af:spacer height="5px" id="s22a"/>
+                <af:button text="Top iconPosition" id="topIconPositionSmallIcon"
+                           icon="/images/uplevel.gif" iconPosition="top"/>
+              </af:panelGroupLayout>
+              
+              <af:panelGroupLayout layout="vertical" >
+                <af:outputText value="Example of a button with iconPosition='bottom'"/>
+                <af:spacer height="5px" id="s23"/>
+                <af:button text="Bottom iconPosition" id="bottomIconPosition"
+                           icon="/images/happy_computer.gif" iconPosition="bottom"/>
+                <af:spacer height="5px" id="s23a"/>
+                <af:button text="Bottom iconPosition" id="bottomIconPositionSmallIcon"
+                           icon="/images/uplevel.gif" iconPosition="bottom"/>
+              </af:panelGroupLayout>
+  
+              <af:panelGroupLayout layout="vertical" >
+                <af:outputText value="Example of an action button which has useWindow='true'"/>
+                <af:spacer height="5px" id="s6"/>
+                <af:button text="Click here" useWindow="true" action="dialog:createNewFile"
+                                  partialSubmit="true" id="usewindowButton"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" >
+                <af:outputText value="Example of a button using showPopupBehavior for inline selector:"/>
+                <af:spacer height="5px" id="s7"/>
+                <af:button id="selectorBtn" text="Click me..." clientComponent="true">
+                  <af:showPopupBehavior popupId="popup" alignId="selectorBtn" align="afterStart"/>
+                </af:button>
+                <af:popup id="popup">
+                  <af:menu text="popup" id="m1">
+                    <af:commandMenuItem text="Copy" icon="/images/copy.gif"
+                                        id="cmi1"/>
+                    <af:commandMenuItem text="Delete" icon="/images/delete_ena.png"
+                                        id="cmi2"/>
+                  </af:menu>
+                </af:popup>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" >
+                <af:outputText value="Example of an action button which has useWindow='true' and windowEmbedStyle='inlineDocument'"/>
+                   <af:spacer height="5px" id="s8"/>
+                     <af:button text="Click here" useWindow="true"
+                         action="dialog:createNewFile" partialSubmit="true" id="usewindowButton2"
+                          windowEmbedStyle="inlineDocument"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" >
+                <af:outputText value="Example of a destination button external URL and targetFrame='_blank'"/>
+                   <af:spacer height="5px" />
+                   <af:button text="Oracle.com" targetFrame="_blank" destination="http://www.oracle.com" />
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" >
+                <af:outputText value="Example of a destination button with a relative URL and targetFrame='_blank'"/>
+                   <af:spacer height="5px" />
+                   <af:button text="Button Visual Design" targetFrame="_blank" destination="/visualDesigns/button.jspx" />
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" >
+                <af:outputText value="Example of a button with both destination and action, destination should win"/>
+                   <af:spacer height="5px" />
+                   <af:button text="Oracle.com" targetFrame="_blank" destination="http://www.oracle.com" 
+                              action="dialog:createNewFile"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="pgl6" layout="default">
+                <af:outputText id="ot8" value="See also the "/>
+                <af:commandLink id="cl1" text="geometry management demo"
+                                action="guide.buttonGeometry"/>
+                <af:outputText id="ot9" value=" for this component."/>
+              </af:panelGroupLayout>
+              <!-- If PPRNavigation is enabled, destination URLs (specified by a hash, '#')
+               don't work. So this section is rendered only when PPRNavigation is off.-->
+              <af:panelGroupLayout layout="vertical" rendered="#{demoInput.PPRNavigationOff}">
+                <af:outputText value="Example of a destination button with an on page '#' destination"/>
+                <af:spacer height="5px" />
+                <af:button text="Jump to Bottom Section"  destination="#dmoTpl:section2"/>
+                <af:panelBox text="Leave some space to see the jump!" inlineStyle="width:300px"
+                             contentStyle="height:1200px; vertical-align: top;"/>
+                <af:panelHeader size="0" text="Bottom Section" id="section2" clientComponent="true">
+                  <af:outputText   value="Bottom section after some space for testing on page destination" />
+                </af:panelHeader>
+              </af:panelGroupLayout>
+            </af:panelHeader>  
+            <af:spacer height="5px" id="s50"/>
+            <af:panelGroupLayout id="pgl17" layout="default" rendered="#{demoSkin.altaBased}">
+                <af:outputText id="ot50" value="See also: "/>
+                <af:commandLink id="cl2" text="Button Alternate Styles Demo"
+                                action="guide.alternateStylesButtonDemo"/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

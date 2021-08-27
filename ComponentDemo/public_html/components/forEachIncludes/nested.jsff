@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved. -->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>forEach nested demo</description>
+      </component>
+    </af:xmlContent>
+    <af:panelHeader text="Nested usage of the for each tag using a partial Canidae taxonomy tree as an example"
+                    id="dc_ph1">
+      <af:panelGroupLayout layout="scroll" id="dc_pgl1">
+        <af:showDetail disclosedText="Hide notes" undisclosedText="Show notes" disclosed="true"
+                       id="dc_sd1">
+          <af:outputText value="Example showing how to use nested for each tags. This example also shows how naming containers (f:subview) can be used to prevent the need to suffix every component's ID with the for each key."
+                         inlineStyle="padding: 1em 0; display: block;" id="dc_ot1"/>
+        </af:showDetail>
+        <af:panelList id="tribePl">
+          <af:forEach var="tribe" varStatus="tvs" items="#{forEachBean.canidaeTribes}">
+            <f:subview id="tsv_${tvs.key}">
+              <af:group id="tribeG">
+                <af:outputText id="tribeOt" value="#{tribe.name}"/>
+                <af:panelList id="genusPl">
+                  <af:forEach var="genus" varStatus="gvs" items="#{tribe.members}">
+                    <f:subview id="gsv_${gvs.key}">
+                      <af:group id="genusG">
+                        <af:outputText id="genusOt" value="#{genus.name}"/>
+                        <af:panelList id="speciesPl">
+                          <af:forEach var="species" varStatus="svs" items="#{genus.members}">
+                            <f:subview id="ssv_${svs.key}">
+                              <af:panelGroupLayout id="dc_pgl2">
+                                <af:outputText id="speciesOt_${svs.key}" value="#{species.name}"/>
+                                (<af:outputText id="speciesSnOt_${svs.key}"
+                                               value="#{species.scientificName}"
+                                               inlineStyle="font-style:italic;"/>)
+                              </af:panelGroupLayout>
+                            </f:subview>
+                          </af:forEach>
+                        </af:panelList>
+                      </af:group>
+                    </f:subview>
+                  </af:forEach>
+                </af:panelList>
+              </af:group>
+            </f:subview>
+          </af:forEach>
+        </af:panelList>
+      </af:panelGroupLayout>
+    </af:panelHeader>
+  </af:componentDef>
+</jsp:root>

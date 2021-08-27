@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root
+  xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Content for Opportunity Team.</description>
+        <attribute>
+          <description>Flag for whether this fragment is being displayed in a maximized mode.</description>
+          <attribute-name>maximized</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:switcher facetName="#{attrs.maximized ? 'maximized' : 'restored'}"
+                 id="dcs1">
+      <f:facet name="restored">
+        <af:panelGroupLayout layout="scroll" id="dcpgl1">
+          <af:panelGroupLayout layout="vertical" halign="center" inlineStyle="padding: 4px"
+                               id="dcpgl2">
+            <af:image source="/images/bar-chart-multicolor.png" shortDesc="Opportunity Chart"
+                      id="dci1"/>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="maximized">
+        <af:outputText value="Opportunity team would be displayed here (larger, maximized size)."
+                       id="dcot1"/>
+      </f:facet>
+    </af:switcher>
+  </af:componentDef>
+</jsp:root>

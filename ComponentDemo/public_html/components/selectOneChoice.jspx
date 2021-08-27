@@ -1,0 +1,862 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="selectOneChoice Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="selectOneChoice"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a selectOneChoice is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputText value="Select a value and use either the partial or full postback command button to push the value of the selectOne control into the underlying model (a bean property).  The outputText will display the submitted value."
+                           id="ot1"/>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>Use the editor to the right to adjust the attributes for this demo.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:selectOneChoice binding="#{editor.component}" id="targetChoice"
+                              value="#{demoInput.choiceValue}" label="Drink">
+            <af:selectItem label="coffee" value="coffee" shortDesc="Sample shortDesc text"
+                           id="si1"/>
+            <f:selectItem itemLabel="tea" itemValue="tea" itemDescription="Tea from China"
+                          id="si2"/>
+            <af:selectItem label="milk" value="milk" rendered="false"
+                           id="si3"/>
+            <f:selectItems value="#{demoInput.selectItems}" id="si4"/>
+          </af:selectOneChoice>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:commandButton id="richCommand" text="partial postback" partialSubmit="true"/>
+              <af:commandButton text="full postback" id="fullCommand"/>
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The submitted combo box value was: "
+                               id="ot2"/>
+                <af:outputText id="result" partialTriggers="richCommand targetChoice"
+                               value="#{demoInput.choiceValue}"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s3"/>
+              </f:facet>
+              <af:outputText value="This is a demo for the selectOneChoice component. Click the drop down icon, select a value from the list and the header text beside it will change accordingly. "
+                             id="ot3"/>
+              <af:panelGroupLayout layout="horizontal" id="pgl5">
+                <af:outputText partialTriggers="richCommand targetCompactChoice" id="header"
+                                value="#{demoInput.compactSelectOneChoiceValue}"
+                                inlineStyle="font-size:20px;font-weight:bold;"/>
+                <af:selectOneChoice id="targetCompactChoice"
+                                    value="#{demoInput.compactSelectOneChoiceValue}" autoSubmit="true"
+                                    mode="compact" simple="true" unselectedLabel="[no selection]"
+                                    label="Computer Equipment">
+                  <af:selectItem label="Mouse" value="Mouse" shortDesc="Sample shortDesc text"
+                                 id="si5"/>
+                  <f:selectItem itemLabel="Keyboard" itemValue="keyboard"
+                                itemDescription="Keyboard from Taiwan"
+                                id="si6"/>
+                  <af:selectItem label="Speaker" value="Speaker" rendered="true"
+                                 id="si7"/>
+                  <af:selectItem label="Head Phone" value="Head Phone"
+                                 shortDesc="Sample shortDesc text" id="si8"/>
+                  <f:selectItem itemLabel="Monitor" itemValue="Monitor"
+                                itemDescription="Monitor from US" id="si9"/>
+                  <af:selectItem label="Flash Drive" value="Flash Drive"
+                                 shortDesc="Sample shortDesc text" id="si10"/>
+                  <af:selectItem label="Memory" value="Memory" shortDesc="Sample shortDesc text"
+                                 id="si11"/>
+                  <af:selectItem label="Mother Board" value="Mother Board"
+                                 shortDesc="Sample shortDesc text" id="si12"/>
+                  <af:selectItem label="Surge Protector" value="Surge Protector"
+                                 shortDesc="Sample shortDesc text" id="si13"/>
+                  <af:selectItem label="CD ROM" value="CD ROM"
+                                 shortDesc="Sample shortDesc text" id="si14"/>
+                  <af:selectItem label="Hard Drive" value="Hard Drive" shortDesc="Sample shortDesc text"
+                                 id="si15"/>
+                  <af:selectItem label="Floppy Drive" value="Floppy Drive" shortDesc="Sample shortDesc text"
+                                 id="si16"/>
+                  <af:selectItem label="Zip Drive" value="Zip Drive" shortDesc="Sample shortDesc text"
+                                 id="si17"/>
+                  <af:selectItem label="CD Writer" value="CD Writer" shortDesc="Sample shortDesc text"
+                                 id="si18"/>
+                  <af:selectItem label="DVD ROM" value="DVD ROM" shortDesc="Sample shortDesc text"
+                                 id="si19"/>
+                  <af:selectItem label="DVD Writer" value="DVD Writer" shortDesc="Sample shortDesc text"
+                                 id="si20"/>
+                </af:selectOneChoice>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="horizontal" id="pgl6">
+              <af:popup id="popupDialog">
+                <af:dialog title="Eat Your Veggies" id="d2">
+                  <af:panelFormLayout partialTriggers="popupChoice">
+                    <af:selectOneChoice label="Drink">
+                      <af:selectItem label="coffee" value="coffee" shortDesc="Sample shortDesc text"
+                                     id="sid1"/>
+                      <f:selectItem itemLabel="tea" itemValue="tea" itemDescription="Tea from China"
+                                    id="sid2"/>
+                      <af:selectItem label="milk" value="milk" rendered="false"
+                                     id="sid3"/>
+                      <f:selectItems value="#{demoInput.selectItems}" id="sid4"/>
+                    </af:selectOneChoice>
+                    <af:inputText id="itd1" label="inputText1"/>
+                    <af:inputText id="itd2" label="inputText2"/>
+                    <af:selectOneChoice id="popupChoice"
+                                          label="Four or More per Day" autoSubmit="true">
+                      <af:selectItem label="Apple" value="Apple" shortDesc="Sample shortDesc text"
+                                     id="si21"/>
+                      <af:selectItem label="Banana" value="Banana" shortDesc="Sample shortDesc text"
+                                     id="si22"/>
+                      <af:selectItem label="Carrot" value="Carrot" shortDesc="Sample shortDesc text"
+                                     id="si23"/>
+                      <af:selectItem label="Cucumber" value="Cucumber" shortDesc="Sample shortDesc text"
+                                     id="si24"/>
+                      <af:selectItem label="Daikon" value="Daikon" shortDesc="Sample shortDesc text"
+                                     id="si25"/>
+                      <af:selectItem label="Edamame" value="Edamame" shortDesc="Sample shortDesc text"
+                                     id="si26"/>
+                      <af:selectItem label="Fig" value="Fig" shortDesc="Sample shortDesc text"
+                                     id="si27"/>
+                      <af:selectItem label="Grape" value="Grape" shortDesc="Sample shortDesc text"
+                                     id="si28"/>
+                    </af:selectOneChoice>
+                  </af:panelFormLayout>
+                </af:dialog>
+              </af:popup>
+              <af:outputText value="This demo shows the selectOneChoice inside of a popup."
+                             id="ot4"/>
+              <af:spacer width="5" id="s4"/>
+              <af:commandButton immediate="true" text="Show SelectOneChoice" clientComponent="true"
+                                id="popupButton">
+                <af:showPopupBehavior popupId="popupDialog" alignId="popupButton" align="afterStart"/>
+              </af:commandButton>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl7">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s5"/>
+              </f:facet>
+              <af:outputText value="By choosing a message type, the appropriate message will be added to the selectOneChoice."
+                             id="ot5"/>
+              <af:selectOneChoice validator="#{messageTest.validateSingleValue}" autoSubmit="true"
+                                  label="messages" simple="true"
+                                  id="selectOneChoice1">
+                <af:selectItem label="none" value="none" shortDesc="Sample shortDesc text"
+                               id="si29"/>
+                <af:selectItem label="fatal" value="fatal" id="si30"/>
+                <af:selectItem label="error" value="error" id="si31"/>
+                <af:selectItem label="warning" value="warning" id="si32"/>
+                <af:selectItem label="confirmation" value="confirmation"
+                               id="si33"/>
+                <af:selectItem label="info" value="info" id="si34"/>
+              </af:selectOneChoice>
+            </af:panelGroupLayout>
+            <af:group id="gAlign">
+              <af:button id="bAlign" text="Field Alignment" immediate="true">
+                <af:showPopupBehavior popupId="pAlign"/>
+              </af:button>
+              <af:popup id="pAlign">
+                <af:panelWindow id="pwAlign" title="Field Alignment">
+                  <af:panelGroupLayout id="pglAlignV" layout="vertical"
+                    inlineStyle="min-width:250px;min-height:340px;"
+                    partialTriggers="changedSetting compactSetting disabledSetting helpSetting readOnlySetting requiredSetting">
+                    <af:panelFormLayout id="pflAlign1" maxColumns="2" rows="1">
+                      <af:selectBooleanCheckbox id="changedSetting" label="Changed" text="Changed indicator"
+                                                contentStyle="white-space:nowrap"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.changed}"/>
+                      <af:selectBooleanCheckbox id="compactSetting" label="Compact" text="Compact"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.compact}"/>
+                      <af:selectBooleanCheckbox id="disabledSetting" label="Disabled" text="Disabled"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.disabled}"/>
+                      <af:selectBooleanCheckbox id="helpSetting" label="Has help" text="Help"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.hasHelp}"/>
+                      <af:selectBooleanCheckbox id="readOnlySetting" label="Read-only" text="Read-only"
+                                                contentStyle="white-space:nowrap"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.readOnly}"/>
+                      <af:selectBooleanCheckbox id="requiredSetting" label="Required" text="Required"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.required}"/>
+                    </af:panelFormLayout>
+                    <af:separator id="sepAlign"/>
+                    <af:spacer id="spAlign1" height="14"/>
+                    <af:outputText id="otAlign1" value="Simple:"/>
+                    <af:selectOneChoice id="alignEx1" label="Example" value="item1" simple="true"
+                                        changed="#{pageFlowScope.changed}"
+                                        disabled="#{pageFlowScope.disabled}"
+                                        helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                        mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                        readOnly="#{pageFlowScope.readOnly}"
+                                        showRequired="#{pageFlowScope.required}">
+                      <af:selectItem id="exSI1" label="Example Item 1" value="item1"/>
+                      <af:selectItem id="exSI2" label="Example Item 2" value="item2"/>
+                      <af:selectItem id="exSI3" label="Example Item 3" value="item3"/>
+                    </af:selectOneChoice>
+                    <af:spacer id="spAlign2" height="14"/>
+                    <af:outputText id="otAlign2" value="Labelled:"/>
+                    <af:selectOneChoice id="alignEx2" label="Example" value="item1"
+                                        changed="#{pageFlowScope.changed}"
+                                        disabled="#{pageFlowScope.disabled}"
+                                        helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                        mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                        readOnly="#{pageFlowScope.readOnly}"
+                                        showRequired="#{pageFlowScope.required}">
+                      <af:selectItem id="exSI4" label="Example Item 1" value="item1"/>
+                      <af:selectItem id="exSI5" label="Example Item 2" value="item2"/>
+                      <af:selectItem id="exSI6" label="Example Item 3" value="item3"/>
+                    </af:selectOneChoice>
+                    <af:spacer id="spAlign3" height="14"/>
+                    <af:panelGroupLayout id="formWrap" layout="default">
+                      <af:outputText id="otAlign3" value="Form (labelled and panelLabelAndMessage):"/>
+                      <af:spacer id="formSp1" width="8"/>
+                      <af:selectBooleanCheckbox id="labelAlignSetting" label="Top Labels" text="Top Labels"
+                                                contentStyle="white-space:nowrap"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.topLabels}"/>
+                    </af:panelGroupLayout>
+                    <af:panelFormLayout id="pflAlign2" maxColumns="1" partialTriggers="labelAlignSetting"
+                                        labelAlignment="#{pageFlowScope.topLabels ? 'top' : 'start'}">
+                      <af:selectOneChoice id="alignEx3" label="Example" value="item1"
+                                          changed="#{pageFlowScope.changed}"
+                                          disabled="#{pageFlowScope.disabled}"
+                                          helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                          mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                          readOnly="#{pageFlowScope.readOnly}"
+                                          showRequired="#{pageFlowScope.required}">
+                        <af:selectItem id="exSI7" label="Example Item 1" value="item1"/>
+                        <af:selectItem id="exSI8" label="Example Item 2" value="item2"/>
+                        <af:selectItem id="exSI9" label="Example Item 3" value="item3"/>
+                      </af:selectOneChoice>
+                      <af:panelLabelAndMessage id="plmAlign" label="Example"
+                                               changed="#{pageFlowScope.changed}"
+                                               helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                               showRequired="#{pageFlowScope.required and (pageFlowScope.disabled != true) and (pageFlowScope.readOnly != true)}"
+                                               shortDesc="This is a panelLabelAndMessage surrounding a simple field">
+                        <af:selectOneChoice id="alignEx4" label="Example" value="item1" simple="true"
+                                            changed="#{pageFlowScope.changed}"
+                                            disabled="#{pageFlowScope.disabled}"
+                                            helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                            mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                            readOnly="#{pageFlowScope.readOnly}"
+                                            showRequired="#{pageFlowScope.required}">
+                          <af:selectItem id="exSI10" label="Example Item 1" value="item1"/>
+                          <af:selectItem id="exSI11" label="Example Item 2" value="item2"/>
+                          <af:selectItem id="exSI12" label="Example Item 3" value="item3"/>
+                        </af:selectOneChoice>
+                      </af:panelLabelAndMessage>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                </af:panelWindow>
+              </af:popup>
+            </af:group>
+            <af:showDetailHeader text="More Tests" id="sdh1">
+              <af:panelGroupLayout layout="vertical" id="pgl8">
+                <f:facet name="separator">
+                  <af:separator id="s6"/>
+                </f:facet>
+                <af:panelGroupLayout layout="vertical" id="pgl9">
+                  <af:separator id="s7"/>
+                  <af:outputText value="Hierachical selectOneChoice" id="ot6"/>
+                  <af:selectOneChoice label="Fruit and Veggies"
+                                      id="selectOneChoice2">
+                    <af:selectItem label="Fruit" value="Fruit" shortDesc="Sample shortDesc text"
+                                   id="si35"/>
+                    <af:selectItem label="- Apricot" value="Apricot" shortDesc="Sample shortDesc text"
+                                   id="si36"/>
+                    <af:selectItem label="- Banana" value="Banana" shortDesc="Sample shortDesc text"
+                                   id="si37"/>
+                    <af:selectItem label="- Carrot" value="Carrot" shortDesc="Sample shortDesc text"
+                                   id="si38"/>
+                    <af:selectItem label="- Fig" value="Fig" shortDesc="Sample shortDesc text"
+                                   id="si39"/>
+                    <af:selectItem label="- Grape" value="Grape" shortDesc="Sample shortDesc text"
+                                   id="si40"/>
+                    <af:selectItem label="- Orange" value="Orange" shortDesc="Sample shortDesc text"
+                                   id="si41"/>
+                    <af:selectItem label="Veggies" value="Veggies" shortDesc="Sample shortDesc text"
+                                   id="si42"/>
+                    <af:selectItem label="- Cucumber" value="Cucumber" shortDesc="Sample shortDesc text"
+                                   id="si43"/>
+                    <af:selectItem label="- Daikon" value="Daikon" shortDesc="Sample shortDesc text"
+                                   id="si44"/>
+                    <af:selectItem label="- Edamame" value="Edamame" shortDesc="Sample shortDesc text"
+                                   id="si45"/>
+                    <af:selectItem label="- Lettuce" value="Lettuce" shortDesc="Sample shortDesc text"
+                                   id="si46"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl10">
+                  <af:outputText value="Narrow selectOneChoice" id="ot7"/>
+                  <af:selectOneChoice label="Narrow 1"
+                                      id="selectOneChoice3">
+                    <af:selectItem label="A" id="si47"/>
+                    <af:selectItem label="B" id="si48"/>
+                    <af:selectItem label="C" id="si49"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl11">
+                  <af:outputText value="Narrow selectOneChoice with wide contentStyle width"
+                                 id="ot8"/>
+                  <af:selectOneChoice contentStyle="width:500px" label="Narrow 2"
+                                      id="selectOneChoice4">
+                    <af:selectItem label="A" id="si50"/>
+                    <af:selectItem label="B" id="si51"/>
+                    <af:selectItem label="C" id="si52"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl12">
+                  <af:outputText value="Wide selectOneChoice" id="ot9"/>
+                  <af:selectOneChoice label="Wide 1" id="selectOneChoice5">
+                    <af:selectItem label="A" id="si53"/>
+                    <af:selectItem label="B" id="si54"/>
+                    <af:selectItem label="This is the really really really really really really long item"
+                                   id="si55"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl13">
+                  <af:outputText value="Wide selectOneChoice with narrow contentStyle width"
+                                 id="ot10"/>
+                  <af:selectOneChoice contentStyle="width:30px" label="Wide 2"
+                                      id="selectOneChoice6">
+                    <af:selectItem label="A" id="si56"/>
+                    <af:selectItem label="B" id="si57"/>
+                    <af:selectItem label="This is the really really really really really really long item"
+                                   id="si58"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl14">
+                  <af:outputText value="Long selectOneChoice with '-----' separator"
+                                 id="ot11"/>
+                  <af:selectOneChoice label="Long" id="selectOneChoice7">
+                    <af:selectItem label="Item 0" id="si59"/>
+                    <af:selectItem label="Item 1" id="si60"/>
+                    <af:selectItem label="Item 2" id="si61"/>
+                    <af:selectItem label="Item 3" id="si62"/>
+                    <af:selectItem label="Item 4" id="si63"/>
+                    <af:selectItem label="Item 5" id="si64"/>
+                    <af:selectItem label="Item 6" id="si65"/>
+                    <af:selectItem label="Item 7" id="si66"/>
+                    <af:selectItem label="Item 8" id="si67"/>
+                    <af:selectItem label="Item 9" id="si68"/>
+                    <af:selectItem label="Item 10" id="si69"/>
+                    <af:selectItem label="----------" value="-----" id="si70"/>
+                    <af:selectItem label="Item 11" id="si71"/>
+                    <af:selectItem label="Item 12" id="si72"/>
+                    <af:selectItem label="Item 13" id="si73"/>
+                    <af:selectItem label="Item 14" id="si74"/>
+                    <af:selectItem label="Item 15" id="si75"/>
+                    <af:selectItem label="Item 16" id="si76"/>
+                    <af:selectItem label="Item 17" id="si77"/>
+                    <af:selectItem label="Item 18" id="si78"/>
+                    <af:selectItem label="Item 19" id="si79"/>
+                    <af:selectItem label="Item 20" id="si80"/>
+                    <af:selectItem label="Item 21" id="si81"/>
+                    <af:selectItem label="Item 22" id="si82"/>
+                    <af:selectItem label="Item 23" id="si83"/>
+                    <af:selectItem label="Item 24" id="si84"/>
+                    <af:selectItem label="Item 25" id="si85"/>
+                    <af:selectItem label="Item 26" id="si86"/>
+                    <af:selectItem label="Item 27" id="si87"/>
+                    <af:selectItem label="Item 28" id="si88"/>
+                    <af:selectItem label="Item 29" id="si89"/>
+                    <af:selectItem label="Item 30" id="si90"/>
+                    <af:selectItem label="Item 31" id="si91"/>
+                    <af:selectItem label="Item 32" id="si92"/>
+                    <af:selectItem label="Item 33" id="si93"/>
+                    <af:selectItem label="Item 34" id="si94"/>
+                    <af:selectItem label="Item 35" id="si95"/>
+                    <af:selectItem label="Item 36" id="si96"/>
+                    <af:selectItem label="Item 37" id="si97"/>
+                    <af:selectItem label="Item 38" id="si98"/>
+                    <af:selectItem label="Item 39" id="si99"/>
+                    <af:selectItem label="Item 40" id="si100"/>
+                    <af:selectItem label="Item 41" id="si101"/>
+                    <af:selectItem label="Item 42" id="si102"/>
+                    <af:selectItem label="Item 43" id="si103"/>
+                    <af:selectItem label="Item 44" id="si104"/>
+                    <af:selectItem label="Item 45" id="si105"/>
+                    <af:selectItem label="Item 46" id="si106"/>
+                    <af:selectItem label="Item 47" id="si107"/>
+                    <af:selectItem label="Item 48" id="si108"/>
+                    <af:selectItem label="Item 49" id="si109"/>
+                    <af:selectItem label="Item 50" id="si110"/>
+                    <af:selectItem label="Item 51" id="si111"/>
+                    <af:selectItem label="Item 52" id="si112"/>
+                    <af:selectItem label="Item 53" id="si113"/>
+                    <af:selectItem label="Item 54" id="si114"/>
+                    <af:selectItem label="Item 55" id="si115"/>
+                    <af:selectItem label="Item 56" id="si116"/>
+                    <af:selectItem label="Item 57" id="si117"/>
+                    <af:selectItem label="Item 58" id="si118"/>
+                    <af:selectItem label="Item 59" id="si119"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>                
+                <af:panelGroupLayout layout="vertical" id="pg125">
+                  <af:outputText value="Very long list of countries in alphabetical order selectOneChoice" id="ot23"/>
+                  <af:selectOneChoice id="country" label="Country">
+                    <af:selectItem label="Afghanistan" value="Afghanistan" />
+                    <af:selectItem label="Aland Islands" value="Aland Islands" />
+                    <af:selectItem label="Albania" value="Albania" />
+                    <af:selectItem label="Algeria" value="Algeria" />
+                    <af:selectItem label="American Samoa" value="American Samoa" />
+                    <af:selectItem label="Andorra" value="Andorra" />
+                    <af:selectItem label="Angola" value="Angola" />
+                    <af:selectItem label="Anguilla" value="Anguilla" />
+                    <af:selectItem label="Antarctica" value="Antarctica" />
+                    <af:selectItem label="Antigua and Barbuda" value="Antigua and Barbuda" />
+                    <af:selectItem label="Argentina" value="Argentina" />
+                    <af:selectItem label="Armenia" value="Armenia" />
+                    <af:selectItem label="Aruba" value="Aruba" />
+                    <af:selectItem label="Australia" value="Australia" />
+                    <af:selectItem label="Austria" value="Austria" />
+                    <af:selectItem label="Azerbaijan" value="Azerbaijan" />
+                    <af:selectItem label="Bahamas" value="Bahamas" />
+                    <af:selectItem label="Bahrain" value="Bahrain" />
+                    <af:selectItem label="Bangladesh" value="Bangladesh" />
+                    <af:selectItem label="Barbados" value="Barbados" />
+                    <af:selectItem label="Belarus" value="Belarus" />
+                    <af:selectItem label="Belgium" value="Belgium" />
+                    <af:selectItem label="Belize" value="Belize" />
+                    <af:selectItem label="Benin" value="Benin" />
+                    <af:selectItem label="Bermuda" value="Bermuda" />
+                    <af:selectItem label="Bhutan" value="Bhutan" />
+                    <af:selectItem label="Bolivia" value="Bolivia" />
+                    <af:selectItem label="Bosnia and Herzegovina" value="Bosnia and Herzegovina" />
+                    <af:selectItem label="Botswana" value="Botswana" />
+                    <af:selectItem label="Bouvet Island" value="Bouvet Island" />
+                    <af:selectItem label="Brazil" value="Brazil" />
+                    <af:selectItem label="British Indian Ocean Territory" value="British Indian Ocean Territory" />
+                    <af:selectItem label="Brunei Darussalam" value="Brunei Darussalam" />
+                    <af:selectItem label="Bulgaria" value="Bulgaria" />
+                    <af:selectItem label="Burkina Faso" value="Burkina Faso" />
+                    <af:selectItem label="Burundi" value="Burundi" />
+                    <af:selectItem label="Cabo Verde" value="Cabo Verde" />
+                    <af:selectItem label="Cambodia" value="Cambodia" />
+                    <af:selectItem label="Cameroon" value="Cameroon" />
+                    <af:selectItem label="Canada" value="Canada" />
+                    <af:selectItem label="Cayman Islands" value="Cayman Islands" />
+                    <af:selectItem label="Central African Republic" value="Central African Republic" />
+                    <af:selectItem label="Chad" value="Chad" />
+                    <af:selectItem label="Chile" value="Chile" />
+                    <af:selectItem label="China" value="China" />
+                    <af:selectItem label="Christmas Island" value="Christmas Island" />
+                    <af:selectItem label="Cocos (Keeling) Islands" value="Cocos (Keeling) Islands" />
+                    <af:selectItem label="Colombia" value="Colombia" />
+                    <af:selectItem label="Comoros" value="Comoros" />
+                    <af:selectItem label="Congo" value="Congo" />
+                    <af:selectItem label="Congo, The Democratic Republic of the" value="Congo, The Democratic Republic of the" />
+                    <af:selectItem label="Cook Islands" value="Cook Islands" />
+                    <af:selectItem label="Costa Rica" value="Costa Rica" />
+                    <af:selectItem label="Cote d'Ivoire" value="Cote d'Ivoire" />
+                    <af:selectItem label="Croatia" value="Croatia" />
+                    <af:selectItem label="Cuba" value="Cuba" />
+                    <af:selectItem label="Curacao" value="Curacao" />
+                    <af:selectItem label="Cyprus" value="Cyprus" />
+                    <af:selectItem label="Czech Republic" value="Czech Republic" />
+                    <af:selectItem label="Denmark" value="Denmark" />
+                    <af:selectItem label="Djibouti" value="Djibouti" />
+                    <af:selectItem label="Dominica" value="Dominica" />
+                    <af:selectItem label="Dominican Republic" value="Dominican Republic" />
+                    <af:selectItem label="Ecuador" value="Ecuador" />
+                    <af:selectItem label="Egypt" value="Egypt" />
+                    <af:selectItem label="El Salvador" value="El Salvador" />
+                    <af:selectItem label="Equatorial Guinea" value="Equatorial Guinea" />
+                    <af:selectItem label="Eritrea" value="Eritrea" />
+                    <af:selectItem label="Estonia" value="Estonia" />
+                    <af:selectItem label="Ethiopia" value="Ethiopia" />
+                    <af:selectItem label="Falkland Islands (Malvinas)" value="Falkland Islands (Malvinas)" />
+                    <af:selectItem label="Faroe Islands" value="Faroe Islands" />
+                    <af:selectItem label="Fiji" value="Fiji" />
+                    <af:selectItem label="Finland" value="Finland" />
+                    <af:selectItem label="France" value="France" />
+                    <af:selectItem label="French Guiana" value="French Guiana" />
+                    <af:selectItem label="French Polynesia" value="French Polynesia" />
+                    <af:selectItem label="French Southern Territories" value="French Southern Territories" />
+                    <af:selectItem label="Gabon" value="Gabon" />
+                    <af:selectItem label="Gambia" value="Gambia" />
+                    <af:selectItem label="Georgia" value="Georgia" />
+                    <af:selectItem label="Germany" value="Germany" />
+                    <af:selectItem label="Ghana" value="Ghana" />
+                    <af:selectItem label="Gibraltar" value="Gibraltar" />
+                    <af:selectItem label="Greece" value="Greece" />
+                    <af:selectItem label="Greenland" value="Greenland" />
+                    <af:selectItem label="Grenada" value="Grenada" />
+                    <af:selectItem label="Guadeloupe" value="Guadeloupe" />
+                    <af:selectItem label="Guam" value="Guam" />
+                    <af:selectItem label="Guatemala" value="Guatemala" />
+                    <af:selectItem label="Guernsey" value="Guernsey" />
+                    <af:selectItem label="Guinea" value="Guinea" />
+                    <af:selectItem label="Guinea-Bissau" value="Guinea-Bissau" />
+                    <af:selectItem label="Guyana" value="Guyana" />
+                    <af:selectItem label="Haiti" value="Haiti" />
+                    <af:selectItem label="Heard Island and McDonald Islands" value="Heard Island and McDonald Islands" />
+                    <af:selectItem label="Holy See (Vatican City State)" value="Holy See (Vatican City State)" />
+                    <af:selectItem label="Honduras" value="Honduras" />
+                    <af:selectItem label="Hong Kong" value="Hong Kong" />
+                    <af:selectItem label="Hungary" value="Hungary" />
+                    <af:selectItem label="Iceland" value="Iceland" />
+                    <af:selectItem label="India" value="India" />
+                    <af:selectItem label="Indonesia" value="Indonesia" />
+                    <af:selectItem label="Iran, Islamic Republic of" value="Iran, Islamic Republic of" />
+                    <af:selectItem label="Iraq" value="Iraq" />
+                    <af:selectItem label="Ireland" value="Ireland" />
+                    <af:selectItem label="Isle of Man" value="Isle of Man" />
+                    <af:selectItem label="Israel" value="Israel" />
+                    <af:selectItem label="Italy" value="Italy" />
+                    <af:selectItem label="Jamaica" value="Jamaica" />
+                    <af:selectItem label="Japan" value="Japan" />
+                    <af:selectItem label="Jersey" value="Jersey" />
+                    <af:selectItem label="Jordan" value="Jordan" />
+                    <af:selectItem label="Kazakhstan" value="Kazakhstan" />
+                    <af:selectItem label="Kenya" value="Kenya" />
+                    <af:selectItem label="Kiribati" value="Kiribati" />
+                    <af:selectItem label="Korea, Democratic People's Republic of" value="Korea, Democratic People's Republic of" />
+                    <af:selectItem label="Korea, Republic of" value="Korea, Republic of" />
+                    <af:selectItem label="Kosovo" value="Kosovo" />
+                    <af:selectItem label="Kuwait" value="Kuwait" />
+                    <af:selectItem label="Kyrgyzstan" value="Kyrgyzstan" />
+                    <af:selectItem label="Lao People's Democratic Republic" value="Lao People's Democratic Republic" />
+                    <af:selectItem label="Latvia" value="Latvia" />
+                    <af:selectItem label="Lebanon" value="Lebanon" />
+                    <af:selectItem label="Lesotho" value="Lesotho" />
+                    <af:selectItem label="Liberia" value="Liberia" />
+                    <af:selectItem label="Libya" value="Libya" />
+                    <af:selectItem label="Liechtenstein" value="Liechtenstein" />
+                    <af:selectItem label="Lithuania" value="Lithuania" />
+                    <af:selectItem label="Luxembourg" value="Luxembourg" />
+                    <af:selectItem label="Macao" value="Macao" />
+                    <af:selectItem label="Macedonia, The Former Yugoslav Republic of" value="Macedonia, The Former Yugoslav Republic of" />
+                    <af:selectItem label="Madagascar" value="Madagascar" />
+                    <af:selectItem label="Malawi" value="Malawi" />
+                    <af:selectItem label="Malaysia" value="Malaysia" />
+                    <af:selectItem label="Maldives" value="Maldives" />
+                    <af:selectItem label="Mali" value="Mali" />
+                    <af:selectItem label="Malta" value="Malta" />
+                    <af:selectItem label="Marshall Islands" value="Marshall Islands" />
+                    <af:selectItem label="Martinique" value="Martinique" />
+                    <af:selectItem label="Mauritania" value="Mauritania" />
+                    <af:selectItem label="Mauritius" value="Mauritius" />
+                    <af:selectItem label="Mayotte" value="Mayotte" />
+                    <af:selectItem label="Mexico" value="Mexico" />
+                    <af:selectItem label="Micronesia, Federated States of" value="Micronesia, Federated States of" />
+                    <af:selectItem label="Moldova" value="Moldova" />
+                    <af:selectItem label="Monaco" value="Monaco" />
+                    <af:selectItem label="Mongolia" value="Mongolia" />
+                    <af:selectItem label="Montenegro" value="Montenegro" />
+                    <af:selectItem label="Montserrat" value="Montserrat" />
+                    <af:selectItem label="Morocco" value="Morocco" />
+                    <af:selectItem label="Mozambique" value="Mozambique" />
+                    <af:selectItem label="Myanmar" value="Myanmar" />
+                    <af:selectItem label="Namibia" value="Namibia" />
+                    <af:selectItem label="Nauru" value="Nauru" />
+                    <af:selectItem label="Nepal" value="Nepal" />
+                    <af:selectItem label="Netherlands" value="Netherlands" />
+                    <af:selectItem label="Netherlands Antilles" value="Netherlands Antilles" />
+                    <af:selectItem label="New Caledonia" value="New Caledonia" />
+                    <af:selectItem label="New Zealand" value="New Zealand" />
+                    <af:selectItem label="Nicaragua" value="Nicaragua" />
+                    <af:selectItem label="Niger" value="Niger" />
+                    <af:selectItem label="Nigeria" value="Nigeria" />
+                    <af:selectItem label="Niue" value="Niue" />
+                    <af:selectItem label="Norfolk Island" value="Norfolk Island" />
+                    <af:selectItem label="Northern Mariana Islands" value="Northern Mariana Islands" />
+                    <af:selectItem label="Norway" value="Norway" />
+                    <af:selectItem label="Oman" value="Oman" />
+                    <af:selectItem label="Pakistan" value="Pakistan" />
+                    <af:selectItem label="Palau" value="Palau" />
+                    <af:selectItem label="Palestine, State of" value="Palestine, State of" />
+                    <af:selectItem label="Panama" value="Panama" />
+                    <af:selectItem label="Papua New Guinea" value="Papua New Guinea" />
+                    <af:selectItem label="Paraguay" value="Paraguay" />
+                    <af:selectItem label="Peru" value="Peru" />
+                    <af:selectItem label="Philippines" value="Philippines" />
+                    <af:selectItem label="Pitcairn" value="Pitcairn" />
+                    <af:selectItem label="Poland" value="Poland" />
+                    <af:selectItem label="Portugal" value="Portugal" />
+                    <af:selectItem label="Puerto Rico" value="Puerto Rico" />
+                    <af:selectItem label="Qatar" value="Qatar" />
+                    <af:selectItem label="Reunion" value="Reunion" />
+                    <af:selectItem label="Romania" value="Romania" />
+                    <af:selectItem label="Russian Federation" value="Russian Federation" />
+                    <af:selectItem label="Rwanda" value="Rwanda" />
+                    <af:selectItem label="Saint Barthelemy" value="Saint Barthelemy" />
+                    <af:selectItem label="Saint Helena, Ascension and Tristan da Cunha" value="Saint Helena, Ascension and Tristan da Cunha" />
+                    <af:selectItem label="Saint Kitts and Nevis" value="Saint Kitts and Nevis" />
+                    <af:selectItem label="Saint Lucia" value="Saint Lucia" />
+                    <af:selectItem label="Saint Martin (French part)" value="Saint Martin (French part)" />
+                    <af:selectItem label="Saint Pierre and Miquelon" value="Saint Pierre and Miquelon" />
+                    <af:selectItem label="Saint Vincent and the Grenadines" value="Saint Vincent and the Grenadines" />
+                    <af:selectItem label="Samoa" value="Samoa" />
+                    <af:selectItem label="San Marino" value="San Marino" />
+                    <af:selectItem label="Sao Tome and Principe" value="Sao Tome and Principe" />
+                    <af:selectItem label="Saudi Arabia" value="Saudi Arabia" />
+                    <af:selectItem label="Senegal" value="Senegal" />
+                    <af:selectItem label="Serbia" value="Serbia" />
+                    <af:selectItem label="Serbia and Montenegro" value="Serbia and Montenegro" />
+                    <af:selectItem label="Seychelles" value="Seychelles" />
+                    <af:selectItem label="Sierra Leone" value="Sierra Leone" />
+                    <af:selectItem label="Singapore" value="Singapore" />
+                    <af:selectItem label="Slovakia" value="Slovakia" />
+                    <af:selectItem label="Slovenia" value="Slovenia" />
+                    <af:selectItem label="Solomon Islands" value="Solomon Islands" />
+                    <af:selectItem label="Somalia" value="Somalia" />
+                    <af:selectItem label="South Africa" value="South Africa" />
+                    <af:selectItem label="South Georgia and the South Sandwich Islands" value="South Georgia and the South Sandwich Islands" />
+                    <af:selectItem label="South Sudan" value="South Sudan" />
+                    <af:selectItem label="Spain" value="Spain" />
+                    <af:selectItem label="Sri Lanka" value="Sri Lanka" />
+                    <af:selectItem label="Sudan" value="Sudan" />
+                    <af:selectItem label="Suriname" value="Suriname" />
+                    <af:selectItem label="Svalbard and Jan Mayen" value="Svalbard and Jan Mayen" />
+                    <af:selectItem label="Swaziland" value="Swaziland" />
+                    <af:selectItem label="Sweden" value="Sweden" />
+                    <af:selectItem label="Switzerland" value="Switzerland" />
+                    <af:selectItem label="Syrian Arab Republic" value="Syrian Arab Republic" />
+                    <af:selectItem label="Taiwan" value="Taiwan" />
+                    <af:selectItem label="Tajikistan" value="Tajikistan" />
+                    <af:selectItem label="Tanzania, United Republic of" value="Tanzania, United Republic of" />
+                    <af:selectItem label="Thailand" value="Thailand" />
+                    <af:selectItem label="The tail" value="The tail" />
+                    <af:selectItem label="Timor-Leste" value="Timor-Leste" />
+                    <af:selectItem label="Togo" value="Togo" />
+                    <af:selectItem label="Tokelau" value="Tokelau" />
+                    <af:selectItem label="Tonga" value="Tonga" />
+                    <af:selectItem label="Trinidad and Tobago" value="Trinidad and Tobago" />
+                    <af:selectItem label="Tunisia" value="Tunisia" />
+                    <af:selectItem label="Turkey" value="Turkey" />
+                    <af:selectItem label="Turkmenistan" value="Turkmenistan" />
+                    <af:selectItem label="Turks and Caicos Islands" value="Turks and Caicos Islands" />
+                    <af:selectItem label="Tuvalu" value="Tuvalu" />
+                    <af:selectItem label="Uganda" value="Uganda" />
+                    <af:selectItem label="Ukraine" value="Ukraine" />
+                    <af:selectItem label="United Arab Emirates" value="United Arab Emirates" />
+                    <af:selectItem label="United Kingdom" value="United Kingdom" />
+                    <af:selectItem label="United States" value="United States" />
+                    <af:selectItem label="United States Minor Outlying Islands" value="United States Minor Outlying Islands" />
+                    <af:selectItem label="Uruguay" value="Uruguay" />
+                    <af:selectItem label="Uzbekistan" value="Uzbekistan" />
+                    <af:selectItem label="Vanuatu" value="Vanuatu" />
+                    <af:selectItem label="Venezuela" value="Venezuela" />
+                    <af:selectItem label="Viet Nam" value="Viet Nam" />
+                    <af:selectItem label="Virgin Islands, British" value="Virgin Islands, British" />
+                    <af:selectItem label="Virgin Islands, U.S." value="Virgin Islands, U.S." />
+                    <af:selectItem label="Wallis and Futuna" value="Wallis and Futuna" />
+                    <af:selectItem label="Western Sahara" value="Western Sahara" />
+                    <af:selectItem label="Yemen" value="Yemen" />
+                    <af:selectItem label="Zambia" value="Zambia" />
+                    <af:selectItem label="Zimbabwe" value="Zimbabwe" />
+                  </af:selectOneChoice>
+                </af:panelGroupLayout> 
+                <!-- Now, simple versions of the above tests -->
+                <af:panelGroupLayout layout="vertical" id="pgl15">
+                  <af:outputText value="Simple narrow selectOneChoice"
+                                 id="ot12"/>
+                  <af:selectOneChoice simple="true" label="simple narrow 1"
+                                      id="selectOneChoice8">
+                    <af:selectItem label="A" id="si120"/>
+                    <af:selectItem label="B" id="si121"/>
+                    <af:selectItem label="C" id="si122"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl16">
+                  <af:outputText value="Simple narrow selectOneChoice with wide contentStyle width"
+                                 id="ot13"/>
+                  <af:selectOneChoice simple="true" contentStyle="width:500px" label="simple narrow 2"
+                                      id="selectOneChoice9">
+                    <af:selectItem label="A" id="si123"/>
+                    <af:selectItem label="B" id="si124"/>
+                    <af:selectItem label="C" id="si125"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl17">
+                  <af:outputText value="Simple wide selectOneChoice" id="ot14"/>
+                  <af:selectOneChoice simple="true" label="simple wide 1"
+                                      id="selectOneChoice10">
+                    <af:selectItem label="A" id="si126"/>
+                    <af:selectItem label="B" id="si127"/>
+                    <af:selectItem label="This is the really really really really really really long item"
+                                   id="si128"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl18">
+                  <af:outputText value="Simple wide selectOneChoice with narrow contentStyle width"
+                                 id="ot15"/>
+                  <af:selectOneChoice simple="true" contentStyle="width:30px" label="simple wide 3"
+                                      id="selectOneChoice11">
+                    <af:selectItem label="A" id="si129"/>
+                    <af:selectItem label="B" id="si130"/>
+                    <af:selectItem label="This is the really really really really really really long item"
+                                   id="si131"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl19">
+                  <af:outputText value="Simple long selectOneChoice" id="ot16"/>
+                  <af:selectOneChoice simple="true" label="long" id="selectOneChoice12">
+                    <af:selectItem label="Item 0" id="si132"/>
+                    <af:selectItem label="Item 1" id="si133"/>
+                    <af:selectItem label="Item 2" id="si134"/>
+                    <af:selectItem label="Item 3" id="si135"/>
+                    <af:selectItem label="Item 4" id="si136"/>
+                    <af:selectItem label="Item 5" id="si137"/>
+                    <af:selectItem label="Item 6" id="si138"/>
+                    <af:selectItem label="Item 7" id="si139"/>
+                    <af:selectItem label="Item 8" id="si140"/>
+                    <af:selectItem label="Item 9" id="si141"/>
+                    <af:selectItem label="Item 10" id="si142"/>
+                    <af:selectItem label="Item 11" id="si143"/>
+                    <af:selectItem label="Item 12" id="si144"/>
+                    <af:selectItem label="Item 13" id="si145"/>
+                    <af:selectItem label="Item 14" id="si146"/>
+                    <af:selectItem label="Item 15" id="si147"/>
+                    <af:selectItem label="Item 16" id="si148"/>
+                    <af:selectItem label="Item 17" id="si149"/>
+                    <af:selectItem label="Item 18" id="si150"/>
+                    <af:selectItem label="Item 19" id="si151"/>
+                    <af:selectItem label="Item 20" id="si152"/>
+                    <af:selectItem label="Item 21" id="si153"/>
+                    <af:selectItem label="Item 22" id="si154"/>
+                    <af:selectItem label="Item 23" id="si155"/>
+                    <af:selectItem label="Item 24" id="si156"/>
+                    <af:selectItem label="Item 25" id="si157"/>
+                    <af:selectItem label="Item 26" id="si158"/>
+                    <af:selectItem label="Item 27" id="si159"/>
+                    <af:selectItem label="Item 28" id="si160"/>
+                    <af:selectItem label="Item 29" id="si161"/>
+                    <af:selectItem label="Item 30" id="si162"/>
+                    <af:selectItem label="Item 31" id="si163"/>
+                    <af:selectItem label="Item 32" id="si164"/>
+                    <af:selectItem label="Item 33" id="si165"/>
+                    <af:selectItem label="Item 34" id="si166"/>
+                    <af:selectItem label="Item 35" id="si167"/>
+                    <af:selectItem label="Item 36" id="si168"/>
+                    <af:selectItem label="Item 37" id="si169"/>
+                    <af:selectItem label="Item 38" id="si170"/>
+                    <af:selectItem label="Item 39" id="si171"/>
+                    <af:selectItem label="Item 40" id="si172"/>
+                    <af:selectItem label="Item 41" id="si173"/>
+                    <af:selectItem label="Item 42" id="si174"/>
+                    <af:selectItem label="Item 43" id="si175"/>
+                    <af:selectItem label="Item 44" id="si176"/>
+                    <af:selectItem label="Item 45" id="si177"/>
+                    <af:selectItem label="Item 46" id="si178"/>
+                    <af:selectItem label="Item 47" id="si179"/>
+                    <af:selectItem label="Item 48" id="si180"/>
+                    <af:selectItem label="Item 49" id="si181"/>
+                    <af:selectItem label="Item 50" id="si182"/>
+                    <af:selectItem label="Item 51" id="si183"/>
+                    <af:selectItem label="Item 52" id="si184"/>
+                    <af:selectItem label="Item 53" id="si185"/>
+                    <af:selectItem label="Item 54" id="si186"/>
+                    <af:selectItem label="Item 55" id="si187"/>
+                    <af:selectItem label="Item 56" id="si188"/>
+                    <af:selectItem label="Item 57" id="si189"/>
+                    <af:selectItem label="Item 58" id="si190"/>
+                    <af:selectItem label="Item 59" id="si191"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl20">
+                  <af:outputText value="selectOneChoice in panelFormLayout"
+                                 id="ot17"/>
+                  <af:panelFormLayout id="pfl1">
+                    <af:inputText label="Input 1" value="Hello, world!"
+                                  id="it1"/>
+                    <af:selectOneChoice label="Select 1" id="selectOneChoice13">
+                      <af:selectItem label="A" id="si192"/>
+                      <af:selectItem label="B" id="si193"/>
+                      <af:selectItem label="C" id="si194"/>
+                    </af:selectOneChoice>
+                    <af:inputText label="Input 2" value="Goodbye" id="it2"/>
+                  </af:panelFormLayout>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl21">
+                  <af:outputText value="Simple selectOneChoice in flow layout"
+                                 id="ot18"/>
+                  <af:panelGroupLayout id="pgl22">
+                    <af:outputText value="Before" id="ot19"/>
+                    <af:inputText value="Hello, world!" simple="true" label="Hello text"
+                                  id="it3"/>
+                    <af:selectOneChoice simple="true" label="Choose a letter"
+                                        id="selectOneChoice14">
+                      <af:selectItem label="A" id="si195"/>
+                      <af:selectItem label="B" id="si196"/>
+                      <af:selectItem label="C" id="si197"/>
+                    </af:selectOneChoice>
+                    <af:selectOneChoice simple="true" label="Choose an item"
+                                        id="selectOneChoice15">
+                      <af:selectItem label="Item 1" id="si198"/>
+                      <af:selectItem label="Item 2" id="si199"/>
+                      <af:selectItem label="Item 3" id="si200"/>
+                    </af:selectOneChoice>
+                    <af:inputText simple="true" value="Goodbye" label="Goodbye text"
+                                  id="it4"/>
+                    <af:outputText value="After" id="ot20"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl23">
+                  <af:outputText value="Example of selectOneChoice with a valueChangeListener used to show and hide a required field."
+                                 id="ot21"/>
+                  <af:selectOneChoice label="Select an address type" value="#{demoInput.choiceValue16}" id="selectOneChoice16"
+                                      autoSubmit="true" immediate="true"
+                                      valueChangeListener="#{demoInput.changeAddressType}">
+                    <af:selectItem value="US" label="US Address" id="si201"/>
+                    <af:selectItem value="NON" label="Non-US Address"
+                                   id="si202"/>
+                  </af:selectOneChoice>
+                  <af:panelFormLayout inlineStyle="border: 1px black solid"
+                                      id="pfl2">
+                    <af:inputText label="Name" id="it5"/>
+                    <af:inputText label="Address 1" id="it6"/>
+                    <af:inputText label="Address 2" id="it7"/>
+                    <af:inputText label="City" id="it8"/>
+                    <af:inputText label="State" id="it9"/>
+                    <af:inputText label="Zip" partialTriggers="selectOneChoice16" visible="#{demoInput.choiceValue16 == 'US'}" required="#{demoInput.choiceValue16 == 'US'}"
+                                  id="it10"/>
+                    <af:inputText label="Country" partialTriggers="selectOneChoice16" visible="#{demoInput.choiceValue16 == 'NON'}" required="#{demoInput.choiceValue16 == 'NON'}"
+                                  id="it11"/>
+                  </af:panelFormLayout>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailHeader>
+            <af:panelGroupLayout layout="vertical" id="pgl24">
+              <af:outputText value="See also:" id="ot22"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem immediate="true" text="with contextInfo in context facet"
+                                          destination="contextInfo.jspx"
+                                          id="cni0"/>
+                <af:commandNavigationItem immediate="true" text="editableTable"
+                                          destination="table/editableTable.jspx"
+                                          id="cni1"/>
+                <af:commandNavigationItem immediate="true" text="af:query (selectOneChoice is used for operator and saved query selection)"
+                                          destination="query.jspx" id="cni2"/>
+                <af:commandNavigationItem immediate="true" text="af:inputDate (selectOneChoice is used for month selection)"
+                                          destination="inputDate.jspx"
+                                          id="cni3"/>
+                <af:commandNavigationItem immediate="true" text="af:richTextEditor (selectOneChoice is used for font selection)"
+                                          destination="richTextEditor.jspx"
+                                          id="cni4"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Table Design Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Table Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelHeader text="Related Links" id="ph1">
+              <af:panelList id="pl1">
+                <af:goLink text="Visual Design - valid table cell elements"
+                           destination="table/tableCellElements.jspx" id="gl1"/>
+                <af:goLink text="Visual Design - valid treeTable cell elements"
+                           destination="table/treeTableCellElements.jspx"
+                           id="gl2"/>
+                <af:goLink text="Component - panelCollection"
+                           destination="/components/panelCollection.jspx"
+                           id="gl3"/>
+                <af:goLink text="Component - table" destination="/components/table.jspx"
+                           id="gl4"/>
+              </af:panelList>
+            </af:panelHeader>
+            <af:panelCollection inlineStyle="width:70%" id="pc1">
+              <f:facet name="menus">
+                <af:menu text="Actions" id="m1">
+                  <af:commandMenuItem text="Add..." id="cmi1"/>
+                  <af:commandMenuItem text="Create.." id="cmi2"/>
+                  <af:commandMenuItem text="Update..." disabled="true"
+                                      id="cmi3"/>
+                  <af:commandMenuItem text="Copy" id="cmi4"/>
+                  <af:group id="g1">
+                    <af:commandMenuItem text="Delete" id="cmi5"/>
+                    <af:commandMenuItem text="Remove" accelerator="control A"
+                                        id="cmi6"/>
+                    <af:commandMenuItem text="Preferences" id="cmi7"/>
+                  </af:group>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="t1">
+                  <af:commandToolbarButton shortDesc="Create" icon="/images/new_ena.png"
+                                           id="ctb1"/>
+                  <af:commandToolbarButton shortDesc="Edit" icon="/images/update_ena.png"
+                                           id="ctb2"/>
+                  <af:commandToolbarButton shortDesc="Delete" icon="/images/delete_ena.png"
+                                           id="ctb3"/>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="secondaryToolbar">
+                <af:menuBar>
+                  <af:commandMenuItem immediate="true" text="Tag Guide" action="guide"/>
+                  <af:goMenuItem inlineStyle="white-space:nowrap" text="Tag Documentation"
+                                 destination="/docs/tagdoc/af_panelCollection.html"/>
+                  <af:goMenuItem inlineStyle="white-space:nowrap" text="View Page Source"
+                                 destination="#{facesContext.viewRoot.viewId}.source"/>
+                </af:menuBar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar id="t3">
+                  <af:outputText id="statusText" inlineStyle="margin-left:5px; white-space:nowrap"
+                                 value="Custom Statusbar Message"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table rowSelection="multiple"
+                        columnSelection="multiple" queryListener="#{tableFilter.processTableFilter}"
+                        filterModel="#{tableFilter.queryDescriptor}" filterVisible="true"
+                        varStatus="vs" var="test1" value="#{tableFilter.data}" id="table"
+                        summary="table data" autoHeightRows="0">
+                <af:column width="20" rowHeader="true" headerText="Row"
+                           id="c1"/>
+                <af:column displayIndex="3" headerText="Employee Number" filterable="true"
+                           sortProperty="Empno" id="c2">
+                  <af:outputText value="#{test1.empno}" id="ot1"/>
+                </af:column>
+                <af:column displayIndex="1" headerText="Emp Name" filterable="true"
+                           sortProperty="Ename" sortable="true" id="c3">
+                  <af:outputText inlineStyle="margin-left:8px" value="#{test1.ename}"
+                                 id="ot2"/>
+                </af:column>
+                <af:column headerText="Salary" filterable="true" sortProperty="Salary"
+                           displayIndex="2" align="end" id="c4">
+                  <af:outputText value="#{test1.salary}" id="ot3"/>
+                </af:column>
+                <af:column headerText="Hire Date" align="center" id="c5">
+                  <f:facet name="filter">
+                    <af:inputDate value="#{vs.filterCriteria.Hiredate}" label="date" simple="true"
+                                  id="id1"/>
+                  </f:facet>
+                    <af:outputText value="#{test1.hireDate}" id="ot4"/>
+                  </af:column>
+                  <af:column filterable="true" sortProperty="Manager" headerText="Manager"
+                             id="c6">
+                    <af:outputText value="#{test1.manager}" id="ot5"/>
+                  </af:column>
+                <af:column sortProperty="Deptno" filterable="true" headerText="Dept Number"
+                             align="center" id="c7">
+                    <af:outputText value="#{test1.deptno}" id="ot6"/>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

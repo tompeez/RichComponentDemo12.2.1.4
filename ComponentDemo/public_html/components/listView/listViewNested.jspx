@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="listView Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:resource type="css">.ProjectHeader { font-weight: bold} .taskName {font-weight: normal;
+                              font-size: 14px; } .projectDesc { font-weight: normal} .taskCreated {
+                              font-weight: normal; opacity: .75; filter: alpha(opacity:.75); }</af:resource>
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="listView"/>
+        <f:attribute name="visualDesignName" value="listView"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelSplitter orientation="vertical" positionedFromEnd="true" splitterPosition="250" shortDesc="Tasks"
+                            id="split" dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:listView id="listView" partialTriggers="::pprLV" var="item"
+                           value="#{demolistView.projectTreeModel}">
+                <af:listItem id="listItem" styleClass="ProjectHeader">
+                  <af:panelGridLayout id="pglouter">
+                    <af:gridRow id="gr">
+                      <af:gridCell id="gc1" width="120px" valign="middle">
+                        <af:outputText id="ot1" value="#{item.projectName}"/>
+                      </af:gridCell>
+                      <af:gridCell id="gc2" width="100%">
+                        <af:listView id="listView2"
+                                     fetchSize="5"
+                                     var="nItem" value="#{item.tasks}">
+                          <af:listItem id="listItem1" shortDesc="#{nItem.taskName}">
+                            <af:panelGroupLayout id="panelGroupLayout1" layout="horizontal"
+                                                 styleClass="AFStretchWidth">
+                              <af:panelGroupLayout id="pgl5" layout="horizontal"
+                                                   inlineStyle="width:100%">
+                                <af:panelGroupLayout id="panelGroupLayout3" layout="vertical"
+                                                     inlineStyle="min-width:300px">
+                                  <af:outputText id="outputText1" value="#{nItem.taskName}"
+                                                 styleClass="taskName"/>
+                                  <af:outputText id="outputText2" value="#{nItem.projectDesc}"
+                                                 styleClass="projectDesc"/>
+                                  <af:outputText id="outputText3" value="#{nItem.created}"
+                                                 styleClass="taskCreated"/>
+                                </af:panelGroupLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="panelGroupLayout4" layout="horizontal"
+                                                   halign="end" valign="middle"
+                                                   inlineStyle="margin-right:20px">
+                                <af:commandButton id="cb1" text="Action"></af:commandButton>
+                              </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                          </af:listItem>
+                        </af:listView>
+                      </af:gridCell>
+                    </af:gridRow>
+                  </af:panelGridLayout>
+                </af:listItem>
+              </af:listView>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout id="scroll" layout="scroll">
+                <af:panelFormLayout rows="2" maxColumns="4" id="mdlattrs">
+                  <af:inputNumberSpinbox id="mdlGroupRows" label="Group Row Count" minimum="5"
+                                         maximum="20"
+                                         value="#{demolistView.projectTreeGroupCount}"/>
+                  <af:inputNumberSpinbox id="mdlChildRows" label="Child Row Count" minimum="10"
+                                         maximum="100"
+                                         value="#{demolistView.projectTreeChildCount}"/>
+                  <af:selectBooleanCheckbox id="mdlgrpunknwn" label="Group Unknown Count"
+                                            value="#{demolistView.projectTreeGroupUnknown}"/>
+                  <af:selectBooleanCheckbox id="mdlchldunknwn" label="Child Unknown Count"
+                                            value="#{demolistView.projectTreeChildUnknown}"/>
+                </af:panelFormLayout>
+                <af:commandButton id="pprLV" text="PPR ListView"
+                                  action="#{demolistView.refreshProjectTreeModel}"/>
+                <af:panelHeader id="head" text="Related Demos">
+                  <af:panelList id="list">
+                    <af:goLink id="related1" text="ListView Component with Groups"
+                               destination="/components/listView/listViewWithGroups.jspx"/>
+                    <af:goLink id="related2" text="ListView Component with Groups And Disclosure "
+                               destination="/components/listView/listViewWithGroupsAndDisclosure.jspx"/>
+                  </af:panelList>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

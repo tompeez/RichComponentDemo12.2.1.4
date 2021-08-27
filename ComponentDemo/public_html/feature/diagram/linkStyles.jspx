@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram Link Styles Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram Link Styles Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Diagram Link Styles"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout dimensionsFrom="parent" topHeight="auto" endWidth="200px">
+            <f:facet name="center">
+              <dvt:diagram summary="Diagram" id="diagram1" layout="circle" panning="none" zooming="none"
+                           controlPanelBehavior="hidden" partialTriggers="ins1 soc1 soc2">
+                <dvt:clientLayout name="circle" method="DemoCircleLayout.circleLayout"
+                                  featureName="DemoCircleLayout">
+                  <f:attribute name="radius" value="150"/>
+                </dvt:clientLayout>
+                <dvt:diagramNodes id="diagramNodes1" value="#{diagramLinkStyles.nodes}" var="node">
+                  <dvt:diagramNode id="n1" nodeId="#{node.id}" showNodeActions="false">
+                    <f:facet name="zoom100">
+                      <dvt:marker width="25" height="25" shape="square" fillColor="#{node.color}" borderStyle="solid"
+                                  borderWidth="1" borderColor="#444444"/>
+                    </f:facet>
+                  </dvt:diagramNode>
+                </dvt:diagramNodes>
+                <dvt:diagramLinks id="diagramLinks1" value="#{diagramLinkStyles.links}" var="link">
+                  <dvt:diagramLink id="l1" linkColor="#{link.color}" startNode="#{link.start}" endNode="#{link.end}"
+                                   linkStyle="#{link.style}" shortDesc="#{link.style}" startConnectorType="#{diagramLinkStyles.startConnector}" endConnectorType="#{diagramLinkStyles.endConnector}" linkWidth="#{diagramLinkStyles.linkWidth}"/>
+                </dvt:diagramLinks>
+              </dvt:diagram>
+            </f:facet>
+            <f:facet name="end">
+              <af:panelFormLayout>
+                <af:inputNumberSlider id="ins1" partialTriggers="ins1" label="Link Width" value="#{diagramLinkStyles.linkWidth}" minimum="0" maximum="20" autoSubmit="true"  majorIncrement="5" minorIncrement="1"/>
+                <af:selectOneChoice id="soc1" label="Start Connector" autoSubmit="true" value="#{diagramLinkStyles.startConnector}">
+                  <af:selectItem value="none" label="none"/>
+                  <af:selectItem value="arrow" label="arrow"/>
+                  <af:selectItem value="arrowOpen" label="arrowOpen"/>
+                  <af:selectItem value="arrowConcave" label="arrowConcave"/>
+                  <af:selectItem value="circle" label="circle"/>
+                  <af:selectItem value="rectangle" label="rectangle"/>
+                  <af:selectItem value="rectangleRounded" label="rectangleRounded"/>
+                </af:selectOneChoice>
+                <af:selectOneChoice id="soc2" label="End Connector" autoSubmit="true" value="#{diagramLinkStyles.endConnector}">
+                  <af:selectItem value="none" label="none"/>
+                  <af:selectItem value="arrow" label="arrow"/>
+                  <af:selectItem value="arrowOpen" label="arrowOpen"/>
+                  <af:selectItem value="arrowConcave" label="arrowConcave"/>
+                  <af:selectItem value="circle" label="circle"/>
+                  <af:selectItem value="rectangle" label="rectangle"/>
+                  <af:selectItem value="rectangleRounded" label="rectangleRounded"/>
+                </af:selectOneChoice>
+              </af:panelFormLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

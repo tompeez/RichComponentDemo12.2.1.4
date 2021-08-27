@@ -1,0 +1,438 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="For Testing Only" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="For Testing Only"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="For Testing Only"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelSplitter id="psl1" splitterPosition="300" positionedFromEnd="true">
+            <f:facet name="first">
+              <af:panelTabbed id="pt1">
+                <af:showDetailItem text="Thematic Map" id="sdi1" stretchChildren="first" clientComponent="true" partialTriggers="selOnDisplay">
+                  <dvt:thematicMap id="tm1" animationOnDisplay="#{tmapFeatures.animationOnDisplay}"
+                                   styleClass="AFStretchWidth" panning="#{tmapFeatures.disablePan ? 'none' : 'auto'}"
+                                   zooming="#{tmapFeatures.disableZoom ? 'none' : 'auto'}"
+                                   controlPanelBehavior="#{tmapFeatures.controlPanelBehavior}"
+                                   tooltipDisplay="#{tmapFeatures.tooltipDisplay}"
+                                   initialZooming="#{tmapFeatures.initialZooming ? 'auto' : 'none'}"
+                                   animationOnMapChange="#{tmapFeatures.animationOnMapChange}"
+                                   summary="Thematic map features" basemap="#{tmapFeatures.basemap}"
+                                   partialTriggers="::sbc1 ::soc13 ::soc2 ::soc7 ::soc8 ::sbcb1 ::sbcb3 ::sbcb4 ::sbcb5 ::it2 ::soc10 ::soc11">
+                    <dvt:legend id='leg1' rendered="#{tmapFeatures.legendDisplay != 'none'}"
+                                display="#{tmapFeatures.legendDisplay}" noWrap="true">
+                      <f:facet name="separator">
+                        <af:separator rendered="#{tmapFeatures.showLegendSeparators}"/>
+                      </f:facet>
+                      <dvt:showLegendGroup label="Areas">
+                        <dvt:legendSection id='ls1' label="Colors" source="al1:adl1:ag1"
+                                           rendered="#{tmapFeatures.areaLocationChild == 'area' and not tmapFeatures.showAreaPattern}"/>
+                        <dvt:legendSection id='ls2' label="Colors" source="al1:adl1:ag2"
+                                           rendered="#{tmapFeatures.areaLocationChild == 'area' and tmapFeatures.showAreaPattern}"/>
+                        <dvt:legendSection id='ls3' label="Patterns" source="al1:adl1:ag4"
+                                           rendered="#{tmapFeatures.areaLocationChild == 'area' and tmapFeatures.showAreaPattern}"/>
+                        <dvt:legendSection id='ls4' source="al1:adl1:ag3" label="Colors"
+                                           rendered="#{tmapFeatures.areaLocationChild != 'area' and tmapFeatures.areaLocationChild != 'image' and not tmapFeatures.showAreaPattern}"/>
+                        <dvt:legendSection id='ls5' source="al1:adl1:img1"
+                                           rendered="#{tmapFeatures.areaLocationChild == 'image'}"/>
+                        <dvt:legendSection id='ls9' label="Colors" source="al1:adl1:ag7"
+                                           rendered="#{tmapFeatures.areaLocationChild != 'area' and tmapFeatures.areaLocationChild != 'image' and tmapFeatures.showAreaPattern}"/>
+                        <dvt:legendSection id='ls10' label="Patterns" source="al1:adl1:ag8"
+                                           rendered="#{tmapFeatures.areaLocationChild != 'area' and tmapFeatures.areaLocationChild != 'image' and tmapFeatures.showAreaPattern}"/>
+                      </dvt:showLegendGroup>
+                      <dvt:legendSection id='ls6' source="pl1:ag5" label="City Population"
+                                         rendered="#{tmapFeatures.markerShape != 'shapePath' and tmapFeatures.markerShape != 'image'}"/>
+                      <dvt:legendSection id='ls7' source="pl1:m4" label="City Population"
+                                         rendered="#{tmapFeatures.markerShape == 'shapePath'}"/>
+                      <dvt:legendSection id='ls8' source="pl1:img2" label="Point of Interest"
+                                         rendered="#{tmapFeatures.markerShape == 'image'}"/>
+                    </dvt:legend>
+                    <dvt:pointDataLayer id="pl1" selectionMode="#{tmapFeatures.selectionModePdl}"
+                                        selectionListener="#{tmapFeatures.processSelectionPdl}"
+                                        animationOnDataChange="#{tmapFeatures.animationOnPointDataLayerChange}"
+                                        partialTriggers=":::irs2 :::soc6 :::sbcb6 :::soc14 :::soc9 :::it5 :::sbcb8 :::sor2"
+                                        emptyText="#{tmapFeatures.pdlEmptyText}"
+                                        value="#{tmapFeatures.cityDataModel}" var="row" varStatus="rowStatus"
+                                        contentDelivery="#{tmapFeatures.contentDelivery}">
+                      <dvt:pointLocation id="loc2" type="pointName" pointName="#{row.id}">
+                        <dvt:marker id="m2" shape="#{tmapFeatures.markerShape}" scaleX="#{row.value/30}"
+                                    scaleY="#{row.value/30}" labelDisplay="#{tmapFeatures.pdlLabelDisplay}"
+                                    labelPosition="#{tmapFeatures.pdlLabelPosition}" shortDesc="#{row.categories[0]}"
+                                    value="Population: #{row.value}k"
+                                    rendered="#{tmapFeatures.markerShape != 'shapePath' and tmapFeatures.markerShape != 'image'}"
+                                    gradientEffect="#{tmapFeatures.pointGradientEffect ? 'auto' : 'none'}">
+                          <dvt:attributeGroups id='ag5' type="color"
+                                               value="#{row.value le 33 ? 'low' : (row.value le 66 ? 'med' : 'high')}"
+                                               label="#{row.value le 33 ? 'Low' : (row.value le 66 ? 'Medium' : 'High')}">
+                            <dvt:attributeMatchRule id="amr1" group="low">
+                              <f:attribute name="color" value="red"/>
+                            </dvt:attributeMatchRule>
+                            <dvt:attributeMatchRule id="amr2" group="med">
+                              <f:attribute name="color" value="yellow"/>
+                            </dvt:attributeMatchRule>
+                            <dvt:attributeMatchRule id="amr3" group="high">
+                              <f:attribute name="color" value="green"/>
+                            </dvt:attributeMatchRule>
+                          </dvt:attributeGroups>
+                        </dvt:marker>
+                        <dvt:marker id="m4"
+                                    shapePath="#{row.value le 33 ? '/resources/svg/redStar.svg' : (row.value le 66 ? '/resources/svg/yellowStar.svg' : '/resources/svg/greenStar.svg')}"
+                                    scaleX="#{row.value/30}" scaleY="#{row.value/30}" value="Population: #{row.value}k"
+                                    rendered="#{tmapFeatures.markerShape == 'shapePath'}"
+                                    labelDisplay="#{tmapFeatures.pdlLabelDisplay}" shortDesc="#{row.categories[0]}"
+                                    labelPosition="#{tmapFeatures.pdlLabelPosition}">
+                          <f:attribute name="legendLabel"
+                                       value="#{row.value le 33 ? 'Low' : (row.value le 66 ? 'Medium' : 'High')}"/>
+                        </dvt:marker>
+                        <af:image id="img2" inlineStyle="width:#{row.value/3}px;height:#{row.value/3}px;"
+                                  source="/resources/images/thematicMap/locationPoint.png"
+                                  shortDesc="#{row.categories[0]}" rendered="#{tmapFeatures.markerShape == 'image'}">
+                          <f:attribute name="legendLabel" value="Popular Vacation City"/>
+                        </af:image>
+                      </dvt:pointLocation>
+                    </dvt:pointDataLayer>
+                    <dvt:areaLayer id="al1" layer="#{tmapFeatures.layer}" labelDisplay="#{tmapFeatures.alLabelDisplay}"
+                                   labelType="#{tmapFeatures.alLabelType}">
+                      <dvt:areaDataLayer id="adl1"
+                                         animationOnDataChange="#{tmapFeatures.animationOnAreaDataLayerChange}"
+                                         selectionMode="#{tmapFeatures.selectionMode}"
+                                         selectionListener="#{tmapFeatures.processSelection}"
+                                         emptyText="#{tmapFeatures.adlEmptyText}"
+                                         contentDelivery="#{tmapFeatures.contentDelivery}"
+                                         value="#{tmapFeatures.areaDataModel}" var="row" varStatus="rowStatus"
+                                         partialTriggers="::::soc3 ::::soc12 ::::irs1 ::::sor1 ::::sbcb2 ::::soc9 ::::it1 ::::sbcb7 ::::selArea">
+                        <dvt:areaLocation id="loc1" name="#{row.id}">
+                          <dvt:area id="a1" labelDisplay="#{tmapFeatures.adlLabelDisplay}"
+                                    rendered="#{tmapFeatures.areaLocationChild == 'area' and not tmapFeatures.showAreaPattern}"
+                                    shortDesc="Value: #{row.value}" value="#{row.value}">
+                            <dvt:attributeGroups id='ag1' type="color" value="#{row.categories[0]}"
+                                                 label="#{row.categories[0]}"/>
+                          </dvt:area>
+                          <dvt:area id="a1pattern" labelDisplay="#{tmapFeatures.adlLabelDisplay}" value="#{row.value}"
+                                    rendered="#{tmapFeatures.areaLocationChild == 'area' and tmapFeatures.showAreaPattern}"
+                                    shortDesc="Value: #{row.value}">
+                            <dvt:attributeGroups id='ag2' type="color" value="#{row.categories[0]}"
+                                                 label="#{row.categories[0]}"/>
+                            <dvt:attributeGroups id='ag4' type="pattern" value="#{row.categories[1]}"
+                                                 label="#{row.categories[1]}"/>
+                          </dvt:area>
+                          <dvt:marker id="m1" shape="#{tmapFeatures.areaLocationChild}" value="#{row.value}"
+                                      gradientEffect="#{tmapFeatures.areaGradientEffect ? 'auto' : 'none'}" scaleX="3"
+                                      scaleY="3" labelDisplay="#{tmapFeatures.adlLabelDisplay}"
+                                      shortDesc="Value: #{row.value}" labelPosition="#{tmapFeatures.adlLabelPosition}"
+                                      rendered="#{tmapFeatures.areaLocationChild != 'area' and tmapFeatures.areaLocationChild != 'image' and not tmapFeatures.showAreaPattern}">
+                            <dvt:attributeGroups id='ag3' type="color" value="#{row.categories[0]}"
+                                                 label="#{row.categories[0]}"/>
+                          </dvt:marker>
+                          <dvt:marker id="m3" shape="#{tmapFeatures.areaLocationChild}" value="#{row.value}" scaleX="3"
+                                      scaleY="3" labelDisplay="#{tmapFeatures.adlLabelDisplay}"
+                                      shortDesc="Value: #{row.value}" labelPosition="#{tmapFeatures.adlLabelPosition}"
+                                      rendered="#{tmapFeatures.areaLocationChild != 'area' and tmapFeatures.areaLocationChild != 'image' and tmapFeatures.showAreaPattern}">
+                            <dvt:attributeGroups id='ag7' type="color" value="#{row.categories[0]}"
+                                                 label="#{row.categories[0]}"/>
+                            <dvt:attributeGroups id='ag8' type="pattern" value="#{row.categories[1]}"
+                                                 label="#{row.categories[1]}"/>
+                          </dvt:marker>
+                          <af:image id="img1" source="/resources/images/geoMap/mansion.gif"
+                                    inlineStyle="height:30px;width:30px;" shortDesc="Value: #{row.value}"
+                                    rendered="#{tmapFeatures.areaLocationChild == 'image'}">
+                            <f:attribute name="legendLabel" value="Prime location"/>
+                          </af:image>
+                        </dvt:areaLocation>
+                      </dvt:areaDataLayer>
+                    </dvt:areaLayer>
+                  </dvt:thematicMap>
+                </af:showDetailItem>
+                <af:showDetailItem text="Data Model: Area Data Layer" id="sdi2" stretchChildren="first">
+                  <af:table value="#{tmapFeatures.areaDataModel}" var="row" rowBandingInterval="0" id="t1">
+                    <af:column sortable="false" headerText="Id" align="start">
+                      <af:outputText value="#{row.id}"/>
+                    </af:column>
+                    <af:column sortable="false" headerText="Attribute 1" align="start">
+                      <af:outputText value="#{row.categories[0]}"/>
+                    </af:column>
+                    <af:column sortable="false" headerText="Attribute 2" align="start">
+                      <af:outputText value="#{row.categories[1]}"/>
+                    </af:column>
+                    <af:column sortable="false" headerText="Value" align="start">
+                      <af:outputText value="#{row.value}"/>
+                    </af:column>
+                  </af:table>
+                </af:showDetailItem>
+                <af:showDetailItem text="Data Model: Point Data Layer" id="sdi3" stretchChildren="first">
+                  <af:table value="#{tmapFeatures.cityDataModel}" var="row" rowBandingInterval="0" id="t2">
+                    <af:column sortable="false" headerText="Id" align="start">
+                      <af:outputText value="#{row.id}"/>
+                    </af:column>
+                    <af:column sortable="false" headerText="Attribute 1" align="start">
+                      <af:outputText value="#{row.categories[0]}"/>
+                    </af:column>
+                    <af:column sortable="false" headerText="Attribute 2" align="start">
+                      <af:outputText value="#{row.categories[1]}"/>
+                    </af:column>
+                    <af:column sortable="false" headerText="Value" align="start">
+                      <af:outputText value="#{row.value}"/>
+                    </af:column>
+                  </af:table>
+                </af:showDetailItem>
+              </af:panelTabbed>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelAccordion discloseMany="true">
+                <af:showDetailItem text="Notes">
+                  <f:verbatim>                     <b>Features to familiarize yourself with in this demo:</b>                     <ul>
+                      <li>Built-in Base Maps and Cities - See Data Model tabs to see area and city ids for built-in base
+                          maps.</li>
+                      <li>Animations</li>
+                      <li>Area and Point Data Layer Shapes</li>
+                      <li>Selection (af:image does not support selection)</li>
+                      <li>Label Customization</li>
+                      <li>Tooltip Customization</li>
+                      <li>Legend Customization</li>
+                      <li>State Management - Thematic Map will save the pan and zoom state of the map and also the
+                          collapsed or expanded state of the control panel and legend. Switch between the tabs to see
+                          this.</li>
+                      <li>See the Styling Demo for how to style Thematic Map elements like labels, areas, and markers.</li>
+                    </ul>                   </f:verbatim>
+                </af:showDetailItem>
+                <af:showDetailItem text="Basic Settings">
+                  <af:selectOneChoice label="Basemap" id="soc1" value="#{tmapFeatures.basemap}" autoSubmit="true">
+                    <f:selectItems id="si1" value="#{tmapFeatures.basemapNames}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice label="Layer" id="soc2" partialTriggers="soc1" value="#{tmapFeatures.layer}"
+                                      autoSubmit="true">
+                    <f:selectItems id="si2" value="#{tmapFeatures.layerNames}"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice label="Content Delivery" id="soc9" value="#{tmapFeatures.contentDelivery}"
+                                      autoSubmit="true">
+                    <af:selectItem label="whenAvailable"/>
+                    <af:selectItem label="immediate"/>
+                    <af:selectItem label="lazy"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="soc7" autoSubmit="true" label="Control Panel Behavior"
+                                      value="#{tmapFeatures.controlPanelBehavior}">
+                    <af:selectItem label="initCollapsed"/>
+                    <af:selectItem label="initExpanded"/>
+                    <af:selectItem label="hidden"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="soc8" autoSubmit="true" label="Tooltip Display"
+                                      value="#{tmapFeatures.tooltipDisplay}">
+                    <af:selectItem label="auto"/>
+                    <af:selectItem label="none"/>
+                    <af:selectItem label="shortDescOnly"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="soc10" autoSubmit="true" label="Label Display"
+                                      value="#{tmapFeatures.alLabelDisplay}">
+                    <af:selectItem label="auto"/>
+                    <af:selectItem label="on"/>
+                    <af:selectItem label="off"/>
+                  </af:selectOneChoice>
+                  <af:selectOneRadio label="Label Type" id="soc11" value="#{tmapFeatures.alLabelType}"
+                                     autoSubmit="true">
+                    <af:selectItem label="short"/>
+                    <af:selectItem label="long"/>
+                  </af:selectOneRadio>
+                  <af:selectOneChoice id="selOnDisplay" autoSubmit="true" label="Animation On Display"
+                                      value="#{tmapFeatures.animationOnDisplay}">
+                    <af:selectItem label="none"/>
+                    <af:selectItem label="alphaFade"/>
+                    <af:selectItem label="conveyorFromRight"/>
+                    <af:selectItem label="conveyorFromLeft"/>
+                    <af:selectItem label="cubeToRight"/>
+                    <af:selectItem label="cubeToLeft"/>
+                    <af:selectItem label="flipRight"/>
+                    <af:selectItem label="flipLeft"/>
+                    <af:selectItem label="slideToRight"/>
+                    <af:selectItem label="slideToLeft"/>
+                    <af:selectItem label="transitionToRight"/>
+                    <af:selectItem label="transitionToLeft"/>
+                    <af:selectItem label="zoom"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="selOnMapChange" autoSubmit="true" label="Animation On Base Map Change"
+                                      value="#{tmapFeatures.animationOnMapChange}">
+                    <af:selectItem label="none"/>
+                    <af:selectItem label="alphaFade"/>
+                    <af:selectItem label="conveyorFromRight"/>
+                    <af:selectItem label="conveyorFromLeft"/>
+                    <af:selectItem label="cubeToRight"/>
+                    <af:selectItem label="cubeToLeft"/>
+                    <af:selectItem label="flipRight"/>
+                    <af:selectItem label="flipLeft"/>
+                    <af:selectItem label="slideToRight"/>
+                    <af:selectItem label="slideToLeft"/>
+                    <af:selectItem label="transitionToRight"/>
+                    <af:selectItem label="transitionToLeft"/>
+                    <af:selectItem label="zoom"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox text="Turn off Panning" value="#{tmapFeatures.disablePan}" autoSubmit="true"
+                                            id="sbcb3"/>
+                  <af:selectBooleanCheckbox text="Turn off Zooming" value="#{tmapFeatures.disableZoom}"
+                                            autoSubmit="true" id="sbcb4"/>
+                  <af:selectBooleanCheckbox text="Initial Zooming" value="#{tmapFeatures.initialZooming}"
+                                            autoSubmit="true" id="sbcb5"/>
+                </af:showDetailItem>
+                <af:showDetailItem text="Legend Settings">
+                  <af:selectBooleanCheckbox id="sbc1" label="Show Separators"
+                                            value="#{tmapFeatures.showLegendSeparators}" autoSubmit="true"/>
+                  <af:selectOneChoice label="Legend Display" id="soc13" autoSubmit="true"
+                                      value="#{tmapFeatures.legendDisplay}">
+                    <af:selectItem label="Show/Hide" value="showHide"/>
+                    <af:selectItem label="Fixed" value="fixed"/>
+                    <af:selectItem label="None" value="none"/>
+                  </af:selectOneChoice>
+                </af:showDetailItem>
+                <!-- Area Data Layer Settings -->
+                <af:showDetailItem text="Area Data Layer Settings">
+                  <af:inputText label="No Data Text (shows in legend)" value="#{tmapFeatures.adlEmptyText}" id="it1"
+                                autoSubmit="true"/>
+                  <af:inputNumberSlider label="Percent Data Coverage" value="#{tmapFeatures.areaDataPercent}"
+                                        minimum="0" maximum="100" majorIncrement="20" minorIncrement="5" id="irs1"
+                                        autoSubmit="true"/>
+                  <af:selectOneChoice label="Label Display" id="sbcb7" value="#{tmapFeatures.adlLabelDisplay}"
+                                      autoSubmit="true">
+                    <af:selectItem label="on"/>
+                    <af:selectItem label="off"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice label="Marker Label Position" id="soc12" value="#{tmapFeatures.adlLabelPosition}"
+                                      autoSubmit="true">
+                    <af:selectItem label="center"/>
+                    <af:selectItem label="top"/>
+                    <af:selectItem label="bottom"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice label="Area Type" id="soc3" value="#{tmapFeatures.areaLocationChild}"
+                                      autoSubmit="true">
+                    <af:selectItem label="area"/>
+                    <af:selectItem label="marker: circle" value="circle"/>
+                    <af:selectItem label="marker: square" value="square"/>
+                    <af:selectItem label="marker: plus" value="plus"/>
+                    <af:selectItem label="marker: diamond" value="diamond"/>
+                    <af:selectItem label="marker: triangleUp" value="triangleUp"/>
+                    <af:selectItem label="marker: triangleDown" value="triangleDown"/>
+                    <af:selectItem label="marker: human" value="human"/>
+                    <af:selectItem label="image"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox label="Show Patterns" id="sbcb1" value="#{tmapFeatures.showAreaPattern}"
+                                            autoSubmit="true"/>
+                  <af:selectBooleanCheckbox label="Marker Gradient" id="sbcb2" autoSubmit="true"
+                                            value="#{tmapFeatures.areaGradientEffect}"/>
+                  <af:selectOneChoice id="selArea" autoSubmit="true" label="Animation On Area Data Layer"
+                                      value="#{tmapFeatures.animationOnAreaDataLayerChange}">
+                    <af:selectItem label="none"/>
+                    <af:selectItem label="alphaFade"/>
+                    <af:selectItem label="conveyorFromRight"/>
+                    <af:selectItem label="conveyorFromLeft"/>
+                    <af:selectItem label="cubeToRight"/>
+                    <af:selectItem label="cubeToLeft"/>
+                    <af:selectItem label="flipRight"/>
+                    <af:selectItem label="flipLeft"/>
+                    <af:selectItem label="slideToRight"/>
+                    <af:selectItem label="slideToLeft"/>
+                    <af:selectItem label="transitionToRight"/>
+                    <af:selectItem label="transitionToLeft"/>
+                    <af:selectItem label="zoom"/>
+                  </af:selectOneChoice>
+                  <af:selectOneRadio label="Selection" value="#{tmapFeatures.selectionMode}" id="sor1"
+                                     autoSubmit="true">
+                    <af:selectItem label="multiple"/>
+                    <af:selectItem label="single"/>
+                    <af:selectItem label="none"/>
+                  </af:selectOneRadio>
+                  <af:commandButton id="cb111" text="Show Selection State">
+                    <af:showPopupBehavior popupId="popup1" triggerType="action" alignId="cb111"/>
+                  </af:commandButton>
+                  <af:popup id="popup1" contentDelivery="lazyUncached">
+                    <af:noteWindow>
+                      <af:outputText value="#{tmapFeatures.selectionString}" clientComponent="true"/>
+                    </af:noteWindow>
+                  </af:popup>
+                </af:showDetailItem>
+                <!-- Point Data Layer Settings -->
+                <af:showDetailItem text="Point Data Layer Settings">
+                  <af:inputText label="No Data Text (shows in legend)" value="#{tmapFeatures.pdlEmptyText}" id="it5"
+                                autoSubmit="true"/>
+                  <af:inputNumberSlider label="Percent Data Coverage" value="#{tmapFeatures.pointDataPercent}"
+                                        minimum="0" maximum="100" majorIncrement="20" minorIncrement="5" id="irs2"
+                                        autoSubmit="true"/>
+                  <af:selectOneChoice id="soc6" autoSubmit="true" label="Point Type"
+                                      value="#{tmapFeatures.markerShape}">
+                    <af:selectItem label="marker: circle" value="circle"/>
+                    <af:selectItem label="marker: square" value="square"/>
+                    <af:selectItem label="marker: plus" value="plus"/>
+                    <af:selectItem label="marker: diamond" value="diamond"/>
+                    <af:selectItem label="marker: triangleUp" value="triangleUp"/>
+                    <af:selectItem label="marker: triangleDown" value="triangleDown"/>
+                    <af:selectItem label="marker: human" value="human"/>
+                    <af:selectItem label="marker: shapePath" value="shapePath"/>
+                    <af:selectItem label="image"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox label="Marker Gradient" id="sbcb6" autoSubmit="true"
+                                            value="#{tmapFeatures.pointGradientEffect}"/>
+                  <af:selectOneChoice label="Label Display" id="sbcb8" value="#{tmapFeatures.pdlLabelDisplay}"
+                                      autoSubmit="true">
+                    <af:selectItem label="on"/>
+                    <af:selectItem label="off"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice label="Marker Label Position" id="soc14" value="#{tmapFeatures.pdlLabelPosition}"
+                                      autoSubmit="true">
+                    <af:selectItem label="center"/>
+                    <af:selectItem label="top"/>
+                    <af:selectItem label="bottom"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="selPoint" autoSubmit="true" label="Animation On Point Data Layer"
+                                      value="#{tmapFeatures.animationOnPointDataLayerChange}">
+                    <af:selectItem label="none"/>
+                    <af:selectItem label="alphaFade"/>
+                    <af:selectItem label="conveyorFromRight"/>
+                    <af:selectItem label="conveyorFromLeft"/>
+                    <af:selectItem label="cubeToRight"/>
+                    <af:selectItem label="cubeToLeft"/>
+                    <af:selectItem label="flipRight"/>
+                    <af:selectItem label="flipLeft"/>
+                    <af:selectItem label="slideToRight"/>
+                    <af:selectItem label="slideToLeft"/>
+                    <af:selectItem label="transitionToRight"/>
+                    <af:selectItem label="transitionToLeft"/>
+                    <af:selectItem label="zoom"/>
+                  </af:selectOneChoice>
+                  <af:selectOneRadio label="Selection" value="#{tmapFeatures.selectionModePdl}" id="sor2"
+                                     autoSubmit="true">
+                    <af:selectItem label="multiple"/>
+                    <af:selectItem label="single"/>
+                    <af:selectItem label="none"/>
+                  </af:selectOneRadio>
+                  <af:commandButton id="cb112" text="Show Selection State">
+                    <af:showPopupBehavior popupId="popup2" triggerType="action" alignId="cb112"/>
+                  </af:commandButton>
+                  <af:popup id="popup2" contentDelivery="lazyUncached">
+                    <af:noteWindow>
+                      <af:outputText value="#{tmapFeatures.selectionPdlString}" clientComponent="true"/>
+                    </af:noteWindow>
+                  </af:popup>
+                </af:showDetailItem>
+              </af:panelAccordion>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+        <!-- END FEATURE DEMO -->
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,360 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="Tablet First Template Demo" id="d1">
+       
+       <af:form id="dsf1">
+        <af:pageTemplate viewId="/oracle/templates/tabletFirstTemplate.jspx" id="pt1"
+                         partialTriggers="cBodFDC:sor1 cBodFDC:sor2 cBodFDC:sbc1 cBodFDC:sbc2 cBodFDC:sbc3 cBodFDC:sbc4">
+           <af:resource type="javascript">
+              _resizeContentsPartial = function (actionEvent)
+              {
+                if (!AdfPage.PAGE.isPageFullyLoaded())
+                {
+                  setTimeout(_resizeContentsPartial, 100);
+                  return;
+                }
+                window["_myBrandingBar"]._resize();
+              }  
+              
+          </af:resource>
+          <af:resource type="css">
+            .af_toolbar .AFGlobalNavbarButton.af_button.p_AFTextOnly {
+              border: 1px solid transparent ;
+              background-color: transparent;
+              background-image: none;
+              filter: none;
+            }
+          </af:resource>
+          <f:facet name="header">
+            <af:outputText value="Fusion Applications" id="ot1"/>
+          </f:facet>
+          <f:facet name="globalLinks">
+            <af:toolbar id="ptnp1" styleClass="GlobalNavbar">
+                <af:group id="grptb">
+                  <af:popup id="popsch" contentDelivery="lazy" childCreation="deferred">
+                    <af:declarativeComponent id="glryFind" viewId="pageTemplateDefs/demoFindField.jsff"/>
+                  </af:popup>
+                  <af:button icon="/images/alta_v1/find_ena.png" hoverIcon="/images/alta_v1/find_ovr.png" depressedIcon="/images/alta_v1/find_dwn.png"  shortDesc="Search"
+                                            id="ptcni15">
+                      <af:showPopupBehavior popupId="::popsch" alignId="ptcni15"/>
+                  </af:button>
+                  <af:button  id="lnkBook" destination="/faces#{facesContext.viewRoot.viewId}"
+                                          rendered="#{attrs.mode != 'accessibility'}" shortDesc="Bookmarkable Link"
+                                          icon="/images/alta_v1/bookmark_ena.png" hoverIcon="/images/alta_v1/bookmark_ovr.png" depressedIcon="/images/alta_v1/bookmark_dwn.png"/>
+                    
+                  </af:group>                    
+
+                <af:button id="userdrp" text="anonymous@oracle.com" actionDelivery="none" styleClass="AFGlobalNavbarButton">
+                  <f:facet name="popup">
+                    <af:menu text="anonymous@oracle.com" id="ursmn1">
+                      <af:commandMenuItem text="Oracle RCF Home" immediate="true"
+                                                shortDesc="Learn more about ADF Faces Rich Client" id="ptcni2"
+                                                partialSubmit="true" action="#{aboutBean.goHome}"/>
+                      <af:group id="abtgrp">
+                        <af:commandMenuItem text="#{aboutBean.aboutLabel}"
+                                            shortDesc="View version information about the software used to generate this page"
+                                            id="ptcni1">
+                          <af:showPopupBehavior popupId="::about:about"/>
+                        </af:commandMenuItem>
+                      </af:group>
+                    </af:menu>
+                  </f:facet>
+                </af:button>
+              </af:toolbar>
+          </f:facet>
+           <f:facet name="start">
+              <af:panelHeader text="Quick Links" id="ph1" rendered="#{pageBean.startWidth.value}">
+                <af:panelList maxColumns="1" id="pl1" shortDesc="Quick Links" inlineStyle="text-align:left;">
+  
+                      <af:link   id="link_id_1">Adf Faces Forum</af:link>
+                     <af:link  id="link_id_2"> Developer's Guide</af:link>
+                      <af:link   id="link_id_3">Tip of the Day </af:link>
+                      <af:link   id="link_id_4">Data Visualization Tools</af:link>
+                     <af:link    id="link_id_5">Layout Basics</af:link>                   
+                </af:panelList>
+              </af:panelHeader>
+           </f:facet>
+           <f:facet name="end">
+            <af:panelGroupLayout id="pgl21" layout="vertical" clientComponent="true" rendered="#{pageBean.endWidth.value}" inlineStyle="margin-left:10px;">
+              <af:panelBox text="About" contentStyle="line-height:20px;" id="pb1" showHeader="never">
+                <f:facet name="toolbar"/>
+                <af:panelHeader text="Event Summary" id="ph4">
+                    <af:outputText value="Coordinator " id="ot2" inlineStyle="font-weight:bold;"/>
+                    <af:outputText value="John" id="ot3"/>
+                    <br/>
+                    <af:outputText value="Status " id="ot4" inlineStyle="font-weight:bold;"/>
+                    <af:outputText value="Prelaunch" id="ot5"/>
+                    <br/>
+                    <af:outputText value="Duration " id="ot6" inlineStyle="font-weight:bold;"/>
+                    <af:outputText value="2 days" id="ot7"/>
+                    <f:facet name="footer"/>
+                </af:panelHeader>
+              </af:panelBox>
+            </af:panelGroupLayout>
+           </f:facet>
+          <f:facet name="center">
+            <af:group id="grp20">
+            <af:decorativeBox id="contentBody" dimensionsFrom="children">
+              <f:facet name="center">
+                <af:panelGroupLayout id="pgl1">
+                  <h1>Tablet First Template</h1>
+                  <h3>Below are the branding bar options.</h3>
+                  <af:panelFormLayout id="pfl1">
+                    <af:selectOneRadio label="Button" id="sor1" binding="#{pageBean.appNavigation}" autoSubmit="true"
+                                       valueChangeListener="#{pageBean.appNavigationChanged}">
+                      <af:clientListener type="click" method="_resizeContentsPartial"/>
+                      <af:selectItem label="No Application Navigator" value="noButton" id="si2"/>
+                      <af:selectItem label="5 Button Application Navigator" value="fiveButton" id="si3"/>
+                      <af:selectItem label="9 Button Application Navigator" value="nineButton" id="si4"/>
+                      <af:selectItem label="20 Button Application Navigator" value="twentyButton" id="si5"/>
+                    </af:selectOneRadio>
+                    <af:selectOneRadio label="Width" id="sor2" binding="#{pageBean.brandingWidth}" autoSubmit="true">
+                      <af:clientListener type="click" method="_resizeContentsPartial"/>
+                      <af:selectItem label="1440px" value="1440px" id="si6"/>
+                      <af:selectItem label="1280px" value="1280px" id="si7"/>
+                      <af:selectItem label="1024px" value="1024px" id="si8"/>
+                    </af:selectOneRadio>
+                    <af:selectBooleanCheckbox label="Fill More Contents" id="sbc1"
+                                              autoSubmit="true" binding="#{pageBean.fillMoreContents}">
+                      <af:clientListener type="click" method="_resizeContentsPartial"/>
+                    </af:selectBooleanCheckbox>
+                    <af:selectBooleanCheckbox label="Enable Start Facet" id="sbc2"
+                                              autoSubmit="true" binding="#{pageBean.startWidth}">
+                      <af:clientListener type="click" method="_resizeContentsPartial"/>
+                    </af:selectBooleanCheckbox>
+                    <af:selectBooleanCheckbox label="Enable End Facet" id="sbc4"
+                                              autoSubmit="true" binding="#{pageBean.endWidth}">
+                      <af:clientListener type="click" method="_resizeContentsPartial"/>
+                    </af:selectBooleanCheckbox>
+		    <af:selectBooleanCheckbox label="Disable Footer" id="sbc3"
+                                              autoSubmit="true" binding="#{pageBean.hideFooter}">
+                      <af:clientListener type="click" method="_resizeContentsPartial"/>
+                    </af:selectBooleanCheckbox>
+                  </af:panelFormLayout>
+                  <af:panelGroupLayout id="pgl2" layout="vertical" rendered="#{pageBean.fillMoreContents.value}">
+                    <af:panelBox text="About" contentStyle="line-height:20px;" inlineStyle=" width:90%;" id="pb2">
+                        <af:outputText value="Oracle ADF Faces Rich Client is a large set of Ajax-enabled JSF components that let you
+                            build a very rich user interface for your Java EE applications. It also includes many of the
+                            framework features needed most by JSF developers today." id="ot39"/>
+                        <af:panelList id="pl3">
+                         <af:outputText value="Very large set of AJAX-enabled components" id="ot40"/>
+                        <af:outputText value="JSF 2 Support" id="ot41"/>
+                        <af:outputText value="Complete JavaScript API" id="ot42"/>
+                        <af:outputText value="Drag and Drop Framework" id="ot43"/>
+                        <af:outputText value="Navigation Menu Framework" id="ot44"/>
+                        <af:outputText value="Built-in Internationalization and Accessibility support" id="ot45"/>
+                        <af:outputText value="Support for page templates, reusable page regions, and declarative components" id="ot46"/>
+                        <af:outputText value="Partial Page Rendering" id="ot47"/>
+                        <af:outputText value="Support for Skinning" id="ot48"/>
+                        <af:outputText value="Integration with ADFc to support Task Flows and bookmarking" id="ot49"/>
+                        <af:outputText value="Integration with ADFm to support data bindings." id="ot50"/>
+                        <af:outputText value="Oracle ADF Security Support" id="ot51"/>
+                      </af:panelList>
+                    </af:panelBox>
+                    <af:spacer height="10px" id="sp4"/>
+                    <af:panelBox text="Featured Items" contentStyle="line-height:20px;" inlineStyle=" width:90%;" id="pb3">
+                        
+                        <af:outputText value="Oracle ADF Faces Rich Client is a large set of Ajax-enabled JSF components that let you build a 
+                          very rich user interface for your Java EE applications. 
+                          It also includes many of the framework features needed most by JSF developers today." id="ot38"
+                                       inlineStyle="font-weight:bold;"/>
+                         
+                        <af:panelList id="pl2">
+                          <af:outputText value="Deck" id="ot26"/>
+                          <af:outputText value="Transition" id="ot27"/>
+                          <af:outputText value="Panel Grid Layout" id="ot28"/>
+                          <af:outputText value="Tabbed Toolbar" id="ot29"/>
+                          <af:outputText value="Index Link View Switching (view as alpha, group, table, tree, carousel,
+                                               tiles, or rows)" id="ot30"/>
+                          <af:outputText value="Decomp Tree" id="ot31"/>
+                          <af:outputText value="Tabbed Toolbar" id="ot32"/>
+                          <af:outputText value="Social Network" id="ot33"/>
+                          <af:outputText value="Search" id="ot34"/>
+                          <af:outputText value="Advanced Search" id="ot35"/>
+                          <af:outputText value="Thematic Map Color Coded Regions" id="ot36"/>
+                          <af:outputText value="Thematic Map Custom Regions" id="ot37"/>
+                        </af:panelList>
+                    </af:panelBox>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:decorativeBox>
+            <af:spacer height="10px" id="sp5"/>
+            <af:panelTabbed position="above" id="ptb">
+                <af:showDetailItem id="pgridl" text="Panel Grid Layout" disclosed="true">
+                    <af:panelGridLayout id="pgl5">
+                        <af:gridRow marginTop="5px" height="auto" id="gr1">
+                            <af:gridCell marginStart="5px" width="100%" id="gc1">
+                                <af:outputText value="Panel Grid Layout" id="ot19"
+                                               inlineStyle="font-weight:bold; font-size:large;"/>
+                            </af:gridCell>
+                        </af:gridRow>
+                        <af:gridRow marginTop="5px" height="auto" marginBottom="5px" id="gr2">
+                            <af:gridCell marginStart="5px" width="50%" id="gc3">
+                                <af:outputText value="Horizontally Aligned Column 1" id="ot20"/>
+                            </af:gridCell>
+                            <af:gridCell marginStart="5px" width="50%" marginEnd="5px" id="gc4">
+                                <af:outputText value="Horizontally Aligned Column 2" id="ot21"/>
+                            </af:gridCell>
+                        </af:gridRow>
+                    </af:panelGridLayout>
+                </af:showDetailItem>
+                <af:showDetailItem id="pgroupl" text="Panel Group Layout">
+                    <af:panelGroupLayout id="pgl4" layout="vertical">
+                        <af:outputText value="Panel Group Layout" id="ot22" inlineStyle="font-weight:bold; font-size:large;"/>
+                        <af:outputText value="Vertically Aligned 1" id="ot23"/>
+                        <af:outputText value="Vertically Aligned 2" id="ot24"/>
+                    </af:panelGroupLayout>                    
+                </af:showDetailItem>
+                <af:showDetailItem id="pbl" text="Panel Border Layout">
+                    <af:panelBorderLayout id="pbl1">
+                        <f:facet name="start">
+                            <af:outputText value="Navigation" id="ot25"/>
+                        </f:facet>
+                        <f:facet name="bottom">
+                            <af:outputText value="Footer" id="ot8"/>
+                        </f:facet>
+                        <f:facet name="end">
+                            <af:outputText value="End" id="ot9"/>
+                        </f:facet>
+                        <f:facet name="top">
+                            <af:outputText value="Panel Border Layout" id="ot10" inlineStyle="font-weight:bold; font-size:large;"/>
+                        </f:facet>
+                        <af:outputText value="Main Content goes here" id="ot12"/>
+                    </af:panelBorderLayout>
+                </af:showDetailItem>
+                <af:showDetailItem id="psl" text="Panel Stretch Layout">
+                    <af:panelStretchLayout id="psl1">
+                        <f:facet name="bottom">
+                            <af:outputText value="Footer" id="ot11"/>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:outputText value="Main Content goes here" id="ot13"/>
+                        </f:facet>
+                        <f:facet name="start">
+                            <af:outputText value="Navigation" id="ot14"/>
+                        </f:facet>
+                        <f:facet name="end">
+                            <af:outputText value="End" id="ot15"/>
+                        </f:facet>
+                        <f:facet name="top">
+                            <af:outputText value="Panel Stretch Layout" id="ot16" inlineStyle="font-weight:bold; font-size:large;"/>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </af:showDetailItem>
+                <af:showDetailItem id="psp" text="Panel Splitter">
+                    <af:panelSplitter id="ps1" orientation="vertical">
+                        <f:facet name="first">
+                            <af:outputText value="Vertical Splitting 1" id="ot17"/>
+                        </f:facet>
+                        <f:facet name="second">
+                            <af:outputText value="Vertical Splitting 2" id="ot18"/>
+                        </f:facet>
+                    </af:panelSplitter>
+                </af:showDetailItem>
+            </af:panelTabbed>
+            </af:group>
+          </f:facet>
+           <f:facet name="footer">
+            <af:panelGroupLayout id="footlnk" inlineStyle="#{requestContext.rightToLeft? 'text-align: right': 'text-align: left'}" layout="vertical">
+              <af:navigationPane hint="bar" id="ftllnks" >
+                    <af:commandNavigationItem id="ptfni0"
+                                              text="Home" shortDesc="Learn more about ADF Faces Rich Client"
+                                              action="#{aboutBean.goHome}"
+                                              />
+                    <af:commandNavigationItem id="ptfni1"
+                                              text="Tag Guide" action="guide"
+                                              />
+                    <af:commandNavigationItem id="ptfni2"
+                                              text="Feature Demos" action="feature"
+                                              />
+                    <af:commandNavigationItem id="ptfni3"
+                                              text="Visual Designs" action="visualDesigns"
+                                              />
+                    <af:commandNavigationItem text="#{aboutBean.aboutLabel}"
+                                              shortDesc="View version information about the software used to generate this page"
+                                              id="ptfni5">
+                      <af:showPopupBehavior popupId="::about:about"/>
+                    </af:commandNavigationItem>
+              </af:navigationPane>
+              <af:outputText id="ftot" value="Copyright &#169; 2013, Oracle and/or its affiliates. All rights reserved." inlineStyle="text-align:left"/>
+              
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="appNav">
+            <af:panelGroupLayout id="pgl3">
+              <af:switcher id="s1" defaultFacet="fiveButton" facetName="#{pageBean.appNavigation.value}">
+                <f:facet name="noButton">
+                </f:facet>
+                <f:facet name="fiveButton">
+                  <af:panelGroupLayout id="nvg5">
+                    <af:button text="Apple" id="b1" styleClass="AFAppNavbarButton" 
+                               actionListener="#{pageBean.buttonClicked}"/>
+                    <af:button text="Samsung" id="b2" styleClass="AFAppNavbarButton" 
+                               actionListener="#{pageBean.buttonClicked}"/>
+                    <af:button text="HTC" id="b3" styleClass="AFAppNavbarButton" 
+                               actionListener="#{pageBean.buttonClicked}"/>
+                    <af:button text="Nokia" id="b4" styleClass="AFAppNavbarButton" 
+                               actionListener="#{pageBean.buttonClicked}"/>
+                    <af:button text="LG" id="b5" styleClass="AFAppNavbarButton" 
+                               actionListener="#{pageBean.buttonClicked}"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="nineButton">
+                  <af:panelGroupLayout id="nvg9">
+                    <af:button text="Sun" id="b6" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Mercury" id="b7" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Venus" id="b8" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Earth" id="b9" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Mars" id="b10" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Jupiter" id="b11" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Saturn" id="b12" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Pluto" id="b13" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Uranus" id="b14" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Moon" id="b15" styleClass="AFAppNavbarButton"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="twentyButton">
+                  <af:panelGroupLayout id="nvg20">
+                    <af:button text="Russia" id="b16" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Antartica" id="b17" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Canada" id="b18" styleClass="AFAppNavbarButton"/>
+                    <af:button text="China" id="b19" styleClass="AFAppNavbarButton"/>
+                    <af:button text="United States" id="b20" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Brazil" id="b21" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Australia" id="b22" styleClass="AFAppNavbarButton"/>
+                    <af:button text="India" id="b23" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Argentina" id="b24" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Kazakhstan" id="b25" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Algeria" id="b26" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Mexico" id="b27" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Indonasia" id="b28" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Sudan" id="b29" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Germany" id="b30" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Britain" id="b31" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Egypt" id="b32" styleClass="AFAppNavbarButton"/>
+                    <af:button text="France" id="b33" styleClass="AFAppNavbarButton"/>
+                    <af:button text="Switzerland" id="b34" styleClass="AFAppNavbarButton"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:switcher>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:attribute name="logoImagePath" value="/images/oracle_logo_lrg.png"/>
+          <f:attribute name="logoSmallImagePath" value="/images/oracle_logo_sm.png"/>
+          <f:attribute name="logoShortDesc" value="Oracle TabletFirst Template Demo"/>
+          <f:attribute name="logoStyleClass" value="BrandingLogo"/>
+          <f:attribute name="showAppNavbar" value="#{not pageBean.renderNoButton}"/>
+          <f:attribute name="brandingMaxWidth" value="#{pageBean.brandingWidth.value}"/>
+          <f:attribute name="startWidth" value="#{pageBean.startWidth.value ? '170px': '0px'}"/>
+          <f:attribute name="endWidth" value="#{pageBean.endWidth.value ? '200px': '0px'}"/>
+          <f:attribute name="showFooter" value="#{not pageBean.hideFooter.value}"/>
+	  <f:attribute name="minWidth" value="700px"/>
+        </af:pageTemplate>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

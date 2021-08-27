@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="shuttle selection demon (with selectOrderShuttle)" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+              function showDetails(event)
+              {
+                if(AdfRichSelectOrderShuttle.SELECTION == event.getPropertyName())
+                {
+                  var shuttleComponent = event.getSource();
+                  var lastChangedValue = AdfShuttleUtils.getLastSelectionChange(shuttleComponent, event.getOldValue());
+
+                  if (lastChangedValue)
+                  {
+                    var selected = AdfShuttleUtils.isSelected(shuttleComponent, lastChangedValue);
+                    var side = AdfShuttleUtils.isLeading(shuttleComponent, lastChangedValue);
+
+                    if(selected)
+                    {
+                      if(side)
+                      {
+                        var popup = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:demoPopup");
+                        AdfCustomEvent.queue(popup,
+                                           "myCustomEvent",
+                                           // Send one parameter
+                                           {value:lastChangedValue},
+                                           // Make it "immediate" on the server
+                                           true);
+                      }
+                    }
+                  }
+                }
+              }
+              function showPopup()
+              {
+                var popup = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:demoPopup");
+                popup.show();
+              }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="selectOrderShuttle"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:popup id="demoPopup" contentDelivery="lazyUncached">
+              <af:dialog closeIconVisible="false" title="Infos for the selected Item"
+                             okVisible="false" visible="true" cancelVisible="true"
+                         id="d2">
+                <af:inputText value="#{personBean.selectedPerson.firstname}" label="Firstname" readOnly="true"
+                              id="it1"/>
+                <af:inputText value="#{personBean.selectedPerson.secondname}" label="Secondname" readOnly="true"
+                              id="it2"/>
+                <af:inputText value="#{personBean.selectedPerson.age}" label="Age" readOnly="true"
+                              id="it3"/>
+              </af:dialog>
+
+              <af:serverListener type="myCustomEvent" method="#{personBean.doCustomEvent}"/>
+
+            </af:popup>
+            <af:outputText value="Select an item on the leading side of the shuttle, to see more details about it in a popup"
+                           id="ot1"/>
+            <af:selectOrderShuttle binding="#{editor.component}" id="OrderShuttle"
+                                  label="Shuttle Selection Test:"
+                                  leadingHeader="Available Values"
+                                  value="#{personBean.manyListValue}"
+                                  trailingHeader="Selected Values">
+
+              <af:clientListener type="propertyChange" method="showDetails"/>
+
+              <f:selectItems value="#{personBean.persons}" id="si1"/>
+            </af:selectOrderShuttle>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+              <af:commandButton text="full postback" id="cb1"/>
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The submitted value: " id="ot2"/>
+                <af:outputText partialTriggers="richCommand OrderShuttle" id="result"
+                               value="#{personBean.manyListValue}"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

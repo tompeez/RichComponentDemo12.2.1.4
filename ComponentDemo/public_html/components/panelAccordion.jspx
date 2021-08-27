@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelAccordion Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelAccordion"/>
+        <f:attribute name="visualDesignName" value="accordion"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmFlowNotes" value="When flowing this component, the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmFlowWithZeroWidthNotes" value="When flowing this component, the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmStretchChildren" value="#{mobileSettings.dimensionsFromChildren ? 'none' : 'first'}"/>
+        <f:facet name="center">
+          <af:panelAccordion id="sampleAccordion" binding="#{editor.component}" discloseNone="false"
+                             discloseMany="false" dimensionsFrom="auto">
+            <af:showDetailItem id="firstPane" disclosed="true" inflexibleHeight="120"
+                               textAndAccessKey="&amp;First Pane" flex="0" stretchChildren="first">
+              <f:facet name="toolbar">
+                <af:outputText id="toolbar1" value="Toolbar 1"/>
+              </f:facet>
+              <af:panelGroupLayout layout="scroll" id="pgl1">
+                <af:outputText value="This pane and the last pane have flex set to 0 meaning they are inflexible."
+                               id="ot1"/>
+                <af:outputText value="Flexibility applies when the accordion has discloseMany set to true and dimensionsFrom=parent."
+                               id="ot2"/>
+                <af:outputText value="Flexibility is also relative among panes so to see this in effect, you will need to disclose two or more panes."
+                               id="ot3"/>
+                <af:commandButton text="Print Pane" id="cb1">
+                  <af:showPrintablePageBehavior/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem id="resizeNotifyPane" disclosed="false"
+                               textAndAccessKey="&amp;ResizeNotify Pane" flex="1"
+                               stretchChildren="first">
+              <f:facet name="toolbar">
+                <af:toolbar id="t1">
+                  <af:group id="g1">
+                    <af:commandToolbarButton shortDesc="Create" icon="/images/new_ena.png"
+                                             id="ctb1"/>
+                    <af:commandToolbarButton shortDesc="Update" icon="/images/update_ena.png"
+                                             id="ctb2"/>
+                    <af:commandToolbarButton shortDesc="Delete" icon="/images/delete_ena.png"
+                                             id="ctb3"/>
+                  </af:group>
+                  <af:group id="g2">
+                    <af:commandToolbarButton shortDesc="E-mail" icon="/images/email.gif"
+                                             id="ctb4"/>
+                    <af:commandToolbarButton shortDesc="Snapshot" icon="/images/snapshot.gif"
+                                             id="ctb5"/>
+                  </af:group>
+                </af:toolbar>
+              </f:facet>
+              <aftest:panelResizeNotify id="resizeNotify"
+                                        inlineStyle="padding:0px;border-width:0px;margin:0px"/>
+            </af:showDetailItem>
+            <af:showDetailItem id="panelStretchLayoutPane" disclosed="false"
+                               textAndAccessKey="PanelS&amp;tretchLayout Pane" flex="1"
+                               stretchChildren="first">
+              <f:facet name="toolbar">
+                <af:outputText value="Toolbar 3" id="ot4"/>
+              </f:facet>
+              <af:panelStretchLayout id="pane3Stretch" partialTriggers="stretchUpdater" topHeight="20"
+                                     startWidth="100" endWidth="100" bottomHeight="20"
+                                     dimensionsFrom="auto">
+                <f:facet name="top">
+                  <af:outputText value="Top" inlineStyle="background-color: #FF6666;"
+                                 id="ot5"/>
+                </f:facet>
+                <f:facet name="start">
+                  <af:outputText value="Start" inlineStyle="background-color: #FFFF66;"
+                                 id="ot6"/>
+                </f:facet>
+                <f:facet name="end">
+                  <af:outputText value="End" inlineStyle="background-color: #66FF66;"
+                                 id="ot7"/>
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="auto" id="psl1" dimensionsFrom="auto">
+                    <f:facet name="top">
+                      <af:panelGroupLayout layout="vertical" id="pgl2">
+                        <af:outputText value="Clicking the button causes the
+                          panelStretchLayout to be replaced via partial page
+                          rendering. The contents of the pane should fill the
+                          pane after the partial page replacement (if the accordion is stretched)." id="ot8"/>
+                        <af:commandButton text="Update PanelStretchLayout" partialSubmit="true"
+                                          id="stretchUpdater"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="center">
+                      <aftest:panelResizeNotify id="prn1"/>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+                <f:facet name="bottom">
+                  <af:outputText value="Bottom" inlineStyle="background-color: #6666FF;"
+                                 id="ot9"/>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:showDetailItem>
+            <af:showDetailItem id="invisiblePane" disclosed="false" text="Invisible Pane" flex="0"
+                               visible="false">
+              <f:facet name="toolbar">
+                <af:outputText value="Invisible Toolbar" id="ot10"/>
+              </f:facet>
+              <af:outputText value="Invisible Body" id="ot11"/>
+            </af:showDetailItem>
+            <af:showDetailItem id="notRenderedPane" disclosed="false" text="Not Rendered Pane"
+                               flex="0" rendered="false">
+              <f:facet name="toolbar">
+                <af:outputText value="Not Rendered Toolbar" id="ot12"/>
+              </f:facet>
+              <af:outputText value="Not Rendered Body" id="ot13"/>
+            </af:showDetailItem>
+            <af:showDetailItem id="panelSplitterPane" disclosed="false"
+                               textAndAccessKey="PanelS&amp;plitter Pane" flex="1"
+                               stretchChildren="first">
+              <af:panelSplitter partialTriggers="splitUpdater" id="ps1" dimensionsFrom="auto">
+                <f:facet name="first">
+                  <af:outputText value="First Pane" id="ot14"/>
+                </f:facet>
+                <f:facet name="second">
+                  <af:panelStretchLayout topHeight="auto" id="psl2" dimensionsFrom="auto">
+                    <f:facet name="top">
+                      <af:panelGroupLayout layout="vertical" id="pgl3">
+                        <af:outputText value="Clicking the button causes the
+                              panelSplitter to be replaced via partial page
+                              rendering. The contents of the pane should fill the
+                              pane after the partial page replacement if the accordion is stretched."
+                                       id="ot15"/>
+                        <af:commandButton text="Update PanelSplitter" partialSubmit="true"
+                                          id="splitUpdater"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="center">
+                      <aftest:panelResizeNotify id="prn2"/>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelSplitter>
+            </af:showDetailItem>
+            <af:showDetailItem id="overflowPane" disclosed="false"
+                               textAndAccessKey="&amp;Overflow Pane" flex="1">
+              <af:panelGroupLayout layout="scroll" id="pgl4">
+                <f:subview id="overflowPaneSubview">
+                  <jsp:include page="/includes/overflowContent.jspx"/>
+                </f:subview>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem id="tablePane" disclosed="false" textAndAccessKey="T&amp;able Pane"
+                               flex="1" stretchChildren="first">
+              <f:subview id="tablePaneSubview">
+                <jsp:include page="/includes/stretchedTableContent.jspx"/>
+              </f:subview>
+            </af:showDetailItem>
+            <af:showDetailItem id="disabledPane" disabled="true"
+                               textAndAccessKey="D&amp;isabled Pane"
+                               stretchChildren="first">
+              <af:panelGroupLayout layout="scroll" id="scrolDis">
+                <af:outputText value="This pane is disabled and thus its disclosed state cannot be modified directly by the user."
+                               id="disTxt1"/>
+                <af:outputText value="The disclosed state can only be changed programmatically or as a result of another showDetailItem's disclosure state forcing this disclosed state to change because of the rules specified in discloseMany and discloseNone."
+                               id="disTxt2"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem id="doubleFlexPane" disclosed="false"
+                               textAndAccessKey="D&amp;ouble Flex Pane" flex="2"
+                               stretchChildren="first">
+              <af:panelGroupLayout layout="scroll" id="pgl5">
+                <af:outputText value="This pane has flex set to 2 meaning it is flexible."
+                               id="ot16"/>
+                <af:outputText value="Most other flexible panes in this demo have flex set to either 0 or 1."
+                               id="ot17"/>
+                <af:outputText value="Flexibility applies when the accordion has discloseMany set to true and dimensionsFrom=parent."
+                               id="ot18"/>
+                <af:outputText value="Flexibility is also relative among panes so to see this in effect, you will need to disclose two or more panes."
+                               id="ot19"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem id="nestedAccordionPane" disclosed="false"
+                               textAndAccessKey="Pane co&amp;ntaining a nested accordion" flex="1"
+                               stretchChildren="first">
+              <!-- begin nested accordion -->
+              <af:panelAccordion id="nestedAccordion" discloseNone="true" dimensionsFrom="auto">
+                <af:showDetailItem id="onlyPane" disclosed="false"
+                                   textAndAccessKey="N&amp;ested accordion's only pane" flex="1"
+                                   stretchChildren="first">
+                  <f:facet name="toolbar">
+                    <af:outputText value="Toolbar" id="ot20"/>
+                  </f:facet>
+                  <aftest:panelResizeNotify id="nestedResizeNotify"
+                                            inlineStyle="padding:0px;border-width:0px;margin:0px"/>
+                </af:showDetailItem>
+              </af:panelAccordion>
+              <!-- end nested accordion -->
+            </af:showDetailItem>
+            <af:showDetailItem id="inlineFramePane" disclosed="false" text="InlineFrame" flex="0"
+                               stretchChildren="first">
+              <af:inlineFrame source="http://www.w3.org/TR/REC-CSS2/" inlineStyle="border: 0px;"
+                              shortDesc="Sample shortDesc text" id="if1"/>
+            </af:showDetailItem>
+            <af:showDetailItem id="lastPane" disclosed="false" icon="/images/circle.svg" iconDelivery="inline"
+                               shortDesc="Sample shortDesc text" textAndAccessKey="&amp;Last Pane" flex="0"
+                               stretchChildren="first">
+              <af:panelGroupLayout layout="scroll" id="pgl6">
+                <af:outputText value="This pane and the first pane have flex set to 0 meaning they are inflexible."
+                               id="ot21"/>
+                <af:outputText value="Flexibility applies when the accordion has discloseMany set to true."
+                               id="ot22"/>
+                <af:outputText value="Flexibility is also relative among panes so to see this in effect, you will need to disclose two or more panes."
+                               id="ot23"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelAccordion>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

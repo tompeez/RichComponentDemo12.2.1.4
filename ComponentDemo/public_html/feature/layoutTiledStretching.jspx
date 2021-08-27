@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Tiled Stretching Layout Pattern Example" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:resource type="css">
+      .MyBreadCrumbsContainer {
+        padding-top: 3px;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      .MyTileInnerPadding {
+        padding: 4px;
+      }
+      </af:resource>
+      <af:pageTemplate id="pt" viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/tabletTemplateAlta.jspx' : '/templates/pageTemplateDefs/tabletTemplate.jspx'}">
+        <f:attribute name="headerGlobalSize" value="45"/>
+        <f:attribute name="navigation2Size" value="0"/>
+        <f:attribute name="header2Size" value="0"/>
+        <f:attribute name="footer2Size" value="0"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:facet name="branding">
+          <af:outputText value="Tiled Stretching" id="ot1" styleClass="AFBrandingBarTitle"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:button icon="/images/alta_v1/project_ena.png" hoverIcon="/images/alta_v1/project_ovr.png" depressedIcon="/images/alta_v1/project_dwn.png"  rendered="#{(attrs.demoKind!='visualDesign') and
+                              (attrs.demoKind!='styles') and
+                              (attrs.demoKind!='confusedComponents') and
+                              (attrs.demoKind!='feature')}" destination="/feature/layoutBasics.jspx" immediate="true" shortDesc="Back to Layout Basics"
+                                    id="ptcni9"/>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:navigationPane hint="tabs" id="np2">
+            <af:commandNavigationItem text="Layout Basics"
+                                      destination="/feature/layoutBasics.jspx"
+                                      id="cni4"/>
+            <af:commandNavigationItem text="Simple Demos"
+                                      destination="/feature/layoutBasicTest.jspx"
+                                      id="cnsd"/>
+            <af:commandNavigationItem text="Branding Bar"
+                                      destination="/feature/layoutBrandingBar.jspx"
+                                      id="cni5"/>
+            <af:commandNavigationItem text="Form Layout"
+                                      destination="/feature/layoutForm.jspx" id="cni6"/>
+            <af:commandNavigationItem text="Navigation-Master-Detail"
+                                      destination="/feature/layoutNavigationMasterDetail.jspx"
+                                      id="cni7"/>
+            <af:commandNavigationItem text="Stretched Header"
+                                      destination="/feature/layoutStretchedHeader.jspx"
+                                      id="cni8"/>
+            <af:commandNavigationItem text="Tiled Flowing"
+                                      destination="/feature/layoutTiledFlowing.jspx"
+                                      id="cni9"/>
+            <af:commandNavigationItem text="Tiled Stretching"
+                                      destination="/feature/layoutTiledStretching.jspx"
+                                      selected="true" id="cni10"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/tabletTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc1">
+                <af:commandNavigationItem text="Feature Demos" destination="/feature/index.jspx"
+                                          id="cni11"/>
+                <af:commandNavigationItem text="Layout Basics" destination="/feature/layoutBasics.jspx"
+                                          id="cni12"/>
+                <af:commandNavigationItem text="Tiled Stretching" id="cni13"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelDashboard columns="3" rowHeight="33%" id="pd1" styleClass="AFStretchWidth">
+            <af:panelBox id="box1" text="panelBox 1" showDisclosure="false">
+              <af:panelGroupLayout layout="scroll" id="pgl2">
+                <af:panelGroupLayout layout="vertical" styleClass="MyTileInnerPadding"
+                                     id="pgl3">
+                  <af:outputText value="Row one, column one" id="ot2"/>
+                  <af:outputText
+                    value="panelBox is used here in a panelDashboard using a 33% rowHeight"
+                                 id="ot3"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelBox>
+            <af:panelBox id="box2" text="panelBox 2" showDisclosure="false">
+              <af:panelGroupLayout layout="scroll" id="pgl4">
+                <af:panelGroupLayout layout="vertical" styleClass="MyTileInnerPadding"
+                                     id="pgl5">
+                  <af:outputText value="Row one, column two" id="ot4"/>
+                  <af:outputText
+                    value="panelBox is used here in a panelDashboard using a 33% rowHeight"
+                                 id="ot5"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelBox>
+            <af:panelBox id="box3" text="panelBox 3" showDisclosure="false">
+              <af:panelGroupLayout layout="scroll" id="pgl6">
+                <af:panelGroupLayout layout="vertical" styleClass="MyTileInnerPadding"
+                                     id="pgl7">
+                  <af:outputText value="Row one, column three" id="ot6"/>
+                  <af:outputText
+                    value="panelBox is used here in a panelDashboard using a 33% rowHeight"
+                                 id="ot7"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelBox>
+            <af:panelBox id="box4" text="panelBox 4" showDisclosure="false">
+              <af:panelGroupLayout layout="scroll" id="pgl8">
+                <af:panelGroupLayout layout="vertical" styleClass="MyTileInnerPadding"
+                                     id="pgl9">
+                  <af:outputText value="Row two, column one" id="ot8"/>
+                  <af:outputText
+                    value="panelBox is used here in a panelDashboard using a 33% rowHeight"
+                                 id="ot9"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelBox>
+            <af:panelBox id="box5" text="panelBox 5" showDisclosure="false">
+              <af:panelGroupLayout layout="scroll" id="pgl10">
+                <af:panelGroupLayout layout="vertical" styleClass="MyTileInnerPadding"
+                                     id="pgl11">
+                  <af:outputText value="Row two, column two" id="ot10"/>
+                  <af:outputText
+                    value="panelBox is used here in a panelDashboard using a 33% rowHeight"
+                                 id="ot11"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelBox>
+            <af:panelBox id="box6" text="panelBox 6" showDisclosure="false">
+              <af:panelGroupLayout layout="scroll" id="pgl12">
+                <af:panelGroupLayout layout="vertical" styleClass="MyTileInnerPadding"
+                                     id="pgl13">
+                  <af:outputText value="Row two, column three" id="ot12"/>
+                  <af:outputText
+                    value="panelBox is used here in a panelDashboard using a 33% rowHeight"
+                                 id="ot13"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelBox>
+            <af:panelBox id="box7" text="panelBox 7" showDisclosure="false">
+              <af:panelGroupLayout layout="scroll" id="pgl14">
+                <af:panelGroupLayout layout="vertical" styleClass="MyTileInnerPadding"
+                                     id="pgl15">
+                  <af:outputText value="Row three, column one" id="ot14"/>
+                  <af:outputText
+                    value="panelBox is used here in a panelDashboard using a 33% rowHeight"
+                                 id="ot15"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelBox>
+            <af:panelBox id="box8" text="panelBox 8" showDisclosure="false">
+              <af:panelGroupLayout layout="scroll" id="pgl16">
+                <af:panelGroupLayout layout="vertical" styleClass="MyTileInnerPadding"
+                                     id="pgl17">
+                  <af:outputText value="Row three, column two" id="ot16"/>
+                  <af:outputText
+                    value="panelBox is used here in a panelDashboard using a 33% rowHeight"
+                                 id="ot17"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelBox>
+            <af:panelBox id="box9" text="panelBox 9" showDisclosure="false">
+              <af:panelGroupLayout layout="scroll" id="pgl18">
+                <af:panelGroupLayout layout="vertical" styleClass="MyTileInnerPadding"
+                                     id="pgl19">
+                  <af:outputText value="Row three, column three" id="ot18"/>
+                  <af:outputText
+                    value="panelBox is used here in a panelDashboard using a 33% rowHeight"
+                                 id="ot19"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:panelBox>
+          </af:panelDashboard>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

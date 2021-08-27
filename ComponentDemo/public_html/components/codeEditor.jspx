@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="codeEditor Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="codeEditor"/>
+        <f:attribute name="visualDesignName" value="codeEditor"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+       <f:attribute name="gmStretchChildren" value="first"/>
+        <f:attribute name="centerBottomCollapsibleHeight" value="125"/>
+        <f:facet name="centerHeader">
+          <af:panelGroupLayout id="pgl1">
+            <af:outputText value="Enter text into the input control and use either the partial or full postback command button to push the value of the input control into the underlying model (a bean property). "
+                           id="ot1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <!-- TODO I've set simple to true for now, when codemirror is in a table the behavior isn't what we want -->
+          <af:codeEditor partialTriggers="language" simple="true" id="idCodeEditor" dimensionsFrom="auto"
+                         language="#{demoCodeEditor.language}" binding="#{editor.component}" 
+                         label="Editor value" value="#{demoCodeEditor.codeEditorValue}" codeFold = "enabled"/>
+        </f:facet>
+        <f:facet name="centerNotes">
+          <af:panelGroupLayout layout="vertical" id="pgl2">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:spacer id="sp" height="5px"/>
+            <af:panelGroupLayout layout="default" id="pgl3">
+              <f:facet name="separator">
+                <af:spacer width="5px" height="5px" id="s2"/>
+              </f:facet>
+              <af:toolbar id="toolbar">
+                <af:selectOneChoice label="switch to" value="#{demoCodeEditor.language}"
+                                    autoSubmit="true" id="language">
+                  <f:selectItems id="items" value="#{demoCodeEditor.languages}"/>
+                </af:selectOneChoice>
+              </af:toolbar>
+              <af:separator/>
+              <af:commandButton text="Partial Postback" id="richCommand" partialSubmit="true"/>
+              <af:commandButton text="Full Postback" id="coreCommand"/>
+              <af:commandButton text="Reset Sample Value" immediate="true"
+                                actionListener="#{demoCodeEditor.resetCodeEditorValue}" id="reset">
+                <af:resetListener type="action"/>
+              </af:commandButton>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="horizontal" id="pgl4">
+              <af:popup id="popupDialog">
+                <af:dialog title="CodeEditor Popup" id="d2" modal="true">
+                  <af:codeEditor language="#{demoCodeEditor.language}" id="idCodeEditorPop"
+                                 value="#{demoCodeEditor.codeEditorValue}" label="Editor value"
+                                 simple="true" rows="20"/>
+                </af:dialog>
+              </af:popup>
+              <af:outputText value="This demo shows the codeEditor inside of a popup." id="ot4"/>
+              <af:spacer width="5" id="s4"/>
+              <af:commandButton immediate="true" text="Show CodeEditor" clientComponent="true"
+                                id="popupButton">
+                <af:showPopupBehavior popupId="popupDialog" alignId="popupButton"
+                                      align="afterStart"/>
+              </af:commandButton>
+            </af:panelGroupLayout>
+            <af:showDetail disclosedText="submitted value" undisclosedText="submitted value"
+                           disclosed="false">
+              <af:inputText id="it" label="Submitted value" readOnly="true"
+                            value="#{demoCodeEditor.codeEditorValue}"
+                            partialTriggers="language  richCommand" rows="10" columns="200"/>
+            </af:showDetail>
+            <!--af:panelGroupLayout layout="vertical" id="pgl5">
+              <af:outputText value="See also:" id="ot3"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem immediate="true" text="inputText Demo"
+                                          action="guide.inputText" id="cni1"/>
+              </af:navigationPane>
+            </af:panelGroupLayout-->
+            <af:panelGroupLayout layout="vertical" id="pgl7">
+              <af:outputText value="See also:" id="ot3"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem immediate="true" text="CodeEditor Messaging"
+                                          destination="codeEditorMessaging.jspx"
+                                          id="cni1"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+        <!--f:facet name="centerBottomCollapsible">
+          <af:panelTabbed partialTriggers="richCommand idCodeEditor" id="pt1">
+            <af:showDetailItem disclosed="true" icon="/images/designmode_ena.png"
+                               text="Submitted Value" stretchChildren="first" id="sdi1">
+              <af:panelGroupLayout layout="scroll" id="pgl6">
+                <af:codeEditor id="result" label="Submitted value"
+                               value="#{demoCodeEditor.codeEditorValue}" simple="true" readOnly="true"
+                               clientComponent="true"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem icon="/images/codemode_ena.png" text="Submitted Value Source"
+                               stretchChildren="first" id="sdi2">
+              <af:panelGroupLayout layout="scroll" id="pgl7">
+                <af:outputText value="#{demoCodeEditor.codeEditorValue}" id="ot4"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem icon="/images/designmode_ena.png" text="Popup Value"
+                               stretchChildren="first" id="sdi3">
+              <af:panelGroupLayout layout="scroll" id="pgl8">
+                <af:codeEditor label="Popup value" id="rte1" value="#{demoCodeEditor.codeEditorValue2}"
+                               simple="true" readOnly="true" clientComponent="true"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem icon="/images/codemode_ena.png" text="Popup Value Source"
+                               stretchChildren="first" id="sdi4">
+              <af:panelGroupLayout layout="scroll" id="pgl9">
+                <af:outputText value="#{demoCodeEditor.codeEditorValue2}" id="ot5"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Stretched Width Example" id="sdi5">
+              <af:outputText value="Example showing a stretched width:" id="ot6"/>
+              <af:codeEditor id="oneHundredPercentWidths" label="Stretch Width Example"
+                             value='&lt;p>This example shows how to achieve a stretched widths:&lt;/p>&lt;ul>&lt;li>Set styleClass="AFStretchWidth"&lt;/li>&lt;li>Note that it is not exactly 100% width because if it were, it would not display consistently in different web browsers.&lt;/li>&lt;/ul>'
+                             rows="6" simple="true" styleClass="AFStretchWidth"/>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet-->
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

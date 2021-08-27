@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+    <jsp:directive.page contentType="text/html;charset=utf-8"/>
+    <f:view>
+        <af:document title="treeTable insert/update/delete Demo" binding="#{templateBindings.documentComponent}"
+                     theme="dark" smallIconSource="#{aboutBean.smallIconSource}"
+                     largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+            <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+                <f:attribute name="tagName" value="treeTable"/>
+                <f:attribute name="visualDesignName" value="treeTable"/>
+                <f:attribute name="demoKind" value="component"/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:facet name="center">
+                    <af:panelSplitter positionedFromEnd="true" splitterPosition="210" orientation="vertical" id="ps1">
+                        <f:facet name="first">
+                            <af:panelStretchLayout topHeight="auto" bottomHeight="auto" dimensionsFrom="auto">
+                                <f:facet name="top">
+                                    <af:panelGroupLayout layout="vertical">
+                                        <af:outputFormatted value="&lt;b>treeTable insert/update/delete - Select a node at any level and perform insert/update/delete action&lt;/b>"/>
+                                        <af:spacer height="5px"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="center">
+                                    <af:panelCollection binding="#{editor.component}" id="pc1" styleClass="AFStretchWidth">
+                                        <f:facet name="menus">
+                                            <af:menu text="Actions" id="m1">
+                                                <af:group id="g1">
+                                                    <af:commandMenuItem id="cmic" text="Create"
+                                                                        actionListener="#{treeInsertUpdateDelete.insertExpanded}"/>
+                                                    <af:commandMenuItem text="Update" id="cmi4"
+                                                                        actionListener="#{treeInsertUpdateDelete.update}"/>
+                                                </af:group>
+                                                <af:group id="g2">
+                                                    <af:commandMenuItem id="cmiif" text="Insert First"
+                                                                        actionListener="#{treeInsertUpdateDelete.insertStart}"/>
+                                                    <af:commandMenuItem id="cmiib" text="Insert Before"
+                                                                        actionListener="#{treeInsertUpdateDelete.insertBefore}"/>
+                                                    <af:commandMenuItem id="cmiia" text="Insert After"
+                                                                        actionListener="#{treeInsertUpdateDelete.insertAfter}"/>
+                                                    <af:commandMenuItem id="cmiil" text="Insert Last"
+                                                                        actionListener="#{treeInsertUpdateDelete.insertEnd}"/>
+                                                </af:group>
+                                                <af:group id="g3">
+                                                    <af:commandMenuItem id="cmidel" text="Delete"
+                                                                        actionListener="#{treeInsertUpdateDelete.delete}"/>
+                                                </af:group>
+                                            </af:menu>
+                                        </f:facet>
+                                        <f:facet name="toolbar">
+                                            <af:toolbar id="t1">
+                                                <af:group id="gtb3">
+                                                    <af:commandToolbarButton id="ctbc" shortDesc="Create"
+                                                                             icon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_ena.png' : '/images/new_ena.png'}"
+                                                                             depressedIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_dwn.png' : '/images/new_dwn.png'}"
+                                                                             disabledIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_dis.png' : '/images/new_dis.png'}"
+                                                                             hoverIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_ovr.png' : '/images/new_ovr.png'}"
+                                                                             actionListener="#{treeInsertUpdateDelete.insertExpanded}"/>
+                                                    <af:commandToolbarButton id="ctbed" shortDesc="Update"
+                                                                             icon="/images/edit_ena.png"
+                                                                             depressedIcon="/images/edit_dwn.png"
+                                                                             disabledIcon="/images/edit_dis.png"
+                                                                             hoverIcon="/images/edit_ovr.png"
+                                                                             actionListener="#{treeInsertUpdateDelete.update}"/>
+                                                    <af:commandToolbarButton id="ctbdel" shortDesc="Delete"
+                                                                             icon="/images/delete_ena.png"
+                                                                             depressedIcon="/images/delete_dwn.png"
+                                                                             disabledIcon="/images/delete_dis.png"
+                                                                             hoverIcon="/images/delete_ovr.png"
+                                                                             actionListener="#{treeInsertUpdateDelete.delete}"/>
+                                                </af:group>
+                                                <af:group id="gtb5">
+                                                    <af:commandToolbarButton id="ctbif" shortDesc="Insert First"
+                                                                             icon="/images/insertabove.png"
+                                                                             actionListener="#{treeInsertUpdateDelete.insertStart}"/>
+                                                    <af:commandToolbarButton id="ctbib" shortDesc="Insert Before"
+                                                                             icon="/images/insertbefore_ena.png"
+                                                                             depressedIcon="/images/insertbefore_dwn.png"
+                                                                             disabledIcon="/images/insertbefore_dis.png"
+                                                                             hoverIcon="/images/insertbefore_ovr.png"
+                                                                             actionListener="#{treeInsertUpdateDelete.insertBefore}"/>
+                                                    <af:commandToolbarButton id="ctbia" shortDesc="Insert After"
+                                                                             icon="/images/insertafter_ena.png"
+                                                                             depressedIcon="/images/insertafter_dwn.png"
+                                                                             disabledIcon="/images/insertafter_dis.png"
+                                                                             hoverIcon="/images/insertafter_ovr.png"
+                                                                             actionListener="#{treeInsertUpdateDelete.insertAfter}"/>
+                                                    <af:commandToolbarButton id="ctbie" shortDesc="Insert Last"
+                                                                             icon="/images/insertbelow.png"
+                                                                             actionListener="#{treeInsertUpdateDelete.insertEnd}"/>
+                                                </af:group>
+                                            </af:toolbar>
+                                        </f:facet>
+                                        <f:facet name="secondaryToolbar">
+                                            <af:toolbar id="t2">
+                                                <af:commandToolbarButton immediate="true" text="TagGuide" action="guide"
+                                                                         id="ctb41"/>
+                                            </af:toolbar>
+                                        </f:facet>
+                                        <f:facet name="afterToolbar">
+                                            <af:menuBar>
+                                                <af:goMenuItem text="view page source"
+                                                               destination="#{facesContext.viewRoot.viewId}.source"/>
+                                            </af:menuBar>
+                                        </f:facet>
+                                        <af:treeTable rowSelection="single" columnSelection="none"
+                                                      columnBandingInterval="1" var="row" varStatus="vs"
+                                                      binding="#{treeInsertUpdateDelete.component}"
+                                                      selectionListener="#{fs.select}"
+                                                      value="#{treeInsertUpdateDelete.model}" id="tree"
+                                                      summary="table data">
+                                            <af:column rowHeader="true" id="c1" width="10">
+                                                <af:outputText value="#{vs.index}"/>
+                                            </af:column>
+                                            <f:facet name="nodeStamp">
+                                                <af:column headerText="Name" id="c3">
+                                                    <af:panelGroupLayout>
+                                                        <af:image source="/images/folder.png"
+                                                                  inlineStyle="margin-right:3px; vertical-align:middle; height:16px; width:16px;"
+                                                                  id="nodeIcon"/>
+                                                        <af:outputText value="#{row.name}" id="ot2"/>
+                                                    </af:panelGroupLayout>
+                                                </af:column>
+                                            </f:facet>
+                                            <af:column headerText="ID" id="c2">
+                                                <af:outputText value="#{row.id}" id="ot1"/>
+                                            </af:column>
+                                            <af:column headerText="Costs" id="c4">
+                                                <af:outputText value="#{row.cost}" id="ot3">
+                                                    <f:convertNumber currencySymbol="$" type="currency"
+                                                                     maxFractionDigits="2"/>
+                                                </af:outputText>
+                                            </af:column>
+                                            <af:column headerText="Sales" id="c5">
+                                                <af:outputText value="#{row.sale}" id="ot4">
+                                                    <f:convertNumber currencySymbol="$" type="currency"
+                                                                     maxFractionDigits="2"/>
+                                                </af:outputText>
+                                            </af:column>
+                                        </af:treeTable>
+                                    </af:panelCollection>
+                                </f:facet>
+                            </af:panelStretchLayout>
+                        </f:facet>
+                        <f:facet name="second">
+                            <af:panelGroupLayout layout="scroll" id="pgl2">
+                                <af:outputText value="See also:" id="ot14"/>
+                                <af:panelList id="pl1">
+                                    <af:goLink text="treeTable Demo" destination="/components/treeTable.jspx" id="gl4"/>
+                                    <af:goLink text="PanelCollection TreeTable Demo"
+                                               destination="/components/table/panelCollectionTreeTable.jspx" id="gl5"/>
+                                </af:panelList>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelSplitter>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

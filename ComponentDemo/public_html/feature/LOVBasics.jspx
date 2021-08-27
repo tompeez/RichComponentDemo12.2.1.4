@@ -1,0 +1,294 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="LOV Basics" binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:resource type="css">.MyStrongText { font-weight: bold; }</af:resource>
+      <af:pageTemplate id="tmplt" viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/demoIndexTemplateAlta.jspx':'/templates/pageTemplateDefs/demoIndexTemplate.jspx'}">
+        <f:attribute name="brandingTitle" value="Layout Basics"/>
+        <f:attribute name="mode" value="feature"/>
+        <f:attribute name="navLevelCount" value="2"/>
+        <f:attribute name="collapsedSettings" value="true"/>
+        <f:facet name="center2">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:panelHeader text="Introduction" styleClass="AFStretchWidth" id="ph1">
+              <f:facet name="toolbar">
+                <af:toolbar id="t1">
+                  <af:commandToolbarButton text="Print Content" icon="/images/print.png"
+                                           partialSubmit="true" id="ctb1">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:outputText value="This page describes and demonstrates various LOV operation,
+                                      use-cases and parameter configurations. This page is under
+                                      construction." id="ot1"/>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="LOV AutoComplete Overview" styleClass="AFStretchWidth" id="ph2">
+              <af:outputText value="The following sections explain the events queued on the
+                      server and the model methods invoked during the various lifecycle phases for
+                      an LOV component. When user enters partial or no value in the LOV input field
+                      (with/without autoComplete) and when user selects a value from the search &amp;
+                      select dialog (and the dropdown in the case of the comboLOV) are the cases
+                      discussed below." id="ot4"/>
+            </af:panelHeader>
+            <af:panelHeader text="InputListOfValues" styleClass="AFStretchWidth" id="ph3">
+              <af:panelList id="pl1">
+                <af:group id="g1">
+                  <af:outputText inlineStyle="font-weight:bold;font-size:14px;" value="AutoComplete is On: " id="hlo1"/>
+                  <af:outputText  value="AutoComplete is turned on if 'autoSubmit' is set to true on
+                  the inputListOfValues component. When autoComplete feature is on and the user
+                  'enters' a partial value, it could result in a single match, multiple or no matches." id="ot5"/>
+                  <af:spacer height="5px" id="sp1"/>
+                  <af:outputText  value="User enters a value in the lov input field and tabs out of
+                  the field or presses the enter key:" id="ot6"/>
+                  <af:panelList id="pl2">
+                    <af:panelGroupLayout layout="vertical" id="pg2">
+                      <af:outputText inlineStyle="font-weight:bold;font-size:14px;" id="ot7"
+                             value="Case 1: User enters value and leaves input field; results in exact match (on server):" />
+                      <af:outputText  id="ot8" value="User enters a value 'Ad' in the input field
+                        and let's say that this eventually resolves to a single match 'Adam' on the server." />
+                      <af:spacer height="5px" id="sp2"/>
+                      <af:outputText inlineStyle="font-weight:bold;font-size:14px;"  value="Server-Side" id="ot25"/>
+                      <af:outputText value="The server lifecycle for this action will be as described below." id="ot26"/>
+                      <af:spacer height="5px" id="sp3"/>
+                      <trh:tableLayout id="tl1" width="100%" borderWidth="1" cellPadding="2" cellSpacing="2">
+                        <trh:rowLayout id="rl1" halign="center" inlineStyle="font-weight:bold;color: #003399;">
+                          <trh:cellFormat id="cf1" > User Action </trh:cellFormat>
+                          <trh:cellFormat id="cf2" > APPLY REQUEST VALUES </trh:cellFormat>
+                          <trh:cellFormat id="cf3" > process events </trh:cellFormat>
+                          <trh:cellFormat id="cf5" > PROCESS VALIDATION </trh:cellFormat>
+                          <trh:cellFormat id="cf6" > process events </trh:cellFormat>
+                          <trh:cellFormat id="cf8" > UPDATE MODEL </trh:cellFormat>
+                          <trh:cellFormat id="cf9" > process events </trh:cellFormat>
+                          <trh:cellFormat id="cf10" > INVOKE APPLICATION </trh:cellFormat>
+                          <trh:cellFormat id="cf11" > process events </trh:cellFormat>
+                          <trh:cellFormat id="cf12" > RENDER RESPONSE </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl2" halign="left">
+                          <trh:cellFormat id="cf13" inlineStyle="font-weight:bold;color: #003399;"> 'Ad' entered by user </trh:cellFormat>
+                          <trh:cellFormat id="cf14" valign="middle">
+                            <af:panelList id="pl5" listStyle="list-style-type: decimal">
+                              <af:outputText id="ot9" value="ListOfValuesModel.autoComplete() called."/>
+                              <af:outputText id="ot10" value="'Ad' auto completes to 'Adam'."/>
+                              <af:outputText id="ot11" value="ListOfValuesModel.getValueFromSelection
+                              is called passing the rowKey to get the auto-completed value of the component"/>
+                              <af:outputText id="ot12" value="Auto-completed value is set on the component as submittedValue."/>
+                              <af:outputText id="ot13" value="ReturnPopupEvent queued"/>
+                            </af:panelList>
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf15" valign="middle"> &#160; </trh:cellFormat>
+                          <trh:cellFormat id="cf16" valign="middle">
+                            <af:panelList id="pl6" listStyle="list-style-type: decimal">
+                              <af:outputText id="ot14" value="Auto-completed value converted and validated."/>
+                              <af:outputText id="ot15" value="ValueChangeEvent queued"/>
+                            </af:panelList>
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf17" valign="middle">
+                              <af:outputText id="ot16" value="ValueChangeEvent delivered (ValueChangeListener called)"/>
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf18" valign="middle">
+                              <af:outputText id="ot17" value="Auto-completed value written to model"/>
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf19" valign="middle"> &#160; </trh:cellFormat>
+                          <trh:cellFormat id="cf20" valign="middle"> &#160; </trh:cellFormat>
+                          <trh:cellFormat id="cf21" valign="middle">
+                            <af:panelList id="pl9" listStyle="list-style-type: decimal">
+                              <af:outputText id="ot18" value="ReturnPopupEvent delivered."/>
+                              <af:outputText id="ot19" value="ListOfValuesModel.valueSelected() (called by DefaultReturnPopupListener)"/>
+                              <af:outputText id="ot20" value="Other ReturnPopupListeners called"/>
+                            </af:panelList>
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf22" valign="middle">
+                              <af:outputText id="ot21" value="LOV component rendered with new auto-completed value"/>
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                      </trh:tableLayout>
+                      <af:spacer height="15px" id="sp4"/>
+                      <af:panelList id="pl10" listStyle="list-style-type: decimal">
+                        <af:panelGroupLayout id="gp1">
+                          <af:outputText value="In the Apply Request Values phase," id="ot22"/>
+                          <af:panelList id="pl11">
+                            <af:outputText value="ListOfValuesModel.autoComplete() is called. This method
+                              returns a list with a single rowkey, of the row that contains the auto-completed
+                              value. This indicates that a single match was found for the entered value 'Ad'." id="ot23"/>
+                            <af:outputText value="The autoCompleted value is set on the component as the submittedValue." id="ot24"/>
+                            <af:outputText value="ReturnPopupEvent is queued on the LOV component, with the
+                              rowKey determined in the previous step passed in." id="ot27"/>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="gp2">
+                          <af:outputText value="In the Process Validations phase," id="ot28"/>
+                          <af:panelList id="pl12">
+                            <af:outputText value="The autocompleted value is converted and validated." id="ot29"/>
+                            <af:outputText value="A ValueChangeEvent is queued, if there were no conversion
+                               or validation errors in the previous step." id="ot30"/>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="gp3">
+                          <af:outputText value="At the end of the Process Validations phase," id="ot31"/>
+                          <af:panelList id="pl13">
+                            <af:outputText value="The ValueChangeEvent is delivered and any custom
+                              ValueChangeListeners attached to the component will be called." id="ot32"/>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="gp4">
+                          <af:outputText value="In the UpdateModel phase," id="ot33"/>
+                          <af:panelList id="pl14">
+                            <af:outputText value="The autoCompleted value is written into the model." id="ot34"/>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="gp5">
+                          <af:outputText value="At the end of the Invoke Application phase," id="ot35"/>
+                          <af:panelList id="pl15">
+                            <af:outputText value="The ReturnPopupEvent is delivered." id="ot36"/>
+                            <af:outputText value="The default ReturnPopupListener that is registered
+                            with the component, will call ListOfValuesModel.valueSelected() method, passing in
+                            the rowKey of the row in the list, that contains the auto completed value. This gives
+                            the model a chance to setup any dependent fields values correctly." id="ot37"/>
+                            <af:outputText value="Other custom ReturnPopupListeners are called." id="ot38"/>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                      </af:panelList>
+                    </af:panelGroupLayout>
+                    <af:panelGroupLayout layout="vertical" id="pg3">
+                      <af:outputText inlineStyle="font-weight:bold;font-size:14px;" id="ot39"
+                             value="Case 2: User enters value and leaves field; results in multiple matches or no match (on server)" />
+                      <af:spacer height="5px" id="sp5"/>
+                      <af:outputText inlineStyle="font-weight:bold;font-size:14px;"  value="Server-Side" id="ot40"/>
+                      <af:outputText value="Selecting the final value for the user is a 2 step process (2 requests)" id="ot41"/>
+                      <af:panelList listStyle="list-style-type: decimal" id="pl16">
+                        <af:outputText value="User enters a value 'A' which results in the multiple matches
+                        or no matches, in which case the LOV dialog is launched, displaying either multiple
+                        matches or all the values respectively. (LaunchPopupEvent is queued in this step)" id="ot42"/>
+                        <af:outputText value="User then selects a value from the list or searches for a
+                        specific value (if a query component is present) and then selects a value. This
+                        value will be returned to the lov input field. (ReturnPopupEvent). This is discussed
+                        in the section below." id="ot43"/>
+                      </af:panelList>
+                      <af:outputText value="The server lifecycle for this action will be as described below." id="ot44"/>
+                      <af:spacer height="5px" id="sp6"/>
+                      <trh:tableLayout id="tl2" width="100%" borderWidth="1" cellPadding="2" cellSpacing="2">
+                        <trh:rowLayout id="rl3" halign="center" inlineStyle="font-weight:bold;color: #003399;">
+                          <trh:cellFormat id="cf23" > User Action </trh:cellFormat>
+                          <trh:cellFormat id="cf24" > APPLY REQUEST VALUES </trh:cellFormat>
+                          <trh:cellFormat id="cf25" > process events </trh:cellFormat>
+                          <trh:cellFormat id="cf26" > PROCESS VALIDATION </trh:cellFormat>
+                          <trh:cellFormat id="cf27" > process events </trh:cellFormat>
+                          <trh:cellFormat id="cf28" > UPDATE MODEL </trh:cellFormat>
+                          <trh:cellFormat id="cf29" > process events </trh:cellFormat>
+                          <trh:cellFormat id="cf31" > INVOKE APPLICATION </trh:cellFormat>
+                          <trh:cellFormat id="cf32" > process events </trh:cellFormat>
+                          <trh:cellFormat id="cf33" > RENDER RESPONSE </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl4" halign="left">
+                          <trh:cellFormat id="cf34" inlineStyle="font-weight:bold;color: #003399;"> 'A' entered by user </trh:cellFormat>
+                          <trh:cellFormat id="cf35" valign="middle">
+                            <af:panelList id="pl7" listStyle="list-style-type: decimal">
+                              <af:outputText id="ot45" value="ListOfValuesModel.autoComplete() method. List returns
+                              more than one rowKey (or is empty)"/>
+                              <af:outputText id="ot46" value="LaunchPopupEvent queued"/>
+                              <af:outputText id="ot47" value="component submitted value set to null"/>
+                            </af:panelList>
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf36" valign="middle"> &#160; </trh:cellFormat>
+                          <trh:cellFormat id="cf37" valign="middle">
+                            <af:panelList id="pl8" listStyle="list-style-type: decimal">
+                              <af:outputText id="ot48" value="submittedValue not validated"/>
+                              <af:outputText id="ot49" value="No ValueChangeEvent is queued"/>
+                            </af:panelList>
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf38" valign="middle"/>
+                          <trh:cellFormat id="cf39" valign="middle">
+                              <af:outputText id="ot50" value="no value pushed to model"/>
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf40" valign="middle"> &#160; </trh:cellFormat>
+                          <trh:cellFormat id="cf41" valign="middle"> &#160; </trh:cellFormat>
+                          <trh:cellFormat id="cf42" valign="middle">
+                            <af:panelList id="pl17" listStyle="list-style-type: decimal">
+                              <af:outputText id="ot51" value="LaunchPopupEvent is delivered"/>
+                              <af:outputText id="ot52" value="The partial value is set on the component such
+                              that the value gets displayed in the field when the dialog or dropdown in launched"/>
+                            </af:panelList>
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf43" valign="middle">
+                            <af:panelList id="pl18" listStyle="list-style-type: decimal">
+                              <af:outputText id="ot53" value="script encoded in response to either launch
+                              dialog or the dropdown popup"/>
+                              <af:outputText id="ot54" value="LOV dialog encoded with partial matches or
+                              full list of values"/>
+                            </af:panelList>
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                      </trh:tableLayout>
+                      <af:spacer height="15px" id="sp7"/>
+                      <af:panelList id="pl19" listStyle="list-style-type: decimal">
+                        <af:panelGroupLayout id="gp6">
+                          <af:outputText value="In the Apply Request Values phase," id="ot55"/>
+                          <af:panelList id="pl20">
+                            <af:outputText value="The LaunchPopupEvent is queued with the user entered
+                            value set as the submittedValue. The event is queued to be delivered during
+                            the Invoke Application phase" id="ot56"/>
+                            <af:outputText value="The submittedValue of the component is set to null
+                            to skip the validation of the partial value. If this is not done, users
+                            will see validation errors." id="ot57"/>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="gp7">
+                          <af:outputText value="In the Process Validations phase," id="ot58"/>
+                          <af:panelList id="pl21">
+                            <af:outputText value="Since the component's submitted value has not really
+                            changed, conversion/validation is skipped and no ValueChangeEvent is queued." id="ot59"/>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="gp8">
+                          <af:outputText value="In the Update Model phase," id="ot60"/>
+                          <af:panelList id="pl22">
+                            <af:outputText value="Again no value gets pushed to the model as the
+                            submitted value was set to null in the Apply Request Values phase." id="ot61"/>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="gp9">
+                          <af:outputText value="At the end of the Invoke Application phase," id="ot62"/>
+                          <af:panelList id="pl23">
+                            <af:outputText value="The LaunchPopupEvent is delivered" id="ot63"/>
+                            <af:outputText value="The internal LaunchPopupListener registered with the
+                            component is called, which then sets the partial value back on the component
+                            such that the value is displayed in the input field when the dialog or
+                            dropdown is launched." id="ot64"/>
+                            <af:outputText value="Any custom LaunchPopupListeners get called" id="ot65"/>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="gp10">
+                          <af:outputText value="In the Render Response phase," id="ot66"/>
+                          <af:panelList id="pl24">
+                            <af:outputText value="A script is added to the response that is sent to the
+                            client, to either launch the dialog or the dropdown popup" id="ot67"/>
+                            <af:outputText value="The LOV dialog is encoded with the list of partial
+                            matches or the full list." id="ot68"/>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                      </af:panelList>
+                    </af:panelGroupLayout>
+                  </af:panelList>
+                </af:group>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

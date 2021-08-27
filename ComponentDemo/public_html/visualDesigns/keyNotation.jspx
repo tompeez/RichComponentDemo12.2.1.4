@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  version="2.1"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page
+    contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document
+      title="Key Notation Visual Design Demo"
+      binding="#{templateBindings.documentComponent}"
+      smallIconSource="#{aboutBean.smallIconSource}"
+      largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript" source="keyNotation/script.js" />
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Key Notation Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+
+        <f:facet name="center">
+          <af:panelGroupLayout
+            id="contentPanel"
+            layout="scroll">
+            <f:facet name="separator">
+              <af:group id="separator">
+                <af:spacer id="sp1" height="8" />
+                <af:separator id="s1" />
+                <af:spacer id="sp2" height="8" />
+              </af:group>
+            </f:facet>
+            <!-- Information/Links section -->
+            <af:panelGroupLayout id="pgl1">
+              <f:facet name="separator">
+                <af:separator id="s3"/>
+              </f:facet>
+              <af:panelHeader text="Information" id="ph1">
+                <af:outputText value=
+                  "A key notation is not a component, but can be constructed
+                  using existing components and style classes from the medium or rich
+                  skin. Here we demonstrate setting up basic key notations
+                  using the a panelHeader component and a dialog component.
+                  Note that a panelHeader automatically formats the legend facet
+                  to be right justified when a help facet is present."
+                               id="ot1"/>
+              </af:panelHeader>
+              <af:panelHeader text="Related Links" id="ph2">
+                <af:panelList id="pl1">
+                  <af:goLink
+                    text="Visual Design - Headers"
+                    destination="headers.jspx" id="gl1"/>
+                  <af:goLink
+                    text="Visual Design - Page Stamps"
+                    destination="pageStamp.jspx" id="gl2"/>
+                  <af:goLink
+                    text="Component - panelHeader"
+                    destination="/components/panelHeader.jspx" id="gl3"/>
+                  <af:goLink
+                    text="Component - declarativeComponent"
+                    destination="/components/declarativeComponent.jspx"
+                             id="gl4"/>
+                  <af:goLink text="Component - showDetail"
+                             destination="/components/showDetail.jspx"/>
+                  <af:goLink
+                    text="Source - #{demoSkin.altaBased ? 'keyNotation/stackedKeyNotationHeaderAlta.jsff' : 'keyNotation/stackedKeyNotationHeader.jsff'}"
+                    destination="#{demoSkin.altaBased ? 'keyNotation/stackedKeyNotationHeaderAlta.jsff.source' : 'keyNotation/stackedKeyNotationHeader.jsff.source'}"
+                             id="gl5"/>
+                  <af:goLink
+                    text="Source - keyNotation/wrappedKeyNotationHeader.jsff"
+                    destination="keyNotation/wrappedKeyNotationHeader.jsff.source"
+                             id="gl6"/>
+                </af:panelList>
+              </af:panelHeader>
+            </af:panelGroupLayout>
+
+            <af:declarativeComponent
+              viewId="#{demoSkin.altaBased ? 'keyNotation/stackedKeyNotationHeaderAlta.jsff' : 'keyNotation/stackedKeyNotationHeader.jsff'}"
+              description="Panel header with a stacked key notation"
+              disclosedKey="stackedNotation" id="dc1"/>
+            <af:declarativeComponent
+              viewId="#{demoSkin.altaBased ? 'keyNotation/stackedKeyNotationHeaderAlta.jsff' : 'keyNotation/stackedKeyNotationHeader.jsff'}"
+              description="Panel header with a stacked key notation
+                and task stamps"
+              disclosedKey="stackedNotation" id="dc2">
+              <f:facet name="taskStamps">
+                <af:declarativeComponent
+                  viewId="headerLegend/component.jsff"
+                  pageStampType="taskStamp" id="dc3"/>
+              </f:facet>
+            </af:declarativeComponent>
+            <af:declarativeComponent
+              viewId="keyNotation/wrappedKeyNotationHeader.jsff"
+              description="Panel header with a wrapped key notation" id="dc4"/>
+            <af:panelHeader
+              text="Panel Header" id="ph3">
+              <f:facet name="help">
+                <af:panelFormLayout id="pfl1">
+                  <af:panelLabelAndMessage label="Label 1" id="plam1">
+                    <af:outputText value="Value 1" id="ot2"/>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="Description" id="plam2">
+                    <af:outputText value="This panel header illustrates
+                      the usage of a key notation in a content container"
+                                   id="ot3"/>
+                  </af:panelLabelAndMessage>
+                </af:panelFormLayout>
+              </f:facet>
+              <f:facet name="info">
+                <af:panelBox
+                  text="Key"
+                  showDisclosure="false"
+                  inlineStyle="text-align:left;" id="pb1">
+                  <af:panelGroupLayout
+                    layout="vertical"
+                    styleClass="AFStampContainer" id="pgl2">
+                    <f:facet name="separator">
+                      <af:spacer height="2" id="s4"/>
+                    </f:facet>
+                    <af:declarativeComponent
+                      viewId="keyNotation/iconKey.jsff"
+                      key="Milestones" id="dc5">
+                      <f:facet name="icon">
+                        <af:image source="keyNotation/milestones.gif" id="i1"/>
+                      </f:facet>
+                    </af:declarativeComponent>
+                    <af:declarativeComponent
+                      viewId="keyNotation/iconKey.jsff"
+                      key="Critical tasks" id="dc6">
+                      <f:facet name="icon">
+                        <af:image source="keyNotation/critical_tasks.gif"
+                                  id="i2"/>
+                      </f:facet>
+                    </af:declarativeComponent>
+                    <af:declarativeComponent
+                      viewId="keyNotation/iconKey.jsff"
+                      key="Linked tasks" id="dc7">
+                      <f:facet name="icon">
+                        <af:image source="keyNotation/linked_tasks.gif"
+                                  id="i3"/>
+                      </f:facet>
+                    </af:declarativeComponent>
+                    <af:declarativeComponent
+                      viewId="keyNotation/iconKey.jsff"
+                      key="Structural tasks" id="dc8">
+                      <f:facet name="icon">
+                        <af:image source="keyNotation/structural_tasks.gif"
+                                  id="i4"/>
+                      </f:facet>
+                    </af:declarativeComponent>
+                  </af:panelGroupLayout>
+                </af:panelBox>
+              </f:facet>
+            </af:panelHeader>
+            <af:group id="g1">
+              <af:popup id="popupDialog">
+                <af:dialog
+                  id="messageDialog"
+                  title="Currency Key"
+                  type="none" modal="false">
+                  <f:facet name="buttonBar">
+                    <af:commandButton text="Done" id="cb1">
+                      <af:clientListener method="closeParentDialog" type="action" />
+                    </af:commandButton>
+                  </f:facet>
+                  <af:panelGroupLayout
+                    layout="vertical"
+                    styleClass="AFStampContainer" id="pgl3">
+                    <f:facet name="separator">
+                      <af:spacer id="spdlg" height="9" rendered="#{demoSkin.altaBased}"/>
+                    </f:facet>
+                    <af:outputText value="AUD = Australian Dollar" id="ot4"/>
+                    <af:outputText value="CHF = Swiss Franc" id="ot5"/>
+                    <af:outputText value="CNY = Chinese Yuan" id="ot6"/>
+                    <af:outputText value="EUR = Euro" id="ot7"/>
+                    <af:outputText value="GBP = British Pound" id="ot8"/>
+                    <af:outputText value="INR = Indian Rupee" id="ot9"/>
+                    <af:outputText value="JPY = Japanese Yen" id="ot10"/>
+                    <af:outputText value="MXN = Mexican Peso" id="ot11"/>
+                    <af:outputText value="RUB = Russian Rouble" id="ot12"/>
+                    <af:outputText value="SGD = Singapore Dollar" id="ot13"/>
+                    <af:outputText value="USD = United States Dollar" id="ot14"/>
+                  </af:panelGroupLayout>
+                </af:dialog>
+              </af:popup>
+              <af:commandButton text="Show key notation in a dialog" id="cb2">
+                <af:showPopupBehavior popupId="popupDialog" triggerType="action" />
+              </af:commandButton>
+            </af:group>
+            <af:showDetail
+              id="themeExamples"
+              rendered="#{!demoSkin.altaBased}"
+              disclosed="true"
+              disclosedText="Themed examples"
+              undisclosedText="Show themed examples">
+              <af:panelGroupLayout
+                layout="scroll" id="pgl4">
+                <f:facet name="separator">
+                  <af:group id="separator2">
+                    <af:spacer id="sp3" height="8" />
+                    <af:separator id="s2" />
+                    <af:spacer id="sp4" height="8" />
+                  </af:group>
+                </f:facet>
+                <af:iterator
+                  id="themes"
+                  var="_theme"
+                  value="#{themeList}">
+                  <af:decorativeBox
+                    id="keyNotationBox"
+                    inlineStyle="height: 24ex;" styleClass="AFStretchWidth"
+                    theme="#{_theme}"
+                    rendered="#{_theme ne 'default'}">
+                    <f:facet name="center">
+                      <af:panelGroupLayout layout="scroll" id="pgl5">
+                        <af:declarativeComponent
+                          viewId="keyNotation/stackedKeyNotationHeader.jsff"
+                          description="Illustrating key notations in a #{_theme} themed
+                              decorative box with a stacked configuration"
+                          disclosedKey="#{_theme}" id="dc9">
+                          <f:facet name="taskStamps">
+                            <af:declarativeComponent
+                              viewId="headerLegend/component.jsff"
+                              pageStampType="taskStamp" id="dc10"/>
+                          </f:facet>
+                        </af:declarativeComponent>
+                        <af:declarativeComponent
+                          viewId="keyNotation/wrappedKeyNotationHeader.jsff"
+                          description="Illustrating key notations in a #{_theme} themed
+                              decorative box with a wrapped configuration"
+                                                 id="dc11"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:decorativeBox>
+                </af:iterator>
+              </af:panelGroupLayout>
+            </af:showDetail>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

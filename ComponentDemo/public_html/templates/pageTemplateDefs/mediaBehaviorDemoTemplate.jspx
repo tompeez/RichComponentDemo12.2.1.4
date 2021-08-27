@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>This three column layout only template is ideal for both a tablet in the landscape orientation and
+                     the desktop. It contains a top area that works well for a logo, product name, and navigation
+                     components. The left area also works well for navigation controls. Target the center area for the
+                     main content of the page. The right area can contain ancillary content. The content shown merely
+                     suggests what to add and where. It is not included with the template.</description>
+        <display-name>Tablet First Template</display-name>
+        <facet>
+          <facet-name>header</facet-name>
+        </facet>
+        <facet>
+          <facet-name>status</facet-name>
+        </facet>
+        <facet>
+          <facet-name>globalLinks</facet-name>
+        </facet>
+        <facet>
+          <facet-name>center</facet-name>
+        </facet>
+        <facet>
+          <facet-name>start</facet-name>
+        </facet>
+        <attribute>
+          <attribute-name>startWidth</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>170px</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:group id="grp1">
+      <af:resource type="css" source="/styles/tabletFirstTemplate.css"/>
+      <div id="mainArea" class="MainArea">
+        <div id="brandingContainer">
+          <af:panelGroupLayout layout="vertical" id="outerB" halign="center" styleClass="AFBrandingBar">
+            <af:panelSplitter id="pt_ps1" disabled="true"  styleClass="BrandingMaxWidth" orientation="horizontal"
+                              splitterPosition="360">
+              <af:matchMediaBehavior propertyName="orientation" matchedPropertyValue="vertical"
+                                 mediaQuery="screen and (max-width: 640px)"/>
+              <af:matchMediaBehavior propertyName="splitterPosition" matchedPropertyValue="34"
+                                 mediaQuery="screen and (max-width: 640px)"/>
+              <f:facet name="first">
+                <af:panelGroupLayout id="logo" layout="horizontal">
+                    <af:link id="logoLink" icon="/images/oracle_logo_lrg.png" action="index" shortDesc="Oracle Logo"
+                             styleClass="AFBrandingLogo"/>
+                    <af:panelGroupLayout id="title" layout="horizontal" styleClass="AFBrandingBarTitle">
+                      <af:facetRef facetName="header"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+              </f:facet>
+              <f:facet name="second">
+                <af:panelGroupLayout valign="middle" layout="horizontal" styleClass="AFBrandingBarItem" id="gllink"
+                                     inlineStyle="float:right">
+                    <af:facetRef facetName="globalLinks"/>
+                    <af:facetRef facetName="status"/>
+                    <af:statusIndicator styleClass="" id="status"/>
+                  </af:panelGroupLayout>
+              </f:facet>
+              
+            </af:panelSplitter>
+            <!--af:panelGridLayout id="branding" styleClass="BrandingMaxWidth" dimensionsFrom="auto"
+                                clientComponent="true">
+              <af:gridRow marginTop="0px" height="34px" id="pt_gr2">
+                <af:gridCell marginStart="20px" marginEnd="0px" width="auto" id="pt_gc4" halign="start" rowSpan="2">
+                  <af:panelGroupLayout id="logo" layout="horizontal">
+                    <af:link id="logoLink" icon="/images/oracle_logo_lrg.png" action="index" shortDesc="Oracle Logo"
+                             styleClass="AFBrandingLogo"/>
+                    <af:panelGroupLayout id="title" layout="horizontal" styleClass="AFBrandingBarTitle">
+                      <af:facetRef facetName="header"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:gridCell>
+                <af:gridCell marginStart="0px" width="50%" marginEnd="20px" id="pt_gc5" halign="end" valign="bottom">
+                  <af:panelGroupLayout valign="middle" layout="horizontal" styleClass="AFBrandingBarItem" id="gllink">
+                    <af:facetRef facetName="globalLinks"/>
+                    <af:facetRef facetName="status"/>
+                    <af:statusIndicator styleClass="" id="status"/>
+                  </af:panelGroupLayout>
+                </af:gridCell>
+              </af:gridRow>
+            </af:panelGridLayout-->
+          </af:panelGroupLayout>
+        </div>
+        <af:panelGroupLayout id="pt_pgl1"  layout="horizontal" halign="center" styleClass="BrandingMaxWidth">
+        <af:panelSplitter id="ps2" orientation="horizontal" clientComponent="true" splitterPosition="200"
+                          disabled="false">
+          <af:matchMediaBehavior propertyName="orientation" matchedPropertyValue="vertical"
+                                 mediaQuery="screen and (max-width: 768px)"/>
+          <af:matchMediaBehavior propertyName="splitterPosition" matchedPropertyValue="80"
+                                 mediaQuery="screen and (max-width: 768px)"/>
+          <af:matchMediaBehavior propertyName="splitterPosition" matchedPropertyValue="150"
+                                 mediaQuery="screen and (min-width: 769px) and (max-width: 1024px)"/>
+          <af:matchMediaBehavior propertyName="orientation" matchedPropertyValue="horizontal"
+                                 mediaQuery="screen and (min-width: 769px) and (max-width: 1024px)"/>
+          <f:facet name="first">
+            <af:facetRef facetName="start"/>
+          </f:facet>
+          <f:facet name="second">
+            <af:decorativeBox id="default" theme="default" dimensionsFrom="children">
+              <f:facet name="center">
+                <af:facetRef facetName="center"/>
+              </f:facet>
+            </af:decorativeBox>
+          </f:facet>
+        </af:panelSplitter>
+        </af:panelGroupLayout>
+      </div>
+    </af:group>
+  </af:pageTemplateDef>
+</jsp:root>

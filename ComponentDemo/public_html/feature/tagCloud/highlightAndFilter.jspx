@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Tag Cloud Highlight and Filter Demo" binding="#{templateBindings.documentComponent}"
+                 theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Tag Cloud Highlight and Filter Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Tag Cloud Highlight and Filter"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout topHeight="auto" bottomHeight="auto" endWidth="250px">
+            <f:facet name="top">
+              <!-- START TAG DEMO -->
+              <af:panelGroupLayout layout="vertical" id="pgl5">
+                <f:verbatim>                   <b>Demonstrates Tag Cloud highlight and Filter feaure using Census data</b>                   <ul>
+                    <li>
+                      Tag Cloud items can be grouped and colored using 
+                      <b>attribute groups</b>. Highlight and Filter features are used to interact with those attribute
+                                             groups.
+                    </li>
+                    <li>
+                      <b>Highlight:</b>
+                       Specifies the behavior when hovering over Tag Cloud or legend items.
+                    </li>
+                    <li>
+                      <b>Filter:</b>
+                       Specifies the filtering of Tag Cloud using legend items.
+                    </li>
+                  </ul>                                    </f:verbatim>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <!-- START FEATURE DEMO -->
+              <af:panelSplitter orientation="horizontal" dimensionsFrom="auto" splitterPosition="300"
+                                styleClass="AFStretchWidth" positionedFromEnd="true" id="psl1">
+                <f:facet name="first">
+                  <af:panelStretchLayout dimensionsFrom="parent" topHeight="auto" partialTriggers="dataSrc">
+                    <f:facet name="center">
+                      <af:panelGroupLayout clientComponent="true" styleClass="AFStretchWidth"
+                                           inlineStyle="border:1px solid #c4ced7;">
+                        <dvt:tagCloud id="tc1" value="#{tagCloudAttrGroups.model}" var="item"
+                                      hideAndShowBehavior="#{tagCloudAttrGroups.hideAndShowBehavior}"
+                                      hoverBehavior="#{tagCloudAttrGroups.hoverBehavior}" layout="cloud"
+                                      selectionMode="none" contentDelivery="whenAvailable"
+                                      legendSource="#{ tagCloudAttrGroups.legendSource ? 'ag2' : ''}"
+                                      inlineStyle="margin:auto;width:100%;height:400px;"
+                                      emptyText="#{tagCloudSample.emptyData}" partialTriggers="legId hsbId hoverId">
+                          <af:transition transition="auto" triggerType="display"/>
+                          <af:transition transition="auto" triggerType="dataChange"/>
+                          <dvt:tagCloudItem label="#{item.word}" value="#{item.frequency}" id="t2"
+                                            shortDesc="#{item.shortDesc}" inlineStyle="color:#FFAAFF;">
+                            <dvt:attributeGroups id="ag2" type="color"
+                                                 value="#{item.frequency > 5 ? 'High Population' : 'Low Population'}"
+                                                 label="#{item.frequency > 5 ? 'High Population' : 'Low Population'}">
+                              <dvt:attributeMatchRule group="Low Population">
+                                <f:attribute name="color" value="#267db3"/>
+                              </dvt:attributeMatchRule>
+                              <dvt:attributeMatchRule group="High Population">
+                                <f:attribute name="color" value="#ed6647"/>
+                              </dvt:attributeMatchRule>
+                              <dvt:attributeExceptionRule id="aer1" label="Alaska" condition="#{item.word == 'Alaska'}">
+                                <f:attribute name="color" value="#000000"/>
+                              </dvt:attributeExceptionRule>
+                            </dvt:attributeGroups>
+                          </dvt:tagCloudItem>
+                        </dvt:tagCloud>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+                <f:facet name="second">
+                  <af:group>
+                    <af:panelFormLayout inlineStyle="border:1px solid #c4ced7; padding:5px;" id="pflw1">
+                      <af:selectBooleanCheckbox label="Display Legend" value="#{tagCloudAttrGroups.legendSource}"
+                                                id="legId" autoSubmit="true"/>
+                      <af:selectOneChoice id="hoverId" label="Highlight behavior" autoSubmit="true"
+                                          value="#{tagCloudAttrGroups.hoverBehavior}">
+                        <af:selectItem value="none" label="none"/>
+                        <af:selectItem value="dim" label="dim"/>
+                      </af:selectOneChoice>
+                      <af:selectOneChoice id="hsbId" label="Filter behavior" autoSubmit="true"
+                                          value="#{tagCloudAttrGroups.hideAndShowBehavior}">
+                        <af:selectItem value="none" label="none"/>
+                        <af:selectItem value="auto" label="auto"/>
+                      </af:selectOneChoice>
+                    </af:panelFormLayout>
+                  </af:group>
+                </f:facet>
+              </af:panelSplitter>
+              <!-- END FEATURE DEMO -->
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

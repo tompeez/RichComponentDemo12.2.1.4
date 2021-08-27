@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Graph Animation Demo"
+                     binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Graph Animation Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Graph Animation"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:panelGroupLayout>
+                            <f:verbatim>
+                                <ul>
+                                    <li>Use the drop down menus to see a
+                                        specific animation effect. The
+                                        "AnimationOnDisplay" menu will PPR the
+                                        panelBox, while the
+                                        "AnimationOnDataChange" menu will PPR
+                                        the graph directly.</li>
+                                     
+                                    <li>Use the inputNumberSlider to change the
+                                        year of data that is displayed on the
+                                        graph.</li>
+                                     
+                                    <li>Use the selectOneRadio to change the
+                                        region whose sales are displayed on the
+                                        graph.</li>
+                                </ul>
+                            </f:verbatim>
+                        </af:panelGroupLayout>
+                        <af:group>
+                            <af:panelGroupLayout layout="horizontal">
+                                <af:selectOneChoice id="selDisplay"
+                                                    autoSubmit="true"
+                                                    label="AnimationOnDisplay"
+                                                    value="#{graphAnimationBean.display}">
+                                    <af:selectItem label="none"/>
+                                    <af:selectItem label="auto"/>
+                                    <af:selectItem label="alphaFade"/>
+                                    <af:selectItem label="conveyorFromLeft"/>
+                                    <af:selectItem label="conveyorFromRight"/>
+                                    <af:selectItem label="cubeToLeft"/>
+                                    <af:selectItem label="cubeToRight"/>
+                                    <af:selectItem label="flipLeft"/>
+                                    <af:selectItem label="flipRight"/>
+                                    <af:selectItem label="slideToLeft"/>
+                                    <af:selectItem label="slideToRight"/>
+                                    <af:selectItem label="transitionToLeft"/>
+                                    <af:selectItem label="transitionToRight"/>
+                                    <af:selectItem label="zoom"/>
+                                </af:selectOneChoice>
+                                <af:spacer width="20"/>
+                                <af:selectOneChoice id="selDataChange"
+                                                    autoSubmit="true"
+                                                    label="AnimationOnDataChange"
+                                                    value="#{graphAnimationBean.dataChange}">
+                                    <af:selectItem label="none"/>
+                                    <af:selectItem label="auto"/>
+                                    <af:selectItem label="alphaFade"/>
+                                    <af:selectItem label="conveyorFromLeft"/>
+                                    <af:selectItem label="conveyorFromRight"/>
+                                    <af:selectItem label="cubeToLeft"/>
+                                    <af:selectItem label="cubeToRight"/>
+                                    <af:selectItem label="flipLeft"/>
+                                    <af:selectItem label="flipRight"/>
+                                    <af:selectItem label="slideToLeft"/>
+                                    <af:selectItem label="slideToRight"/>
+                                    <af:selectItem label="transitionToLeft"/>
+                                    <af:selectItem label="transitionToRight"/>
+                                    <af:selectItem label="zoom"/>
+                                </af:selectOneChoice>
+                            </af:panelGroupLayout>
+                            <af:spacer height="10"/>
+                            <af:panelGroupLayout layout="horizontal">
+                                <af:panelBox text="Animated Graph"
+                                             id="graphContainer"
+                                             clientComponent="true"
+                                             partialTriggers="selDisplay"
+                                             showDisclosure="false">
+                                    <dvt:barGraph id="graph"
+                                                  subType="BAR_VERT_CLUST"
+                                                  
+                                                  value="#{graphAnimationBean.randomGraphData}"
+                                                  animationOnDataChange="#{graphAnimationBean.dataChange}"
+                                                  animationOnDisplay="#{graphAnimationBean.display}"
+                                                  partialTriggers="::selDataChange ::selYear ::selRegion"
+                                                  inlineStyle="width:400px;">
+                                        <dvt:graphTitle text="Sales by Product"/>
+                                        <dvt:graphSubtitle text="#{graphAnimationBean.subtitle}"/>
+                                        <dvt:graphFootnote text="#{graphAnimationBean.footnote}">
+                                            <dvt:graphFont bold="true"/>
+                                        </dvt:graphFootnote>
+                                        <dvt:legendArea rendered="false"/>
+                                        <dvt:y1Axis axisMaxValue="100"
+                                                    axisMaxAutoScaled="true"/>
+                                    </dvt:barGraph>
+                                </af:panelBox>
+                                <af:selectOneRadio id="selRegion"
+                                                   autoSubmit="true"
+                                                   value="#{graphAnimationBean.region}">
+                                    <af:selectItem label="All"/>
+                                    <af:selectItem label="APAC and Japan"/>
+                                    <af:selectItem label="EMEA"/>
+                                    <af:selectItem label="LAD"/>
+                                    <af:selectItem label="North America"/>
+                                </af:selectOneRadio>
+                            </af:panelGroupLayout>
+                            <af:inputNumberSlider id="selYear" minimum="2005"
+                                                  maximum="2010"
+                                                  autoSubmit="true"
+                                                  value="#{graphAnimationBean.year}"
+                                                  contentStyle="width:400px;"/>
+                        </af:group>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Tree Table Display Row Demo" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelStretchLayout id="pst" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:panelGroupLayout layout="vertical" inlineStyle="margin:10px"
+                                   id="pgl1">
+                <af:outputFormatted value="&lt;b>Tree Table Display Row Demo&lt;/b>"
+                                    id="of1"/>
+                <af:panelGroupLayout layout="horizontal" id="pgl2">
+                  <af:commandButton partialSubmit="true" id="firstBtn"
+                                    actionListener="#{treeTableTestData.showFirstRow}"
+                                    text="Show First Row"/>
+                  <af:commandButton partialSubmit="true" id="lastBtn"
+                                    actionListener="#{treeTableTestData.showLastRow}"
+                                    text="Show Last Row"/>
+                  <af:commandButton partialSubmit="true" id="selectedBtn"
+                                    actionListener="#{treeTableTestData.showSelectedRow}"
+                                    text="Show Selected Row"/>
+                  <af:inputText label="&#160;&#160;rowKey" contentStyle="width:50px" id="rowKeyValue"/>
+                  <af:commandButton partialSubmit="true" id="rowKeyBtn"
+                                    actionListener="#{treeTableTestData.showRowKey}" text="Show Row Key"/>
+                </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:treeTable var="node" inlineStyle="position:relative;width:90%; height:300px" summary="treeTable display row demo"
+                          id="displayRowTable" varStatus="vs" rowSelection="single"
+                          disclosedRowKeys="#{treeTableTestData.disclosedRowKeys}"
+                          partialTriggers="::firstBtn ::lastBtn ::selectedBtn ::rowKeyBtn"
+                          value="#{treeTableTestData.treeModel}">
+              <af:column width="80" rowHeader="true" headerText="RowKey" id="c1">
+                <af:outputText value="#{vs.model.rowKey}" id="ot1"/>
+              </af:column>
+              <f:facet name="nodeStamp">
+                <af:column headerText="Node Value" width="200" id="c2">
+                  <af:panelGroupLayout id="pgl3">
+                    <af:image source="#{node.icon}"
+                              inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                              id="i1"></af:image>
+                    <af:outputText value="#{node.value}" id="ot2"/>
+                  </af:panelGroupLayout>
+                </af:column>
+              </f:facet>
+              <f:facet name="pathStamp">
+                <af:panelGroupLayout id="pgl4">
+                  <af:image source="#{node.icon}" inlineStyle="vertical-align:middle;"
+                            id="i2"/>
+                  <af:outputFormatted value="&lt;b> #{node.value} &lt;/b>"
+                                      id="of2"/>
+                </af:panelGroupLayout>
+              </f:facet>
+              <af:column headerText="Timestamp" width="100" id="c3">
+                <af:outputText id="timestamp" value="#{node.timestamp}"/>
+              </af:column>
+              <af:column headerText="Col10" id="c4">
+                <af:commandButton partialTriggers="timestamp" partialSubmit="true" text="Click"
+                                  disabled="#{node.disabled}" actionListener="#{node.rowKeyTest}"
+                                  id="cb1">
+                  <af:setPropertyListener type="action" to="#{node.target}" from="#{node.src}"/>
+                </af:commandButton>
+              </af:column>
+            </af:treeTable>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

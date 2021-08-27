@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="CRITERION_UPDATE event Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="query"/>
+        <f:attribute name="visualDesignName" value="query"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="This demo page demonstrates the use of CRITERION_UPDATE
+            QueryOperationEvent. We have our custom listener attached to query component which
+            listen this event. You can see this by choosing 'System Search 4' form the Saved Search
+            Dropdown. When you change 'Show Salary', CRITERION_UPDATE event is queued. We catch
+            this event in our listner and hide/show the 'Salary' criterion."
+                           id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="25px" id="s2"/>
+              </f:facet>
+              <af:panelHeader text="Employees (header)" id="ph1">
+                <af:outputText value="This search panel can be used to search for Employees."
+                               id="ot2"/>
+                <f:facet name="toolbar">
+                  <af:toolbar id="t1">
+                    <af:commandToolbarButton icon="/images/new_ena.png" partialSubmit="true"
+                                             shortDesc="new" id="ctb1"/>
+                    <af:commandToolbarButton icon="/images/update_ena.png" partialSubmit="true"
+                                             shortDesc="update" id="ctb2"/>
+                    <af:commandToolbarButton icon="/images/delete_ena.png" partialSubmit="true"
+                                             shortDesc="delete" id="ctb3"/>
+                    <af:commandToolbarButton text="Cancel"/>
+                    <af:commandToolbarButton text="Actions"/>
+                    <af:commandToolbarButton text="Apply"/>
+                  </af:toolbar>
+                </f:facet>
+                <af:panelGroupLayout layout="vertical" id="pgl3">
+                  <af:query id="highSalariedClerksQueryId" rows="3" maxColumns="2"
+                            binding="#{editor.component}" headerText="Search" disclosed="true"
+                            queryOperationListener=
+                            "#{demoQuery.queryOperationListener.processQueryOperation}"
+                            resultComponentId="::resultTextId" value="#{demoQuery.queryDescriptor}"
+                            model="#{demoQuery.queryModel}" queryListener="#{demoQuery.processQuery}">
+                    <f:facet name="toolbar">
+                      <af:menuBar id="mb1">
+                        <af:menu text="My Menu" id="m2">
+                          <af:commandMenuItem text="Test Menu Item-1"
+                                        partialSubmit="false" id="cmi1"/>
+                          <af:commandMenuItem text="Test Menu Item-2"
+                                        partialSubmit="false" id="cmi2"/>
+                          <af:commandMenuItem text="Test Menu Item-3"
+                                        partialSubmit="false" id="cmi3"/>
+                       </af:menu>
+                     </af:menuBar>
+                     <!-- af:commandButton text="Test Button on query panel" action="http://www.oracle.com"/ -->
+                    </f:facet>
+                  </af:query>
+                </af:panelGroupLayout>
+              </af:panelHeader>
+              <af:outputText id="resultTextId" partialTriggers="highSalariedClerksQueryId"
+                             value="Query statement is as folows: #{demoQuery.sqlString}"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputText value="See also:" id="ot3"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem text="Query Demo"
+                                          destination="../query.jspx"
+                                          id="cni1"/>
+                <af:commandNavigationItem text="Demo that toggles between the query and quickQuery components."
+                                          destination="../queryToggle.jspx"
+                                          id="cni2"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

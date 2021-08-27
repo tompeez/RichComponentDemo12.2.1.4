@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Page Stamp Visual Design Demo" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.visualDesignTemplate}">
+        <f:attribute name="headerGlobalSize" value="45"/>
+        <f:attribute name="header1Size" value="22"/>
+        <f:attribute name="header2Size" value="20"/>
+        <f:attribute name="footer2Size" value="5"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:attribute name="auxiliaryGlobalSize" value="500"/>
+        <f:attribute name="auxiliary1StartSize" value="500"/>
+        <f:attribute name="auxiliary2Size" value="500"/>
+        <f:attribute name="auxiliaryGlobalCollapsed" value="true"/>
+        <f:attribute name="auxiliary1StartCollapsed" value="true"/>
+        <f:attribute name="auxiliary2Collapsed" value="true"/>
+        <f:facet name="branding">
+          <af:outputText value="Page Stamp Visual Design Demo" id="ot1"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:navigationPane hint="buttons" id="np1">
+            <af:commandNavigationItem destination="index.jspx" text="Visual Designs" id="vds"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/panelPageTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc">
+                <af:commandNavigationItem
+                  destination="index.jspx"
+                  text="Visual Designs" id="cni2"/>
+                <af:commandNavigationItem
+                  text="Page Stamp Visual Design Demo" id="cni3"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="navigation1">
+          <af:panelStretchLayout endWidth="40px" id="psl1">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation1" hint="tabs" id="np2">
+                <af:commandNavigationItem partialSubmit="true" text="Primary/Medium Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni4"></af:commandNavigationItem>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:panelStretchLayout endWidth="40px" id="psl2">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation2" hint="tabs" id="np3">
+                <af:commandNavigationItem partialSubmit="true" text="Secondary/Light Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni9"/>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+
+        <f:facet name="auxiliaryGlobal">
+          <af:panelGroupLayout layout="scroll">
+            <f:facet name="separator">
+              <af:separator/>
+            </f:facet>
+            <af:panelHeader text="Page Stamp - User Stamp">
+              <f:facet name="help">
+                <af:outputText value="User stamp is right justified"/>
+              </f:facet>
+              <f:facet name="legend">
+                <af:declarativeComponent viewId="headerLegend/component.jsff"
+                                         pageStampType="userStamp" />
+              </f:facet>
+            </af:panelHeader>
+
+            <af:panelHeader text="Page Stamp - Task Stamp" >
+              <f:facet name="help">
+                <af:outputText value="Task stamp is right justified"/>
+              </f:facet>
+              <f:facet name="legend">
+                <af:declarativeComponent viewId="headerLegend/component.jsff"
+                                         pageStampType="taskStamp" />
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbox >
+                  <af:toolbar >
+                    <af:commandToolbarButton icon="/images/new_ena.png" partialSubmit="true" shortDesc="new" />
+                    <af:commandToolbarButton icon="/images/update_ena.png" partialSubmit="true" shortDesc="update" />
+                    <af:commandToolbarButton icon="/images/delete_ena.png" partialSubmit="true" shortDesc="delete" />
+                    <af:commandToolbarButton text="Cancel" />
+                    <af:commandToolbarButton text="Actions" />
+                    <af:commandToolbarButton text="Apply" />
+                  </af:toolbar>
+                </af:toolbox>
+              </f:facet>
+
+            </af:panelHeader>
+
+          </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="auxiliary1Start">
+          <af:panelGroupLayout layout="scroll">
+            <f:facet name="separator">
+              <af:separator/>
+            </f:facet>
+            <af:panelHeader text="Page Stamp - User Stamp">
+              <f:facet name="help">
+                <af:outputText value="User stamp is right justified"/>
+              </f:facet>
+              <f:facet name="legend">
+                <af:declarativeComponent viewId="headerLegend/component.jsff"
+                                         pageStampType="userStamp" />
+              </f:facet>
+            </af:panelHeader>
+
+            <af:panelHeader text="Page Stamp - Task Stamp" >
+              <f:facet name="help">
+                <af:outputText value="Task stamp is right justified"/>
+              </f:facet>
+              <f:facet name="legend">
+                <af:declarativeComponent viewId="headerLegend/component.jsff"
+                                         pageStampType="taskStamp" />
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbox >
+                  <af:toolbar >
+                    <af:commandToolbarButton icon="/images/new_ena.png" partialSubmit="true" shortDesc="new" />
+                    <af:commandToolbarButton icon="/images/update_ena.png" partialSubmit="true" shortDesc="update" />
+                    <af:commandToolbarButton icon="/images/delete_ena.png" partialSubmit="true" shortDesc="delete" />
+                    <af:commandToolbarButton text="Cancel" />
+                    <af:commandToolbarButton text="Actions" />
+                    <af:commandToolbarButton text="Apply" />
+                  </af:toolbar>
+                </af:toolbox>
+              </f:facet>
+
+            </af:panelHeader>
+
+          </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="auxiliary2">
+          <af:panelGroupLayout layout="scroll">
+            <f:facet name="separator">
+              <af:separator/>
+            </f:facet>
+            <af:panelHeader text="Page Stamp - User Stamp">
+              <f:facet name="help">
+                <af:outputText value="User stamp is right justified"/>
+              </f:facet>
+              <f:facet name="legend">
+                <af:declarativeComponent viewId="headerLegend/component.jsff"
+                                         pageStampType="userStamp" />
+              </f:facet>
+            </af:panelHeader>
+            <af:panelHeader text="Page Stamp - Task Stamp" >
+              <f:facet name="help">
+                <af:outputText value="Task stamp is right justified"/>
+              </f:facet>
+              <f:facet name="legend">
+                <af:declarativeComponent viewId="headerLegend/component.jsff"
+                                         pageStampType="taskStamp" />
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbox >
+                  <af:toolbar >
+                    <af:commandToolbarButton icon="/images/new_ena.png" partialSubmit="true" shortDesc="new" />
+                    <af:commandToolbarButton icon="/images/update_ena.png" partialSubmit="true" shortDesc="update" />
+                    <af:commandToolbarButton icon="/images/delete_ena.png" partialSubmit="true" shortDesc="delete" />
+                    <af:commandToolbarButton text="Cancel" />
+                    <af:commandToolbarButton text="Actions" />
+                    <af:commandToolbarButton text="Apply" />
+                  </af:toolbar>
+                </af:toolbox>
+              </f:facet>
+
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll">
+            <f:facet name="separator">
+              <af:separator/>
+            </f:facet>
+
+              <af:panelHeader text="Information">
+                <af:outputText value="A page stamp is not its own component, but can be constructed using existing
+                      components. Here we demonstrate setting up basic page stamps (user stamp and task
+                      stamp) using the legend facet inside a panelHeader. Note that a panelHeader
+                      automatically formats the legend facet to be right justified when a help facet is
+                      present."/>
+              </af:panelHeader>
+
+              <af:panelHeader text="Page Stamp - User Stamp">
+                <f:facet name="help">
+                  <af:outputText value="User stamp is right justified"/>
+                </f:facet>
+                <f:facet name="legend">
+                  <af:declarativeComponent viewId="headerLegend/component.jsff"
+                                           pageStampType="userStamp" />
+                </f:facet>
+              </af:panelHeader>
+
+              <af:panelHeader text="Page Stamp - Task Stamp" >
+                <f:facet name="help">
+                  <af:outputText value="Task stamp is right justified"/>
+                </f:facet>
+                <f:facet name="legend">
+                  <af:declarativeComponent viewId="headerLegend/component.jsff"
+                                           pageStampType="taskStamp" />
+                </f:facet>
+                <f:facet name="toolbar">
+                  <af:toolbox >
+                    <af:toolbar >
+                      <af:commandToolbarButton icon="/images/new_ena.png" partialSubmit="true" shortDesc="new" />
+                      <af:commandToolbarButton icon="/images/update_ena.png" partialSubmit="true" shortDesc="update" />
+                      <af:commandToolbarButton icon="/images/delete_ena.png" partialSubmit="true" shortDesc="delete" />
+                      <af:commandToolbarButton text="Cancel" />
+                      <af:commandToolbarButton text="Actions" />
+                      <af:commandToolbarButton text="Apply" />
+                    </af:toolbar>
+                  </af:toolbox>
+                </f:facet>
+
+              </af:panelHeader>
+
+              <af:panelHeader text="Related Links">
+                <af:panelList>
+                  <af:goLink text="Visual Design - Headers" destination="headers.jspx"/>
+                  <af:goLink text="Visual Design - Key Notation" destination="keyNotation.jspx"/>
+                  <af:goLink text="Component - panelHeader" destination="/components/panelHeader.jspx"/>
+                  <af:goLink text="Component - navigationPane (hint = choice)" destination="/components/navigationPane.jspx"/>
+                  <af:goLink text="Component - selectOneChoice (mode = compact)" destination="/components/selectOneChoice.jspx"/>
+                  <af:goLink text="Source - headerLegend/component.jsff" destination="headerLegend/component.jsff.source"/>
+                </af:panelList>
+              </af:panelHeader>
+
+          </af:panelGroupLayout>
+        </f:facet>
+
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

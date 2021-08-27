@@ -1,0 +1,683 @@
+/** Copyright (c) 2008, Oracle and/or its affiliates. All rights reserved. */
+package oracle.adfdemo.view.components.rich;
+
+import java.awt.Color;
+
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+
+import java.lang.reflect.Method;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import java.util.Set;
+
+import javax.faces.component.UIComponent;
+
+import javax.faces.context.FacesContext;
+
+import oracle.adf.view.faces.bi.component.graph.CoreGraph;
+import oracle.adf.view.faces.bi.component.gauge.CoreGauge;
+import oracle.adf.view.rich.model.ListOfValuesModel;
+
+import org.apache.myfaces.trinidad.component.UIXTable;
+import org.apache.myfaces.trinidad.component.UIXTree;
+import org.apache.myfaces.trinidad.context.RequestContext;
+import org.apache.myfaces.trinidad.model.CollectionModel;
+import oracle.adfdemo.view.components.rich.tageditor.AttribInfo;
+import oracle.adfdemo.view.components.rich.tageditor.AttribParser;
+import oracle.adfdemo.view.components.rich.tageditor.EditorCache;
+
+public class ComponentEditorHandler
+{
+
+    
+  public String update()
+  {
+    UIComponent editedComponent = getComponent();
+    boolean rendered = editedComponent.isRendered();
+    List list = _list;
+    
+    if (list != null)
+    {
+      Iterator iter = list.iterator();
+      while (iter.hasNext())
+      {
+          Object object = iter.next();
+          ((PropertyOfComponent)object).flushToComponent();
+      }
+    }
+
+      RequestContext rc = RequestContext.getCurrentInstance();
+      // If we toggled rendered, we'd better toggle the parent
+      if (rendered != editedComponent.isRendered())
+          rc.addPartialTarget(editedComponent.getParent());
+      else
+          rc.addPartialTarget(editedComponent);
+
+    return null;
+  }
+
+  public void reinitialize()
+  {
+    _cachedComponent = null;
+    _javascriptShown = true;
+    _alternateComponentsChecked = false;
+    _list = null;
+  }
+
+  public void setComponent(UIComponent component)
+  {
+    _cachedComponent = component;
+  }
+
+  public UIComponent getComponent()
+  {      
+      FacesContext facesContext = FacesContext.getCurrentInstance();
+
+    if (_cachedComponent == null && !_alternateComponentsChecked)
+    {
+      // check the special use case if the document or the form should be used
+      // when the component has not been set
+
+
+
+      DemoTemplateBindings templateBindingsBean = (DemoTemplateBindings)
+        facesContext.getApplication().getELResolver().getValue(
+          facesContext.getELContext(), null, "templateBindings");
+
+      if (templateBindingsBean != null)
+      {
+        if (templateBindingsBean.isEditingDocument())
+        {
+          _cachedComponent = templateBindingsBean.getDocumentComponent();
+        }
+        else if (templateBindingsBean.isEditingForm())
+        {
+          _cachedComponent = templateBindingsBean.getFormComponent();
+        }
+      }
+      _alternateComponentsChecked = true;
+    }
+    return _cachedComponent;
+  }
+
+  public boolean isJavascriptShown()
+  {
+    return _javascriptShown;
+  }
+
+  public void setJavascriptShown(boolean javascriptShown)
+  {
+    _javascriptShown = javascriptShown;
+  }
+
+  public List getAttributes()
+  {
+    if (_list != null)
+      return _list;
+
+    UIComponent comp = getComponent();
+    if (comp == null)
+      return null;
+
+    List list = new ArrayList();
+    try
+    {
+      BeanInfo beanInfo = Introspector.getBeanInfo(comp.getClass());
+      PropertyDescriptor[] descriptors = beanInfo.getPropertyDescriptors();
+      for (int i = 0; i < descriptors.length; i++)
+      {
+        PropertyDescriptor descriptor = descriptors[i];
+        // "Write-only" properties - no go
+        if (descriptor.getReadMethod() == null)
+          continue;
+
+        PropertyOfComponent poc = null;
+
+        boolean readOnly = descriptor.getWriteMethod() == null;
+        if (readOnly)
+          continue;
+
+        boolean isPrivateAttribute = _isPrivateAttribute(comp, descriptor);
+        if (isPrivateAttribute)
+          continue;
+        
+        String className = comp.getClass().getName();
+        String name = descriptor.getName();
+
+        /* Commenting this out since it appears to work just fine and allowing editing of this will
+         * let the document component demo have an edit field for maximized and for title.
+         * If you need to suppress something else in particular, perhaps a special check for that
+         * should be used instead?
+        // For now, skip any attributes with ValueBindings
+        if (skipAttributeForValueBinding(comp, name))
+          continue;
+        */
+    
+        Class type = descriptor.getPropertyType();
+        String renderType = comp.getRendererType();
+        AttribInfo attributeInfo = null;
+
+
+          if ( poc == null ) {
+            if (type == String.class)
+            {
+              if (!isJavascriptShown() &&
+                  name.startsWith("on"))
+                continue;
+    
+                poc = new StringProperty(comp, descriptor);
+            }
+            else if ((type == Integer.class) ||
+                     (type == Integer.TYPE))
+            {
+                poc = new IntegerProperty(comp, descriptor);
+            }
+            else if(type == Number.class)
+            {
+              poc = new NumberProperty(comp, descriptor);
+            }
+            else if ((type == Boolean.class) ||
+                     (type == Boolean.TYPE))
+            {
+              poc = new BooleanProperty(comp, descriptor);
+            }
+            else if (type == Date.class)
+            {
+              poc = new DateProperty(comp, descriptor);
+            }
+            else if (type == Color.class)
+            {
+              poc = new ColorProperty(comp, descriptor);
+            }
+            else if (type == List.class)
+            {
+              poc = new ListProperty(comp, descriptor);
+            }
+            else if (type == Set.class)
+            {
+              poc = new SetProperty(comp, descriptor);
+            }
+            else if ((type == Character.class) ||
+                       (type == Character.TYPE))
+            {
+              poc = new CharacterProperty(comp, descriptor);
+            }
+            else if (type == Object.class)
+            {
+              if (!isJavascriptShown() && name.startsWith("on"))
+                continue;
+    
+              poc = new StringProperty(comp, descriptor);
+            }
+        }
+        
+        if (poc != null){
+          list.add(poc);
+        }
+      }
+
+      // Sort the list by property name
+      Collections.sort(list);
+
+      _list = list;
+
+      return list;
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
+  static public class PropertyOfComponent implements Comparable
+  {
+    public PropertyOfComponent(UIComponent component,
+                               PropertyDescriptor descriptor)
+    {
+      _component = component;
+      _descriptor = descriptor;
+    }
+
+    // Sort by the name of the property
+    public int compareTo(Object o)
+    {
+      PropertyOfComponent poc = (PropertyOfComponent) o;
+      return getLabelName().compareTo(poc.getLabelName());
+    }
+    public String getLabelName(){
+        if ( _labelName == null )
+            return getName();
+        else
+            return _labelName;
+    }
+    public void setLabelName(String name){
+        _labelName = name;
+    }
+
+    public void setName(String name){
+        _propertyMapKey = name;
+    }
+    public String getName()
+    {
+        if (_propertyMapKey == null)
+            return _descriptor.getName();
+        else
+            return _propertyMapKey;
+    }
+
+    public String getType()
+    {
+      return null;
+    }
+
+    public void flushToComponent()
+    {
+      if (_valueSet)
+        _component.getAttributes().put(getName(), _value);
+    }
+
+    protected Object getBeanProperty()
+    {
+      Method method = _descriptor.getReadMethod();
+      try
+      {
+        return method.invoke(_component);
+      }
+      catch (Exception e)
+      {
+        e.printStackTrace();
+      }
+
+      return getProperty();
+    }
+
+
+    protected Object getProperty()
+    {
+      return _component.getAttributes().get(getName());
+    }
+
+    protected void setProperty(Object value)
+    {
+      if ("".equals(value))
+        value = null;
+
+      _valueSet = true;
+      _value = value;
+    }
+    
+    public String getDefaultAttribValue() {
+        return _attribValues[0];
+    }
+
+    public String[] getAttribValues() {
+        return _attribValues;
+    }
+
+    public void setAttribValues(String[] attribValues) {
+        _attribValues = attribValues;
+    }
+
+    protected String[] _attribValues;
+    protected boolean _valueSet = false;
+    protected Object  _value    = null;
+    protected String _labelName = null;
+    protected String _propertyMapKey = null;
+    protected final PropertyDescriptor _descriptor;
+    protected final UIComponent        _component;
+  }
+
+  static public class IntegerProperty extends PropertyOfComponent
+  {
+    public IntegerProperty(UIComponent component, PropertyDescriptor descriptor)
+    {
+      super(component, descriptor);
+    }
+
+    public Integer getValue()
+    {
+      return (Integer) getProperty();
+    }
+
+    public void setValue(Integer i)
+    {
+      setProperty(i);
+    }
+
+    public String getType()
+    {
+      return "integer";
+    }
+  }
+  static public class NumberProperty extends PropertyOfComponent
+  {
+    public NumberProperty(UIComponent component, PropertyDescriptor descriptor)
+    {
+      super(component, descriptor);
+    }
+
+    public Number getValue()
+    {
+      return (Number) getProperty();
+    }
+
+    public void setValue(Number n)
+    {
+      setProperty(n);
+    }
+
+    public String getType()
+    {
+      return "number";
+    }
+  }
+    static public class CharacterProperty extends PropertyOfComponent
+    {
+      public CharacterProperty(UIComponent component, PropertyDescriptor descriptor)
+      {
+        super(component, descriptor);
+      }
+
+      public Character getValue()
+      {
+        return (Character) getProperty();
+      }
+
+      public void setValue(Character i)
+      {
+        setProperty(i);
+      }
+
+      public String getType()
+      {
+        return "character";
+      }
+    }
+
+
+  static public class DateProperty extends PropertyOfComponent
+  {
+    public DateProperty(UIComponent component, PropertyDescriptor descriptor)
+    {
+      super(component, descriptor);
+    }
+
+    public Date getValue()
+    {
+      return (Date) getProperty();
+    }
+
+    public void setValue(Date i)
+    {
+      setProperty(i);
+    }
+
+    public String getType()
+    {
+      return "date";
+    }
+  }
+
+  static public class ColorProperty extends PropertyOfComponent
+  {
+    public ColorProperty(UIComponent component, PropertyDescriptor descriptor)
+    {
+      super(component, descriptor);
+    }
+
+    public Color getValue()
+    {
+      return (Color) getProperty();
+    }
+
+    public void setValue(Color i)
+    {
+      setProperty(i);
+    }
+
+    public String getType()
+    {
+      return "color";
+    }
+  }
+
+  static public class ListProperty extends PropertyOfComponent
+  {
+    public ListProperty(UIComponent component, PropertyDescriptor descriptor)
+    {
+      super(component, descriptor);
+    }
+
+    public List getValue()
+    {
+      return (List) getProperty();
+    }
+
+    public void setValue(List i)
+    {
+      setProperty(i);
+    }
+
+    public String getType()
+    {
+      return "list";
+    }
+  }
+    static public class EnumSetProperty extends EnumProperty
+    {
+      public EnumSetProperty(UIComponent component, PropertyDescriptor descriptor)
+      {
+        super(component, descriptor);
+      }
+      
+        public Object getValue()
+        {
+          return getProperty();
+        }
+
+        public void setValue(Object s)
+        {
+          setProperty(s);
+        }
+        public void flushToComponent()
+        {
+            // Converts an arraylist of string to a string split by spaces
+            if (_valueSet){
+                
+                ArrayList list = (ArrayList)_value;
+                String finalString = "";
+                if (list!=null){
+                    for (int i = 0; i < list.size(); i++){
+                        String item = (String)list.get(i);
+                        if (i==0)
+                            finalString = item;
+                        else
+                            finalString = finalString + " " + item;
+                    }
+                }
+                _component.getAttributes().put(getName(), finalString);
+            }
+        }
+
+      public String getType()
+      {
+        return "enumSet";
+      }
+    }
+    static public class EnumSingleProperty extends EnumProperty
+    {
+      public EnumSingleProperty(UIComponent component, PropertyDescriptor descriptor)
+      {
+        super(component, descriptor);
+      }
+
+        public String getValue()
+        {
+          Object o = getProperty();
+          if (o == null)
+            return null;
+          return o.toString();
+        }
+
+        public void setValue(String s)
+        {
+          setProperty(s);
+        }
+    }
+    static public class EnumProperty extends PropertyOfComponent
+    {
+      public EnumProperty(UIComponent component, PropertyDescriptor descriptor)
+      {
+        super(component, descriptor);
+      }
+
+      public String getType()
+      {
+        return "enum";
+      }
+    }
+
+  static public class SetProperty extends PropertyOfComponent
+  {
+    public SetProperty(UIComponent component, PropertyDescriptor descriptor)
+    {
+      super(component, descriptor);
+    }
+
+    public Set getValue()
+    {
+      return (Set) getProperty();
+    }
+
+    public void setValue(Set i)
+    {
+      setProperty(i);
+    }
+
+    public String getType()
+    {
+      return "set";
+    }
+  }
+
+  static public class StringProperty extends PropertyOfComponent
+  {
+    public StringProperty(UIComponent component, PropertyDescriptor descriptor)
+    {
+      super(component, descriptor);
+    }
+
+    public String getValue()
+    {
+      Object o = getProperty();
+      if (o == null)
+        return null;
+      return o.toString();
+    }
+
+    public void setValue(String s)
+    {
+      setProperty(s);
+    }
+
+    public String getType()
+    {
+      return "string";
+    }
+  }
+
+
+
+  static public class BooleanProperty extends PropertyOfComponent
+  {
+    public BooleanProperty(UIComponent component, PropertyDescriptor descriptor)
+    {
+      super(component, descriptor);
+    }
+
+    public Boolean getValue()
+    {
+      return (Boolean) getBeanProperty();
+    }
+
+    public void setValue(Boolean b)
+    {
+      setProperty(b);
+    }
+
+    public String getType()
+    {
+      return "boolean";
+    }
+  }
+
+  /**
+   *
+   * @param comp the component that provides attribute for testing
+   * @param name attribute name
+   * @return true if the attribute should be skipped due to value binding, false
+   * otherwise.
+   */
+  protected boolean skipAttributeForValueBinding(UIComponent comp, String name)
+  {
+    return comp.getValueExpression(name) != null;
+  }
+
+  /**
+   * Check if the given property is private and should be skipped.
+   * @param component the component that provides attribute for testing
+   * @param descriptor component porperty descriptor
+   * @return true if the attribute is private and should be skipped
+   */
+  private boolean _isPrivateAttribute(UIComponent component, PropertyDescriptor descriptor)
+  {
+    // We do not want to display CollectionModel or Collection attributes because cases like
+    // the table demo will insert the entire data records in the input field, making the page
+    // huge and slow.
+    Class type = descriptor.getPropertyType();
+    if (type == Object.class)
+    {
+      Object value = component.getAttributes().get(descriptor.getName());
+      if ((value instanceof CollectionModel) || (value instanceof Collection))
+        return true;
+    }
+    
+    if (component instanceof UIXTable || component instanceof UIXTree)
+    {
+      String name = descriptor.getName();
+      if (name.equals("scrollTop") || name.equals("scrollLeft") || name.equals("scrollTopRowKey"))
+        return true;
+    }
+    
+    
+    return false;
+    
+  }
+  
+  // Tests whether the specified component is a partial target parent - ie.
+  // whether the specified parent component should be used as the partial
+  // target in place of the edited component.
+  private boolean _isPartialTargetParent(UIComponent component)
+  {
+    // We use the bonus "partialTargetParent" attribute to mark partial
+    // target parents.
+    return "true".equals(component.getAttributes().get("partialTargetParent"));
+  }
+  private UIComponent _cachedComponent;
+  private boolean     _javascriptShown = true;
+  private boolean     _alternateComponentsChecked = false;
+  private List        _list;
+  private EditorCache _editorCache = null;
+  private AttribParser _attribParser = null;
+  
+}

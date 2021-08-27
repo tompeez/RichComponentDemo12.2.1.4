@@ -1,0 +1,315 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="ClickListener Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="ClickListener Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="ClickListener Demo"/>
+                <f:facet name="center">
+                    <af:group id="g1">
+                        <af:panelGroupLayout layout="vertical" id="pgl6">
+                            <af:outputText value="Hover items in the graph to see onMouseOver interactivity." id="ot3"/>
+                            <af:outputText value="Click on items in the graph to demonstrate clickListener interactivity.  The clickListener will update the table with information about the click."
+                                           id="ot2"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="horizontal" id="pgl5">
+                            <af:panelGroupLayout layout="vertical" partialTriggers="graphTypeChoice" id="pgl4">
+                                <dvt:barGraph shortDesc="Graph" id="barGraph1" partialTriggers="::graphTypeChoice"
+                                              clickListener="#{clickListener.processClick}"
+                                              binding="#{clickListener.barGraph}"
+                                              rendered="#{clickListener.barVisible}">
+                                    <dvt:annotationSet>
+                                        <dvt:annotation series="0" group="1" text="Annotation"/>
+                                    </dvt:annotationSet>
+                                    <dvt:y1Title text="Y1 Axis Title"/>
+                                    <dvt:graphTitle text="Bar Graph"/>
+                                    <dvt:o1Title text="O1 Axis Tilte"/>
+                                    <dvt:shapeAttributesSet id="graphShapeAttrSet">
+                                        <dvt:shapeAttributes component="GRAPH_LEGENDMARKER" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_LEGENDTEXT" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_ANNOTATION" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes clickable="true" component="GRAPH_Y1TICKLABEL"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_Y1TITLE" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_O1TITLE" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_O1TICKLABEL"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             clickable="true"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <!-- Can't seem to mouse over a 2-d marker -->
+                                        <dvt:shapeAttributes component="GRAPH_TWODMARKER"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             clickable="true"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                    </dvt:shapeAttributesSet>
+                                    <dvt:graphPlotArea/>
+                                </dvt:barGraph>
+                                <dvt:stockGraph shortDesc="Graph" id="stockGraph1" partialTriggers="::graphTypeChoice"
+                                                subType="STOCK_OHLC_CANDLE_VOLUME"
+                                                clickListener="#{clickListener.processClick}"
+                                                binding="#{clickListener.stockGraph}"
+                                                rendered="#{clickListener.stockVisible}">
+                                    <dvt:y1Title text="Y1 Axis Title"/>
+                                    <dvt:graphTitle text="Stock Graph"/>
+                                    <dvt:o1Title text="O1 Axis Tilte"/>
+                                    <dvt:shapeAttributesSet id="graphShapeAttrSet5">
+                                        <dvt:shapeAttributes component="GRAPH_LEGENDMARKER" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_LEGENDTEXT" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes clickable="true" component="GRAPH_Y1TICKLABEL"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_Y1TITLE" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_O1TITLE" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_O1TICKLABEL"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             clickable="true"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <!-- Can't seem to mouse over a 2-d marker -->
+                                        <dvt:shapeAttributes component="GRAPH_STOCKMARKER"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             clickable="true"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_VOLUMEMARKER"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             clickable="true"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                    </dvt:shapeAttributesSet>
+                                    <dvt:graphPlotArea/>
+                                </dvt:stockGraph>
+                                <dvt:lineGraph shortDesc="Graph" id="lineGraph1"
+                                               clickListener="#{clickListener.processClick}"
+                                               rendered="#{clickListener.lineVisible}"
+                                               binding="#{clickListener.lineGraph}" partialTriggers="::graphTypeChoice">
+                                    <dvt:y1Title text="Y1 Axis Title"/>
+                                    <dvt:graphTitle text="Line Graph"/>
+                                    <dvt:o1Title text="O1 Axis Tilte"/>
+                                    <!-- No way to easily show the markers on a line graph
+                <dvt:seriesSet defaultMarkerType="MT_MARKER"
+                               defaultMarkerShape="MS_CIRCLE">
+                  <dvt:series markerShape="MS_DIAMOND" markerType="MT_MARKER"/>
+                </dvt:seriesSet>
+                -->
+                                    <dvt:shapeAttributesSet id="shapeAttributesSet1">
+                                        <dvt:shapeAttributes component="GRAPH_LEGENDMARKER" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_LEGENDTEXT" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes clickable="true" component="GRAPH_Y1TICKLABEL"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_Y1TITLE" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_O1TITLE" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_O1TICKLABEL"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             clickable="true"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <!-- Can't seem to mouse over a dataline, or to click on a data marker -->
+                                        <dvt:shapeAttributes component="GRAPH_DATALINE" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_DATAMARKER" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                    </dvt:shapeAttributesSet>
+                                </dvt:lineGraph>
+                                <dvt:pieGraph shortDesc="Graph" id="pieGraph1" subType="PIE"
+                                              clickListener="#{clickListener.processClick}"
+                                              binding="#{clickListener.pieGraph}" partialTriggers="::graphTypeChoice"
+                                              rendered="#{clickListener.pieVisible}">
+                                    <dvt:graphTitle text="Pie Graph"/>
+                                    <dvt:background>
+                                        <dvt:specialEffects/>
+                                    </dvt:background>
+                                    <dvt:graphPieFrame/>
+                                    <dvt:seriesSet>
+                                        <dvt:series/>
+                                    </dvt:seriesSet>
+                                    <dvt:sliceLabel textType="LD_TEXT_PERCENT"/>
+                                    <dvt:pieLabel rendered="true"/>
+                                    <dvt:legendArea automaticPlacement="AP_NEVER"/>
+                                    <dvt:shapeAttributesSet id="shapeAttributesSet2">
+                                        <dvt:shapeAttributes component="GRAPH_LEGENDMARKER" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_LEGENDTEXT" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes clickable="true" component="GRAPH_PIELABEL"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_SLICE" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_SLICELABEL" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                    </dvt:shapeAttributesSet>
+                                </dvt:pieGraph>
+                                <dvt:bubbleGraph shortDesc="Graph" id="bubbleGraph1" subType="BUBBLE"
+                                                 clickListener="#{clickListener.processClick}"
+                                                 binding="#{clickListener.bubbleGraph}"
+                                                 partialTriggers="::graphTypeChoice"
+                                                 rendered="#{clickListener.bubbleVisible}">
+                                    <dvt:graphTitle text="Bubble Graph"/>
+                                    <dvt:background>
+                                        <dvt:specialEffects/>
+                                    </dvt:background>
+                                    <dvt:graphPlotArea/>
+                                    <dvt:seriesSet>
+                                        <dvt:series/>
+                                    </dvt:seriesSet>
+                                    <dvt:x1Axis/>
+                                    <dvt:y1Axis/>
+                                    <dvt:annotationSet>
+                                        <dvt:annotation position="absolute" xValue="25" yValue="20"
+                                                        horizontalAlignment="LEFT" verticalAlignment="TOP"
+                                                        text="Top-Left aligned at (25,20)"/>
+                                    </dvt:annotationSet>
+                                    <dvt:legendArea automaticPlacement="AP_NEVER"/>
+                                    <dvt:shapeAttributesSet id="shapeAttributesSet3">
+                                        <dvt:shapeAttributes component="GRAPH_LEGENDMARKER" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_LEGENDTEXT" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_ANNOTATION" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes clickable="true" component="GRAPH_Y1TICKLABEL"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_Y1TITLE" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_X1TITLE" clickable="true"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_X1TICKLABEL"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             clickable="true"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                        <dvt:shapeAttributes component="GRAPH_DATAMARKER"
+                                                             clickListener="#{clickListener.processClick}"
+                                                             clickable="true"
+                                                             onMouseOver="#{clickListener.processMouseOver}"/>
+                                    </dvt:shapeAttributesSet>
+                                </dvt:bubbleGraph>
+                                <af:selectOneChoice label="Graph Type" value="#{clickListener.graphType}"
+                                                    autoSubmit="true" id="graphTypeChoice">
+                                    <af:selectItem label="Bar" value="17" id="si4"/>
+                                    <af:selectItem label="Line" value="41" id="si3"/>
+                                    <af:selectItem label="Pie" value="55" id="si2"/>
+                                    <af:selectItem label="Bubble" value="89" id="si1"/>
+                                    <af:selectItem label="Stock" value="71" id="si5"/>
+                                </af:selectOneChoice>
+                                <af:outputText id="outputText" value="#{clickListener.text}"
+                                               partialTriggers="barGraph1 lineGraph1 pieGraph1 bubbleGraph1 clearTableBtn"/>
+                                <div id="mouseEventTextArea">Mouse-over events recorded here</div>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout layout="vertical" id="pgl3">
+                                <af:table summary="Table" value="#{clickListener.eventQueue}" var="row"
+                                          partialTriggers="::barGraph1 ::lineGraph1 ::pieGraph1 ::bubbleGraph1 ::clearTableBtn"
+                                          displayRow="last" width="400" binding="#{clickListener.table}" id="t1">
+                                    <af:column headerText="Timestamp" width="150" id="timestamp_column"
+                                               rowHeader="true">
+                                        <af:outputText value="#{row.date}" id="timestamp_text"/>
+                                    </af:column>
+                                    <af:column sortable="false" headerText="I D" width="225" id="text_column"
+                                               minimumWidth="12">
+                                        <af:popup id="noteWindow" contentDelivery="lazyUncached" eventContext="launcher"
+                                                  launcherVar="source">
+                                            <af:noteWindow id="nw1">
+                                                <af:outputFormatted value="#{row.value}" id="of2"/>
+                                            </af:noteWindow>
+                                        </af:popup>
+                                        <af:outputText value="#{row.ID}" id="text">
+                                            <af:showPopupBehavior popupId="noteWindow" triggerType="mouseOver"
+                                                                  alignId="text"/>
+                                        </af:outputText>
+                                        <af:showDetail disclosed="#{clickListener.expanded}" id="sd1">
+                                            <af:outputFormatted value="#{row.value}" inlineStyle="height:1000px"
+                                                                id="of1"/>
+                                        </af:showDetail>
+                                    </af:column>
+                                    <!--  The plus sign icon does not render in the detailStamp
+                      No visual cue is provided to indicate that a row can
+                      be expanded.  This is likely due to a bug in the css 
+                <f:facet name="detailStamp">
+                  <af:group>
+                    <af:outputFormatted value="#{row.value}"
+                                        inlineStyle="height:1000px"/>
+                  </af:group>
+                </f:facet>
+                -->
+                                </af:table>
+                                <af:commandButton text="Clear table" actionListener="#{clickListener.clearTable}"
+                                                  partialSubmit="true" id="clearTableBtn"/>
+                                <af:outputText value="Hover over the text in the ID column or click on '+' to get more detail."
+                                               id="ot1"/>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="horizontal" partialTriggers="graphTypeChoice" id="pgl1">
+                            <f:facet name="separator">
+                                <af:separator id="s1"/>
+                            </f:facet>
+                        </af:panelGroupLayout>
+                        <p>&amp;nbsp;</p>
+                        <af:panelGroupLayout layout="vertical" id="pgl2"></af:panelGroupLayout>
+                    </af:group>
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                    <af:panelGroupLayout layout="scroll">
+                        <af:outputText value="See also:"/>
+                        <af:panelList id="pl1">
+                            <af:goLink text="Click Listener Backing Bean"
+                                       destination="/resources/sourceCode/feature/rich/graph/ClickListener.javasource"
+                                       id="gl1"/>
+                        </af:panelList>
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

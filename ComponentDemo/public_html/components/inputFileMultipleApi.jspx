@@ -1,0 +1,282 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:trh="http://myfaces.apache.org/trinidad/html" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="inputFile Multiple Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}" largeIconSource="#{aboutBean.largeIconSource}"
+                 theme="dark" id="d1">
+      <af:resource type="javascript">
+        function progressEventFunction(progressEvent)
+        {
+          var percentComp = AdfPage.PAGE.findComponent("dmoTpl:cidp1");
+          percentComp.setValue(progressEvent.getPercentComplete() + "%");
+        };
+
+        function statusEventFunction(statusEvent)
+        {
+          if (statusEvent.getOperation() == AdfFileUploadManager.OPERATION_UPLOAD &amp;&amp; statusEvent.getStatus() == AdfFileUploadManager.EVENT_STATUS_COMPLETE)
+          {
+            if (statusEvent.getFileItem().isSuccess())
+            {
+              var statusComp = AdfPage.PAGE.findComponent("dmoTpl:cidst1");
+              statusComp.setValue("Complete");
+            }
+          }
+        };
+
+        function stateEventFunction(stateEvent)
+        {
+          var inputFileMultiComp = AdfPage.PAGE.findComponent("dmoTpl:testid");
+          if (stateEvent.getOperationSource() == AdfFileUploadManager.EVENT_SOURCE_FALLBACK &amp;&amp; stateEvent.getStatus() == AdfFileUploadManager.EVENT_STATUS_COMPLETE)
+          {
+            // if we are in fallback mode then hide the input element
+            hideInputFile();
+          }
+          else if (stateEvent.getOperation() == AdfFileUploadManager.OPERATION_ADDED &amp;&amp; stateEvent.getOperationSource() == AdfFileUploadManager.EVENT_SOURCE_QUEUE)
+          {
+            if (stateEvent.getMessage() != null)
+            {
+              var facesMessage = stateEvent.getMessage();
+              AdfPage.PAGE.addMessage(null, facesMessage);
+              return;
+            }
+            // first clear out the rest of the files in queue since we are only going to support single file upload in this custom UI
+            var uploadQueue = inputFileMultiComp.getFileUploadManager().getFileUploadQueue();
+            var filename = uploadQueue.item(uploadQueue.length - 1).getFilename();
+            var removeFilenameList = new Array();
+            for (var i = 0;i &lt; uploadQueue.length;i++)
+            {
+              if (uploadQueue.item(i).getFilename() != filename)
+              {
+                removeFilenameList.push(uploadQueue.item(i).getFilename());
+              }
+            }
+            for (var i = 0;i &lt; removeFilenameList.length;i++)
+            {
+              inputFileMultiComp.getFileUploadManager().deleteFileFromQueue(removeFilenameList[i]);
+            }
+            var nameComp = AdfPage.PAGE.findComponent("dmoTpl:cidn1");
+            var sizeComp = AdfPage.PAGE.findComponent("dmoTpl:cids1");
+            nameComp.setValue(uploadQueue.item(0).getFilename());
+            if (uploadQueue.item(0).getFilesize() != null)
+              sizeComp.setValue(uploadQueue.item(0).getFilesize().toString());
+            var statusComp = AdfPage.PAGE.findComponent("dmoTpl:cidst1");
+            var percentComp = AdfPage.PAGE.findComponent("dmoTpl:cidp1");
+            statusComp.setValue("");
+            percentComp.setValue("");
+          }
+        };
+
+        function inputNodeListener(domEvent)
+        {
+          var agent = AdfAgent.AGENT
+          var inputFileMultiComp = AdfPage.PAGE.findComponent("dmoTpl:testid");
+          var inputNode = agent.getElementById("dmoTpl:cidf1");
+          inputFileMultiComp.getFileUploadManager().addFileToQueue(inputNode);
+          resetInputFile(inputNode);
+        }
+
+        function initCustomInputFile()
+        {
+          var agent = AdfAgent.AGENT;
+          var inputFileMultiComp = AdfPage.PAGE.findComponent("dmoTpl:testid");
+
+          if (!inputFileMultiComp)
+          {
+            setTimeout("initCustomInputFile()", 500);
+            return;
+          }
+
+          clearQueue(null);
+          clearEventListeners();
+
+          var inputNode = agent.getElementById("dmoTpl:cidf1");
+          agent.addBubbleEventListener(inputNode, "change", inputNodeListener);
+
+          inputFileMultiComp.getFileUploadManager().addEventListener(AdfFileUploadManager.EVENT_TYPE_PROGRESS, progressEventFunction);
+          inputFileMultiComp.getFileUploadManager().addEventListener(AdfFileUploadManager.EVENT_TYPE_STATUS, statusEventFunction);
+          inputFileMultiComp.getFileUploadManager().addEventListener(AdfFileUploadManager.EVENT_TYPE_STATE, stateEventFunction);
+        }
+
+        function uploadClick(event)
+        {
+          var inputFileMultiComp = AdfPage.PAGE.findComponent("dmoTpl:testid");
+          var descComp = AdfPage.PAGE.findComponent("dmoTpl:cidd1");
+          if (descComp.getValue() != null)
+          {
+            var uploadQueue = inputFileMultiComp.getFileUploadManager().getFileUploadQueue();
+            if (uploadQueue.length &gt; 0)
+            {
+              var filename = uploadQueue.item(0).getFilename();
+              inputFileMultiComp.getFileUploadManager().setFileProperty(filename, "description", descComp.getValue());
+            }
+          }
+          inputFileMultiComp.getFileUploadManager().uploadAllFilesFromQueue();
+        }
+
+        function clearQueue(event)
+        {
+          var inputFileMultiComp = AdfPage.PAGE.findComponent("dmoTpl:testid");
+          var nameComp = AdfPage.PAGE.findComponent("dmoTpl:cidn1");
+          var sizeComp = AdfPage.PAGE.findComponent("dmoTpl:cids1");
+          var descComp = AdfPage.PAGE.findComponent("dmoTpl:cidd1");
+          var statusComp = AdfPage.PAGE.findComponent("dmoTpl:cidst1");
+          var percentComp = AdfPage.PAGE.findComponent("dmoTpl:cidp1");
+          var uploadQueue = inputFileMultiComp.getFileUploadManager().getFileUploadQueue();
+          while (uploadQueue.length &gt; 0)
+          {
+            inputFileMultiComp.getFileUploadManager().deleteFileFromQueue(uploadQueue.item(0).getFilename());
+          }
+          descComp.setValue("");
+          nameComp.setValue("");
+          sizeComp.setValue("");
+          statusComp.setValue("");
+          percentComp.setValue("");
+        }
+
+        function clearEventListeners()
+        {
+          var agent = AdfAgent.AGENT;
+          var inputFileMultiComp = AdfPage.PAGE.findComponent("dmoTpl:testid");
+          inputFileMultiComp.getFileUploadManager().removeEventListener(AdfFileUploadManager.EVENT_TYPE_PROGRESS, progressEventFunction);
+          inputFileMultiComp.getFileUploadManager().removeEventListener(AdfFileUploadManager.EVENT_TYPE_STATUS, statusEventFunction);
+          inputFileMultiComp.getFileUploadManager().removeEventListener(AdfFileUploadManager.EVENT_TYPE_STATE, stateEventFunction);
+          
+          var inputNode = agent.getElementById("dmoTpl:cidf1");
+          agent.removeBubbleEventListener(inputNode, "change", inputNodeListener);
+        }
+
+        function resetInputFile(node)
+        {
+          var agent = AdfAgent.AGENT;
+          agent.setAttribute(node, "value", "");
+          var domDocument = AdfPage.PAGE.getDomDocument();
+          var newNode = domDocument.createElement(node.nodeName);
+          for (var i = 0;i &lt; node.attributes.length;i++)
+          {
+            var attribute = node.attributes[i];
+            if (attribute.name != "value" &amp;&amp; attribute.specified)
+            {
+              agent.setAttribute(newNode, attribute.name, attribute.value);
+            }
+          }
+          agent.addBubbleEventListener(newNode, "change", inputNodeListener);
+          var parentNode = node.parentNode;
+          if (parentNode)
+          {
+            parentNode.removeChild(node);
+            parentNode.appendChild(newNode);
+          }
+          agent.elementsRemoved(node);
+          agent.elementsAdded(newNode);
+        }
+        
+        function hideInputFile()
+        {
+          // this is used to hide the input element when
+          // in fallback mode. In fallback mode the drop area
+          // displays an input element so there is not need for ours.
+          var agent = AdfAgent.AGENT;
+          var inputNode = agent.getElementById("dmoTpl:cidf1");
+          inputNode.style.display = "none";
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputFile"/>
+        <f:attribute name="usesUpload" value="true"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes"
+                     value="Warning: attempting to stretch an inputFile is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This is a demo for a custom file upload UI which utilizes the inputFile file upload JS APIs.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="sp6"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:panelGroupLayout layout="vertical" id="pglC">
+            <af:table value="#{demoFile.fileList}" var="row" rowBandingInterval="0" id="t1" partialTriggers="testid"
+                      width="500px" columnSelection="multiple">
+              <af:column sortable="false" headerText="Filename" align="start" id="c1" width="200px">
+                <af:outputText value="#{row.filename}" id="ot1"/>
+              </af:column>
+              <af:column sortable="false" headerText="Description" align="start" id="c2" width="200px">
+                <af:outputText value="#{row.description}" id="ot2"/>
+              </af:column>
+              <af:column sortable="false" headerText="Length" align="end" id="c3" width="80px">
+                <af:outputText value="#{row.length}" id="ot3"/>
+              </af:column>
+            </af:table>
+            <af:spacer height="5px" id="sp4"/>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>Select a file and then click Upload. After upload has completed the file will be submitted to the JSF lifecycle and will show up the table above. The demo UI supports single file upload but the APIs can also be used to do multi file uploads.&lt;/b>"
+                                id="of2"/>
+            <af:spacer height="5px" id="sp5"/>
+            <af:separator id="s1"/>
+            <af:inputFile binding="#{editor.component}" id="testid" immediate="true" maximumFiles="-1"
+                          valueChangeListener="#{demoFile.fileUpdate}" displayMode="dropArea" uploadType="manual"
+                          contentStyle="width:200px; height:100px">
+              <af:clientListener method="initCustomInputFile()" type="propertyChange"/>
+            </af:inputFile>
+            <af:panelFormLayout maxColumns="2" rows="1">
+              <input type="file" id="dmoTpl:cidf1"/>
+              <af:inputText clientComponent="true" id="cidd1" label="Please Enter a Description"/>
+            </af:panelFormLayout>
+            <af:spacer height="5px" id="sp7"/>
+            <af:separator id="s2"/>
+            <af:panelFormLayout maxColumns="2" rows="2">
+              <af:panelLabelAndMessage for="cidn1" label="Filename:" id="plm1">
+                <af:outputText clientComponent="true" id="cidn1"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage for="cids1" label="Filesize:" id="plm2">
+                <af:outputText clientComponent="true" id="cids1"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage for="cidp1" label="% Complete:" id="plm3">
+                <af:outputText clientComponent="true" id="cidp1"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage for="cidst1" label="Status:" id="plm4">
+                <af:outputText clientComponent="true" id="cidst1"/>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+            <af:separator id="s5"/>
+            <af:panelFormLayout maxColumns="2" rows="1">
+              <af:goButton id="cup1" text="Upload">
+                <af:clientListener method="uploadClick" type="click"/>
+              </af:goButton>
+              <af:spacer height="2px" id="sp10"/>
+              <af:goButton id="cl1" text="Clear">
+                <af:clientListener method="clearQueue" type="click"/>
+              </af:goButton>
+            </af:panelFormLayout>
+            <af:spacer height="5px" id="sp3"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s3"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <af:commandButton partialSubmit="true" id="richCommand"
+                                text="partial postback"/>
+              <af:spacer height="5px" id="s11"/>
+              <af:commandButton text="Submit" id="cb1"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl7"></af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>
+

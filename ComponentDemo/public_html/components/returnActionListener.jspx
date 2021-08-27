@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="returnActionListener Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="resetActionListener"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="behavior"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="This is a demo page for the returnActionListener. The returnActionListener is used in the dialog page.
+            Calling returnActionListener is a declarative way to call AdfFacesContext.returnFromDialog(). You can pass back values
+            out of the dialog into the main page using returnActionListener.
+            " id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="25px" id="s2"/>
+              </f:facet>
+              <af:inputText label="Total:" value="" id="inputTextId"
+                            binding="#{launchRALDialog.input}">
+                <af:convertNumber integerOnly="true" messageDetailConvertNumber="Not a valid integer"/>
+              </af:inputText>
+              <!-- dialog:returnActionListener will launch the dialog for this demo automatically -->
+              <!-- set useWindow to true. when used in conjunction with the dialog: action,
+              ADF Faces know to launch the pages in popup dialog -->
+              <!-- the returnListener takes a ReturnEvent object. This object contains information
+              that is set in the returnActionListener tag in the dialog. This way the main
+              page can use that information via the returnListener method.
+              In this demo the returnListener method sets the inputText's value based on the
+              information in the ReturnEvent. -->
+
+              <af:commandButton text="Launch Dialog to Add Numbers"
+                                action="dialog:returnActionListener"
+                                partialSubmit="true" useWindow="true"
+                                windowWidth="250" windowHeight="250"
+                                launchListener="#{launchRALDialog.addParameter}"
+                                returnListener="#{launchRALDialog.returned}"
+                                id="cb1"/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

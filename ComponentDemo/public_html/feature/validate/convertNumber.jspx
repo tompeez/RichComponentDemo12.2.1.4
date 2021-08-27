@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="convertNumber Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="convertNumber"/>
+        <f:attribute name="demoKind" value="converter"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:messages id="m1"/>
+            <af:outputText styleClass="AFInstructionText"
+                           value="Example to demonstrate the number converter.  Enter a value and press submit."
+                           id="ot1"/>
+            <af:panelFormLayout id="pfl1"> 
+              <af:inputText label="type=number" value="#{validate.long}"
+                            id="it1">
+                <af:convertNumber type="number"/>
+              </af:inputText>
+              <af:inputText label="integerOnly=true, messageDetailConvertNumber set"
+                            value="#{validate.integerOnly1}" id="it2">
+                <af:convertNumber integerOnly="true"
+                                  messageDetailConvertNumber="Not a valid integer"/>
+              </af:inputText>
+              <af:inputText label="type=number, custom format hint for pattern, with shortDesc" value="#{validate.long2}"
+                            shortDesc='Example of unconvertable value: "K123"'
+                            id="it5">
+                <af:convertNumber pattern="###,000.00" hintPattern="Example format: 100,000.00" type="number"/>
+              </af:inputText>
+              <af:inputText label="type=currency, no pattern" value="#{validate.currency3}"
+                            id="it8">
+                <af:convertNumber type="currency"/>
+              </af:inputText>
+              <af:inputText label="type=currency, with pattern" value="#{validate.currency1}"
+                            id="it3">
+                <af:convertNumber pattern="$###,000.00" type="currency"/>
+              </af:inputText>
+              <af:inputText label="type=currency, with pattern and custom format hint" value="#{validate.currency2}"
+                            id="it6">
+                <af:convertNumber pattern="$###,000.00" hintPattern="Example format: $100,000.00" type="currency"/>
+              </af:inputText>
+              <af:inputText label="type=percentage, no pattern" value="#{validate.percent3}"
+                            id="it9">
+                <af:convertNumber type="percent"/>
+              </af:inputText>
+              <af:inputText label="type=percentage, with pattern" value="#{validate.percent1}"
+                            id="it4">
+                <af:convertNumber pattern="##0.00%" type="percent"/>
+              </af:inputText>              
+              <af:inputText label="type=percentage, with pattern and custom format hint"
+                            value="#{validate.percent2}" id="it7">
+                <af:convertNumber pattern="##0.00%" hintPattern="Example format: 100.00%" type="percent"/>
+              </af:inputText>
+              <af:inputText label='af:inputText converter="javax.faces.Integer"' 
+                            value="#{validate.converterIntVal}" id="it10"
+                            converter="javax.faces.Integer" />
+              <af:inputText label="using f:converter" id="it11" >
+                <f:converter converterId="javax.faces.Integer" />
+              </af:inputText>
+              <af:inputNumberSpinbox label="Spinbox with NumberConverter (type=percent, locale=fr)" value="9 %"
+                                     minimum="0" maximum="1" stepSize="0.01"
+                                     id="idInputNumberSpinbox7" contentStyle="width: 30px">
+                <af:convertNumber type="percent" locale="fr"/>
+              </af:inputNumberSpinbox>
+              <af:inputNumberSlider label="Horizontal Slider with percent converter"
+                                  minorIncrement="0.01" majorIncrement="0.1" minimumIncrement="0.01"
+                                  minimum="0" maximum="1" value="3" orientation="horizontal"
+                                  contentStyle="width: 50em" id="slider4">
+                <af:convertNumber type="percent" id="sliderConverter"/>
+              </af:inputNumberSlider>
+              <af:inputText label='maxIntegerDigits="5"'
+                            shortDesc="This attribute serves little (if any) practical purpose"
+                            id="it12">
+                <af:convertNumber maxIntegerDigits="5"/>
+              </af:inputText>
+              <af:inputText label='roundingMode="CEILING" maxFractionDigits="1"'
+                            shortDesc="roundingMode=CEILING causes the initial value to round from 5.52 to 5.6"
+                            id="it13" value="#{validate.double10}">
+                <af:convertNumber maxFractionDigits="1" roundingMode="CEILING"/>
+              </af:inputText>
+              
+            </af:panelFormLayout>
+            <af:commandButton text="Submit" id="cb1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

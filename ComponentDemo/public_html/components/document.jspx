@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="document Demo" binding="#{templateBindings.documentComponent}"
+                 initialFocusId="dmoTpl:focusButton"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="editingDocument" value="true"/>
+        <f:attribute name="tagName" value="document"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="editorSize" value="330"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmDisabled" value="true"/>
+        <f:attribute name="gmDisabledNotes" value="To stretch a document, set maximized to true (the default). This will cause the page's outer-most margin and padding to collapse to 0px. If the document is set to be maximized and if there is only a single effective visual root component, that component will stretch automatically to consume the browser's viewable area--if supported by that component. Examples of components that support this are af:form, af:panelStretchLayout, af:panelSplitter, and af:panelGroupLayout with layout=scroll."/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText
+              value="This is a demo page for the document component.
+  The document component isn't obviously visible like other components.
+  Try unchecking the 'maximized' checkbox to see how the document changes its contents to no longer stretch to fill the browser."
+                           id="ot1"/>
+
+            <af:group id="g1">
+              <af:commandButton id="focusButton" text="Initial Focus Button">
+                <af:showPopupBehavior popupId="focusPopup"/>
+              </af:commandButton>
+              <af:popup id="focusPopup">
+                <af:dialog type="ok" title="Note" id="d2">
+                  <af:outputText value="Inital Focus Button says: I don't do anything.  I'm just here to take the intial focus"
+                                 id="ot2"/>
+                </af:dialog>
+              </af:popup>
+            </af:group>
+
+            <af:outputText value="Modify value to test uncommitted data warning."
+                           id="ot3"/>
+            <af:inputText label="Test Input" value="Modify me" id="it1"/>
+
+            <af:commandButton text="checkUncommittedDataBehavior" immediate="true" 
+                                partialSubmit="true" actionListener="#{demoPanelLabelAndMessage.createFacesMessage}">
+              <af:checkUncommittedDataBehavior/>
+            </af:commandButton>
+            
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

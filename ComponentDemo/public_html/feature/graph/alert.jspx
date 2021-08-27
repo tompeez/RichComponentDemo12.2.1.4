@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view><af:document title="Alert Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo"
+                     viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Alert Demo"/>
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Alert Demo"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          
+            <af:outputText value="Move the slider to change the alert threshold." id="ot0"/>
+          
+            <af:panelGroupLayout layout="horizontal" id="pgl4">
+              <dvt:barGraph shortDesc="Graph" id="barGraph1" 
+                            partialTriggers="::irs1" tabularData="#{alertBean.list}"
+                            >
+                <dvt:graphTitle text="Bar Graph"/>
+                <dvt:referenceObjectSet>
+                  <dvt:referenceObject type="RO_AREA" text="Alert Range"
+                                       lowValue="#{alertBean.value.minimum}" 
+                                       highValue="#{alertBean.value.maximum}" 
+                                       color="#60FF0000" location="RO_FRONT"/>
+                </dvt:referenceObjectSet>
+                <dvt:alertSet alertMap="#{alertBean.alertMap}"/>
+                <dvt:graphFootnote text="Alerts assign to group"/>
+              </dvt:barGraph>
+              <af:inputRangeSlider value="#{alertBean.value}" label="Alert" id="irs1" autoSubmit="true" valueChangeListener="#{alertBean.valueListener}"
+                                   minimum="0" maximum="100" majorIncrement="10" minimumIncrement="1" orientation="vertical"/>
+            </af:panelGroupLayout>
+            
+            <af:outputText value="Change the spin boxes to change the alert location." id="ot1"/>
+            
+            <af:panelGroupLayout layout="horizontal" id="pgl5">
+                <dvt:scatterGraph shortDesc="Graph"  id="scatterGraph1" tabularData="#{alertBean.scatterList}"  partialTriggers="::xValue ::yValue">
+                    <dvt:graphTitle text="Scatter Graph"/>
+                    <dvt:alertSet>
+                      <dvt:alert xValue="#{alertBean.alertXValue}" yValue="#{alertBean.alertYValue}" imageSource="/resources/images/graph/alert_icon.png"/>
+                    </dvt:alertSet>
+                    <dvt:graphFootnote text="Alerts assign to location"/>
+                </dvt:scatterGraph>
+                <af:panelGroupLayout layout="vertical" id="pgl6">
+                  <af:inputNumberSpinbox label="X Value" id="xValue" value="#{alertBean.alertXValue}" autoSubmit="true" stepSize="10"/>
+                  <af:inputNumberSpinbox label="Y Value" id="yValue" value="#{alertBean.alertYValue}" autoSubmit="true" stepSize="10"/>
+                </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            
+            <af:outputText value="Change the spin box and date selector to change the alert location." id="ot2"/>
+            
+            
+            <af:panelGroupLayout layout="horizontal" id="pgl7">
+                <dvt:lineGraph shortDesc="Graph"  id="lineGraph1" tabularData="#{alertBean.lineList}" timeAxisType="TAT_MIXED_FREQUENCY_STRICT" partialTriggers="::id1 ::yValue2">
+                    <dvt:graphTitle text="Line Graph"/>
+                    <dvt:alertSet>
+                      <dvt:alert xValue="#{alertBean.alertDate}" yValue="#{alertBean.alertYValue2}" imageSource="/resources/images/graph/alert_icon.png"/>
+                    </dvt:alertSet>
+                    <dvt:graphFootnote text="Alerts assign to location and date"/>
+                </dvt:lineGraph>
+                <af:panelGroupLayout layout="vertical" id="pgl8">
+                  <af:inputDate label="Date" id="id1" value="#{alertBean.alertDate}" autoSubmit="true"/>
+                  <af:inputNumberSpinbox label="Y Value" id="yValue2" value="#{alertBean.alertYValue2}" autoSubmit="true" stepSize="10"/>
+                </af:panelGroupLayout>
+            </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">
+        <af:panelGroupLayout layout="scroll">
+            <af:outputText value="See also:"/>       
+            <af:panelList>               
+                <af:goLink text="Alert Backing Bean" destination="/resources/sourceCode/feature/rich/graph/AlertBean.javasource" id="gl1"/>
+            </af:panelList>
+        </af:panelGroupLayout>
+      </f:facet> 
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

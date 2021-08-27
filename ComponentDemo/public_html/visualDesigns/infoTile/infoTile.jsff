@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root
+  xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Info Tile Declarative Compnonent.</description>        
+        <facet>
+          <description>The content that goes into each tile</description>
+            <facet-name>tileContent</facet-name>
+        </facet>
+        <attribute>
+          <description>The layout of the info tile component. Possible values are  vertical or horizontal. </description>
+          <attribute-name>layout</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>vertical</default-value>
+        </attribute>
+        <attribute>
+          <description>The index for the tile in its collection data. </description>
+          <attribute-name>index</attribute-name>
+          <attribute-class>int</attribute-class>
+          <required>true</required>
+        </attribute>
+        <attribute>
+          <description>Indicated whether the tile is selected. </description>
+          <attribute-name>selected</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Width for the tile. This is optional since the tile will size to content. However if content on the tile is disparate, size can be fixed. </description>
+          <attribute-name>tileWidth</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Height for the tile. However if content on the tile is disparate, size can be fixed.</description>
+          <attribute-name>tileHeight</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:group id="grp1">
+      <af:resource
+          source="/jsLibs/infoTile.js"
+          type="javascript"/>
+      <af:resource
+          source="/visualDesigns/infoTile/infoTile.css"
+          type="css"/>
+      <af:panelGroupLayout clientComponent="true" layout="vertical" id="tile" styleClass="#{attrs.layout == 'vertical' ? 'InfoTileItemV' : 'InfoTileItemH'} #{attrs.selected ? 'p_AFSelected' : ''}" 
+                   inlineStyle="#{(attrs.tileWidth != null) ? 'width:' : ''} #{(attrs.tileWidth != null) ? attrs.tileWidth : ''} #{(attrs.tileWidth != null) ? ';' : ''} #{(attrs.tileHeight != null) ? 'height:' : ''} #{(attrs.tileHeight != null) ? attrs.tileHeight : ''}">
+        <af:facetRef facetName="tileContent"/>
+        <af:panelGroupLayout id="tileSel" clientComponent="true" layout="vertical" styleClass="#{attrs.layout == 'vertical' ? 'InfoTileSelectorV ' :  'InfoTileSelectorH '} #{attrs.selected ? 'p_AFSelected' : ''}">
+          <af:link partialSubmit="true"  styleClass="InfoTileSelIcon" shortDesc="Select Tile" 
+            icon="#{attrs.selected ? (attrs.layout == 'vertical' ? '/images/alta_v1/tile_arrow_l_dwn.png' : '/images/alta_v1/tile_arrow_p_dwn.png') : (attrs.layout == 'vertical' ? '/images/alta_v1/tile_arrow_l_ena.png' : '/images/alta_v1/tile_arrow_p_ena.png')}"  
+            depressedIcon="#{attrs.selected ? ('') : (attrs.layout == 'vertical' ? '/images/alta_v1/tile_arrow_l_dwn.png' : '/images/alta_v1/tile_arrow_p_dwn.png')}"
+            hoverIcon="#{attrs.selected ? '' : (attrs.layout == 'vertical' ? '/images/alta_v1/tile_arrow_l_ovr.png' : '/images/alta_v1/tile_arrow_p_ovr.png')}" id="sel">
+            <af:clientListener method="InfoTileComp.raiseSelectionEvent" type="action" />
+            <!--af:clientListener method="InfoTileComp.raiseSelectionEvent" type="click"/-->
+          </af:link>
+        </af:panelGroupLayout>
+        <af:clientAttribute name="index" value="#{attrs.index}"/>
+        <af:clientAttribute name="selected" value="#{attrs.selected}"/>
+        <af:clientListener method="InfoTileComp.raiseSelectionEvent" type="click"/>
+      </af:panelGroupLayout>
+    </af:group>
+  </af:componentDef>
+</jsp:root>

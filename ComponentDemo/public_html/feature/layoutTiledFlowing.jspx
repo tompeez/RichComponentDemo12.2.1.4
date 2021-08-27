@@ -1,0 +1,261 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Tiled Flowing Layout Pattern Example" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:resource type="css">
+      .MyBreadCrumbsContainer {
+        padding-top: 3px;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      .MyTopStartCornerTile {
+        padding-right: 2px;
+        padding-bottom: 2px;
+      }
+      HTML[dir=rtl] .MyTopStartCornerTile {
+        padding-left: 2px;
+        padding-right: 0px;
+      }
+      .MyTopMiddleTile {
+        padding-left: 2px;
+        padding-right: 2px;
+        padding-bottom: 2px;
+      }
+      .MyTopEndCornerTile {
+        padding-left: 2px;
+        padding-bottom: 2px;
+      }
+      HTML[dir=rtl] .MyTopEndCornerTile {
+        padding-left: 0px;
+        padding-right: 2px;
+      }
+      .MyCenterStartTile {
+        padding-top: 2px;
+        padding-right: 2px;
+        padding-bottom: 2px;
+      }
+      HTML[dir=rtl] .MyCenterStartTile {
+        padding-left: 2px;
+        padding-right: 0px;
+      }
+      .MyCenterTile {
+        padding: 2px;
+      }
+      .MyCenterEndTile {
+        padding-top: 2px;
+        padding-left: 2px;
+        padding-bottom: 2px;
+      }
+      HTML[dir=rtl] .MyCenterEndTile {
+        padding-left: 0px;
+        padding-right: 2px;
+      }
+      .MyBottomStartCornerTile {
+        padding-top: 2px;
+        padding-right: 2px;
+      }
+      HTML[dir=rtl] .MyBottomStartCornerTile {
+        padding-left: 2px;
+        padding-right: 0px;
+      }
+      .MyBottomMiddleTile {
+        padding-top: 2px;
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+      .MyBottomEndCornerTile {
+        padding-top: 2px;
+        padding-left: 2px;
+      }
+      HTML[dir=rtl] .MyBottomEndCornerTile {
+        padding-left: 0px;
+        padding-right: 2px;
+      }
+      </af:resource>
+      <af:pageTemplate id="pt" viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/tabletTemplateAlta.jspx' : '/templates/pageTemplateDefs/tabletTemplate.jspx'}">
+        <f:attribute name="headerGlobalSize" value="45"/>
+        <f:attribute name="navigation2Size" value="0"/>
+        <f:attribute name="header2Size" value="0"/>
+        <f:attribute name="footer2Size" value="0"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:facet name="branding">
+          <af:outputText value="Tiled Flowing" id="ot1" styleClass="AFBrandingBarTitle"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:button icon="/images/alta_v1/project_ena.png" hoverIcon="/images/alta_v1/project_ovr.png" depressedIcon="/images/alta_v1/project_dwn.png"  rendered="#{(attrs.demoKind!='visualDesign') and
+                              (attrs.demoKind!='styles') and
+                              (attrs.demoKind!='confusedComponents') and
+                              (attrs.demoKind!='feature')}" destination="/feature/layoutBasics.jspx" immediate="true" shortDesc="Back to Layout Basics"
+                                    id="ptcni9"/>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:navigationPane hint="tabs" id="np2">
+            <af:commandNavigationItem text="Layout Basics"
+                                      destination="/feature/layoutBasics.jspx"
+                                      id="cni4"/>
+            <af:commandNavigationItem text="Simple Demos"
+                                      destination="/feature/layoutBasicTest.jspx"
+                                      id="cnsd"/>
+            <af:commandNavigationItem text="Branding Bar"
+                                      destination="/feature/layoutBrandingBar.jspx"
+                                      id="cni5"/>
+            <af:commandNavigationItem text="Form Layout"
+                                      destination="/feature/layoutForm.jspx" id="cni6"/>
+            <af:commandNavigationItem text="Navigation-Master-Detail"
+                                      destination="/feature/layoutNavigationMasterDetail.jspx"
+                                      id="cni7"/>
+            <af:commandNavigationItem text="Stretched Header"
+                                      destination="/feature/layoutStretchedHeader.jspx"
+                                      id="cni8"/>
+            <af:commandNavigationItem text="Tiled Flowing"
+                                      destination="/feature/layoutTiledFlowing.jspx"
+                                      selected="true" id="cni9"/>
+            <af:commandNavigationItem text="Tiled Stretching"
+                                      destination="/feature/layoutTiledStretching.jspx"
+                                      id="cni10"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/tabletTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc1">
+                <af:commandNavigationItem text="Feature Demos" destination="/feature/index.jspx"
+                                          id="cni11"/>
+                <af:commandNavigationItem text="Layout Basics" destination="/feature/layoutBasics.jspx"
+                                          id="cni12"/>
+                <af:commandNavigationItem text="Tiled Flowing" id="cni13"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl2">
+            <!-- start of flowing tiled area -->
+            <trh:tableLayout width="100%" id="tl1">
+              <trh:rowLayout id="rl1">
+                <trh:cellFormat width="33%" valign="top" id="cf1">
+                  <af:panelHeader text="A1" size="1" styleClass="MyTopStartCornerTile"
+                                  id="ph1">
+                    <af:panelGroupLayout layout="vertical" id="pgl3">
+                      <af:outputText value="Row one, column one" id="ot2"/>
+                      <af:outputText
+                        value="panelHeader is used here since it flows and does not stretch vertically"
+                                     id="ot3"/>
+                    </af:panelGroupLayout>
+                  </af:panelHeader>
+                </trh:cellFormat>
+                <trh:cellFormat width="33%" valign="top" id="cf2">
+                  <af:panelHeader text="B1" size="1" styleClass="MyTopMiddleTile"
+                                  id="ph2">
+                    <af:panelGroupLayout layout="vertical" id="pgl4">
+                      <af:outputText value="Row one, column two" id="ot4"/>
+                      <af:outputText
+                        value="panelHeader is used here since it flows and does not stretch vertically"
+                                     id="ot5"/>
+                    </af:panelGroupLayout>
+                  </af:panelHeader>
+                </trh:cellFormat>
+                <trh:cellFormat width="33%" valign="top" id="cf3">
+                  <af:panelHeader text="C1" size="1" styleClass="MyTopEndCornerTile"
+                                  id="ph3">
+                    <af:panelGroupLayout layout="vertical" id="pgl5">
+                      <af:outputText value="Row one, column three" id="ot6"/>
+                      <af:outputText
+                        value="panelHeader is used here since it flows and does not stretch vertically"
+                                     id="ot7"/>
+                    </af:panelGroupLayout>
+                  </af:panelHeader>
+                </trh:cellFormat>
+              </trh:rowLayout>
+              <trh:rowLayout id="rl2">
+                <trh:cellFormat width="33%" valign="top" id="cf4">
+                  <af:panelHeader text="A2" size="1" styleClass="MyCenterStartTile"
+                                  id="ph4">
+                    <af:panelGroupLayout layout="vertical" id="pgl6">
+                      <af:outputText value="Row two, column one" id="ot8"/>
+                      <af:outputText
+                        value="panelHeader is used here since it flows and does not stretch vertically"
+                                     id="ot9"/>
+                    </af:panelGroupLayout>
+                  </af:panelHeader>
+                </trh:cellFormat>
+                <trh:cellFormat width="33%" valign="top" id="cf5">
+                  <af:panelHeader text="B2" size="1" styleClass="MyCenterTile"
+                                  id="ph5">
+                    <af:panelGroupLayout layout="vertical" id="pgl7">
+                      <af:outputText value="Row two, column two" id="ot10"/>
+                      <af:outputText
+                        value="panelHeader is used here since it flows and does not stretch vertically"
+                                     id="ot11"/>
+                    </af:panelGroupLayout>
+                  </af:panelHeader>
+                </trh:cellFormat>
+                <trh:cellFormat width="33%" valign="top" id="cf6">
+                  <af:panelHeader text="C2" size="1" styleClass="MyCenterEndTile"
+                                  id="ph6">
+                    <af:panelGroupLayout layout="vertical" id="pgl8">
+                      <af:outputText value="Row three, column three" id="ot12"/>
+                      <af:outputText
+                        value="panelHeader is used here since it flows and does not stretch vertically"
+                                     id="ot13"/>
+                    </af:panelGroupLayout>
+                  </af:panelHeader>
+                </trh:cellFormat>
+              </trh:rowLayout>
+              <trh:rowLayout id="rl3">
+                <trh:cellFormat width="33%" valign="top" id="cf7">
+                  <af:panelHeader text="A3" size="1" styleClass="MyBottomStartCornerTile"
+                                  id="ph7">
+                    <af:panelGroupLayout layout="vertical" id="pgl9">
+                      <af:outputText value="Row three, column one" id="ot14"/>
+                      <af:outputText
+                        value="panelHeader is used here since it flows and does not stretch vertically"
+                                     id="ot15"/>
+                    </af:panelGroupLayout>
+                  </af:panelHeader>
+                </trh:cellFormat>
+                <trh:cellFormat width="33%" valign="top" id="cf8">
+                  <af:panelHeader text="B3" size="1" styleClass="MyBottomMiddleTile"
+                                  id="ph8">
+                    <af:panelGroupLayout layout="vertical" id="pgl10">
+                      <af:outputText value="Row three, column two" id="ot16"/>
+                      <af:outputText
+                        value="panelHeader is used here since it flows and does not stretch vertically"
+                                     id="ot17"/>
+                    </af:panelGroupLayout>
+                  </af:panelHeader>
+                </trh:cellFormat>
+                <trh:cellFormat width="33%" valign="top" id="cf9">
+                  <af:panelHeader text="C3" size="1" styleClass="MyBottomEndCornerTile"
+                                  id="ph9">
+                    <af:panelGroupLayout layout="vertical" id="pgl11">
+                      <af:outputText value="Row three, column three" id="ot18"/>
+                      <af:outputText
+                        value="panelHeader is used here since it flows and does not stretch vertically"
+                                     id="ot19"/>
+                    </af:panelGroupLayout>
+                  </af:panelHeader>
+                </trh:cellFormat>
+              </trh:rowLayout>
+            </trh:tableLayout>
+            <!-- end of flowing titled area -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

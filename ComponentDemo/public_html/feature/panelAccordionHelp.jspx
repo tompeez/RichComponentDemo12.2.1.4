@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Help on Accordion" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Accordion Help"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="This page shows how to display help on a panelAccordion component."
+                           id="ot1"/>
+            <af:panelAccordion id="pa1">
+              <af:showDetailItem disclosed="true" text="First Pane" id="sdi1">
+                <af:outputFormatted value='#{adfFacesContext.helpProvider["TOPICID_INSTR"].instructions}'
+                                    id="of1"/>
+              </af:showDetailItem>
+              <af:showDetailItem text="Second Pane" id="sdi2">
+                <f:facet name="toolbar">
+                  <af:outputText value="Toolbar 2" id="ot2"/>
+                </f:facet>
+                <af:outputFormatted value='#{adfFacesContext.helpProvider["TOPICID_DEFN"].definition}'
+                                    id="of2"/>
+              </af:showDetailItem>
+              <af:showDetailItem text="Last Pane" id="sdi3">
+                <af:goLink text="Help"
+                           destination='#{adfFacesContext.helpProvider["TOPICID_URL"].externalUrl}'
+                           shortDesc="Sample shortDesc text" id="gl1"/>
+              </af:showDetailItem>
+            </af:panelAccordion>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

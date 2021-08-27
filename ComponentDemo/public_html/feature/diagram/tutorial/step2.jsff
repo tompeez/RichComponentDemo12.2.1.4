@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <af:panelGroupLayout layout="scroll">
+        <af:panelGridLayout id="step2_grid" inlineStyle="background-color:#F4F4F8">
+            <af:gridRow id="step2_row1" marginTop="4px" marginBottom="4px">
+                <af:gridCell id="step2_header" marginStart="5px" marginEnd="5px" width="100%" halign="stretch"
+                             valign="top">
+                    <af:outputText value="Custom layout attributes" inlineStyle="font-size:large;"/>
+                    <af:spacer width="10"/>
+                    <af:outputFormatted value="Vertical layout that accepts custom attributes&lt;br>- padding attribute is used as a distance between nodes&lt;br>- nodes are sorted by a custom node attribute ('price' in this case)"/>
+                </af:gridCell>
+            </af:gridRow>
+            <af:gridRow id="step2_row2" height="auto" marginTop="4px" marginBottom="4px">
+                <af:gridCell id="step2_diagram_container" valign="middle" marginStart="5px" marginEnd="4px"
+                             halign="stretch" inlineStyle="background-color:white">
+                    <dvt:diagram id="step2_diagram" layout="verticalLayout" summary="summary"
+                                 controlPanelBehavior="hidden" panning="none" zooming="none"
+                                 inlineStyle="width:100%;">
+                        <dvt:clientLayout name="verticalLayout" featureName="TutorialLayouts"
+                                          method="DemoVerticalLayoutSortedNodes.layout">
+                            <f:attribute name="nodePadding" value="20"/>
+                            <f:attribute name="sortAttr" value="price"/>
+                            <dvt:nodeAttributes node="step2_n">
+                                <f:attribute name="price" value="price"/>
+                                <f:attribute name="label" value="label"/>
+                            </dvt:nodeAttributes>
+                        </dvt:clientLayout>
+                        <dvt:diagramNodes value="#{tutorialBikeSample.nodes}" var="node">
+                            <dvt:diagramNode id="step2_n" nodeId="#{node.id}" shortDesc="#{node.label}"
+                                             showNodeActions="false" rendered="#{node.type =='Parts'}"
+                                             selectable="false">
+                                <f:facet name="zoom100">
+                                    <af:panelGroupLayout layout="horizontal"
+                                                         inlineStyle="padding:10px;border-color:#abb3b9;background-color:#f9f9f9;border-width:1px">
+                                        <af:panelLabelAndMessage label="#{node.label}"
+                                                                 labelStyle="font-size:12px;font-weight:normal">
+                                            <af:outputText value="\$#{node.price}"
+                                                           inlineStyle="font-size:11px;color:#383A47;font-weight:bold;"/>
+                                        </af:panelLabelAndMessage>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </dvt:diagramNode>
+                        </dvt:diagramNodes>
+                    </dvt:diagram>
+                </af:gridCell>
+            </af:gridRow>
+            <af:gridRow id="step2_row3" height="auto" marginTop="4px" marginBottom="4px">
+                <af:gridCell id="step2_bottom" width="100%" halign="stretch" valign="top" marginStart="5px"
+                             marginEnd="5px" inlineStyle="background-color:#F4F4F8">
+                    <af:outputText value="Layout implementation" inlineStyle="font-size:large;"/>
+                    <af:spacer width="40"/>
+                    <af:codeEditor value="#{tutorialJavascriptReader.source}" language="javascript" rows="#{tutorialJavascriptReader.rows * 1.36 + 2.64}"
+                                   id="step2_ce2" dimensionsFrom="auto" inlineStyle="width:100%" readOnly="true"/>
+                </af:gridCell>
+            </af:gridRow>
+        </af:panelGridLayout>
+    </af:panelGroupLayout>
+</jsp:root>

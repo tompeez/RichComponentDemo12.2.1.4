@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Carousel PPR Demo" id="d1" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="carousel"/>
+        <f:attribute name="visualDesignName" value="carousel"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout id="pgl1" layout="scroll">
+            <af:panelGroupLayout layout="vertical" id="pg1">
+              <af:outputFormatted value="&lt;b>Specify the field, the field value, an item key, and then click on the 'PPR Field' button.&lt;/b>"
+                                  id="of1"/>
+              <af:panelFormLayout id="pfl1" maxColumns="1">
+                <af:selectOneRadio id="fieldName" value="selectOneValue"
+                                   label="Select a field">
+                  <af:selectItem label="List Box" value="selectOneValue" shortDesc="List Box"
+                                 id="si1"/>
+                  <af:selectItem label="Select One Radio" value="selectOneValue2"
+                                 shortDesc="Select One Radio" id="si2"/>
+                  <af:selectItem label="Check Box" value="isDirectory" shortDesc="Check Box"
+                                 id="si3"/>
+                  <af:selectItem label="Spin Box" value="testSpinbox" shortDesc="Spin Box"
+                                 id="si4"/>
+                  <af:selectItem label="Date Picker" value="inputDate" shortDesc="Date Picker"
+                                 id="si5"/>
+                  <af:selectItem label="Text" value="name" shortDesc="Text"
+                                 id="si6"/>
+                </af:selectOneRadio>
+                <af:inputText label="Specify a field value" value="Speaker"
+                              contentStyle="width:60px" id="fieldValue"/>
+                <af:inputText label="Specify an item key" value="2"
+                              contentStyle="width:50px" id="itemKeyValue"/>
+                <af:commandButton partialSubmit="true" actionListener="#{carouselTestData.pprField}"
+                                  text="PPR Field" id="cb1"/>
+              </af:panelFormLayout>
+            </af:panelGroupLayout>
+            <af:separator id="sep1"/>
+            <af:carousel var="item" id="carouselPPR" varStatus="vs" value="#{tableTestData}"
+                         styleClass="AFStretchWidth">
+              <f:facet name="nodeStamp">
+                <af:carouselItem text="Item #{vs.model.rowKey}" id="ci1">
+                  <af:panelGroupLayout id="itemPGL" layout="scroll">
+                    <af:panelFormLayout id="itemPFL" maxColumns="1">
+                      <af:inputText id="key" label="Item Key" value="#{vs.model.rowKey}"
+                                    readOnly="true"/>
+                      <af:selectOneListbox id="selectOneValue" value="#{item.selectOneValue}"
+                                           valueChangeListener="#{item.selectOneValueChanged}"
+                                           autoSubmit="true" label="List Box"
+                                           partialTriggers="selectOneValue2"
+                                           contentStyle="width: 85px;" size="3">
+                        <af:selectItem label="Mouse" value="Mouse" shortDesc="mouse from China"
+                                       id="si7"/>
+                        <af:selectItem label="Speaker" value="Speaker" shortDesc="Speaker from Taiwan"
+                                       id="si8"/>
+                        <af:selectItem label="Head Phone" value="Head Phone"
+                                       shortDesc="Head Phone from China" id="si9"/>
+                      </af:selectOneListbox>
+                      <af:selectOneRadio id="selectOneValue2" value="#{item.selectOneValue2}"
+                                         autoSubmit="true" partialTriggers="selectOneValue"
+                                         label="Select One Radio">
+                        <af:selectItem label="Mouse" value="Mouse" shortDesc="mouse from China"
+                                       id="si10"/>
+                        <af:selectItem label="Speaker" value="Speaker" shortDesc="Speaker from Taiwan"
+                                       id="si11"/>
+                        <af:selectItem label="Head Phone" value="Head Phone"
+                                       shortDesc="Head Phone from China" id="si12"/>
+                      </af:selectOneRadio>
+                      <af:selectBooleanCheckbox label="Check Box" autoSubmit="true"
+                                                value="#{item.isDirectory}" id="isDirectory"/>
+                      <af:inputNumberSpinbox id="testSpinbox" value="#{item.testSpinbox}"
+                                             converter="javax.faces.Integer" autoSubmit="true"
+                                             label="Spin Box" minimum="0"/>
+                      <af:inputDate columns="10" value="#{item.inputDate}" autoSubmit="true"
+                                    id="inputDate" contentStyle="width:70px" label="Date Picker"/>
+                      <af:inputText id="name" label="Text" value="#{item.name}"
+                                    contentStyle="width: 85px;"/>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                </af:carouselItem>
+              </f:facet>
+            </af:carousel>
+            <af:separator id="sep2"/>
+            <af:panelHeader id="head" text="Related Components">
+              <af:panelList id="list">
+                <af:goLink id="related1" text="carousel" destination="/components/carousel.jspx"/>
+                <af:goLink id="related2" text="carouselItem" destination="/components/carouselItem.jspx"/>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

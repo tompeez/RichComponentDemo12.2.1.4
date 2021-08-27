@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="NBox Features Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="NBox Features Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="NBox Features"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="275"
+                            dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelStretchLayout id="psl1">
+                <f:facet name="center">
+                  <dvt:nBox id="nb1" binding="#{nBox.NBox}" value="#{nBox.model}" var="node" columnsTitle="#{nBox.columnsTitle}" rowsTitle="#{nBox.rowsTitle}" nodeSelection="#{nBox.selection}"
+                            cellMaximize="#{nBox.cellMaximize}" cellContent="#{nBox.cellContent}" labelTruncation="#{nBox.labelTruncation}" 
+                            partialTriggers="::nodeCount ::rowCount ::colCount ::rowsTitle ::colsTitle ::dataChange ::rowLabels ::colLabels ::cellLabels ::cellShowCount ::customCountLabels ::cellBg ::cellContent ::cellMaximize ::nodeLabel ::nodeIcon ::selection ::labelTruncation">
+                    <af:transition transition="#{nBox.dataChange}" triggerType="dataChange"/>
+                    <f:facet name="rows">
+                      <af:iterator value="#{nBox.rowModel}" var="row">
+                        <dvt:nBoxRow value="#{row.value}" label="#{nBox.rowLabels ? row.label : null}"/>
+                      </af:iterator>
+                    </f:facet>
+                    <f:facet name="columns">
+                      <af:iterator value="#{nBox.columnModel}" var="column">
+                        <dvt:nBoxColumn value="#{column.value}" label="#{nBox.columnLabels ? column.label : null}"/>
+                      </af:iterator>
+                    </f:facet>
+                    <f:facet name="cells">
+                      <af:iterator value="#{nBox.cellModel}" var="cell">
+                        <dvt:nBoxCell row="#{cell.row}" column="#{cell.column}" 
+                                      showCount="#{nBox.cellShowCount}" countLabel="#{nBox.customCountLabels ? cell.countLabel : null}"
+                                      label="#{nBox.cellLabels ? cell.label : null}"
+                                      shortDesc="#{nBox.cellLabels ? cell.label : null}"
+                                      background="#{'colors' eq nBox.cellBackground ? cell.color1 : 'gradients' eq nBox.cellBackground ? cell.gradient : null}"/>
+                      </af:iterator>
+                    </f:facet>
+                    <dvt:nBoxNode row="#{node.row}" column="#{node.column}"
+                                  label="#{nBox.nodeLabel eq 'none' ? null : node.name}"
+                                  secondaryLabel="#{nBox.nodeLabel eq 'dual' ? node.job : null}"
+                                  shortDesc="#{node.name} - #{node.job}">
+                      <f:facet name="icon">
+                        <dvt:marker shape="#{nBox.nodeIcon eq 'marker' ? 'human' : null}"
+                                    source="#{nBox.nodeIcon eq 'photo' ? '/resources/images/nBox/' : ''}#{nBox.nodeIcon eq 'photo' ? node.image : ''}"
+                                    rendered="#{nBox.nodeIcon ne 'none'}"/>
+                      </f:facet>
+                    </dvt:nBoxNode>
+                  </dvt:nBox>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelFormLayout id="pfl1">
+                <af:group>
+                  <af:inputNumberSlider label="Nodes" id="nodeCount" minimum="0" maximum="200" value="#{nBox.nodes}"
+                                        autoSubmit="true" majorIncrement="100" minorIncrement="25"/>
+                  <af:inputNumberSlider label="Rows" id="rowCount" minimum="1" maximum="5" value="#{nBox.rows}"
+                                        autoSubmit="true" minorIncrement="1"/>
+                  <af:inputNumberSlider label="Columns" id="colCount" minimum="1" maximum="5" value="#{nBox.columns}"
+                                        autoSubmit="true" minorIncrement="1"/>
+                  <af:selectOneChoice id="dataChange" value="#{nBox.dataChange}" autoSubmit="true"
+                                      label="Data Change Transitions">
+                    <af:selectItem value="none" label="none"/>
+                    <af:selectItem value="auto" label="auto"/>
+                  </af:selectOneChoice>
+                </af:group>
+                <af:group>
+                  <af:inputText label="Rows Title" id="rowsTitle" value="#{nBox.rowsTitle}" autoSubmit="true"/>
+                  <af:inputText label="Columns Title" id="colsTitle" value="#{nBox.columnsTitle}" autoSubmit="true"/>
+                  <af:selectBooleanCheckbox label="Row Labels" value="#{nBox.rowLabels}" id="rowLabels"
+                                            autoSubmit="true"/>
+                  <af:selectBooleanCheckbox label="Column Labels" value="#{nBox.columnLabels}" id="colLabels"
+                                            autoSubmit="true"/>
+                  <af:selectOneChoice id="cellBg" value="#{nBox.cellBackground}" autoSubmit="true"
+                                      label="Cell Background">
+                    <af:selectItem value="default" label="default"/>
+                    <af:selectItem value="colors" label="colors"/>
+                    <af:selectItem value="gradients" label="gradients"/>
+                  </af:selectOneChoice>
+                  <af:selectOneRadio label="Cell Content" value="#{nBox.cellContent}" id="cellContent" autoSubmit="true">
+                    <af:selectItem value="auto" label="auto"/>
+                    <af:selectItem value="counts" label="counts"/>
+                  </af:selectOneRadio>
+                  <af:selectOneRadio label="Cell Maximize" value="#{nBox.cellMaximize}" id="cellMaximize" autoSubmit="true">
+                    <af:selectItem value="on" label="on"/>
+                    <af:selectItem value="off" label="off"/>
+                  </af:selectOneRadio>
+                  <af:selectBooleanCheckbox label="Cell Labels" value="#{nBox.cellLabels}" id="cellLabels"
+                                            autoSubmit="true"/>
+                  <af:selectOneChoice id="cellShowCount" value="#{nBox.cellShowCount}" autoSubmit="true"
+                                      label="Cell Show Count" disabled="#{not nBox.cellLabels}" partialTriggers="cellLabels">
+                    <af:selectItem value="auto" label="auto"/>
+                    <af:selectItem value="on" label="on"/>
+                    <af:selectItem value="off" label="off"/>
+                  </af:selectOneChoice>
+                  <af:selectBooleanCheckbox label="Custom Count Labels" value="#{nBox.customCountLabels}" id="customCountLabels"
+                                            disabled="#{not nBox.cellLabels}" autoSubmit="true" partialTriggers="cellLabels"/>
+                </af:group>
+                <af:group>
+                  <af:selectOneChoice id="nodeLabel" value="#{nBox.nodeLabel}" autoSubmit="true" label="Node Label">
+                    <af:selectItem value="none" label="None"/>
+                    <af:selectItem value="single" label="Name"/>
+                    <af:selectItem value="dual" label="Name and Title"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="nodeIcon" value="#{nBox.nodeIcon}" autoSubmit="true" label="Node Icon">
+                    <af:selectItem value="none" label="None"/>
+                    <af:selectItem value="photo" label="Photograph"/>
+                    <af:selectItem value="marker" label="Placeholder"/>
+                  </af:selectOneChoice>
+                  <af:selectOneRadio label="Node Label Truncation" value="#{nBox.labelTruncation}" id="labelTruncation" autoSubmit="true">
+                    <af:selectItem value="on" label="on"/>
+                    <af:selectItem value="ifRequired" label="ifRequired"/>
+                  </af:selectOneRadio>
+                </af:group>
+                <af:group>
+                  <af:selectOneRadio label="Selection" value="#{nBox.selection}" id="selection" autoSubmit="true">
+                    <af:selectItem value="multiple" label="multiple"/>
+                    <af:selectItem value="single" label="single"/>
+                    <af:selectItem value="none" label="none"/>
+                  </af:selectOneRadio>
+                  <af:commandButton id="cb111" text="Show Selection State">
+                    <af:showPopupBehavior popupId="popup1" triggerType="action" alignId="cb111"/>
+                  </af:commandButton>
+                </af:group>
+                <af:popup id="popup1" contentDelivery="lazyUncached">
+                  <af:noteWindow>
+                    <af:outputFormatted value="#{nBox.selectionState}" clientComponent="true"/>
+                  </af:noteWindow>
+                </af:popup>
+              </af:panelFormLayout>
+            </f:facet>
+          </af:panelSplitter>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <!-- START SEE ALSO LINKS -->
+            <!-- END SEE ALSO LINKS -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

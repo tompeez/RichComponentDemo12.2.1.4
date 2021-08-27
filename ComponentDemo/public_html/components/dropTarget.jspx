@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="dropTarget demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        function showMessage()
+        {
+          AdfLogger.LOGGER.logMessage(AdfLogger.OFF, "clientDropListener handler, copying...");
+          return AdfDnDContext.ACTION_COPY;
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="dropTarget"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="dragNDrop"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="This demo shows drag and drop using af:dragSource,
+              af:dropTarget, af:dataFlavor"
+                           id="ot1"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer width="30px" id="s2"/>
+              </f:facet>
+              <af:panelHeader text="Table with a dragSource" id="ph1">
+                <af:table var="test1" value="#{tableTestData}" id="table"
+                          summary="collection drag source">
+                  <af:column headerText="Name" id="c1">
+                    <af:panelGroupLayout id="pgl3">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                shortDesc="Sample shortDesc text" id="i1"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                     id="ot2"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size" id="c2">
+                    <af:outputText value="#{test1.size}" id="ot3"/>
+                  </af:column>
+                  <af:dragSource actions="COPY" discriminant="fileModel"/>
+                </af:table>
+              </af:panelHeader>
+              <af:panelGroupLayout layout="vertical" id="pgl4">
+                <af:panelBox text="Drop Target accepting collection RowKeySets with custom Drop Handler"
+                             id="pb1">
+                  <af:outputText id="genericDropTarget" value="Drop a row here!">
+                    <af:dropTarget actions="COPY" dropListener="#{demoDropHandler.handleDrop}">
+                      <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet"
+                                     discriminant="fileModel"/>
+                    </af:dropTarget>
+                  </af:outputText>
+                </af:panelBox>
+                <af:panelBox text="Drop Target with clientDropListener also"
+                             id="pb2">
+                  <af:outputText id="genericDropTarget2" value="Drop a row here!">
+                    <af:dropTarget actions="COPY" dropListener="#{demoDropHandler.handleDrop}"
+                                   clientDropListener="showMessage">
+                      <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet"
+                                     discriminant="fileModel"/>
+                    </af:dropTarget>
+                  </af:outputText>
+                </af:panelBox>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

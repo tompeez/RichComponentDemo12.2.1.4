@@ -1,0 +1,305 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Chart Style Customization" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Style Customization Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Style Customization"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:panelAccordion id="pa1" styleClass="AFStretchWidth" discloseMany="true" dimensionsFrom="children">
+            <af:showDetailItem text="Color and Border Customization" disclosed="true">
+             <af:panelGroupLayout layout="horizontal">
+                 <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row"
+                               title="BorderColor">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <dvt:chartSeriesStyle series="#{row.series}" borderColor="#000000"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:barChart>
+                 <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row"
+                               title="BorderWidth">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <dvt:chartSeriesStyle series="#{row.series}" borderColor="#000000" borderWidth="4" />
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:barChart>
+                <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row"
+                               title="Color and BorderColor">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <af:group>
+                      <dvt:chartSeriesStyle series="Series 1" color="#b5d9ef" borderColor="#0b2535"/>
+                      <dvt:chartSeriesStyle series="Series 2" color="#8bc3e6" borderColor="#0b2535"/>
+                      <dvt:chartSeriesStyle series="Series 3" color="#4ca3d9" borderColor="#0b2535"/>
+                      <dvt:chartSeriesStyle series="Series 4" color="#267db3" borderColor="#0b2535"/>
+                    </af:group>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:areaChart>
+                <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row"
+                                 title="Color and BorderColor - Series 3">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"
+                                       z="#{row.z}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <dvt:chartSeriesStyle series="Series 3" color="#00FF00" borderColor="#003b00"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:bubbleChart>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            
+            
+            <af:showDetailItem text="Marker Customization" disclosed="true">
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row" title="MarkerColor">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <af:group>
+                      <dvt:chartSeriesStyle series="Series 1" markerDisplayed="true" markerColor="#FFB54D"/>
+                      <dvt:chartSeriesStyle series="Series 2" markerDisplayed="true" markerColor="#A75DBA"/>
+                      <dvt:chartSeriesStyle series="Series 3" markerDisplayed="true" markerColor="#6DDBDB"/>
+                      <dvt:chartSeriesStyle series="Series 4" markerDisplayed="true" markerColor="#68C182"/>
+                      <dvt:chartSeriesStyle series="Series 5" markerDisplayed="true" markerColor="#FF0000"/>
+                    </af:group>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:lineChart>
+                <dvt:scatterChart value="#{chartDataSource.defaultScatterData}" var="row"
+                                title="MarkerSize and MarkerShape">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <af:group>
+                      <dvt:chartSeriesStyle series="Series 1" markerSize="5"/>
+                      <dvt:chartSeriesStyle series="Series 2" markerSize="15" markerShape="triangleDown"/>
+                      <dvt:chartSeriesStyle series="Series 3" markerSize="25" markerShape="star"/>
+                      <dvt:chartSeriesStyle series="Series 4" markerSize="35" markerShape="human"/>
+                    </af:group>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:scatterChart>
+                <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row" title="MarkerShape and MarkerColor - Series 2">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <dvt:chartSeriesStyle series="Series 2" markerDisplayed="true" markerShape="plus" markerColor="#E371B2"
+                        markerSize="20"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:areaChart>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+        
+        
+            <af:showDetailItem text="Bar Customization" disclosed="true">
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:barChart value="#{chartDataSource.extendedBarData}" var="row" title="Bar Chart with Sorting" sorting="on">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.Group}" group="#{row.series}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:barChart>
+                <dvt:barChart value="#{chartDataSource.defaultAreaData}" var="row" title="Bar Chart with Varying Bar Width Using Z Value">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}" z="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:barChart>
+                <dvt:barChart value="#{chartDataSource.defaultAreaData}" var="row" title="Bar Chart with series stackCategory"
+                              stack="on">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <af:group>
+                      <dvt:chartSeriesStyle series="Series 2"  stackCategory="color" />
+                      <dvt:chartSeriesStyle series="Series 3"  stackCategory="color" />
+                     </af:group>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:barChart>
+             </af:panelGroupLayout>
+            </af:showDetailItem>
+            
+            
+            <af:showDetailItem text="Line Series Customization" disclosed="true">
+              <af:panelGroupLayout layout="horizontal">
+                 <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row" title="LineStyle and LineWidth">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                   <f:facet name="seriesStamp">
+                    <af:group>
+                      <dvt:chartSeriesStyle series="Series 1" lineStyle="dotted" lineWidth="1"/>
+                      <dvt:chartSeriesStyle series="Series 2" lineStyle="dashed" lineWidth="3"/>
+                      <dvt:chartSeriesStyle series="Series 3" lineWidth="5"/>
+                      <dvt:chartSeriesStyle series="Series 4" lineStyle="dashed" lineWidth="1"/>
+                      <dvt:chartSeriesStyle series="Series 5" lineStyle="dotted" lineWidth="3"/>
+                    </af:group>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:lineChart>
+             </af:panelGroupLayout>
+            </af:showDetailItem>
+
+            
+            <af:showDetailItem text="Combo Series Customization" disclosed="true">
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:comboChart value="#{chartDataSource.defaultComboData}" var="row" title="Series Type">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <af:group>
+                      <dvt:chartSeriesStyle series="Series 1" type="bar"/>
+                      <dvt:chartSeriesStyle series="Series 2" type="area"/>
+                      <dvt:chartSeriesStyle series="Series 3" type="area"/>
+                      <dvt:chartSeriesStyle series="Series 4" type="bar"/>
+                      <dvt:chartSeriesStyle series="Series 5" type="bar"/>
+                    </af:group>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:comboChart>
+                <dvt:comboChart value="#{chartDataSource.defaultComboData}" var="row" title="Series Type">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <af:group>
+                      <dvt:chartSeriesStyle series="Series 1" type="line"/>
+                      <dvt:chartSeriesStyle series="Series 2" type="bar"/>
+                      <dvt:chartSeriesStyle series="Series 3" type="area"/>
+                      <dvt:chartSeriesStyle series="Series 4" type="bar"/>
+                      <dvt:chartSeriesStyle series="Series 5" type="line"/>
+                    </af:group>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:comboChart>
+                 <dvt:comboChart value="#{chartDataSource.defaultComboData}" var="row"
+                                 title="Series Type and Various Styles">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <af:group>
+                      <dvt:chartSeriesStyle series="Series 1" type="area"/>
+                      <dvt:chartSeriesStyle series="Series 2" type="area" pattern="largeCrosshatch"/>
+                      <dvt:chartSeriesStyle series="Series 3" type="bar" borderColor="#c60ccd"/>
+                      <dvt:chartSeriesStyle series="Series 4" lineStyle="dashed" lineWidth="6" type="line"/>
+                      <dvt:chartSeriesStyle series="Series 5" type="bar" borderColor="#cdc60c"/>
+                    </af:group>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:comboChart>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            
+             <af:showDetailItem text="Data Item Customization" disclosed="true">
+             <af:panelGroupLayout layout="horizontal">
+        
+              <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row"
+                               title="BorderColor - Series 3:Group A Item">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"
+                    borderColor="#{(row.series == 'Series 3' &amp;&amp; row.group == 'Group A') ? '#000000' : ''}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+              </dvt:barChart>
+              
+              <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row"
+                                 title="Color - Series 2:Group B Item">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"
+                                       z="#{row.z}" color="#{(row.series == 'Series 2' &amp;&amp; row.group == 'Group B') ? '#FF37FC' : ''}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+            </dvt:bubbleChart>   
+            
+            <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row" title="MarkerDisplayed - Series 4:Group D Item">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"
+                                        markerSize="20"
+                                        markerDisplayed="#{(row.series == 'Series 4' &amp;&amp; row.group == 'Group D') ? true : false}" />
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+            </dvt:lineChart>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="horizontal">
+             <dvt:scatterChart value="#{chartDataSource.defaultScatterData}" var="row"
+                                title="MarkerSize - Group B Items">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"
+                                       markerDisplayed="true"
+                                       markerSize="#{(row.group == 'Group B') ? 25 : 8}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <af:group>
+                      <dvt:chartSeriesStyle series="Series 1" markerSize="5"/>
+                      <dvt:chartSeriesStyle series="Series 2" markerSize="15" markerShape="triangleDown"/>
+                      <dvt:chartSeriesStyle series="Series 3" markerSize="25" markerShape="triangleUp"/>
+                      <dvt:chartSeriesStyle series="Series 4" markerSize="35" markerShape="human"/>
+                    </af:group>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:scatterChart>
+                <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row" stack="on" title="MarkerShape - Group C Item">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"
+                                        
+                                        markerShape="#{(row.group == 'Group C') ? 'triangleUp' : 'circle'}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <dvt:chartSeriesStyle series="Series 2"  markerDisplayed="true"
+                                          markerColor="#d52c8d" markerSize="15"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:areaChart>
+                 <dvt:pieChart value="#{chartDataSource.defaultPieData}" var="row" title="Pattern - Series 1 Item">
+                      <dvt:pieDataItem label="#{row.series}" value="#{row.value}" pattern="#{row.series == 'Series 1' ? 'largeChecker' : ''}"/>
+                      <dvt:chartLegend rendered="true"/>
+                    </dvt:pieChart>
+             </af:panelGroupLayout>
+             </af:showDetailItem>
+            </af:panelAccordion>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:pivotFilterBar&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:pivotFilterBar&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:pivotFilterBar pivotFilterBar pivot filter bar</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.pivotFilterBar.UIPivotFilterBar<br>
+<b>Component type:</b> oracle.dss.adf.pivotFilterBar.PivotFilterBar<br></p>
+<p>The PivotFilterBar component is used to filter data based on the selected criterion belonging to the PivotableQueryDescriptor as specified by the value property. The PivotFilterBar component is usually used along with the PivotTable component, in which case the PivotFilterBar is used to display the attributes of the page edge. When the PivotFilterBar component is associated with the PivotTable component, users will also be able to change the layout of the PivotTable by drag and drop pivoting between the PivotFilterBar and the PivotTable.</p>
+<h3>PivotFilterBar Features</h3>
+<h4>PivotFilterBar Model</h4>
+<p>The PivotFilterBar component uses a model to display and interact with data. The specific model class to use is <code>oracle.adf.view.faces.bi.model.PivotableQueryDescriptor</code>. If pivoting is not required, then the <code>oracle.adf.view.rich.model.QueryDescriptor</code> could also be used instead.</p>
+<h4>Sizing</h4>
+<p>The inlineStyle attribute can be used to specify a PivotFilterBar's width and height. For example, inlineStyle="width:600px;height:400px".</p>
+<h4>Filter</h4>
+<p>The PivotFilterBar displays a list of filters based on the information from the model. A QueryListener will be notified after the value of one of the filters has changed.</p>
+<h4>Pivot</h4>
+<p>Pivot operations can be performed between a PivotTable and a PivotFilterBar if a PivotableQueryDescriptor is specified as the data model and provided the underlying data source (of the PivotTable, and in most cases it is the same as the PivotFilterBar) allows this operation. A QueryPivotListener will be notified after the operation is successfully performed.</p>
+<h4>Attachment Mode</h4>
+<p>In attachment mode, content delivery is forced to immediate. The current value of each filter is displayed, but cannot be changed. The ability to pivot with a Pivot Table is also not supported.</p>
+<h4>Geometry Management</h4>
+<ul>
+<li>This component can be stretched by a parent layout component that stretches its children, e.g. panelStretchLayout, panelSplitter</li>
+<li>This component does not stretch to fill up the browser's viewport when it is the "sole visual root component" in the component tree.</li>
+<li>When NOT stretched, this component will be displayed in its default dimensions which are provided by the skin. This can be modified by applying a dimension using the inlineStyle or styleClass attributes.</li>
+<li>This component does not stretch its filters. The filters instead re-arrange themselves to fit the available space accordingly.</li>
+</ul>
+<h3>Example</h3>
+<p>The following shows an example of using a PivotFilterBar component in conjunction with a PivotTable<br></p>
+<pre>
+         <code>
+         &lt;dvt:pivotFilterBar id="pfb1"                 
+                     value="#{backingBean.queryDescriptor}" modelname="pivot1" /&gt; 
+         &lt;dvt:pivotTable id="pt1"                 
+                     value="#{backingBean.dataModel}" modelname="pivot1" /&gt; 
+         </code>
+       
+</pre>
+<div class="section">
+<h2><a name="Screen_Shots" id="Screen_Shots">Screen Shot(s)</a></h2>
+<div class="screenshot"><br>
+<img src="./images/pivotFilterBar.png" alt="PivotFilterBar screenshot"><br></div>
+<br></div>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.QueryPivotEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application</td>
+<td align="left" headers="evDesc">The query pivot event is delivered when a pivot is performed on the PivotFilterBar.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.rich.event.QueryEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application</td>
+<td align="left" headers="evDesc">The query event is delivered when the value of one of the filters has changed.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">Binding reference to store the UIPivotFilterBar component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">contentDelivery</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> lazy, immediate, whenAvailable<br>
+<strong>Default Value:</strong> whenAvailable<br>
+<br>
+Whether data should be fetched when the component is rendered initially. If contentDelivery is "immediate", data is fetched and inlined into the component chrome. If contentDelivery is "lazy", data will be fetched and delivered to the client during a subsequent request. If contentDelivery is set to "whenAvailable", upon initial rendering, the renderer queries the model for available data. Data is fetched and rendered immediately if the model indicates that data is available, or on a subsequent request if the model indicates otherwise. The default setting is "whenAvailable".</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dontPersist</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">A list of attributes whose changes are NOT to be persisted by FilteredPersistenceChangeManager via the "Persistent Change Manager" registered in adf-config.xml. The token 'ALL' can be used in the list here to indicate that all attribute changes that the component implicitly persists should be excluded. If there is a conflict of values, "dontPersist" always precedes "persist".</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">filterLabelVisible</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> false<br>
+<br>
+The visibility of the PivotFilterBar's filter labels. If set to "true", the labels for each filter will be shown. The default value is false.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Specifies the identifier for the component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The CSS styles to use for this component. This is intended for basic style changes. The inlineStyle is a set of CSS styles that are applied to the root DOM element of the component. If the inlineStyle's CSS properties do not affect the DOM element you want affected, then you will have to create a skin and use the skinning keys which are meant to target particular DOM elements, like ::label or ::icon-style.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">label</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The label associated with the PivotFilterBar. If null is specified then no label will be shown.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">modelName</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The model name of the PivotFilterBar. The model name is used to ensure that this PivotFilterBar can only pivot with a PivotTable with the same model name.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too. Identifiers are relative to the source component (this component), and must account for NamingContainers. If your component is already inside of a naming container, you can use a single colon to start the search from the root of the page, or multiple colons to move up through the NamingContainers - "::" will pop out of the component's naming container (or itself if the component is a naming container) and begin the search from there, ":::" will pop out of two naming containers (including itself if the component is a naming container) and begin the search from there, etc.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">persist</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">A list of attributes whose changes are to be persisted by FilteredPersistenceChangeManager via the "Persistent Change Manager" registered in adf-config.xml. The token 'ALL' can be used in the list here to indicate that all attribute changes that the component implicitly persists should be included.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">queryListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">A method reference to a QueryListener that will be called when the value of one of the filters has changed.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">queryPivotListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">A method reference to a QueryPivotListener that will be called after a pivot operation is performed on the PivotFilterBar.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Whether the component is rendered. When set to false, no output will be delivered for this component (the component will not in any way be rendered, and cannot be made visible on the client). If you want to change a component's rendered attribute from false to true using PPR, set the partialTrigger attribute of its parent component so the parent refreshes and in turn will render this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shortDesc</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The short description of the component. This text is commonly used by user agents to display tooltip help text, in which case the behavior for the tooltip is controlled by the user agent, e.g. Firefox 2 truncates long tooltips.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">A CSS style class to use for this component. The style class can be defined in your jspx page or in a skinning CSS file, for example, or you can use one of our public style classes, like 'AFInstructionText'.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">summary</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a summary of this PivotFilterBar's purpose and structure for user agents rendering to non-visual media (e.g. screen readers).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">Object</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The data model for the PivotFilterBar - can be an instance of oracle.adf.view.faces.bi.model.PivotableQueryDescriptor or oracle.adf.view.rich.model.QueryDescriptor. If the latter is specified then pivoting is disabled.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">visible</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+The visibility of the component. If it is "false", the component will be hidden on the client. Unlike "rendered", this does not affect the lifecycle on the server - the component may have its bindings executed, etc. - and the visibility of the component can be toggled on and off on the client, or toggled with PPR. When "rendered" is false, the component will not in any way be rendered, and cannot be made visible on the client. In most cases, use the "rendered" property instead of the "visible" property.</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

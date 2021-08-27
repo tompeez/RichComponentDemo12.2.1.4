@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Treemap Drilling Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Treemap Drilling Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Treemap Drilling"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:group>
+                            <f:verbatim>
+                                <p>Drilling is used to navigate through a hierarchy and display more detailed
+                                   information. Try the following:</p>
+                                <ul>
+                                    <li>Click on a group node's header text to set that node as the root of the treemap.</li>
+                                     
+                                    <li>Double click on a node to set that node as the root of the treemap.</li>
+                                     
+                                    <li>Use the breadcrumbs to navigate back up the hierarchy.</li>
+                                     
+                                    <li>Use the slider to experiment with drilling when different levels of children are
+                                        displayed.</li>
+                                </ul>
+                                <p>Note: Drilling is most useful when the drill action results in the display of more
+                                   detailed data. To focus on the data that is already displayed, consider using the
+                                   isolate feature instead.</p>
+                            </f:verbatim>
+                            <dvt:treemap id="t1" inlineStyle="width:700px;height:450px;" value="#{treemap.censusData}"
+                                         var="row" displayLevelsChildren="#{treemap.displayLevelsChildren}" nodeSelection="none"
+                                         sizeLabel="Population" colorLabel="Median Household Income" legendSource="ag1" 
+                                         animationOnDataChange="auto" partialTriggers="::ins10">
+                                <dvt:treemapNode id="tn1" value="#{row.size}" label="#{row.text}"
+                                                 shortDesc="#{row.income}" drilling="replace">
+                                    <dvt:treemapNodeHeader isolate="off"/>
+                                    <dvt:attributeGroups id="ag1" type="color" value="#{row.income > 50000}"
+                                                         label="#{row.income > 50000 ? 'Low Income' : 'High Income'}"/>
+                                </dvt:treemapNode>
+                            </dvt:treemap>
+                            <af:spacer height="20"/>
+                            <af:inputNumberSlider label="Display Levels Children" id="ins10"
+                                                  value="#{treemap.displayLevelsChildren}" minimum="1" maximum="3"
+                                                  autoSubmit="true"/>
+                        </af:group>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

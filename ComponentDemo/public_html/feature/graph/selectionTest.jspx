@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Graph Drag and Drop Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Graph Selection Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Graph Selection"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:outputText inlineStyle="font-size:large; display:block;"
+                           value="Graph Selection"
+                           id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:selectOneChoice label="Select a Graph:" id="soc1" value="#{graphSelection.graphType}"
+                                  autoSubmit="true">
+                <f:selectItems value="#{graphSelection.graphList}" id="si1"/>
+              </af:selectOneChoice>
+              <af:panelGroupLayout layout="horizontal" id="pgl3" partialTriggers="soc1">
+              <af:switcher facetName="#{graphSelection.graphType}" defaultFacet="bubbleGraph">
+                <f:facet name="bubbleGraph">
+                    <dvt:bubbleGraph shortDesc="Graph" value="#{graphData.rows[2].cols[12].seed[8].random}"
+                                 id="bubbleGraph" animationOnDataChange="ON"
+                                
+                                 dataSelection="multiple"
+                                 selectionListener="#{graphSelection.selectionListener}">
+                  <dvt:seriesSet>
+                    <dvt:series index="0" markerShape="MS_HUMAN"/>
+                  </dvt:seriesSet>
+                </dvt:bubbleGraph>
+                </f:facet>
+                <f:facet name="scatterGraph">
+                <dvt:scatterGraph shortDesc="Graph" value="#{graphData.rows[5].cols[4].seed[8].random}"
+                                  id="scatterGraph" animationOnDataChange="ON"
+                                 
+                                  dataSelection="multiple"
+                                  selectionListener="#{graphSelection.selectionListener}">
+                  <dvt:seriesSet>
+                    <dvt:series index="0" markerShape="MS_HUMAN"/>
+                  </dvt:seriesSet>
+                </dvt:scatterGraph>
+                </f:facet>
+              </af:switcher>               
+              </af:panelGroupLayout>
+              <af:outputFormatted value="#{graphSelection.selectionInfo}"
+                             id="selectionText"
+                             inlineStyle="font-size:120.0%;"
+                             partialTriggers="bubbleGraph scatterGraph"/>
+            </af:panelGroupLayout>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <!-- START SEE ALSO LINKS -->
+            <af:outputText value="See also:"/>
+            <af:panelList id="pl1">             
+             <af:goLink text="Selection Backing Bean" destination="/resources/sourceCode/feature/rich/graph/SelectionSample.javasource" id="gl1"/>
+            </af:panelList>
+            <!-- END SEE ALSO LINKS -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

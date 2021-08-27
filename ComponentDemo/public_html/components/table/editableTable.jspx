@@ -1,0 +1,291 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2019, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Editable Table Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="usesUpload" value="true" />
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelSplitter positionedFromEnd="true" splitterPosition="160" orientation="vertical" dimensionsFrom="auto"
+                            >
+            <f:facet name="first">
+              <af:panelStretchLayout topHeight="auto" bottomHeight="auto" dimensionsFrom="auto"
+                                     >
+                <f:facet name="top">
+                  <af:panelGroupLayout layout="vertical" >
+                    <af:outputFormatted value="&lt;b>Editable Table Demo&lt;/b>"
+                                        id="of1"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                  <af:table rowSelection="single" id="table1" var="row" varStatus="vs"
+                      value="#{tableTestData}" binding="#{editor.component}"
+                      styleClass="AFStretchWidth" summary="table data" contentDelivery="immediate">
+              <f:facet name="contextMenu">
+                <af:popup id="myPopup">
+                  <af:menu id="m1">
+                    <af:commandMenuItem text="Context Menu Item 1" id="cmi1"/>
+                    <af:commandMenuItem text="Context Menu Item 2" id="cmi2"/>
+                    <af:commandMenuItem text="Context Menu Item 3" id="cmi3"/>
+                  </af:menu>
+                </af:popup>
+              </f:facet>
+              <af:column width="40" rowHeader="true" headerText="Number" id="c1">
+                <af:outputText value="#{row.no}" id="ot1"/>
+              </af:column>
+              <af:column headerText="Name" id="c2">
+                <af:panelGroupLayout id="pgl2">
+                  <af:image source="#{row.icon}"
+                            inlineStyle="width:16px; height:14px;vertical-align:middle"
+                            shortDesc="row icon" id="i1"/>
+                  <af:outputText inlineStyle="margin-left:8px" value="#{row.name}"
+                                 id="ot2"/>
+                  <af:outputText inlineStyle="margin-left:8px" value="#{row.message}"
+                                 id="clickText" partialTriggers="cl1"/>
+                </af:panelGroupLayout>
+              </af:column>
+              <af:column headerText="commandButton" id="c3">
+                <af:popup id="popupDialog">
+                  <af:dialog title="Text" id="d2">
+                    <af:inputText label="What is your name?" id="it1"/>
+                  </af:dialog>
+                </af:popup>
+                <af:commandButton immediate="true" text="Popup" clientComponent="true"
+                                  id="popupButton">
+                  <af:showPopupBehavior popupId="popupDialog" alignId="popupButton"
+                                        align="afterStart"/>
+                </af:commandButton>
+              </af:column>
+              <af:column headerText="commandLink" sortable="false" id="c4">
+                <af:commandLink partialSubmit="true" text="Click Me" actionListener="#{row.linkAction}"
+                                id="cl1"/>
+              </af:column>
+              <af:column headerText="goLink" id="c20">
+                 <af:goLink text="goLinkDemo" destination="/components/goLink.jspx"
+                            id="glgoLink"/>
+              </af:column>
+              <af:column headerText="inputText" sortable="false" align="end"
+                         id="c5">
+                <af:inputText contentStyle="#{requestContext.rightToLeft?
+                                            'text-align:left':
+                                            'text-align:right'}" value="#{row.size}" label="test inputText" simple="true"
+                              id="it2"/>
+              </af:column>
+              <af:column headerText="Required field" showRequired="true" sortable="false"
+                         id="c6">
+                <af:inputText value="#{row.col5}" required="true" label="test Required"
+                              simple="true" id="it3"/>
+              </af:column>
+              <af:column headerText="inputSearch" id="c39">
+                <af:inputSearch label="inputSearch" id="ic19lov1" valueAttribute="id" changed="#{vs.index == 2}"
+                                selectionConverter="#{inputSearchDemo.selectionConverter}"
+                                selectionMode="multiple">
+                  <af:searchSection type="default" dataUrl="/rest/employees?cache=expiry&amp;limit=5000" />
+                  <f:facet name="context">
+                    <af:contextInfo id="ci3" rendered="#{vs.index == 2}"/>
+                  </f:facet>
+                </af:inputSearch>
+              </af:column>
+              <af:column headerText="inputComboboxListOfValues" sortable="false"
+                         id="c7">
+                <af:inputComboboxListOfValues label="Ename" id="idInputComboboxListOfValues"
+                                              value="#{demoComboboxLOV.ename}" autoSubmit="true"
+                                              searchDesc="search for employee name"
+                                              changed="#{vs.index == 2}"
+                                              model="#{demoComboboxLOV.listOfValuesModel}">
+                  <f:facet name="context">
+                    <af:contextInfo id="ci1" rendered="#{vs.index == 2}"/>
+                  </f:facet>
+                </af:inputComboboxListOfValues>
+              </af:column>
+              <af:column headerText="inputDate" id="c8">
+                <af:inputDate value="#{row.inputDate}" id="inptDateInTable" label="test inputDate"
+                              simple="true"/>
+              </af:column>
+              <!--
+              <af:column headerText="inputFile" width="182" id="c9">
+                <af:inputFile id="testid1" shortDesc="File Upload" columns="10" autoSubmit="true"/>
+              </af:column>
+              -->
+              <af:column headerText="inputListOfValues" sortable="false"
+                         id="c10">
+                <af:inputListOfValues label="Fname" id="idInputListOfValues" value="#{demoLOV.ename}"
+                                      autoSubmit="true" searchDesc="employee search"
+                                      changed="#{vs.index == 4}"
+                                      model="#{demoLOV.listOfValuesModel}">
+                  <f:facet name="context">
+                    <af:contextInfo id="ci2" rendered="#{vs.index == 4}"/>
+                  </f:facet>
+                </af:inputListOfValues>
+              </af:column>
+              <af:column headerText="inputNumberSpinbox" sortable="false"
+                         id="c11">
+                <af:inputNumberSpinbox value="#{row.testSpinbox}" id="spinboxInTable"
+                                       label="test spinbox" simple="true"/>
+              </af:column>
+              <af:column align="start" sortable="false" headerNoWrap="true"
+                         id="c12">
+                <f:facet name="header">
+                  <af:selectBooleanCheckbox text="select all selectBooleanCheckbox" simple="true"
+                                            id="headerCheckbox" clientComponent="true"
+                                            autoSubmit="true"
+                                            valueChangeListener="#{tableTestData.selectAllValueChanged}"/>
+                </f:facet>
+                <!-- [darobin] An EL example of how you can have an alternate
+                     label in screen reader mode that is unique for each table row:
+                     text="Cool_#{accessibilityHolder.screenReader ? row.no : ''}" -->
+                <af:selectBooleanCheckbox id="targetBooleanCheckbox" label="Cool"
+                                          value="#{row.selectBooleanValue2}" autoSubmit="true"
+                                          valueChangeListener="#{tableTestData.selectBooleanCheckboxValueChanged}"
+                                          simple="true"/>
+              </af:column>
+              <af:column headerText="selectBooleanRadio" sortable="false"
+                         id="c13">
+                <af:selectBooleanRadio id="targetBooleanRadio" label="Active" simple="true" group="sbrcol"
+                                       value="#{row.selectBooleanValue1}"/>
+              </af:column>
+              <af:column headerText="selectManyCheckbox" sortable="false"
+                         id="c14">
+                <af:selectManyCheckbox id="targetManyCheckbox" value="#{row.selectManyValue1}"
+                                       label="drinks" simple="true">
+                  <af:selectItem label="coffee" value="bean" shortDesc="shortDesc text"
+                                 id="si1"/>
+                  <af:selectItem label="tea" value="leaf" shortDesc="shortDesc text"
+                                 id="si2"/>
+                  <af:selectItem disabled="true" label="orange juice" value="orange"
+                                 id="si3"/>
+                  <af:selectItem label="wine" value="grape" id="si4"/>
+                  <af:selectItem shortDesc="shortDesc text" label="milk"
+                                 value="moo" id="si5"/>
+                </af:selectManyCheckbox>
+              </af:column>
+              <af:column headerText="selectManyChoice" sortable="false"
+                         id="c15">
+                <af:selectManyChoice id="targetManyChoice" value="#{row.selectManyChoice1}"
+                                     selectAllVisible="true" label="nuts" simple="true"
+                                     changed="#{vs.index == 4}">
+                  <af:selectItem label="peanuts" value="nuts" shortDesc="shortDesc text"
+                                 id="si6"/>
+                  <af:selectItem label="pinenuts" value="pinenuts" shortDesc="shortDesc text"
+                                 id="si7"/>
+                  <af:selectItem disabled="true" label="almonds" value="almonds"
+                                 id="si8"/>
+                  <af:selectItem label="pecans" value="pecans" id="si9"/>
+                  <af:selectItem shortDesc="shortDesc text" label="filberts"
+                                 value="more nuts" id="si10"/>
+                </af:selectManyChoice>
+              </af:column>
+              <af:column headerText="selectManyListbox" sortable="false"
+                         id="c16">
+                <af:selectManyListbox id="targetManyListbox" value="#{row.selectManyList1}" size="2"
+                                      label="more drinks" simple="true">
+                  <af:selectItem label="coffee" value="bean" shortDesc="shortDesc text"
+                                 id="si11"/>
+                  <af:selectItem label="tea" value="leaf" shortDesc="shortDesc text"
+                                 id="si12"/>
+                  <af:selectItem disabled="true" label="orange juice" value="orange"
+                                 id="si13"/>
+                  <af:selectItem label="wine" value="grape" id="si14"/>
+                  <af:selectItem shortDesc="shortDesc text" label="milk"
+                                 value="moo" id="si15"/>
+                </af:selectManyListbox>
+              </af:column>
+              <af:column headerText="selectOneChoice" id="c17">
+                <af:selectOneChoice id="targetCompactChoice" value="#{row.selectOneValue}"
+                                    valueChangeListener="#{row.selectOneValueChanged}" simple="true"
+                                    label="selectOneChoice accessories">
+                  <af:selectItem label="Mouse" value="Mouse" shortDesc="shortDesc text"
+                                 id="si16"/>
+                  <af:selectItem label="Speaker" value="Speaker" rendered="true"
+                                 id="si17"/>
+                  <af:selectItem label="Head Phone" value="Head Phone" shortDesc="shortDesc text"
+                                 id="si18"/>
+                </af:selectOneChoice>
+              </af:column>
+              <af:column headerText="selectOneListbox" id="c18">
+                <af:selectOneListbox id="targetSelectOneListbox" value="#{row.selectOneValue}"
+                                     valueChangeListener="#{row.selectOneValueChanged}" simple="true"
+                                     label="selectOneListbox accessories">
+                  <af:selectItem label="Mouse" value="Mouse" shortDesc="shortDesc text"
+                                 id="si19"/>
+                  <af:selectItem label="Speaker" value="Speaker" rendered="true"
+                                 id="si20"/>
+                  <af:selectItem label="Head Phone" value="Head Phone" shortDesc="shortDesc text"
+                                 id="si21"/>
+                </af:selectOneListbox>
+              </af:column>
+              <af:column headerText="selectOneRadio" id="c19">
+                <af:selectOneRadio id="targetRadio" layout="vertical" label="veggies" simple="true">
+                  <af:selectItem label="apples" value="fruit" id="si22"/>
+                  <af:selectItem label="potato" value="root veggie" id="si23"/>
+                  <af:selectItem label="lettuce" value="salad" id="si24"/>
+                  <af:selectItem label="zucchini" value="vegetable" id="si25"/>
+                </af:selectOneRadio>
+              </af:column>
+            </af:table>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+              <af:outputText value="See also:" id="ot3"/>
+              <af:panelList maxColumns="2" rows="8" id="pl1">
+                <af:goLink text="Editable Table with Input Color"
+                           destination="editableTableInputColor.jspx" id="gl1"/>
+                <af:goLink text="commandButton" destination="/components/commandButton.jspx"
+                           id="gl2"/>
+                <af:goLink text="commandLink" destination="/components/commandLink.jspx"
+                           id="gl3"/>
+                <af:goLink text="goLink" destination="/components/goLink.jspx"
+                           id="gl18"/>
+                <af:goLink text="inputComboboxListOfValues"
+                           destination="/components/inputComboboxListOfValues.jspx"
+                           id="gl4"/>
+                <af:goLink text="inputDate" destination="/components/inputDate.jspx"
+                           id="gl5"/>
+                <af:goLink text="inputFile" destination="/components/inputFile.jspx"
+                           id="gl6"/>
+                <af:goLink text="inputListOfValues" destination="/components/inputListOfValues.jspx"
+                           id="gl7"/>
+                <af:goLink text="inputNumberSpinbox"
+                           destination="/components/inputNumberSpinbox.jspx"
+                           id="gl8"/>
+                <af:goLink text="inputText" destination="/components/inputText.jspx"
+                           id="gl9"/>
+                <af:goLink text="selectBooleanCheckbox"
+                           destination="/components/selectBooleanCheckbox.jspx"
+                           id="gl10"/>
+                <af:goLink text="selectBooleanRadio"
+                           destination="/components/selectBooleanRadio.jspx"
+                           id="gl11"/>
+                <af:goLink text="selectManyCheckbox"
+                           destination="/components/selectManyCheckbox.jspx"
+                           id="gl12"/>
+                <af:goLink text="selectManyChoice" destination="/components/selectManyChoice.jspx"
+                           id="gl13"/>
+                <af:goLink text="selectManyListbox" destination="/components/selectManyListbox.jspx"
+                           id="gl14"/>
+                <af:goLink text="selectOneChoice" destination="/components/selectOneChoice.jspx"
+                           id="gl15"/>
+                <af:goLink text="selectOneListbox" destination="/components/selectOneListbox.jspx"
+                           id="gl16"/>
+                <af:goLink text="selectOneRadio" destination="/components/selectOneRadio.jspx"
+                           id="gl17"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

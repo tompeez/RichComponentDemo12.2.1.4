@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelSplitter Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript" source="/jsLibs/TestPanelSplitter.js"/>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelSplitter"/>
+        <f:attribute name="visualDesignName" value="splitterBar"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmFlowNotes" value="If you use dimensionsFrom=&quot;parent&quot; when flowing this component, the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmFlowWithZeroWidthNotes" value="If you use dimensionsFrom=&quot;parent&quot; when flowing this component, the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmStretchChildren" value="first"/>
+        <f:facet name="centerSplitStart">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:showDetailHeader text="Partial Update Tests" id="sdh1">
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:selectBooleanCheckbox text="First" value="#{demoPanelSplitter.updateFirst}"
+                                          id="sbc1"/>
+                <af:selectBooleanCheckbox text="Second"
+                                          value="#{demoPanelSplitter.updateSecond}"
+                                          id="sbc2"/>
+                <af:commandButton text="Update" partialSubmit="true"
+                                  action="#{demoPanelSplitter.updateFacets}"
+                                  id="cb1"/>
+              </af:panelGroupLayout>
+            </af:showDetailHeader>
+            <af:showDetailHeader text="Rendered Tests" id="sdh2">
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <af:selectBooleanCheckbox id="firstRenderedCheckbox" text="First"
+                                          value="#{demoPanelSplitter.firstRendered}"/>
+                <af:selectBooleanCheckbox id="secondRenderedCheckbox" text="Second"
+                                          value="#{demoPanelSplitter.secondRendered}"/>
+                <af:commandButton id="updateRendered" text="Update" partialSubmit="true"/>
+              </af:panelGroupLayout>
+            </af:showDetailHeader>
+            <af:showDetailHeader text="Visibility Tests" id="sdh3">
+              <af:panelGroupLayout layout="vertical" id="pgl4">
+                <af:selectBooleanCheckbox id="firstVisibleCheckbox" text="First"
+                                          value="#{demoPanelSplitter.firstVisible}">
+                  <af:clientListener type="valueChange"
+                                     method="TestPanelSplitter.toggleVisibility"/>
+                </af:selectBooleanCheckbox>
+                <af:selectBooleanCheckbox id="secondVisibleCheckbox" text="Second"
+                                          value="#{demoPanelSplitter.secondVisible}">
+                  <af:clientListener type="valueChange"
+                                     method="TestPanelSplitter.toggleVisibility"/>
+                </af:selectBooleanCheckbox>
+                <af:selectBooleanCheckbox clientComponent="true" id="localVisibleCheckbox"
+                                          text="Set visible locally"
+                                          valueChangeListener="#{demoPanelSplitter.visibilityModeChanged}"
+                                          autoSubmit="true"/>
+              </af:panelGroupLayout>
+            </af:showDetailHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelSplitter id="innerVerticalSplitter" binding="#{editor.component}"
+                            partialTriggers="updateRendered" dimensionsFrom="auto">
+            <f:facet name="first">
+              <aftest:panelResizeNotify id="firstChild"
+                                        rendered="#{demoPanelSplitter.firstRendered}"
+                                        visible="#{demoPanelSplitter.firstVisible}"
+                                        inlineStyle="background-color: red"/>
+            </f:facet>
+            <f:facet name="second">
+              <aftest:panelResizeNotify id="secondChild"
+                                        rendered="#{demoPanelSplitter.secondRendered}"
+                                        visible="#{demoPanelSplitter.secondVisible}"
+                                        inlineStyle="background-color: green"/>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

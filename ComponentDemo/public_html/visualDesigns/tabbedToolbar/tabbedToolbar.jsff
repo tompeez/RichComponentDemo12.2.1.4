@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2011, Oracle and/or its affiliates. All rights reserved. -->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Dynamic declarative component for a tabbed toolbar.</description>
+        <attribute>
+          <description>the CSS length for the width of the start toolbar</description>
+          <attribute-name>startToolbarWidth</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>25%</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelGroupLayout id="tTools" layout="vertical">
+      <af:resource type="css">
+        .MyTabbedToolbarToolbox { border-bottom: 1px solid #606974; }
+        .MyTabbedToolbarTab { min-height: 2em; }
+        .MyTabbedToolbarTab.p_AFDepressed.p_AFSelected.p_AFTextOnly { border-bottom-color: #A7B7D4; }
+        .MyTabbedToolbarContents { border-left: 1px solid #606974; border-right: 1px solid #606974; border-bottom: 1px solid #606974; }
+        .MyTabbedToolbarContentText { border-right: 1px solid #606974; padding: 2px; white-space: nowrap; text-align: center; background-color: #A7B7D4; }
+        .MyTabbedToolbarContentControls { border-right: 1px solid #606974; padding: 4px; }
+        .MyTabbedToolbarContentText.MyLast,
+        .MyTabbedToolbarContentControls.MyLast { border-right-width: 0px; }
+        .MySelectOneIconImage { border: 1px solid #606974; }
+        .MySelectOneIconImage.MySelected { border: 3px solid orange; }
+        .MySelectOneIconText { display: block; max-width: 70px; }
+      </af:resource>
+      <af:resource type="javascript">
+        function handleToolbarChangeButton(actionEvent)
+        {
+          actionEvent.cancel();
+          var eventSource = actionEvent.getSource();
+          var toolbarId = eventSource.getProperty("toolbar");
+          _findComponent(eventSource, "insertPgl").setVisible("insert" == toolbarId);
+          _findComponent(eventSource, "pgLytPgl").setVisible("pgLyt" == toolbarId);
+          _findComponent(eventSource, "contextPgl").setVisible("context" == toolbarId);
+        }
+        function handleToolbarContextSwitch(valueChangeEvent)
+        {
+          valueChangeEvent.cancel();
+          var eventSource = valueChangeEvent.getSource();
+          var toolbarId = eventSource.getProperty("toolbar");
+          var newContext = valueChangeEvent.getNewValue();
+          var newText = "Chart";
+          var newToolbar = "chartToolbar";
+          if (newContext != "chart")
+          {
+            newText = "Text";
+            newToolbar = "textToolbar";
+          }
+          _findComponent(eventSource, toolbarId+":ctbContext").setText(newText);
+          _findComponent(eventSource, toolbarId+":chartPgl").setVisible("chartToolbar" == newToolbar);
+          _findComponent(eventSource, toolbarId+":textPgl").setVisible("textToolbar" == newToolbar);
+        }
+        function _findComponent(relativeComponent, searchExpression)
+        {
+          var foundComponent = relativeComponent.findComponent(searchExpression);
+          if (foundComponent == null)
+          {
+            alert("Unable to find component with search expression " + searchExpression + " from relativeComponent " + relativeComponent);
+          }
+          return foundComponent;
+        }
+      </af:resource>
+      <af:panelStretchLayout id="psl1" dimensionsFrom="auto" startWidth="#{attrs.startToolbarWidth}">
+        <f:facet name="start">
+          <af:toolbox id="tbox1" styleClass="MyTabbedToolbarToolbox">
+            <af:toolbar id="tbar1">
+              <af:group id="history">
+                <af:commandToolbarButton id="undo" shortDesc="Undo" icon="/images/undo_ena.png"
+                                             hoverIcon="/images/undo_ovr.png" depressedIcon="/images/undo_dwn.png"
+                                             disabledIcon="/images/undo_dis.png"/>
+                <af:commandToolbarButton id="redo" shortDesc="Redo" disabled="true" icon="/images/redo_ena.png"
+                                             hoverIcon="/images/redo_ovr.png" depressedIcon="/images/redo_dwn.png"
+                                             disabledIcon="/images/redo_dis.png"/>
+              </af:group>
+              <af:group id="edits">
+                <af:commandToolbarButton id="cut" shortDesc="Cut" icon="/images/cut_ena.png"
+                                             hoverIcon="/images/cut_ovr.png" depressedIcon="/images/cut_dwn.png"
+                                             disabledIcon="/images/cut_dis.png"/>
+                <af:commandToolbarButton id="copy" shortDesc="Copy" icon="/images/copy_ena.png"
+                                             hoverIcon="/images/copy_ovr.png" depressedIcon="/images/copy_dwn.png"
+                                             disabledIcon="/images/copy_dis.png"/>
+                <af:commandToolbarButton id="Paste" shortDesc="Paste" icon="/images/paste_ena.png"
+                                             hoverIcon="/images/paste_ovr.png" depressedIcon="/images/paste_dwn.png"
+                                             disabledIcon="/images/paste_dis.png"/>
+              </af:group>
+            </af:toolbar>
+          </af:toolbox>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout id="psl2" dimensionsFrom="auto" startWidth="auto">
+            <f:facet name="start">
+              <af:panelGroupLayout id="hPgl" layout="horizontal">
+                <af:commandToolbarButton id="ctbInsert" type="radio" styleClass="MyTabbedToolbarTab" text="Insert" selected="true">
+                  <af:clientListener type="action" method="handleToolbarChangeButton"/>
+                  <af:clientAttribute name="toolbar" value="insert"/>
+                </af:commandToolbarButton>
+                <af:commandToolbarButton id="ctbPgLyt" type="radio" styleClass="MyTabbedToolbarTab" text="Page Layout">
+                  <af:clientListener type="action" method="handleToolbarChangeButton"/>
+                  <af:clientAttribute name="toolbar" value="pgLyt"/>
+                </af:commandToolbarButton>
+                <af:commandToolbarButton id="ctbContext" type="radio" styleClass="MyTabbedToolbarTab" text="Chart">
+                  <af:clientListener type="action" method="handleToolbarChangeButton"/>
+                  <af:clientAttribute name="toolbar" value="context"/>
+                </af:commandToolbarButton>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:toolbox id="tbox2" styleClass="MyTabbedToolbarToolbox">
+                <af:toolbar id="tbar2" stretchId="stretch">
+                  <af:spacer id="stretch" clientComponent="true"/>
+                  <af:commandToolbarButton id="return" text="Return" partialSubmit="true"/>
+                  <af:group id="file">
+                    <af:commandToolbarButton id="new" shortDesc="New" icon="/images/new_ena.png"
+                                             hoverIcon="/images/new_ovr.png" depressedIcon="/images/new_dwn.png"
+                                             disabledIcon="/images/new_dis.png"/>
+                    <af:commandToolbarButton id="open" shortDesc="Open" icon="/images/folderopen_ena.png"
+                                             hoverIcon="/images/folderopen_ovr.png"
+                                             depressedIcon="/images/folderopen_dwn.png"
+                                             disabledIcon="/images/folderopen_dis.png"/>
+                    <af:commandToolbarButton id="save" shortDesc="Save" icon="/images/save_ena.png"
+                                             hoverIcon="/images/save_ovr.png" depressedIcon="/images/save_dwn.png"
+                                             disabledIcon="/images/save_dis.png"/>
+                  </af:group>
+                </af:toolbar>
+              </af:toolbox>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+      <af:panelGroupLayout id="pglContentsS" layout="vertical">
+        <af:panelGroupLayout id="pglContentsV" layout="vertical" styleClass="MyTabbedToolbarContents">
+          <af:panelGroupLayout id="insertPgl" layout="scroll" clientComponent="true" visible="true">
+            <af:declarativeComponent id="insert" viewId="/visualDesigns/tabbedToolbar/contentInsert.jsff"/>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout id="pgLytPgl" layout="scroll" clientComponent="true" visible="false">
+            <af:declarativeComponent id="pgLyt" viewId="/visualDesigns/tabbedToolbar/contentPageLayout.jsff"/>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout id="contextPgl" layout="scroll" clientComponent="true" visible="false">
+            <af:panelGroupLayout id="chartPgl" layout="vertical" clientComponent="true" visible="true">
+              <af:declarativeComponent id="chart" viewId="/visualDesigns/tabbedToolbar/contentChart.jsff"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout id="textPgl" layout="vertical" clientComponent="true" visible="false">
+              <af:declarativeComponent id="text" viewId="/visualDesigns/tabbedToolbar/contentText.jsff"/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+    </af:panelGroupLayout>
+  </af:componentDef>
+</jsp:root>

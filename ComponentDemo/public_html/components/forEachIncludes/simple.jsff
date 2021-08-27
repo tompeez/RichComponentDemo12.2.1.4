@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2012, 2013, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  version="2.1"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef
+    var="attrs"
+    componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>forEach simple demo</description>
+      </component>
+    </af:xmlContent>
+    <af:panelGroupLayout layout="scroll" id="dc_pgl1">
+      <af:panelHeader text="Simple forEach usage" id="dc_ph1"/>
+      <af:showDetailHeader id="dc_sdhl" text="List" disclosed="false">
+        <af:showDetail disclosedText="Hide notes" undisclosedText="Show notes" disclosed="true"
+                       id="dc_sd1">
+          <af:outputText value="List based for each loops cannot be safely altered. They are good for iterating over a collection that will not changed between requests"
+                         id="dc_ot1" inlineStyle="padding: 1em 0; display: block;"/>
+        </af:showDetail>
+        <af:forEach var="emp" varStatus="vs" items="#{forEachBean.employeeList}">
+          <af:declarativeComponent id="dcl${vs.key}" viewId="employeeDetails.jsff"
+                                   employee="#{emp}"
+                                   varStatus="#{vs}"
+                                   styleClass="#{vs.count % 2 eq 0 ? 'even' : 'odd'}" />
+        </af:forEach>
+      </af:showDetailHeader>
+      <af:showDetailHeader id="dc_sdhm" text="Map" disclosed="false">
+        <af:showDetail disclosedText="Hide notes" undisclosedText="Show notes" disclosed="true"
+                       id="dc_sd2">
+          <af:outputText value="Map based for each loops should be based on ordered maps (TreeMap and LinkedHashMap for example). The keys must be serializable. The IDs of the children components should be tied to the key of the map during each iteration"
+                         id="dc_ot2" inlineStyle="padding: 1em 0; display: block;"/>
+        </af:showDetail>
+        <af:forEach var="emp" varStatus="vs" items="#{forEachBean.employeeMap}">
+          <af:declarativeComponent id="dcm${vs.key}" viewId="employeeDetails.jsff"
+                                   employee="#{emp}"
+                                   varStatus="#{vs}"
+                                   styleClass="#{vs.count % 2 eq 0 ? 'even' : 'odd'}" />
+        </af:forEach>
+      </af:showDetailHeader>
+      <af:showDetailHeader id="dc_sdhc" text="Collection Model" disclosed="true">
+        <af:showDetail disclosedText="Hide notes" undisclosedText="Show notes" disclosed="true"
+                       id="dc_sd3">
+          <af:outputText value="Collection model based for each loops must have a serializable row key. The IDs of the children components should be tied to the row key during each iteration"
+                         id="dc_ot3" inlineStyle="padding: 1em 0; display: block;"/>
+        </af:showDetail>
+        <af:forEach var="emp" varStatus="vs" items="#{forEachBean.employeeModel}">
+          <af:declarativeComponent id="dcc${vs.key}" viewId="employeeDetails.jsff"
+                                   employee="#{emp}"
+                                   varStatus="#{vs}"
+                                   styleClass="#{vs.count % 2 eq 0 ? 'even' : 'odd'}" />
+        </af:forEach>
+      </af:showDetailHeader>
+    </af:panelGroupLayout>
+  </af:componentDef>
+</jsp:root>

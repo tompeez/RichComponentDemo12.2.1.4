@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Branding Bar Layout Pattern Example" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:resource type="css">
+      .MyBreadCrumbsContainer {
+        padding-top: 3px;
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      HTML[dir=rtl] .SampleShownInLtr {
+        display: none;
+      }
+      .SampleShownInRtl {
+        display: none;
+      }
+      HTML[dir=rtl] .SampleShownInRtl {
+        display: block;
+      }
+      .SampleStretchedImage {
+        width: 100%;
+        max-width: 100%;
+      }
+      </af:resource>
+      <af:pageTemplate id="pt" viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/tabletTemplateAlta.jspx' : '/templates/pageTemplateDefs/tabletTemplate.jspx'}">
+        <f:attribute name="headerGlobalSize" value="45"/>
+        <f:attribute name="navigation2Size" value="0"/>
+        <f:attribute name="header2Size" value="0"/>
+        <f:attribute name="footer2Size" value="0"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:facet name="branding">
+          <af:outputText value="Branding Bar" id="ot1" styleClass="AFBrandingBarTitle"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:button icon="/images/alta_v1/project_ena.png" hoverIcon="/images/alta_v1/project_ovr.png" depressedIcon="/images/alta_v1/project_dwn.png"  rendered="#{(attrs.demoKind!='visualDesign') and
+                                        (attrs.demoKind!='styles') and
+                                        (attrs.demoKind!='confusedComponents') and
+                                        (attrs.demoKind!='feature')}" destination="/feature/layoutBasics.jspx" immediate="true" shortDesc="Back to Layout Basics"
+                                              id="ptcni9"/>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:navigationPane hint="tabs" id="np2">
+            <af:commandNavigationItem text="Layout Basics"
+                                      destination="/feature/layoutBasics.jspx"
+                                      id="cni4"/>
+            <af:commandNavigationItem text="Simple Demos"
+                                      destination="/feature/layoutBasicTest.jspx"
+                                      id="cnsd"/>
+            <af:commandNavigationItem text="Branding Bar"
+                                      destination="/feature/layoutBrandingBar.jspx"
+                                      selected="true" id="cni5"/>
+            <af:commandNavigationItem text="Form Layout"
+                                      destination="/feature/layoutForm.jspx" id="cni6"/>
+            <af:commandNavigationItem text="Navigation-Master-Detail"
+                                      destination="/feature/layoutNavigationMasterDetail.jspx"
+                                      id="cni7"/>
+            <af:commandNavigationItem text="Stretched Header"
+                                      destination="/feature/layoutStretchedHeader.jspx"
+                                      id="cni8"/>
+            <af:commandNavigationItem text="Tiled Flowing"
+                                      destination="/feature/layoutTiledFlowing.jspx"
+                                      id="cni9"/>
+            <af:commandNavigationItem text="Tiled Stretching"
+                                      destination="/feature/layoutTiledStretching.jspx"
+                                      id="cni10"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/tabletTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc1">
+                <af:commandNavigationItem text="Feature Demos" destination="/feature/index.jspx"
+                                          id="cni11"/>
+                <af:commandNavigationItem text="Layout Basics" destination="/feature/layoutBasics.jspx"
+                                          id="cni12"/>
+                <af:commandNavigationItem text="Branding Bar" id="cni13"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="center">
+          <af:decorativeBox theme="dark" id="db1" dimensionsFrom="auto">
+            <f:facet name="center">
+              <af:panelGroupLayout layout="scroll" id="pgl2">
+                <af:panelGroupLayout layout="vertical" inlineStyle="padding: 15px;"
+                                     id="pgl3">
+                  <!-- start of branding bar -->
+                  <af:panelBorderLayout styleClass="AFBrandingBar" id="pbl1">
+                    <f:facet name="start">
+                      <af:panelGroupLayout styleClass="AFBrandingBarItem" id="pgl4">
+                        <af:link id="logoLinkEx" action="index" shortDesc="Go to index" icon="/afr/oracle_logo.png" styleClass="AFBrandingLogo"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="innerStart">
+                      <af:panelGroupLayout styleClass="AFBrandingBarItem"
+                                           id="pgl5">
+                        <af:panelGroupLayout layout="vertical" styleClass="AFBrandingBarTitle"
+                                             id="pgl6">
+                          <af:outputText value="Sample Title" id="ot4"/>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <af:panelBorderLayout id="pbl2">
+                      <af:spacer inlineStyle="width: 100%; max-width: 100%;" />
+                      <f:facet name="end">
+                        <af:panelGroupLayout layout="vertical" styleClass="AFBrandingBarItem"
+                                             id="pgl7">
+                          <af:navigationPane hint="bar" id="np3">
+                            <af:commandNavigationItem text="Home" partialSubmit="true"
+                                                      id="cni14"/>
+                            <af:commandNavigationItem text="Preferences" partialSubmit="true"
+                                                      id="cni15"/>
+                            <af:commandNavigationItem text="Sign Out" partialSubmit="true"
+                                                      id="cni16"/>
+                          </af:navigationPane>
+                        </af:panelGroupLayout>
+                      </f:facet>
+                    </af:panelBorderLayout>
+                    <f:facet name="innerEnd">
+                      <af:spacer width="4" id="s3"/>
+                    </f:facet>
+                    <f:facet name="end">
+                      <af:panelGroupLayout layout="horizontal" styleClass="AFBrandingBarItem"
+                                           id="pgl8">
+                        <af:statusIndicator id="si1"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <!-- end of branding bar -->
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:decorativeBox>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

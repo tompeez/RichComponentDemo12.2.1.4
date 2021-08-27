@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map Drilling" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <!--<f:attribute name="documentTitle" value="Show And Hide Series"/>-->
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Thematic Map Drilling"/>
+        <f:facet name="center">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth" topHeight="auto">
+            <f:facet name="bottom"/>
+            <f:facet name="center">
+              <dvt:thematicMap id="thematicMap" basemap="usa" drilling="on"
+                               maintainDrill="#{tmapBean.maintainDrillState}" drillBehavior="#{tmapBean.drillBehavior}"
+                               controlPanelBehavior="initExpanded"
+                               partialTriggers="::sbc1 ::soc1"
+                               summary="Thematic map drilling demo.  Select a state from the table then click he drill down button above the table to drill to that state.">
+                <!-- Because drilling is on, control panel will also display, but is set to hidden for testing. -->     
+                <af:transition transition="auto" triggerType="display"/>
+                <af:transition transition="auto" triggerType="drill"/>
+                <dvt:areaLayer id="areaLayerS" layer="states">
+                  <dvt:areaDataLayer id="dataLayerS" selectionMode="multiple" contentDelivery="immediate"
+                                     value="#{tmapBean.colorModel}" var="row" varStatus="rowStatus">
+                    <dvt:areaLocation id="areaLocS" name="#{row.name}">
+                      <dvt:area id="area1S" fillColor="#{row.color}"/>
+                    </dvt:areaLocation>
+                  </dvt:areaDataLayer>
+                </dvt:areaLayer>
+                <dvt:areaLayer id="areaLayer" layer="counties">
+                  <dvt:areaDataLayer id="dataLayer" selectionMode="multiple" contentDelivery="immediate"
+                                     value="#{tmapBean.countyModel}" var="row" varStatus="rowStatus">
+                    <dvt:areaLocation id="areaLoc" name="#{row.name}">
+                      <dvt:area id="area1" fillColor="#{row.color}"/>
+                    </dvt:areaLocation>
+                  </dvt:areaDataLayer>
+                </dvt:areaLayer>
+              </dvt:thematicMap>
+            </f:facet>
+            <f:facet name="start"/>
+            <f:facet name="end"/>
+            <f:facet name="top">
+              <af:panelGroupLayout layout="vertical" id="pgl11">
+                <af:panelGroupLayout layout="horizontal" id="pgl12">
+                  <af:spacer width="10px" id="s11"/>
+                  <af:panelGroupLayout id="pgl13">
+                    <f:verbatim>
+                      <p>This demo contains state and county data for the United States.  To drill down to the county level data:</p>
+                      <ul>
+                        <li>Double click on an area</li>
+                        <li>Use the drill down button in the control panel</li>
+                        <li>Select an area and hit the Enter key.</li>
+                      </ul>
+                      <p>To drill back up to the state level data, select a county and:</p>
+                      <ul>
+                        <li>Use the drill up button in the control panel</li>
+                        <li>Hit the Shift + Enter keys.</li>
+                      </ul>
+                      <p>Set the drill behavior to 'zoomToFit' and perform a drill action to zoom in on the current drilled area. 
+                      You can zoom to fit multiple drilled states by first selecting multiple areas (hold down the ctrl key while selecting) and then performing a drill action.</p>
+                    </f:verbatim>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="horizontal">
+                  <af:selectOneChoice id="soc1" autoSubmit="true" label="Drill Behavior"
+                                      value="#{tmapBean.drillBehavior}">
+                    <af:selectItem label="none" value="none"/>
+                    <af:selectItem label="zoomToFit" value="zoomToFit"/>
+                  </af:selectOneChoice>
+                  <af:spacer width="10px" height="5px"/>
+                  <af:selectBooleanCheckbox id="sbc1" value="#{tmapBean.maintainDrillState}"
+                                            label="Maintain Drill State" autoSubmit="true"/>
+                </af:panelGroupLayout>
+                <af:separator/>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

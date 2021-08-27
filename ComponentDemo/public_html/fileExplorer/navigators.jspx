@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelStretchLayout id="navsStretch" dimensionsFrom="auto">
+    <f:facet name="center">
+      <!-- Using accordion to show and hide multiple navigator items -->
+      <af:panelAccordion id="navigatorAccordion"
+                         discloseMany="true"
+                         discloseNone="true"
+                         binding="#{explorer.navigatorManager.navigatorAccordion}"
+                         dimensionsFrom="auto">
+        <af:showDetailItem id="showFolders"
+                           icon="#{explorer.navigatorManager.foldersNavigator.icon}"
+                           text="#{explorer.navigatorManager.foldersNavigator.label}"
+                           disclosed="#{explorer.navigatorManager.foldersNavigator.disclosed}"
+                           binding="#{explorer.navigatorManager.foldersNavigator.showDetailItem}"
+                           flex="#{explorer.navigatorManager.foldersNavigator.flex}"
+                           disclosureListener="#{explorer.navigatorManager.foldersNavigator.discloseNavigator}"
+                           stretchChildren="#{mobileSettings.dimensionsFromChildren ? 'none' : 'first'}">
+          <af:tree id="folderTree"
+                   var="folder"
+                   binding="#{explorer.navigatorManager.foldersNavigator.foldersTreeComponent}"
+                   value="#{explorer.navigatorManager.foldersNavigator.foldersTreeModel}"
+                   disclosedRowKeys="#{explorer.navigatorManager.foldersNavigator.foldersTreeDisclosedRowKeys}"
+                   rowSelection="single"
+                   selectionListener="#{explorer.navigatorManager.foldersNavigator.showSelectedFolderContent}"
+                   styleClass="AFStretchWidth" autoHeightRows="0">
+            <af:collectionDropTarget actions="COPY MOVE" modelName="fileModel"
+                                     dropListener="#{explorer.navigatorManager.foldersNavigator.onTreeDrop}"/>
+            <f:facet name="contextMenu">
+              <af:popup id="context2">
+                <af:menu id="m1">
+                  <af:commandMenuItem text="#{explorerBundle['menuitem.properties']}"
+                                      windowWidth="300" windowHeight="300" useWindow="true"
+                                      action="#{explorer.launchProperties}"
+                                      returnListener="#{explorer.returnFromProperties}"
+                                      id="cmi1">
+                  </af:commandMenuItem>
+                  <af:commandMenuItem text="#{explorerBundle['menuitem.copy']}"
+                                      disabled="#{explorer.headerManager.disabledCopyItem}"
+                                      actionListener="#{explorer.headerManager.copySelectedItem}"
+                                      id="cmi2"/>
+                  <af:commandMenuItem text="#{explorerBundle['menuitem.paste']}"
+                                      disabled="#{explorer.headerManager.disabledPasteItem}"
+                                      actionListener="#{explorer.headerManager.pasteItemToCurrentLocation}"
+                                      id="cmi3"/>
+                </af:menu>
+              </af:popup>
+            </f:facet>
+            <f:facet name="nodeStamp">
+              <af:panelGroupLayout id="pgl1">
+                <af:image id="folderNodeStampImg" source="#{folder.icon}"
+                          inlineStyle="vertical-align:middle; margin-right:3px;" shortDesc="folder icon"/>
+                <af:outputText id="folderNodeStampText" value="#{folder.name}"/>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="pathStamp">
+              <af:panelGroupLayout id="pgl2">
+                <af:image id="folderPathStampImg" source="#{folder.icon}"
+                          inlineStyle="vertical-align:middle; margin-right:3px;" shortDesc="folder icon"/>
+                <af:outputText id="folderPathStampText" value="#{folder.name}"/>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:tree>
+        </af:showDetailItem>
+        <af:showDetailItem id="search"
+                           icon="#{explorer.navigatorManager.searchNavigator.icon}"
+                           text="#{explorer.navigatorManager.searchNavigator.label}"
+                           disclosed="#{explorer.navigatorManager.searchNavigator.disclosed}"
+                           binding="#{explorer.navigatorManager.searchNavigator.showDetailItem}"
+                           flex="#{explorer.navigatorManager.searchNavigator.flex}"
+                           disclosureListener="#{explorer.navigatorManager.searchNavigator.discloseNavigator}"
+                           stretchChildren="first">
+          <af:panelSplitter orientation="vertical" splitterPosition="160"
+                            id="ps1" dimensionsFrom="auto">
+            <f:facet name="first">
+              <!-- Search Criteria -->
+              <af:panelGroupLayout layout="scroll" id="pgl3">
+                <af:panelGroupLayout layout="vertical" inlineStyle="min-width: 225px;"
+                                     id="pgl4">
+                  <f:facet name="separator">
+                    <af:spacer height="5" id="s1"/>
+                  </f:facet>
+                  <!-- File Item name -->
+                  <af:outputLabel value="#{explorerBundle['navigator.filenamesearch']}"
+                                  id="ol1"/>
+                  <af:inputText id="searchCriteriaName"
+                                value="#{explorer.navigatorManager.searchNavigator.searchCriteriaName}"
+                                shortDesc="#{explorerBundle['navigator.filenamesearch']}">
+                    <af:serverListener type="enterPressedOnSearch"
+                                 method="#{explorer.navigatorManager.searchNavigator.searchOnEnter}"/>
+                    <af:clientListener type="keyPress"
+                                 method="Explorer.searchNameHandleKeyPress"/>
+                  </af:inputText>
+                  <!-- What is the FileItem type -->
+                  <af:selectOneChoice autoSubmit="true"
+                                      label="#{explorerBundle['navigator.typeoffilesearch']}"
+                                      value="#{explorer.navigatorManager.searchNavigator.searchCriteriaType}"
+                                      id="soc1">
+                    <f:selectItems value="#{explorer.navigatorManager.searchNavigator.searchFileItemTypes}"
+                                   id="si1"/>
+                  </af:selectOneChoice>
+                  <af:showDetail id="when"
+                                 disclosedText="#{explorerBundle['navigator.lastmodifiedsearch']}" clientComponent="true">
+                    <!-- When its modified -->
+                    <af:selectOneRadio id="modifiedCriteria"
+                                       autoSubmit="true"
+                                       value="#{explorer.navigatorManager.searchNavigator.searchCriteriaLastModified}"
+                                       label="modified criteria"
+                                       simple="true" clientComponent="true">
+                      <f:selectItem itemLabel="#{explorerBundle['lastmodifiedsearch.any']}"
+                                    itemValue="any" id="si2"/>
+                      <f:selectItem itemLabel="#{explorerBundle['lastmodifiedsearch.week']}"
+                                    itemValue="week" id="si3"/>
+                      <f:selectItem itemLabel="#{explorerBundle['lastmodifiedsearch.month']}"
+                                    itemValue="month" id="si4"/>
+                      <f:selectItem itemLabel="#{explorerBundle['lastmodifiedsearch.year']}"
+                                    itemValue="year" id="si5"/>
+                      <f:selectItem itemLabel="#{explorerBundle['lastmodifiedsearch.specify']}"
+                                    itemValue="specify" id="si6"/>
+                    </af:selectOneRadio>
+                    <af:inputDate id="lastModifiedDate"
+                                  label="#{explorerBundle['lastmodifiedsearch.from']}"
+                                  disabled="#{explorer.navigatorManager.searchNavigator.disabledLastModifiedDate}"
+                                  value="#{explorer.navigatorManager.searchNavigator.searchCriteriaLastModifiedDate}"/>
+                  </af:showDetail>
+                  <af:showDetail disclosedText="#{explorerBundle['navigator.sizeoptionsearch']}"
+                                 id="sd1" clientComponent="true">
+                    <!-- What is the file size? -->
+                    <af:selectOneRadio autoSubmit="true"
+                                       value="#{explorer.navigatorManager.searchNavigator.searchCriteriaSize}"
+                                       label="file size" simple="true"
+                                       id="sor1" clientComponent="true">
+                      <af:selectItem label="#{explorerBundle['sizeoptionsearch.any']}"
+                                     value="any" id="si7"/>
+                      <af:selectItem label="#{explorerBundle['sizeoptionsearch.small']}"
+                                     value="small" id="si8"/>
+                      <af:selectItem label="#{explorerBundle['sizeoptionsearch.medium']}"
+                                     value="medium" id="si9"/>
+                      <af:selectItem label="#{explorerBundle['sizeoptionsearch.large']}"
+                                     value="large" id="si10"/>
+                    </af:selectOneRadio>
+                  </af:showDetail>
+                  <af:separator id="s2"/>
+                  <af:commandButton id="searchButton"
+                                    text="#{explorerBundle['navigator.search']}"
+                                    actionListener="#{explorer.navigatorManager.searchNavigator.searchForFileItem}"
+                                    partialSubmit="true"
+                                    shortDesc="#{explorerBundle['navigator.search']}"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <!-- Search Results -->
+              <af:panelStretchLayout topHeight="auto" id="psl1" dimensionsFrom="auto">
+                <f:facet name="top">
+                  <af:panelGroupLayout layout="scroll" id="pgl5">
+                    <!-- Number of matches found -->
+                    <af:outputLabel id="topicCountLabel"
+                                    value="#{explorer.navigatorManager.searchNavigator.searchMatchesCountMessage}"
+                                    partialTriggers="searchButton"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                  <!-- Search Results table-->
+                  <af:table id="resultTable" var="rowData"
+                            value="#{explorer.navigatorManager.searchNavigator.searchResultsTableModel}"
+                            rowSelection="single" verticalGridVisible="false"
+                            horizontalGridVisible="true"
+                            emptyText="#{explorerBundle['global.no_row']}"
+                            partialTriggers="::searchButton"
+                            columnStretching="last"
+                            selectionListener="#{explorer.navigatorManager.searchNavigator.searchTableSelectFileItem}"
+                            summary="search results table" autoHeightRows="0">
+                    <af:column sortable="true" sortProperty="name"
+                               align="start" id="c1">
+                      <f:facet name="header">
+                        <af:outputText value="#{explorerBundle['fileproperties.name']}"
+                                       id="ot1"/>
+                      </f:facet>
+                      <af:outputText value="#{rowData.name}"
+                                     shortDesc="#{rowData.name}" id="ot2"/>
+                    </af:column>
+                    <af:column sortable="true" sortProperty="type"
+                               align="start" id="c2">
+                      <f:facet name="header">
+                        <af:outputText value="#{explorerBundle['fileproperties.type']}"
+                                       id="ot3"/>
+                      </f:facet>
+                      <af:outputText value="#{rowData.type}"
+                                     shortDesc="#{rowData.type}" id="ot4"/>
+                    </af:column>
+                    <af:column sortable="true" sortProperty="property.size"
+                               align="start" id="c3">
+                      <f:facet name="header">
+                        <af:outputText value="#{explorerBundle['fileproperties.size']}"
+                                       id="ot5"/>
+                      </f:facet>
+                      <af:outputText value="#{rowData.property.size}"
+                                     shortDesc="#{rowData.property.size}"
+                                     id="ot6"/>
+                    </af:column>
+                    <af:column sortable="true" sortProperty="displayPathName"
+                               align="start" id="c4">
+                      <f:facet name="header">
+                        <af:outputText value="#{explorerBundle['fileproperties.currentpath']}"
+                                       id="ot7"/>
+                      </f:facet>
+                      <af:outputText value="#{rowData.displayPathName}"
+                                     shortDesc="#{rowData.displayPathName}"
+                                     id="ot8"/>
+                    </af:column>
+                  </af:table>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </af:showDetailItem>
+      </af:panelAccordion>
+    </f:facet>
+  </af:panelStretchLayout>
+</jsp:root>

@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Graph and Gauge Dynamic Resize Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Graph and Gauge Dynamic Resize Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Graph and Gauge Dynamic Resize"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:outputText value="Resize the Panel Splitters to resize the graphs."
+                           id="ot1"/>
+            <af:panelSplitter orientation="vertical" id="ps1"
+                              inlineStyle="width:600px;height:500px;">
+              <f:facet name="first">
+                <af:panelSplitter id="ps2">
+                  <f:facet name="first">
+                    <dvt:areaGraph shortDesc="Graph" dynamicResize="DYNAMIC_SIZE" value="#{graphData.rows[4].cols[12].continuous}"
+                                   id="ag1"/>
+                  </f:facet>
+                  <f:facet name="second">
+                    <dvt:pieGraph shortDesc="Graph" dynamicResize="DYNAMIC_SIZE"
+                                 
+                                  threeDEffect="true" value="#{graphData.rows[5].cols[1].rowLabels['Slice %d'].random}"
+                                  id="pg1"/>
+                  </f:facet>
+                </af:panelSplitter>
+              </f:facet>
+              <f:facet name="second">
+                <af:panelSplitter id="ps3">
+                  <f:facet name="first">
+                    <dvt:scatterGraph shortDesc="Graph" dynamicResize="DYNAMIC_SIZE" value="#{graphData.rows[3].cols[21].correlatedPairs}"
+                                     
+                                      id="sg1"/>
+                  </f:facet>
+                  <f:facet name="second">
+                    <dvt:barGraph shortDesc="Graph" dynamicResize="DYNAMIC_SIZE"
+                                 
+                                  threeDEffect="true"  value="#{graphData.rows[5].cols[3].colLabels['Group %d'].random}"
+                                  id="bg1"/>
+                  </f:facet>
+                </af:panelSplitter>
+              </f:facet>
+            </af:panelSplitter>
+            <af:spacer id="s2"/>
+            <af:outputText value="Resize the Panel Splitters to resize the gauges."
+                           id="ot2"/>
+            <af:panelSplitter orientation="vertical" id="ps4"
+                              inlineStyle="width:600px;height:500px;">
+              <f:facet name="first">
+                <af:panelSplitter id="ps5">
+                  <f:facet name="first">
+                    <dvt:gauge dynamicResize="DYNAMIC_SIZE" id="g1" shortDesc="Gauge">
+                      <dvt:topLabel text="Dial Gauge - Metric Inside"/>
+                      <dvt:bottomLabel position="LP_NONE"/>
+                      <dvt:indicator type="IT_NEEDLE"/>
+                      <dvt:metricLabel position="LP_INSIDE_GAUGE"/>
+                      <dvt:thresholdSet>
+                        <dvt:threshold text="Low" thresholdMaxValue="40"/>
+                        <dvt:threshold text="Medium" thresholdMaxValue="70"/>
+                        <dvt:threshold text="High"/>
+                      </dvt:thresholdSet>
+                      <dvt:tickLabel numberType="NT_NUMBER"/>
+                      <dvt:gaugeLegendArea position="LAP_BOTTOM"/>
+                    </dvt:gauge>
+                  </f:facet>
+                  <f:facet name="second">
+                    <dvt:gauge gaugeType="STATUSMETER" shortDesc="Gauge"
+                               dynamicResize="DYNAMIC_SIZE" id="g2">
+                      <dvt:topLabel text="Status Meter with Thresholds"/>
+                      <dvt:bottomLabel text="Bottom Label"/>
+                      <dvt:thresholdSet>
+                        <dvt:threshold text="Low" thresholdMaxValue="40"/>
+                        <dvt:threshold text="Medium" thresholdMaxValue="70"/>
+                        <dvt:threshold text="High"/>
+                      </dvt:thresholdSet>
+                    </dvt:gauge>
+                  </f:facet>
+                </af:panelSplitter>
+              </f:facet>
+              <f:facet name="second">
+                <af:panelSplitter id="ps6">
+                  <f:facet name="first">
+                    <dvt:gauge gaugeType="LED" ledStyle="LS_DOT"
+                               dynamicResize="DYNAMIC_SIZE" id="g3" shortDesc="Gauge">
+                      <dvt:topLabel text="LED Dot Gauge"/>
+                      <dvt:thresholdSet>
+                        <dvt:threshold text="Low" thresholdMaxValue="40"/>
+                        <dvt:threshold text="Medium" thresholdMaxValue="60"/>
+                        <dvt:threshold text="High"/>
+                      </dvt:thresholdSet>
+                    </dvt:gauge>
+                  </f:facet>
+                  <f:facet name="second">
+                    <dvt:gauge gaugeType="VERTICALSTATUSMETER"
+                               dynamicResize="DYNAMIC_SIZE" id="g4" shortDesc="Gauge">
+                      <dvt:topLabel text="Status Meter - Metric Inside"/>
+                      <dvt:bottomLabel position="LP_NONE"/>
+                      <dvt:metricLabel position="LP_INSIDE_GAUGE"/>
+                      <dvt:thresholdSet>
+                        <dvt:threshold text="Low" thresholdMaxValue="40"/>
+                        <dvt:threshold text="Medium" thresholdMaxValue="70"/>
+                        <dvt:threshold text="High"/>
+                      </dvt:thresholdSet>
+                      <dvt:tickLabel numberType="NT_NUMBER"/>
+                      <dvt:gaugeLegendArea position="LAP_BOTTOM"/>
+                    </dvt:gauge>
+                  </f:facet>
+                </af:panelSplitter>
+              </f:facet>
+            </af:panelSplitter>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

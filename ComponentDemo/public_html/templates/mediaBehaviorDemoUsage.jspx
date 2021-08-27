@@ -1,0 +1,161 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <af:document title="Media Behavior Demo" id="d1">
+      <af:form id="dsf1">
+        <af:pageTemplate viewId="/templates/pageTemplateDefs/mediaBehaviorDemoTemplate.jspx" id="pt1">
+          <af:resource type="css">
+            .af_toolbar .AFGlobalNavbarButton.af_button.p_AFTextOnly
+              {
+              border: 1px solid transparent;
+              background-color: transparent;
+              background-image: none;
+              filter: none;
+            }
+            .BrandingMaxWidth
+            {
+              max-width: 1440px;
+            }
+            .AFBrandingBar
+            {
+              height: auto !important;
+              margin-bottom: 10px;
+            }
+          </af:resource>
+          <f:facet name="header">
+            <af:outputText value="Media Behavior Demo" id="ot1"/>
+          </f:facet>
+          <f:facet name="globalLinks">
+            <af:toolbar id="ptnp1" styleClass="GlobalNavbar">
+              <af:group id="grptb">
+                <af:popup id="popsch" contentDelivery="lazy" childCreation="deferred">
+                  <af:declarativeComponent id="glryFind" viewId="pageTemplateDefs/demoFindField.jsff"/>
+                </af:popup>
+                <af:button icon="/images/alta_v1/find_ena.png" hoverIcon="/images/alta_v1/find_ovr.png"
+                           depressedIcon="/images/alta_v1/find_dwn.png" shortDesc="Search" id="ptcni15">
+                  <af:showPopupBehavior popupId="popsch" alignId="ptcni15"/>
+                </af:button>
+                <af:button id="lnkBook" destination="/faces#{facesContext.viewRoot.viewId}"
+                           rendered="#{attrs.mode != 'accessibility'}" shortDesc="Bookmarkable Link"
+                           icon="/images/alta_v1/bookmark_ena.png" hoverIcon="/images/alta_v1/bookmark_ovr.png"
+                           depressedIcon="/images/alta_v1/bookmark_dwn.png"/>
+              </af:group>
+              <af:button id="userdrp" text="anonymous@oracle.com" actionDelivery="none"
+                         styleClass="AFGlobalNavbarButton">
+                <f:facet name="popup">
+                  <af:menu text="anonymous@oracle.com" id="ursmn1">
+                    <af:commandMenuItem text="Oracle RCF Home" immediate="true"
+                                        shortDesc="Learn more about ADF Faces Rich Client" id="ptcni2"
+                                        partialSubmit="true" action="#{aboutBean.goHome}"/>
+                  </af:menu>
+                </f:facet>
+              </af:button>
+            </af:toolbar>
+          </f:facet>
+          <f:facet name="start">
+            <af:panelHeader text="Quick Links" id="ph1">
+              <af:panelList maxColumns="1" id="pl1" shortDesc="Quick Links" rows="100" inlineStyle="text-align:left;">
+                <af:matchMediaBehavior propertyName="maxColumns" matchedPropertyValue="5"
+                                           mediaQuery="screen and (max-width: 768px)"/>
+                <af:matchMediaBehavior propertyName="rows" matchedPropertyValue="2"
+                                           mediaQuery="screen and (max-width: 768px)"/>
+                <af:link id="link_id_1">Adf Faces Forum</af:link>
+                <af:link id="link_id_2">Developer's Guide</af:link>
+                <af:link id="link_id_3">Tip of the Day</af:link>
+                <af:link id="link_id_4">Data Visualization Tools</af:link>
+                <af:link id="link_id_5">Layout Basics</af:link>
+              </af:panelList>
+            </af:panelHeader>
+          </f:facet>
+          <f:facet name="center">
+            <af:decorativeBox id="contentBody" dimensionsFrom="children">
+              <f:facet name="center">
+                <af:panelGroupLayout id="pgl1">
+                  <af:panelFormLayout id="pfl1" clientComponent="true" labelAlignment="start">
+                    <af:matchMediaBehavior propertyName="labelAlignment" matchedPropertyValue="top"
+                                           mediaQuery="screen and (max-width: 768px)"/>
+                    <af:inputText label="InputText component 1" placeholder="Enter some thing here." id="it0"/>
+                    <af:selectBooleanRadio id="rb" group="rbGroup" shortDesc="shortDesc text" label="A Radio Option"/>
+                    <af:selectManyListbox id="rs" label="Select Many List Box" shortDesc="Select Option">
+                      <af:selectItem label="option 1" id="si5"/>
+                      <af:selectItem label="option 2" id="si6"/>
+                      <af:selectItem label="option 3" id="si7"/>
+                      <af:selectItem label="option 4" id="si8"/>
+                    </af:selectManyListbox>
+                    <af:inputText label="InputText component 2" placeholder="Enter some thing here." id="it1"/>
+                    <af:inputText label="InputText component 3" placeholder="Enter some thing here." id="it2"/>
+                    <f:facet name="footer"></f:facet>
+                  </af:panelFormLayout>
+                  <af:panelGroupLayout id="pgl2" clientComponent="true" layout="horizontal">
+                    <af:matchMediaBehavior propertyName="layout" matchedPropertyValue="vertical"
+                                           mediaQuery="screen and (max-width: 1024px)"/>
+                    <af:panelStretchLayout id="psl1" dimensionsFrom="children">
+                      <f:facet name="center">
+                        <af:panelGroupLayout id="pgl3">
+                          <af:panelHeader text="ADF Form with variable label alignment" id="ph7" headerLevel="6"></af:panelHeader>
+                          <p>
+                            <h3>Oracle ADF Faces Rich Client is a large set of Ajax-enabled JSF components that let you
+                                build a very rich user interface for your Java EE applications. It also includes many of
+                                the framework features needed most by JSF developers today.</h3>
+                            <ol>
+                              <li>Very large set of AJAX-enabled components</li>
+                              <li>Extensive data visualization component set</li>
+                              <li>JSF 2 Support</li>
+                              <li>Complete JavaScript API</li>
+                              <li>Drag and Drop Framework</li>
+                              <li>Dialog and Popup Framework</li>
+                              <li>Navigation Menu Framework</li>
+                              <li>Built-in Internationalization and Accessibility support</li>
+                              <li>Support for page templates, reusable page regions, and declarative components</li>
+                              <li>Partial Page Rendering</li>
+                              <li>Support for Skinning</li>
+                              <li>Integration with ADFc to support Task Flows and bookmarking</li>
+                              <li>Integration with ADFm to support data bindings.</li>
+                              <li>Oracle ADF Security Support</li>
+                            </ol>
+                          </p>
+                        </af:panelGroupLayout>
+                      </f:facet>
+                    </af:panelStretchLayout>
+                    <af:panelStretchLayout id="psl2" dimensionsFrom="children">
+                      <f:facet name="center">
+                        <af:panelGroupLayout id="pgl4">
+                          <af:panelHeader text="JavaServer Faces" id="ph8" headerLevel="6"/>
+                          <p>
+                            <h3>JavaServer Faces (JSF) is a Java specification for building component-based user
+                                interfaces for web applications.[1] It was formalized as a standaaf through the Java
+                                Community Process and is part of the Java Platform, Enterprise Edition.</h3>
+                            <ol>Facelets (which was designed specifically for JavaServer Faces) was adopted as the
+                                official view technology for JSF 2.0. This eliminates the life-cycle conflicts that
+                                existed with JSP, forcing workarounds by Java developers.[6] Facelets allows easy
+                                component/tag creation using XML markup instead of Java code, the chief complaint
+                                against JSF 1.x.</ol>
+                            <ol>The new JSF developments also provide wide accessibility to Java 5 annotations such as
+                                @ManagedBean, @ManagedProperty and @FacesComponent which removes the need for
+                                faces-config.xml in all cases except framework extension. Navigation has been
+                                simplified, removing the need for faces-config.xml navigation cases.</ol>
+                            <ol>transitions can be invoked simply by passing the name of the desired View/Facelet.
+                                Addition of Partial State Saving and DOM updates are part of the built in standaafized
+                                Ajax support.Because JSF supports multiple output formats, Ajax-enabled components can
+                                easily be added to enrich JSF-based user interfaces.</ol>
+                            <ol>JSF 2.0 specification provides built in support for Ajax by standardizing the Ajax
+                                request lifecycle, and providing simple development interfaces to Ajax events, allowing
+                                any event triggered by the client to go through proper validation, conversion, and
+                                finally method invocation, before returning the result to the browser via an XML DOM
+                                update.</ol>
+                          </p>
+                        </af:panelGroupLayout>
+                      </f:facet>
+                    </af:panelStretchLayout>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:decorativeBox>
+          </f:facet>
+        </af:pageTemplate>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

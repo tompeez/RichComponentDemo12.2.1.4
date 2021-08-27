@@ -1,0 +1,410 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:hierarchyViewer&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:hierarchyViewer&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:hierarchyViewer hierarchyViewer hierarchy viewer</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.hierarchyViewer.UIHierarchyViewer<br>
+<b>Component type:</b> oracle.dss.adf.hierarchyViewer.HierarchyViewer<br></p>
+<p>The ADF hierarchy viewer component displays hierarchical data as a set of linked nodes in a diagram. The nodes and links correspond to the elements and relationships to the data. The component supports pan and zoom operations, expanding and collapsing of the nodes, and rendering of simple ADF components within the nodes. A common use of the hierarchy viewer is to display an organization chart.</p>
+<h4>Relationship with other tags</h4>
+<p>The hierarchy viewer component can have the following children: &lt;af:dragSource&gt;, &lt;af:dropTarget&gt;, <a href="dvt_link.html">&lt;dvt:link&gt;</a>, <a href="dvt_node.html">&lt;dvt:node&gt;</a>, <a href="dvt_search.html">&lt;dvt:search&gt;(deprecated)</a>.</p>
+<p>The <a href="dvt_panelCard.html">&lt;dvt:panelCard&gt;</a> can be used in conjunction with <a href="dvt_node.html">&lt;dvt:node&gt;</a>. See the documentation for those tags for more information.</p>
+<h4>Example</h4>
+<p>The following example shows XML for a hierarchyViewer tag.<br>
+<code>&lt;dvt:hierarchyViewer id="hierarchyViewer1" layout="hier_vert_top" inlineStyle="width:100%;height:600px;" var="node" value="#{bindings.rootEmp1.treeModel}"&gt;<br>
+&nbsp;&nbsp;&lt;dvt:link linkType="directRounded"/&gt;<br>
+&nbsp;&nbsp;&lt;dvt:node width="233" height="233"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;f:facet name="zoom100"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;af:panelGroupLayout layout="vertical" inlineStyle="width:100%;height:100%;padding:5px"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;af:panelGroupLayout layout="horizontal"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;af:panelGroupLayout inlineStyle="width:85px;height:120px"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;af:image source="#{node.Thumburl}"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/af:panelGroupLayout&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;af:spacer width="5" height="5"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;af:panelGroupLayout layout="vertical"&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;af:outputText value="#{node.Firstname}" inlineStyle="font-weight:bold;font-size:20px;color:#383A47"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;af:outputText value="#{node.Lastname}" inlineStyle="font-size:20px;color:#383A47"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;af:outputText value="#{node.Title}" inlineStyle="font-size:11px;font-style:italic;color:#383A47"/&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/af:panelGroupLayout&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/af:panelGroupLayout&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/af:panelGroupLayout&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/f:facet&gt;<br>
+&nbsp;&nbsp;&lt;/dvt:node&gt;<br>
+&lt;/dvt:hierarchyViewer&gt;<br></code></p>
+<h4>Gradient background</h4>
+<p>By default, the hierarchy viewer displays a gradient background that transitions from its background-color to white. The gradient can be turned off so that the background is a solid color by specifying the custom attribute "fill-type:solid" in the inlineStyle attribute on the &lt;dvt:hierarchyViewer&gt; tag.</p>
+<h4>Geometry Management</h4>
+<ul>
+<li>This component can be stretched by a parent layout component that stretches its children, e.g. panelStretchLayout, panelSplitter</li>
+<li>This component does stretch to fill up the browser's viewport when it is the "sole visual root component" in the component tree.</li>
+<li>When NOT stretched, this component will be displayed in its default dimensions which are provided by the skin. This can be modified by applying a dimension using the inlineStyle or styleClass attributes.</li>
+<li>This component does not stretch its children.</li>
+<li>Nodes within it do not resize</li>
+</ul>
+<h4>Drag and Drop</h4>
+<p>The hierarchy viewer can be used as both a drag source and a drop target. To do so, a developer must add one or both of the &lt;af:dragSource&gt; and &lt;af:dropTarget&gt; tags as direct children of the &lt;dvt:hierarchyViewer&gt; tag. The following example shows a hierarchy viewer configured as both a drag source and a drop target.<br>
+<code>&lt;dvt:hierarchyViewer&gt;<br>
+&lt;af:dragSource actions="COPY MOVE" defaultAction="MOVE" /&gt;<br>
+&lt;af:dropTarget dropListener="#{myBean.dropListener}" actions="COPY MOVE" &gt;<br>
+&lt;af:dataFlavor flavorClass="java.lang.Object" /&gt;<br>
+&lt;af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet" /&gt;<br>
+&lt;/af:dropTarget&gt;<br>
+&lt;dvt:node ... &gt; ... &lt;/dvt:node&gt;<br>
+&lt;/dvt:hierarchyViewer&gt;<br></code> One or more nodes may be dragged from the hierarchy viewer. Multiple selection must be enabled on the hierarchy viewer to allow dragging multiple nodes. To drag multiple nodes, the set of nodes must be selected before dragging, and the drag must be initiated on a selected node in the set. The data in the transferable for a drag originating from a hierarchy viewer will be of type org.apache.myfaces.trinidad.model.RowKeySet.<br>
+A drop on a hierarchy viewer can occur on a node or on the background. The java.util.Map drop site retrieved from the drop event will contain a value for the "clientRowKey" key. This value will specify the client row key for the node on which the drop occurred, or null if it occurred on the background.<br></p>
+<div class="section">
+<h2><a name="Screen_Shots" id="Screen_Shots">Screen Shot(s)</a></h2>
+<div class="screenshot"><br>
+<img src="./images/hierarchyViewer.png" alt="Hierarchy Viewer screenshot"><br></div>
+<br></div>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">binding reference to store the UIHierarchyViewer component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">contentDelivery</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> whenAvailable, lazy, immediate<br>
+<strong>Default Value:</strong> whenAvailable<br>
+<br>
+Options are "lazy", "immediate", and "whenAvailable". If "lazy", then the hierarchyViewer content is fetched after the hierarchyViewer is sent to the browser. If "immediate", then the hierarchyViewer content is immediately sent to the browser. If "whenAvailable", then "immediate" content delivery is used if the data is already available; otherwise "lazy" content delivery is used. The default value is "whenAvailble".</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">controlPanelBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> initCollapsed, initExpanded, hidden<br>
+<strong>Default Value:</strong> initCollapsed<br>
+<br>
+<p>Specifies the behavior of the control panel. Valid values are:</p>
+<ul>
+<li>"initCollapsed" - initially collapsed</li>
+<li>"initExpanded" - initially expanded</li>
+<li>"hidden" - hidden from view</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customizationId</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. The 'id' attribute should be used when applying persistent customizations. This attribute will be removed in the next release.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">detailWindow</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, default, none<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+<p>Specifies whether to show the detail window. Valid values are:</p>
+<ul>
+<li>"default" - show the detail window when hovering over a node that is not at 76 - 100% zoom level (deprecated)</li>
+<li>"auto" - detail window enabled with device specific gesture for hover over a node that is not at 76 - 100% zoom level (default)</li>
+<li>"none" - suppress the detail window</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">disclosedRowKeys</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.RowKeySet</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the set of disclosed rows for this component. Each entry in the set is a rowKey.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">displayLevelsAncestor</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The number of ancestor levels to display during initial render. This property is 0-based. A value of 0 means that no ancestor levels above the root will be shown. The default value is 0.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">displayLevelsChildren</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The number of child levels to display during initial render. This property is 0-based. A value of 0 means that no child levels below the root will be shown; the root itself will be shown. The default value is 1, which means that the root and the first level of children will be shown.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dontPersist</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">List of persistent attributes that are restricted from persisting to a registered "Persistent Change Manager". Persistent attributes would still persist to a session.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">emptyText</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The text of an empty hierarchy viewer.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">featuresOff</td>
+<td align="left" headers="attrType">java.util.Set</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This feature is deprecated. A list of default features to turn off for the hierarchyViewer. Currently the supported values are "pan", "zoom", "zoomToFit", "changeLayout", "cardSync", and "nodeDetail".</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The inline style of the hierarchy viewer's outer DOM element. Can be used to control the size/position of the hierarchy viewer.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">layout</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> hier_vert_top, hier_vert_bottom, hier_horz_left, hier_horz_right, hier_horz_start, hier_horz_end, tree, radial, circle<br>
+<strong>Default Value:</strong> hier_vert_top<br>
+<br>
+<p>Specifies the layout of the hierarchy. Valid values are:</p>
+<ul>
+<li>"hier_vert_top" - top-to-bottom vertical hierarchy</li>
+<li>"hier_vert_bottom" - bottom-to-top vertical hierarchy</li>
+<li>"hier_horz_left" - left-to-right horizontal hierarchy</li>
+<li>"hier_horz_right" - right-to-left horizontal hierarchy</li>
+<li>"hier_horz_start" - horizontal hierarchy whose direction depends on the locale</li>
+<li>"hier_horz_end" - horizontal hierarchy whose direction depends on the locale</li>
+<li>"tree" - indented tree</li>
+<li>"radial" - layout with root node in center and successive child levels radiating outward from their parent nodes</li>
+<li>"circle" - layout with root node in center and all leaf nodes arranged in concentric circle, with parent nodes arranged within the circle</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">layoutChange</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, none<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+<p>Specifies layout change behavior. Valid values are:</p>
+<ul>
+<li>"auto" - layout change enabled with device specific gesture (default)</li>
+<li>"none" - layout change will be disabled</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">levelFetchSize</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 25<br>
+<br>
+Specifies the number of child nodes that will be fetched and displayed at a single time for each expanded parent node. Additional child nodes may be fetched and displayed by using the lateral navigation controls shown in the hierarchy viewer. The default value is 25. The name of this attribute is levelFetchSize.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">navigateUpListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a navigate up action listener, the method is invoked when the end user tries to navigate up from the current root node</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">nodeSelection</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, single, multiple<br>
+<strong>Default Value:</strong> multiple<br>
+<br>
+<p>Specifies the selection mode. Valid values are:</p>
+<ul>
+<li>"none" - no nodes can be selected</li>
+<li>"single" - a single node can be selected</li>
+<li>"multiple" - (Default) multiple nodes can be selected</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">panelCardSync</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, none<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+<p>Specifies panel card sync behavior. Valid values are:</p>
+<ul>
+<li>"auto" - panel card sync enabled with device specific gesture (default)</li>
+<li>"none" - panel card sync will be disabled</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">panning</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, tilt, none, default<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+<p>Specifies panning behavior. Valid values are:</p>
+<ul>
+<li>"default" - click-and-drag panning (deprecated)</li>
+<li>"tilt" - click-and-drag panning with automatic 3D tilt panning enabled (deprecated)</li>
+<li>"auto" - panning enabled with device specific gesture (default)</li>
+<li>"none" - panning will be disabled</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">persist</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">List of persistent attributes that are persisting to a registered "Persistent Change Manager". Persistent attributes, by default, always persist to a session.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rowDisclosureListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a rowDisclosure listener, the method is invoked when a node is expanded or collapsed</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectedRowKeys</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.RowKeySet</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the set of selected rows for this component. Each entry in the set is a rowKey.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a selection listener, the method is invoked when the selected nodes are changed.<br>
+<br>
+<pre>
+        public void nodeSelected(SelectionEvent selectionEvent) {
+
+          UIHierarchyViewer hv = (UIHierarchyViewer) selectionEvent.getSource();
+          RowKeySet addedSet = selectionEvent.getAddedSet();
+          Iterator i = addedSet.iterator();
+
+          TreeModel model = (TreeModel)hv.getValue();
+          model.setRowKey(i.next());
+
+          Object selectedNode = model.getRowData();
+         //then cast the selected node to the tree model specific type
+         //in this example, it is a single selection model, so, you only need to get the only rowkey in the selection event
+
+         // note, the selectionEvent is of org.apache.myfaces.trinidad.event.SelectionEvent
+         //...
+         }
+        
+        
+</pre></td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">summary</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a summary of this hierarchy viewer's purpose and structure for user agents rendering to non-visual media (e.g. screen readers).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the data model for the hierarchy viewer - can be an instance of javax.faces.TreeModel</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">var</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Name of the EL variable used to reference each element of this collection. Once this component has completed rendering, this variable is removed (or reverted back to its previous value).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">zooming</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, none<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+<p>Specifies zooming behavior. Valid values are:</p>
+<ul>
+<li>"auto" - zooming enabled with device specific gesture (default)</li>
+<li>"none" - zooming will be disabled</li>
+</ul>
+</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

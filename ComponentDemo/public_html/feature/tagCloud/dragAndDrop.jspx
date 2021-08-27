@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Tag Cloud Drag and Drop" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Tag Cloud Drag and Drop Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Tag Cloud Drag and Drop"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout topHeight="auto" bottomHeight="auto" endWidth="auto">
+            <f:facet name="top">
+              <!-- START TAG DEMO -->
+              <af:panelGroupLayout layout="vertical" id="pgl5">
+                <f:verbatim>                                          <b>Demonstrates Drag and Drop in Tag Cloud</b>                                          <ul>
+                    <li>
+                      Tag Cloud can be configured to support Drag and Drop using 
+                      <b>af:dragSource</b>
+                       and 
+                      <b>af:dropTarget</b>
+                       tags respectively.
+                    </li>
+                    <li>Drag a Tag Cloud item from the Tag Cloud to the table.</li>
+                    <li>Drag an item from table and drop in Tag Cloud.</li>
+                    <li>When an item is dragged or dropped the associated trigger event is displayed below.</li>
+                  </ul>                                    </f:verbatim>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelGroupLayout layout="vertical">
+                <af:panelGroupLayout layout="horizontal">
+                  <dvt:tagCloud id="tc1" value="#{tagCloudDnD.model}" binding="#{tagCloudDnD.tagCloud}"
+                                inlineStyle="height:400px;width:100%;max-width:700px;border-style:solid; border-width:1px; border-color:#D6DFE6"
+                                selectionMode="multiple" var="item" layout="cloud" contentDelivery="whenAvailable"
+                                rendered="true" emptyText="No TagCloud Data to display">
+                    <af:transition transition="auto" triggerType="display"/>
+                    <af:transition transition="auto" triggerType="dataChange"/>
+                    <af:dragSource actions="COPY MOVE LINK" defaultAction="MOVE" discriminant="tagCloud"/>
+                    <af:dropTarget actions="COPY MOVE LINK" dropListener="#{tagCloudDnD.tagCloudDropListener}">
+                      <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet" discriminant="tagCloud"/>
+                    </af:dropTarget>
+                    <dvt:tagCloudItem label="#{item.word}" value="#{item.frequency}" shortDesc="#{item.shortDesc}"
+                                      id="t1"></dvt:tagCloudItem>
+                  </dvt:tagCloud>
+                  <af:spacer width="10"/>
+                  <af:table var="row" rowBandingInterval="0" id="table1" value="#{tagCloudDnD.tableModel}"
+                            binding="#{tagCloudDnD.table}" rowSelection="multiple" emptyText="Drop items here"
+                            inlineStyle="width:200px;height:400px;background:transparent;">
+                    <af:dragSource actions="COPY MOVE LINK" defaultAction="MOVE" discriminant="tagCloud"/>
+                     
+                    <af:dropTarget actions="COPY MOVE LINK" dropListener="#{tagCloudDnD.tableDropListener}">
+                      <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet" discriminant="tagCloud"/>
+                    </af:dropTarget>
+                    <af:column sortable="false" id="c2" width="167">
+                      <af:panelGroupLayout layout="vertical">
+                        <af:outputText value="#{row.word}"/>
+                        <af:outputText value="#{row.frequency}"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                  </af:table>
+                </af:panelGroupLayout>
+                <af:spacer height="10"/>
+                <af:outputFormatted value="#{tagCloudDnD.status}" binding="#{tagCloudDnD.richOutputText}" id="of1"
+                                    clientComponent="true"/>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

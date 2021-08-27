@@ -1,0 +1,811 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>AdfUserInactivityTimeoutHelper</title>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<script type="text/javascript">
+function handleOnload()
+{
+  if ((""+self.location).indexOf("file://") == 0)
+    return;
+  if (parent.document.documentElement.getAttribute("showprivate")=="true")
+  {
+    document.body.setAttribute("showprivate", "true");
+  }
+  else
+  {
+    document.body.setAttribute("showprivate", "false");
+  }
+  parent.document.title="AdfUserInactivityTimeoutHelper";
+}
+function togglePrivate(desiredFlag)
+{
+  var currentFlag = document.body.getAttribute("showprivate")=="true";
+  var newFlag = "" + (!currentFlag);
+  if (desiredFlag != null)
+  {
+    newFlag = desiredFlag;
+  }  document.body.setAttribute("showprivate", newFlag);
+}
+</script>
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body onload="handleOnload()">
+<h1 style="color:#0D4988;font-size:18px;font-weight:bold;font-family:Tahoma, Verdana,Helvetica,sans-serif"><img alt="Oracle" src="../../../../../../.././doc-files/logo-oracle-red.png" align="top">JavaScript API Reference for Oracle ADF Faces</h1>
+<!-- ====== START OF NAVBAR ====== -->
+<p><a name="navbar_top" id="navbar_top"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a name="navbar_top_firstrow" id="navbar_top_firstrow"><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../../../oracle/adfinternal/view/js/monitoring/AdfUserActivityInfo.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../../../oracle/adf/view/js/event/AdfValueChangeEvent.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../../../index.html?oracle/adfinternal/view/js/laf/dhtml/rich/AdfUserInactivityTimeoutHelper.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfUserInactivityTimeoutHelper.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<hr>
+<h1><span style="font-size: smaller">oracle.adfinternal.view.js.laf.dhtml.rich</span><br>
+Class AdfUserInactivityTimeoutHelper</h1>
+<div class="InternalClassOrPackageWarning">
+<h2>Warning:</h2>
+<ul>
+<li>This is an unsupported, internal implementation class.</li>
+<li>Use an API class that might provide equivalent functionality instead.</li>
+<li>This class will change without notice.</li>
+<li>It is not recommended that you use anything in this class.</li>
+</ul>
+</div>
+<pre>
+<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">org.ecmascript.object.Object</a>
+   |
+   +--<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">oracle.adf.view.js.base.AdfObject</a>
+         |
+         +--<strong>oracle.adfinternal.view.js.laf.dhtml.rich.AdfUserInactivityTimeoutHelper</strong>
+</pre>
+<hr>
+<pre>
+public class <strong>AdfUserInactivityTimeoutHelper</strong>
+extends <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>
+</pre>
+<div>This class is used to support user inactivity timeout for active components, like af:poll and Active Data Service (ADS). If a user has been inactive for a period of user inactivity timeout, it stops active components instacting with server to allow application's session to time out so that server resources can be released timely. This class provides functions to check whetehr the feature is enabled, start/restart user inactivity timeout timer, calculate the timeout value, stop active component sending any request to server when user is inactive and inactivity times out, and resume active components if user interacts again before session times out. The timeout value is specified in web.xml file as a servlet context paramter, "oracle.adf.view.rich.poll.TIMEOUT". Its default value is 10 minutes. The feature is disabled if its value is -1. af:poll component's timeout property overrides the value defined in web.xml. An instance of this class in a page should only be created if there is af:poll component or the page supports ADS. If it is enabled, a user inactivity timeout timer starts when the page is loaded. When it times out, it stops active components and starts session timeout warning timer. If user is active again before session times out, it resumes active components and a new timer is started.</div>
+<p><br></p>
+<hr>
+<p><a name="field_summary" id="field_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_componentIDsArray" title="field in this class">_componentIDsArray</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_defaultTimeoutInterval" title="field in this class">_defaultTimeoutInterval</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_globalTimeoutInterval" title="field in this class">_globalTimeoutInterval</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hasTimedOut" title="field in this class">_hasTimedOut</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_maxComponentTimeoutInterval" title="field in this class">_maxComponentTimeoutInterval</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from oracle.adf.view.js.base.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#constructor" title="field in oracle.adf.view.js.base.AdfObject">constructor</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#superclass" title="field in oracle.adf.view.js.base.AdfObject">superclass</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_org_ecmascript_object_Object" id="fields_inherited_from_class_org_ecmascript_object_Object"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from org.ecmascript.object.<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../org/ecmascript/object/Object.html#prototype" title="field in org.ecmascript.object.Object">prototype</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="constructor_summary" id="constructor_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%"><code>public</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#AdfUserInactivityTimeoutHelper_Object_" title="constructor in this class">AdfUserInactivityTimeoutHelper</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> userInactivityTimeout)</code></dt>
+<dd>
+<div>This class is used to support user inactivity timeout for active components, like af:poll and Active Data Service (ADS).</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="method_summary" id="method_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_applyPollTimeoutStyle__" title="method in this class">_applyPollTimeoutStyle</a></strong>()</code></dt>
+<dd>
+<div>Callback function to apply the "poll timeout" style to all components that were updated by the LAST poll, before the &lt;af:poll&gt; component timed out, due to user inactivity.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_calculatePollingTimeoutInterval_Object_" title="method in this class">_calculatePollingTimeoutInterval</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> interval)</code></dt>
+<dd>
+<div>Calculates the global "timeout interval" for the af:poll components.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private HTMLElement</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_createPollingTimeoutLayerElement_HTMLElement_" title="method in this class">_createPollingTimeoutLayerElement</a></strong>(HTMLElement element)</code></dt>
+<dd>
+<div>Helper function which creates a (simple) layer/DIV element to be placed ontop of those components that are no longer being updated, once the &lt;af:poll&gt; component has been "timed out".</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_forceADSStop__" title="method in this class">_forceADSStop</a></strong>()</code></dt>
+<dd>
+<div>Forces ADS to stop sending polling/reconnecting requests down to the server due to user inactivity timeout.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_forceComponentStop__" title="method in this class">_forceComponentStop</a></strong>()</code></dt>
+<dd>
+<div>Callback function which forces all &lt;af:poll&gt; components and ADS to stop interacting with server since client timed out due to user inactivity.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_forcePollingComponentStop__" title="method in this class">_forcePollingComponentStop</a></strong>()</code></dt>
+<dd>
+<div>Forces all &lt;af:poll&gt; components to stop sending polling requests down to the server due to user inactivity timeout.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/primitive/boolean.html" title="class in org.ecmascript.primitive">boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#hasTimedOut__" title="method in this class">hasTimedOut</a></strong>()</code></dt>
+<dd>
+<div>Helper method to request the "state" of the user inactivity timeout</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#Init__" title="method in this class">Init</a></strong>()</code></dt>
+<dd>
+<div>Create an instance of an AdfUserInactivityTimeoutHelper</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#InitClass__" title="method in this class">InitClass</a></strong>()</code></dt>
+<dd>
+<div>Initializes the AdfUserInactivityTimeoutHelper class</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#initializeTimeout_Object_" title="method in this class">initializeTimeout</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> interval)</code></dt>
+<dd>
+<div>Called when a page is loaded or on PPR to calculate the global timeout interval of the embedding PAGE and schedules the timeout callback, if needed.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/primitive/boolean.html" title="class in org.ecmascript.primitive">boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#isTimeoutEnabled__" title="method in this class">isTimeoutEnabled</a></strong>()</code></dt>
+<dd>
+<div>Check whether user inactivity timeout is enabled</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#registerPollComponent_Object_" title="method in this class">registerPollComponent</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd>
+<div>Hook for the PollPeer to register its component to keep track of its ID and timeout value.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_removePollingTimeoutLayer__" title="method in this class">_removePollingTimeoutLayer</a></strong>()</code></dt>
+<dd>
+<div>Removes the "polling timeout layer" HTML elements and removes the "polling timeout" styles from those components that are no longer updated, once the polling times out.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_rescheduleOrScheduleTimerIfNeeded__" title="method in this class">_rescheduleOrScheduleTimerIfNeeded</a></strong>()</code></dt>
+<dd>
+<div>Helper function to cancel and reschedule the timer callback.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O__resetTimeoutHandler_Object_" title="method in this class">__resetTimeoutHandler</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd>
+<div>This function is called by _redistribute().</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#unregisterPollComponent_Object_" title="method in this class">unregisterPollComponent</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd>
+<div>Called by the ComponentRemoved of the Poll Peer to trigger the unregister of the removed component.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Methods inherited from oracle.adf.view.js.base.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#adopt_Object_" title="method in oracle.adf.view.js.base.AdfObject">adopt</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#clone__" title="method in oracle.adf.view.js.base.AdfObject">clone</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createCallback_Object_" title="method in oracle.adf.view.js.base.AdfObject">createCallback</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createInitializedObject__" title="method in oracle.adf.view.js.base.AdfObject">createInitializedObject</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createSubclass_Function__Function__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">createSubclass</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#ensureClassInitialization_Function_" title="method in oracle.adf.view.js.base.AdfObject">ensureClassInitialization</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#equals_Object_" title="method in oracle.adf.view.js.base.AdfObject">equals</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#exportPrototypeSymbol_string__Object_" title="method in oracle.adf.view.js.base.AdfObject">exportPrototypeSymbol</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#getClass_Object_" title="method in oracle.adf.view.js.base.AdfObject">getClass</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyArrayProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyArrayProperty</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyMapProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyMapProperty</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#getTypeName__" title="method in oracle.adf.view.js.base.AdfObject">getTypeName</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#toDebugString__" title="method in oracle.adf.view.js.base.AdfObject">toDebugString</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#toString__" title="method in oracle.adf.view.js.base.AdfObject">toString</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="field_detail" id="field_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="O_componentIDsArray" id="O_componentIDsArray"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_componentIDsArray</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_componentIDsArray</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_defaultTimeoutInterval" id="O_defaultTimeoutInterval"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_defaultTimeoutInterval</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_defaultTimeoutInterval</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_globalTimeoutInterval" id="O_globalTimeoutInterval"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_globalTimeoutInterval</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_globalTimeoutInterval</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hasTimedOut" id="O_hasTimedOut"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hasTimedOut</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_hasTimedOut</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_maxComponentTimeoutInterval" id="O_maxComponentTimeoutInterval"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_maxComponentTimeoutInterval</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_maxComponentTimeoutInterval</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="constructor_detail" id="constructor_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="AdfUserInactivityTimeoutHelper_Object_" id="AdfUserInactivityTimeoutHelper_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">AdfUserInactivityTimeoutHelper</h3>
+<dl>
+<dt><code>public <strong>AdfUserInactivityTimeoutHelper</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> userInactivityTimeout)</code></dt>
+<dd><br>
+<div>This class is used to support user inactivity timeout for active components, like af:poll and Active Data Service (ADS). If a user has been inactive for a period of user inactivity timeout, it stops active components instacting with server to allow application's session to time out so that server resources can be released timely. This class provides functions to check whetehr the feature is enabled, start/restart user inactivity timeout timer, calculate the timeout value, stop active component sending any request to server when user is inactive and inactivity times out, and resume active components if user interacts again before session times out. The timeout value is specified in web.xml file as a servlet context paramter, "oracle.adf.view.rich.poll.TIMEOUT". Its default value is 10 minutes. The feature is disabled if its value is -1. af:poll component's timeout property overrides the value defined in web.xml. An instance of this class in a page should only be created if there is af:poll component or the page supports ADS. If it is enabled, a user inactivity timeout timer starts when the page is loaded. When it times out, it stops active components and starts session timeout warning timer. If user is active again before session times out, it resumes active components and a new timer is started.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>userInactivityTimeout</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="method_detail" id="method_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="O_applyPollTimeoutStyle__" id="O_applyPollTimeoutStyle__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_applyPollTimeoutStyle</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _applyPollTimeoutStyle</strong>()</code></dt>
+<dd><br>
+<div>Callback function to apply the "poll timeout" style to all components that were updated by the LAST poll, before the &lt;af:poll&gt; component timed out, due to user inactivity.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_calculatePollingTimeoutInterval_Object_" id="O_calculatePollingTimeoutInterval_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_calculatePollingTimeoutInterval</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _calculatePollingTimeoutInterval</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> interval)</code></dt>
+<dd><br>
+<div>Calculates the global "timeout interval" for the af:poll components. If timeout is spcified in af:poll components, the maximum value is returned to overrides the timeout specified in web.xml. Otherwise, the input value is returned.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>interval</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the amount of time (in ms) after which client should time out, as specified in web.xml file.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - timeoutInterval the timeout should be used for user inactivity on this page</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_createPollingTimeoutLayerElement_HTMLElement_" id="O_createPollingTimeoutLayerElement_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_createPollingTimeoutLayerElement</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong>HTMLElement _createPollingTimeoutLayerElement</strong>(HTMLElement element)</code></dt>
+<dd><br>
+<div>Helper function which creates a (simple) layer/DIV element to be placed ontop of those components that are no longer being updated, once the &lt;af:poll&gt; component has been "timed out".</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>element</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Root DOM Element of the ADF component, which needs a layer on top.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code>HTMLElement</code> - Returns the newly created HTML (layer) element.</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_forceADSStop__" id="O_forceADSStop__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_forceADSStop</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _forceADSStop</strong>()</code></dt>
+<dd><br>
+<div>Forces ADS to stop sending polling/reconnecting requests down to the server due to user inactivity timeout.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_forceComponentStop__" id="O_forceComponentStop__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_forceComponentStop</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _forceComponentStop</strong>()</code></dt>
+<dd><br>
+<div>Callback function which forces all &lt;af:poll&gt; components and ADS to stop interacting with server since client timed out due to user inactivity.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_forcePollingComponentStop__" id="O_forcePollingComponentStop__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_forcePollingComponentStop</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _forcePollingComponentStop</strong>()</code></dt>
+<dd><br>
+<div>Forces all &lt;af:poll&gt; components to stop sending polling requests down to the server due to user inactivity timeout.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="hasTimedOut__" id="hasTimedOut__"><!-- --></a></p>
+<h3 class="DetailHeader">hasTimedOut</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/primitive/boolean.html" title="class in org.ecmascript.primitive">boolean</a> hasTimedOut</strong>()</code></dt>
+<dd><br>
+<div>Helper method to request the "state" of the user inactivity timeout</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/boolean.html" title="class in org.ecmascript.primitive">boolean</a></code> - true if the user inactivity has timed out</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="Init__" id="Init__"><!-- --></a></p>
+<h3 class="DetailHeader">Init</h3>
+<dl>
+<dt><code>protected <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> Init</strong>()</code></dt>
+<dd><br>
+<div>Create an instance of an AdfUserInactivityTimeoutHelper</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#Init__" title="method in oracle.adf.view.js.base.AdfObject">Init()</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="InitClass__" id="InitClass__"><!-- --></a></p>
+<h3 class="DetailHeader">InitClass</h3>
+<dl>
+<dt><code>protected static <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> InitClass</strong>()</code></dt>
+<dd><br>
+<div>Initializes the AdfUserInactivityTimeoutHelper class</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="initializeTimeout_Object_" id="initializeTimeout_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">initializeTimeout</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> initializeTimeout</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> interval)</code></dt>
+<dd><br>
+<div>Called when a page is loaded or on PPR to calculate the global timeout interval of the embedding PAGE and schedules the timeout callback, if needed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>interval</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="isTimeoutEnabled__" id="isTimeoutEnabled__"><!-- --></a></p>
+<h3 class="DetailHeader">isTimeoutEnabled</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/primitive/boolean.html" title="class in org.ecmascript.primitive">boolean</a> isTimeoutEnabled</strong>()</code></dt>
+<dd><br>
+<div>Check whether user inactivity timeout is enabled</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/boolean.html" title="class in org.ecmascript.primitive">boolean</a></code> - true if the user inactivity is enabled, false otherwise</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="registerPollComponent_Object_" id="registerPollComponent_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">registerPollComponent</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> registerPollComponent</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd><br>
+<div>Hook for the PollPeer to register its component to keep track of its ID and timeout value. This method also computes the max timeout interval among all the registered af:poll components.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_removePollingTimeoutLayer__" id="O_removePollingTimeoutLayer__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_removePollingTimeoutLayer</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _removePollingTimeoutLayer</strong>()</code></dt>
+<dd><br>
+<div>Removes the "polling timeout layer" HTML elements and removes the "polling timeout" styles from those components that are no longer updated, once the polling times out.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_rescheduleOrScheduleTimerIfNeeded__" id="O_rescheduleOrScheduleTimerIfNeeded__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_rescheduleOrScheduleTimerIfNeeded</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _rescheduleOrScheduleTimerIfNeeded</strong>()</code></dt>
+<dd><br>
+<div>Helper function to cancel and reschedule the timer callback.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O__resetTimeoutHandler_Object_" id="O__resetTimeoutHandler_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">__resetTimeoutHandler</h3>
+<dl class="HiddenPrivate">
+<dt><code><strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> __resetTimeoutHandler</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> event)</code></dt>
+<dd><br>
+<div>This function is called by _redistribute(). If needed it resets the user inactivity timeout timer.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="unregisterPollComponent_Object_" id="unregisterPollComponent_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">unregisterPollComponent</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> unregisterPollComponent</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd><br>
+<div>Called by the ComponentRemoved of the Poll Peer to trigger the unregister of the removed component. We remove the clientID and regenerate the 'per page' valid timeout interval</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<!-- ====== START OF NAVBAR ====== -->
+<hr>
+<p><a name="navbar_bottom" id="navbar_bottom"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../../../oracle/adfinternal/view/js/monitoring/AdfUserActivityInfo.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../../../oracle/adf/view/js/event/AdfValueChangeEvent.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../../../index.html?oracle/adfinternal/view/js/laf/dhtml/rich/AdfUserInactivityTimeoutHelper.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfUserInactivityTimeoutHelper.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div class="CreationTime">Generated on 2018.06.28 06:41 UTC</div>
+<center>Copyright (c) 1998, 2018, Oracle and/or its affiliates. All rights reserved.</center>
+</body>
+</html>

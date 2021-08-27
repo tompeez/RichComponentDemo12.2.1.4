@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Sunburst Rotation Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Sunburst Rotation Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Sunburst Rotation"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:group>
+                            <f:verbatim>
+                                <p>The user can rotate the sunburst to more easily understand the data, especially when
+                                   rotated labels are displayed. To rotate the sunburst, drag from just outside the 
+                                   perimeter of the sunburst.</p>
+                            </f:verbatim>
+                            <dvt:sunburst id="sb1" inlineStyle="width:600px;height:550px;"
+                                          value="#{sunburst.censusData}" var="row" displayLevelsChildren="3"
+                                          sizeLabel="Population" colorLabel="Median Household Income" legendSource="ag2"
+                                          rotation="on">
+                                <dvt:sunburstNode id="sn1" value="#{row.size}" label="#{row.text}"
+                                                  shortDesc="#{row.income}" labelDisplay="rotated">
+                                    <dvt:attributeGroups id="ag2" type="color" value="#{row.income > 50000}"
+                                                         label="#{row.income > 50000 ? 'Low Income' : 'High Income'}"/>
+                                </dvt:sunburstNode>
+                            </dvt:sunburst>
+                        </af:group>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

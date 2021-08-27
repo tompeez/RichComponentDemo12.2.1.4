@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Chart Zoom and Scroll" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Chart Zoom and Scroll Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Zoom and Scroll"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:group>
+              <af:panelGroupLayout layout="horizontal">
+                <af:selectOneChoice label="Zoom and Scroll" value="#{chartSample.zoomAndScroll}" id="zs" autoSubmit="true">
+                  <af:selectItem label="live" id="zs1"/>
+                  <af:selectItem label="liveScrollOnly" id="zs2"/>
+                  <af:selectItem label="delayed" id="zs3"/>
+                  <af:selectItem label="delayedScrollOnly" id="zs4"/>
+                  <af:selectItem label="off" id="zs5"/>
+                </af:selectOneChoice>
+                <af:spacer width="50px"/>
+                <af:selectOneChoice label="Selection" value="#{chartSample.dataSelectionZS}" id="sel" autoSubmit="true">
+                  <af:selectItem label="multiple" id="sel1"/>
+                  <af:selectItem label="single" id="sel2"/>
+                  <af:selectItem label="none" id="sel3"/>
+                </af:selectOneChoice>
+              </af:panelGroupLayout>
+            </af:group>
+            
+            <af:group>
+              <dvt:lineChart value="#{chartDataSource.weeklyStockData}" timeAxisType="enabled" var="row" partialTriggers="::zs ::sel" 
+                  zoomAndScroll="#{chartSample.zoomAndScroll}" dataSelection="#{chartSample.dataSelectionZS}" dataCursor="on" inlineStyle="height:400px;width:650px" >
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"
+                      shortDesc="#{row.series}\\n#{row.group}\\n\$#{row.value*1000}"/>
+                </f:facet>
+                <f:facet name="overview">
+                  <dvt:overview rendered="true"/>
+                </f:facet>
+                <dvt:chartXAxis viewportMinimum="#{chartDataSource.stockViewportMinimum}" viewportMaximum="#{chartDataSource.stockViewportMaximum}">
+                  <dvt:majorTick rendered="true"/>
+                </dvt:chartXAxis>
+                <dvt:chartYAxis baselineScaling="min" title="Portfolio Value (thousands of USD)"/>
+                <dvt:chartLegend rendered="true" position="top"/>
+              </dvt:lineChart>
+            </af:group>
+            
+            <af:group>
+              <dvt:barChart value="#{globalGDP.globalGDP}" title="Global GDP by Country" var="row" 
+                  partialTriggers="::zs ::sel" zoomAndScroll="#{chartSample.zoomAndScroll}" 
+                  dataSelection="#{chartSample.dataSelectionZS}" inlineStyle="height:400px;width:650px">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="GDP" group="#{row.categories[2]}" value="#{row.value}"
+                      shortDesc="#{row.categories[2]}\\n\$#{row.value} million"/>
+                </f:facet>
+                <dvt:chartXAxis viewportStartGroup="United States" viewportEndGroup="Malaysia"/>
+                <dvt:chartYAxis title="GDP (millions of USD)"/>
+                <dvt:chartLegend rendered="false"/>
+              </dvt:barChart>
+            </af:group>
+            
+            <af:group>
+              <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row" partialTriggers="::zs ::sel" 
+                  zoomAndScroll="#{chartSample.zoomAndScroll}" dataSelection="#{chartSample.dataSelectionZS}" 
+                  inlineStyle="height:400px;width:650px">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}" z="#{row.z}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="true"/>
+              </dvt:bubbleChart>
+            </af:group>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

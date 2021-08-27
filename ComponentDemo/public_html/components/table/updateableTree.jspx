@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+    <jsp:directive.page contentType="text/html;charset=utf-8"/>
+    <f:view>
+        <af:document title="Updateable Tree Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     smallIconSource="#{aboutBean.smallIconSource}" largeIconSource="#{aboutBean.largeIconSource}"
+                     id="d1">
+            <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+                <f:attribute name="tagName" value="tree"/>
+                <f:attribute name="visualDesignName" value="tree"/>
+                <f:attribute name="demoKind" value="component"/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="auto" bottomHeight="auto" id="psl1" dimensionsFrom="auto">
+                      <f:facet name="top">
+                          <af:panelGroupLayout layout="vertical" id="pgl1">
+                              <af:outputFormatted value="&lt;b>Tree with optimized node insert/update/delete support - Select a node (root or child) and perform insert/update/delete operations &lt;/b>"
+                                                  id="of1"/>
+                          </af:panelGroupLayout>
+                      </f:facet>
+                      <f:facet name="center">
+                          <af:panelCollection id="pc1">
+                              <f:facet name="menus">
+                                  <af:menu text="Actions">
+                                      <af:group id="g1">
+                                          <af:commandMenuItem id="cmic" text="Create"
+                                                              actionListener="#{updateableTreeBean.insertExpandedRow}"/>
+                                          <af:commandMenuItem id="cmidup" text="Duplicate" actionListener="#{updateableTreeBean.duplicateRow}"/>
+                                          <af:commandMenuItem id="cmie" text="Edit">
+                                            <af:showPopupBehavior popupId="editDialog"/>
+                                          </af:commandMenuItem>
+                                      </af:group>
+                                      <af:group id="g2">
+                                          <af:commandMenuItem id="cmiif" text="Insert First"
+                                                              actionListener="#{updateableTreeBean.insertStart}"/>
+                                          <af:commandMenuItem id="cmiib" text="Insert Before"
+                                                              actionListener="#{updateableTreeBean.insertBefore}"/>
+                                          <af:commandMenuItem id="cmiia" text="Insert After"
+                                                              actionListener="#{updateableTreeBean.insertAfter}"/>
+                                          <af:commandMenuItem id="cmiil" text="Insert Last"
+                                                              actionListener="#{updateableTreeBean.insertEnd}"/>
+                                      </af:group>
+                                      <af:group id="g3">
+                                          <af:commandMenuItem id="cmidel" text="Delete"
+                                                              actionListener="#{updateableTreeBean.deleteRow}"/>
+                                      </af:group>
+                                      <af:group id="g4">
+                                          <af:commandMenuItem id="cmimu" text="Move Up" actionListener="#{updateableTreeBean.moveRowUp}" disabled="#{!updateableTreeBean.canMoveRowUp}"/>
+                                          <af:commandMenuItem id="cmimd" text="Move Down" actionListener="#{updateableTreeBean.moveRowDown}" disabled="#{!updateableTreeBean.canMoveRowDown}"/>
+                                      </af:group>
+                                      <af:group id="g5">
+                                          <af:commandMenuItem id="cmiii" text="Increase Indent" actionListener="#{updateableTreeBean.moveRowDown}" disabled="#{!updateableTreeBean.canMoveRowDown}"/>
+                                          <af:commandMenuItem id="cmidi" text="Decrease Indent" actionListener="#{updateableTreeBean.moveRowUp}" disabled="#{!updateableTreeBean.canMoveRowUp}"/>
+                                      </af:group>
+                                  </af:menu>
+                              </f:facet>
+                              <f:facet name="toolbar">
+                                  <af:toolbar id="tb1">
+                                      <af:group id="gtb2">
+                                          <af:commandToolbarButton id="ctbii" shortDesc="Increase Indent"
+                                                                   icon="#{adfFacesContext.rightToLeft ? '/images/indent_rtl_ena.png' : '/images/indent_ena.png'}"
+                                                                   depressedIcon="#{adfFacesContext.rightToLeft ? '/images/indent_rtl_dwn.png' : '/images/indent_dwn.png'}"
+                                                                   disabledIcon="#{adfFacesContext.rightToLeft ? '/images/indent_rtl_dis.png' : '/images/indent_dis.png'}"
+                                                                   hoverIcon="#{adfFacesContext.rightToLeft ? '/images/indent_rtl_ovr.png' : '/images/indent_ovr.png'}"
+                                                                   actionListener="#{updateableTreeBean.moveRowDown}"
+                                                                   disabled="#{!updateableTreeBean.canMoveRowDown}"/>
+                                          <af:commandToolbarButton id="ctbdi" shortDesc="Decrease Indent"
+                                                                   icon="#{adfFacesContext.rightToLeft ? '/images/unindent_rtl_ena.png' : '/images/unindent_ena.png'}"
+                                                                   depressedIcon="#{adfFacesContext.rightToLeft ? '/images/unindent_rtl_dwn.png' : '/images/unindent_dwn.png'}"
+                                                                   disabledIcon="#{adfFacesContext.rightToLeft ? '/images/unindent_rtl_dis.png' : '/images/unindent_dis.png'}"
+                                                                   hoverIcon="#{adfFacesContext.rightToLeft ? '/images/unindent_rtl_ovr.png' : '/images/unindent_ovr.png'}"
+                                                                   actionListener="#{updateableTreeBean.moveRowUp}"
+                                                                   disabled="#{!updateableTreeBean.canMoveRowUp}"/>
+                                      </af:group>
+                                      <af:group id="gtb3">
+                                          <af:commandToolbarButton id="ctbc" shortDesc="Create"
+                                                                   icon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_ena.png' : '/images/new_ena.png'}"
+                                                                   depressedIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_dwn.png' : '/images/new_dwn.png'}"
+                                                                   disabledIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_dis.png' : '/images/new_dis.png'}"
+                                                                   hoverIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_ovr.png' : '/images/new_ovr.png'}"
+                                                                   actionListener="#{updateableTreeBean.insertExpandedRow}"/>
+                                          <af:commandToolbarButton id="ctbed" shortDesc="Edit"
+                                                                   icon="/images/edit_ena.png"
+                                                                   depressedIcon="/images/edit_dwn.png"
+                                                                   disabledIcon="/images/edit_dis.png"
+                                                                   hoverIcon="/images/edit_ovr.png">
+                                            <af:showPopupBehavior popupId="editDialog"/>
+                                          </af:commandToolbarButton>
+                                          <af:commandToolbarButton id="ctbdel" shortDesc="Delete"
+                                                                   icon="/images/delete_ena.png"
+                                                                   depressedIcon="/images/delete_dwn.png"
+                                                                   disabledIcon="/images/delete_dis.png"
+                                                                   hoverIcon="/images/delete_ovr.png"
+                                                                   actionListener="#{updateableTreeBean.deleteRow}"/>
+                                      </af:group>
+                                      <af:group id="gtb4">
+                                          <af:commandToolbarButton id="ctbdup" shortDesc="Duplicate"
+                                                                   icon="/images/duplicate_ena.png"
+                                                                   depressedIcon="/images/duplicate_dwn.png"
+                                                                   disabledIcon="/images/duplicate_dis.png"
+                                                                   hoverIcon="/images/duplicate_ovr.png" actionListener="#{updateableTreeBean.duplicateRow}"/>
+                                      </af:group>
+                                      <af:group id="gtb5">
+                                          <af:commandToolbarButton id="ctbif" shortDesc="Insert First"
+                                                                   icon="/images/insertabove.png"
+                                                                   actionListener="#{updateableTreeBean.insertStart}"/>
+                                          <af:commandToolbarButton id="ctbib" shortDesc="Insert Before"
+                                                                   icon="/images/insertbefore_ena.png"
+                                                                   depressedIcon="/images/insertbefore_dwn.png"
+                                                                   disabledIcon="/images/insertbefore_dis.png"
+                                                                   hoverIcon="/images/insertbefore_ovr.png"
+                                                                   actionListener="#{updateableTreeBean.insertBefore}"/>
+                                          <af:commandToolbarButton id="ctbia" shortDesc="Insert After"
+                                                                   icon="/images/insertafter_ena.png"
+                                                                   depressedIcon="/images/insertafter_dwn.png"
+                                                                   disabledIcon="/images/insertafter_dis.png"
+                                                                   hoverIcon="/images/insertafter_ovr.png"
+                                                                   actionListener="#{updateableTreeBean.insertAfter}"/>
+                                          <af:commandToolbarButton id="ctbie" shortDesc="Insert Last"
+                                                                   icon="/images/insertbelow.png"
+                                                                   actionListener="#{updateableTreeBean.insertEnd}"/>
+                                      </af:group>
+                                  </af:toolbar>
+                              </f:facet>
+                              <!-- focusListener="#{fs.onTreeFocus}" focusRowKey="#{fs.defaultFocusRowKey}" -->
+                              <af:tree rowSelection="single" id="t1" var="row"
+                                       value="#{updateableTreeBean.model}"
+                                       rowDisclosureListener="#{fs.toggle}"
+                                       binding="#{updateableTreeBean.component}"
+                                       selectionListener="#{updateableTreeBean.selectionListener}">
+                                  <f:facet name="pathStamp">
+                                    <af:outputText id="ot1p" value="#{row.value}"/>
+                                  </f:facet>
+                                  <f:facet name="nodeStamp">
+                                      <af:panelGroupLayout id="pglt">
+                                          <af:image source="#{row.icon}"
+                                                    inlineStyle="vertical-align:middle;padding-right:3px;"
+                                                    shortDesc="Status" id="i1"/>
+                                          <af:outputText id="ot1" value="#{row.value}"/>
+                                      </af:panelGroupLayout>
+                                  </f:facet>
+                              </af:tree>
+
+                              <af:popup id="editDialog" contentDelivery="lazyUncached"
+                                popupFetchListener="#{updateableTreeBean.popupFetchListener}"
+                                popupCanceledListener="#{updateableTreeBean.popupCanceledListener}">
+
+                                <af:dialog title="Edit Node" dialogListener="#{updateableTreeBean.dialogListener}">
+                                   <af:inputText label="value" value="#{pageFlowScope.row.value}"/>
+                                </af:dialog>
+                              </af:popup>
+                          </af:panelCollection>
+                      </f:facet>
+                      <f:facet name="bottom">
+                          <af:panelGroupLayout layout="vertical" id="pgl3">
+                              <af:toolbar id="tb11">
+                                  <af:commandToolbarButton text="Export All Rows to Excel" immediate="true"
+                                                           id="exportAll">
+                                      <af:exportCollectionActionListener type="excelHTML" exportedId="pc1:t1"
+                                                                         filename="export.xls"
+                                                                         title="ADF Faces Export - All"
+                                                                         exportedRows="all"/>
+                                  </af:commandToolbarButton>
+                                  <af:commandToolbarButton text="Export Selected Rows to Excel"
+                                                           immediate="true" id="exportSelected">
+                                      <af:exportCollectionActionListener type="excelHTML" exportedId="pc1:t1"
+                                                                         filename="export.xls"
+                                                                         title="ADF Faces Export - Selected Rows"
+                                                                         exportedRows="selected"/>
+                                  </af:commandToolbarButton>
+                                  <af:commandToolbarButton text="Print Splitter Content" id="ctb">
+                                      <af:showPrintablePageBehavior/>
+                                  </af:commandToolbarButton>
+                              </af:toolbar>
+                          </af:panelGroupLayout>
+                      </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>
+

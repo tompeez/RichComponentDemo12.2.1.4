@@ -1,0 +1,434 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Query Basics" binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:resource type="css">.MyStrongText { font-weight: bold; }</af:resource>
+      <af:pageTemplate id="tmplt"  viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/demoIndexTemplateAlta.jspx':'/templates/pageTemplateDefs/demoIndexTemplate.jspx'}">
+        <f:attribute name="brandingTitle" value="Layout Basics"/>
+        <f:attribute name="mode" value="feature"/>
+        <f:attribute name="navLevelCount" value="2"/>
+        <f:attribute name="collapsedSettings" value="true"/>
+        <f:facet name="center2">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:panelHeader text="Introduction" styleClass="AFStretchWidth" id="ph1">
+              <f:facet name="toolbar">
+                <af:toolbar id="t1">
+                  <af:commandToolbarButton text="Print Content" icon="/images/print.png"
+                                           partialSubmit="true" id="ctb1">
+                    <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:outputText value="This page describes and demonstrates various query operation,
+                                      use-cases and parameter configurations. This page is under
+                                      construction." id="ot1"/>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="Query Basics" styleClass="AFStretchWidth" id="ph2">
+              <af:panelList id="pl1">
+                <af:group id="g1">
+                  <af:outputText inlineStyle="font-weight:bold;font-size:14px;" value="High Level Overview" id="hlo1"/>
+                  <af:panelList id="pl2">
+                    <af:panelGroupLayout layout="vertical" id="mdl1">
+                      <af:outputText inlineStyle="font-weight:bold;font-size:12px;" value="Model Contract - An Overview" id="ot4"/>
+                      <af:outputText inlineStyle="font-weight:bold;" value="Class Diagram -" id="mdl2"/>
+                      <af:image source="/images/queryModelDiagram.png" shortDesc="shortDesc text"
+                                id="i1"/>
+                      <af:outputText inlineStyle="font-weight:bold;" id="mcd1" value="Package : oracle.adf.view.rich.model"/>
+                      <af:panelList id="mdlpl1">
+                        <af:group id="mdlg1">
+                          <af:outputText inlineStyle="font-weight:bold;" value="AttributeDescriptor" id="mdl3"/>
+                          <af:spacer height="2" id="mdlsp1"/>
+                          <af:outputText id="mdl4" value="An AttributeDescriptor represents an attribute that is part of a view object or any other model object." />
+                        </af:group>
+                        <af:group id="mdlg2">
+                          <af:outputText inlineStyle="font-weight:bold;" value="Criterion" id="mdl5"/>
+                          <af:spacer height="2" id="mdlsp2"/>
+                          <af:outputText id="mdl6" value="The base class for a criterion (or a search criteria item) object." />
+                        </af:group>
+                        <af:group id="mdlg31">
+                          <af:outputText inlineStyle="font-weight:bold;" value="AttributeCriterion" id="mdl7"/>
+                          <af:spacer height="2" id="mdlsp3"/>
+                          <af:outputText id="mdl8" value="An AttributeCriterion contains information specific to a search field that is based off an attribute as defined by an AttributeDescriptor." />
+                        </af:group>
+                        <af:group id="mdlg4">
+                          <af:outputText inlineStyle="font-weight:bold;" value="ConjunctionCriterion" id="mdl9"/>
+                          <af:spacer height="2" id="mdlsp4"/>
+                          <af:outputText id="mdl101" value="Represents a group of criterion objects that use one conjunction operator between them. Since this class contains a list of Criterion objects it is possible to build complex hierarchies of Criterion objects." />
+                          <af:outputText id="mdl102" value="The hierarchical representation of Criterion objects is especially useful when SQL style inner queries are desired. [Nested Conjunction Criteria is not supported yet]." />
+                        </af:group>
+                        <af:group id="mdlg5">
+                          <af:outputText inlineStyle="font-weight:bold;" value="QueryDescriptor" id="mdl11"/>
+                          <af:spacer height="2" id="mdlsp5"/>
+                          <af:outputText id="mdl12" value="A QueryDescriptor describes a saved search by providing Criterion objects (used to render search fields; by providing an ability to add remove Criterion objects. In addition, it also provides methods to change the definition of a QueryDescriptor, such as its name, UI hints and mode." />
+                        </af:group>
+                        <af:group id="mdlg6">
+                          <af:outputText inlineStyle="font-weight:bold;" value="QueryModel" id="mdl13"/>
+                          <af:spacer height="2" id="mdlsp6"/>
+                          <af:outputText id="mdl14" value="The model for query component, it is used to manage QueryDescriptor objects.
+                          A user can perform various operations on saved searches while interacting with a query component. These actions
+                          include creating, deleting, duplicating, selecting, resetting and updating a saved search.The above actions result
+                          in a QueryDescriptor object to be created, deleted, updated, reset or retrieved. Methods that perform the above actions
+                          are typically called during the 'Invoke Application' phase of the JSF lifecycle." />
+                        </af:group>
+                      </af:panelList>
+                    </af:panelGroupLayout>
+                    <af:panelGroupLayout layout="vertical" id="uhg6">
+                      <af:outputText inlineStyle="font-weight:bold;font-size:12px;" value="UI Hints - How to Customize?" id="ot5"/>
+                      <af:panelList id="uhp6">
+                      <af:group id="uhg61">
+                        <af:outputText inlineStyle="font-weight:bold;" value="QueryDescriptor.UIHINT_AUTO_EXECUTE" id="uh1"/>
+                        <af:spacer height="2" id="uhsp1"/>
+                        <af:outputText id="uh2" value="Whether the saved search related to this QueryDescriptor should execute the query when it is selected on the search panel." />
+                      </af:group>
+                      <af:group id="uhg62">
+                        <af:outputText inlineStyle="font-weight:bold;" value="QueryDescriptor.UIHINT_DEFAULT" id="uh3"/>
+                        <af:spacer height="2" id="uhsp2"/>
+                        <af:outputText id="uh4" value="Whether the saved search should be loaded by default when the user first visits the search panel during a session. Setting this automatically unsets any other user-defined default saved search." />
+                      </af:group>
+                      <af:group id="uhg63">
+                        <af:outputText inlineStyle="font-weight:bold;" value="QueryDescriptor.UIHINT_IMMUTABLE" id="uh5"/>
+                        <af:spacer height="2" id="uhsp3"/>
+                        <af:outputText id="uh6" value="Whether the QueryDescriptor object can be updated." />
+                      </af:group>
+                      <af:group id="uhg64">
+                        <af:outputText inlineStyle="font-weight:bold;" value="QueryDescriptor.UIHINT_MODE" id="uh7"/>
+                        <af:spacer height="2" id="uhsp4"/>
+                        <af:outputText id="uh8" value="The mode of the search panel QueryMode.BASIC / QueryMode.ADVANCED when this saved serach is rendered." />
+                      </af:group>
+                      <af:group id="uhg65">
+                        <af:outputText inlineStyle="font-weight:bold;" value="QueryDescriptor.UIHINT_NAME" id="uh9"/>
+                        <af:spacer height="2" id="uhsp5"/>
+                        <af:outputText id="uh10" value="Name which is used for the saved search. This name should be unique." />
+                      </af:group>
+                      <af:group id="uhg66">
+                        <af:outputText inlineStyle="font-weight:bold;" value="QueryDescriptor.UIHINT_RESULTS_COMPONENT_ID" id="uh11"/>
+                        <af:spacer height="2" id="uhsp6"/>
+                        <af:outputText id="uh12" value="The id of the result component which need to be refreshed after Query search event. " />
+                      </af:group>
+                      <af:group id="uhg67">
+                        <af:outputText inlineStyle="font-weight:bold;" value="QueryDescriptor.UIHINT_SAVE_RESULTS_LAYOUT" id="uh13"/>
+                        <af:spacer height="2" id="uhsp7"/>
+                        <af:outputText id="uh14" value="Whether the saved search related to this QueryDescriptor should persist the layout of the results component." />
+                      </af:group>
+                      <af:group id="uhg68">
+                        <af:outputText inlineStyle="font-weight:bold;" value="QueryDescriptor.UIHINT_SHOW_IN_LIST" id="uh15"/>
+                        <af:spacer height="2" id="uhsp8"/>
+                        <af:outputText id="uh16" value="Whether the saved search related to this QueryDescriptor should appear in the Saved Searches choice list in the main search panel." />
+                      </af:group>
+                      </af:panelList>
+                    </af:panelGroupLayout>
+                    <af:panelGroupLayout layout="vertical" id="pglua">
+                      <af:outputText inlineStyle="font-weight:bold;font-size:12px;" value="UI Artifacts - Search Panel UI" id="ot6"/>
+                      <trh:tableLayout id="tl1" width="100%" borderWidth="1" cellPadding="2" cellSpacing="2">
+                        <trh:rowLayout id="rl1" halign="center" inlineStyle="font-weight:bold;color: blue;">
+                          <trh:cellFormat id="cf1"  width="10%"> UI Artifact </trh:cellFormat>
+                          <trh:cellFormat id="cf2" > Description </trh:cellFormat>
+                          <trh:cellFormat id="cf3" > Model Class - Property / Operations used </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl2" halign="left">
+                          <trh:cellFormat id="cf4" > Search panel </trh:cellFormat>
+                          <trh:cellFormat id="cf5" valign="top">
+                             Usually based on a single saved search.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf6" valign="top">
+                             A saved search is represented by a QueryDescriptor instance.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl3" halign="left">
+                          <trh:cellFormat id="cf7" > Disclosure Icon </trh:cellFormat>
+                          <trh:cellFormat id="cf8" valign="top">
+                            Opens or closes the search panel.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf9" valign="top"> </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl4" halign="left">
+                          <trh:cellFormat id="cf10" > Search Fields </trh:cellFormat>
+                          <trh:cellFormat id="cf11" valign="top">
+                            The search panel displays one or more search fields associated to the currently selected saved search.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf12" valign="top">
+                             The collection of search fields for a QueryDescriptor is represented by a ConjunctionCriterion, returned by the method getConjunctionCriterion() on QueryDescriptor. The getCriterionList() method returns a List&lt;Criterion&gt;.<br/>
+                             The reason for modeling it this way is to allow nesting of hierarchies of ConjunctionCriterion (for inner queries). This feature will be supported in a future release.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl5" halign="left">
+                          <trh:cellFormat id="cf13" > Search Field </trh:cellFormat>
+                          <trh:cellFormat id="cf14" valign="top">
+                             Each search field is comprised of a label, an operator, one or more value components and an option delete icon. Information required to render these are of 2 types - specific to an instance of a search field (in a saved search) and generic and unchanging no matter which saved search it's part of. For e.g., let's assume that there exists an Employee business object comprising of search fields 'Employee Name' and 'Salary'.
+                             <ul><li>A user can configure 2 saved searches - Low Salaried Employees, High Salaried Employees both containing 2 search fields based on 'Employee' and 'Salary' attributes. Even though both saved searches are based on the same Employee object, the search field 'Salary' is configured to have its default operator as 'less than' and value as 50000.00 and the latter with a default operator of 'greater than' and value of 100000.00. Selecting the saved searches on the UI will show the appropriate operator and values for that search fields belonging to it.</li>
+                             <li>Regardless of the operator and value (which is specific to a saved search), it's clear that the search field for Salary always needs to render a number component, and the label always needs to show 'Salary'.</li></ul>
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf15" valign="top">
+                             <ul><li>An AttributeCriterion class provides information specific to a search field instance. AttributeCriterion, is an item in the List &lt;Criterion\&gt; returned by getCriterionList() on ConjunctionCriterion.</li>
+                             <li>An AttributeDescriptor class provides static information pertaining to a search field. This is available through the method getAttribute(), on the AttributeCriterion class.</li></ul>
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl6" halign="left">
+                          <trh:cellFormat id="cf16" > Match Type radio </trh:cellFormat>
+                          <trh:cellFormat id="cf17" valign="top">
+                            Displays the default conjunction to use between search fields, when a query is performed. If a default is set it appears selected. If the search fields are configured such that a mix of different conjunctions is to be used between them, then a value may not be selected on the UI. The Match Type is readOnly if the 'conjunctionReadOnly' property is set to true. Its not rendered at all when 'simple' property is true.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf18" valign="top">
+                            Available through the getConjunction() method on ConjunctionCriterion.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl7" halign="left">
+                          <trh:cellFormat id="cf19" > Saved Searches dropdown </trh:cellFormat>
+                          <trh:cellFormat id="cf20" valign="top">
+                            Displays a list of available system and user saved searches. A "Personalize..." option is also added if 'saveQueryMode' property is set to 'default'. Selecting this option launches a Personalize dialog, that allows users to personalize saved searches - duplicate, delete or update an existing saved search.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf21" valign="top">
+                            System and User saved searches are available through the methods getSystemQueries() and getUserQueries() on QueryModel.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl8" halign="left">
+                          <trh:cellFormat id="cf22" > Save button </trh:cellFormat>
+                          <trh:cellFormat id="cf23" valign="top">
+                            Rendered on the footer only when the saveQueryMode property is default (footer contents are not rendered at all when the simple property is true).
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf24" valign="top">
+                            See next section for the its behavior.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl9" halign="left">
+                          <trh:cellFormat id="cf25" > Search, Reset button </trh:cellFormat>
+                          <trh:cellFormat id="cf26" valign="top">
+                            Rendered always on the footer (footer contents are not rendered at all when the simple property is true).
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf27" valign="top">
+                            See next section for the its behavior.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl10" halign="left">
+                          <trh:cellFormat id="cf28" > Add Fields button </trh:cellFormat>
+                          <trh:cellFormat id="cf29" valign="top">
+                            Rendered only in Advanced mode and on the footer (footer contents are not rendered at all when the simple property is true).
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf30" valign="top">
+                            See next section for the its behavior.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rl11" halign="left">
+                          <trh:cellFormat id="cf31" > Delete (search field) icon </trh:cellFormat>
+                          <trh:cellFormat id="cf32" valign="top">
+                            Rendered only in Advanced mode and next to the search field if it's removable.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="cf33" valign="top">
+                            See next section for the its behavior.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                      </trh:tableLayout>
+                      <af:spacer height="5" id="uabs1"/>
+                      <af:outputText inlineStyle="font-weight:bold;" value="UI Artifacts Behavior" id="ot62"/>
+                      <af:spacer height="2" id="uabs2"/>
+                      <trh:tableLayout id="tl2" width="100%" borderWidth="1" cellPadding="2" cellSpacing="2">
+                        <trh:rowLayout id="brl1" halign="center" inlineStyle="font-weight:bold;color: blue;">
+                          <trh:cellFormat id="bcf1"  width="15%"> UI Artifact </trh:cellFormat>
+                          <trh:cellFormat id="bcf2" > Behavior </trh:cellFormat>
+                          <trh:cellFormat id="bcf3" > Model Methods Involved </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl2" halign="left">
+                          <trh:cellFormat id="bcf4" > Mode (Basic/Advanced) button </trh:cellFormat>
+                          <trh:cellFormat id="bcf5" valign="top">
+                             Clicking on the mode button toggles the mode.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf6" valign="top">
+                             changeMode() on QueryDescriptor is called.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl3" halign="left">
+                          <trh:cellFormat id="bcf7" > Saved Search Dropdown </trh:cellFormat>
+                          <trh:cellFormat id="bcf8" valign="top">
+                            Selecting a different saved search changes the contents of the search panel.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf9" valign="top">
+                            In the 'Invoke Application' phase, the method setCurrentDescriptor() on the QueryModel is called. This is done automatically by an internal QueryOperationListener registered with the query component. Model implementors only need to override this method to switch the current QueryDescriptor.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl4" halign="left">
+                          <trh:cellFormat id="bcf10" > Delete (search field) icon </trh:cellFormat>
+                          <trh:cellFormat id="bcf11" valign="top">
+                            Deletes a search field from the current QueryDescriptor.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf12" valign="top">
+                             In the 'Invoke Application' phase, the method removeCriterion() on the QueryDescriptor is called automatically by an internal ActionListener registered with the command component.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl5" halign="left">
+                          <trh:cellFormat id="bcf13" > Search button </trh:cellFormat>
+                          <trh:cellFormat id="bcf14" valign="top">
+                             Performs a query using the operator selected and values entered for every search field.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf15" valign="top">
+                             <ul><li>In the 'Update Model' phase, the user selected operator and values entered in the search fields are automatically updated to the model - via EL wired to the operator and value components. The methods get/setOperator(); get/setOperators(); getValues() on the AttributeCriterion class are used for this.</li>
+                             <li>In the 'Invoke Application' phase, the QueryListener registered with the query component is invoked and this performs the search. Model implementors are expected to implement the listener method.</li></ul>
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl6" halign="left">
+                          <trh:cellFormat id="bcf16" > Reset button </trh:cellFormat>
+                          <trh:cellFormat id="bcf17" valign="top">
+                            Resets the search fields to its previous saved state.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf18" valign="top">
+                            In the 'Invoke Application' phase, the method reset() on the QueryModel is called. This is done automatically by an internal QueryOperationListener registered with the query component. Model implementors only need to override this method to reset the QueryDescriptor to its original state.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl7" halign="left">
+                          <trh:cellFormat id="bcf19" > Saved Searches dropdown </trh:cellFormat>
+                          <trh:cellFormat id="bcf20" valign="top">
+                            Displays a list of available system and user saved searches. A "Personalize..." option is also added if 'saveQueryMode' property is set to 'default'. Selecting this option launches a Personalize dialog, that allows users to personalize saved searches - duplicate, delete or update an existing saved search.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf21" valign="top">
+                            System and User saved searches are available through the methods getSystemQueries() and getUserQueries() on QueryModel.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl8" halign="left">
+                          <trh:cellFormat id="bcf22" > Save... button </trh:cellFormat>
+                          <trh:cellFormat id="bcf23" valign="top">
+                            Create a new saved search based on the current saved search, including any new search fields (that was added by the user) in its definition.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf24" valign="top">
+                            In the 'Invoke Application' phase, the method create() on the QueryModel is called. This is done automatically by an internal QueryOperationListener registered with the query component. Model implementors only need to override this method to create a new QueryDescriptor based on the argument passed in.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl9" halign="left">
+                          <trh:cellFormat id="bcf25" > Add Fields button </trh:cellFormat>
+                          <trh:cellFormat id="bcf26" valign="top">
+                            Adds an attribute as a search field to the existing saved search.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf27" valign="top">
+                            In the 'Invoke Application' phase, the method addCriterion() on the QueryDescriptor is called automatically by an internal ActionListener registered with the command component. Model implementors need to override this method to create a new AttributeCriterion based on the AttributeDescriptor (identified by the name argument).
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl10" halign="left">
+                          <trh:cellFormat id="bcf28" > Duplicate (saved search) button in Personalize... dialog  </trh:cellFormat>
+                          <trh:cellFormat id="bcf29" valign="top">
+                            Duplicates a saved search based on the selected saved search. This is similar to the Save... feature, with the subtle difference that a duplicate is an exact clone of the original when its created whereas certain properties of a saved search can be customized when using the "Save" feature.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf30" valign="top">
+                            In the 'Invoke Application' phase, the method create() on the QueryModel is called. This is done automatically by an internal QueryOperationListener registered with the query component. Model implementors only need to override this method to create a new QueryDescriptor based on the argument passed in.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl11" halign="left">
+                          <trh:cellFormat id="bcf31" > Delete (saved search) button in Personalize... dialog </trh:cellFormat>
+                          <trh:cellFormat id="bcf32" valign="top">
+                            Deletes the selected saved search, except if it's the currently selected one.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf33" valign="top">
+                            In the 'Invoke Application' phase, the method delete() on the QueryModel is called. This is done automatically by an internal QueryOperationListener registered with the query component. Model implementors need to override this method to delete the QueryDescriptor.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl12" halign="left">
+                          <trh:cellFormat id="bcf35" > Apply button in Personalize... dialog </trh:cellFormat>
+                          <trh:cellFormat id="bcf36" valign="top">
+                            Applies changes made to the selected saved search (such as its name and UIHints).
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf37" valign="top">
+                            In the 'Invoke Application' phase, the method update() on the QueryModel is called. This is done automatically by an internal QueryOperationListener registered with the query component. Model implementors need to override this method to update the QueryDescriptor using the arguments passed in.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl13" halign="left">
+                          <trh:cellFormat id="bcf38" > OK button in Personalize... dialog </trh:cellFormat>
+                          <trh:cellFormat id="bcf39" valign="top">
+                            Same as Apply, except the dialog is closed afterwards.
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf39b" valign="top">
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="brl14" halign="left">
+                          <trh:cellFormat id="bcf40" > Cancel button in Personalize... dialog </trh:cellFormat>
+                          <trh:cellFormat id="bcf41" valign="top">
+                            Cancels any edits made in the dialog (such as changes to name or UIHints for the selected saved search).
+                          </trh:cellFormat>
+                          <trh:cellFormat id="bcf42" valign="top">
+                            No method defined for this action.
+                          </trh:cellFormat>
+                        </trh:rowLayout>
+                      </trh:tableLayout>
+                    </af:panelGroupLayout>
+                  </af:panelList>
+                </af:group>
+                <af:group id="g2">
+                  <af:outputText inlineStyle="font-weight:bold;font-size:14px;" value="Feature Basics" id="fb1"/>
+                  <af:panelList id="pl3">
+                    <af:panelGroupLayout layout="vertical" id="g3">
+                      <af:outputText inlineStyle="font-weight:bold;font-size:12px;" value="Query Mode" id="qm"/>
+                      <af:spacer height="4" id="qmv1"/>
+                      <af:outputText id="qmv" value="Query panel can be switched between two modes : Basic and Advanced. " />
+                      <af:panelList id="p14">
+                        <af:group id="qmg2">
+                          <af:outputText inlineStyle="font-weight:bold;" value="Basic Mode" id="otc2"/>
+                          <af:spacer height="2" id="qms1"/>
+                          <af:outputText id="qmb" value="In the Basic mode query panel shows the basic panel where it can be designed to
+                                         hide some features like operators for the criterion field and some features will not be available
+                                         by default like 'Add Fields' button to add attribute criterion to the panel." />
+                        </af:group>
+                        <af:group id="qmg1">
+                          <af:outputText inlineStyle="font-weight:bold;" value="Advanced Mode" id="otc1"/>
+                          <af:spacer height="2" id="qms2"/>
+                          <af:outputText id="qma" value="In the Advanced mode query panel shows the additional features which are not present
+                                         or not configured to be available in the Basic mode. For example 'footer' facet (which contains 'Add
+                                         Fields' by default) will only be available in this mode."  />
+                        </af:group>
+                      </af:panelList>
+                    </af:panelGroupLayout>
+                    <af:group id="g4">
+                      <af:outputText value="Query Facets" id="ot7"/>
+                      <af:panelList id="p15">
+                        <af:outputText value="footer" id="addft"/>
+                        <af:outputText value="toolbar" id="afud"/>
+                      </af:panelList>
+                    </af:group>
+                    <af:group id="g5">
+                      <af:outputText value="Saved Search" id="ss"/>
+                      <af:panelList id="p16">
+                        <af:outputText value="System Searches" id="ssss"/>
+                        <af:outputText value="User Searches" id="ssus"/>
+                      </af:panelList>
+                    </af:group>
+                    <af:group id="g6">
+                      <af:outputText value="Personalized Saved Search" id="pss"/>
+                      <af:panelList id="p17">
+                        <af:outputText value="Delete" id="pssd"/>
+                        <af:outputText value="Rename" id="pssr"/>
+                        <af:outputText value="Update Hints" id="pssuh"/>
+                      </af:panelList>
+                    </af:group>
+                    <af:outputText value="Query Event Listener" id="qel"/>
+                    <af:outputText value="Query Operation Event Listeners" id="qoel"/>
+                    <af:outputText value="Refreshing Query Panel" id="rqp"/>
+                    <af:outputText value="Result Component" id="rc"/>
+                    <af:group id="g7">
+                      <af:outputText value="Criterion Fields" id="cf"/>
+                      <af:panelList id="p18">
+                        <af:outputText value="Date Field" id="df"/>
+                        <af:outputText value="LOV Fields" id="lovf"/>
+                        <af:outputText value="Number Fields" id="nf"/>
+                        <af:outputText value="Multi Select Fields" id="msf"/>
+                      </af:panelList>
+                    </af:group>
+                    <af:outputText value="Auto Submit and Dependent Criterion" id="ashd"/>
+                    <af:outputText value="Value Change Listeners" id="vcl"/>
+                  </af:panelList>
+                </af:group>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

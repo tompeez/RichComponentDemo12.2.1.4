@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Hierarchy Viewer" binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:resource type="css">.MyStrongText { font-weight: bold; }
+                                  .MySpacedLI { margin-bottom: .5em; }
+                                  .MySpacedImage { margin-top: .5em; }
+      </af:resource>
+      <af:pageTemplate id="tmplt" viewId="/templates/pageTemplateDefs/demoIndexTemplate.jspx">
+        <f:attribute name="brandingTitle" value="Hierarchy Viewer"/>
+        <f:attribute name="mode" value="feature"/>
+        <f:attribute name="navLevelCount" value="2"/>
+        <f:attribute name="collapsedSettings" value="true"/>
+        <f:facet name="center2">
+            <af:declarativeComponent id="dc1" viewId="/feature/common/demoIndex.jspx" 
+                    demoList="#{featureIndexBean.hvDemoData}"
+                    categoryList="#{featureIndexBean.hvCategoryData}"
+                    compName="Hierarchy Viewer"
+                    samplePath="/components/hierarchyViewer.jspx" />                             
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2016, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Toolbar Facet demo of inputSearch" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        function updateSuggestionCount(event)
+        {
+          event.cancel();
+          var inputSearch = _getParentInputSearch(event.getSource());
+          var searchSection = inputSearch.getSearchSections()['default'];
+
+          var randomNo = Math.floor(Math.random() * 5000);
+          var dataUrl = AdfPage.PAGE.getBaseResourceUrl() +
+                        "/rest/employees?cache=etag&amp;limit=" + randomNo;
+          searchSection.setDataUrl(dataUrl);
+        }
+
+        function _getParentInputSearch(component)
+        {
+          while (component &amp;&amp; !(component instanceof AdfRichInputSearch))
+            component = component.getParent();
+          return component;
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputSearch"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="Demo showcasing the toolbar facet of inputSearch" id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:popup clientComponent="true" id="createpopup">
+                <af:dialog title="Create Employee" id="d2">
+                  <af:inputText label="Name" id="it1"/>
+                </af:dialog>
+              </af:popup>
+              <af:inputSearch label="Ename" id="inputSearch"
+                                            binding="#{editor.component}"
+                                            valueAttribute="id"
+                                            displayAttributes="fName lName"
+                                            filterAttributes="fName lName tags jobTitle "
+                                            selectionConverter="#{inputSearchDemo.selectionConverter}"
+                                            contentMode="list"
+                                            autoSubmit="true">
+                <af:searchSection type="default" dataUrl="#{inputSearchDemo.dataUrl}" partialTriggers="ctb3" />
+                <f:facet name="toolbar">
+                  <af:toolbar id="pgl14">
+                    <af:group id="g1">
+                      <af:button shortDesc="Create" icon="/images/new_ena.png" id="ctb1">
+                        <af:showPopupBehavior popupId="createpopup"/>
+                      </af:button>
+                      <af:button icon="/images/update_ena.png"
+                        shortDesc="Update the searchSection URL on client" id="ctb2">
+                        <af:clientListener type="action" method="updateSuggestionCount" />
+                      </af:button>
+                      <af:button icon="/images/uplevel.gif" actionListener="#{inputSearchDemo.updateDataUrl}"
+                                 shortDesc="Update the searchSection URL on server" id="ctb3"/>
+                    </af:group>
+                    <af:group id="g2">
+                      <af:button shortDesc="E-mail" icon="/images/email.gif"
+                                                id="ctb4"/>
+                      <af:button shortDesc="Snapshot" icon="/images/snapshot.gif"
+                                                id="ctb5"/>
+                    </af:group>
+                  </af:toolbar>
+                </f:facet>
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                <f:facet name="contentStamp">
+                  <af:sanitized value="test">
+                    <span style="font-weight: bold; font-size: 15px">{{fName}} {{lName}}</span> <br/> {{jobTitle}} (<b>Email:</b> <span style="font-style: italic;"> {{email}} </span>)<br /> <b>Tags: </b> <span>{{tags}}</span>
+                  </af:sanitized>
+                </f:facet>
+              </af:inputSearch>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

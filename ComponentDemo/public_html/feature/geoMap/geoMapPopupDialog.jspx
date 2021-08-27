@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="Map Theme Custom Click Behaviors" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/><f:attribute name="tagDocPrefix" value="dvt"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Map Theme Custom Click Behaviors"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="map"/>    
+      
+      <f:facet name="center">
+          <af:group id="g1">
+            <!-- START TAG DEMO -->
+            <af:panelStretchLayout id="psl1" topHeight="auto"
+                                   bottomHeight="80px">
+              <f:facet name="center">
+                <dvt:map id="map1" binding="#{elocationBean.component}"
+                         startingY="0.0" startingX="0.0" mapZoom="0"
+                         mapServerConfigId="mapConfig1"
+                         baseMapName="ELOCATION_MERCATOR.WORLD_MAP"
+                         autoZoomThemeId="pointTheme">
+                  <!-- Use the rtPopup facet if rightClickBehavior is set to 'Popup' -->
+                  <f:facet name="rtPopup">
+                    <!-- In this example a popup menu is defined for right click -->
+                    <af:menu id="m1">
+                      <af:commandMenuItem text="menu1" id="mi1"/>
+                      <af:commandMenuItem text="menu2" id="mi2"/>
+                      <af:commandMenuItem text="menu3" id="mi3"/>
+                    </af:menu>
+                  </f:facet>
+                  <!-- Use the popup facet if leftClickBehavior is set to 'Popup' -->
+                  <f:facet name="popup">
+                    <!-- In this example a popup dialog is defined for left click that contains info about the point that was clicked-->
+                    <af:dialog title="testPopup" modal="true" type="ok" id="d2">
+                      <af:panelGroupLayout layout="vertical" id="pgl1">
+                        <af:outputText value="You have clicked" id="ot2"/>
+                        <af:outputText value="#{eventBean.address}" id="ot3"/>
+                        <af:outputText value="#{eventBean.location}" id="ot4"/>
+                        <af:outputText value="#{eventBean.value}" id="ot5"/>
+                      </af:panelGroupLayout>
+                    </af:dialog>
+                  </f:facet>
+                  <!-- Define the behavior when the user clicks or hovers over a point using the
+          leftClickBehavior, rightClickBehavior, and hoverBehavior attributes -->
+                  <dvt:mapPointTheme id="pointTheme"
+                                     clickListener="#{eventBean.processClickAction}"
+                                     leftClickBehavior="Popup"
+                                     rightClickBehavior="Popup"
+                                     hoverBehavior="InfoWindow"
+                                     value="#{geoMapBacking.pointModel}"/>
+                  <dvt:mapOverview initialShown="false"/>
+                </dvt:map>
+              </f:facet>
+              <f:facet name="start"/>
+              <f:facet name="end"/>
+              <f:facet name="top">
+                <af:outputText value="Left click, right click, or hover over a point to see the custom defined behaviors"
+                               id="ot1"/>
+              </f:facet>
+            </af:panelStretchLayout>
+            <!-- END TAG DEMO -->
+          </af:group>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+            <af:panelGroupLayout layout="scroll" id="pgl2">
+              <!-- START SEE ALSO LINKS -->
+              <af:outputText value="See also:" id="ot6"/>
+              <af:panelList id="pl1">
+                <af:goLink text="Map with Point Theme"
+                           destination="/components/mapPointTheme.jspx"
+                           id="gl1"/>
+                <af:goLink text="Map with Color Theme"
+                           destination="/components/mapColorTheme.jspx"
+                           id="gl2"/>
+                <af:goLink text="Map with Bar Graph Theme"
+                           destination="/components/mapBarGraphTheme.jspx"
+                           id="gl3"/>
+                <af:goLink text="Map with Pie Graph Theme"
+                           destination="/components/mapPieGraphTheme.jspx"
+                           id="gl4"/>
+              </af:panelList>
+              <!-- END SEE ALSO LINKS -->
+            </af:panelGroupLayout>
+        </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

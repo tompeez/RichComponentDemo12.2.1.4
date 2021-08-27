@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2013, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="2.1">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Deck Visual Design Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <af:resource type="css">
+          /* adjust the dot image size for hidpi screens */
+          .CustomDot IMG {
+            width: 20px;
+            height: 20px;
+          }
+        </af:resource>
+        <af:resource type="javascript">
+          function stopPoll()
+          {
+            clearRestartTimeout();
+            var poll = getComponentByAbsoluteId("dmoTpl:autoAdvPoll");
+            if (poll != null)
+              poll.setInterval(-1);
+          }
+          function startPoll()
+          {
+            clearRestartTimeout();
+            var poll = getComponentByAbsoluteId("dmoTpl:autoAdvPoll");
+            if (poll != null)
+              poll.setInterval(3000);
+          }
+          function pauseThenDelayRestartPoll()
+          {
+            clearRestartTimeout();
+            stopPoll();
+            window.pollTimer = window.setTimeout(startPoll, 10000);
+          }
+          function clearRestartTimeout()
+          {
+            if (window.pollTimer)
+            {
+              window.pollTimer = null;
+              window.clearTimeout(window.pollTimer);
+            }
+          }
+          function getComponentByAbsoluteId(absoluteId)
+          {
+            var component = AdfPage.PAGE.findComponentByAbsoluteId(absoluteId);
+            if (component == null)
+              AdfLogger.LOGGER.severe("Unable to locate the " + absoluteId + " component in this page's custom code");
+            return component;
+          }
+          
+          function pprReplaceDeck(evt)
+          {
+            AdfPage.PAGE.addPartialTargets(evt.getSource().findComponent("replaceDeck"));
+          }
+        </af:resource>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="deck"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelHeader id="ph1" text="Related Links">
+              <af:panelList id="pl1" rows="3">
+                <af:goLink id="gl1" text="Component - deck" destination="/components/deck.jspx"/>
+                <af:goLink id="gl2" text="Component - poll" destination="/components/poll.jspx"/>
+                <af:goLink id="gl3" text="Tag - transition" destination="/components/transition.jspx"/>
+              </af:panelList>
+            </af:panelHeader>
+
+            <af:panelHeader id="autoAdvPh" text="Auto-advancement cards">
+              <af:panelGridLayout id="autoAdvGrid">
+                <af:gridRow id="autoAdvGr1" height="160px">
+                  <af:gridCell id="autoAdvGc1" width="330px" halign="stretch" valign="stretch">
+                    <af:deck id="autoAdvDeck" displayedChild="#{vdDeck.autoAdvChild}"
+                             displayChangeListener="#{vdDeck.updateAutoAdvChild}">
+                      <af:transition triggerType="backNavigate" transition="slideEnd"/>
+                      <af:transition triggerType="forwardNavigate" transition="slideStart"/>
+                      <af:clientListener type="mouseOver" method="stopPoll"/>
+                      <af:clientListener type="mouseOut" method="startPoll"/>
+                      <af:panelGroupLayout id="autoAdvChild1" layout="scroll"
+                        inlineStyle="background-color:#C0504D;color:white;padding:40px">
+                        <af:outputText id="autoAdvOt1" value="New and improved!" inlineStyle="font-size:32px"/>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout id="autoAdvChild2" layout="scroll"
+                        inlineStyle="background-color:#F79646;color:white;padding:40px">
+                        <af:outputText id="autoAdvOt2" value="Now available in more flavors!" inlineStyle="font-size:32px"/>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout id="autoAdvChild3" layout="scroll"
+                        inlineStyle="background-color:#9BBB59;color:white;padding:40px">
+                        <af:outputText id="autoAdvOt3" value="Quantities are limited!" inlineStyle="font-size:32px"/>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout id="autoAdvChild4" layout="scroll"
+                        inlineStyle="background-color:#4F81BD;color:white;padding:40px">
+                        <af:outputText id="autoAdvOt4" value="In stores now. Get yours today!" inlineStyle="font-size:32px"/>
+                      </af:panelGroupLayout>
+                    </af:deck>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow id="autoAdvGr2" marginTop="5px">
+                  <af:gridCell id="autoAdvGc2" halign="center">
+                    <af:panelGroupLayout id="autoAdvPgl1" layout="horizontal" partialTriggers="autoAdvPoll autoAdvDot1 autoAdvDot2 autoAdvDot3 autoAdvDot4 autoAdvDeck">
+                      <af:poll id="autoAdvPoll" interval="3000" pollListener="#{vdDeck.autoAdvHandlePoll}"/>
+                      <af:commandImageLink id="autoAdvDot1" shortDesc="Show card 1" actionListener="#{vdDeck.autoAdvManualJump}" styleClass="CustomDot"
+                                           partialSubmit="true" icon="/images/page-dot-#{vdDeck.autoAdvChild == 'autoAdvChild1' ? 'on' : 'off'}.png">
+                        <af:setPropertyListener from="autoAdvChild1" to="#{vdDeck.autoAdvChild}" type="action"/>
+                        <af:clientListener type="action" method="pauseThenDelayRestartPoll"/>
+                      </af:commandImageLink>
+                      <af:commandImageLink id="autoAdvDot2" shortDesc="Show card 2" actionListener="#{vdDeck.autoAdvManualJump}" styleClass="CustomDot"
+                                           partialSubmit="true" icon="/images/page-dot-#{vdDeck.autoAdvChild == 'autoAdvChild2' ? 'on' : 'off'}.png">
+                        <af:setPropertyListener from="autoAdvChild2" to="#{vdDeck.autoAdvChild}" type="action"/>
+                        <af:clientListener type="action" method="pauseThenDelayRestartPoll"/>
+                      </af:commandImageLink>
+                      <af:commandImageLink id="autoAdvDot3" shortDesc="Show card 3" actionListener="#{vdDeck.autoAdvManualJump}" styleClass="CustomDot"
+                                           partialSubmit="true" icon="/images/page-dot-#{vdDeck.autoAdvChild == 'autoAdvChild3' ? 'on' : 'off'}.png">
+                        <af:setPropertyListener from="autoAdvChild3" to="#{vdDeck.autoAdvChild}" type="action"/>
+                        <af:clientListener type="action" method="pauseThenDelayRestartPoll"/>
+                      </af:commandImageLink>
+                      <af:commandImageLink id="autoAdvDot4" shortDesc="Show card 4" actionListener="#{vdDeck.autoAdvManualJump}" styleClass="CustomDot"
+                                           partialSubmit="true" icon="/images/page-dot-#{vdDeck.autoAdvChild == 'autoAdvChild4' ? 'on' : 'off'}.png">
+                        <af:setPropertyListener from="autoAdvChild4" to="#{vdDeck.autoAdvChild}" type="action"/>
+                        <af:clientListener type="action" method="pauseThenDelayRestartPoll"/>
+                      </af:commandImageLink>
+                    </af:panelGroupLayout>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+              <af:panelList id="autoAdvNotes">
+                <af:outputText id="autoAdvNote1" value="Hover over a card to suspend the polling (exit to resume)."/>
+                <af:outputText id="autoAdvNote2" value="Click on a dot to temporarily suspend polling and go to a particular card."/>
+              </af:panelList>
+            </af:panelHeader>
+
+            <af:panelHeader id="typesPh" text="Transition Types">
+              <af:panelGridLayout id="typesGrid">
+                <af:gridRow id="typesRow1" height="100px" marginBottom="10px">
+                  <af:gridCell id="flipEndCell" width="100px" marginEnd="10px" halign="stretch" valign="stretch">
+                    <af:deck id="flipEndDeck" displayedChild="flipEndChild1">
+                      <af:transition triggerType="backNavigate" transition="flipEnd"/>
+                      <af:transition triggerType="forwardNavigate" transition="flipEnd"/>
+                      <af:commandLink id="flipEndChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="flipEnd 1" inlineStyle="background-color:#C0504D;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipEndChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipEndDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                      <af:commandLink id="flipEndChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="flipEnd 2" inlineStyle="background-color:#F79646;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipEndChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipEndDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                  <af:gridCell id="flipStartCell" width="100px" marginEnd="10px" halign="stretch" valign="stretch">
+                    <af:deck id="flipStartDeck" displayedChild="flipStartChild1">
+                      <af:transition triggerType="backNavigate" transition="flipStart"/>
+                      <af:transition triggerType="forwardNavigate" transition="flipStart"/>
+                      <af:commandLink id="flipStartChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="flipStart 1" inlineStyle="background-color:#F79646;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipStartChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipStartDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                      <af:commandLink id="flipStartChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="flipStart 2" inlineStyle="background-color:#9BBB59;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipStartChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipStartDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                  <af:gridCell id="flipDownCell" width="100px" marginEnd="10px" halign="stretch" valign="stretch">
+                    <af:deck id="flipDownDeck" displayedChild="flipDownChild1">
+                      <af:transition triggerType="backNavigate" transition="flipDown"/>
+                      <af:transition triggerType="forwardNavigate" transition="flipDown"/>
+                      <af:commandLink id="flipDownChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="flipDown 1" inlineStyle="background-color:#9BBB59;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipDownChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipDownDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                      <af:commandLink id="flipDownChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="flipDown 2" inlineStyle="background-color:#4F81BD;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipDownChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipDownDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                  <af:gridCell id="flipUpCell" width="100px" marginEnd="10px" halign="stretch" valign="stretch">
+                    <af:deck id="flipUpDeck" displayedChild="flipUpChild1">
+                      <af:transition triggerType="backNavigate" transition="flipUp"/>
+                      <af:transition triggerType="forwardNavigate" transition="flipUp"/>
+                      <af:commandLink id="flipUpChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="flipUp 1" inlineStyle="background-color:#4F81BD;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipUpChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipUpDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                      <af:commandLink id="flipUpChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="flipUp 2" inlineStyle="background-color:#8064A2;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipUpChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipUpDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow id="typesRow2" height="100px" marginBottom="10px">
+                  <af:gridCell id="slideEndCell" halign="stretch" valign="stretch">
+                    <af:deck id="slideEndDeck" displayedChild="slideEndChild1" inlineStyle="overflow:hidden">
+                      <af:transition triggerType="backNavigate" transition="slideEnd"/>
+                      <af:transition triggerType="forwardNavigate" transition="slideEnd"/>
+                      <af:commandLink id="slideEndChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="slideEnd 1" inlineStyle="background-color:#8064A2;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideEndChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideEndDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                      <af:commandLink id="slideEndChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="slideEnd 2" inlineStyle="background-color:#C0504D;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideEndChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideEndDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                  <af:gridCell id="slideStartCell" halign="stretch" valign="stretch">
+                    <af:deck id="slideStartDeck" displayedChild="slideStartChild1" inlineStyle="overflow:hidden">
+                      <af:transition triggerType="backNavigate" transition="slideStart"/>
+                      <af:transition triggerType="forwardNavigate" transition="slideStart"/>
+                      <af:commandLink id="slideStartChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="slideStart 1" inlineStyle="background-color:#C0504D;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideStartChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideStartDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                      <af:commandLink id="slideStartChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="slideStart 2" inlineStyle="background-color:#F79646;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideStartChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideStartDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                  <af:gridCell id="slideDownCell" halign="stretch" valign="stretch">
+                    <af:deck id="slideDownDeck" displayedChild="slideDownChild1" inlineStyle="overflow:hidden">
+                      <af:transition triggerType="backNavigate" transition="slideDown"/>
+                      <af:transition triggerType="forwardNavigate" transition="slideDown"/>
+                      <af:commandLink id="slideDownChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="slideDown 1" inlineStyle="background-color:#F79646;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideDownChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideDownDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                      <af:commandLink id="slideDownChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="slideDown 2" inlineStyle="background-color:#9BBB59;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideDownChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideDownDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                  <af:gridCell id="slideUpCell" halign="stretch" valign="stretch">
+                    <af:deck id="slideUpDeck" displayedChild="slideUpChild1" inlineStyle="overflow:hidden">
+                      <af:transition triggerType="backNavigate" transition="slideUp"/>
+                      <af:transition triggerType="forwardNavigate" transition="slideUp"/>
+                      <af:commandLink id="slideUpChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="slideUp 1" inlineStyle="background-color:#9BBB59;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideUpChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideUpDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                      <af:commandLink id="slideUpChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="slideUp 2" inlineStyle="background-color:#4F81BD;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideUpChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideUpDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow id="typesRow3" height="100px" marginBottom="10px">
+                  <af:gridCell id="fadeCell" halign="stretch" valign="stretch">
+                    <af:deck id="fadeDeck" displayedChild="fadeChild1">
+                      <af:transition triggerType="backNavigate" transition="fade"/>
+                      <af:transition triggerType="forwardNavigate" transition="fade"/>
+                      <af:commandLink id="fadeChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="fade 1" inlineStyle="background-color:#4F81BD;color:white;font-size:18px">
+                        <af:setPropertyListener from="fadeChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:fadeDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                      <af:commandLink id="fadeChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="fade 2" inlineStyle="background-color:#8064A2;color:white;font-size:18px">
+                        <af:setPropertyListener from="fadeChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:fadeDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                  <af:gridCell id="noneCell" halign="stretch" valign="stretch">
+                    <af:deck id="noneDeck" displayedChild="noneChild1">
+                      <af:transition triggerType="backNavigate" transition="none"/>
+                      <af:transition triggerType="forwardNavigate" transition="none"/>
+                      <af:commandLink id="noneChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="none 1" inlineStyle="background-color:#8064A2;color:white;font-size:18px">
+                        <af:setPropertyListener from="noneChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:noneDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                      <af:commandLink id="noneChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        text="none 2" inlineStyle="background-color:#C0504D;color:white;font-size:18px">
+                        <af:setPropertyListener from="noneChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:noneDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelHeader>
+
+            <af:panelHeader id="pairsPh" text="Complimentary (back + forward) Transition Parings">
+              <af:panelGridLayout id="pairsGrid">
+                <af:gridRow id="pairsRow1" height="100px" marginBottom="10px">
+                  <af:gridCell id="flipHorizontalCell" width="210px" marginEnd="10px" halign="stretch" valign="stretch">
+                    <af:deck id="flipHorizontalDeck" displayedChild="flipHorizontalChild1">
+                      <af:transition triggerType="backNavigate" transition="flipEnd"/>
+                      <af:transition triggerType="forwardNavigate" transition="flipStart"/>
+                      <af:commandLink id="flipHorizontalChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        inlineStyle="background-color:#C0504D;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipHorizontalChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipHorizontalDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                        <af:outputFormatted id="flipHorizontalTxt1" value="1&lt;br>back = flipEnd&lt;br>forward = flipStart"/>
+                      </af:commandLink>
+                      <af:commandLink id="flipHorizontalChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        inlineStyle="background-color:#F79646;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipHorizontalChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipHorizontalDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                        <af:outputFormatted id="flipHorizontalTxt2" value="2&lt;br>back = flipEnd&lt;br>forward = flipStart"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                  <af:gridCell id="flipVerticalCell" width="210px" halign="stretch" valign="stretch">
+                    <af:deck id="flipVerticalDeck" displayedChild="flipVerticalChild1">
+                      <af:transition triggerType="backNavigate" transition="flipDown"/>
+                      <af:transition triggerType="forwardNavigate" transition="flipUp"/>
+                      <af:commandLink id="flipVerticalChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        inlineStyle="background-color:#F79646;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipVerticalChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipVerticalDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                        <af:outputFormatted id="flipVerticalTxt1" value="1&lt;br>back = flipDown&lt;br>forward = flipUp"/>
+                      </af:commandLink>
+                      <af:commandLink id="flipVerticalChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        inlineStyle="background-color:#9BBB59;color:white;font-size:18px">
+                        <af:setPropertyListener from="flipVerticalChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:flipVerticalDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                        <af:outputFormatted id="flipVerticalTxt2" value="2&lt;br>back = flipDown&lt;br>forward = flipUp"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                </af:gridRow>
+                <af:gridRow id="pairsRow2" height="100px" marginBottom="10px">
+                  <af:gridCell id="slideHorizontalCell" halign="stretch" valign="stretch">
+                    <af:deck id="slideHorizontalDeck" displayedChild="slideHorizontalChild1"
+                      inlineStyle="overflow:hidden">
+                      <af:transition triggerType="backNavigate" transition="slideEnd"/>
+                      <af:transition triggerType="forwardNavigate" transition="slideStart"/>
+                      <af:commandLink id="slideHorizontalChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        inlineStyle="background-color:#9BBB59;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideHorizontalChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideHorizontalDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                        <af:outputFormatted id="slideHorizontalTxt1" value="1&lt;br>back = slideEnd&lt;br>forward = slideStart"/>
+                      </af:commandLink>
+                      <af:commandLink id="slideHorizontalChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        inlineStyle="background-color:#4F81BD;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideHorizontalChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideHorizontalDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                        <af:outputFormatted id="slideHorizontalTxt2" value="2&lt;br>back = slideEnd&lt;br>forward = slideStart"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                  <af:gridCell id="slideVerticalCell" halign="stretch" valign="stretch">
+                    <af:deck id="slideVerticalDeck" displayedChild="slideVerticalChild1"
+                      inlineStyle="overflow:hidden">
+                      <af:transition triggerType="backNavigate" transition="slideDown"/>
+                      <af:transition triggerType="forwardNavigate" transition="slideUp"/>
+                      <af:commandLink id="slideVerticalChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        inlineStyle="background-color:#4F81BD;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideVerticalChild2" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideVerticalDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                        <af:outputFormatted id="slideVerticalTxt1" value="1&lt;br>back = slideDown&lt;br>forward = slideUp"/>
+                      </af:commandLink>
+                      <af:commandLink id="slideVerticalChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true"
+                        inlineStyle="background-color:#8064A2;color:white;font-size:18px">
+                        <af:setPropertyListener from="slideVerticalChild1" to="#{vdDeck.genericChild}" type="action"/>
+                        <af:setPropertyListener from="dmoTpl:slideVerticalDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                        <af:outputFormatted id="slideVerticalTxt2" value="2&lt;br>back = slideDown&lt;br>forward = slideUp"/>
+                      </af:commandLink>
+                    </af:deck>
+                  </af:gridCell>
+                </af:gridRow>
+              </af:panelGridLayout>
+            </af:panelHeader>
+
+            <af:panelHeader id="clickAdvPh" text="Use of multiple transition types">
+              <af:deck id="clickAdvDeck" displayedChild="clickAdvChild1" inlineStyle="width:95px;height:137px">
+                <af:transition triggerType="backNavigate" transition="#{vdDeck.genericBackNavigate}"/>
+                <af:transition triggerType="forwardNavigate" transition="#{vdDeck.genericForwardNavigate}"/>
+                <af:commandLink id="clickAdvChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="clickAdvChild2" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:clickAdvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="flipUp" to="#{vdDeck.genericForwardNavigate}" type="action"/>
+                  <af:image id="clickAdvChild1Img" shortDesc="Playing card back" source="/images/card-back.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+                <af:commandLink id="clickAdvChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="clickAdvChild3" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:clickAdvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="slideEnd" to="#{vdDeck.genericForwardNavigate}" type="action"/>
+                  <af:image id="clickAdvChild2Img" shortDesc="Playing card A" source="/images/card-front-a.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+                <af:commandLink id="clickAdvChild3" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="clickAdvChild4" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:clickAdvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="slideDown" to="#{vdDeck.genericForwardNavigate}" type="action"/>
+                  <af:image id="clickAdvChild3Img" shortDesc="Playing card B" source="/images/card-front-b.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+                <af:commandLink id="clickAdvChild4" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="clickAdvChild5" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:clickAdvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="slideStart" to="#{vdDeck.genericForwardNavigate}" type="action"/>
+                  <af:image id="clickAdvChild4Img" shortDesc="Playing card C" source="/images/card-front-c.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+                <af:commandLink id="clickAdvChild5" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="clickAdvChild6" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:clickAdvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="slideUp" to="#{vdDeck.genericForwardNavigate}" type="action"/>
+                  <af:image id="clickAdvChild5Img" shortDesc="Playing card D" source="/images/card-front-d.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+                <af:commandLink id="clickAdvChild6" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="clickAdvChild1" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:clickAdvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="flipEnd" to="#{vdDeck.genericBackNavigate}" type="action"/>
+                  <af:image id="clickAdvChild6Img" shortDesc="Playing card E" source="/images/card-front-e.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+              </af:deck>
+            </af:panelHeader>
+
+            <af:panelHeader id="hideOvPh" text="Use of overflow:hidden style">
+              <af:deck id="hideOvDeck" displayedChild="hideOvChild1"
+                       inlineStyle="width:95px;height:137px;overflow:hidden">
+                <af:transition triggerType="backNavigate" transition="#{vdDeck.genericBackNavigate}"/>
+                <af:transition triggerType="forwardNavigate" transition="#{vdDeck.genericForwardNavigate}"/>
+                <af:commandLink id="hideOvChild1" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="hideOvChild2" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:hideOvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="flipUp" to="#{vdDeck.genericForwardNavigate}" type="action"/>
+                  <af:image id="hideOvChild1Img" shortDesc="Playing card back" source="/images/card-back.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+                <af:commandLink id="hideOvChild2" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="hideOvChild3" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:hideOvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="slideEnd" to="#{vdDeck.genericForwardNavigate}" type="action"/>
+                  <af:image id="hideOvChild2Img" shortDesc="Playing card A" source="/images/card-front-a.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+                <af:commandLink id="hideOvChild3" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="hideOvChild4" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:hideOvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="slideDown" to="#{vdDeck.genericForwardNavigate}" type="action"/>
+                  <af:image id="hideOvChild3Img" shortDesc="Playing card B" source="/images/card-front-b.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+                <af:commandLink id="hideOvChild4" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="hideOvChild5" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:hideOvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="slideStart" to="#{vdDeck.genericForwardNavigate}" type="action"/>
+                  <af:image id="hideOvChild4Img" shortDesc="Playing card C" source="/images/card-front-c.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+                <af:commandLink id="hideOvChild5" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="hideOvChild6" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:hideOvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="slideUp" to="#{vdDeck.genericForwardNavigate}" type="action"/>
+                  <af:image id="hideOvChild5Img" shortDesc="Playing card D" source="/images/card-front-d.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+                <af:commandLink id="hideOvChild6" actionListener="#{vdDeck.animateToGenericChild}" partialSubmit="true">
+                  <af:setPropertyListener from="hideOvChild1" to="#{vdDeck.genericChild}" type="action"/>
+                  <af:setPropertyListener from="dmoTpl:hideOvDeck" to="#{vdDeck.genericDeckSearchExpression}" type="action"/>
+                  <af:setPropertyListener from="flipEnd" to="#{vdDeck.genericBackNavigate}" type="action"/>
+                  <af:image id="hideOvChild6Img" shortDesc="Playing card E" source="/images/card-front-e.png"
+                            inlineStyle="width:95px;height:137px"/>
+                </af:commandLink>
+              </af:deck>
+            </af:panelHeader>
+
+            <af:panelHeader id="replacePh" text="Replace transition (Animate a single card on PPR)">
+              <af:deck id="replaceDeck" displayedChild="replaceChild1" inlineStyle="width: 500px;overflow:hidden">
+                <af:transition triggerType="replace" transition="slideDown"/>
+                <af:commandLink id="replaceChild1" clientComponent="true" partialSubmit="true"
+                  inlineStyle="background-color:#C0504D;color:white;display:block;padding:40px;">
+                  <af:outputText id="replaceCl1" value="Server Time Stamp - #{vdDeck.timeStamp}" inlineStyle="font-size:24px"/>
+                  <af:clientListener type="action" method="pprReplaceDeck"/>
+                </af:commandLink>
+              </af:deck>
+            </af:panelHeader>
+            
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

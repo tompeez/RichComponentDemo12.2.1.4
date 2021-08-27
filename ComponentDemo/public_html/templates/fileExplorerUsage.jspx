@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="File Explorer Template" theme="#{demoSkin.theme4}" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="pt" viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/fileExplorerTemplateAlta.jspx' : '/templates/pageTemplateDefs/fileExplorerTemplate.jspx'}">
+        <f:attribute name="auxiliary2Size" value="210"/>
+        <f:attribute name="header2Size" value="2em"/>
+        <f:facet name="branding">
+          <af:outputText value="Product Name" id="ot1" styleClass="AFBrandingBarTitle"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:navigationPane shortDesc="navigationGlobal" hint="bar"
+                             id="np1">
+            <af:commandNavigationItem text="Sample Page Templates" action="templates" id="back"/>
+            <af:commandNavigationItem partialSubmit="true" text="Global Link 1"
+              actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                      id="cni1"/>
+            <af:commandNavigationItem partialSubmit="true" text="Global Link 2"
+              selected="true"
+              actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                      id="cni2"/>
+            <af:commandNavigationItem partialSubmit="true" text="Global Link 3"
+              actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                      id="cni3"/>
+            <af:commandNavigationItem partialSubmit="true" text="Global Link 4"
+              actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                      id="cni4"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/fileExplorerTemplate.jspx.source">
+            <f:facet name="customMenu">
+              <af:menu text="Related Demos" id="menuRelated">
+                <af:group id="gPageTemps">
+                  <af:goMenuItem id="menuPPT" text="Sample Page Template - Panel Page"
+                                 destination="/templates/panelPageUsage.jspx"/>
+                  <af:goMenuItem id="menuTT" text="Sample Page Template - Tablet"
+                                 destination="/templates/tabletUsage.jspx"/>
+                </af:group>
+                <af:goMenuItem id="menuVDT" text="Visual Design - Tabs"
+                               destination="/visualDesigns/tabs.jspx"/>
+              </af:menu>
+            </f:facet>
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc">
+                <af:commandNavigationItem text="Feature Demos" action="feature" id="bc1"/>
+                <af:commandNavigationItem text="Sample Page Templates" action="templates" id="bc2"/>
+                <af:commandNavigationItem text="File Explorer Template" id="bc3"/>
+              </af:breadCrumbs>
+            </f:facet>
+            <f:facet name="infoUser">
+              <af:inputText id="userTxt" contentStyle="font-weight:bold" shortDesc="infoUser"
+                            label="Logged in as" value="Administrator" readOnly="true"/>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="header2">
+          <af:outputText value="header2" id="ot3"/>
+        </f:facet>
+        <f:facet name="auxiliary2">
+          <af:outputText value="auxiliary2" id="ot4"/>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:outputText value="This is a demo for the sample file explorer page template."
+                           id="ot5"/>
+            <af:goLink
+              text="Usage Source"
+              destination="#{facesContext.viewRoot.viewId}.source"
+              targetFrame="demoSource" id="gl2"/>
+            <af:goLink
+              text="Template Definition Source"
+              destination="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/fileExplorerTemplateAlta.jspx.source' :'/templates/pageTemplateDefs/fileExplorerTemplate.jspx.source'}"
+              targetFrame="templateSource" id="gl3"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="infoTile Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:resource type="javascript">
+        function tileSelected(evt)
+        {
+          // PPR both the info tile as well as the detail component
+          AdfPage.PAGE.addPartialTargets(AdfPage.PAGE.findComponent("pt:pglinfoTl"), AdfPage.PAGE.findComponent("pt:pglDet"), AdfPage.PAGE.findComponent("pt:pglend"));
+        }
+      </af:resource>
+      <af:resource type="css" source="/visualDesigns/infoTile/infoTileSamplePage.css"/>
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="infoTile Visual Design"/>
+        <f:attribute name="visualDesignName" value="infoTile"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="galleryEnabled" value="false"/>
+        <f:attribute name="gmStretchChildren" value="false"/>
+        <f:facet name="center">
+          <trh:tableLayout id="pgll" width="100%">
+            <trh:rowLayout id="gr" width="100%">
+              <trh:cellFormat id="gc1" width="20%" valign="top">
+                <trh:tableLayout id="tbl" width="100%" styleClass="InfoTileHdRgn">
+                  <trh:rowLayout id="rl1" valign="middle" >
+                    <trh:cellFormat id="cf1" halign="start" valign="middle">
+                      <af:button id="cd" text="New Project" />
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf2" halign="end" valign="middle">
+                      <af:toolbar id="tb1" inlineStyle="float:right">
+                        <af:group id="g3">
+                          <af:button id="stn" icon="/images/alta_v1/settings_ena.png" hoverIcon="/images/alta_v1/settings_ovr.png" depressedIcon="/images/alta_v1/settings_dwn.png"/>
+                        </af:group>
+                      </af:toolbar>
+                    </trh:cellFormat>                  
+                  </trh:rowLayout>
+                </trh:tableLayout>
+                
+                <af:panelGroupLayout id="pglinfoTl" styleClass="InfoTileComp" clientComponent="true">
+                  <!-- Set the rows  to a large number so that all rows are rendered -->
+                  <af:iterator id="infolv"  rows="1000" value="#{infoTileBean.infoTileProjectModel}"  var="tile" varStatus="vs">
+                    <af:declarativeComponent  viewId="infoTile/infoTile.jsff" id="dc1">
+                      <f:attribute name="selected" value="#{infoTileBean.infoTileSelectedProjectIndex == vs.index ? true : false}"/>
+                      <f:attribute name="index" value="#{vs.index}"/>
+                      <!-- Since we have consistent content we do not need to specify the height -->
+                      <!--f:attribute name="tileHeight" value="120px"/-->
+                      <f:facet name="tileContent">
+                        <af:panelGroupLayout layout="vertical" id="tcon">
+                          <af:outputText value="#{tile.title}" id="title" styleClass="ProjTitle"/>
+                          <af:outputText value="#{tile.description}" id="desc" styleClass="ProjDesc"/>
+                          
+                          <af:panelGroupLayout layout="horizontal" id="bldsts" styleClass="StatusInfo">
+                            <af:image id="imgs1" source="#{tile.buildStatusImage}" shortDesc="#{tile.buildStatus}"/>
+                            <af:outputText value="&#160;Builds" id="bldt"/>
+                          </af:panelGroupLayout>
+                          <af:panelGroupLayout layout="horizontal" id="depsts" styleClass="StatusInfo">
+                            <af:image id="imgs2" source="#{tile.deploymentStatusImage}" shortDesc="#{tile.deploymentStatus}"/>
+                            <af:outputText value="&#160;Deployment" id="dept"/>
+                          </af:panelGroupLayout>
+                          
+                          <af:panelGroupLayout layout="horizontal" id="tskinfo" valign="top">
+                            <af:outputLabel id="nlbl" value="New"/>
+                            <af:commandLink id="rv" text="#{tile.reviewCount} Reviews"/>
+                            <af:outputText id="sep" value="&#160;|&#160;"/>
+                            <af:commandLink id="tst" text="#{tile.taskCount} Tasks"/>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                      </f:facet>
+                    </af:declarativeComponent>
+                  </af:iterator>
+                  <!-- Client Listener for tile selection -->
+                  <af:clientListener type="tileSelected" method="tileSelected"/>
+                  <af:serverListener type="tileSelected" method="#{infoTileBean.infoTileProjectSelected}"/>
+                </af:panelGroupLayout>
+              </trh:cellFormat>
+              <trh:cellFormat id="gc2" width="80%" valign="top">
+                <af:deck id="pglDet" displayedChild="pglDetC" inlineStyle="overflow:hidden">
+                  <af:transition triggerType="replace" transition="slideEnd"/>
+                  <trh:tableLayout width="100%"  id="pglDetC">
+                    <trh:rowLayout id="gr3" width="100%">
+                      <trh:cellFormat id="gc31" width="66%" valign="top">
+                        <af:panelGroupLayout layout="vertical" styleClass="ProjDet">
+                          <af:panelGroupLayout id="pmldt" styleClass="ProjDetTitleCont">
+                            <af:outputLabel value="#{infoTileBean.selectedInfoTileProject.title} Home"  id="ol" styleClass="ProjDetTitle"/>
+                            <af:commandLink id="pdwk" text="Project Wiki"/>
+                          </af:panelGroupLayout>
+                          
+                          <af:panelGroupLayout layout="horizontal" id="dtlinfo" valign="top" inlineStyle="width:100%">
+                            <af:panelGroupLayout layout="vertical" id="dtlpgl1" styleClass="DtlInfoPGL">
+                                <af:panelHeader id="dtlbldi" text="Builds" styleClass="DtlInfoHdr">
+                                  <af:iterator id="bldit" value="#{infoTileBean.selectedInfoTileProject.buildJobStatusImages}" var="img" varStatus="vs">
+                                    <af:spacer id="vspbld" height="5px"/>
+                                    <af:panelGroupLayout layout="horizontal" id="bldpgl">
+                                      <af:image id="imgbld1" source="#{img}" shortDesc="#{img}"/>
+                                      <af:spacer id="spbld1" width="5px"/>
+                                      <af:outputLabel id="bldlbl" value="Build #{vs.index +1}"/>
+                                    </af:panelGroupLayout>
+                                  </af:iterator>
+                                  <af:spacer id="vspbld2" height="5px"/>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout layout="vertical" id="dtlpgl2" styleClass="DtlInfoPGL">
+                              <af:panelHeader id="dtldepi" text="Deployments" styleClass="DtlInfoHdr LastCol">
+                                <af:iterator id="depit" value="#{infoTileBean.selectedInfoTileProject.deploymentTargetStatusImages}" var="img" varStatus="vs">
+                                    <af:spacer id="vspdep" height="5px"/>
+                                    <af:panelGroupLayout layout="horizontal" id="deppgl">
+                                      <af:image id="imgdep1" source="#{img}" shortDesc="#{img}"/>
+                                      <af:spacer id="spdep1" width="5px"/>
+                                      <af:outputLabel id="bldepl" value="Target #{vs.index +1}"/>
+                                    </af:panelGroupLayout>
+                                  </af:iterator>
+                                <af:spacer id="vspdep2" height="5px"/>
+                              </af:panelHeader>
+                            </af:panelGroupLayout>
+                          </af:panelGroupLayout>
+                          
+                          <af:panelHeader id="dtlmtr" text="Metrics" styleClass="DtlMtr">
+                          
+                            <af:image id="immtr" shortDesc="dvt chart goes here" source="/images/alta_v1/dvt_placeholder.png"/>
+                            <af:image id="immtr2" shortDesc="dvt chart goes here" source="/images/alta_v1/dvt_placeholder.png"/>
+                            <af:image id="immtr3" shortDesc="dvt chart goes here" source="/images/alta_v1/dvt_placeholder.png"/>
+                            <af:image id="immtr4" shortDesc="dvt chart goes here" source="/images/alta_v1/dvt_placeholder.png"/>
+                          </af:panelHeader>
+                          
+                          <af:panelGroupLayout id="pgltskl" styleClass="ProjDetTitleCont">
+                            <af:outputLabel value="#{infoTileBean.selectedInfoTileProject.title} Tasks"  id="oltskl" styleClass="ProjDetTitle"/>
+                          </af:panelGroupLayout>
+                          
+                          <af:table columnStretching="last" contentDelivery="immediate" summary="Task List for #{infoTileBean.selectedInfoTileProject.title}" id="tsktbl" value="#{infoTileBean.selectedInfoTileProject.taskList}" var="row">
+                            <af:column id="rh" rowHeader="true" width="10"/>
+                            <af:column id="tskid" headerText="Task Id" rowHeader="unstyled">
+                              <af:outputText id="tskidot" value="#{row.taskId}"/>
+                            </af:column>
+                            <af:column id="tsksum" headerText="Task Summary">
+                              <af:outputText id="tsksumot" value="#{row.summary}"/>
+                            </af:column>
+                          </af:table>
+                        </af:panelGroupLayout>
+                      </trh:cellFormat>
+                      <trh:cellFormat id="gc32" width="36%" valign="top">
+                        <af:panelGroupLayout layout="vertical" id="pglend" styleClass="ProjActCont" clientComponent="true">
+                          <af:showDetail disclosed="false" id="GitR" undisclosedText="Git Repositories" disclosedText="Git Repositories">
+                            <af:outputText id="otgit" value="Here are the git repositories. This will probably be a list of some sort."/>
+                          </af:showDetail>
+                          <af:showDetail disclosed="false" id="MvnR" undisclosedText="Maven Repositories" disclosedText="Maven Repositories">
+                            <af:outputText id="otmvn" value="Here are the maven repositories."/>
+                          </af:showDetail>
+                          <af:panelGroupLayout layout="vertical" id="pglact" styleClass="ProjAct">
+                            <trh:tableLayout id="tbla" width="100%" styleClass="InfoTileHdRgn">
+                              <trh:rowLayout id="rla1" valign="middle" >
+                                <trh:cellFormat id="cfa1" halign="start" valign="middle">
+                                  <af:outputLabel id="ota1" value="Recent Activity" />
+                                </trh:cellFormat>
+                                <trh:cellFormat id="cfa2" halign="end" valign="middle">
+                                  <af:toolbar id="tba1" inlineStyle="float:right">
+                                    <af:group id="ga3">
+                                      <af:commandToolbarButton shortDesc="Setting" id="stna" icon="/images/alta_v1/settings_ena.png" hoverIcon="/images/alta_v1/settings_ovr.png" depressedIcon="/images/alta_v1/settings_dwn.png"/>
+                                    </af:group>
+                                  </af:toolbar>
+                                </trh:cellFormat>                  
+                              </trh:rowLayout>
+                            </trh:tableLayout>
+                            <af:outputLabel value="Today"  id="ottdy"/>
+                            <af:panelGroupLayout id="pktd" layout="vertical" rendered="#{(infoTileBean.infoTileSelectedProjectIndex)%2 == 0}">
+                              <af:panelGroupLayout id="grptd1" layout="horizontal" styleClass="ActLine" valign="top">
+                                  <af:image id="imgltd1" source="/images/alta_v1/activity_bad.png" shortDesc="Activity Error"/>
+                                  <af:panelGroupLayout id="pglintd1">
+                                    <af:link id="lnkltd11" text="&#160;Build 10 of Customer Orders failed tests"/>
+                                    <af:outputText id="ottd1" value="&#160;at 11:01PM PT after 1.75 hours. Started by Timer."/>
+                                  </af:panelGroupLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="grptd2" layout="horizontal" styleClass="ActLine" valign="top">
+                                  <af:image id="imgltd2" source="/images/alta_v1/activity_ok.png" shortDesc="Activity OK"/>
+                                  <af:panelGroupLayout id="pglintd2">
+                                    <af:link id="lnkltd12" text="&#160;Build 9 of Customer Orders Succeeded"/>
+                                    <af:outputText id="ottd2" value="&#160;at 10:25PM PT after 2 hours. Started by Timer."/>
+                                  </af:panelGroupLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="grptd3" layout="horizontal" styleClass="ActLine" valign="top">
+                                  <af:image id="imgltd3" source="/images/alta_v1/activity_bad.png" shortDesc="Activity Error"/>
+                                  <af:panelGroupLayout id="pglintd3">
+                                    <af:link id="lnkltd13" text="&#160;Deployment of Service Orders failed"/>
+                                    <af:outputText id="ottd3" value="&#160;at 4:25PM PT. Started by Rich Gunther.."/>
+                                  </af:panelGroupLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="grptd4" layout="horizontal" styleClass="ActLine" valign="top">
+                                  <af:image id="imgltd4" source="/images/alta_v1/activity_none.png" shortDesc="Activity None"/>
+                                  <af:panelGroupLayout id="pglintd4">
+                                    <af:link id="lnkltd14" text="&#160;Code Review Assigned."/>
+                                    <af:outputText id="ottd4" value="&#160; by Jose Cronembold at 11:03AM PT."/>
+                                  </af:panelGroupLayout>
+                              </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout id="pktd2" layout="vertical" rendered="#{(infoTileBean.infoTileSelectedProjectIndex)%2 == 1}">
+                              <af:panelGroupLayout id="grptd5" layout="horizontal" styleClass="ActLine" valign="top">
+                                  <af:image id="imgltd5" source="/images/alta_v1/activity_none.png" shortDesc="Activity None"/>
+                                  <af:panelGroupLayout id="pglintd5">
+                                    <af:link id="lnkltd15" text="&#160;Clint Morgan update Task 1234"/>
+                                    <af:outputText id="ottd5" value="&#160;at 5:45PM PT. Set Resolution to FIXED..."/>
+                                  </af:panelGroupLayout>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="grptd6" layout="horizontal" styleClass="ActLine" valign="top">
+                                  <af:image id="imgltd6" source="/images/alta_v1/activity_ok.png" shortDesc="Activity OK"/>
+                                  <af:panelGroupLayout id="pglintd6">
+                                    <af:link id="lnkltd16" text="&#160;Vimala Ranganathan committed 98819a6"/>
+                                    <af:outputText id="ottd6" value="&#160;at 3:15PM PT. Added printinfo target."/>
+                                  </af:panelGroupLayout>
+                              </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                            <af:outputLabel value="Yesterday"  id="otys"/>
+                            <af:panelGroupLayout id="pkltd" layout="vertical">
+                              <af:panelGroupLayout id="grpys1" layout="horizontal" styleClass="ActLine" valign="middle">
+                                  <af:image id="imgys1" source="/images/alta_v1/activity_warn.png" shortDesc="Activity Warning"/>
+                                  <af:link id="lnkys1" text="&#160;Yesterday Activity 1"/>
+                                  <af:outputText id="otys1" value="&#160;more info..."/>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="grpys2" layout="horizontal" styleClass="ActLine" valign="middle">
+                                  <af:image id="imgys2" source="/images/alta_v1/activity_warn.png" shortDesc="Activity Warning"/>
+                                  <af:link id="lnkys2" text="&#160;Yesterday Activity 2"/>
+                                  <af:outputText id="otys2" value="&#160;more info..."/>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="grpys3" layout="horizontal" styleClass="ActLine" valign="middle">
+                                  <af:image id="imgys3" source="/images/alta_v1/activity_ok.png" shortDesc="Activity Warning"/>
+                                  <af:link id="lnkys3" text="&#160;Yesterday Activity 2"/>
+                                  <af:outputText id="otys3" value="&#160;more info..."/>
+                              </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                            <af:outputLabel value="Last Week"  id="otlw"/>
+                            <af:panelGroupLayout id="pklw" layout="vertical">
+                              <af:panelGroupLayout id="grplw1" layout="horizontal" styleClass="ActLine" valign="middle">
+                                  <af:image id="imglw1" source="/images/alta_v1/activity_none.png" shortDesc="Activity None"/>
+                                  <af:link id="lnklw1" text="&#160;Last Week Activity 1"/>
+                                  <af:outputText id="otlw1" value="&#160;more info..."/>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout id="grplw2" layout="horizontal" styleClass="ActLine" valign="middle">
+                                  <af:image id="imglw2" source="/images/alta_v1/activity_ok.png" shortDesc="Activity OK"/>
+                                  <af:link id="lnklw2" text="&#160;Last Week Activity 2"/>
+                                  <af:outputText id="otlw2" value="&#160;more info..."/>
+                              </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                      </trh:cellFormat>
+                    </trh:rowLayout>
+                  </trh:tableLayout>
+                </af:deck>
+              </trh:cellFormat>
+            </trh:rowLayout>
+          </trh:tableLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Calendar Custom Toolbar Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+                 
+    <af:resource type="javascript">
+        /**
+         * Shows a popup from an "action" type event.
+         * @param {AdfActionEvent} actionEvent the event being handled
+         */
+        function hidePopup(actionEvent)
+        {
+          var popupComp = actionEvent.getSource().getParent();
+          popupComp.hide();
+        }
+    </af:resource>                 
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="calendar"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelSplitter positionedFromEnd="true" splitterPosition="70" orientation="vertical"
+                            id="ps1">
+            <f:facet name="first">
+              <af:panelStretchLayout topHeight="150" id="psl1">
+                <f:facet name="top">
+                  <af:panelGroupLayout layout="scroll" id="pgl1">
+                    <af:panelGroupLayout layout="vertical" id="pgl2">
+                      <f:facet name="separator">
+                        <af:spacer height="5px" id="s2"/>
+                      </f:facet>
+                      <af:outputText value="This demo shows how to add a date picker to the toolbar (the date picker icon is next to the 'today' button). "
+                                     id="ot3"/>
+                      <af:outputText value="In certain situations, for example when the built in toolbar buttons are used, the 'view' and/or 'activeDay' attribute is updated by the framework. However when these attributes are set by the framework they are only set locally on the component, and the component no longer pulls the value from the EL expression. As long as a local value is set any updates to the back end are ignored."
+                                     id="ot4"/>
+                      <af:outputText value="Therefore, in cases where you need to update these attributes you have 2 choices. In both cases you need to add an attributeComponentChange for the change manager. The choices are:"
+                                     id="ot5"/>
+                      <af:panelList listStyle="list-style:decimal" id="pl1">
+                        <af:panelGroupLayout id="pgl3">
+                          <af:outputText value="to pull from the back end you have to have a displayChangeListener which nulls out the local value on the component so that the component will pull data from the back end. A demo of this strategy can be seen "
+                                         id="ot6"/>
+                          <af:goLink text="here" destination="customDatePickerStrategy1.jspx"
+                                     id="gl1"/>
+                        </af:panelGroupLayout>
+                        <af:outputText value="push the new value onto the component instance. This demo shows this strategy. The interesting part of this demo is in the code for DemoCalendarBean.get/setActiveDayComp()."
+                                       id="ot7"/>
+                      </af:panelList>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                <af:panelStretchLayout>
+                    <f:facet name="top">
+                      <af:popup id="chdPop" >
+                        <af:chooseDate id="chd"  />
+                        <af:inputDate simple="true"  id="inputDateId" visible="false" autoSubmit="true" value="#{calendarBean.activeDay}" chooseId="chd">
+                          <af:clientListener method="hidePopup" type="valueChange" />
+                        </af:inputDate>
+                      </af:popup>                                                  
+                    </f:facet>
+                    <f:facet name="center">
+                      <af:calendar binding="#{editor.component}" id="cal"
+                               value="#{calendarBean.calendarModel}"
+                               activeDay="#{calendarBean.activeDay}"
+                               toolboxLayout="views dates customToolbarInputDate range"
+                               partialTriggers="inputDateId">
+                        <f:facet name="customToolbarInputDate">
+                          <af:button shortDesc="Switch to a different date" icon="/afr/alta-v1/input_date.png" id="datePickerBtn">
+                            <af:showPopupBehavior popupId="::chdPop" alignId="datePickerBtn"/>
+                          </af:button>                      
+                        </f:facet>
+                      </af:calendar>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="scroll" id="pgl4">
+                <af:outputText value="See also:" id="ot8"/>
+                <af:panelList id="pl2">
+                  <af:goLink destination="../calendar.jspx" text="calendar"
+                             id="gl2"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

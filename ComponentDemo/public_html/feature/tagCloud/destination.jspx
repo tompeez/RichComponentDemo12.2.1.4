@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Tag Cloud Destination Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Tag Cloud Destination Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Tag Cloud Destination"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout topHeight="auto">
+            <f:facet name="top">
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <f:verbatim>                                      <b>Demonstrates Destination feature in Tag Cloud using
+                                                                     Census Data</b>                   <ul>
+                    <li>
+                      Tag Cloud item 
+                      <b>destination</b>
+                       attribute can be used to redirect users to external URL by clicking on the Tag Cloud item.
+                    </li>
+                    <li>Click on any Tag Cloud item to look at state specific census details.</li>
+                  </ul>                                                                                    </f:verbatim>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <dvt:tagCloud id="tc1" value="#{tagCloudAttrGroups.model}" var="item" layout="cloud" selectionMode="none"
+                            contentDelivery="whenAvailable" styleClass="AFStretchWidth"
+                            inlineStyle="margin:auto;width:70%;height:400px;" emptyText="No TagCloud Data to display">
+                <af:transition transition="auto" triggerType="display"/>
+                <dvt:tagCloudItem label="#{item.word}" value="#{item.frequency}" shortDesc="#{item.shortDesc}"
+                                  destination="#{item.destination}" rendered="true" id="t1"></dvt:tagCloudItem>
+              </dvt:tagCloud>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="NBox Attribute Groups" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <!--<f:attribute name="documentTitle" value="Show And Hide Series"/>-->
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="NBox Attribute Groups"/>
+        <f:facet name="separator">
+          <af:separator id="s1"/>
+        </f:facet>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth" topHeight="auto" endWidth="auto">
+            <f:facet name="top">
+              <af:outputFormatted value="&lt;ul>&lt;li>Use the check boxes on the right to toggle the display of the Department and Role attribute groups.&lt;/li>&lt;li>Once an attribute group is displayed it can also be used to group nodes into summary nodes.&lt;/li>&lt;/ul>"/>
+            </f:facet>
+            <f:facet name="center">
+              <dvt:nBox id="nb1" value="#{nBoxAttributeGroups.model}" var="node" binding="#{nBoxAttributeGroups.NBox}" rowsTitle="Potential" columnsTitle="Performance"
+                        groupBehavior="#{nBoxAttributeGroups.groupBehavior}" groupBy="#{nBoxAttributeGroups.groupBy}"
+                        partialTriggers="::displayDepartment ::groupDepartment ::displayRole ::groupRole ::displayExp ::groupExp ::displayLoc ::groupLoc ::groupBehavior">
+                <af:transition transition="auto" triggerType="dataChange"/>
+                <f:facet name="rows">
+                  <af:group>
+                    <dvt:nBoxRow value="0"/>
+                    <dvt:nBoxRow value="1"/>
+                    <dvt:nBoxRow value="2"/>
+                  </af:group>
+                </f:facet>
+                <f:facet name="columns">
+                  <af:group>
+                    <dvt:nBoxColumn value="0"/>
+                    <dvt:nBoxColumn value="1"/>
+                    <dvt:nBoxColumn value="2"/>
+                  </af:group>
+                </f:facet>
+                <f:facet name="cells">
+                  <af:group>
+                    <dvt:nBoxCell row="0" column="0" showCount="on" label="Misaligned Talent" shortDesc="Misaligned Talent"/>
+                    <dvt:nBoxCell row="0" column="1" showCount="on" label="Solid Talent" shortDesc="Solid Talent"/>
+                    <dvt:nBoxCell row="0" column="2" showCount="on" label="Expert Talent" shortDesc="Expert Talent"/>
+                    <dvt:nBoxCell row="1" column="0" showCount="on" label="Unproven Talent" shortDesc="Unproven Talent"/>
+                    <dvt:nBoxCell row="1" column="1" showCount="on" label="Core Talent" shortDesc="Core Talent"/>
+                    <dvt:nBoxCell row="1" column="2" showCount="on" label="Flexible Talent" shortDesc="Flexible Talent"/>
+                    <dvt:nBoxCell row="2" column="0" showCount="on" label="Evolving Talent" shortDesc="Evolving Talent"/>
+                    <dvt:nBoxCell row="2" column="1" showCount="on" label="Emerging Talent" shortDesc="Emerging Talent"/>
+                    <dvt:nBoxCell row="2" column="2" showCount="on" label="Top Talent" shortDesc="Top Talent"/>
+                  </af:group>
+                </f:facet>
+                <dvt:nBoxNode row="#{node.row}" column="#{node.column}" label="#{node.name}" secondaryLabel="#{node.job}" shortDesc="#{node.name} - #{node.job}">
+                  <dvt:attributeGroups id="department" type="color" value="#{node.department}" label="#{node.department}" sectionLabel="Department" rendered="#{nBoxAttributeGroups.displayDepartment}"/>
+                  <dvt:attributeGroups id="role" type="indicatorColor" value="#{node.role}" label="#{node.role}" sectionLabel="Role" rendered="#{nBoxAttributeGroups.displayRole}">
+                    <dvt:attributeMatchRule group="Manager"><f:attribute name="indicatorColor" value="#6ddbdb"/></dvt:attributeMatchRule>
+                    <dvt:attributeMatchRule group="Individual Contributor"><f:attribute name="indicatorColor" value="#ffb54d"/></dvt:attributeMatchRule>
+                  </dvt:attributeGroups>
+                  <f:facet name="indicator" >
+                    <dvt:marker width="10" height="10" rendered="#{nBoxAttributeGroups.displayExp || nBoxAttributeGroups.displayLoc}">
+                      <dvt:attributeGroups id="experience" type="shape" label="#{node.experience ge 6 ? '6+ years' : (node.experience ge 3 ? '3-5 years' : '0-2 years')}" sectionLabel="Experience"
+                                           value="#{node.experience ge 6 ? '6+ years' : (node.experience ge 3 ? '3-5 years' : '0-2 years')}" 
+                                           rendered="#{nBoxAttributeGroups.displayExp}">
+                        <dvt:attributeMatchRule group="6+ years"><f:attribute name="shape" value="triangleUp"/></dvt:attributeMatchRule>
+                        <dvt:attributeMatchRule group="3-5 years"><f:attribute name="shape" value="circle"/></dvt:attributeMatchRule>
+                        <dvt:attributeMatchRule group="0-2 years"><f:attribute name="shape" value="triangleDown"/></dvt:attributeMatchRule>
+                      </dvt:attributeGroups>
+                      <dvt:attributeGroups id="location" type="color" label="#{node.remote ? 'Remote' : 'Local'}" sectionLabel="Location"
+                                           value="#{node.remote ? 'Remote' : 'Local'}" 
+                                           rendered="#{nBoxAttributeGroups.displayLoc}">
+                        <dvt:attributeMatchRule group="Remote"><f:attribute name="color" value="#e371b2"/></dvt:attributeMatchRule>
+                        <dvt:attributeMatchRule group="Local"><f:attribute name="color" value="#8561c8"/></dvt:attributeMatchRule>
+                      </dvt:attributeGroups>                      
+                    </dvt:marker>
+                  </f:facet>
+                  <f:facet name="icon">
+                    <dvt:marker source="/resources/images/nBox/#{node.image}"/>
+                  </f:facet>
+                </dvt:nBoxNode>
+              </dvt:nBox>
+            </f:facet>
+            <f:facet name="end">
+              <af:panelFormLayout>
+                <af:group>
+                  <af:group>
+                    <af:outputText value="Department" inlineStyle="font-weight:bold"/>
+                    <af:selectBooleanCheckbox label="Display" value="#{nBoxAttributeGroups.displayDepartment}" id="displayDepartment" autoSubmit="true"/>
+                    <af:selectBooleanCheckbox label="Group" value="#{nBoxAttributeGroups.groupDepartment}" id="groupDepartment" 
+                                              disabled="#{not nBoxAttributeGroups.displayDepartment}" autoSubmit="true" partialTriggers="displayDepartment"/>
+                    <af:outputText value="Role" inlineStyle="font-weight:bold"/>                    
+                    <af:selectBooleanCheckbox label="Display" value="#{nBoxAttributeGroups.displayRole}" id="displayRole" autoSubmit="true"/>
+                    <af:selectBooleanCheckbox label="Group" value="#{nBoxAttributeGroups.groupRole}" id="groupRole" 
+                                              disabled="#{not nBoxAttributeGroups.displayRole}" autoSubmit="true" partialTriggers="displayRole"/>
+                    <af:outputText value="Experience" inlineStyle="font-weight:bold"/>                    
+                    <af:selectBooleanCheckbox label="Display" value="#{nBoxAttributeGroups.displayExp}" id="displayExp" autoSubmit="true"/>
+                    <af:selectBooleanCheckbox label="Group" value="#{nBoxAttributeGroups.groupExp}" id="groupExp" 
+                                              disabled="#{not nBoxAttributeGroups.displayExp}" autoSubmit="true" partialTriggers="displayExp"/>                                              
+                    <af:outputText value="Location" inlineStyle="font-weight:bold"/>                    
+                    <af:selectBooleanCheckbox label="Display" value="#{nBoxAttributeGroups.displayLoc}" id="displayLoc" autoSubmit="true"/>
+                    <af:selectBooleanCheckbox label="Group" value="#{nBoxAttributeGroups.groupLoc}" id="groupLoc" 
+                                              disabled="#{not nBoxAttributeGroups.displayLoc}" autoSubmit="true" partialTriggers="displayLoc"/>
+                  </af:group>
+                  <af:group>
+                    <af:selectOneChoice id="groupBehavior" value="#{nBoxAttributeGroups.groupBehavior}" autoSubmit="true"
+                                        label="Group Behavior">
+                      <af:selectItem value="none" label="none"/>
+                      <af:selectItem value="acrossCells" label="acrossCells"/>
+                      <af:selectItem value="withinCell" label="withinCell"/>                      
+                    </af:selectOneChoice>
+                  </af:group>
+                </af:group>
+              </af:panelFormLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

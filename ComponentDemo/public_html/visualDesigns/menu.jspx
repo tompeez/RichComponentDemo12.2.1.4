@@ -1,0 +1,811 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Menu Visual Design Demo" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.visualDesignTemplate}">
+        <f:attribute name="headerGlobalSize" value="120"/>
+        <f:attribute name="header1Size" value="70"/>
+        <f:attribute name="header2Size" value="90"/>
+        <f:attribute name="footer2Size" value="0"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:attribute name="auxiliaryGlobalSize" value="200"/>
+        <f:attribute name="auxiliaryGlobalCollapsed" value="true"/>
+        <f:facet name="branding">
+          <af:panelGroupLayout layout="horizontal" >
+          <af:outputText value="Menu Visual Design Demo" id="ot1"/>
+          <af:menuBar>
+            <af:menu text="menuOne">
+              <af:commandMenuItem text="menuItemOne"/>
+              <af:commandMenuItem text="menuItemTwo"/>
+              <af:commandMenuItem text="menuItemThree" disabled="true" shortDesc="disabled"/>
+            </af:menu>
+            <af:menu text="menuTwo">
+              <af:commandMenuItem text="menuItemOne"/>
+              <af:commandMenuItem text="menuItemTwo"/>
+              <af:commandMenuItem text="menuItemThree" disabled="true" shortDesc="disabled"/>
+            </af:menu>
+            <af:menu text="menuThree" disabled="true" shortDesc="disabled">
+              <af:commandMenuItem text="menuItemOne"/>
+              <af:commandMenuItem text="menuItemTwo"/>
+              <af:commandMenuItem text="menuItemThree" disabled="true" shortDesc="disabled"/>
+            </af:menu>
+          </af:menuBar>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:navigationPane hint="buttons" id="np1">
+            <af:commandNavigationItem destination="index.jspx" text="Visual Designs" id="vds"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools"
+                                   viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/panelPageTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc">
+                <af:commandNavigationItem destination="index.jspx" text="Visual Designs" id="cni2"/>
+                <af:commandNavigationItem text="Menu Visual Design Demo" id="cni3"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind"
+                                   viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="navigation1">
+          <af:panelStretchLayout endWidth="40px" id="psl1" dimensionsFrom="auto">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation1" hint="tabs" id="np2">
+                <af:commandNavigationItem partialSubmit="true" text="Primary/Medium Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni4"></af:commandNavigationItem>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:panelStretchLayout endWidth="40px" id="psl2" dimensionsFrom="auto">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation2" hint="tabs" id="np3">
+                <af:commandNavigationItem partialSubmit="true" text="Secondary/Light Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni9"/>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="auxiliaryGlobal">
+          <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+            <af:spacer height="10px" id="s21"/>
+            <af:outputText value="Move splitter to cause overflow!"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="contextGlobal">
+          <af:panelSplitter orientation="horizontal" splitterPosition="100"
+                            positionedFromEnd="true" inlineStyle="height: 70px" styleClass="AFStretchWidth"
+                            dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelGroupLayout layout="vertical">
+                <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+                  <af:spacer height="5px"/>
+                  <af:outputText value="Menus (Global/Dark) "/>
+                  <af:spacer height="5px"/>
+                  <af:toolbox>
+                    <af:menuBar>
+                      <af:menu text="File" icon="/images/copy.gif">
+                        <af:menu textAndAccessKey="&amp;New">
+                          <af:commandMenuItem textAndAccessKey="Navigator &amp;Window"
+                                              accelerator="ctrl N"/>
+                          <af:commandMenuItem textAndAccessKey="Navigator &amp;Tab" disabled="true"
+                                              accelerator="control T"/>
+                          <af:menu textAndAccessKey="Subway">
+                            <af:commandMenuItem textAndAccessKey="Veggie delight"/>
+                            <af:commandMenuItem textAndAccessKey="Froggadile special"/>
+                          </af:menu>
+                        </af:menu>
+                        <af:menu text="File2">
+                          <af:commandMenuItem textAndAccessKey="Two"/>
+                        </af:menu>
+                        <af:menu text="Empty submenu"/>
+                        <af:commandMenuItem textAndAccessKey="Open Web &amp;Location..."
+                                            accelerator="control L" disabled="true"/>
+                        <af:commandMenuItem textAndAccessKey="Open &amp;File..."
+                                            accelerator="control O" icon="/images/copy.gif"/>
+                        <af:commandMenuItem textAndAccessKey="D&amp;ocument History..."
+                                            disabled="true"></af:commandMenuItem>
+                        <af:commandMenuItem text="Close" accelerator="control W"/>
+                        <af:commandMenuItem text="Save" accelerator="control S" action="guide"/>
+                        <af:commandMenuItem textAndAccessKey="&amp;Component Guide"
+                                            accelerator="control C" action="guide"/>
+                      </af:menu>
+                      <af:menu text="Edit">
+                        <af:commandMenuItem text="Cut"/>
+                        <af:commandMenuItem text="Copy"/>
+                        <af:commandMenuItem text="Paste"/>
+                        <af:group>
+                          <af:commandMenuItem type="check" text="Wrap" selected="false"/>
+                          <af:commandMenuItem type="check" text="Check" selected="true"/>
+                        </af:group>
+                        <af:group>
+                          <af:commandMenuItem type="antonym" text="Expand" selectedText="Collapse"
+                                              selected="false"/>
+                          <af:commandMenuItem type="antonym" text="Expand all"
+                                              selectedText="Collapse all" selected="false"/>
+                        </af:group>
+                        <af:group>
+                          <af:commandMenuItem type="radio" text="radio A" selected="true"/>
+                          <af:commandMenuItem type="radio" text="radio B" selected="false"/>
+                          <af:commandMenuItem type="radio" text="radio C" selected="false"/>
+                        </af:group>
+                        <af:group>
+                          <af:commandMenuItem type="radio" text="radio D" selected="true"/>
+                          <af:commandMenuItem type="radio" text="radio E" selected="false"/>
+                          <af:commandMenuItem type="radio" text="radio F" selected="false"/>
+                        </af:group>
+                      </af:menu>
+                      <af:menu text="Aap">
+                        <af:commandMenuItem icon="/images/copy.gif" text="Monkey"/>
+                        <af:commandMenuItem text="Nut"/>
+                        <af:commandMenuItem text="Buildman"/>
+                        <af:menu text="Tearrific menu" detachable="true">
+                          <af:commandMenuItem icon="/images/copy.gif" text="Monkey"/>
+                          <af:commandMenuItem text="Nut"/>
+                          <af:commandMenuItem text="Buildman"/>
+                          <af:menu text="Tearrific menu" detachable="true">
+                            <af:commandMenuItem icon="/images/copy.gif" text="Whim"/>
+                            <af:commandMenuItem text="Sister"/>
+                            <af:commandMenuItem text="Jet"/>
+                            <af:menu text="Submarine">
+                              <af:commandMenuItem text="Yellow"/>
+                              <af:commandMenuItem text="Beatle"/>
+                            </af:menu>
+                          </af:menu>
+                          <af:commandMenuItem text="Tune"/>
+                          <af:commandMenuItem text="Fire"/>
+                          <af:commandMenuItem text="Polter" type="check"/>
+                          <af:commandMenuItem text="Lame" type="check"/>
+                          <af:group>
+                            <af:commandMenuItem text="Case" type="radio"/>
+                            <af:commandMenuItem text="Bock" type="radio"/>
+                          </af:group>
+                          <af:commandMenuItem text="Wide"/>
+                          <af:commandMenuItem text="Shower"/>
+                          <af:commandMenuItem text="Cage"/>
+                          <af:commandMenuItem text="Pigeon"/>
+                          <af:commandMenuItem text="Sheep"/>
+                        </af:menu>
+                        <af:commandMenuItem text="Tune"/>
+                        <af:commandMenuItem text="Fire"/>
+                        <af:commandMenuItem text="Polter" type="check"/>
+                        <af:commandMenuItem text="Lame" type="check"/>
+                        <af:group>
+                          <af:commandMenuItem text="Case" type="radio"/>
+                          <af:commandMenuItem text="Bock" type="radio"/>
+                        </af:group>
+                        <af:commandMenuItem text="Wide"/>
+                        <af:commandMenuItem text="Shower"/>
+                        <af:commandMenuItem text="Cage"/>
+                        <af:commandMenuItem text="Pigeon"/>
+                        <af:commandMenuItem text="Sheep"/>
+                      </af:menu>
+                      <af:menu text="Detachables">
+                        <af:menu text="Menu 1" detachable="true">
+                          <af:commandMenuItem text="Menu item"/>
+                          <af:commandMenuItem text="Menu item"/>
+                          <af:commandMenuItem text="Menu item"/>
+                        </af:menu>
+                        <af:menu text="Menu 2" detachable="true">
+                          <af:commandMenuItem text="Menu item"/>
+                          <af:commandMenuItem text="Menu item"/>
+                        </af:menu>
+                        <af:menu text="Menu 3" detachable="true">
+                          <af:goMenuItem text="Go Menu item"/>
+                          <af:goMenuItem text="Go Menu item"/>
+                          <af:goMenuItem text="Go Menu item"/>
+                          <af:goMenuItem text="Go Menu item"/>
+                          <af:goMenuItem text="Go Menu item"/>
+                          <af:goMenuItem text="Go Menu item"/>
+                        </af:menu>
+                      </af:menu>
+                      <af:menu text="Disabled" shortDesc="disabled because it is empty"/>
+                      <af:commandMenuItem text="menuItem" shortDesc="command menu item on menuBar"/>
+                      <af:commandMenuItem icon="/images/copy.gif" text="menuItem"
+                                          shortDesc="command menu item with icon on menuBar"/>
+                      <af:goMenuItem text="menuItem2" shortDesc="go menu item on menuBar"/>
+                      <af:goMenuItem icon="/images/copy.gif" text="menuItem"
+                                     shortDesc="go menu item with icon on menuBar"/>
+                      <af:commandMenuItem text="disabled menuItem" disabled="true"
+                                          shortDesc="disabled command menu item on menuBar"/>
+                      <af:goMenuItem text="disabled menuItem2" disabled="true"
+                                     shortDesc="disabled go menu item on menuBar"/>
+                    </af:menuBar>
+                  </af:toolbox>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+                <af:outputText value="Move splitter to cause overflow!"/>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+        <f:facet name="toolbar1">
+          <af:panelGroupLayout layout="scroll">
+            <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+              <af:spacer height="5px"/>
+              <af:outputText value="Menus (Primary/Medium)"/>
+              <af:spacer height="5px"/>
+              <af:toolbox>
+                <af:menuBar>
+                  <af:menu text="File" icon="/images/copy.gif">
+                    <af:menu textAndAccessKey="&amp;New">
+                      <af:commandMenuItem textAndAccessKey="Navigator &amp;Window"
+                                          accelerator="ctrl N"/>
+                      <af:commandMenuItem textAndAccessKey="Navigator &amp;Tab" disabled="true"
+                                          accelerator="control T"/>
+                      <af:menu textAndAccessKey="Subway">
+                        <af:commandMenuItem textAndAccessKey="Veggie delight"/>
+                        <af:commandMenuItem textAndAccessKey="Froggadile special"/>
+                      </af:menu>
+                    </af:menu>
+                    <af:menu text="File2">
+                      <af:commandMenuItem textAndAccessKey="Two"/>
+                    </af:menu>
+                    <af:menu text="Empty submenu"/>
+                    <af:commandMenuItem textAndAccessKey="Open Web &amp;Location..."
+                                        accelerator="control L" disabled="true"/>
+                    <af:commandMenuItem textAndAccessKey="Open &amp;File..." accelerator="control O"
+                                        icon="/images/copy.gif"/>
+                    <af:commandMenuItem textAndAccessKey="D&amp;ocument History..." disabled="true"/>
+                    <af:commandMenuItem text="Close" accelerator="control W"/>
+                    <af:commandMenuItem text="Save" accelerator="control S" action="guide"/>
+                    <af:commandMenuItem textAndAccessKey="&amp;Component Guide"
+                                        accelerator="control C" action="guide"/>
+                  </af:menu>
+                  <af:menu text="Edit">
+                    <af:commandMenuItem text="Cut"/>
+                    <af:commandMenuItem text="Copy"/>
+                    <af:commandMenuItem text="Paste"/>
+                    <af:group>
+                      <af:commandMenuItem type="check" text="Wrap" selected="false"/>
+                      <af:commandMenuItem type="check" text="Check" selected="true"/>
+                    </af:group>
+                    <af:group>
+                      <af:commandMenuItem type="antonym" text="Expand" selectedText="Collapse"
+                                          selected="false"/>
+                      <af:commandMenuItem type="antonym" text="Expand all"
+                                          selectedText="Collapse all" selected="false"/>
+                    </af:group>
+                    <af:group>
+                      <af:commandMenuItem type="radio" text="radio A" selected="true"/>
+                      <af:commandMenuItem type="radio" text="radio B" selected="false"/>
+                      <af:commandMenuItem type="radio" text="radio C" selected="false"/>
+                    </af:group>
+                    <af:group>
+                      <af:commandMenuItem type="radio" text="radio D" selected="true"/>
+                      <af:commandMenuItem type="radio" text="radio E" selected="false"/>
+                      <af:commandMenuItem type="radio" text="radio F" selected="false"/>
+                    </af:group>
+                  </af:menu>
+                  <af:menu text="Aap">
+                    <af:commandMenuItem icon="/images/copy.gif" text="Monkey"/>
+                    <af:commandMenuItem text="Nut"/>
+                    <af:commandMenuItem text="Buildman"/>
+                    <af:menu text="Tearrific menu" detachable="true">
+                      <af:commandMenuItem icon="/images/copy.gif" text="Monkey"/>
+                      <af:commandMenuItem text="Nut"/>
+                      <af:commandMenuItem text="Buildman"/>
+                      <af:menu text="Tearrific menu" detachable="true">
+                        <af:commandMenuItem icon="/images/copy.gif" text="Whim"/>
+                        <af:commandMenuItem text="Sister"/>
+                        <af:commandMenuItem text="Jet"/>
+                        <af:menu text="Submarine">
+                          <af:commandMenuItem text="Yellow"/>
+                          <af:commandMenuItem text="Beatle"/>
+                        </af:menu>
+                      </af:menu>
+                      <af:commandMenuItem text="Tune"/>
+                      <af:commandMenuItem text="Fire"/>
+                      <af:commandMenuItem text="Polter" type="check"/>
+                      <af:commandMenuItem text="Lame" type="check"/>
+                      <af:group>
+                        <af:commandMenuItem text="Case" type="radio"/>
+                        <af:commandMenuItem text="Bock" type="radio"/>
+                      </af:group>
+                      <af:commandMenuItem text="Wide"/>
+                      <af:commandMenuItem text="Shower"/>
+                      <af:commandMenuItem text="Cage"/>
+                      <af:commandMenuItem text="Pigeon"/>
+                      <af:commandMenuItem text="Sheep"/>
+                    </af:menu>
+                    <af:commandMenuItem text="Tune"/>
+                    <af:commandMenuItem text="Fire"/>
+                    <af:commandMenuItem text="Polter" type="check"/>
+                    <af:commandMenuItem text="Lame" type="check"/>
+                    <af:group>
+                      <af:commandMenuItem text="Case" type="radio"/>
+                      <af:commandMenuItem text="Bock" type="radio"/>
+                    </af:group>
+                    <af:commandMenuItem text="Wide"/>
+                    <af:commandMenuItem text="Shower"/>
+                    <af:commandMenuItem text="Cage"/>
+                    <af:commandMenuItem text="Pigeon"/>
+                    <af:commandMenuItem text="Sheep"/>
+                  </af:menu>
+                  <af:menu text="Detachables">
+                    <af:menu text="Menu 1" detachable="true">
+                      <af:commandMenuItem text="Menu item"/>
+                      <af:commandMenuItem text="Menu item"/>
+                      <af:commandMenuItem text="Menu item"/>
+                    </af:menu>
+                    <af:menu text="Menu 2" detachable="true">
+                      <af:commandMenuItem text="Menu item"/>
+                      <af:commandMenuItem text="Menu item"/>
+                    </af:menu>
+                    <af:menu text="Menu 3" detachable="true">
+                      <af:goMenuItem text="Go Menu item"/>
+                      <af:goMenuItem text="Go Menu item"/>
+                      <af:goMenuItem text="Go Menu item"/>
+                      <af:goMenuItem text="Go Menu item"/>
+                      <af:goMenuItem text="Go Menu item"/>
+                      <af:goMenuItem text="Go Menu item"/>
+                    </af:menu>
+                  </af:menu>
+                  <af:menu text="Disabled" shortDesc="disabled because it is empty"/>
+                  <af:commandMenuItem text="menuItem" shortDesc="command menu item on menuBar"/>
+                  <af:commandMenuItem icon="/images/copy.gif" text="menuItem"
+                                      shortDesc="command menu item with icon on menuBar"/>
+                  <af:goMenuItem text="menuItem2" shortDesc="go menu item on menuBar"/>
+                  <af:goMenuItem icon="/images/copy.gif" text="menuItem"
+                                 shortDesc="go menu item with icon on menuBar"/>
+                  <af:commandMenuItem text="disabled menuItem" disabled="true"
+                                      shortDesc="disabled command menu item on menuBar"/>
+                  <af:goMenuItem text="disabled menuItem2" disabled="true"
+                                 shortDesc="disabled go menu item on menuBar"/>
+                </af:menuBar>
+              </af:toolbox>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="toolbar2">
+          <af:panelGroupLayout layout="scroll">
+            <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+              <af:spacer height="5px"/>
+              <af:outputText value="Menus (Secondary/Light)"/>
+              <af:spacer height="5px"/>
+              <af:toolbox>
+                <af:menuBar>
+                  <af:menu text="File" icon="/images/copy.gif">
+                    <af:menu textAndAccessKey="&amp;New">
+                      <af:commandMenuItem textAndAccessKey="Navigator &amp;Window"
+                                          accelerator="ctrl N"/>
+                      <af:commandMenuItem textAndAccessKey="Navigator &amp;Tab" disabled="true"
+                                          accelerator="control T"/>
+                      <af:menu textAndAccessKey="Subway">
+                        <af:commandMenuItem textAndAccessKey="Veggie delight"/>
+                        <af:commandMenuItem textAndAccessKey="Froggadile special"/>
+                      </af:menu>
+                    </af:menu>
+                    <af:menu text="File2">
+                      <af:commandMenuItem textAndAccessKey="Two"/>
+                    </af:menu>
+                    <af:menu text="Empty submenu"/>
+                    <af:commandMenuItem textAndAccessKey="Open Web &amp;Location..."
+                                        accelerator="control L" disabled="true"/>
+                    <af:commandMenuItem textAndAccessKey="Open &amp;File..." accelerator="control O"
+                                        icon="/images/copy.gif"/>
+                    <af:commandMenuItem textAndAccessKey="D&amp;ocument History..." disabled="true"/>
+                    <af:commandMenuItem text="Close" accelerator="control W"/>
+                    <af:commandMenuItem text="Save" accelerator="control S" action="guide"/>
+                    <af:commandMenuItem textAndAccessKey="&amp;Component Guide"
+                                        accelerator="control C" action="guide"/>
+                  </af:menu>
+                  <af:menu text="Edit">
+                    <af:commandMenuItem text="Cut"/>
+                    <af:commandMenuItem text="Copy"/>
+                    <af:commandMenuItem text="Paste"/>
+                    <af:group>
+                      <af:commandMenuItem type="check" text="Wrap" selected="false"/>
+                      <af:commandMenuItem type="check" text="Check" selected="true"/>
+                    </af:group>
+                    <af:group>
+                      <af:commandMenuItem type="antonym" text="Expand" selectedText="Collapse"
+                                          selected="false"/>
+                      <af:commandMenuItem type="antonym" text="Expand all"
+                                          selectedText="Collapse all" selected="false"/>
+                    </af:group>
+                    <af:group>
+                      <af:commandMenuItem type="radio" text="radio A" selected="true"/>
+                      <af:commandMenuItem type="radio" text="radio B" selected="false"/>
+                      <af:commandMenuItem type="radio" text="radio C" selected="false"/>
+                    </af:group>
+                    <af:group>
+                      <af:commandMenuItem type="radio" text="radio D" selected="true"/>
+                      <af:commandMenuItem type="radio" text="radio E" selected="false"/>
+                      <af:commandMenuItem type="radio" text="radio F" selected="false"/>
+                    </af:group>
+                  </af:menu>
+                  <af:menu text="Aap">
+                    <af:commandMenuItem icon="/images/copy.gif" text="Monkey"/>
+                    <af:commandMenuItem text="Nut"/>
+                    <af:commandMenuItem text="Buildman"/>
+                    <af:menu text="Tearrific menu" detachable="true">
+                      <af:commandMenuItem icon="/images/copy.gif" text="Monkey"/>
+                      <af:commandMenuItem text="Nut"/>
+                      <af:commandMenuItem text="Buildman"/>
+                      <af:menu text="Tearrific menu" detachable="true">
+                        <af:commandMenuItem icon="/images/copy.gif" text="Whim"/>
+                        <af:commandMenuItem text="Sister"/>
+                        <af:commandMenuItem text="Jet"/>
+                        <af:menu text="Submarine">
+                          <af:commandMenuItem text="Yellow"/>
+                          <af:commandMenuItem text="Beatle"/>
+                        </af:menu>
+                      </af:menu>
+                      <af:commandMenuItem text="Tune"/>
+                      <af:commandMenuItem text="Fire"/>
+                      <af:commandMenuItem text="Polter" type="check"/>
+                      <af:commandMenuItem text="Lame" type="check"/>
+                      <af:group>
+                        <af:commandMenuItem text="Case" type="radio"/>
+                        <af:commandMenuItem text="Bock" type="radio"/>
+                      </af:group>
+                      <af:commandMenuItem text="Wide"/>
+                      <af:commandMenuItem text="Shower"/>
+                      <af:commandMenuItem text="Cage"/>
+                      <af:commandMenuItem text="Pigeon"/>
+                      <af:commandMenuItem text="Sheep"/>
+                    </af:menu>
+                    <af:commandMenuItem text="Tune"/>
+                    <af:commandMenuItem text="Fire"/>
+                    <af:commandMenuItem text="Polter" type="check"/>
+                    <af:commandMenuItem text="Lame" type="check"/>
+                    <af:group>
+                      <af:commandMenuItem text="Case" type="radio"/>
+                      <af:commandMenuItem text="Bock" type="radio"/>
+                    </af:group>
+                    <af:commandMenuItem text="Wide"/>
+                    <af:commandMenuItem text="Shower"/>
+                    <af:commandMenuItem text="Cage"/>
+                    <af:commandMenuItem text="Pigeon"/>
+                    <af:commandMenuItem text="Sheep"/>
+                  </af:menu>
+                  <af:menu text="Detachables">
+                    <af:menu text="Menu 1" detachable="true">
+                      <af:commandMenuItem text="Menu item"/>
+                      <af:commandMenuItem text="Menu item"/>
+                      <af:commandMenuItem text="Menu item"/>
+                    </af:menu>
+                    <af:menu text="Menu 2" detachable="true">
+                      <af:commandMenuItem text="Menu item"/>
+                      <af:commandMenuItem text="Menu item"/>
+                    </af:menu>
+                    <af:menu text="Menu 3" detachable="true">
+                      <af:goMenuItem text="Go Menu item"/>
+                      <af:goMenuItem text="Go Menu item"/>
+                      <af:goMenuItem text="Go Menu item"/>
+                      <af:goMenuItem text="Go Menu item"/>
+                      <af:goMenuItem text="Go Menu item"/>
+                      <af:goMenuItem text="Go Menu item"/>
+                    </af:menu>
+                  </af:menu>
+                  <af:menu text="Disabled" shortDesc="disabled because it is empty"/>
+                  <af:commandMenuItem text="menuItem" shortDesc="command menu item on menuBar"/>
+                  <af:commandMenuItem icon="/images/copy.gif" text="menuItem"
+                                      shortDesc="command menu item with icon on menuBar"/>
+                  <af:goMenuItem text="menuItem2" shortDesc="go menu item on menuBar"/>
+                  <af:goMenuItem icon="/images/copy.gif" text="menuItem"
+                                 shortDesc="go menu item with icon on menuBar"/>
+                  <af:commandMenuItem text="disabled menuItem" disabled="true"
+                                      shortDesc="disabled command menu item on menuBar"/>
+                  <af:goMenuItem text="disabled menuItem2" disabled="true"
+                                 shortDesc="disabled go menu item on menuBar"/>
+                </af:menuBar>
+              </af:toolbox>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelHeader text="Default Theme">
+            <af:panelGroupLayout layout="scroll" id="pgl2">
+              <af:outputText value="Menu - Page Content Region" id="ot2"/>
+              <af:toolbox id="tb1">
+                <af:menuBar id="mb2">
+                  <af:menu text="File" icon="/images/copy.gif" id="m15">
+                    <af:menu textAndAccessKey="&amp;New" id="m16">
+                      <af:commandMenuItem textAndAccessKey="Navigator &amp;Window"
+                                          accelerator="ctrl N" id="cmi41"/>
+                      <af:commandMenuItem textAndAccessKey="Navigator &amp;Tab" disabled="true"
+                                          accelerator="control T" id="cmi42"/>
+                      <af:menu textAndAccessKey="Subway" id="m17">
+                        <af:commandMenuItem textAndAccessKey="Veggie delight" id="cmi43"/>
+                        <af:commandMenuItem textAndAccessKey="Froggadile special" id="cmi44"/>
+                      </af:menu>
+                    </af:menu>
+                    <af:menu text="File2" id="m18">
+                      <af:commandMenuItem textAndAccessKey="Two" id="cmi45"/>
+                    </af:menu>
+                    <af:menu text="Empty submenu" id="m19"/>
+                    <af:commandMenuItem textAndAccessKey="Open Web &amp;Location..."
+                                        accelerator="control L" disabled="true" id="cmi46"/>
+                    <af:commandMenuItem textAndAccessKey="Open &amp;File..." accelerator="control O"
+                                        icon="/images/copy.gif" id="cmi47"/>
+                    <af:commandMenuItem textAndAccessKey="D&amp;ocument History..." disabled="true"
+                                        id="cmi48"></af:commandMenuItem>
+                    <af:commandMenuItem text="Close" accelerator="control W" id="cmi49"/>
+                    <af:commandMenuItem text="Save" accelerator="control S" action="guide"
+                                        id="cmi50"/>
+                    <af:commandMenuItem textAndAccessKey="&amp;Component Guide"
+                                        accelerator="control C" action="guide" id="cmi51"/>
+                  </af:menu>
+                  <af:menu text="Edit" id="m20">
+                    <af:commandMenuItem text="Cut" id="cmi52"/>
+                    <af:commandMenuItem text="Copy" id="cmi53"/>
+                    <af:commandMenuItem text="Paste" id="cmi54"/>
+                    <af:group id="g6">
+                      <af:commandMenuItem id="wrap" type="check" text="Wrap" selected="false"/>
+                      <af:commandMenuItem id="check" type="check" text="Check" selected="true"/>
+                    </af:group>
+                    <af:group id="g7">
+                      <af:commandMenuItem id="expandCollapse" type="antonym" text="Expand"
+                                          selectedText="Collapse" selected="false"/>
+                      <af:commandMenuItem id="expandCollapseAll" type="antonym" text="Expand all"
+                                          selectedText="Collapse all" selected="false"/>
+                    </af:group>
+                    <af:group id="g8">
+                      <af:commandMenuItem id="radioA" type="radio" text="radio A" selected="true"/>
+                      <af:commandMenuItem id="radioB" type="radio" text="radio B" selected="false"/>
+                      <af:commandMenuItem id="radioC" type="radio" text="radio C" selected="false"/>
+                    </af:group>
+                    <af:group id="g9">
+                      <af:commandMenuItem id="radioD" type="radio" text="radio D" selected="true"/>
+                      <af:commandMenuItem id="radioE" type="radio" text="radio E" selected="false"/>
+                      <af:commandMenuItem id="radioF" type="radio" text="radio F" selected="false"/>
+                    </af:group>
+                  </af:menu>
+                  <af:menu text="Aap" id="m21">
+                    <af:commandMenuItem icon="/images/copy.gif" text="Monkey" id="cmi55"/>
+                    <af:commandMenuItem text="Nut" id="cmi56"/>
+                    <af:commandMenuItem text="Buildman" id="cmi57"/>
+                    <af:menu text="Tearrific menu" detachable="true" id="m22">
+                      <af:commandMenuItem icon="/images/copy.gif" text="Monkey"/>
+                      <af:commandMenuItem text="Nut"/>
+                      <af:commandMenuItem text="Buildman"/>
+                      <af:menu text="Tearrific menu" detachable="true">
+                        <af:commandMenuItem icon="/images/copy.gif" text="Whim"/>
+                        <af:commandMenuItem text="Sister"/>
+                        <af:commandMenuItem text="Jet"/>
+                        <af:menu text="Submarine">
+                          <af:commandMenuItem text="Yellow"/>
+                          <af:commandMenuItem text="Beatle"/>
+                        </af:menu>
+                      </af:menu>
+                      <af:commandMenuItem text="Tune"/>
+                      <af:commandMenuItem text="Fire"/>
+                      <af:commandMenuItem text="Polter" type="check"/>
+                      <af:commandMenuItem text="Lame" type="check"/>
+                      <af:group>
+                        <af:commandMenuItem text="Case" type="radio"/>
+                        <af:commandMenuItem text="Bock" type="radio"/>
+                      </af:group>
+                      <af:commandMenuItem text="Wide"/>
+                      <af:commandMenuItem text="Shower"/>
+                      <af:commandMenuItem text="Cage"/>
+                      <af:commandMenuItem text="Pigeon"/>
+                      <af:commandMenuItem text="Sheep"/>
+                    </af:menu>
+                    <af:commandMenuItem text="Tune" id="cmi63"/>
+                    <af:commandMenuItem text="Fire" id="cmi64"/>
+                    <af:commandMenuItem text="Polter" type="check"/>
+                    <af:commandMenuItem text="Lame" type="check"/>
+                    <af:group id="g10">
+                      <af:commandMenuItem text="Case" type="radio"/>
+                      <af:commandMenuItem text="Bock" type="radio"/>
+                    </af:group>
+                    <af:commandMenuItem text="Wide" id="cmi69"/>
+                    <af:commandMenuItem text="Shower" id="cmi70"/>
+                    <af:commandMenuItem text="Cage" id="cmi71"/>
+                    <af:commandMenuItem text="Pigeon" id="cmi72"/>
+                    <af:commandMenuItem text="Sheep" id="cmi73"/>
+                  </af:menu>
+                  <af:menu text="Detachables" id="m24">
+                    <af:menu text="Menu 1" detachable="true" id="m25">
+                      <af:commandMenuItem text="Menu item" id="cmi74"/>
+                      <af:commandMenuItem text="Menu item" id="cmi75"/>
+                      <af:commandMenuItem text="Menu item" id="cmi76"/>
+                    </af:menu>
+                    <af:menu text="Menu 2" detachable="true" id="m26">
+                      <af:commandMenuItem text="Menu item" id="cmi77"/>
+                      <af:commandMenuItem text="Menu item" id="cmi78"/>
+                    </af:menu>
+                    <af:menu text="Menu 3" detachable="true" id="m27">
+                      <af:goMenuItem text="Go Menu item" id="gmi9"/>
+                      <af:goMenuItem text="Go Menu item" id="gmi10"/>
+                      <af:goMenuItem text="Go Menu item" id="gmi11"/>
+                      <af:goMenuItem text="Go Menu item" id="gmi12"/>
+                      <af:goMenuItem text="Go Menu item" id="gmi13"/>
+                      <af:goMenuItem text="Go Menu item" id="gmi14"/>
+                    </af:menu>
+                  </af:menu>
+                  <af:menu text="Disabled" shortDesc="disabled because it is empty" id="m28"/>
+                  <af:commandMenuItem text="menuItem" shortDesc="command menu item on menuBar"/>
+                  <af:commandMenuItem icon="/images/copy.gif" text="menuItem"
+                                      shortDesc="command menu item with icon on menuBar"/>
+                  <af:goMenuItem text="menuItem2" shortDesc="go menu item on menuBar"/>
+                  <af:goMenuItem icon="/images/copy.gif" text="menuItem"
+                                 shortDesc="go menu item with icon on menuBar"/>
+                  <af:commandMenuItem text="disabled menuItem" disabled="true"
+                                      shortDesc="disabled command menu item on menuBar" id="cmi80"/>
+                  <af:goMenuItem text="disabled menuItem2" disabled="true"
+                                 shortDesc="disabled go menu item on menuBar" id="gmi16"/>
+                </af:menuBar>
+              </af:toolbox>
+              <af:spacer height="15px" id="s39"/>
+              <af:outputText value="Menu / CommandMenuItem /GoMenuItem - icon only enabled/disabled"
+                             id="ot27"/>
+              <af:spacer height="5px" id="s40"/>
+              <af:toolbox id="t1r2">
+                <af:menuBar id="mmb1">
+                  <af:group id="mmg1">
+                    <af:menu id="mm1" icon="/images/doc_red.png" shortDesc="menu icon only">
+                      <af:commandMenuItem id="mcmi1" text="menu item"/>
+                    </af:menu>
+                    <af:commandMenuItem id="mcmi2" icon="/images/doc_red.png"
+                                        shortDesc="cmi icon only"/>
+                    <af:goMenuItem id="mgmi1" icon="/images/doc_red.png" shortDesc="gmi icon only"/>
+                  </af:group>
+                  <af:group id="mmg2">
+                    <af:menu id="mm2" icon="/images/doc_gray.png" shortDesc="menu icon only"
+                             disabled="true">
+                      <af:commandMenuItem id="mcmi3" text="menu item"/>
+                    </af:menu>
+                    <af:commandMenuItem id="mcmi4" icon="/images/doc_gray.png"
+                                        shortDesc="cmi icon only" disabled="true"/>
+                    <af:goMenuItem id="mgmi2" icon="/images/doc_gray.png" shortDesc="gmi icon only"
+                                   disabled="true"/>
+                  </af:group>
+                  <af:menu id="mm3" text="Submenu Examples">
+                    <af:group id="mmg3">
+                      <af:menu id="mm4" icon="/images/doc_red.png" shortDesc="menu icon only">
+                        <af:commandMenuItem id="mcmi5" text="menu item"/>
+                      </af:menu>
+                      <af:commandMenuItem id="mcmi6" icon="/images/doc_red.png"
+                                          shortDesc="cmi icon only"/>
+                      <af:goMenuItem id="mgmi3" icon="/images/doc_red.png"
+                                     shortDesc="gmi icon only"/>
+                    </af:group>
+                    <af:group id="mmg4">
+                      <af:menu id="mm5" icon="/images/doc_gray.png" shortDesc="menu icon only"
+                               disabled="true">
+                        <af:commandMenuItem id="mcmi7" text="menu item"/>
+                      </af:menu>
+                      <af:commandMenuItem id="mcmi8" icon="/images/doc_gray.png"
+                                          shortDesc="cmi icon only" disabled="true"/>
+                      <af:goMenuItem id="mgmi4" icon="/images/doc_gray.png"
+                                     shortDesc="gmi icon only" disabled="true"/>
+                    </af:group>
+                  </af:menu>
+                </af:menuBar>
+              </af:toolbox>
+              <af:spacer height="15px" id="s392"/>
+              <af:outputText value="Menu / CommandMenuItem /GoMenuItem - text only enabled/disabled"
+                             id="ot272"/>
+              <af:spacer height="5px" id="s402"/>
+              <af:toolbox id="t1r22">
+                <af:menuBar id="mmb12">
+                  <af:group id="mmg12">
+                    <af:menu id="mm12" text="menu" shortDesc="menu text only">
+                      <af:commandMenuItem id="mcmi12" text="menu item"/>
+                    </af:menu>
+                    <af:commandMenuItem id="mcmi22" text="cmi" shortDesc="cmi text only"/>
+                    <af:goMenuItem id="mgmi12" text="gmi" shortDesc="gmi textonly"/>
+                  </af:group>
+                  <af:group id="mmg22">
+                    <af:menu id="mm22" text="menu" shortDesc="menu text only" disabled="true">
+                      <af:commandMenuItem id="mcmi32" text="menu item"/>
+                    </af:menu>
+                    <af:commandMenuItem id="mcmi42" text="cmi" shortDesc="cmi text only"
+                                        disabled="true"/>
+                    <af:goMenuItem id="mgmi22" text="gmi" shortDesc="gmi text only"
+                                   disabled="true"/>
+                  </af:group>
+                  <af:menu id="mm32" text="Submenu Examples">
+                    <af:group id="mmg32">
+                      <af:menu id="mm42" text="menu" shortDesc="menu text only">
+                        <af:commandMenuItem id="mcmi52" text="menu item"/>
+                      </af:menu>
+                      <af:commandMenuItem id="mcmi62" text="cmi" shortDesc="cmi text only"/>
+                      <af:goMenuItem id="mgmi32" text="gmi" shortDesc="gmi text only"/>
+                    </af:group>
+                    <af:group id="mmg42">
+                      <af:menu id="mm52" text="menu" shortDesc="menu text only" disabled="true">
+                        <af:commandMenuItem id="mcmi72" text="menu item"/>
+                      </af:menu>
+                      <af:commandMenuItem id="mcmi82" text="cmi" shortDesc="cmi text only"
+                                          disabled="true"/>
+                      <af:goMenuItem id="mgmi42" text="gmi" shortDesc="gmi text only"
+                                     disabled="true"/>
+                    </af:group>
+                  </af:menu>
+                </af:menuBar>
+              </af:toolbox>
+              <af:spacer height="15px" id="s393"/>
+              <af:outputText value="Menu / CommandMenuItem /GoMenuItem - text and icon enabled/disabled"
+                             id="ot273"/>
+              <af:spacer height="5px" id="s403"/>
+              <af:toolbox id="t1r23">
+                <af:menuBar id="mmb13">
+                  <af:group id="mmg13">
+                    <af:menu id="mm13" icon="/images/doc_red.png" text="menu"
+                             shortDesc="menu icon and text">
+                      <af:commandMenuItem id="mcmi13" text="menu item"/>
+                    </af:menu>
+                    <af:commandMenuItem id="mcmi23" icon="/images/doc_red.png" text="cmi"
+                                        shortDesc="cmi icon and text"/>
+                    <af:goMenuItem id="mgmi13" icon="/images/doc_red.png" text="gmi"
+                                   shortDesc="gmi icon and text"/>
+                  </af:group>
+                  <af:group id="mmg23">
+                    <af:menu id="mm23" icon="/images/doc_gray.png" text="menu"
+                             shortDesc="menu icon and text" disabled="true">
+                      <af:commandMenuItem id="mcmi33" text="menu item"/>
+                    </af:menu>
+                    <af:commandMenuItem id="mcmi43" icon="/images/doc_gray.png" text="cmi"
+                                        shortDesc="cmi icon and text" disabled="true"/>
+                    <af:goMenuItem id="mgmi23" icon="/images/doc_gray.png" text="gmi"
+                                   shortDesc="gmi icon and text" disabled="true"/>
+                  </af:group>
+                  <af:menu id="mm33" text="Submenu Examples">
+                    <af:group id="mmg33">
+                      <af:menu id="mm43" icon="/images/doc_red.png" text="menu"
+                               shortDesc="menu icon and text">
+                        <af:commandMenuItem id="mcmi53" text="menu item"/>
+                      </af:menu>
+                      <af:commandMenuItem id="mcmi63" icon="/images/doc_red.png" text="cmi"
+                                          shortDesc="cmi icon and text"/>
+                      <af:goMenuItem id="mgmi33" icon="/images/doc_red.png" text="gmi"
+                                     shortDesc="gmi icon and text"/>
+                    </af:group>
+                    <af:group id="mmg43">
+                      <af:menu id="mm53" icon="/images/doc_gray.png" text="menu"
+                               shortDesc="menu icon and text" disabled="true">
+                        <af:commandMenuItem id="mcmi73" text="menu item"/>
+                      </af:menu>
+                      <af:commandMenuItem id="mcmi83" icon="/images/doc_gray.png" text="cmi"
+                                          shortDesc="cmi icon and text" disabled="true"/>
+                      <af:goMenuItem id="mgmi43" icon="/images/doc_gray.png" text="gmi"
+                                     shortDesc="gmi icon and text" disabled="true"/>
+                    </af:group>
+                  </af:menu>
+                </af:menuBar>
+              </af:toolbox>
+              <af:spacer id="sp" height="10px"/>
+              <af:panelHeader text="Related Links" id="ph1">
+                <af:panelList id="pl1">
+                  <af:goLink text="Component - menu" destination="/components/menu.jspx" id="gl2"/>
+                  <af:goLink text="Component - menuBar" destination="/components/menuBar.jspx"
+                             id="gl3"/>
+                  <af:goLink text="Component - commandMenuItem"
+                             destination="/components/commandMenuItem.jspx" id="gl1"/>
+                  <af:goLink text="Component - goMenuItem" destination="/components/goMenuItem.jspx"
+                             id="gl4"/>
+                </af:panelList>
+              </af:panelHeader>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

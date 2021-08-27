@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://xmlns.oracle.com/adf/faces/feature"
+            targetNamespace="http://xmlns.oracle.com/adf/faces/feature"
+            elementFormDefault="qualified">
+
+  <!-- 
+    Todo: aschwart
+    Tighter restriction for name attribute types?  Disallow ':'?
+  -->
+  
+  <xsd:element name="features">
+    <xsd:annotation>
+      <xsd:documentation>
+        The root element in a JavaScript library feature configuration file.
+        In order to support declarative JavaScript library partitioning,
+        component authors expose a set of JavaScript "features" which 
+        can be grouped into separately downloadable "partitions".
+
+        The "features" element contains any number of child "feature"
+        elements, each of which defines a feature which partiticpates
+        in library partitioning.
+      </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:complexType>
+      <xsd:sequence minOccurs="1" maxOccurs="unbounded">
+        <xsd:element name="feature" type="Feature"/>
+      </xsd:sequence>
+    </xsd:complexType>
+    
+  </xsd:element>
+  
+  <xsd:complexType name="Feature">
+
+    <xsd:annotation>
+      <xsd:documentation>
+        The "feature" element provides an abstraction for some piece
+        of JavaScript functionality which can be grouped into a
+        partition.  Each feature consists of a name, zero or more 
+        JavaScript classes which provide the implementation of the
+        feature, as well as zero or more dependencies on other features.
+        Dependency information is used to ensure that all JavaScript
+        code needed to support a particular feature will be loaded,
+        and also ensures that dependencies are loaded before the
+        features that are dependent on them.
+      </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:sequence>
+      <xsd:element name="feature-name" type="xsd:Name"/>
+
+      <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="feature-class" type="xsd:string"/>
+        <xsd:element name="feature-dependency" type="xsd:Name"/>
+      </xsd:choice>
+    </xsd:sequence>
+
+  </xsd:complexType>
+
+</xsd:schema>

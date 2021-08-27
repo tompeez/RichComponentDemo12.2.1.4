@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram Popup Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram Popup Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Diagram Popup"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout dimensionsFrom="auto" topHeight="auto" bottomHeight="0">
+            <f:facet name="top">
+              <af:outputText value="The Diagram below demonstrates the use of popups. Even nodes/links are triggered with click; odd nodes/links are triggered with hover."
+                             inlineStyle="font-size:medium"/>
+            </f:facet>
+            <f:facet name="center">
+              <dvt:diagram summary="Diagram" id="diagram1" layout="circle" selection="none" panning="none" zooming="none" controlPanelBehavior="hidden">
+                <dvt:clientLayout name="circle" method="DemoCircleLayout.circleLayout"
+                                  featureName="DemoCircleLayout">
+                  <f:attribute name="radius" value="50"/>
+                </dvt:clientLayout>
+                <dvt:diagramNodes id="diagramNodes1" value="#{diagramPopup.nodes}" var="node">
+                  <dvt:diagramNode id="evenNode" nodeId="#{node.id}" showNodeActions="false" rendered="#{(node.index % 2) == 0}" label="#{node.id}">
+                    <af:showPopupBehavior popupId="::nodePopup" triggerType="click" align="endAfter"/>
+                    <f:facet name="zoom100">
+                      <dvt:marker width="25" height="25" shape="square" fillColor="#{node.color}" borderStyle="solid"
+                                  borderWidth="1" borderColor="#444444"/>
+                    </f:facet>
+                    <f:facet name="overlay">
+                      <af:group>
+                        <dvt:pointLocation pointX="100%" pointY="50%">
+                          <dvt:marker width="10" height="10" shape="plus" fillColor="#{node.color}"
+                                      borderStyle="solid" borderWidth="1" borderColor="#444444">
+                            <af:showPopupBehavior popupId="::overlayPopup" triggerType="click" align="endAfter"/>
+                          </dvt:marker>
+                        </dvt:pointLocation>
+                      </af:group>
+                    </f:facet>
+                  </dvt:diagramNode>
+                  <dvt:diagramNode id="oddNode" nodeId="#{node.id}" showNodeActions="false" rendered="#{(node.index % 2) == 1}" label="#{node.id}">
+                    <af:showPopupBehavior popupId="::nodePopup" triggerType="mouseHover" align="endAfter"/>
+                    <f:facet name="zoom100">
+                      <dvt:marker width="25" height="25" shape="square" fillColor="#{node.color}" borderStyle="solid"
+                                  borderWidth="1" borderColor="#444444"/>
+                    </f:facet>
+                    <f:facet name="overlay">
+                      <af:group>
+                        <dvt:pointLocation pointX="100%" pointY="50%">
+                          <dvt:marker width="10" height="10" shape="plus" fillColor="#{node.color}"
+                                      borderStyle="solid" borderWidth="1" borderColor="#444444">
+                            <af:showPopupBehavior popupId="::overlayPopup" triggerType="mouseHover" align="endAfter"/>
+                          </dvt:marker>
+                        </dvt:pointLocation>
+                      </af:group>
+                    </f:facet>
+                  </dvt:diagramNode>
+                </dvt:diagramNodes>
+                <dvt:diagramLinks id="diagramLinks1" value="#{diagramPopup.links}" var="link">
+                  <dvt:diagramLink id="evenLink" linkColor="#{link.color}" startNode="#{link.start}"
+                                   endNode="#{link.end}" rendered="#{(link.index % 2) == 0}">
+                    <af:showPopupBehavior popupId="::linkPopup" triggerType="click" align="endAfter"/>
+                    <f:facet name="startConnector">
+                      <dvt:marker width="5" height="5" shape="square" fillColor="#{link.color}" borderStyle="solid"
+                                  borderWidth="1" borderColor="#444444">
+                        <af:showPopupBehavior popupId="::startPopup" triggerType="click" align="endAfter"/>
+                      </dvt:marker>
+                    </f:facet>
+                    <f:facet name="endConnector">
+                      <dvt:marker width="5" height="5" shape="circle" fillColor="#{link.color}" borderStyle="solid"
+                                  borderWidth="1" borderColor="#444444">
+                        <af:showPopupBehavior popupId="::endPopup" triggerType="click" align="endAfter"/>
+                      </dvt:marker>
+                    </f:facet>
+                  </dvt:diagramLink>
+                  <dvt:diagramLink id="oddLink" linkColor="#{link.color}" startNode="#{link.start}"
+                                   endNode="#{link.end}" rendered="#{(link.index % 2) == 1}">
+                    <af:showPopupBehavior popupId="::linkPopup" triggerType="mouseHover" align="endAfter"/>
+                    <f:facet name="startConnector">
+                      <dvt:marker width="5" height="5" shape="square" fillColor="#{link.color}" borderStyle="solid"
+                                  borderWidth="1" borderColor="#444444">
+                        <af:showPopupBehavior popupId="::startPopup" triggerType="mouseHover" align="endAfter"/>
+                      </dvt:marker>
+                    </f:facet>
+                    <f:facet name="endConnector">
+                      <dvt:marker width="5" height="5" shape="circle" fillColor="#{link.color}" borderStyle="solid"
+                                  borderWidth="1" borderColor="#444444">
+                        <af:showPopupBehavior popupId="::endPopup" triggerType="mouseHover" align="endAfter"/>
+                      </dvt:marker>
+                    </f:facet>
+                  </dvt:diagramLink>
+                </dvt:diagramLinks>
+              </dvt:diagram>
+            </f:facet>
+            <f:facet name="bottom">
+              <af:group>
+                <af:popup id="nodePopup" launcherVar="source" eventContext="launcher" clientComponent="true"
+                          contentDelivery="lazyUncached">
+                  <af:setPropertyListener from="#{source.currentRowData.id}" to="#{diagramPopup.popupSourceId}"
+                                          type="popupFetch"/>
+                  <af:noteWindow>
+                    <af:outputText value="This is the node popup for #{diagramPopup.popupSourceId}"/>
+                  </af:noteWindow>
+                </af:popup>
+                <af:popup id="overlayPopup" launcherVar="source" eventContext="launcher" clientComponent="true"
+                          contentDelivery="lazyUncached">
+                  <af:setPropertyListener from="#{source.currentRowData.id}" to="#{diagramPopup.popupSourceId}"
+                                          type="popupFetch"/>
+                  <af:noteWindow>
+                    <af:outputText value="This is the overlay popup for #{diagramPopup.popupSourceId}"/>
+                  </af:noteWindow>
+                </af:popup>
+                <af:popup id="linkPopup" launcherVar="source" eventContext="launcher" clientComponent="true"
+                          contentDelivery="lazyUncached">
+                  <af:setPropertyListener from="#{source.currentRowData.id}" to="#{diagramPopup.popupSourceId}"
+                                          type="popupFetch"/>
+                  <af:noteWindow>
+                    <af:outputText value="This is the link popup for #{diagramPopup.popupSourceId}"/>
+                  </af:noteWindow>
+                </af:popup>
+                <af:popup id="startPopup" launcherVar="source" eventContext="launcher" clientComponent="true"
+                          contentDelivery="lazyUncached">
+                  <af:setPropertyListener from="#{source.currentRowData.id}" to="#{diagramPopup.popupSourceId}"
+                                          type="popupFetch"/>
+                  <af:noteWindow>
+                    <af:outputText value="This is the start connector popup for #{diagramPopup.popupSourceId}"/>
+                  </af:noteWindow>
+                </af:popup>
+                <af:popup id="endPopup" launcherVar="source" eventContext="launcher" clientComponent="true"
+                          contentDelivery="lazyUncached">
+                  <af:setPropertyListener from="#{source.currentRowData.id}" to="#{diagramPopup.popupSourceId}"
+                                          type="popupFetch"/>
+                  <af:noteWindow>
+                    <af:outputText value="This is the end connector popup for #{diagramPopup.popupSourceId}"/>
+                  </af:noteWindow>
+                </af:popup>
+              </af:group>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <!-- START SEE ALSO LINKS -->
+            <!-- END SEE ALSO LINKS -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

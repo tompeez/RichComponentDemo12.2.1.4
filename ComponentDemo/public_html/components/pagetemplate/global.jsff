@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2009, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  version="2.1"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <af:componentDef var="attrs" componentVar="component">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <facet>
+          <facet-name>content</facet-name>
+        </facet>
+        <attribute>
+          <attribute-name>templateViewId</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Specifies the branding logo.</description>
+          <attribute-name>logoImagePath</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>/afr/oracle_logo.png</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the branding logo styling.</description>
+          <attribute-name>logoStyleClass</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>AFBrandingLogo</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the alternate text and tooltip for the branding logo.</description>
+          <attribute-name>logoShortDesc</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>Demo home page</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelStretchLayout id="dcpsl1">
+      <f:facet name="center">
+        <af:panelSplitter
+          id="dcps1"
+          orientation="vertical"
+          splitterPosition="32"
+          styleClass="AFBrandingSplitter"
+          firstLandmark="banner"
+          firstBorder="none"
+          secondLandmark="main"
+          secondBorder="none">
+          <f:facet name="first">
+            <af:panelGroupLayout layout="scroll" id="dcpgl1" styleClass="AFBrandingBar" >
+              <af:panelBorderLayout id="dcpbl1">
+                <f:facet name="start">
+                  <af:panelGroupLayout styleClass="AFBrandingBarItem" id="dcpgl2">
+                    <af:link id="logoLink" action="index" shortDesc="#{attrs.logoShortDesc}" icon="#{attrs.logoImagePath}" styleClass="#{attrs.logoStyleClass}"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="innerStart">
+                  <af:panelGroupLayout
+                    styleClass="AFBrandingBarItem"
+                    id="dcpgl3">
+                    <af:panelGroupLayout
+                      layout="vertical"
+                      styleClass="AFBrandingBarTitle"
+                      id="dcpgl4">
+                      <af:outputText id="dcbbot1" value="Page Template Model Demo" />
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <af:panelBorderLayout id="dcpbl2">
+                  <af:spacer inlineStyle="width: 100%; max-width: 100%;" />
+                  <f:facet name="end">
+                    <af:panelGroupLayout
+                      layout="vertical"
+                      styleClass="AFBrandingBarItem"
+                      id="dcpgl5">
+                      <!-- af:navigationPane
+                        shortDesc="navigationGlobal"
+                        hint="buttons"
+                        id="dcnp1">
+                      </af:navigationPane -->
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:panelBorderLayout>
+                <f:facet name="innerEnd">
+                  <af:spacer width="4" id="dcs2"/>
+                </f:facet>
+                <f:facet name="end">
+                  <af:panelGroupLayout
+                    layout="horizontal"
+                    styleClass="AFBrandingBarItem"
+                    id="dcpgl6">
+                    <af:statusIndicator id="dcsi1"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:panelBorderLayout>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="second">
+            <af:decorativeBox id="db1" theme="#{demoSkin.theme1}">
+              <f:facet name="center">
+                <af:panelSplitter
+                  id="dcGT"
+                  splitterPosition="45"
+                  orientation="vertical"
+                  firstLandmark="complementary">
+                  <f:facet name="first">
+                    <af:declarativeComponent
+                      id="dcgt"
+                      viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                      templateSource="#{attrs.templateViewId}.source">
+                      <f:facet name="location">
+                        <af:breadCrumbs
+                          inlineStyle="margin:0 6px;display:block"
+                          id="dcbc">
+                          <af:commandNavigationItem
+                            text="Tag Guide"
+                            action="guide"
+                            id="dcbc1"/>
+                          <af:commandNavigationItem
+                            text="Page Template"
+                            destination="../pageTemplate.jspx"
+                            id="dcbc2" />
+                          <af:commandNavigationItem
+                            text="Page Template Model Example"
+                            id="dcbc3"/>
+                        </af:breadCrumbs>
+                      </f:facet>
+                      <f:facet name="infoUser">
+                        <af:inputText
+                          id="dcut"
+                          contentStyle="font-weight:bold"
+                          shortDesc="infoUser"
+                          label="Logged in as"
+                          value="Administrator"
+                          readOnly="true"/>
+                      </f:facet>
+                    </af:declarativeComponent>
+                  </f:facet>
+                  <f:facet name="second">
+                    <af:panelStretchLayout id="dcpslSec" topHeight="2em">
+                      <f:facet name="top">
+                        <af:panelStretchLayout id="dcsearchPSL" endWidth="auto">
+                          <f:facet name="end">
+                            <af:panelGroupLayout layout="vertical" id="dcpgltptem" theme="dark">
+                              <af:panelGroupLayout layout="default" id="dcpgl7">
+                                <af:declarativeComponent
+                                  id="dcfind"
+                                  viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+                              </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                          </f:facet>
+                        </af:panelStretchLayout>
+                      </f:facet>
+                      <f:facet name="center">
+                        <!-- start of secondary decoration -->
+                        <af:decorativeBox
+                          theme="#{demoSkin.theme2}" id="ptdb1">
+                          <f:facet name="center">
+                            <af:facetRef facetName="content" />
+                          </f:facet>
+                        </af:decorativeBox>
+                      </f:facet>
+                    </af:panelStretchLayout>
+                  </f:facet>
+                </af:panelSplitter>
+              </f:facet>
+            </af:decorativeBox>
+          </f:facet>
+        </af:panelSplitter>
+      </f:facet>
+    </af:panelStretchLayout>
+  </af:componentDef>
+</jsp:root>

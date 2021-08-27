@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="carousel Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="carousel"/>
+        <f:attribute name="visualDesignName" value="carousel"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchChildren" value="first"/>
+        <f:attribute name="gmFlowNotes" value="When flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmFlowWithZeroWidthNotes" value="When flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmStretchNotes" value="The size of the carousel items will adjust as the size of the carousel changes.  Resize the splitters on this page to see how it reacts.  The number of visible auxiliary items may vary but the current item is always visible."/>
+        <f:attribute name="centerSplitHeight" value="335"/>
+        <f:attribute name="centerSplitPositionedFromEnd" value="false"/>
+        <f:facet name="center">
+          <af:carousel id="carousel" binding="#{editor.component}"
+                       var="item"
+                       value="#{demoCarousel.items}"
+                       carouselSpinListener="#{demoCarousel.handleCarouselSpin}">
+            <f:facet name="nodeStamp">
+              <af:carouselItem id="crslItem" text="#{item.title}" shortDesc="#{item.title}">
+                <af:image id="img" source="#{item.url}" shortDesc="#{item.title}"/>
+              </af:carouselItem>
+            </f:facet>
+          </af:carousel>
+        </f:facet>
+        <f:facet name="centerSplitBottom">
+          <af:panelGroupLayout id="scroll" layout="scroll">
+            <af:separator id="sepA"/>
+            <af:panelGroupLayout id="detailPgl" layout="vertical" partialTriggers="carousel">
+              <af:panelFormLayout id="detailsForm">
+                <af:inputText id="mainTitle" readOnly="true" label="Title"
+                              value="#{demoCarousel.currentMediaInfo.title}"/>
+                <af:inputText id="mainGenre" readOnly="true" label="Genre"
+                              value="#{demoCarousel.currentMediaInfo.genre}"/>
+              </af:panelFormLayout>
+            </af:panelGroupLayout>
+            <af:separator id="sep"/>
+            <af:panelHeader id="head" text="Related Components">
+              <af:panelList id="list">
+                <af:goLink id="related1" text="carouselItem" destination="/components/carouselItem.jspx"/>
+                <af:goLink id="related2" text="Carousel item PPR" destination="/components/table/carouselItemPPR.jspx"/>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

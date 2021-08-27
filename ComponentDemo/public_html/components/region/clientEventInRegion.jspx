@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          version="1.2"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:jsp="http://java.sun.com/JSP/Page">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="region Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="region"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="customEditorPresent" value="false"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+
+            <af:outputFormatted styleUsage="instruction" value="&lt;b>Demo to test queuing of client
+              event inside region (when dragging data from left table to the right table) that also
+              results in recursive invocation of invokeOnComponent for region. Dragging data from left
+              table to the right table should work without any exceptions being thrown."
+                                id="of1"/>
+
+            <trh:tableLayout cellSpacing="10" inlineStyle="background-color:#CFDCEB"
+                             id="tl1">
+              <trh:rowLayout id="rl1">
+                <trh:cellFormat id="cf1">
+                  <af:region
+                    showHeader="always"
+                    text="Region"
+                    value="#{regionModel.dragDropModel}"
+                    binding="#{editor.component}"
+                    regionNavigationListener="#{demoRegionNavigationListener.processRegionNavigation}"
+                    shortDesc="This is the region"
+                    id="myRegion"/>
+                </trh:cellFormat>
+              </trh:rowLayout>
+            </trh:tableLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

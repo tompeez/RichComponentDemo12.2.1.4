@@ -1,0 +1,268 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>
+        This component lays out an entire page.
+        </description>
+        <facet>
+          <description><![CDATA[The auxiliary content for the secondary layer.]]></description>
+          <facet-name>auxiliary2</facet-name>
+        </facet>
+        <facet>
+          <description><![CDATA[The branding region of the page.  This section typically
+                    contains a horizontal panelGroupLayout for an image of a logo and an
+                    outputText for a title.]]>
+          </description>
+          <facet-name>branding</facet-name>
+        </facet>
+        <facet>
+          <description><![CDATA[Content for the top of the secondary layer.]]>
+          </description>
+          <facet-name>header2</facet-name>
+        </facet>
+        <facet>
+          <description><![CDATA[This section typically contains global application links or otherwise top level navigation structure links, e.g. "Home", "Preferences", "Help", and "Sign Out".]]></description>
+          <facet-name>navigationGlobal</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[This location typically is a toolbar for the global layer.]]>
+          </description>
+          <facet-name>toolbarGlobal</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The search region of the page.  Typically used for application or system-wide searches.]]>
+          </description>
+          <facet-name>search</facet-name>
+        </facet>
+        <facet>
+          <description><![CDATA[The center content.]]></description>
+          <facet-name>center</facet-name>
+        </facet>
+        <attribute>
+          <description>Specifies the branding title.</description>
+          <attribute-name>brandingTitle</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Specifies the height of the branding bar. This includes the borders and the box shadow</description>
+          <attribute-name>brandingBarHeight</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>96px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of pixels that the auxiliary2 content should consume (this is a width if the orientationis "start" or "end" or a height if the orientation is "bottom").
+          </description>
+          <attribute-name>auxiliary2Size</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>200</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of pixels tall that the secondary header content should consume.
+          </description>
+          <attribute-name>header2Size</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>2em</default-value>
+        </attribute>
+        <attribute>
+          <description>the id attribute of the command button inside the form whose action should
+            be invoked by default, when the enter key is pressed with focus inside the form.
+            Identifiers are relative to the form component, and must account for NamingContainers.
+            You can use a single colon to start the search from the root.</description>
+          <attribute-name>defaultCommand</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>whether the form supports file upload.</description>
+          <attribute-name>usesUpload</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the branding logo.</description>
+          <attribute-name>logoImagePath</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>/afr/oracle_logo.png</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the branding logo styling.</description>
+          <attribute-name>logoStyleClass</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>AFBrandingLogo</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the alternate text and tooltip for the branding logo.</description>
+          <attribute-name>logoShortDesc</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>Demo home page</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the top margin of the content area. This usually takes out the box shadow in the branding area.</description>
+          <attribute-name>contentAreaMarginTop</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>5px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the bottom margin of the content area. </description>
+          <attribute-name>contentAreaMarginBottom</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>10px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the start margin of the content area. </description>
+          <attribute-name>contentAreaMarginStart</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>20px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the end margin of the content area. </description>
+          <attribute-name>contentAreaMarginEnd</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>20px</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:resource type="css" source="/styles/customAlta.css"/>
+    <af:form
+      defaultCommand="#{attrs.defaultCommand}"
+      usesUpload="#{attrs.usesUpload}" id="ptf1">
+      <af:panelStretchLayout id="ptpglwrp" topHeight="#{attrs.brandingBarHeight}" dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}">
+        <f:facet name="top">
+          <af:group>
+            <af:declarativeComponent id="bbar" viewId="/oracle/templates/brandingBar.jsff" showStatusIndicator="true" logoImagePath="#{attrs.logoImagePath}" logoShortDesc="#{attrs.logoShortDesc}" logoSmallImagePath="/images/oracle_logo_sm.png">
+              <f:facet name="globalNavbar">
+                <af:facetRef facetName="navigationGlobal"/>
+              </f:facet>
+              <f:facet name="appNavbar">
+                <af:group id="nvgrp">
+                  <af:declarativeComponent id="gToolsAlta" viewId="globalToolsAlta.jsff"
+                                           templateSource="/templates/pageTemplateDefs/fileExplorerTemplate.jspx.source"
+                                           tagDocShown="#{attrs.demoKind!='visualDesign' and attrs.demoKind!='feature' and attrs.demoKind!='confusedComponents' and attrs.tagName!=null}"
+                                           tagDocDestination="/docs/#{attrs.tagDocPrefix=='dvt' ? 'dvt/tagdoc/dvt' : 'tagdoc/af'}_#{attrs.tagName}.html"
+                                           skinDocShown="#{attrs.demoKind=='component' or attrs.demoKind=='styles'}"
+                                           skinDocDestination="/docs/skin-selectors.html##{attrs.tagName}"
+                                           skinDemoShown="#{attrs.demoKind=='component' or attrs.demoKind=='styles'}"
+                                           tagDemoShown="#{attrs.tagName!=null and attrs.demoKind=='styles'}"
+                                           tagDemoDestination="/components/#{attrs.tagName}.jspx"
+                                           visualDesignDemoShown="#{attrs.demoKind=='component'}"
+                                           visualDesignDemoDestination="/visualDesigns/#{attrs.visualDesignName}.jspx"
+                                           visualDesignDemoDisabled="#{''==attrs.visualDesignName}">
+                    <f:facet name="location"></f:facet>
+                    <f:facet name="search">
+                      <af:panelGroupLayout id="pglSearch" layout="horizontal">
+                        <af:declarativeComponent id="glryFind" viewId="demoFindField.jsff"/>
+                        <af:popup id="editorPopup" contentDelivery="lazy" childCreation="deferred"
+                                  rendered="#{!attrs.customEditorPresent and mobileSettings.simplifiedPresentation}">
+                          <af:noteWindow id="editorNoteWindow">
+                            <af:panelStretchLayout id="editorPsl" dimensionsFrom="auto"
+                                                   inlineStyle="width:#{attrs.editorSize}px">
+                              <f:facet name="center">
+                                <af:declarativeComponent id="floatingTagEditor" viewId="tagEditor.jsff"
+                                                         customEditorPresent="#{attrs.customEditorPresent}"
+                                                         demoKind="#{attrs.demoKind}" gmChrome="#{attrs.gmChrome}"
+                                                         gmStretchChildren="#{attrs.gmStretchChildren}"
+                                                         gmDisabled="#{attrs.gmDisabled}"
+                                                         gmDisabledNotes="#{attrs.gmDisabledNotes}"
+                                                         gmFlowNotes="#{attrs.gmFlowNotes}"
+                                                         gmFlowWithZeroWidthNotes="#{attrs.gmFlowWithZeroWidthNotes}"
+                                                         gmStretchNotes="#{attrs.gmStretchNotes}"
+                                                         editingDocument="#{attrs.editingDocument}"
+                                                         editingForm="#{attrs.editingForm}"
+                                                         tagDocPrefix="#{attrs.tagDocPrefix}"/>
+                              </f:facet>
+                            </af:panelStretchLayout>
+                          </af:noteWindow>
+                        </af:popup>
+                        <af:spacer width="6" id="findSpE" rendered="#{!attrs.customEditorPresent and mobileSettings.simplifiedPresentation}"/>
+                        <af:link id="pslEditor" shortDesc="Editor" icon="/images/edit_ena.png"
+                                 rendered="#{!attrs.customEditorPresent and mobileSettings.simplifiedPresentation}">
+                          <af:showPopupBehavior popupId="editorPopup" align="afterEnd"/>
+                        </af:link>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:declarativeComponent>            
+                </af:group>
+              </f:facet>
+              <f:facet name="brandingTitle">
+                <af:group id="tGrp">
+                  <af:group id="ptpgl4">
+                    <af:outputText inlineStyle="white-space: nowrap;" rendered="#{attrs.brandingTitle!=null}"
+                                     value="#{attrs.brandingTitle}" id="ptot1" />
+                    <af:facetRef facetName="branding"/>
+                  </af:group>
+                </af:group>
+              </f:facet>
+            </af:declarativeComponent> 
+            <f:subview id="about">
+                <jsp:include page="/includes/aboutPopup.jspx"/>
+          </f:subview>
+          </af:group>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout id="contentArea" 
+          startWidth="#{attrs.contentAreaMarginStart}" endWidth="#{attrs.contentAreaMarginEnd}" 
+          topHeight="#{attrs.contentAreaMarginTop}" bottomHeight="#{attrs.contentAreaMarginBottom}" 
+          styleClass="AFStretchWidth" dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}">
+            <f:facet name="top">
+              <af:spacer id="spca1"/>
+            </f:facet>
+            <f:facet name="bottom">
+              <af:spacer id="spca2"/>
+            </f:facet>
+            <f:facet name="start">
+              <af:spacer id="spca3"/>
+            </f:facet>
+            <f:facet name="end">
+              <af:spacer id="spca4"/>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelStretchLayout dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}" id="contentmaxwidth" styleClass="ContentContainer BrandingMaxWidth">
+                <f:facet name="center">
+                <af:decorativeBox id="contentBody" theme="#{demoSkin.theme1}" dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}" styleClass="AFStretchWidth">
+                  <f:facet name="center">
+                    <af:panelStretchLayout topHeight="#{attrs.header2Size}" id="head2"
+                                           dimensionsFrom="auto">
+                      <f:facet name="top">
+                        <af:facetRef facetName="header2"/>
+                      </f:facet>
+                      <f:facet name="center">
+                        <af:panelSplitter orientation="horizontal"
+                          splitterPosition="#{attrs.auxiliary2Size}" id="ptps2"
+                                          dimensionsFrom="auto">
+                          <f:facet name="first">
+                            <af:facetRef facetName="auxiliary2"/>
+                          </f:facet>
+                          <f:facet name="second">
+                            <!-- start of main decoration -->
+                            <af:decorativeBox
+                              theme="default" id="ptdb2" dimensionsFrom="auto">
+                              <f:facet name="center">
+                                <af:facetRef facetName="center"/>
+                              </f:facet>
+                            </af:decorativeBox>
+                            <!-- end of main decoration -->
+                          </f:facet>
+                        </af:panelSplitter><!-- end of secondary auxiliary splitter -->
+                      </f:facet>
+                    </af:panelStretchLayout><!-- end of secondary header/footer layout -->
+                  </f:facet>
+                </af:decorativeBox>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:panelStretchLayout>  
+    </af:form>
+  </af:pageTemplateDef>
+</jsp:root>

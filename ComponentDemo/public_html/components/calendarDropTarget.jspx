@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Calendar Drop Target Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="calendarDropTarget"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="dragNDrop"/>
+        <f:attribute name="customEditorPresent" value="true" />
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:outputFormatted value="This demo shows drag and drop to create a new calendar activity. Drag a row from the table and drop it in the calendar to create a new activity"
+                                id="of1"/>
+            <af:panelGroupLayout layout="horizontal" valign="top" id="pgl2">
+              <af:table var="row" value="#{calendarBean.dndActivitiesValues}" id="dndSrc"
+                            summary="collection drag source"
+                            rowSelection="single" contentDelivery="immediate" autoHeightRows="5">
+                <af:column headerText="Title" id="c1" rowHeader="unstyled">
+                  <af:outputText value="#{row.title}" id="ot1"/>
+                </af:column>
+                <af:column headerText="Location" id="c2">
+                  <af:outputText value="#{row.location}" id="ot2"/>
+                </af:column>
+                <af:column headerText="Recurring" id="c3">
+                  <af:outputText value="#{row.recurring}" id="ot3"/>
+                </af:column>
+                <af:dragSource actions="COPY" discriminant="DnDAcivityModel"/>
+              </af:table>
+
+              <af:panelGroupLayout layout="vertical" inlineStyle="margin:0 10px 0 10px"
+                                   id="pgl3">
+                <af:calendar id="cal"
+                             value="#{calendarBean.calendarModel}" timeZone="#{calendarBean.timeZone}">
+                  <af:calendarDropTarget actions="MOVE COPY" dropListener="#{calendarBean.handleDrop}">
+                    <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet" discriminant="DnDAcivityModel"/>
+                  </af:calendarDropTarget>
+                </af:calendar>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

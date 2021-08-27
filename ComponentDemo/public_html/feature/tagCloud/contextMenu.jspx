@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Tag Cloud Context Menu Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Tag Cloud Context Menu Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Tag Cloud Context Menu"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout topHeight="auto">
+            <f:facet name="top">
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:popup contentDelivery="lazyUncached" id="contextMenu" launcherVar="source" eventContext="launcher"
+                          clientComponent="true">
+                  <af:setPropertyListener from="#{source.currentRowData}" to="#{tagCloudContextMenu.selectedTagMenu}"
+                                          type="popupFetch"/>
+                  <af:menu id="m2">
+                    <af:commandMenuItem text="View Details of '#{tagCloudContextMenu.selectedTagMenu}'"
+                                        actionListener="#{tagCloudContextMenu.menuItemListener}" id="cmi4"/>
+                    <af:group id="g2">
+                      <af:commandMenuItem text="Add Task for '#{tagCloudContextMenu.selectedTagMenu}'"
+                                          actionListener="#{tagCloudContextMenu.menuItemListener}" id="cmi5"/>
+                      <af:commandMenuItem text="Add Notes for '#{tagCloudContextMenu.selectedTagMenu}'"
+                                          actionListener="#{tagCloudContextMenu.menuItemListener}" id="cmi6"/>
+                    </af:group>
+                  </af:menu>
+                </af:popup>
+                <f:verbatim>                                      <b>Demonstrates Context Menu in Tag Cloud using Social
+                                                                     data</b>                   <ul>
+                    <li>
+                      This demo shows how to trigger context menus on Tag Cloud items using 
+                      <b>dvt:showPopupBehavior</b>
+                    </li>
+                    <li>Right click on any Tag Cloud item to see the context menu and select an action.</li>
+                  </ul>                                                                                    </f:verbatim>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelGroupLayout clientComponent="true">
+                <dvt:tagCloud id="tc1" value="#{tagCloudContextMenu.model}" binding="#{tagCloudContextMenu.tagCloud}"
+                              styleClass="AFStretchWidth" var="item" layout="cloud" selectionMode="none"
+                              contentDelivery="whenAvailable"
+                              inlineStyle="max-width:600px;margin:auto;width:100%;height:400px;"
+                              emptyText="No TagCloud Data to display">
+                  <af:transition transition="auto" triggerType="display"/>
+                  <dvt:tagCloudItem label="#{item.word}" value="#{item.frequency}" shortDesc="#{item.shortDesc}"
+                                    rendered="true" id="t1">
+                    <af:showPopupBehavior popupId="::contextMenu" triggerType="contextMenu"/>
+                  </dvt:tagCloudItem>
+                </dvt:tagCloud>
+                <af:outputFormatted binding="#{tagCloudContextMenu.outputFormatted}"
+                                    value="#{tagCloudContextMenu.status}" id="of1" clientComponent="true"/>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

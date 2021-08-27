@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Treemap Node Content Facet Demo" binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Treemap Node Content Facet Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Treemap Node Content Facet"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:group>
+                            <f:verbatim>
+                                <p>Treemap supports advanced node content via the content facet of the dvt:treemapNode.
+                                   The following ADF tags are supported within the facet:</p>
+                                <ul>
+                                    <li>af:image</li>
+                                     
+                                    <li>af:outputText</li>
+                                     
+                                    <li>af:panelGroupLayout</li>
+                                     
+                                    <li>af:spacer</li>
+                                </ul>
+                                <p>Note: When possible, it's recommended to use the label attributes on the treemap
+                                   node, especially when there may be a large number of nodes. Treemaps are intended to
+                                   show two dimensions of data using the size and color of the nodes, and it's not
+                                   recommended to use the node content facet to display additional data. Instead,
+                                   consider using the node content facet to provide additional information to identify
+                                   the node or its value.</p>
+                            </f:verbatim>
+                            <dvt:treemap id="t1" inlineStyle="width:730px;height:450px;" value="#{treemapNodeContent.model}"
+                                         var="node" varStatus="nodeStatus">
+                                <dvt:treemapNode id="tn1" value="#{node.orgSize}"
+                                                 label="#{node.firstName} #{node.lastName}'s Org"
+                                                 shortDesc="#{node.firstName} #{node.lastName}">
+                                    <dvt:treemapNodeHeader isolate="off"/>
+                                    <f:facet name="content">
+                                        <af:panelGroupLayout layout="horizontal">
+                                            <af:image source="/resources/images/hv/#{node.personId}.png" id="i1"
+                                                      inlineStyle="width:43px;height:50px;"/>
+                                            <af:spacer width="5"/>
+                                            <af:panelGroupLayout layout="vertical">
+                                                <af:outputText value="#{node.firstName} #{node.lastName}"
+                                                               inlineStyle="color: white; font-weight: bold;"/>
+                                                <af:outputText value="#{node.title}" inlineStyle="color: white;"/>
+                                            </af:panelGroupLayout>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                    <dvt:attributeGroups id="ag1" type="color" value="#{node.parent.personId}"/>
+                                </dvt:treemapNode>
+                            </dvt:treemap>
+                        </af:group>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

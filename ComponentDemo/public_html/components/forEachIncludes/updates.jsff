@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2012, 2013, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>forEach PPR demo</description>
+      </component>
+    </af:xmlContent>
+    <af:panelStretchLayout id="dc_psl1" topHeight="2.5em" bottomHeight="0">
+      <f:facet name="top">
+        <af:panelHeader text="" id="dc_ph1"/>
+      </f:facet>
+      <f:facet name="center">
+        <af:panelHeader id="dc_ph2" text="Making changes to a collection used by a for each tag">
+          <f:facet name="menuBar">
+            <af:menuBar id="dc_mb1">
+              <af:commandMenuItem text="Add new employee" id="dc_cmi1">
+                <af:showPopupBehavior popupId="addPopup" align="afterEnd" alignId="dc_cmi1"/>
+              </af:commandMenuItem>
+            </af:menuBar>
+          </f:facet>
+          <af:panelGroupLayout layout="scroll" id="dc_pgl1">
+            <af:showDetail disclosedText="Hide notes" undisclosedText="Show notes" disclosed="true"
+                           id="dc_sd1">
+              <af:outputText value="Example showing how to correctly implement a page using a for each loop that is backed by a collection that will change between requests"
+                             inlineStyle="padding-top: 1em; display: block;" id="dc_ot1"/>
+              <af:outputText value="Use drag and drop to reorder the employees on the page. Use the menu bar to add new employees and use the delete icons at the end of each employee row to delete the employee."
+                             inlineStyle="padding: 1em 0; display: block;" id="dc_ot2"/>
+            </af:showDetail>
+            <af:panelGroupLayout layout="vertical" id="forEachParent" partialTriggers="addDialog">
+              <af:forEach var="emp" varStatus="vs" items="#{forEachBean.employeeMap}">
+                <af:declarativeComponent id="dc${vs.key}" viewId="employeeDetails.jsff"
+                                         employee="#{emp}" varStatus="#{vs}"
+                                         styleClass="#{vs.count % 2 eq 0 ? 'even' : 'odd'}"
+                                         allowDnd="true" employeeId="#{emp.id}">
+                  <f:facet name="actions">
+                    <af:link shortDesc="Delete employee" icon="/fileExplorer/images/delete_ena.png"
+                             hoverIcon="/images/delete_ovr.png"
+                             depressedIcon="/images/delete_dwn.png"
+                             disabledIcon="/images/delete_dis.png"
+                             actionListener="#{forEachBean.handleDelete}" id="dc_l1">
+                      <f:attribute name="employeeId" value="#{vs.key}"/>
+                    </af:link>
+                  </f:facet>
+                </af:declarativeComponent>
+              </af:forEach>
+              <af:panelGroupLayout layout="vertical" styleClass="AFStretchWidth"
+                                   inlineStyle="padding: 15px;" id="dropAtEndComp">
+                <af:outputText value="Drop the employee here to make it the last"
+                               inlineStyle="font-style:italic;" id="dc_ot3"/>
+                <af:dropTarget dropListener="#{forEachBean.employeeIdDrop}">
+                  <af:dataFlavor flavorClass="java.lang.Number"/>
+                </af:dropTarget>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </af:panelHeader>
+      </f:facet>
+      <f:facet name="bottom">
+        <af:popup id="addPopup" childCreation="deferred" contentDelivery="lazyUncached">
+          <af:dialog title="Add New Employee"
+                     dialogListener="#{forEachBean.handleAddEmployeeDialogEvent}" id="addDialog">
+            <af:panelFormLayout id="dc_pfl1">
+              <af:inputText id="newId" label="ID:" value="#{forEachBean.newEmployeeId}"
+                            validator="#{forEachBean.validateNewEmployeeId}">
+                <af:convertNumber type="number" groupingUsed="false" integerOnly="true"/>
+                <af:validateLongRange minimum="0"/>
+              </af:inputText>
+              <af:inputText id="newFn" label="First name:" value="#{forEachBean.newFirstName}"/>
+              <af:inputText id="newLn" label="Last name:" value="#{forEachBean.newLastName}"/>
+              <af:inputText id="newS" label="Salary:" value="#{forEachBean.newSalary}">
+                <af:convertNumber type="currency"/>
+              </af:inputText>
+            </af:panelFormLayout>
+          </af:dialog>
+        </af:popup>
+      </f:facet>
+    </af:panelStretchLayout>
+  </af:componentDef>
+</jsp:root>

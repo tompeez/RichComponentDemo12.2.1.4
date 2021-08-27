@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="Custom Default Point Styles" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/><f:attribute name="tagDocPrefix" value="dvt"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Custom Default Point Styles"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="mapPointTheme"/>    
+      
+      <f:facet name="center">
+          <af:group id="g1">
+            <!-- START TAG DEMO -->
+            <af:panelStretchLayout id="psl1" topHeight="auto"
+                                   bottomHeight="80px">
+              <f:facet name="center">
+                <dvt:map id="map1" binding="#{elocationBean.component}"
+                         startingY="0.0" startingX="0.0" mapZoom="0"
+                         mapServerConfigId="mapConfig1"
+                         baseMapName="ELOCATION_MERCATOR.WORLD_MAP"
+                         autoZoomThemeId="pointTheme">
+                  <dvt:mapPointTheme id="pointTheme"
+                                     value="#{geoMapBacking.pointModel}">
+                    <!-- Set the isDefault attribute to "true" to use a mapPointStyleItem by default for all points in the theme -->
+                    <dvt:mapPointStyleItem isDefault="true"
+                                           imageURL="/resources/images/geoMap/normalHouse.gif"/>
+                  </dvt:mapPointTheme>
+                  <dvt:mapOverview initialShown="false"/>
+                </dvt:map>
+              </f:facet>
+              <f:facet name="start"/>
+              <f:facet name="end"/>
+              <f:facet name="top"/>
+            </af:panelStretchLayout>
+            <!-- END TAG DEMO -->
+          </af:group>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+            <af:panelGroupLayout layout="scroll" id="pgl1">
+              <!-- START SEE ALSO LINKS -->
+              <af:outputText value="See also:" id="ot1"/>
+              <af:panelList id="pl1">
+                <af:goLink text="Map with Point Theme"
+                           destination="/components/mapPointTheme.jspx"
+                           id="gl1"/>
+                <af:goLink text="Map with Geocoded Point Theme"
+                           destination="/feature/geoMap/geoMapGeocoding.jspx"
+                           id="gl2"/>
+                <af:goLink text="Point Theme Bucketing by Value"
+                           destination="/feature/geoMap/geoMapPointValueBucketing.jspx"
+                           id="gl3"/>
+                <af:goLink text="Point Theme Bucketing by Category"
+                           destination="/feature/geoMap/geoMapPointCategoryBucketing.jspx"
+                           id="gl4"/>
+                <af:goLink text="Map Theme Custom Click Behaviors"
+                           destination="/feature/geoMap/geoMapPopupDialog.jspx"
+                           id="gl5"/>
+                <af:goLink text="Map Theme Custom Info Window"
+                           destination="/feature/geoMap/geoMapCustomInfoWindow.jspx"
+                           id="gl6"/>
+                <af:goLink text="Custom Point Callback"
+                           destination="/feature/geoMap/geoMapCustomPointCallback.jspx"
+                           id="gl7"/>
+              </af:panelList>
+              <!-- END SEE ALSO LINKS -->
+            </af:panelGroupLayout>
+          </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

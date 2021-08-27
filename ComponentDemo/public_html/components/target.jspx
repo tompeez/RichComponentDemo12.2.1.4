@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="target Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="target"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="listener"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputFormatted value="Demos for the af:target tag" inlineStyle="font-weight:bold;font-size:14px;" 
+                styleUsage="instruction" id="of1"/>
+            <af:outputText value="The following demos use the new af:target tag to control or skip validations." id="ot12"/>
+
+            <af:panelHeader size="1" text="Controlling Dependent Field Validations" id="ph1">
+
+              <af:panelGroupLayout layout="vertical" id="pgl11">
+                <af:panelList id="pl11">
+                  <af:outputText value="Selecting the boolean will show or hide the inputText 
+                    component. The Cancel button does not trigger validations on the required field 
+                    but the Submit button does." id="ot11"/>
+                    
+                </af:panelList>            
+                <af:panelFormLayout id="pfl1" labelAlignment="top">
+                  <af:panelLabelAndMessage label="Show/Hide Field" id="plam11">
+                    <af:selectBooleanRadio id="show3" autoSubmit="true" text="Show" group="group3"
+                                           value="#{validate.show3}">
+                      <af:target execute="show3 hide3" render="pfl1"/>
+                    </af:selectBooleanRadio>
+                    <af:selectBooleanRadio id="hide3" autoSubmit="true" text="Hide" group="group3"
+                                           value="#{validate.hide3}">
+                      <af:target execute="hide3 show3" render="pfl1"/>
+                    </af:selectBooleanRadio>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage id="plam12" for="it3">
+                    <af:inputText label="Required Field" required="true" rendered="#{validate.show3}" id="it3"/>
+                  </af:panelLabelAndMessage>
+                  <af:panelGroupLayout layout="horizontal" id="pgl9">
+                    <f:facet name="separator">
+                      <af:spacer width="2px" id="s7"/>
+                    </f:facet>
+
+                    <af:commandButton text="submit" partialSubmit="true" disabled="#{validate.hide3}" id="cb2">
+                      <af:target execute="@this it3" render="pfl1"/>
+                    </af:commandButton>
+                    <af:commandButton actionListener="#{validate.handleCancel}"  partialSubmit="true" text="cancel" id="cb1">
+                      <af:target execute="@this" render="ot10"/>
+                    </af:commandButton>
+
+                    <af:outputText clientComponent="true" value="Cancel Click: #{validate.clickCount}" id="ot10"/>
+                  </af:panelGroupLayout>
+                
+                
+                </af:panelFormLayout>
+              </af:panelGroupLayout>            
+            </af:panelHeader>
+            <af:panelHeader size="1" text="Dependent Field Validations involving LOV" id="ph2">
+              <af:panelList id="pl2">
+    
+                <af:panelGroupLayout layout="vertical" id="pg21">
+                  <af:outputText value="Required field validation is not triggered on the 
+                    dependent field Empno when opening or returning from the Ename LOV popup. All 
+                    dependent fields are merely rendered without being executed" id="ot20"/>
+                  <af:panelFormLayout id="pfl2">
+                    <af:inputListOfValues label="Ename" id="lov21" required="true"
+                            value="#{validateLOV.ename}" autoSubmit="true"
+                            popupTitle="Search and Select: Ename" searchDesc="Choose a name"
+                            model="#{validateLOV.listOfValuesModel}"
+                            validator="#{validateLOV.validate}">
+                      <af:target execute="@this" render="lovDep22 lovDep23"/>
+                    </af:inputListOfValues>
+                    <af:inputText label="Empno" value="#{validateLOV.empno}" required="true"
+                    id="lovDep22"/>
+                    <af:inputDate label="HireDate" value="#{validateLOV.hireDate}"
+                    id="lovDep23"/>
+                  </af:panelFormLayout>
+                  <f:facet name="separator">
+                    <af:spacer height="10" id="sp5"/>
+
+                  </f:facet>
+                </af:panelGroupLayout>
+    
+              </af:panelList>
+            </af:panelHeader>
+
+            <af:panelHeader size="1" text="Dependent Field Validations inside Table" id="ph3">
+              <af:panelList id="pl31">
+                <af:panelGroupLayout layout="vertical" id="pgl31">
+
+                  <f:facet name="separator">
+                    <af:spacer height="10" id="sp30"/>
+
+                  </f:facet>
+
+                  <af:outputText value="Required field validations are not triggered in editable 
+                    fields of the current row when a commandLink on the same row is clicked. Only 
+                    the target field, i.e. the Message column, is updated. But stepping off the row 
+                    will fire validation errors. Also the toolbar button 'Do Something' unlike the 
+                    'Detach' button, queues an event to the server to only process the action without 
+                    validating the entire panelCollection. " id="ot30"/>
+
+                  <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+                    <f:facet name="menus"/>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="tbar1">
+                                                
+                        <af:commandToolbarButton partialSubmit="true" text="Do Something" id="ctb3">
+                          <af:target execute="@this"/>
+  
+                        </af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="statusbar"/>                
+                    <af:table rowSelection="single" id="table31" var="row" autoHeightRows="10"
+                        value="#{tableTestData}" editingMode="clickToEdit"
+                        styleClass="AFStretchWidth" summary="table data" contentDelivery="immediate">
+                      <af:column width="40" rowHeader="true" headerText="Number" id="c31">
+                        <af:outputText value="#{row.no}" id="ot31"/>
+                      </af:column>
+                      
+                      <af:column headerText="commandLink" sortable="false" id="c32">
+                        <af:commandLink partialSubmit="true" text="Click Me" actionListener="#{row.linkAction}"
+                                        id="cl31">
+                          <af:target execute="@this" render="@default ot32"/>
+                        </af:commandLink>
+                      </af:column>
+                      
+                      <af:column width="200" headerText="Message" id="c33">
+                        <af:outputText clientComponent="true" value="#{row.message}" id="ot32"/>
+                      </af:column>
+                      
+                      <af:column showRequired="true" headerText="inputText" sortable="false" id="c34">
+                        <af:inputText value="#{row.col5}" required="true" label="test Required"
+                                      simple="true" id="it31"/>
+                      </af:column>
+  
+                      <af:column headerText="inputComboboxListOfValues" sortable="false"
+                                 id="c35">
+                        <af:inputComboboxListOfValues label="Ename" id="idInputComboboxListOfValues"
+                                                      value="#{demoComboboxLOV.ename}" autoSubmit="true"
+                                                      searchDesc="search for employee name"
+                                                      model="#{demoComboboxLOV.listOfValuesModel}">
+                          <af:target execute="@this" render="@this"/>
+                        </af:inputComboboxListOfValues>
+                      </af:column>
+                      <af:column headerText="inputDate" id="c36">
+                        <af:inputDate value="#{row.inputDate}" id="inptDateInTable" label="test inputDate"
+                                      simple="true"/>
+                      </af:column>                    
+  
+                      <af:column headerText="Required Field" sortable="false" id="c37" showRequired="true">
+                        <af:inputText value="#{demoComboboxLOV.ename1}" required="true" label="test Required" editable="always" id="it37" readOnly="false"/>
+                      </af:column>
+  
+                    </af:table>
+                    </af:panelCollection>
+                </af:panelGroupLayout>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

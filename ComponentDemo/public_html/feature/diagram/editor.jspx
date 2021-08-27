@@ -1,0 +1,244 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram Editor Features Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram Editor Features Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Diagram Editor Features"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="275"
+                            dimensionsFrom="auto">
+            <f:facet name="first">
+              <dvt:diagram id="dg1" binding="#{Editor.diagrammer}" layout="forceDirectedLayout" selection="single"
+                           readOnly="#{Editor.readOnly}" partialTriggers="diagramEdit linkEdit nodeEdit" minZoom="0"
+                           maxZoom="3" summary="Diagram Editor Demo">
+                <af:transition transition="auto" triggerType="dataChange"/>
+                <dvt:clientLayout name="forceDirectedLayout" method="DemoEditorLayout.forceDirectedLayout"
+                                  featureName="DemoEditorLayout">
+                  <f:attribute name="optimalLinkLength" value="110"/>
+                  <f:attribute name="setViewport" value="true"/>                                  
+                </dvt:clientLayout>
+                <dvt:overviewWindow id="ow1"/>
+                <af:dropTarget dropListener="#{Editor.diagramDropListener}" actions="COPY LINK MOVE">
+                  <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet" discriminant="fromDiagram"/>
+                  <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet" discriminant="fromTable"/>
+                </af:dropTarget>
+                <dvt:palette maxWidth="200px">           
+                  <dvt:paletteSection label="Basic shapes" value="#{Editor.paletteNodes}" var="node">
+
+                    <dvt:paletteItem typeHint="#{node.Type}" label="#{node.Label}" rendered="#{node.Type == 'Node2'}">
+                      <dvt:marker width="60" height="40" shape="diamond" fillColor="#8B0000" borderStyle="solid"
+                                  borderWidth="1" borderColor="#444444"></dvt:marker>
+                    </dvt:paletteItem>
+                    <dvt:paletteItem typeHint="#{node.Type}" label="#{node.Label}" rendered="#{node.Type == 'Node3'}">
+                      <dvt:marker width="65" height="30" shape="square" fillColor="#88aadd" borderStyle="solid"
+                                  borderWidth="1" borderColor="#444444"></dvt:marker>                                                      
+                    </dvt:paletteItem>
+                  </dvt:paletteSection>                 
+                  <!-- second section has collection and multiple items (we could not render multiple items before) -->
+                  <dvt:paletteSection label="Custom shapes" value="#{Editor.paletteNodes}" var="node"> 
+                    <dvt:paletteItem typeHint="#{node.Type}" label="#{node.Label}" rendered="#{node.Type == 'Node4'}">
+                      <dvt:marker width="50" height="40" shape="human" fillColor="#88aadd" borderStyle="solid"
+                                  borderWidth="1" borderColor="#444444"></dvt:marker>
+                    </dvt:paletteItem>
+                    <dvt:paletteItem typeHint="#{node.Type}" label="#{node.Label}" rendered="#{node.Type == 'Node5'}">
+                      <af:image inlineStyle="width: 40px;height: 50px"
+                                source="/resources/images/diagram/robot_model_2.png"/>
+                    </dvt:paletteItem>                    
+                  </dvt:paletteSection>
+                  <dvt:paletteLinkDefs label="Link Styles" value="#{Editor.paletteLinks}" var="link" disclosed="false">
+                    <dvt:paletteItem typeHint="#{link.Type}" label="#{link.Label}">
+                      <dvt:paletteLink startConnectorType="none" rendered="#{link.Type == 'Link1'}"
+                                       endConnectorType="arrowConcave" linkStyle="solid" linkWidth="2"
+                                       linkColor="#808080" linkLength="35"/>
+                      <dvt:paletteLink startConnectorType="none" endConnectorType="arrowConcave"
+                                       rendered="#{link.Type != 'Link1'}" linkStyle="dash" linkWidth="2"
+                                       linkColor="#0069A7" linkLength="35"/>
+                    </dvt:paletteItem>
+                  </dvt:paletteLinkDefs>
+                </dvt:palette>
+                <dvt:diagramNodes id="dn1" value="#{Editor.nodes}" var="node"
+                                  nodeDeleteListener="#{Editor.nodeDeleteListener}"
+                                  selectionListener="#{Editor.nodesSelectedEdit}"
+                                  selectedRowKeys="#{Editor.selectedNodes}" binding="#{Editor.UIDiagramNodes}"
+                                  nodeCreateListener="#{Editor.nodeCreateListener}">
+                  <af:dragSource actions="COPY LINK MOVE" defaultAction="MOVE" discriminant="fromDiagram"/>
+                  <dvt:diagramNode id="nstep" nodeId="#{node.Nodeid}" containerId="#{node.Containerid}"
+                                   readOnly="#{Editor.nodeReadOnly}" rendered="#{node.Type =='Node1'}" shortDesc="#{node.Label}">
+                    <f:facet name="zoom100">
+                      <af:panelGroupLayout layout="vertical">
+                        <af:panelGroupLayout>
+                          <af:image source="/resources/images/diagram/internet_cloud.png"
+                                    inlineStyle="height:70px; width:90px"/>
+                        </af:panelGroupLayout>
+                        <af:outputText inlineStyle="font-size:12px;font-weight:bold;color:#333333"
+                                       value="#{node.Label}"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </dvt:diagramNode>
+                  <dvt:diagramNode id="nstep2" nodeId="#{node.Nodeid}" containerId="#{node.Containerid}"
+                                   readOnly="#{Editor.nodeReadOnly}" rendered="#{node.Type =='Node2'}" shortDesc="#{node.Label}">
+                    <f:facet name="zoom100">
+                      <af:panelGroupLayout layout="vertical" halign="center">
+                        <dvt:marker width="100" height="50" shape="diamond" fillColor="#8B0000" borderStyle="solid"
+                                    borderWidth="1" borderColor="#444444" labelPosition="center"
+                                    value="#{node.Nodeid}: #{node.Label}"
+                                    labelStyle="color:#FFFFFF; font-weight:normal; font-size:8px"></dvt:marker>
+
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </dvt:diagramNode>
+                  <dvt:diagramNode id="nstep3" nodeId="#{node.Nodeid}" containerId="#{node.Containerid}"
+                                   readOnly="#{Editor.nodeReadOnly}" rendered="#{node.Type =='Node3'}" shortDesc="#{node.Label}">
+                    <f:facet name="zoom100">
+                      <af:panelGroupLayout layout="vertical" halign="center">
+                        <dvt:marker width="80" height="40" shape="square" fillColor="#88aadd" borderStyle="solid"
+                                    borderWidth="1" borderColor="#444444" rendered="#{node.Type == 'Node3'}"
+                                    labelPosition="center" value="#{node.Nodeid}: #{node.Label}"
+                                    labelStyle="color:#FFFFFF; font-weight:normal; font-size:8px"></dvt:marker>
+
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </dvt:diagramNode>
+                  <dvt:diagramNode id="nstep4" nodeId="#{node.Nodeid}" containerId="#{node.Containerid}"
+                                   readOnly="#{Editor.nodeReadOnly}" rendered="#{node.Type =='Node4'}" shortDesc="#{node.Label}">
+                    <f:facet name="zoom100">
+                      <af:panelGroupLayout layout="vertical" halign="center">
+                        <dvt:marker width="50" height="40" shape="human" fillColor="#88aadd" borderStyle="solid"
+                                    borderWidth="1" borderColor="#444444"></dvt:marker>
+                        <af:outputText inlineStyle="color:#333333; font-weight:normal; font-size:10px" value="#{node.Nodeid}: #{node.Label}"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </dvt:diagramNode>
+                  <dvt:diagramNode id="nstep5" nodeId="#{node.Nodeid}" containerId="#{node.Containerid}"
+                                   readOnly="#{Editor.nodeReadOnly}" rendered="#{node.Type =='Node5'}" shortDesc="#{node.Label}">
+                    <f:facet name="zoom100">
+                      <af:panelGroupLayout layout="vertical" halign="center">
+                        <af:image source="/resources/images/diagram/robot_model_2.png"
+                                  inlineStyle="width:40px;height:50px"/>
+                        <af:outputText inlineStyle="color:#333333; font-weight:normal; font-size:10px" value="#{node.Nodeid}: #{node.Label}"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </dvt:diagramNode>
+                </dvt:diagramNodes>
+                <dvt:diagramLinks id="dl1" value="#{Editor.links}" var="link"
+                                  linkCreateListener="#{Editor.linkCreateListener}"
+                                  linkChangeListener="#{Editor.linkUpdateListener}"
+                                  linkDeleteListener="#{Editor.linkDeleteListener}"
+                                  selectionListener="#{Editor.linksSelected}" selectedRowKeys="#{Editor.selectedLinks}"
+                                  binding="#{Editor.UIDiagramLinks}">
+                  <dvt:diagramLink id="l6" startNode="#{link.Startnode}" endNode="#{link.Endnode}"
+                                   startConnectorType="none" endConnectorType="arrowConcave" linkStyle="solid"
+                                   linkWidth="2" linkColor="#808080" readOnly="#{Editor.linkReadOnly}"
+                                   rendered="#{link.Type =='Link1'}" shortDesc="Wired"/>
+                  <dvt:diagramLink id="l7" startNode="#{link.Startnode}" endNode="#{link.Endnode}"
+                                   startConnectorType="none" endConnectorType="arrowConcave" linkWidth="2"
+                                   linkColor="#0069A7" linkStyle="dash" readOnly="#{Editor.linkReadOnly}"
+                                   rendered="#{link.Type =='Link2'}" shortDesc="Wireless"/>
+                  <dvt:diagramLink id="l8" startNode="#{link.Startnode}" endNode="#{link.Endnode}"
+                                   startConnectorType="none" endConnectorType="arrowConcave" linkWidth="4"
+                                   linkColor="#0069A7" linkStyle="dash" readOnly="#{Editor.linkReadOnly}"
+                                   rendered="#{link.Type =='Link3'}" shortDesc="Wireless"/>
+                </dvt:diagramLinks>
+              </dvt:diagram>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout id="pfl1" partialTriggers="diagramEdit" layout="scroll">
+                <af:outputText value="Edit Features"/>
+                <af:selectBooleanCheckbox autoSubmit="true" id="diagramEdit" value="#{Editor.readOnly}"
+                                          label="Diagram Read-only"/>
+                <af:panelGroupLayout layout="vertical" rendered="#{not Editor.readOnly}">
+                  <af:selectBooleanCheckbox autoSubmit="true" id="nodeEdit" value="#{Editor.nodeReadOnly}"
+                                            label="Node Read-only"/>
+                  <af:selectBooleanCheckbox autoSubmit="true" id="linkEdit" value="#{Editor.linkReadOnly}"
+                                            label="Link Read-only"/>
+                  <af:selectBooleanCheckbox autoSubmit="true" id="showcreatepopup" value="#{Editor.showCreatePopup}"
+                                            label="Show Popup On Node Create"/>
+                </af:panelGroupLayout>
+                <af:spacer height="5"/>
+                <af:separator/>
+                <af:spacer height="5"/>
+                <af:outputText value="Events:"/>
+                <af:spacer height="5"/>
+                <af:table value="#{Editor.eventQueue}" var="row" partialTriggers="::clearTableBtn"
+                          columnStretching="column:eventcolumn" displayRow="last" binding="#{Editor.table}" id="t12"
+                          styleClass="AFStretchWidth">
+                  <af:column headerText="Time" id="timestamp_column" rowHeader="true" width="100">
+                    <af:outputText value="#{row.date}" id="timestamp_text">
+                      <af:convertDateTime dateStyle="medium" timeStyle="medium" type="time"/>
+                    </af:outputText>
+                  </af:column>
+                  <af:column headerText="Event" id="eventcolumn">
+                    <af:outputText value="#{row.text}" id="eventtext"/>
+                  </af:column>
+                </af:table>
+                <af:spacer height="5"/>
+                <af:button text="Clear table" actionListener="#{Editor.clearTable}" partialSubmit="true"
+                                  id="clearTableBtn"/>
+                <af:spacer height="5"/>
+                <af:separator/>
+                <af:spacer height="5"/>
+                <af:outputText value="Drag and Drop Nodes Here:"/>
+                <af:spacer height="5"/>
+                <af:table var="row" id="t1" inlineStyle="height:200px" styleClass="AFStretchWidth"
+                          value="#{Editor.dragAndDropRegionTableModel}" columnStretching="column:c2"
+                          rowSelection="multiple">
+                  <af:dragSource actions="MOVE COPY LINK" defaultAction="MOVE" discriminant="fromTable"/>
+                   
+                  <af:dropTarget actions="MOVE COPY LINK" dropListener="#{Editor.tableDrop}">
+                    <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet"
+                                   discriminant="fromDiagram"/>
+                  </af:dropTarget>
+                  <af:column sortable="false" headerText="Node Id" id="c1" width="125">
+                    <af:outputText value="#{row.Nodeid}" id="ot1"/>
+                  </af:column>
+                  <af:column sortable="false" headerText="Label" id="c2" width="125">
+                    <af:outputText value="#{row.Label}" id="ot2"/>
+                  </af:column>
+                </af:table>
+                <af:popup id="nodeCreatePopups" binding="#{Editor.nodeCreatePopup}">
+                  <af:panelWindow title="Create Step" modal="true" closeIconVisible="false">
+                    <af:inputText value="#{Editor.newNode['Label']}" label="Label"/>
+                    <af:button text="Save" partialSubmit="true" actionListener="#{Editor.submitNodeCreate}"/>
+                    <af:button text="Cancel" partialSubmit="true" actionListener="#{Editor.cancelNodeCreate}"/>
+                  </af:panelWindow>
+                </af:popup>
+                <af:popup id="linkAlreadyExists" binding="#{Editor.linkExistsPopup}">
+                  <af:panelWindow title="Link Exists" modal="true" closeIconVisible="false">
+                    <af:outputText value="A link already exists between #{Editor.newLink['Startnode']}  and #{Editor.newLink['Endnode']}."/>
+                    <af:button text="Ok" partialSubmit="true" actionListener="#{Editor.linkExistsOk}"/>
+                  </af:panelWindow>
+                </af:popup>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+        <!-- END FEATURE DEMO -->
+        <f:facet name="centerBottomCollapsible">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <!-- START SEE ALSO LINKS -->
+            <!-- END SEE ALSO LINKS -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

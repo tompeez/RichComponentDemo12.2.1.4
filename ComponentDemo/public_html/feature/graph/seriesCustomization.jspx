@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view><af:document title="Graph Series Customization Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo"
+                     viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Graph Series Customization Demo"/>
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Graph Series Customization"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+          <af:panelGroupLayout layout="vertical" id="pgl2">
+            <af:outputText value="In this line graph, the following series properties have been set:"
+                           id="ot2"/>
+            <af:outputText value="Series 1 has green diamond-shaped line markers."
+                           id="ot1"/>
+            <af:outputText value="Series 2 has a linear fitline." id="ot3"/>
+            <af:outputText value="Series 3 uses a dashed line style." id="ot4"/>
+            <af:outputText value="Series 5 has a reduced line width." id="ot5"/>
+          </af:panelGroupLayout>
+          <dvt:lineGraph shortDesc="Graph" subType="LINE_VERT_ABS" value="#{graphData.rows[5].cols[15].continuous}"
+                    
+                     id="g1">
+            <dvt:seriesSet markerDisplayed="true">
+              <dvt:series markerColor="#00ff00" markerShape="MS_DIAMOND"/>
+              <dvt:series fitlineType="FT_LINEAR"/>
+              <dvt:series lineStyle="LS_DASH"/>
+              <dvt:series index="4" lineWidth="2"/>
+            </dvt:seriesSet>
+          </dvt:lineGraph>
+          <af:panelGroupLayout layout="vertical" id="pgl3">
+            <af:outputText value="In this pie graph, the following series properties have been set:"
+                           id="ot9"/>
+            <af:outputText value="Series 1 has a green series color." id="ot8"/>
+            <af:outputText value="Series 4 is exploded." id="ot7"/>
+            <af:outputText value="Series 5 has a black border." id="ot6"/>
+          </af:panelGroupLayout>
+          <dvt:pieGraph shortDesc="Graph" value="#{graphData.rows[5].cols[1].rowLabels['Yummy Slice %d'].random}"
+                       
+                        id="pg1">
+            <dvt:seriesSet>
+              <dvt:series color="#00ff00"/>
+              <dvt:series index="3" pieSliceExplode="100"/>
+              <dvt:series index="4" borderColor="#000000" borderTransparent="false"/>
+            </dvt:seriesSet>
+          </dvt:pieGraph>
+          <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

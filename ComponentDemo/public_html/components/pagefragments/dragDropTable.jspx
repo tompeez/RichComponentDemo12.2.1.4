@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:outputText value="This text is inside of the region" id="ot1"/>
+  <br/><br/>
+  <af:panelGroupLayout layout="horizontal" id="pgl1">
+    <af:panelBox text="PanelBox Left" id="pb1">
+      <f:facet name="toolbar"/>
+      <af:table value="#{regionModel.dragDropModel.tableData.dataLeft}" var="row" id="tableLeft">
+        <af:column sortable="false" headerText="col1" id="c1">
+          <af:outputText value="#{row.col1}" id="ot2"/>
+        </af:column>
+        <af:dragSource actions="MOVE" discriminant="addRole"/>
+      </af:table>
+    </af:panelBox>
+    <af:panelBox text="PanelBox Right" id="pb2">
+      <f:facet name="toolbar"/>
+      <af:table value="#{regionModel.dragDropModel.tableData.dataRight}" var="row"
+                id="tableRight">
+        <af:column sortable="false" headerText="col1" id="c2">
+          <af:outputText value="#{row.col1}" id="ot3"/>
+        </af:column>
+        <af:collectionDropTarget actions="MOVE" modelName="addRole"
+                                 dropListener="#{regionModel.dragDropModel.tableData.addRole}"/>
+      </af:table>
+    </af:panelBox>
+  </af:panelGroupLayout>
+  <af:commandButton text="Reset Data"
+                    actionListener="#{regionModel.dragDropModel.tableData.resetDataButton}"
+                    partialSubmit="true" id="cb1"/>
+</jsp:root>

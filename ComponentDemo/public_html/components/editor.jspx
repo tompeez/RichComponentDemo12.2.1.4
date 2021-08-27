@@ -1,0 +1,74 @@
+<!-- Copyright (c) 2008, 2010, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+          
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:panelHeader text="Attributes" id="ph1">
+    <af:panelFormLayout maxColumns="1" id="pfl1">
+      <af:forEach var="row" items="#{editor.attributes}">
+        <af:inputText immediate="true"
+                      disabled="#{row.name == 'value' ||
+                                 row.name == 'var' ||
+                                 row.name == 'componentVar' ||
+                                 row.name == 'currencyKey' ||
+                                 row.name == 'currencyString' ||
+                                 row.name == 'focusRowKey' ||
+                                 row.name == 'rowKey' ||
+                                 row.name == 'id' ||
+                                 row.name == 'rendererType' ||
+                                 row.name == 'submittedValue'}"
+                      rendered="#{row.type == 'string'}"
+                      value="#{row.value}"
+                      shortDesc="Type to change '#{row.name}'"
+                      label="#{row.name}"
+                      contentStyle="width: 150px;" id="mtnit1"/>
+        <af:inputText immediate="true"
+                      disabled="#{row.name == 'rowIndex'}"
+                      rendered="#{row.type == 'integer' ||
+                                 row.type == 'number' }"
+                      value="#{row.value}"
+                      shortDesc="Type to change '#{row.name}'"
+                      label="#{row.name}"
+                      contentStyle="width: 150px;" id="mtnit2">
+          <f:converter converterId="javax.faces.Integer"/>
+        </af:inputText>
+        <af:inputText immediate="true"
+                      rendered="#{row.type == 'date'}"
+                      value="#{row.value}"
+                      shortDesc="Type to change '#{row.name}'"
+                      label="#{row.name}"
+                      contentStyle="width: 150px;" id="mtnit3">
+          <f:facet name="help">
+            <h:outputText styleClass="AFInstructionText" value="Sample format: 2004-07-15"
+                          id="mtnot1"/>
+          </f:facet>
+          <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </af:inputText>
+        <af:selectBooleanCheckbox rendered="#{row.type == 'boolean'}"
+                                  disabled="#{row.name == 'localValueSet' ||
+                                             row.name == 'valid' ||
+                                             row.name == 'transient'}"
+                                  immediate="true"
+                                  value="#{row.value}"
+                                  shortDesc="Click to change '#{row.name}'"
+                                  label="#{row.name}" id="mtnsbc1"/>
+        <af:inputText immediate="true"
+                      rendered="#{row.type == 'character'}"
+                      value="#{row.value}"
+                      shortDesc="Type to change '#{row.name}'"
+                      label="#{row.name}"
+                      contentStyle="width: 150px;" id="mtnit4">
+          <f:converter converterId="javax.faces.Character"/>
+        </af:inputText>
+        
+      </af:forEach>
+      <af:commandButton id="updateButton" text="Update" action="#{editor.update}" partialSubmit="true"/>
+    </af:panelFormLayout>
+  </af:panelHeader>
+</jsp:root>
+
+

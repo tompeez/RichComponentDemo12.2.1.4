@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="#{ganttFeatureLinks.projectGanttTitle}" binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="component"/>
+                <f:attribute name="tagDocPrefix" value="dvt"/>
+                <f:attribute name="gmChrome" value="shown"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Project Gantt"/>
+                <!-- Tag Name -->
+                <f:attribute name="tagName" value="projectGantt"/>
+                <f:facet name="top">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                    <!-- START TAG DEMO -->
+                    <dvt:projectGantt id="mygantt" startTime="2008-04-22" endTime="2008-09-31" var="task"
+                                      binding="#{extEditor.component}" value="#{projectGantt.model}"
+                                      tooltipKeys="#{projectGantt.tooltipKeys}"
+                                      tooltipKeyLabels="#{projectGantt.tooltipLabels}"
+                                      dataChangeListener="#{projectGantt.handleDataChanged}"
+                                      actionListener="#{projectGantt.handleAction}" summary="Project Gantt Demo">
+                        <f:facet name="major">
+                            <dvt:timeAxis scale="months" id="ta1"/>
+                        </f:facet>
+                        <f:facet name="minor">
+                            <dvt:timeAxis scale="weeks" id="ta2"/>
+                        </f:facet>
+                        <f:facet name="nodeStamp">
+                            <af:column headerText="Task Name" id="c1">
+                                <af:outputText value="#{task.taskName}" id="ot1"/>
+                            </af:column>
+                        </f:facet>
+                        <af:column headerText="Resource" id="c2">
+                            <af:outputText value="#{task.resourceName}" id="ot2"/>
+                        </af:column>
+                        <af:column headerText="Start Date" id="c3">
+                            <af:outputText value="#{task.startTime}" id="ot3"/>
+                        </af:column>
+                        <af:column headerText="End Date" id="c4">
+                            <af:outputText value="#{task.endTime}" id="ot4"/>
+                        </af:column>
+                        <dvt:ganttLegend keys="#{projectGantt.legendKeys}" labels="#{projectGantt.legendLabels}"
+                                         id="gl1"/>
+                    </dvt:projectGantt>
+                    <!-- END TAG DEMO -->
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                        <!-- START SEE ALSO LINKS -->
+                        <af:outputText value="See also:" id="ot5"/>
+                        <af:panelList id="pl1">
+                            <af:goLink text="Gantt Index" destination="/feature/gantt/index.jspx"
+                                       id="gl2"/>
+                        </af:panelList>
+                        <!-- END SEE ALSO LINKS -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

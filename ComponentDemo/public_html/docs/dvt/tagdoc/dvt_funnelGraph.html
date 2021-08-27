@@ -1,0 +1,726 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:funnelGraph&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:funnelGraph&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:funnelGraph funnelGraph funnel graph</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.graph.UIGraph<br>
+<b>Component type:</b> oracle.dss.adf.graph.Graph (funnelGraph)<br></p>
+<h4>Overview</h4>
+<p>The funnelGraph tag is deprecated. Use the funnelChart tag instead.</p>
+<p>Use the <a href="dvt_funnelGraph.html">&lt;dvt:funnelGraph&gt;</a> tag to create an ADF data visualization bar graph. A Funnel graph is a visual representation of data related to steps in a process. The steps appear as vertical slices across a horizontal cone-shaped section. As the actual value for a given step or slice approaches the quota for that slice, the slice fills. A funnel renders a three-dimensional chart that represents target and actual values, and levels by color.</p>
+<p>The Graph's layout is dominated by four major components: <a href="dvt_graphTitle.html">title</a>, <a href="dvt_graphSubtitle.html">subtitle</a>, <a href="dvt_graphFootnote.html">footnote</a>, and funnel frame. The funnel frame plots the data and is always rendered, but the other three components are optional, and can be placed in different locations within the graph. Within the area allocated to the whole graph, space is first allocated to the titles, if present. The <a href="dvt_graphTitle.html">title</a> and the <a href="dvt_graphSubtitle.html">subtitle</a> are displayed side by side at the top of the graph by default, and the <a href="dvt_graphFootnote.html">footnote</a> is displayed at the bottom of the graph. The graph plots funnel frame and its labels in the remaining space.</p>
+<h4>Data Model</h4>
+<p>Use the data binding dialogs to bind the simple graph tags to a data control, which is typically based on a rowset (see data binding documentation for details). Another common way to provide data for the graph is to use the "tabularData" attribute to create a grid. This requires use of a backing or managed bean.</p>
+<p>The graph requires a simple grid of numeric data points to plot a graph. The grid's row and column labels are used to identify components within the graph. <a href="dvt_funnelGraph.html">Funnel graphs</a> generally require two rows of data. The first row provides actual data values, and the second row provides target values. <a href="dvt_funnelGraph.html">Funnel</a> graphs legend display threshold values.</p>
+<h4>Threshold</h4>
+<p>The number of threshold, each threshold range and color can be customized in the graph bean. These functions are not exposed to the faces layer yet, but application may use a graph binding to access these functions in the graph engine.</p>
+<p>Here is an example of customized threshold areas in a funnel graph using a graph binding.</p>
+<pre>
+<code>    
+    UIGraph graph = null;
+    public UIGraph getGraph() {
+        if ( graph == null )
+            graph = new UIGraph();
+        // Gets the graph engine object
+        CommonGraph commonGraph = (CommonGraph)graph.getImageView();
+        
+        // Sets the number of thresholds to be 4
+        commonGraph.setThresholdObjectCount(4);
+        
+        // Gets the threshold object
+        Threshold th = commonGraph.getThreshold();
+        
+        try {
+        
+            // Sets the color of the threshold
+            // setColor( color , index of threshold );
+            th.setColor(Color.blue, 0);
+            th.setColor(Color.yellow, 1);
+            th.setColor(Color.green, 2);
+            th.setColor(Color.red, 3);
+            
+            // setTransparent( transparent , index of threshold );    
+            th.setTransparent(false, 0);
+            th.setTransparent(false, 1);
+            th.setTransparent(false, 2);
+            th.setTransparent(false, 3);
+                
+            // setMinValue( index of threshold , value );
+            // setMaxValue( index of threshold , value );
+            th.setMinValue(0, 0);
+            th.setMaxValue(0, 20);
+            
+            th.setMinValue(1, 20);
+            th.setMaxValue(1, 40);
+            
+            th.setMinValue(2, 40);
+            th.setMaxValue(2, 50);
+            
+            th.setMinValue(3, 50);
+            th.setMaxValue(3, 100);       
+        }
+        // Catches the threshold of out range exception
+        catch (ThresholdOutOfRangeException e){;}
+        return graph;
+    }
+        
+        </code>
+</pre>
+<h4><code>SeriesEffect</code></h4>
+<p><code>Use the graph's "seriesEffect" attribute to add predefined gradient effects on funnel slices.</code></p>
+<h4><code>Titles</code></h4>
+<p><code>The <a href="dvt_graphTitle.html">title</a> and the <a href="dvt_graphSubtitle.html">subtitle</a>, if present, are displayed side by side at the top of the graph by default. Use the graph's "customLayout" attribute to change this default setting. The <a href="dvt_graphFootnote.html">footnote</a>, if present, is displayed at the bottom of the graph.</code></p>
+<h4><code>Legend</code></h4>
+<p><code>The <a href="dvt_legendArea.html">legend</a> displays threshold values. It also displays the <a href="dvt_legendTitle.html">legend title</a>, if present. The <a href="dvt_legendArea.html">legend</a> can be positioned in one of four different locations: left, right, top and bottom. Use the attribute "alongGraphEdge" to attach it to the edge of the graph. The <a href="dvt_legendArea.html">legend</a> can be removed with the "rendered" attribute.</code></p>
+<h4><code>Funnel frame</code></h4>
+<p><code>Funnel graphs plot the data within the funnel frame. The funnelFrame integrates <a href="dvt_sliceLabel.html">slice labels</a>, <a href="dvt_o1TickLabel.html">o1TickLabel</a> and a horizontal cone-shaped frame that draws slices.</code></p>
+<h3><code>Number Formatting</code></h3>
+<p><code>DVT funnel graph supports number formatting on its slice labels. Users can customize the number formatting by adding &lt;af:convertNumber&gt; to the &lt;dvt:sliceLabel&gt;. The following is an example of how to configure this tag:</code></p>
+<pre>
+<code>            &lt;dvt:funnelGraph value="#{binding.dataModel}"&gt;
+                &lt;dvt:sliceLabel&gt;
+                     &lt;af:convertNumber pattern="#{appPrefs.sliceLabelPattern}" /&gt;
+                &lt;/dvt:sliceLabel&gt;
+             &lt;/dvt:funnelGraph&gt;
+            </code>
+</pre>
+<p><b>Automatic Scaling and Precision</b></p>
+<p>Graph automatically determines the scale ( e.g. 4K ) and precision ( e.g. show 2 decimal points - 0.25 ) based on the values that are being displayed. This automatic formatting still occurs when &lt;af:convertNumber&gt; is specified. The &lt;dvt:sliceLabel&gt; and &lt;dvt:y1TickLabel&gt; tags also have scaling and autoPrecision attributes that can be used to control graph's automatic number formatting. By default, scaling="auto" means graph will auto-calculate the scale. For example, 40,000 will be formatted as "40K". By default, autoPrecision="on" means that graph will auto-calculate the precision of the number. For example, 0.230546 will be displayed as "0.23". If the autoPrecision is 'on' then all of the &lt;af:convertNumber&gt; fraction digit settings ( e.g. min/maxFractionDigits or pattern) are ignored.</p>
+<p><b>Percent and Number Formatting</b></p>
+<p>Funnel graphs calculate and display percent values by default. An application has the option to have the funnel graph display percent values and / or the numbers used to calculate the percentages. To configure what is displayed in the funnel's slice label, &lt;dvt:sliceLabel&gt;'s textType attribute can be set and accepts the following values (LD_TEXT, LD_VALUE, LD_PERCENT, LD_TEXT_PERCENT ). Note that tooltips always display the numbers ( e.g. 42K ) and cannot display percent values like the funnel's slice.</p>
+<p>The single &lt;af:convertNumber&gt; tag specified within &lt;dvt:sliceLabel&gt; is used to specify formatting for slice labels and tooltips, regardless of whether the slice label or tooltip is displaying percent values (e.g. 25% ) or numbers ( e.g. 42K ). When an element of the funnel graph is configured to show percents ( e.g. &lt;dvt:sliceLabel textType="LD_PERCENT"&gt; ), the funnel graph will force the &lt;af:convertNumber&gt; specified into a percent format. When &lt;af:convertNumber&gt; is forced to percent, graph clears &lt;af:convertNumber&gt; pattern, since the pattern will prevent type=percent if specified. This means that patterns are ignored when graph forces percent formatting.</p>
+<p>Also, please note that &lt;dvt:sliceLabel&gt;'s autoPrecision attribute applies to both percent formats as well as numbers, while the scaling attribute only applies to numbers and is not used when formatting percents.</p>
+<h4>Graph Size</h4>
+<p>The default graph size is 300 pixels tall by 400 pixels wide. Change this using the "inlineStyle" attribute. Set inlineStyle="width:500px; height:350px;", for instance, to change the graph size to 350 pixels tall by 500 pixels wide. The width and the height can also be specified in percent. Use percent for height only when the graph is added to an explicitly sized container or one that manages layout, otherwise graph will behave differently for different browsers. Use the "dynamicResize" attribute to resize the graph based on its container size.</p>
+<h4>Interactivity</h4>
+<p>Use the <a href="dvt_shapeAttributes.html">shapeAttributes</a> tag to specify interactivity on an individual graph component. A backing or managed bean is required to use this feature.</p>
+<p>Here is an example of a slice labels in a funnel graph using a clickListener to display data value :</p>
+<pre>
+<code>           &lt;dvt:funnelGraph id="graph1" subType="FUNNEL"&gt;
+              &lt;dvt:shapeAttributesSet&gt;
+                 &lt;dvt:shapeAttributes component="GRAPH_SLICELABEL" clickable="true" clickListener="#{clickListener.processClick}"/&gt;
+              &lt;/dvt:shapeAttributesSet&gt;
+           &lt;/dvt:funnelGraph&gt;
+        </code>
+</pre>
+<p>The "processClick" method in the backing bean will look like:</p>
+<pre>
+<code>        public void processClick(ClickEvent event) {   
+                ComponentHandle handle = event.getComponentHandle();
+                if (handle instanceof DataComponentHandle) {
+                        DataComponentHandle dhandle = (DataComponentHandle)handle;
+                        System.out.println("Data value: " + dhandle.getValue(DataComponentHandle.UNFORMATTED_VALUE).toString());
+                }
+        }
+        </code>
+</pre>
+<p>Wrap all <a href="dvt_shapeAttributes.html">&lt;dvt:shapeAttributes&gt;</a> tags in a <a href="dvt_shapeAttributesSet.html">&lt;dvt:shapeAttributesSet&gt;</a> tag.</p>
+<h4>Popups</h4>
+<p>The af:showPopupBehavior tag can be used within the <a href="dvt_seriesSet.html">&lt;dvt:seriesSet&gt;</a> to display popups for data objects within the graph. Only the "click" and "mouseHover" trigger types are supported. When using hover popups, it is recommended that tooltips be disabled, since having multiple types of hover feedback can be confusing to the user.</p>
+<h4>Context Menus</h4>
+<p>Context menus can be defined by using any of the context menu facets that are defined on the graph. The "bodyContextMenu" facet specifies a context menu that is displayed on any non-selectable object within the component. The "contextMenu" facet specifies a context menu that is displayed on any selectable object within the graph. The "multiSelectContextMenu" facet specifies a context menu that is displayed when multiple objects are selected. Each facet supports only a single child component. Selection must be enabled and supported for the specific graph type in order for an object to be considered selectable. Context Menus are currently only supported in Flash.</p>
+<p>Due to technical limitations when using the Flash rendering format, the context menu contents are currently displayed using the Flash Player's context menu. This imposes several limitations defined by the Flash Player:</p>
+<ul>
+<li>Flash does not allow for submenus in its context menu.</li>
+<li>Flash only allows a maximum of 15 custom menu items. The component's built in menu items, such as the ones for interactiveSliceBehavior, also count towards this limit.</li>
+<li>Flash only allows for text-only menu items. Icons or other controls possible in ADF Faces menus are not possible in Flash.</li>
+<li>Each caption must contain at least one visible character.</li>
+<li>Control characters, newlines, and other white space characters are ignored.</li>
+<li>No caption can be more than 100 characters long.</li>
+<li>Captions that are identical to another custom item are ignored, whether the matching item is visible or not. Menu captions are compared to built-in captions or existing custom captions without regard to case, punctuation, or white space.</li>
+<li>The following captions are not allowed, but the words may be used in conjunction with other words to form a custom caption: "Save","Zoom In", "Zoom Out", "100%", "Show All", "Quality", "Play", "Loop", "Rewind", "Forward", "Back", "Movie not loaded", "About", "Print", "Show Redraw Regions", "Debugger", "Undo", "Cut", "Copy", "Paste", "Delete", "Select All", "Open", "Open in new window", "Copy link"</li>
+<li>None of the following words can appear in a custom caption on their own or in conjunction with other words: "Adobe", "Macromedia", "Flash Player", "Settings"</li>
+</ul>
+<p>Additionally, since Flash's request for context menu items is a synchronous call, so a server request to evaluate EL is not possible when the context menu is invoked. To provide context menus that vary by selected object, the menus will be pre-fetched if the context menu popup uses contentDelivery="lazyUncached". For context menus that may vary by state, this means that any EL expressions within the menu definition will be called repeatedly at render time, with different selection and currency states. When using these context menus that are pre-fetched, the application must be aware of the following:</p>
+<ul>
+<li>Long running or slow code should not be executed in any EL that may be used to determine how the context menu is displayed. This does not apply to af:commandMenuItem attributes that are called after a menu item is selected, such as "actionListener".</li>
+<li>In the future, if the Flash limitations are solved, the ADF context menu may be displayed in place of the Flash context menu. To ensure upgrade compatibility, applications developers should code such that their EL will function both in cases where the menu is pre-fetched, and also if the EL is evaluated when the menu is invoked. It is highly recommended that the only component state that applications rely on are selection and currency.</li>
+</ul>
+<h4>Tooltips</h4>
+<p>Tooltips are useful to display identification and or detail information for data markers. They can be very useful in smaller graphs without enough space to display labels. Use attributes "markerTooltipType", "seriesTooltipLabelType", and "groupTooltipLabelType" to customize tooltip content. The graph automatically displays tooltips for components like <a href="dvt_graphTitle.html">title</a>, <a href="dvt_graphSubtitle.html">subtitle</a>, <a href="dvt_graphFootnote.html">footnote</a>, and <a href="dvt_legendText.html">legendText</a> when their text is truncated. There is no option to change this behavior.</p>
+<h4>Font</h4>
+<p>The <a href="dvt_graphFont.html">&lt;dvt:graphFont&gt;</a> tag is used for font formatting. Text color, style, size, and font name can be specified using this tag. This tag is used as a child tag for any of the graph's text component tags. All text component tags have other formatting attributes like horizontal and vertical alignment, text string, and whether or not the text should be rendered.</p>
+<h4>SpecialEffects</h4>
+<p>Use the <a href="dvt_specialEffects.html">&lt;dvt:specialEffects&gt;</a> tag to specify gradient effects on many graph subcomponents. This tag must be defined as a child tag of the component tag and is not available for any text components. Note that the "seriesEffect" attribute setting always overrides the special effects settings.</p>
+<h4>Relationship with other tags</h4>
+<p>The <a href="dvt_funnelGraph.html">&lt;dvt:funnelGraph&gt;</a> tag can have the following child tags:</p>
+<p><a href="dvt_attributeFormat.html">&lt;attributeFormat&gt;</a>, <a href="dvt_background.html">&lt;background&gt;</a>, <a href="dvt_graphFootnote.html">&lt;graphFootnote&gt;</a>, <a href="dvt_graphPlotArea.html">&lt;graphPlotArea&gt;</a>, <a href="dvt_graphSubtitle.html">&lt;graphSubtitle&gt;</a>, <a href="dvt_graphTitle.html">&lt;graphTitle&gt;</a>, <a href="dvt_legendArea.html">&lt;legendArea&gt;</a>, <a href="dvt_legendText.html">&lt;legendText&gt;</a>, <a href="dvt_legendTitle.html">&lt;legendTitle&gt;</a>, <a href="dvt_o1TickLabel.html">&lt;o1TickLabel&gt;</a>, <a href="dvt_shapeAttributesSet.html">&lt;shapeAttributesSet&gt;</a>, <a href="dvt_sliceLabel.html">&lt;sliceLabel&gt;</a></p>
+<h4>Geometry Management</h4>
+<ul>
+<li>This component can be stretched by a parent layout component that stretches its children, e.g. panelStretchLayout, panelSplitter, if dynamicResize="DYNAMIC_SIZE" is set.</li>
+<li>This component does stretch to fill up the browser's viewport when it is the "sole visual root component" in the component tree, if dynamicResize="DYNAMIC_SIZE" is set.</li>
+<li>When NOT stretched, this component will be displayed in its default dimensions which are provided by the skin. This can be modified by applying a dimension using the inlineStyle or styleClass attributes.</li>
+<li>This component does not stretch its children.</li>
+</ul>
+<h4>Attachment Mode</h4>
+<p>In attachment mode, the graph will be displayed in HTML5 or PNG, depending on the browser being used. Limited client interactivity, such as tooltips, is available. The following features are not supported in attachment mode:</p>
+<ul>
+<li>clickListener</li>
+<li>drilling</li>
+<li>dynamicResize</li>
+<li>hideAndShowBehavior="withRescale"</li>
+<li>selectionListener</li>
+<li>timeSelector</li>
+<li>zoom functionality</li>
+</ul>
+<div class="section">
+<h2><a name="Screen_Shots" id="Screen_Shots">Screen Shot(s)</a></h2>
+<div class="screenshot"><br>
+<img src="./images/funnelGraph.png" alt="FunnelGraph screenshot"><br></div>
+<br></div>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.ClickEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">The ClickEvent is delivered when the component is clicked.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Supported Facets</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="27%" align="left" valign="bottom" id="fcName">Name</th>
+<th width="73%" align="left" valign="bottom" id="fcDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="fcName">bodyContextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click on any non-selectable object within the component. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">contextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click of any selectable data object within the component. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">multiSelectContextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click when multiple data objects are selected. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">advancedPropertiesXML</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>This attribute is deprecated. The UIComponent APIs should be used instead. Specifies path to an XML file that contains settings for graph properties that are not exposed in the areaGraph tag.<br>
+For example, /myfiles/graph.xml<br>
+Path from web application root must be provided.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationDuration</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 1000<br>
+<br>
+Specifies the animation duration in milliseconds. The default value is 1000.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnDataChange</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, auto, alphaFade, conveyorFromLeft, conveyorFromRight, cubeToLeft, cubeToRight, flipLeft, flipRight, slideToLeft, slideToRight, transitionToLeft, transitionToRight, zoom<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies the type of animation to apply on data change. Valid values are:
+<ul>
+<li>none - (Default) Does not apply data change animation effects</li>
+<li>alphaFade</li>
+<li>conveyorFromLeft</li>
+<li>conveyorFromRight</li>
+<li>cubeToLeft</li>
+<li>cubeToRight</li>
+<li>flipLeft</li>
+<li>flipRight</li>
+<li>slideToLeft</li>
+<li>slideToRight</li>
+<li>transitionToLeft</li>
+<li>transitionToRight</li>
+<li>zoom</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnDisplay</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, auto, alphaFade, conveyorFromLeft, conveyorFromRight, cubeToLeft, cubeToRight, flipLeft, flipRight, slideToLeft, slideToRight, transitionToLeft, transitionToRight, zoom<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies the type of animation to apply when the component is initially displayed. Valid values are:
+<ul>
+<li>none - (Default) Does not apply any initial rendering effect</li>
+<li>auto - Applies an initial rendering effect automatically chosen based on the graph type</li>
+<li>alphaFade</li>
+<li>conveyorFromLeft</li>
+<li>conveyorFromRight</li>
+<li>cubeToLeft</li>
+<li>cubeToRight</li>
+<li>flipLeft</li>
+<li>flipRight</li>
+<li>slideToLeft</li>
+<li>slideToRight</li>
+<li>transitionToLeft</li>
+<li>transitionToRight</li>
+<li>zoom</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">
+<p>Specifies a binding reference to store a specific instance of UIGraph from a backing bean. Set this attribute only to access code in a backing bean. For example, to reference a graph component in the SampleGraph class, use the following code: <code>binding="#{sampleGraph.graph}"</code></p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">clickAction</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Refers to a backing bean method that performs navigation processing for the graph and returns an outcome String. Or a static outcome String can be specified. The JSF NavigationHandler selects the page to display next by matching the outcome String against the navigation rules in the application configuration resource file. The application writes the Navigation rules.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">clickListener</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The listener interface for receiving click events on the graph components. Here is an example of clickListener implementation that displays a component name on a click action -
+<pre>
+<code>    public void clickListener (ClickEvent event){
+        ComponentHandle handle = event.getComponentHandle();
+        System.out.println(handle.getName()+" is clicked.");
+    }
+        </code>
+</pre></td>
+</tr>
+<tr>
+<td align="left" headers="attrName">contentDelivery</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> whenAvailable, lazy, immediate<br>
+<strong>Default Value:</strong> whenAvailable<br>
+<br>
+Specifies whether to fetch content with page load or after page load. Valid values are lazy (default) and immediate.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customLayout</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>Specifies custom layout information when the graph automatically places and sizes its components. Valid values are:</p>
+<ul>
+<li>CL_NONE - Do not use any of the other custom layout attribute values</li>
+<li>CL_TITLES_SIDEBYSIDE - Display Title and subtitle side by side instead of the subtitle below the title</li>
+<li>CL_TITLE_SEPARATOR - Display title separator under the titles</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customizationId</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. The 'id' attribute should be used when applying persistent customizations. This attribute will be removed in the next release.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataErrorTextCallback</td>
+<td align="left" headers="attrType">oracle.dss.graph.DataErrorTextCallback</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies callback for overriding the error message that the Graph displays when it is not provided with enough data to draw a graph. Only EL is supported.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataSelection</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, single, multiple<br>
+<strong>Default Value:</strong> none<br>
+<br>
+<p>Determines the data selection mode for the graph. Valid values are:</p>
+<ul>
+<li>none: no selection</li>
+<li>single: single selection</li>
+<li>multiple: multiple selection</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">drillingEnabled</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> false<br>
+<br>
+Indicates whether drilling is enabled.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dynamicResize</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> FIXED_SIZE, DYNAMIC_SIZE<br>
+<strong>Default Value:</strong> FIXED_SIZE<br>
+<br>
+Specifies whether to resize the component based on its container size. Valid values are FIXED_SIZE (default) and DYNAMIC_RESIZE.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">emptyText</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies error text to display when graph has no data.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">flashDefaultFontLoading</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> FLASH_DEFAULT_FONT_LOADING_ALL<br>
+<br>
+Specifies whether default fonts are loaded in FLASH from the middle tier. Valid values are FLASH_DEFAULT_FONT_LOADING_ALL or FLASH_DEFAULT_FONT_LOADING_NONE. The default value is FLASH_DEFAULT_FONT_LOADING_ALL.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">groupTooltipLabelType</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> TLT_MEMBER, TLT_DIM_MEMBER, TLT_NONE<br>
+<strong>Default Value:</strong> TLT_MEMBER<br>
+<br>
+Specifies whether group information for a graph appears in tooltips and, if so, identifies the kind of group information that appears in tooltips. Valid values are:
+<ul>
+<li>TLT_NONE - No group information appears in tooltips.</li>
+<li>TLT_MEMBER - (Default) Only the dimension member for a group appears in tooltips.</li>
+<li>TLT_DIM_MEMBER - Both dimension name and dimension member for a group are displayed in tooltips.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Specifies the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">imageFormat</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> HTML5, FLASH, PNG, PNG_STAMPED, AUTO<br>
+<br>
+This attribute is deprecated. Use the oracle.adf.view.rich.dvt.DEFAULT_IMAGE_FORMAT context parameter instead. The component will use the specified default if possible, falling back to alternate output formats as needed based on the client browser.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">imageHeight</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 300<br>
+<br>
+This attribute is deprecated. Use inlineStyle attribute to specify the image width and height instead. For examples: inlineStyle = "width:500px; height:350px;".
+<p>The default height is 300 pixels.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">imageWidth</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 400<br>
+<br>
+This attribute is deprecated. Use inlineStyle attribute to specify the image width and height instead. For examples: inlineStyle = "width:500px; height:350px;".
+<p>The default width is 400 pixels.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Style of the outer element(enclosing div) of the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">markerTooltipTemplate</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Provides a declarative way to customize the tooltips that appear on the graph. By setting the markerTooltipTemplate attribute to a tokenized string, an application can quickly format all the marker tooltips. This feature is a more performant alternative to the customTooltipCallback, since tokens can be sent to the client instead of preconstructed tooltip strings. This reduces the graph payload significantly, especially for large datasets.
+<p>The markerTooltipTemplate attribute accepts a String that may contain any number of a set of predefined tokens. When the tooltips are generated, the tokens are replaced with the information corresponding to each marker. Valid tokens are:</p>
+<ul>
+<li>NEW_LINE - inserts a new line</li>
+<li>SERIES_LABEL - the series label for the series of this marker</li>
+<li>GROUP_LABEL - the group label for the group of this marker</li>
+<li>X_VALUE - the X value of a scatter or bubble marker</li>
+<li>Y_VALUE - the Y value of this marker (if this marker has a y value)</li>
+<li>Z_VALUE - the Z value (bubble size) of a bubble marker</li>
+<li>PIE_VALUE - the value of a pie slice</li>
+<li>PIE_PERCENT - pie slice percentage value</li>
+<li>ACTUAL_VALUE - the actual value for a funnel slice</li>
+<li>TARGET_VALUE - the target value for a funnel slice</li>
+<li>HIGH_VALUE - the high value for a stock marker</li>
+<li>LOW_VALUE - the low value for a stock marker</li>
+<li>CLOSE_VALUE - the close value for a stock marker</li>
+<li>OPEN_VALUE - the open value for a stock marker</li>
+<li>VOLUME_VALUE - the volume value for a stock volume marker</li>
+<li>CUM_VALUE - the cumulative stacked value for a stacked graph</li>
+<li>CUM_PERCENT - the cumulative percentage value for a stacked percent graph, pareto graph</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">markerTooltipType</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> MTT_NONE, MTT_VALUES, MTT_CUM_VAL, MTT_PERCENT_VAL, MTT_TEXT, MTT_PERCENT_VAL_VALUES, MTT_PERCENT_VAL_TEXT, MTT_PERCENT_VAL_VALUES_TEXT, MTT_VALUES_TEXT<br>
+<strong>Default Value:</strong> MTT_VALUES<br>
+<br>
+Specifies whether tooltips are displayed for markers and, if so, identifies the kind of information that appears in the tooltips. Valid values for marker tooltips are:
+<ul>
+<li>MTT_NONE - Displays no tooltips for markers.</li>
+<li>MTT_CUM_VAL - Displays the cumulative data value (stacked graphs only).</li>
+<li>MTT_PERCENT_VAL - Displays the percentage data value (pie slice only).</li>
+<li>MTT_PERCENT_VAL_TEXT - Displays the percentage data value (pie slice only) and text identification such as "January, Shoes".</li>
+<li>MTT_PERCENT_VAL_VALUES - Displays the percentage data value (pie slice only) and data value or values.</li>
+<li>MTT_PERCENT_VAL_VALUES_TEXT - Displays the percentage data value (pie slice only), data value or values, and text identification information such as "January, Shoes".</li>
+<li>MTT_TEXT - Displays text identification such as "January, Shoes".</li>
+<li>MTT_VALUES - (Default) Displays data value or values.</li>
+<li>MTT_VALUES_TEXT - Displays data value or values and text identification such as "January, Shoes".</li>
+</ul>
+<strong>Note:</strong> To display series tooltip labels for a graph, you must set markerTooltipType to a value that includes text.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialSubmit</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Deprecated. It is not useful anymore.
+<p>Indicates whether an action can be performed through a partial page submit. Valid values are:</p>
+<ul>
+<li>"true" - (Default) Partial page submit is allowed.</li>
+<li>"false" - No partial page submit.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">renderImagemap</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Indicates whether an image map should be rendered for a PNG image. The default value is true.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionListener</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The listener interface for receiving selection events on the graph.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">seriesEffect</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> SE_NONE, SE_GRADIENT, SE_AUTO_GRADIENT<br>
+<strong>Default Value:</strong> SE_AUTO_GRADIENT<br>
+<br>
+<p>Determines the series effect that is used for a graph. Valid values are:</p>
+<ul>
+<li>SE_NONE - No series effect is used for the graph. This value causes markers to appear flat and sets the graphicAntialiasing attribute to "false".</li>
+<li>SE_GRADIENT - Sets a special gradient on data markers to make them look more polished and sets graphicAntialiasing to "true".</li>
+<li>SE_AUTO_GRADIENT - (Default) Works similar to SE_GRADIENT except in the case of a large dataset. If the graph displays a large dataset, then the gradient is not displayed in data markers so that performance is improved.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">seriesRolloverBehavior</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> RB_NONE, RB_DIM, RB_HIGHLIGHT<br>
+<strong>Default Value:</strong> RB_NONE<br>
+<br>
+<p>Specifies the behavior when the mouse rolls over one bar in a series. Valid values are:</p>
+<ul>
+<li>RB_NONE - (Default) No series rollover behavior is enabled.</li>
+<li>RB_HIGHLIGHT - Highlights all bars in the series when rollover occurs.</li>
+<li>RB_DIM - Dims all bars in the series when rollover occurs</li>
+<li>RB_HIGHLIGHT | RB_DIM - Produces both highlighting and dimming of all bars in the series when rollover occurs.</li>
+</ul>
+Note: this attribute is not supported for funnel graphs.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">seriesTooltipLabelType</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> TLT_MEMBER, TLT_DIM_MEMBER, TLT_NONE<br>
+<strong>Default Value:</strong> TLT_MEMBER<br>
+<br>
+Specifies series information in a tooltip. Valid values are as follows:
+<ul>
+<li>TLT_NONE - Displays no series information</li>
+<li>TLT_MEMBER - (Default) Displays the member label of the series in a tooltip</li>
+<li>TLT_DIM_MEMBER - Displays the dimension member label of a series in a tooltip</li>
+</ul>
+<strong>Note:</strong> The graph displays series tooltip labels only if markerTooltipType is set to a value that includes text.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shortDesc</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the short description of the graph. This is particularly useful in the screen reader mode.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">style</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>This attribute is deprecated. Skinning should be used instead. Applies a style to the graph based on the specified XML file. Valid values are the name of a standard graph style or the path of a custom XML file that you want to set as a style for this graph.</p>
+<p>Predefined graph styles are:</p>
+<ul>
+<li>April</li>
+<li>Autumn</li>
+<li>Black and White</li>
+<li>Comet</li>
+<li>Confetti</li>
+<li>Default</li>
+<li>Earth</li>
+<li>Executive</li>
+<li>Financial</li>
+<li>Glass</li>
+<li>Nautical</li>
+<li>Projection</li>
+<li>Regatta</li>
+<li>Southwest</li>
+<li>Transparent</li>
+</ul>
+<p>To specify a custom style, enter the entire path to the xml file. For example: /text/myStyle.xml.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component. Note that width and height should be set using the inlineStyle property.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleRuleBundle</td>
+<td align="left" headers="attrType">java.util.Vector</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies a vector of <code>oracle.dss.rules.RuleBundle</code> objects that specify different colors based on data values or characteristics. For example, a styleRuleBundle might contain a stoplight rule that sets the following colors:
+<ul>
+<li>Green when the data value is less than 1000.</li>
+<li>Yellow when the data value is less than 40.</li>
+<li>Red when the data value is less than 20.</li>
+</ul>
+<p>The following example refers to a style rule bundle called myRuleBundle that is stored in the backing bean SampleGraph: <code>styleRuleBundle="#{sampleGraph.myRuleBundle}"</code></p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">subType</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>Specifies the type of graph. Valid values are:</p>
+<ul>
+<li>FUNNEL - Funnel Chart</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">tabularData</td>
+<td align="left" headers="attrType">java.util.List</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>Specifies a list of data that the graph uses to create a grid and populate itself. The List consists of a three-member Object array for each data value to be passed to the graph. The members of each array must be organized as follows:</p>
+<ul>
+<li>The first member (index 0) is the column label, in the grid, of the data value. This is generally a <code>String</code>. If the graph has a time axis, then this should be a Java <code>Date</code>. Column labels typically identify groups in the graph.</li>
+<li>The second member (index 1) is the row label, in the grid, of the data value. This is generally a <code>String</code>. Row labels appear as series labels in the graph (usually in the legend).</li>
+<li>The third member (index 2) is the data value, which is usually a <code>Double</code>.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">title</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. Use the child tag graphTitle and its text attribute instead. Specifies the text of the title.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the graph's data model. This must be an instance of oracle.adf.view.faces.bi.model.DataModel or oracle.adf.view.faces.bi.model.GraphDataModel</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">visualEffects</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> NONE, AUTO<br>
+<strong>Default Value:</strong> AUTO<br>
+<br>
+<p>Specifies the type or types of visualEffect to apply. Valid values are:</p>
+<ul>
+<li>NONE - Apply no visual effects</li>
+<li>AUTO (Default) - Apply visual effects automatically based on graph or gauge type.</li>
+</ul>
+</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

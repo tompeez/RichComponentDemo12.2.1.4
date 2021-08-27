@@ -1,0 +1,245 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Secondary Window Comparison" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="brandingTitle" value="Secondary Window Comparison"/>
+        <f:attribute name="demoKind" value="confusedComponents"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+
+            <af:panelHeader text="Inline Popup Components" shortDesc="Popups defined by JSF components and always within the active browser window."
+                            id="ph1">
+            <af:outputText value="Inline popups are defined using the af:popup component accompanied with the af:menu, af:noteWindow, af:dialog
+                  or af:panelWindow components.  Lightweight popups are displayed within the active browser window versus a new browser window and should
+                  not be confused with the Dialog Framework.  Inline popups are not limited to using command components as their launching source and don't
+                  use JSF navigation rules.  However, the af:popup + af:panelWindow + af:region components can be used to achieve similar functionality as to the
+                  Dialog Framework.  Inline Popups are client centric (JavaScript) and must always be used in context of a JSF view." id="ot01"/>
+            <!-- noteWindow -->
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:outputFormatted value="&lt;b>af:noteWindow&lt;/b>" id="of1"/>
+              <af:panelList id="pl1">
+                <af:outputText value="A note window is a layer that contains read-only information
+                associated with a particular UI component." id="ot1"/>
+                <af:outputText value="Note windows are used to display help and messages.  They do not have title bars."
+                               id="ot2"/>
+                <af:outputText value="Note windows are commonly shown on mouse over or on focus."
+                               id="ot3"/>
+                <af:outputText value="Note windows are always attached to their associated component and cannot be manually repositioned.  Note windows
+                                     have a (caption) cone that points to the aligning element."
+                               id="ot4"/>
+                <af:outputText value="The af:noteWindow must be used with the af:popup component and is required to be the immediate child of the af:popup."
+                               id="ot5"/>
+                <af:outputText value="The note window is shown using the af:showPopupBehavior tag;  The alignId and align attributes are required by the
+                                      af:showPopupBehavior to show a af:noteWindow."
+                               id="ot6"/>
+                <af:outputText value="Note windows have assumed auto-dismissal behavior when focus moves to a control other than the launcher or when the
+                                    aligning component scrolls out of visibility.  Note windows can also be dismissed by pressing the Esc key."
+                               id="ot7"/>
+
+              </af:panelList>
+              <af:popup id="noteWindowPop" contentDelivery="lazyUncached">
+                <af:noteWindow inlineStyle="width:150px" id="nw1">Some text in a note window.</af:noteWindow>
+              </af:popup>
+              <af:panelGroupLayout id="pgl3">
+                <p style="margin-left:30px;line-height:5px">
+                  Hover to see
+                  <af:outputText id="noteWindow" value="noteWindow"
+                                 inlineStyle="color:red; font-weight:bold">
+                    <af:showPopupBehavior popupId="noteWindowPop" triggerType="mouseHover"
+                                          alignId="noteWindow"/>
+                  </af:outputText>
+                   in action.
+                </p>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            <!-- dialog -->
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputFormatted value="&lt;b>af:dialog&lt;/b>" id="of2"/>
+              <af:panelList id="pl2">
+                <af:outputText value="The dialog control is a layout element that displays its children
+                inside a dialog window and delivers DialogEvents when the OK, Yes, and No actions are activated."
+                               id="ot8"/>
+                <af:outputText value="A dialog must be used as the immediate child of a popup component."
+                               id="ot9"/>
+                <af:outputText value="Dialogs can be displayed modal or modeless.  When displayed modal, a glass pane is
+                  laid over the primary window blocking all interaction and effectively making the modal dialog the new primary window."
+                               id="ot10"/>
+                <af:outputText value="Multiple layers of modal dialogs can be used within the same page along with modeless dialogs."
+                               id="ot11"/>
+                <af:outputText value="The ctrl+alt+w keystroke can be used to navigate through open modeless dialogs within the primary window."
+                               id="ot12"/>
+                <af:outputText value="Use the af:showPopupBehavior to show a dialog.  Dialogs can be aligned to an element but defaults to the center
+                     of the page.  To show the dialog from Javascript, call show() on the popup client component; it will automatically hide itself
+                     when OK, Cancel, Yes or No button is pressed if there are
+                not any faces messages of severity error or greater active."
+                               id="ot13"/>
+                <af:outputText value="af:dialog supports the title bar (with optional title bar text,
+                   dynamic help icon, close icon, and title icon)." id="ot14"/>
+                <af:outputText value="af:dialog also supports buttons, such as OK, Cancel and custom buttons in a button bar.
+                             Only partial submit custom buttons are supported in the button bar facet or within the dialog's content."
+                               id="ot15"/>
+                <af:outputText value="A dialog can be repositioned manually using drag-and-drop activated from the dialog's title bar.  Dialogs
+                                     show an inactive state when they are not in focus."
+                               id="ot16"/>
+                <af:outputText value="A dialog's do not have auto-dismissal behavior like the noteWindow and inline selector making it
+                                      ideally suited for data collection.  Dialogs can be dismissed using the Esc key."
+                               id="ot17"/>
+
+              </af:panelList>
+              <af:popup id="popupDialog">
+                <af:dialog id="dialog" title="Dialog Header">
+                  <af:outputText value="Some Text or Components" id="ot18"/>
+                </af:dialog>
+              </af:popup>
+              <af:spacer height="5" id="s2"/>
+              <af:commandButton immediate="true" text="Show Dialog" inlineStyle="margin-left:30px;"
+                                id="cb1">
+                <af:showPopupBehavior popupId="popupDialog"/>
+              </af:commandButton>
+            </af:panelGroupLayout>
+            <!-- popup -->
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <af:outputFormatted value="&lt;b>af:popup&lt;/b>" id="of3"/>
+              <af:panelList id="pl3">
+                <af:outputText value="The popup component is an invisible control whose contents will
+                be used in popup windows, such as context menus, windows, dialogs and popup selectors."
+                               id="ot19"/>
+                <af:outputText value="Popups can be shown using the af:showPopupBehavior tag.  Using this tag you register a trigger type
+                                     to show the associated popup.  The trigger type represents client event types.  This allows the af:popup
+                                     to be loosely coupled with its launcher unlike the Dialog Framework."
+                               id="ot20"/>
+                <af:outputText value="The af:popup provides several client events that can be used with the af:clientListener tag but
+                                 doesn't provide server-side faces events as the Dialog Framework does."
+                               id="ot21"/>
+                <af:outputText value="The immediate child of a Popup component are most commonly
+                &lt;af:menu>, &lt;af:noteWindow>, &lt;af:panelWindow> or &lt;af:dialog>
+                components, but can be any other component.  When the first child of an af:popup is not one of the
+                component previously listed, the popup is defined as an inline selector."
+                               id="ot22"/>
+                <af:outputText value="The inline selector type of popup should be used to display read-only information.
+                               Because of its auto-dismissal properties, it is not suited for data collection.  Inline
+                               selectors auto-dismiss when focus is taken from its content.  The Esc key will also dismiss
+                               an inline selector." id="ot23"/>
+              </af:panelList>
+              <af:popup id="popup">
+                <af:panelGroupLayout layout="vertical" id="pgl6">
+                  <af:outputText value="Some" id="ot24"/>
+                  <af:outputText value="popup" id="ot25"/>
+                  <af:outputText value="content" id="ot26"/>
+                </af:panelGroupLayout>
+              </af:popup>
+              <af:popup id="popupMenu">
+                <af:menu text="Edit" id="m1">
+                  <af:commandMenuItem text="Cut" id="cmi1"/>
+                  <af:commandMenuItem text="Copy" id="cmi2"/>
+                  <af:commandMenuItem text="Paste" id="cmi3"/>
+                </af:menu>
+              </af:popup>
+              <af:spacer height="5" id="s3"/>
+              <af:commandButton text="Show Popup" id="button" clientComponent="true"
+                                inlineStyle="margin-left:30px;">
+                <af:showPopupBehavior popupId="popup" align="afterEnd" alignId="button"/>
+              </af:commandButton>
+              <af:spacer height="10" id="s4"/>
+              <af:outputText value="Right-click For A Popup Menu" inlineStyle="margin-left:30px;"
+                             id="ot27">
+                <af:showPopupBehavior popupId="popupMenu" triggerType="contextMenu"/>
+              </af:outputText>
+            </af:panelGroupLayout>
+            <!-- panelWindow -->
+            <af:panelGroupLayout layout="vertical" id="pgl7">
+              <af:outputFormatted value="&lt;b>af:panelWindow&lt;/b>" id="of4"/>
+              <af:panelList id="pl4">
+                <af:outputText value="The af:panelWindow component is a type of popup that has many of the same characteristics as the af:dialog; however,
+                                      panelWindow's do not have preconfigured buttons or buttonBar facet like the af:dialog.  Otherwise, they are the same."
+                               id="ot28"/>
+                <af:outputText value="The af:panelWindow must be used as the first child of the af:popup component."
+                               id="ot29"/>
+                <af:outputText value="af:panelWindow can be displayed as modal or non modal."
+                               id="ot30"/>
+                <af:outputText value="af:panelWindow cannot show buttons (e.g. no OK/Cancel button)."
+                               id="ot31"/>
+                <af:outputText value="af:panelWindow has a title bar, and the title bar supports text, dynamic help icon, close icon and title icon."
+                               id="ot32"/>
+                <af:outputText value="The af:panelWindow is suitable for data collection and like the af:dialog only supports partial submit commands
+                                    within its content." id="ot33"/>
+
+
+              </af:panelList>
+              <af:popup id="popupDialog2">
+                <af:panelWindow modal="true" title="Window Header" id="panelWindow1">
+                  <af:outputText value="Some Text or Components" id="ot34"/>
+                </af:panelWindow>
+              </af:popup>
+              <af:spacer height="5" id="s5"/>
+              <af:commandButton text="Show Window" id="commandButton"
+                                inlineStyle="margin-left:30px;">
+                <af:showPopupBehavior popupId="popupDialog2"/>
+              </af:commandButton>
+            </af:panelGroupLayout>
+            </af:panelHeader>
+
+            <af:panelHeader text="Dialog Framework" shortDesc="Manages alternative page flows within or in a new browser window."
+                            id="ph2">
+            <af:outputFormatted value="&lt;p>The purpose of the dialog framework is to manage alternative page flows that are used within
+            the current window or launched as a new browser window.  The dialog framework utilizes navigation rules accompanied
+            by a rich client command family components.  Unlike the inline popups, the dialog framework encompasses its own
+            pageFlowScope context and page transitions besides view compositions.&lt;/p>
+            &lt;p>By default, Trinidad dialog service is active in Rich Client.  There are several methods of launching dialog using
+            the dialog framework.  The action outcome of &quot;dialog:&quot; can be used to launch a dialog along with the useWindow,
+            windowHeight and windowWidth properties of the command family of RC components.  These components also provide
+            launch and return listeners fired when the dialog flow is started or ended. Besides the tight coupling to the command
+            components, a dialog can be launched in Java using the dialog service API.&lt;/p>
+            &lt;p>The dialog framework integrates with ADFc in rich client.  When ADF controller and page flow libraries are in the classpath
+               of a Fusion web application, ADFc will override the default action navigation prefix of &quot;dialog:&quot;.  When used with ADFc,
+               the dialog navigation rules and view transitions are defined in ADFc taskflows versus the standard faces-config file." id="ot02"/>
+
+            <af:commandButton text="Show Dialog"  shortDesc="Launch this page in a new external browser dialog" action="dialog:secondaryWindows" windowWidth="150"
+                           windowHeight="150" immediate="true" partialSubmit="true" useWindow="true"
+                              id="cb2"/>
+
+            </af:panelHeader>
+            <af:panelGroupLayout layout="vertical" id="pgl8">
+              <af:outputText value="See also:" id="ot35"/>
+              <af:panelList id="pl5">
+                <af:goLink text="noteWindow" destination="../components/noteWindow.jspx"
+                           id="gl1"/>
+                <af:goLink text="dialog" destination="../components/dialog.jspx"
+                           id="gl2"/>
+                <af:goLink text="popup" destination="../components/popup.jspx"
+                           id="gl3"/>
+                <af:goLink text="panelWindow" destination="../components/panelWindow.jspx"
+                           id="gl4"/>
+                <af:goLink text="Shared popup"
+                           destination="../components/secondaryWindows/popupShared.jspx"
+                           id="gl5"/>
+                <af:goLink text="Dialog With Custom Buttons"
+                           destination="../components/secondaryWindows/dialogCustomButtons.jspx"
+                           id="gl6"/>
+                <af:goLink text="Dialog With Custom And Standard Buttons"
+                           destination="../components/secondaryWindows/dialogCustomAndStandardButtons.jspx"
+                           id="gl7"/>
+                <af:goLink text="Dialog With table"
+                           destination="../components/secondaryWindows/tableInDialog.jspx"
+                           id="gl8"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,279 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces"
+          xmlns:c="http://java.sun.com/jstl/core">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram Simple Rules Editor" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="doc1">
+      <af:messages id="m1"/>
+      <!-- The custom layout model used for this diagram allows you to alter the spacing between conditions and the size of the drop targets -->
+      <c:set var="dropZoneSize" value="20" scope="session"/>
+      <c:set var="dropZoneDistance" value="3" scope="session"/>
+      <c:set var="nodeSeparationDistance" value="50" scope="session"/>
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram Simple Rules Editor"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Diagram Simple Rules Editor"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout id="psl1" topHeight="auto" binding="#{ruleDiagramHelper.mainPanel}">
+            <f:facet name="top">
+              <af:panelGroupLayout id="pgl1" layout="vertical">
+                <f:verbatim>                   <b>Instructions for the Rules Editor demo</b>                   <br/>                                         <ul>
+                    <li>Use the diagram to edit the expression. Dragging and dropping a fact onto a circle wll create an
+                        OR expression, dropping onto a square will create an AND.</li>
+                    <li>If you drop onto another condition the existing relationship for that group will be used.</li>
+                    <li>Dropping onto blank space in the diagram will AND the new condition to the end of the expression.</li>
+                    <li>Dropping inside of a group, but not on an existing condition or drop indicator will be ignored.</li>
+                    <li>Click on a condition to edit or remove it.</li>
+                  </ul>                 </f:verbatim>
+                <af:panelHeader text="Generated Expression" id="ph1" size="5">
+                  <af:panelGroupLayout layout="scroll" id="pgl5">
+                    <af:outputText value="#{ruleSet.formattedRules}" id="ot1"/>
+                  </af:panelGroupLayout>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelSplitter id="ps1" splitterPosition="300" positionedFromEnd="true" dimensionsFrom="auto">
+                <f:facet name="first">
+                  <!-- diagram demo goes here -->
+                  <dvt:diagram emptyText="No Rules Defined" readOnly="true" summary="Rule Editor"
+                               layout="rulesRootLayout" id="d1" maxZoom="2.0" minZoom="0.5"
+                               binding="#{ruleDiagramHelper.ruleDiagram}" selection="single">
+                    <dvt:clientLayout name="rulesOrLayout" method="DemoRulesEditorLayout.rulesOrLayout"
+                                      featureName="DemoRulesEditorLayout">
+                      <f:attribute name="horizontalSpacing" value="#{nodeSeparationDistance}"/>
+                      <f:attribute name="dropTargetSize" value="#{dropZoneSize}"/>
+                      <f:attribute name="dropTargetDistance" value="#{dropZoneDistance}"/>
+                    </dvt:clientLayout>
+                    <dvt:clientLayout name="rulesAndLayout" method="DemoRulesEditorLayout.rulesAndLayout"
+                                      featureName="DemoRulesEditorLayout">
+                      <f:attribute name="verticalSpacing" value="#{nodeSeparationDistance}"/>
+                      <f:attribute name="dropTargetSize" value="#{dropZoneSize}"/>
+                      <f:attribute name="dropTargetDistance" value="#{dropZoneDistance}"/>
+                    </dvt:clientLayout>
+                    <dvt:clientLayout name="rulesRootLayout" method="DemoRulesEditorLayout.rulesRootLayout"
+                                      featureName="DemoRulesEditorLayout">
+                      <f:attribute name="verticalSpacing" value="#{nodeSeparationDistance}"/>
+                      <f:attribute name="dropTargetDistance" value="#{dropZoneDistance}"/>
+                    </dvt:clientLayout>
+                    <af:dropTarget actions="COPY" dropListener="#{ruleDiagramHelper.factDropHandler}">
+                      <af:dataFlavor flavorClass="java.lang.String"/>
+                    </af:dropTarget>
+                    <dvt:diagramNodes value="#{ruleSet.diagramNodesModel}" var="node" id="dn1"
+                                      disclosedRowKeys="#{ruleSet.conditionGroups}"
+                                      binding="#{ruleDiagramHelper.ruleDiagramNodes}">
+                      <dvt:diagramNode nodeId="#{node.ruleNodeId}" id="nodeCond" showIsolate="false" readOnly="true"
+                                       rendered="#{node.ruleNodeType eq 'CONDITION'}" containerId="#{node.ruleGroupId}">
+                        <af:showPopupBehavior popupId="::nodepu" triggerType="click" align="endAfter"/>
+                        <f:facet name="zoom100">
+                          <af:panelGroupLayout layout="vertical" halign="center" id="pgl2"
+                                               styleClass="AFStretchWidth AFHVNodePadding"
+                                               inlineStyle="background-color:#ffe4e1;border-color:#f2cdc9;">
+                            <af:outputText value="#{node.ruleFact}"/>
+                            <af:outputText value="#{node.ruleExpressionLabel}"/>
+                            <af:outputText value="#{node.ruleValue}" id="nvot"
+                                           rendered="#{node.ruleExpression ne 'NULL' and node.ruleExpression ne 'NOTNULL'}"/>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </dvt:diagramNode>
+                      <dvt:diagramNode nodeId="#{node.ruleNodeId}" id="nOrGrp" showIsolate="false"
+                                       containerId="#{node.ruleGroupId}" layout="rulesOrLayout"
+                                       rendered="#{node.ruleGroupConjuctionType eq 'OR'}" selectable="false"
+                                       showDisclose="false" readOnly="true" showDrill="false" showNodeActions="false"
+                                       containerStyle="background-color:#EFF2F5;border-color:#D6DfE6;;">
+                        <f:facet name="zoom100">
+                          <af:panelGroupLayout layout="vertical" styleClass="AFStretchWidth AFHVNodePadding"
+                                               inlineStyle="background-color:#ffded6;"></af:panelGroupLayout>
+                        </f:facet>
+                      </dvt:diagramNode>
+                      <dvt:diagramNode nodeId="#{node.ruleNodeId}" id="nAndGrp" showIsolate="false"
+                                       containerId="#{node.ruleGroupId}" layout="rulesAndLayout"
+                                       rendered="#{node.ruleGroupConjuctionType eq 'AND'}" selectable="false"
+                                       readOnly="true" showDrill="false" showNodeActions="false"
+                                       containerStyle="background-color:#EFF2F5;border-color:#D6DfE6;"
+                                       showDisclose="false">
+                        <f:facet name="zoom100">
+                          <af:panelGroupLayout layout="vertical" styleClass="AFStretchWidth AFHVNodePadding"
+                                               inlineStyle="background-color:#ffded6;"></af:panelGroupLayout>
+                        </f:facet>
+                      </dvt:diagramNode>
+                      <dvt:diagramNode nodeId="#{node.ruleNodeId}" id="nodeDrpHOr" showIsolate="false"
+                                       containerId="#{node.ruleGroupId}" readOnly="true" selectable="false"
+                                       rendered="#{node.dropNodeType eq 'HOR'}" overviewStyle="background-color:rgba(0,0,0,0)">
+                        <f:attribute name="nodePosition" value="#{node.dropNodePosition}"/>
+                        <f:facet name="zoom100">
+                          <dvt:marker id="mhor" shape="circle" fillColor="#FFFFFF" height="#{dropZoneSize}"
+                                      width="#{dropZoneSize}" borderColor="#D6DFE6" borderStyle="solid" borderWidth="1"
+                                      labelDisplay="off"/>
+                        </f:facet>
+                      </dvt:diagramNode>
+                      <dvt:diagramNode nodeId="#{node.ruleNodeId}" id="nodeDrpCOr" showIsolate="false"
+                                       containerId="#{node.ruleGroupId}" readOnly="true" selectable="false"
+                                       rendered="#{node.dropNodeType eq 'COR'}">
+                        <f:facet name="zoom100">
+                          <dvt:marker id="mcor" shape="circle" fillColor="#FFFFFF" height="30" width="30"
+                                      borderColor="#D6DFE6" borderStyle="solid" borderWidth="1" labelDisplay="on"
+                                      labelPosition="center" value="#{node.dropConjuctionType}"/>
+                        </f:facet>
+                      </dvt:diagramNode>
+                      <dvt:diagramNode nodeId="#{node.ruleNodeId}" id="nodeDrpHAnd" showIsolate="false"
+                                       containerId="#{node.ruleGroupId}" readOnly="true" selectable="false"
+                                       rendered="#{node.dropNodeType eq 'HAND'}" overviewStyle="background-color:rgba(0,0,0,0)">
+                        <f:facet name="zoom100">
+                          <dvt:marker id="mhand" shape="square" fillColor="#FFFFFF" height="#{dropZoneSize}"
+                                      width="#{dropZoneSize}" borderColor="#D6DFE6" borderStyle="solid" borderWidth="1"
+                                      labelDisplay="off"/>
+                        </f:facet>
+                      </dvt:diagramNode>
+                      <dvt:diagramNode nodeId="#{node.ruleNodeId}" id="nodeDrpCAnd" showIsolate="false"
+                                       containerId="#{node.ruleGroupId}" readOnly="true" selectable="false"
+                                       rendered="#{node.dropNodeType eq 'CAND'}">
+                        <f:facet name="zoom100">
+                          <dvt:marker id="mcand" shape="square" fillColor="#FFFFFF" height="20" width="30"
+                                      borderColor="#D6DFE6" borderStyle="solid" borderWidth="1" labelDisplay="on"
+                                      labelPosition="center" value="#{node.dropConjuctionType}"/>
+                        </f:facet>
+                      </dvt:diagramNode>
+                    </dvt:diagramNodes>
+                    <dvt:diagramLinks value="#{ruleSet.diagramLinksModel}" var="link" id="dl1">
+                      <dvt:diagramLink rendered="#{link.linkLabel != ''}" startNode="#{link.startNodeId}"
+                                       endNode="#{link.endNodeId}" id="dl2" endConnectorType="none"
+                                       startConnectorType="none" readOnly="false"/>
+                      <dvt:diagramLink startNode="#{link.startNodeId}" endNode="#{link.endNodeId}"
+                                       rendered="#{link.linkLabel eq ''}" id="dl3" endConnectorType="none"
+                                       startConnectorType="none" linkStyle="dot" linkWidth="1" linkColor="#D6DfE6"
+                                       readOnly="true"/>
+                    </dvt:diagramLinks>
+                    <dvt:overviewWindow id="ow1"/>
+                  </dvt:diagram>
+                  <!-- diagram end -->
+                </f:facet>
+                <f:facet name="second">
+                  <!-- table with facts goes here -->
+                  <af:panelGroupLayout layout="scroll">
+                    <af:panelGroupLayout layout="vertical">
+                      <af:panelHeader text="Facts">
+                        <af:listView id="lv1" value="#{facts.facts}" var="fact">
+                          <af:listItem id="li1">
+                            <af:panelGroupLayout layout="horizontal" valign="middle">
+                              <af:attributeDragSource attribute="dragfact"/>
+                              <af:clientAttribute name="dragfact"
+                                                  value="#{fact.factName},#{fact.factType},#{fact.defaultExpression},#{fact.initialValue}"/>
+                              <af:image source="#{typeImages[fact.factType]}" shortDesc="#{fact.factType}"/>
+                              <af:outputText value="#{fact.factName}"/>
+                              <f:facet name="separator">
+                                <af:spacer width="6"/>
+                              </f:facet>
+                            </af:panelGroupLayout>
+                          </af:listItem>
+                        </af:listView>
+                      </af:panelHeader>
+                      <af:group id="pugrp">
+                        <af:popup id="nodepu">
+                          <af:menu id="m2">
+                            <af:commandMenuItem text="Edit" id="cmi1"
+                                                actionListener="#{ruleDiagramHelper.nodeMenuEditListener}"/>
+                            <af:group id="g1">
+                              <af:commandMenuItem text="Remove from Expression" id="cmi3"
+                                                  actionListener="#{ruleDiagramHelper.nodeMenuDeleteListener}"/>
+                            </af:group>
+                          </af:menu>
+                        </af:popup>
+                        <af:popup contentDelivery="lazyUncached" childCreation="deferred" id="droppu"
+                                  resetEditableValues="whenCanceled" binding="#{ruleDiagramHelper.dropCreatePopup}">
+                          <af:dialog title="#{ruleEditorUiStateManager.editExistingMode?'Edit':'Define'} Expression"
+                                     modal="true" id="w2" dialogListener="#{ruleDiagramHelper.editDialogHandler}">
+                            <af:panelFormLayout partialTriggers="pusocs pusocd pusocn">
+                              <af:panelLabelAndMessage label="Attribute">
+                                <af:outputText value="#{ruleEditorUiStateManager.editFact}"/>
+                              </af:panelLabelAndMessage>
+                              <af:switcher facetName="#{ruleEditorUiStateManager.editFactDataType}"
+                                           defaultFacet="NUMERIC">
+                                <f:facet name="BOOLEAN">
+                                  <af:selectOneRadio value="#{ruleEditorUiStateManager.editFactValue}" label="Is"
+                                                     autoSubmit="true" id="pusocb">
+                                    <af:selectItem label="True" value="TRUE"/>
+                                    <af:selectItem label="False" value="FALSE"/>
+                                  </af:selectOneRadio>
+                                </f:facet>
+                                <f:facet name="STRING">
+                                  <af:group startBoundary="hide">
+                                    <af:selectOneChoice value="#{ruleEditorUiStateManager.editFactOperand}" label="Is"
+                                                        autoSubmit="true" id="pusocs">
+                                      <af:selectItem label="equal to" value="EQ"/>
+                                      <af:selectItem label="not equal to" value="NEQ"/>
+                                      <af:selectItem label="contains" value="CNT"/>
+                                      <af:selectItem label="not empty" value="NOTNULL"/>
+                                      <af:selectItem label="empty" value="NULL"/>
+                                    </af:selectOneChoice>
+                                    <af:inputText value="#{ruleEditorUiStateManager.editFactValue}" label="Value"
+                                                  visible="#{ruleEditorUiStateManager.editableValue}"/>
+                                  </af:group>
+                                </f:facet>
+                                <f:facet name="DATE">
+                                  <af:group startBoundary="hide">
+                                    <af:selectOneChoice value="#{ruleEditorUiStateManager.editFactOperand}" label="Is"
+                                                        autoSubmit="true" id="pusocd">
+                                      <af:selectItem label="equal to" value="EQ"/>
+                                      <af:selectItem label="not equal to" value="NEQ"/>
+                                      <af:selectItem label="greater than" value="GT"/>
+                                      <af:selectItem label="less than" value="LT"/>
+                                      <af:selectItem label="greater than or equal to" value="GTE"/>
+                                      <af:selectItem label="less than or equal to" value="LTE"/>
+                                      <af:selectItem label="not empty" value="NOTNULL"/>
+                                      <af:selectItem label="empty" value="NULL"/>
+                                    </af:selectOneChoice>
+                                    <af:inputDate value="#{ruleEditorUiStateManager.editFactValue}" label="Value"
+                                                  visible="#{ruleEditorUiStateManager.editableValue}"/>
+                                  </af:group>
+                                </f:facet>
+                                <f:facet name="NUMERIC">
+                                  <af:group startBoundary="hide">
+                                    <af:selectOneChoice value="#{ruleEditorUiStateManager.editFactOperand}" label="Is"
+                                                        autoSubmit="true" id="pusocn" clientComponent="true">
+                                      <af:selectItem label="equal to" value="EQ"/>
+                                      <af:selectItem label="not equal to" value="NEQ"/>
+                                      <af:selectItem label="greater than" value="GT"/>
+                                      <af:selectItem label="less than" value="LT"/>
+                                      <af:selectItem label="greater than or equal to" value="GTE"/>
+                                      <af:selectItem label="less than or equal to" value="LTE"/>
+                                      <af:selectItem label="not empty" value="NOTNULL"/>
+                                      <af:selectItem label="empty" value="NULL"/>
+                                    </af:selectOneChoice>
+                                    <af:inputText value="#{ruleEditorUiStateManager.editFactValue}" label="Value"
+                                                  visible="#{ruleEditorUiStateManager.editableValue}"/>
+                                  </af:group>
+                                </f:facet>
+                              </af:switcher>
+                            </af:panelFormLayout>
+                          </af:dialog>
+                        </af:popup>
+                      </af:group>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:panelSplitter>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

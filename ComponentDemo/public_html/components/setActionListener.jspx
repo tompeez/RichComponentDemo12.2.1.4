@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="setActionListener Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="setActionListener"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="listener"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:outputText value="This is a demo page for setActionListener."
+                           id="ot1"/>
+            <af:outputText value="Please note that while setActionListener is fully supported, it is recommended to follow the best practice of using af:setPropertyListener type='action' instead."
+                           id="ot2"/>
+            <af:separator id="s1"/>
+            <af:outputText value="Example of using setActionListener to set a session variable:"
+                         id="pb1"/>
+            <af:spacer height="10px"/>
+            <af:panelBox text="SetActionListener Example" ramp="core" background="medium">
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:commandLink text="Click here to update the text below" immediate="true" partialSubmit="true"
+                                id="refresh">
+                  <af:setActionListener from="#{sessionScope.myNum == null ? 1:(sessionScope.myNum+1)}"
+                                        to="#{sessionScope.myNum}"/>
+                </af:commandLink>
+                <af:spacer height="10px"/>
+                <af:outputText value="You have clicked :#{sessionScope.myNum == null ? 0 : (sessionScope.myNum)} times"
+                               partialTriggers="refresh" id="ot4"/>
+                <!-- The setActionListener gets called before the button's actionListener -->
+                <af:button text="Say Hello" id="b1" actionListener="#{testPostback.sayHello}" immediate="true"
+                           partialSubmit="true">
+                  <af:setActionListener from="SetActionListener!" to="#{sessionScope.name}"/>
+                </af:button>
+                <af:outputText value="Greetings, #{testPostback.helloName}" partialTriggers="b1 b2" id="ot4a"/>
+                <af:button text="Clear Greetings" immediate="true" partialSubmit="true" id="b2"  actionListener="#{testPostback.clearHello}" />
+              </af:panelGroupLayout>
+            </af:panelBox>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

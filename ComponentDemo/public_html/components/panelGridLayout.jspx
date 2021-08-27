@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2011, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelGridLayout Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelGridLayout"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerFooterHeight" value="2em"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="center">
+          <af:panelGridLayout id="grid1" binding="#{editor.component}"
+                              inlineStyle="background-color:hotpink;min-width:510px">
+            <af:gridRow id="gr1" marginTop="5px" marginBottom="10px" height="auto">
+              <af:gridCell id="gc1" marginStart="5px" marginEnd="5px" width="100%" halign="stretch" valign="top">
+                <!-- begin header layout -->
+                <af:panelGridLayout id="header" inlineStyle="background-color:lightgreen">
+                  <af:gridRow id="headerRow1" marginBottom="10px">
+                    <af:gridCell id="headerCell1" valign="top"/>
+                    <af:gridCell id="headerCell2" width="100%" halign="end" valign="top">
+                      <af:panelLabelAndMessage id="plm1" label="Search" for="it1">
+                        <af:inputText id="it1" value="widget" columns="30" simple="true"/>
+                        <f:facet name="end">
+                          <af:commandButton id="cb1" text="Go"/>
+                        </f:facet>
+                      </af:panelLabelAndMessage>
+                    </af:gridCell>
+                  </af:gridRow>
+                  <af:gridRow id="headerRow2" height="38px">
+                    <af:gridCell id="headerCell3" width="215px" halign="start" valign="bottom">
+                      <af:image id="image" shortDesc="Logo" source="/images/cobrandlogo.gif"/>
+                    </af:gridCell>
+                    <af:gridCell id="headerCell4" width="100%" halign="end" valign="bottom">
+                      <!-- begin global links layout -->
+                      <af:panelGroupLayout id="globalLinks" inlineStyle="background-color:darkturquoise">
+                        <f:facet name="separator">
+                          <af:spacer id="gLinkSp" width="10px" height="1px"/>
+                        </f:facet>
+                        <af:goLink id="logout" text="Logout"/>
+                        <af:goLink id="home" text="Home"/>
+                        <af:goLink id="help" text="Help"/>
+                      </af:panelGroupLayout>
+                      <!-- end global links layout -->
+                    </af:gridCell>
+                  </af:gridRow>
+                </af:panelGridLayout>
+                <!-- end header layout -->
+              </af:gridCell>
+            </af:gridRow>
+            <af:gridRow id="gr2" marginBottom="10px" height="auto">
+              <af:gridCell id="gc2" marginStart="5px" marginEnd="5px" width="100%" halign="stretch" valign="top">
+                <!-- begin Order Information box -->
+                <af:panelBox id="pb1" text="Order Information">
+                  <af:panelFormLayout id="pfl1" labelWidth="125px" maxColumns="2" rows="4">
+                    <af:inputText id="it2" readOnly="true" label="Order ID" value="1014"/>
+                    <af:inputText id="it3" readOnly="true" label="Order Date" value="10/15/2008"/>
+                    <af:inputText id="it4" readOnly="true" label="Customer ID" value="116"/>
+                  </af:panelFormLayout>
+                  <af:panelFormLayout id="pfl2" labelWidth="125px" maxColumns="2" rows="1">
+                    <af:inputText id="it5" readOnly="true" label="Order Status Code" value="COMPLETE"/>
+                    <af:inputText id="it6" readOnly="true" label="Order Shipped Date" value="10/20/2008"/>
+                    <af:inputText id="it7" readOnly="true" label="Order Total" value="1499.5"/>
+                  </af:panelFormLayout>
+                </af:panelBox>
+                <!-- end Order Information box -->
+              </af:gridCell>
+            </af:gridRow>
+            <af:gridRow id="gr3" marginBottom="10px" height="auto">
+              <af:gridCell id="gc3" marginStart="5px" marginEnd="5px" width="100%" halign="stretch" valign="top">
+                <!-- begin Ship to box -->
+                <af:panelBox id="pb2" text="Ship to Name and Address">
+                  <af:panelFormLayout id="pfl3" labelWidth="125px">
+                    <af:inputText id="it8" readOnly="true" label="Ship To Name" value="John Smith"/>
+                    <af:inputText id="it9" readOnly="true" label="Ship To Phone Number" value="+1 303-555-5555"/>
+                    <af:inputText id="it10" readOnly="true" label="Ship To Address ID" value="17"/>
+                    <af:inputText id="it11" readOnly="true" label="Shipping Option ID" value="1"/>
+                  </af:panelFormLayout>
+                </af:panelBox>
+                <!-- end Ship to box -->
+              </af:gridCell>
+            </af:gridRow>
+            <af:gridRow id="gr4" marginBottom="20px" height="auto">
+              <af:gridCell id="gc4" marginStart="5px" marginEnd="5px" width="100%" halign="stretch" valign="top">
+                <!-- begin Gift Wrap box -->
+                <af:panelBox id="pb3" text="Gift Wrap">
+                  <af:outputFormatted id="of1" value="instruction text"/>
+                  <af:spacer id="s1" height="10"/>
+                  <af:panelFormLayout id="pfl4" labelWidth="125">
+                    <af:inputText id="it12" readOnly="true" label="Gift Wrap Flag" value="N"/>
+                    <af:inputText id="it13" readOnly="true" label="Gift Wrap Message" value="n/a"/>
+                  </af:panelFormLayout>
+                </af:panelBox>
+                <!-- end Gift Wrap box -->
+              </af:gridCell>
+            </af:gridRow>
+            <af:gridRow id="gr5" marginBottom="40px" height="100%">
+              <af:gridCell id="gc5" marginStart="5px" marginEnd="5px" width="100%" halign="start" valign="top">
+                <!-- begin nav button bar layout -->
+                <af:panelGroupLayout id="navBar" layout="horizontal" inlineStyle="background-color:purple">
+                  <f:facet name="separator">
+                    <af:spacer id="navBarSp" width="10px" height="1px"/>
+                  </f:facet>
+                  <af:commandButton id="cb2" text="First" partialSubmit="true"/>
+                  <af:commandButton id="cb3" text="Previous" partialSubmit="true"/>
+                  <af:commandButton id="cb4" text="Next" partialSubmit="true"/>
+                  <af:commandButton id="cb5" text="Last" partialSubmit="true"/>
+                </af:panelGroupLayout>
+                <!-- end nav button bar layout -->
+              </af:gridCell>
+            </af:gridRow>
+            <af:gridRow id="gr6" marginBottom="5px" height="auto">
+              <af:gridCell id="gc6" marginStart="5px" marginEnd="5px" width="100%" halign="stretch" valign="middle">
+                <!-- begin footer layout -->
+                <af:panelGridLayout id="footer" inlineStyle="background-color:lightskyblue">
+                  <af:gridRow id="footerRow" height="auto">
+                    <af:gridCell id="footerCell1" width="auto" marginEnd="20px" halign="start" valign="top">
+                      <af:inputText id="it14" readOnly="true" label="Last Updated By" value="0"/>
+                    </af:gridCell>
+                    <af:gridCell id="footerCell2" width="100%" marginEnd="20px" halign="start" valign="top">
+                      <af:inputText id="it15" readOnly="true" label="Last Update Date" value="11"/>
+                    </af:gridCell>
+                    <af:gridCell id="footerCell3" width="auto" marginEnd="20px" halign="end" valign="top">
+                      <af:inputText id="it16" readOnly="true" label="Created By" value="0"/>
+                    </af:gridCell>
+                    <af:gridCell id="footerCell4" width="auto" halign="end" valign="top">
+                      <af:inputText id="it17" readOnly="true" label="Creation Date" value="11/4/2008"/>
+                    </af:gridCell>
+                  </af:gridRow>
+                </af:panelGridLayout>
+                <!-- end footer layout -->
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

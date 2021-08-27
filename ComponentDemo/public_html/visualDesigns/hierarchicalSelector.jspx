@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Hierarchical Selector Visual Design Demo"
+                 binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="css">
+      .hierarchical-selector{
+        font-family: Tahoma;
+        font-size: 11px;
+        font-weight: normal;
+        color: #003399;
+        text-decoration:none;
+      }
+      .hierarchical-selector:hover{
+        color: #003399;
+        text-decoration:underline;
+      }
+      .hierarchical-selector:active{
+        color: #72007C;
+        text-decoration:underline;
+      }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Hierarchical Selector Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelHeader text="Related Links" id="ph1">
+              <af:panelList id="pl1">
+                <af:goLink text="Component - Panel Collection with Tree"
+                           destination="/components/table/panelCollectionTree.jspx"
+                           id="gl1"/>
+                <af:goLink text="Component - Panel Collection with Tree Table"
+                           destination="/components/table/panelCollectionTreeTable.jspx"
+                           id="gl2"/>
+              </af:panelList>
+            </af:panelHeader>
+            <af:panelHeader text="Hierarchical Selector in Tree" id="ph2">
+
+              <af:panelGroupLayout inlineStyle="margin:20px 20px 20px 20px"
+                                   id="pgl2">
+                <af:panelCollection id="pc1">
+                  <f:facet name="secondaryToolbar">
+                    <af:menuBar>
+                      <af:goMenuItem text="Tree" destination="../tree.jspx"/>
+                      <af:commandMenuItem immediate="true" text="ComponentGuide" action="guide"/>
+                      <af:goMenuItem inlineStyle="white-space:nowrap" text="view page source"
+                                 destination="#{facesContext.viewRoot.viewId}.source"/>
+                    </af:menuBar>
+                  </f:facet>
+                  <af:tree id="folderTree1" focusRowKey="#{fs.defaultFocusRowKey}" var="directory"
+                           rowSelection="multiple" value="#{fs.treeModel}"
+                           rowDisclosureListener="#{fs.toggle}">
+                    <f:facet name="nodeStamp">
+                      <af:panelGroupLayout id="pgl3">
+                        <af:image source="#{directory.icon}"
+                                  inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                  shortDesc="directory icon" id="i1"/>
+                        <af:outputText id="directoryStamp1" value="#{directory.name}"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="pathStamp">
+                      <af:panelGroupLayout id="pgl4">
+                        <af:outputText styleClass="hierarchical-selector" value="#{directory.name}"
+                                       id="ot1"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:tree>
+                </af:panelCollection>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+
+            <af:panelHeader text="Hierarchical Selector in Tree Table" id="ph3">
+              <af:panelGroupLayout inlineStyle="margin:20px 20px 20px 20px"
+                                   id="pgl5">
+                <af:panelCollection id="pc2">
+                  <f:facet name="secondaryToolbar">
+                    <af:menuBar>
+                      <af:goMenuItem text="treeTable" destination="../treeTable.jspx"/>
+                      <af:commandMenuItem immediate="true" text="ComponentGuide" action="guide"/>
+                      <af:goMenuItem inlineStyle="white-space:nowrap" text="view page source"
+                                 destination="#{facesContext.viewRoot.viewId}.source"/>
+                    </af:menuBar>
+                  </f:facet>
+                  <af:treeTable id="folderTree2" focusRowKey="#{fs.defaultFocusRowKey}" var="directory"
+                                rowSelection="multiple" columnSelection="multiple" columnStretching="last"
+                                value="#{fs.treeModel}"
+                                rowDisclosureListener="#{fs.toggle}" summary="treeTable data">
+                    <af:column width="40" rowHeader="true" headerText="Row Number"
+                               id="c1"/>
+                    <f:facet name="nodeStamp">
+                      <af:column headerText="Directory Name" width="200"
+                                 id="c2">
+                        <af:panelGroupLayout id="pgl6">
+                          <af:image source="#{directory.icon}"
+                                    inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                    shortDesc="directory icon" id="i2"/>
+                          <af:outputText id="directoryStamp2" value="#{directory.name}"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+                    </f:facet>
+                  <f:facet name="pathStamp">
+                    <af:panelGroupLayout id="pgl7">
+                      <af:outputText styleClass="hierarchical-selector" value="#{directory.name}"
+                                     id="ot2"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                    <af:column headerText="Icon" id="c3">
+                      <af:outputText id="iconStamp2" value="#{directory.icon}"/>
+                    </af:column>
+                    <af:column headerText="Last Modified" width="300" id="c4">
+                      <af:outputText id="modifiedStamp2" value="#{directory.lastModified}"/>
+                    </af:column>
+                  </af:treeTable>
+                </af:panelCollection>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

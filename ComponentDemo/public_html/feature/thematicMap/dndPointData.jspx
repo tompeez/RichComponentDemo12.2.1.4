@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Thematic Map's Drag Marker Demo" binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <!--<f:attribute name="documentTitle" value="Show And Hide Series"/>-->
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Thematic Map's Drag Marker Demo"/>
+                <f:facet name="separator">
+                    <af:separator id="s1"/>
+                </f:facet>
+                <f:facet name="center">
+                    <!-- START FEATURE DEMO -->
+                    <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth" topHeight="auto" endWidth="auto">
+                        <f:facet name="top">
+                            <!-- START TAG DEMO -->
+                            <af:panelGroupLayout layout="vertical" id="pgl5">
+                                <f:verbatim>
+                                    <b>Demonstrates Drag And Drop in Thematic Map</b>
+                                    <ul>
+                                        <li>Drag a marker from the map and drop it on the table</li>
+                                    </ul>
+                                </f:verbatim>
+                                <af:selectBooleanCheckbox label="Disable Pan" id="featureOff" value="#{stateData.disablePan}" autoSubmit="true"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="bottom"></f:facet>
+                        <f:facet name="center">
+                                <dvt:thematicMap basemap="usa" id="tm1" >
+                                    <dvt:areaLayer layer="states" id="al1">
+                                        <af:dropTarget actions="COPY MOVE LINK" dropListener="#{tmapBean.imageDrop}">
+                                            <af:dataFlavor flavorClass="java.lang.Object" discriminant="Demo"/>
+                                            <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet"/>
+                                        </af:dropTarget>
+                                    </dvt:areaLayer>
+                                    <dvt:pointDataLayer id="pointLayer" value="#{tmapBean.dropPointModel}" var="row"
+                                                        varStatus="rowStatus" contentDelivery="immediate">                                                        
+                                        <dvt:pointLocation id="pointLoc" type="pointXY" pointX="#{row.longitude}"
+                                                           pointY="#{row.latitude}">
+                                            <af:image id="img1" source="/resources/images/geoMap/mansion.gif"
+                                                      shortDesc="test image"/>
+                                        </dvt:pointLocation>
+                                    </dvt:pointDataLayer>
+                                </dvt:thematicMap>
+                        </f:facet>
+                        <f:facet name="start"/>
+                        <f:facet name="end">
+                                <af:image source="/resources/images/geoMap/mansion.gif" id="i1">
+                                    <af:componentDragSource discriminant="Demo"/>
+                                </af:image>
+                        
+                        </f:facet>
+                    </af:panelStretchLayout>
+                    <!-- END FEATURE DEMO -->
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

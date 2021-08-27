@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Treemap and Sunburst Pattern Fill Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Treemap and Sunburst Pattern Fill Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Treemap and Sunburst Pattern Fill"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+           <af:group>
+          <af:panelGroupLayout layout="horizontal">
+            <dvt:treemap id="treemap" value="#{treemap.patternData}" var="row" varStatus="rowStatus"
+                         inlineStyle="width:450px; height:350px;">
+              <dvt:treemapNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="smallChecker" rendered="#{rowStatus.index % 6 == 0}"/>
+              <dvt:treemapNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="smallCrosshatch" rendered="#{rowStatus.index % 6 == 1}"/>
+              <dvt:treemapNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="smallDiagonalLeft" rendered="#{rowStatus.index % 6 == 2}"/>
+              <dvt:treemapNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="smallDiagonalRight" rendered="#{rowStatus.index % 6 == 3}"/>
+              <dvt:treemapNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="smallDiamond" rendered="#{rowStatus.index % 6 == 4}"/>
+              <dvt:treemapNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="smallTriangle" rendered="#{rowStatus.index % 6 == 5}"/>
+            </dvt:treemap>
+            <dvt:sunburst id="sunburst" value="#{treemap.patternData}" var="row" varStatus="rowStatus"
+                          inlineStyle="width:400px; height:350px;" nodeSelection="none">
+              <dvt:sunburstNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="largeChecker" rendered="#{rowStatus.index % 6 == 0}"/>
+              <dvt:sunburstNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="largeCrosshatch" rendered="#{rowStatus.index % 6 == 1}"/>
+              <dvt:sunburstNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="largeDiagonalLeft" rendered="#{rowStatus.index % 6 == 2}"/>
+              <dvt:sunburstNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="largeDiagonalRight" rendered="#{rowStatus.index % 6 == 3}"/>
+              <dvt:sunburstNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="largeDiamond" rendered="#{rowStatus.index % 6 == 4}"/>
+              <dvt:sunburstNode value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.text}" labelDisplay="off"
+                               fillPattern="largeTriangle" rendered="#{rowStatus.index % 6 == 5}"/>
+            </dvt:sunburst>
+          </af:panelGroupLayout>
+        </af:group>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

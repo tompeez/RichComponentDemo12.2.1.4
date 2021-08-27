@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Dynamic help demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Dynamic help on miscellaneous components"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s2"/>
+              </f:facet>
+              <af:outputText value="See javadoc on ResourceBundleHelpProvider for details on
+              how to access help, also see DemoHelpProvider for details on how to
+              implement external URL." id="ot1"/>
+                <af:outputText value="Dynamic help on rich text editor."
+                               id="ot2"/>
+                <af:richTextEditor id="richTextEditor" label="richTextEditor"
+                                    value="#{demoInput.richValue}" helpTopicId="TOPICID_ALL"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s3"/>
+              </f:facet>
+              <af:outputText value="Dynamic help on quickQuery component."
+                             id="ot3"/>
+              <af:panelFormLayout id="pfl1">
+                <af:quickQuery label="quickQuery" id="search" searchDesc="search"
+                           helpTopicId="TOPICID_ALL"
+                           value="#{demoQuickQuery.queryDescriptor}"
+                           queryListener="#{demoQuickQuery.processQuery}">
+                  <f:facet name="end">
+                    <af:commandLink text="Advanced" id="queryLink" clientComponent="true">
+                      <af:popup id="popup">
+                        <af:panelGroupLayout layout="vertical" id="pgl4">
+                          <af:outputText value="To toggle between quickQuery and query components,"
+                                         id="ot4"/>
+                          <af:outputText value="please wire up them using a managed-bean."
+                                         id="ot5"/>
+                        </af:panelGroupLayout>
+                      </af:popup>
+                      <af:showPopupBehavior popupId="popup"
+                        align="afterStart" alignId="queryLink"/>
+                    </af:commandLink>
+                  </f:facet>
+                </af:quickQuery>
+              </af:panelFormLayout>
+              </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <af:outputText value="Dynamic help on query component." id="ot6"/>
+              <af:panelHeader text="Query" id="ph1">
+                <af:query id="empqry" binding="#{editor.component}" disclosed="true"
+                          headerText="Search" inlineStyle="width:500px"
+                          resultComponentId="::resultTextId"
+                          helpTopicId="TOPICID_ALL"
+                          value="#{demoQuery.queryDescriptor}"
+                          model="#{demoQuery.queryModel}"
+                          queryListener="#{demoQuery.processQuery}"/>
+             </af:panelHeader>
+              <af:spacer height="10px" id="s4"/>
+              <af:outputText id="resultTextId"
+                             value="Query statement is as folows: #{demoQuery.sqlString}"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl6">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s5"/>
+              </f:facet>
+              <af:outputText value="Dynamic help on column component."
+                             id="ot7"/>
+              <af:table var="test1" value="#{tableTestData}" summary="Table with help on column"
+                        id="t1">
+                <af:column align="left" helpTopicId="TOPICID_ALL" id="c1" rowHeader="true">
+                  <f:facet name="header">
+                    <af:outputText value="No" id="ot8"/>
+                  </f:facet>
+                  <af:outputText value="#{test1.no}" id="ot9"/>
+                </af:column>
+                <af:column headerText="Name" sortProperty="name" align="center"
+                           sortable="true" helpTopicId="TOPICID_ALL" id="c2">
+                  <af:outputText value="#{test1.name}" id="ot10"/>
+                </af:column>
+                <af:column headerText="Value" align="right" helpTopicId="TOPICID_ALL"
+                           id="c3">
+                  <af:inputText helpTopicId="TOPICID_ALL" simple="true" label="value"
+                                id="it1"/>
+                </af:column>
+             </af:table>
+            </af:panelGroupLayout>
+            <af:commandButton text="Submit" id="submitCommand"/>
+            <af:separator id="s6"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="collectionDropTarget demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="collectionDropTarget"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="dragNDrop"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+  <!-- if changes are made to this demo, you may need to update collectionDragSource also. -->
+            <af:outputText value="This demo shows drag and drop using af:collectionDragSource and
+            af:collectionDropTarget. Please note that the af:collectionDragSource has been
+              deprecated and it's recommended to use the new tag af:dragSource instead." id="ot1"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer width="30px" id="s2"/>
+              </f:facet>
+              <af:panelHeader text="Table with a collectionDragSource" id="ph1">
+                <af:table var="test1" value="#{collectionDnD.source1Values}" id="table1"
+                          summary="collection drag source"
+                          rowSelection="single">
+                  <af:column headerText="Product" id="c1">
+                    <af:outputText value="#{test1.product}" id="ot2"/>
+                  </af:column>
+                  <af:column headerText="Cost" id="c2">
+                    <af:outputText value="#{test1.cost}" id="ot3"/>
+                  </af:column>
+                  <af:collectionDragSource actions="COPY" modelName="DnDDemoModel"/>
+                </af:table>
+              </af:panelHeader>
+              <af:panelHeader text="Table with a collectionDropTarget" id="ph2">
+                <af:table var="test2" value="#{collectionDnD.targetValues}" id="table2"
+                          summary="collection drag source"
+                          rowSelection="single">
+                  <af:column headerText="Product" id="c3">
+                    <af:outputText value="#{test2.product}" id="ot4"/>
+                  </af:column>
+                  <af:column headerText="Cost" id="c4">
+                    <af:outputText value="#{test2.cost}" id="ot5"/>
+                  </af:column>
+                  <af:collectionDropTarget actions="COPY" modelName="DnDDemoModel" dropListener="#{collectionDnD.handleDrop}"/>
+                </af:table>
+              </af:panelHeader>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

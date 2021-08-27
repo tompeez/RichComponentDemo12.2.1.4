@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Graph Popup Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Graph Popup Support Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Graph Popup Support"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:outputText inlineStyle="font-size:large;" value="Graph Popup Support" id="ot1"/>
+                        <af:group>
+                            <af:outputText value="Click on a marker to show a popup." id="ot5"/>
+                            <dvt:bubbleGraph markerTooltipType="MTT_NONE" groupTooltipLabelType="TLT_NONE"
+                                              seriesTooltipLabelType="TLT_NONE" dataSelection="single"
+                                              shortDesc="Scatter Graph with Click Popup" binding="#{popupSample.graph}"
+                                              inlineStyle="width:500px;height:350px;" id="g2">
+                                <dvt:seriesSet defaultMarkerShape="MS_HUMAN">
+                                    <af:showPopupBehavior triggerType="click" popupId="::graphPopup" align="endAfter"/>
+                                </dvt:seriesSet>
+                                <dvt:x1Title text="Sales in Millions"/>
+                                <dvt:y1Title text="Quota in Millions"/>
+                                <dvt:graphTitle text="Sales Performance"/>
+                                <dvt:graphSubtitle text="FY08"/>
+                            </dvt:bubbleGraph>
+                        </af:group>
+                        <af:group>
+                            <af:outputText value="Hover over a data point to show a popup." id="ot6"/>
+                            <dvt:barGraph markerTooltipType="MTT_NONE" groupTooltipLabelType="TLT_NONE"
+                                           seriesTooltipLabelType="TLT_NONE" shortDesc="Line Graph with Hover Popup"
+                                           inlineStyle="width:500px;height:350px;" id="g4">
+                                <dvt:seriesSet>
+                                    <af:showPopupBehavior triggerType="mouseHover" popupId="::noteWindowPopup"
+                                                          align="endAfter"/>
+                                </dvt:seriesSet>
+                            </dvt:barGraph>
+                            <af:popup id="graphPopup" launcherVar="source" eventContext="launcher"
+                                      clientComponent="true" contentDelivery="lazyUncached">
+                                <af:setPropertyListener from="#{source.seriesKey}" to="#{popupSample.seriesKey}"
+                                                        type="popupFetch"/>
+                                <af:setPropertyListener from="#{source.groupKeys}" to="#{popupSample.groupKeys}"
+                                                        type="popupFetch"/>
+                                <af:panelWindow title="Graph Popup" id="pw1">
+                                    <dvt:gauge shortDesc="Gauge" value="#{popupSample.gaugeValue}" gaugeType="DIAL"
+                                               animationOnDisplay="auto" inlineStyle="width:150px;height:120px;"
+                                               minValue="0" maxValue="100" contentDelivery="immediate" id="g3">
+                                        <dvt:bottomLabel text="Sales" position="LP_NONE"/>
+                                        <dvt:metricLabel position="LP_NONE"/>
+                                        <dvt:thresholdSet>
+                                            <dvt:threshold thresholdMaxValue="#{popupSample.quotaValue}"
+                                                           text="Under Quota"/>
+                                            <dvt:threshold fillColor="#84AE31" text="Above Quota"/>
+                                        </dvt:thresholdSet>
+                                        <dvt:indicator useThresholdFillColor="true"/>
+                                        <dvt:tickLabel content="TC_MIN_MAX TC_INCREMENTS"/>
+                                        <dvt:tickMark content="TC_NONE" majorTickCount="5"/>
+                                    </dvt:gauge>
+                                </af:panelWindow>
+                            </af:popup>
+                            <af:popup id="noteWindowPopup" launcherVar="source" eventContext="launcher"
+                                      clientComponent="true" contentDelivery="lazyUncached">
+                                <af:setPropertyListener from="#{source.seriesKey}" to="#{popupSample.seriesKey}"
+                                                        type="popupFetch"/>
+                                <af:setPropertyListener from="#{source.groupKeys}" to="#{popupSample.groupKeys}"
+                                                        type="popupFetch"/>
+                                <af:noteWindow id="nw1">
+                                    <af:outputFormatted value="#{popupSample.popupString}" id="of8"/>
+                                </af:noteWindow>
+                            </af:popup>
+                        </af:group>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                  <af:panelGroupLayout layout="scroll" id="pgl1">
+                    <!-- START SEE ALSO LINKS -->
+                    <af:outputText value="See also:"/>
+                    <af:panelList>              
+                      <af:goLink text="Popup Backing Bean" destination="/resources/sourceCode/feature/rich/graph/PopupSample.javasource" id="gl1"/>
+                    </af:panelList>
+                    <!-- END SEE ALSO LINKS -->
+                  </af:panelGroupLayout>
+               </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

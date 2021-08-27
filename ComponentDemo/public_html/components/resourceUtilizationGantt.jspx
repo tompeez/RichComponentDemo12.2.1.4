@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="#{ganttFeatureLinks.resourceUtilizationGanttTitle}"
+                     binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="component"/>
+                <f:attribute name="tagDocPrefix" value="dvt"/>
+                <f:attribute name="gmChrome" value="shown"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Resource Utilization Gantt"/>
+                <!-- Tag Name -->
+                <f:attribute name="tagName" value="resourceUtilizationGantt"/>
+                <f:facet name="top">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                    <!-- START TAG DEMO -->
+                    <dvt:resourceUtilizationGantt id="resourceUtilizationGantt" startTime="2008-01-01"
+                                                  endTime="2008-01-31" binding="#{extEditor.component}"
+                                                  dataChangeListener="#{resourceUtilizationGantt.handleDataChanged}"
+                                                  actionListener="#{resourceUtilizationGantt.handleGanttAction}"
+                                                  value="#{resourceUtilizationGantt.model}" var="resourceObj"
+                                                  taskbarFormatManager="#{resourceUtilizationGantt.taskbarFormatManager}"
+                                                  metrics="#{resourceUtilizationGantt.metrics}"
+                                                  summary="Resource Utilization Gantt Demo">
+                        <f:facet name="major">
+                            <dvt:timeAxis scale="weeks" id="ta1"/>
+                        </f:facet>
+                        <f:facet name="minor">
+                            <dvt:timeAxis scale="days" id="ta2"/>
+                        </f:facet>
+                        <f:facet name="nodeStamp">
+                            <af:column headerText="Resource Name" id="c1">
+                                <af:outputText value="#{resourceObj.resourceName}" id="ot1"/>
+                            </af:column>
+                        </f:facet>
+                        <af:column headerText="Department" id="c2">
+                            <af:outputText value="#{resourceObj.department}" id="ot2"/>
+                        </af:column>
+                    </dvt:resourceUtilizationGantt>
+                    <!-- END TAG DEMO -->
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                        <!-- START SEE ALSO LINKS -->
+                        <af:outputText value="See also:" id="ot5"/>
+                        <af:panelList id="pl1">
+                            <af:goLink text="Gantt Index" destination="/feature/gantt/index.jspx"
+                                       id="gl1"/>
+                        </af:panelList>
+                        <!-- END SEE ALSO LINKS -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

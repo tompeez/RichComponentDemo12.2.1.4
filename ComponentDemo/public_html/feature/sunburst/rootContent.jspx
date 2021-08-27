@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Sunburst Root Content Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Sunburst Root Content Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Sunburst Root Content"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:group>
+                            <f:verbatim>
+                                <p>Sunburst supports advanced root content via the rootContent facet of the
+                                   dvt:sunburstNode. The following ADF tags are supported within the facet:</p>
+                                <ul>
+                                    <li>af:image</li>
+                                     
+                                    <li>af:outputText</li>
+                                     
+                                    <li>af:panelGroupLayout</li>
+                                     
+                                    <li>af:spacer</li>
+                                </ul>
+                            </f:verbatim>
+                            <dvt:sunburst id="sb1" inlineStyle="width:480px;height:500px;"
+                                          value="#{sunburstRootContent.model}" var="node" varStatus="nodeStatus" animationOnDataChange="auto" animationOnDisplay="fan"
+                                          legendSource="ag1" sizeLabel="Organization Size" colorLabel="Years of Service">
+                                <dvt:sunburstNode id="sn1" drilling="replace" value="#{node.orgSize}"
+                                                  label="#{node.firstName} #{node.lastName}"
+                                                  shortDesc="#{node.firstName} #{node.lastName}&lt;br/>#{node.title}">
+                                    <f:facet name="rootContent">
+                                        <af:panelGroupLayout layout="vertical" halign="center" valign="middle">
+                                            <af:image source="/resources/images/hv/#{node.personId}.png" id="i1"
+                                                      inlineStyle="width:60px;height:70px;"/>
+                                            <af:spacer height="5"/>
+                                            <af:outputText value="#{node.firstName} #{node.lastName}"
+                                                           inlineStyle="color: white; font-weight: bold;"/>
+                                            <af:outputText value="#{node.title}"
+                                                           inlineStyle="color: white;"/>
+                                        </af:panelGroupLayout>
+                                    </f:facet>
+                                    <dvt:attributeGroups id="ag1" type="color" value="#{node.yearsWorked}" minValue="0" maxValue="40"
+                                                         attributeType="continuous" minLabel="0" maxLabel="40 years">
+                                        <f:attribute name="color1" value="#ED6647"/>
+                                        <f:attribute name="color2" value="#471307"/>
+                                    </dvt:attributeGroups>
+                                </dvt:sunburstNode>
+                            </dvt:sunburst>
+                        </af:group>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

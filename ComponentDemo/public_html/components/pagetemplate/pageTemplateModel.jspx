@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2009, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  version="2.1"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1" title="Page template model demo" theme="dark">
+      <af:form id="f1">
+        <af:pageTemplate
+          id="pt1"
+          value="#{pageTemplateDemoModel}">
+          <f:facet name="editor">
+            <af:panelGroupLayout id="editorPgl1" layout="scroll">
+              <af:popup id="addItemPopup">
+                <af:dialog
+                  id="d2"
+                  title="Add item to context"
+                  modal="true"
+                  type="okCancel"
+                  dialogListener="#{pageTemplateDemoHandlerBean.handleDialogEvent}">
+                  <af:panelFormLayout id="dlgPfl1">
+                    <af:inputText
+                      id="newKey"
+                      label="Key:"
+                      value="#{pageTemplateDemoHandlerBean.newKey}"
+                      validator="#{pageTemplateDemoHandlerBean.validateNewKey}"
+                      required="true" />
+                    <af:inputText
+                      id="newValue"
+                      label="Value"
+                      required="true"
+                      value="#{pageTemplateDemoHandlerBean.newValue}" />
+                  </af:panelFormLayout>
+                </af:dialog>
+              </af:popup>
+              <af:panelHeader id="header1" text="Choose the template to use">
+                <af:panelGroupLayout id="changeViewPanel" layout="horizontal">
+                  <af:selectOneChoice
+                    id="viewIds"
+                    label="Template"
+                    value="#{pageTemplateDemoHandlerBean.viewId}">
+                    <f:selectItems
+                      id="viewIdItems"
+                      value="#{pageTemplateDemoModel.viewIds}" />
+                  </af:selectOneChoice>
+                  <af:commandButton
+                    id="changeView"
+                    actionListener="#{pageTemplateDemoHandlerBean.viewIdChanged}"
+                    text="Update" />
+                </af:panelGroupLayout>
+              </af:panelHeader>
+              <af:panelHeader id="header2" text="Alter the context">
+                <af:outputText
+                  id="editorHelp"
+                  value="The controls below allow you to add or remove objects from the list that will be passed to the page template's context." />
+              </af:panelHeader>
+              <af:panelFormLayout id="pfl2">
+                <af:toolbar id="t1">
+                  <af:commandToolbarButton
+                    id="ctb1"
+                    text="Add new item">
+                    <af:showPopupBehavior popupId="addItemPopup" triggerType="action" />
+                  </af:commandToolbarButton>
+                </af:toolbar>
+                <af:iterator id="editorI1" var="key" value="#{pageTemplateDemoHandlerBean.keys}">
+                  <af:panelLabelAndMessage
+                    id="plam1"
+                    label="#{key}:">
+                    <f:facet name="end">
+                      <af:commandButton
+                        id="deleteKey"
+                        icon="/images/delete_ena.png"
+                        shortDesc="Delete item from the context"
+                        partialSubmit="true"
+                        actionListener="#{pageTemplateDemoHandlerBean.removeKey}">
+                        <f:setPropertyActionListener
+                          value="#{key}"
+                          target="#{pageTemplateDemoHandlerBean.keyToRemove}" />
+                      </af:commandButton>
+                    </f:facet>
+                    <af:inputText
+                      id="value"
+                      simple="true"
+                      required="true"
+                      value="#{pageTemplateDemoModel.contextVariables[key]}" />
+                  </af:panelLabelAndMessage>
+                </af:iterator>
+              </af:panelFormLayout>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:pageTemplate>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

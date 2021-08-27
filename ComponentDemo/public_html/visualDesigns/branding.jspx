@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Branding Visual Design Demo" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:resource type="javascript">
+      /**
+       * Handles a switch in the selectOneChoice to change the product branding.
+       */
+      function switchBranding(event)
+      {
+        var comp = event.getSource();
+        var productBranding = comp.findComponent("productBranding");
+        productBranding.setProperty("value", comp.getValue());
+        event.cancel();
+      }
+      </af:resource>
+      <af:pageTemplate
+        id="fe"
+        viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/panelPageTemplateAlta.jspx' : '/templates/pageTemplateDefs/fileExplorerTemplate.jspx'}">
+        <f:attribute name="auxiliary2Size" value="210"/>
+        <f:attribute name="header2Size" value="0"/>
+        <f:facet name="branding">
+          <af:group id="grp1">
+            <af:outputText
+                id="productBrandingAlta"
+                rendered="#{demoSkin.altaBased}"
+                clientComponent="true"
+                styleClass="AFBrandingBarTitle"
+                value="Branding Visual Design Demo"/>
+            <af:panelGroupLayout rendered="#{!demoSkin.altaBased}" layout="horizontal" shortDesc="branding"
+                                 id="pgl1">
+              <af:outputText
+                id="productBranding"
+                clientComponent="true"
+                inlineStyle="white-space: nowrap;"
+                value="Branding Visual Design Demo"/>
+              <af:spacer width="5" id="s1"/>
+              <af:selectOneChoice
+                id="targetCompactChoice"
+                valuePassThru="true"
+                value="Branding Visual Design Demo"
+                autoSubmit="true"
+                mode="compact"
+                simple="true"
+                label="header choice">
+                <af:clientListener type="valueChange" method="switchBranding"/>
+                <af:selectItem
+                  label="Branding Visual Design Demo"
+                  value="Branding Visual Design Demo"
+                  shortDesc="Item 1" id="si1"/>
+                <f:selectItem
+                  itemLabel="Order Management"
+                  itemValue="Order Management"
+                  itemDescription="Item 2" id="si2"/>
+              </af:selectOneChoice>
+            </af:panelGroupLayout>
+          </af:group>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:navigationPane hint="bar" id="np1">
+            <af:commandNavigationItem text="#{mobileSettings.simplifiedPresentation ? null : 'Bookmarkable Link'}"
+                                          id="lnkBook" destination="/faces#{facesContext.viewRoot.viewId}"
+                                          rendered="#{demoSkin.altaBased}" 
+                                          shortDesc="Bookmarkable Link"
+                                          icon="/images/link-e.png"/>
+            <af:commandNavigationItem destination="index.jspx" text="Visual Designs" id="vds"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/fileExplorerTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc">
+                <af:commandNavigationItem
+                  destination="index.jspx"
+                  text="Visual Designs" id="cni2"/>
+                <af:commandNavigationItem
+                  text="Branding Visual Design Demo" id="cni3"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl2">
+            <af:panelHeader text="Related Links" id="ph1">
+              <af:panelList id="pl1">
+                <af:goLink
+                  text="Component - selectOneChoice"
+                  rendered="#{!demoSkin.altaBased}" 
+                  destination="/components/selectOneChoice.jspx" id="gl1"/>
+                <af:goLink
+                  text="Component - Button"
+                  rendered="#{demoSkin.altaBased}" 
+                  destination="/components/button.jspx" id="gl2"/>
+                  <af:goLink
+                  text="Component - Naivagion Pane"
+                  rendered="#{demoSkin.altaBased}" 
+                  destination="/components/navigationPane.jspx" id="gl3"/>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

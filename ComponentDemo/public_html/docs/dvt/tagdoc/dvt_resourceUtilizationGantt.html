@@ -1,0 +1,703 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:resourceUtilizationGantt&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:resourceUtilizationGantt&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:resourceUtilizationGantt resourceUtilizationGantt resource utilization gantt</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.gantt.UIResourceUtilizationGantt<br>
+<b>Component type:</b> oracle.dss.adf.gantt.ResourceUtilizationGantt<br></p>
+<p>The ResourceUtilizationGantt is typically used to illustrate how many units (ex. hours) are allocated and utilized for a particular resource in a given time period. It comprises of two major parts; the left side of the Resource Utilization Gantt shows information about the resources in the form of columns in the Table, while the right side of the Resource Utilization Gantt displays graphical representation of the resource utilized for the resource at a specific time.</p>
+<p>This component can have the following children: ganttLegend, collectionDropTarget, dropTarget</p>
+<p>The ResourceUtilizationGantt provides a set of predefined styles out of the box. For a complete set of predefined styles, please consult the javadoc for oracle.adf.view.faces.bi.component.gantt.UIResourceUtilizationGantt for details. Applications can also define their own styles or make changes to predefined styles by registering their own TaskbarFormat object through the TaskbarFormatManager. For details, please see the javadoc for oracle.adf.view.faces.bi.component.gantt.TaskbarFormat and oracle.adf.view.faces.bi.component.gantt.TaskbarFormatManager classes.</p>
+<h4>Gantt Model</h4>
+<p>The ResourceUtilizationGantt component uses a model to access the data in the underlying list. Like the TreeTable component, the ResourceUtilizationGantt supports hierarchical data. The specific model class is org.apache.myfaces.trinidad.model.TreeModel.</p>
+<p>The collection of objects returned by TreeModel must have, at the minimal, the following properties:</p>
+<ul>
+<li>resourceId - the id of the resource</li>
+<li>timeBuckets - a collection of time bucket objects for this resource</li>
+</ul>
+<p>Optionally, the object could implement the oracle.adf.view.faces.bi.model.Resource interface to ensure it provides the correct properties to the Gantt.</p>
+<p>The collection of objects returned by the timeBuckets property must also have the following properties:</p>
+<ul>
+<li>time - the date represented by the time bucket</li>
+<li>values - the numeric data for each metrics</li>
+</ul>
+<p>Optionally, the object could implement the oracle.adf.view.faces.bi.model.TimeBucket interface to ensure it provides the correct properties to the Gantt.</p>
+<h4>Columns</h4>
+<p>A user would specify what columns to display in the left side of the Gantt by adding the Column components as its children. For more information see the documentation for <code>&lt;af:column&gt;</code>.</p>
+<p>Like the TreeTable, a "nodeStamp" facet is used to specify the primary identifier of an element in the hiearchy. For example, the "Resource Name" Column might be used as the nodeStamp for the ResourceUtilization Gantt.</p>
+<h4>Legend</h4>
+<p>A legend can be attached to the Gantt by adding the ganttLegend component. The legend toggle button in the toolbar would only be available if a legend is attached and is visible.</p>
+<h4>Drag And Drop</h4>
+<p>The ResourceUtilizationGantt can be made as a drop target for Table, TreeTable by using the dropTarget tag. Note that the Table, TreeTable must first be specified as a drag source before their content can be drop onto the Gantt. Please see the documentation for <code>&lt;af:dragSource&gt;</code>.</p>
+<h4>Geometry Management</h4>
+<ul>
+<li>This component can be stretched by a parent layout component that stretches its children, e.g. panelStretchLayout, panelSplitter</li>
+<li>When stretching this component, the data treeTable and chart treeTable will be stretch both horizontally and vertically. The toolbar and legend of the Gantt will only be stretched horizontally.</li>
+<li>This component is automatically stretched to fill up the browser's viewport when it is the "sole visual root component" in the component tree and if the document component is configured with maximized="true" (the default).</li>
+<li>When NOT stretched, this component will be displayed in its default dimensions which are provided by the skin. This can be modified by applying a dimension using the inlineStyle or styleClass attributes.</li>
+</ul>
+<h4>Supported Client Events for Client Behaviors</h4>
+<table class="oac_no_warn" summary="Layout table... probably." cellspacing="0" style="padding:0;width:100%;border:1px solid">
+<tr>
+<td>
+<ul>
+<li>blur</li>
+<li>click</li>
+<li>contextMenu</li>
+<li>dblClick</li>
+<li>focus</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>keyDown</li>
+<li>keyPress</li>
+<li>keyUp</li>
+<li>mouseDown</li>
+<li>mouseMove</li>
+</ul>
+</td>
+<td>
+<ul>
+<li>mouseOut</li>
+<li>mouseOver</li>
+<li>mouseUp</li>
+<li>propertyChange</li>
+<li>selection (Default)</li>
+</ul>
+</td>
+</tr>
+</table>
+<h4>Examples</h4>
+<pre>
+             <code>
+                &lt;dvt:resourceUtilizationGantt id="gantt1" 
+                                              summary="gantt"
+                                              startTime="2008-04-12" 
+                                              endTime="2010-04-12"
+                                              value="#{resourceUtilizationGantt.model}"
+                                              var="res" 
+                                              metrics="allocated utilized"&gt;
+                  &lt;f:facet name="major"&gt;
+                    &lt;dvt:timeAxis scale="weeks"/&gt;
+                  &lt;/f:facet&gt;
+                  &lt;f:facet name="minor"&gt;
+                    &lt;dvt:timeAxis scale="days"/&gt;
+                  &lt;/f:facet&gt;
+                  &lt;f:facet name="nodeStamp"&gt;
+                    &lt;af:column id="c1" headerText="Resource Name"&gt;
+                      &lt;af:outputText id="ot1" value="#{res.resourceName}"/&gt;
+                    &lt;/af:column&gt;
+                  &lt;/f:facet&gt;
+                  &lt;af:column id="c2" headerText="Department"&gt;
+                    &lt;af:outputText id="ot2" value="#{res.department}"/&gt;
+                  &lt;/af:column&gt;
+                &lt;/dvt:resourceUtilizationGantt&gt;
+            </code>
+          
+</pre>
+<div class="section">
+<h2><a name="Screen_Shots" id="Screen_Shots">Screen Shot(s)</a></h2>
+<div class="screenshot"><br>
+<img src="./images/resourceUtilizationGantt.PNG" alt="ResourceUtilizationGantt screenshot"><br></div>
+<br></div>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.FilterEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">The filter event is delivered when the filter is changed.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.DataChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">The data change event is delivered when an action that would change the data is performed on the Gantt. An example would be updating the start time of a particular task by dragging the task bar to a different time.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.TimeBucketDoubleClickEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">The time bucket double click event is delivered when a double click is performed on a time bucket.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.ResourceSelectionEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">The resource selection event is delivered when a resource is selected in the Gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.TimeBucketSelectionEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">The time bucket selection event is delivered when a time bucket is selected in the Gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.GanttActionEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">The action event is delivered when an action that would not change the data is performed on the Gantt. An example would be printing the Gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.SortEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">The sort event is delivered when a sort action is performed on one of the columns on the Gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Supported Facets</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="27%" align="left" valign="bottom" id="fcName">Name</th>
+<th width="73%" align="left" valign="bottom" id="fcDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="fcName">chartPopupMenu</td>
+<td align="left" headers="fcDesc">the component to use to specify additional controls to appear in the context menu of the chart table. It must be a Popup component. Multiple components are not allowed in this facet.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">customChartContextMenu</td>
+<td align="left" headers="fcDesc">the component to use to specify a custom context menu to appear instead of the default context menu of the chart table. It must be a Popup component. Multiple components are not allowed in this facet.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">customPanel</td>
+<td align="left" headers="fcDesc">the component to use to specify controls to appear in the custom tab of the task properties dialog. In JSP pages only one component is allowed. When using Facelets mutiple components are allowed.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">customTableContextMenu</td>
+<td align="left" headers="fcDesc">the component to use to specify a custom context menu to appear instead of the default context menu of the list table. It must be a Popup component. Multiple components are not allowed in this facet.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">major</td>
+<td align="left" headers="fcDesc">the component to use to specify the major time axis. This must be a TimeAxis component. Multiple components are not allowed in this facet.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">menuBar</td>
+<td align="left" headers="fcDesc">the component to use to specify additional controls to appear in the Gantt menu bar. It must be a MenuBar component. Multiple components are not allowed in this facet.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">minor</td>
+<td align="left" headers="fcDesc">the component to use to specify the minor time axis. This must be a TimeAxis component. Multiple components are not allowed in this facet.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">nodeStamp</td>
+<td align="left" headers="fcDesc">the component to use to stamp each element in the Gantt. Only certain types of components are supported, including all components with no behavior and most components that implement the EditableValueHolder or ActionSource interfaces. In a Gantt, this must be a column. Multiple components are not allowed in this facet.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">tablePopupMenu</td>
+<td align="left" headers="fcDesc">the component to use to specify additional controls to appear in the context menu of the list table. It must be a Popup component. Multiple components are not allowed in this facet.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">toolbar</td>
+<td align="left" headers="fcDesc">the component to use to specify additional controls to appear in the Gantt toolbar. It must be a Toolbar component. Multiple components are not allowed in this facet.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">YAxisHeight</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the height of the Y-Axis in pixels.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">YAxisMaxValue</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the maximum value of the Y-Axis. This is used to calculate the height of the bars. If this is not specified, the value will be calculated automatically based on the data.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">actionListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an actionListener that will be called when an action is performed on the Gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeConverterFactory</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.gantt.AttributeConverterFactory</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies an AttributeConverterFactory that provides Converters for various task attributes rendered within tooltips, context menus, and the information panel of the legend. (In order for the "startTime", "endTime", and "completedThrough" attributes to be properly formatted within the tooltips rendered during task resizes and moves, the Converter returned by the AttributeConverterFactory must implement the org.apache.myfaces.trinidad.convert.ClientConverter interface.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">backgroundColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the background color for the Gantt. A hex string is expected. (ex: #FF33FF)</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">an EL reference that will store the component instance on a bean. This can be used to give programmatic access to a component from a backing bean, or to move creation of the component to a backing bean.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">chartPopupMenuLayout</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> all, separator, properties<br>
+<br>
+Customize the chart popup menu.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">contentDelivery</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> lazy, immediate, whenAvailable<br>
+<strong>Default Value:</strong> whenAvailable<br>
+<br>
+whether data should be fetched when the component is rendered initially. When contentDelivery is "immediate", data is fetched and inlined into the component chrome. If contentDelivery is "lazy", data will be fetched and delivered to the client during a subsequent request. If contentDelivery is "whenAvailable", the model is queried for available data during initial rendering: If data is available, it will render as if contentDelivery="immediate", else it will render as if contentDelivery="lazy".</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">currentDate</td>
+<td align="left" headers="attrType">java.util.Date</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the current date that should be highlighted in the Gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customTimeScales</td>
+<td align="left" headers="attrType">java.util.Map</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies custom time scales for this gantt. The type is Map&lt;String, CustomTimeScale&gt;. The String being used for the map key is the custom time scale name. The value is the implementation of the CustomTimeScale interface. Gantt will use this map to render custom time scales.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customizationId</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. The 'id' attribute should be used when applying persistent customizations. This attribute will be removed in the next release.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a dataChangeListener that will be called when an action that would change the data is performed on the Gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">disclosedRowKeys</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.RowKeySet</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The set of disclosed rows for this component. Each entry in the set is a rowKey.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">displayRow</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> first, last, selected<br>
+<br>
+The row to display during initial display. The possible values are "first" to display the first row, "last" to display the last row and "selected" to display the first selected row. The default value for this is null which means that the first row is displayed. Please note that this API will have no effect if the total number of rows are not known from the table model (model.getRowCount()==-1).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">displayRowKey</td>
+<td align="left" headers="attrType">Object</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The rowKey to display during initial display. Specifying this attribute will override the displayRow attribute. Please note that this API will have no effect if the total number of rows are not known from the table model (model.getRowCount()==-1).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dontPersist</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">a list of persistent attributes that are restricted from persisting to a registered "Persistent Change Manager". Persistent attributes would still persist to a session.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">doubleClickListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a timeBucketDoubleClickListener that will be called when a double click is performed on a time bucket.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">endTime</td>
+<td align="left" headers="attrType">java.util.Date</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the end time that is used to render the time period of the Gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">featuresOff</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> edit, clipboard, print, undo, legend, zoom, view, filter, properties, indentingMenu, indentingToolbar, indentingRightMenu, indentingMenus, propertiesMenu, propertiesRightMenu, editMenu, undoMenu, undoToolbar, clipboardMenu, clipboardToolbar, clipboardRightMenu, viewMenu, listPaneMenu, asListMenu, asHierMenu, columnsMenu, expandMenu, explandAllBelowMenu, collapseAllBelowMenu, explandAllMenu, collapseAllMenu, legendMenu, legendToolbar, goToDateMenu, timeAxisMenu, printMenu, printToolbar, resourceMenu, createResourceToolbar, timeBucketMenu, zoomToolbar, zoomToToolbar<br>
+<br>
+a list of default features to turn off for the resourceUtilizationGantt.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">fetchSize</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 25<br>
+<br>
+The number of rows in the data fetch block.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">filterListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a filterListener that will be called when a different filter is selected.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">filterManager</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.gantt.FilterManager</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">overrides the default FilterManager with an application defined FilterManager. The FilterManager contains a list of application defined filters which limit the tasks to display in the Gantt. See the javadoc for oracle.adf.view.faces.bi.component.gantt.FilterManager for details.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">first</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. The 'displayRow' or 'displayRowKey' attributes should be used instead. This attribute will be removed in the next release.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">goToDateConverter</td>
+<td align="left" headers="attrType">javax.faces.convert.Converter</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies a Converter to be used for the dates displayed in the "Go To Date" dialog of the gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">highlightColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the color used for the highlighted time period. A hex string is expected. (ex: #FF33FF)</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">highlightEndTime</td>
+<td align="left" headers="attrType">java.util.Date</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the end time of the highlighted time period.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">highlightStartTime</td>
+<td align="left" headers="attrType">java.util.Date</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the start time of the highlighted time period.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">horizontalFetchSize</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the size of the horizontal data window in number of pixels in which the data are fetched. Only task bars within this data window would be rendered. In contrast with fetchSize, which provides vertical virtualization, horizontalFetchSize provides horizontal virtualization.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Specifies the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">initialDateFocus</td>
+<td align="left" headers="attrType">java.util.Date</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the initial date displayed when the the gantt comes up.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">initiallyExpandAll</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> false<br>
+<br>
+Specifies whether the rows should be initially expanded.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies CSS styles to use for this component. This is intended for basic style changes; you should use the skinning mechanism if you require any complex style changes. The inlineStyle is a set of CSS styles that are applied to the root DOM element of the component. Many components are composed of several DOM elements which may have their own styles applied to them. Defining a style in the inlineStyle may not always give you what you want. For example, if one of the inner DOM elements for this component has a background color specified for it in the skin, setting a background color in the inlineStyle may not provide any visible change (at least for where that inner DOM element exists) because the inner DOM element's background color will win (since that DOM element is essentially layered on top of the root element). In cases like this, you can use a different skin (or define your own) that defines a skinning key for that inner DOM element where its background color is inhibited (e.g. with -tr-inhibit: background-color) or otherwise set to the color you want.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">labelPlacement</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> top, center<br>
+<strong>Default Value:</strong> top<br>
+<br>
+Specifies the placement of the label relative to the taskbar.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">menuBarLayout</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> all, separator, edit, print, undoGroup, undo, redo, filter, indentGroup, indent, outdent, legend, properties, viewMenu, listPaneMenu, asList, asHier, columnsMenu, expand, expandAllBelow, collapseAllBelow, expandAll, collapseAll, goToDate, timeScale, timeBucketMenu<br>
+<br>
+Customize the menu bar.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">metricConverter</td>
+<td align="left" headers="attrType">javax.faces.convert.Converter</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies a Converter to be used for the numbers shown on the data bars.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">metrics</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">a list of metrics used in the Resource Utilization Gantt. Note that the values are also used to identify the TaskbarFormat from TaskbarFormatManager.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">nonWorkingDays</td>
+<td align="left" headers="attrType">java.util.Date[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">a whitespace delimited list of dates that should be highlighted as non-working days in the Gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">nonWorkingDaysColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the color used to highlight the non-working days or non-working days of the week. A hex string of the color is expected. (ex: #FF33FF)</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">nonWorkingDaysOfWeek</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> sun, mon, tue, wed, thu, fri, sat<br>
+<br>
+a whitespace delimited list of weekdays that should be highlighted as non-working days in every week. The list should consist of one or more of the following abbreviations: sun, mon, tue, wed, thu, fri, sat.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too. Identifiers are relative to the source component, and must account for NamingContainers. If your component is already inside of a naming container, you can use a single colon to start the search from the root, or multiple colons to move up through the NamingContainers - "::" will search from the parent naming container, ":::" will search from the grandparent naming container, etc.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">persist</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">a list of persistent attributes that are persisting to a registered "Persistent Change Manager". Persistent attributes, by default, always persist to a session.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+whether the component is rendered. When set to false, no output will be delivered for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">resourceSelectionListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a resourceSelectionListener that will be called when a resource is selected.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rowBandingInterval</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 0<br>
+<br>
+the interval between which the row banding occurs. This value controls the display of the row banding in the Gantt. For e.g, rowBandingInterval=1 would display alternately banded rows in the Grid.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rowResizable</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">whether the row can be resize.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rowSelection</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">scrollPolicy</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, page, scroll<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+specifies the mechanism used to scroll data within the Gantt.
+<p>possible values are: auto (depends on your device), page, and scroll.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectedRowKeys</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.RowKeySet</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The set of selected resources. Each entry in the set is a rowKey.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectedTimeBucketRowKeys</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.RowKeySet</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The set of selected timeBuckets. Each entry in the set is a rowKey.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">showCurrentDate</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+whether a line should be drawn in the Gantt at the date marked as current by the application. The currentDate attribute must also be set for this to become visible</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">showMenuBar</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+whether the menu bar should be shown in the Gantt. Note that if this is set to false, then any custom menu bar items specified in the menuBar facet will also be hidden.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">showToolbar</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+whether the toolbar should be shown in the Gantt. Note that if this is set to false, then any custom toolbar buttons specified in the toolbar facet will also be hidden.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">sortListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a sortListener that will be called when a column in the Gantt is sorted (using the arrow buttons in the column header).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">splitterPosition</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the initial location of the splitter between the data region and the chart region, in number of pixels.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">startTime</td>
+<td align="left" headers="attrType">java.util.Date</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the start time that is used to render the time period of the Gantt.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">summary</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a summary of this Gantt's purpose and structure for user agents rendering to non-visual media (e.g. screen readers).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">tableActiveRowKey</td>
+<td align="left" headers="attrType">Object</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the row that is currently active on the client. The active row will be made editable and is brought into view (if not already visible). Upon initial display, the component defaults the active row to the first visible row.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">tableColumnStretching</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, last, blank, multiple<br>
+<strong>Default Value:</strong> last<br>
+<br>
+Indicates what kind of stretching you want applied to the columns. For optimal performance, use the "none" (default) option. If you want the last column to stretch to fill up any unused space inside of the viewport, use the "last" option. If you want to have an empty blank column be automatically inserted and have it stretch (so the row background colors will span the entire width of the table), use the "blank" option. If you want to have a specific leaf (non-group) column stretch to fill up any unused space inside of the viewport, use the option where you specify "column:" followed by the ID of the column that you want to have stretched, e.g. "column:myColId". If you want more than one column stretched, use the "multiple" option. When the "multiple" option is used you can set the widths in the columns (non-group) to be percentages. See the column documentation for how percentages are handled. Note that row headers and frozen columns will not be stretched because doing so could easily leave the user unable to access the scrollable data body of the table.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">tablePopupMenuLayout</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> all, separator, indentGroup, indent, outdent<br>
+<br>
+Customize the table popup menu.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">taskbarFormatManager</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.gantt.TaskbarFormatManager</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">overrides the default TaskbarFormatManager with an application defined TaskbarFormatManager. The TaskbarFormatManager contains a registry of the types of task bar that are displayed in the Gantt and the visual representation of each of these type of task bars. See the javadoc for oracle.adf.view.faces.bi.component.gantt.TaskbarFormatManager for details.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">timeBucketSelectionListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a timeBucketSelectionListener that will be called when a time bucket is selected.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">timeZone</td>
+<td align="left" headers="attrType">java.util.TimeZone</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies a global TimeZone for the gantt. If not set, the timezone is pulled from the AdfFacesContext.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">toolBarLayout</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> all, separator, edit, print, undoFilterGroup, undoGroup, undo, redo, filter, indentGroup, indent, outdent, legend, zoomInOutGroup, zoomToGroup, zoomIn, zoomOut, zoomTo, properties, createResource<br>
+<br>
+Customize the toolbar.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">tooltipKeyLabels</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the labels for the corresponding data object keys specified in tooltipKeys attribute. This attribute is always used in conjunction with tooltipKey, and the number of keys should match the number of labels.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">tooltipKeys</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the data object keys used to retrieve values to populate the tooltip. These values are basically the properties associated with the task object returned by the GanttModel. Note this attribute is always used in conjunction with tooltipKeyLabels, and the number of keys should match the number of labels.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">undoManager</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.gantt.UndoManager</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">overrides the default UndoManager with an application defined UndoManager. The UndoManager manages undoable entries as a result of certain actions performed on the Gantt. See the javadoc for oracle.adf.view.faces.bi.component.gantt.UndoManager for details.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.TreeModel</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the Gantt data - must be of type org.apache.myfaces.trinidad.model.TreeModel.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">var</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Name of the EL variable used to reference each element of this collection. Once this component has completed rendering, this variable is removed (or reverted back to its previous value).</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

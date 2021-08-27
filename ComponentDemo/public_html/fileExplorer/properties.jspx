@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <f:loadBundle basename="oracle.adfdemo.view.explorer.rich.resource.FileExplorerBundle"
+                  var="explorerBundle"/>
+    <af:document title="#{explorerBundle['global.properties']}" id="d1">
+      <af:form id="f1">
+        <af:panelStretchLayout bottomHeight="50" id="psl1">
+          <f:facet name="center">
+            <af:panelTabbed id="fileItemPropertiesTab"
+                            position="above"
+                            binding="#{explorer.contentViewManager.contentViewTab}">
+              <af:showDetailItem id="general"
+                                 text="#{explorerBundle['propertiesdialog.general']}"
+                                 disclosed="true"
+                                 stretchChildren="first">
+                <af:panelGroupLayout layout="vertical" id="pgl1">
+                  <f:facet name="separator">
+                    <af:spacer width="0" height="5" id="s1"/>
+                  </f:facet>
+                  <!-- name -->
+                  <af:group id="g1">
+                    <af:panelGroupLayout layout="horizontal" id="pgl2">
+                      <f:facet name="separator">
+                        <af:spacer width="3" height="0" id="s2"/>
+                      </f:facet>
+                      <af:image source="#{fileItemProperties.icon}"
+                                shortDesc="#{fileItemProperties.name}" id="i1"/>
+                      <af:inputText value="#{fileItemProperties.name}"
+                                    simple="true"
+                                    readOnly="true" label="name" id="it1"/>
+                    </af:panelGroupLayout>
+                  </af:group>
+                  <!-- physical properties -->
+                  <af:panelBox text="#{explorerBundle['propertiesdialog.attributes']}"
+                               id="pb1">
+                    <af:panelFormLayout rows="5" id="pfl1">
+                      <af:inputText value="#{fileItemProperties.type}"
+                                    label="#{explorerBundle['fileproperties.type']}"
+                                    readOnly="true" id="it2"/>
+                      <af:inputText value="#{fileItemProperties.location}"
+                                    label="#{explorerBundle['fileproperties.currentpath']}"
+                                    readOnly="true" id="it3"/>
+                      <af:inputText value="#{fileItemProperties.size}"
+                                    label="#{explorerBundle['fileproperties.size']}"
+                                    readOnly="true" id="it4"/>
+                      <af:inputText value="#{fileItemProperties.contains}"
+                                    label="#{explorerBundle['fileproperties.contains']}"
+                                    readOnly="true" id="it5"/>
+                    </af:panelFormLayout>
+                  </af:panelBox>
+                  <!-- modification info -->
+                  <af:panelBox text="#{explorerBundle['propertiesdialog.history']}"
+                               id="pb2">
+                    <af:panelFormLayout rows="3" id="pfl2">
+                      <af:inputText value="#{fileItemProperties.lastModified}"
+                                    label="#{explorerBundle['fileproperties.lastmodified']}"
+                                    readOnly="true" id="it6"/>
+                      <af:inputText value="#{fileItemProperties.created}"
+                                    label="#{explorerBundle['fileproperties.created']}"
+                                    readOnly="true" id="it7"/>
+                    </af:panelFormLayout>
+                  </af:panelBox>
+                </af:panelGroupLayout>
+              </af:showDetailItem>
+              <af:showDetailItem id="sharing"
+                                 text="#{explorerBundle['propertiesdialog.sharing']}"
+                                 disclosed="false"
+                                 stretchChildren="first">
+                <!-- sharing and accessibility info -->
+                <af:panelGroupLayout layout="vertical" id="pgl3">
+                  <af:panelFormLayout rows="3" id="pfl3">
+                    <af:selectBooleanCheckbox value="#{fileItemProperties.hidden}"
+                                              label="#{explorerBundle['fileproperties.hidden']}"
+                                              readOnly="true" id="sbc1"/>
+                    <af:selectBooleanCheckbox value="#{fileItemProperties.shared}"
+                                              label="#{explorerBundle['fileproperties.shared']}"
+                                              readOnly="true" id="sbc2"/>
+                    <af:selectBooleanCheckbox value="#{fileItemProperties.readOnly}"
+                                              label="#{explorerBundle['fileproperties.readonly']}"
+                                              readOnly="true" id="sbc3"/>
+                  </af:panelFormLayout>
+                </af:panelGroupLayout>
+              </af:showDetailItem>
+              <af:showDetailItem id="Others"
+                                 text="#{explorerBundle['propertiesdialog.others']}"
+                                 disclosed="false"
+                                 stretchChildren="first">
+                <af:panelGroupLayout layout="vertical" id="pgl4">
+                  <af:panelFormLayout rows="3" id="pfl4">
+                    <af:inputText value="#{fileItemProperties.description}"
+                                  label="#{explorerBundle['fileproperties.description']}"
+                                  readOnly="true" rows="5" id="it8"/>
+                    <af:inputText value="#{fileItemProperties.keywords}"
+                                  label="#{explorerBundle['fileproperties.keywords']}"
+                                  readOnly="true" id="it9"/>
+                  </af:panelFormLayout>
+                </af:panelGroupLayout>
+              </af:showDetailItem>
+            </af:panelTabbed>
+          </f:facet>
+          <f:facet name="bottom">
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <af:commandButton id="closeProperties"
+                                text="#{explorerBundle['global.close']}"
+                                immediate="true"
+                                action="#{fileItemProperties.closePropertiesDialog}"/>
+            </af:panelGroupLayout>
+         </f:facet>
+        </af:panelStretchLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>
+

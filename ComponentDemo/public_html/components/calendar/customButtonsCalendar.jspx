@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Calendar Custom Toolbar Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="calendar"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelSplitter positionedFromEnd="true" splitterPosition="70" orientation="vertical"
+                            id="ps1">
+            <f:facet name="first">
+              <af:panelStretchLayout id="psl1">
+                <f:facet name="top">
+                  <af:panelGroupLayout id="pgl1">
+                    <af:outputText value="This demo shows how to add custom content to the toolbox created by the calendar. The custom content is not functional, it is just to demonstrate layout. Note that the custom facets contain toolbar components. The facets are not required to contain a toolbar component, for an example see the "
+                                   id="ot1"/>
+                    <af:goLink text="add buttons to built in toolbar demo."
+                               destination="customGroupButtonsCalendar.jspx"
+                               id="gl1"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                  <af:calendar binding="#{editor.component}" id="cal"
+                               value="#{calendarBean.calendarModel}"
+                               timeZone="#{calendarBean.timeZone}"
+                               toolboxLayout="customToolbarAlign all customToolbarTZ stretch customToolbarBold newline  customToolbarCreate"
+                               partialTriggers="timezoneId">
+                    <f:facet name="customToolbarTZ">
+                      <af:toolbar id="t1">
+                        <af:selectOneChoice id="timezoneId" label="Time Zone"
+                                            inlineStyle="white-space:nowrap"
+                                            value="#{calendarBean.timeZoneString}" autoSubmit="true"
+                                            contentStyle="width:190px">
+                       <f:selectItems value="#{af:getMergedTimeZoneSelectItems(calendarBean.timeZoneString)}" id="tzones" />
+                        </af:selectOneChoice>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="customToolbarCreate">
+                      <af:toolbar id="t2">
+                        <af:commandToolbarButton shortDesc="Create" icon="/images/new_ena.png"
+                                                 id="ctb1"/>
+                        <af:commandToolbarButton shortDesc="Update" icon="/images/update_ena.png"
+                                                 id="ctb2"/>
+                        <af:commandToolbarButton shortDesc="Delete" icon="/images/delete_ena.png"
+                                                 id="ctb3"/>
+                        <af:commandToolbarButton text="Text only" id="ctb4"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="customToolbarBold">
+                      <af:toolbar id="t3">
+                        <af:group id="g1">
+                          <af:commandToolbarButton id="bold" shortDesc="bold"
+                                                   icon="/images/bold16.png" type="check"
+                                                   selected="false"/>
+                          <af:commandToolbarButton id="italic" shortDesc="italic"
+                                                   icon="/images/italic16.png" type="check"
+                                                   selected="false"/>
+                          <af:commandToolbarButton id="underline" shortDesc="underline"
+                                                   icon="/images/underline16.png" type="check"
+                                                   selected="false"/>
+                        </af:group>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="customToolbarAlign">
+                      <af:toolbar id="t4">
+                        <af:commandToolbarButton id="alignLeft" shortDesc="align left"
+                                                 icon="/images/alignleft16.png" type="radio"
+                                                 selected="true"/>
+                        <af:commandToolbarButton id="alignCenter" shortDesc="align center"
+                                                 icon="/images/aligncenter16.png" type="radio"
+                                                 selected="false"/>
+                        <af:commandToolbarButton id="alignRight" shortDesc="align right"
+                                                 icon="/images/alignright16.png" type="radio"
+                                                 selected="false"/>
+                      </af:toolbar>
+                    </f:facet>
+                  </af:calendar>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="scroll" id="pgl2">
+                <af:outputText value="See also:" id="ot2"/>
+                <af:panelList id="pl1">
+                  <af:goLink destination="../calendar.jspx" text="calendar"
+                             id="gl2"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

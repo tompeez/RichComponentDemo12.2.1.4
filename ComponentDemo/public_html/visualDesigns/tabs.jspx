@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2017, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Tabs Visual Design Demo" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="pt" viewId="#{templates.visualDesignTemplate}">
+        <f:attribute name="headerGlobalSize" value="45"/>
+        <f:attribute name="header1Size" value="22"/>
+        <f:attribute name="header2Size" value="20"/>
+        <f:attribute name="navigation3Size" value="250"/>
+        <f:attribute name="footer2Size" value="5"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:attribute name="auxiliaryGlobalSize" value="450"/>
+        <f:attribute name="auxiliary1StartSize" value="450"/>
+        <f:attribute name="auxiliary2Size" value="450"/>
+        <f:attribute name="auxiliaryGlobalCollapsed" value="true"/>
+        <f:attribute name="auxiliary1StartCollapsed" value="true"/>
+        <f:attribute name="auxiliary2Collapsed" value="true"/>
+        <f:facet name="branding">
+          <af:outputText value="Tabs Visual Design Demo" id="ot1"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:navigationPane hint="buttons" id="np1">
+            <af:commandNavigationItem destination="index.jspx" text="Visual Designs" id="vds"/>
+          </af:navigationPane>
+        </f:facet>
+        <!-- Needed for alta related demos in the temaplate -->
+        <f:facet name="globalToolsCustomMenu">
+          <af:button text="Related Demos" id="configAlta" actionDelivery="none" styleClass="AFAppNavbarButton">
+            <f:facet name="popup">
+              <af:menu text="Related Demos" id="menuRelatedAlta">
+                <af:group id="gComps">
+                  <af:goMenuItem id="menuCNIAlta" text="Component - commandNavigationItem"
+                                 destination="/components/commandNavigationItem.jspx"/>
+                  <af:goMenuItem id="menuDBAtla" text="Component - decorativeBox"
+                                 destination="/components/decorativeBox.jspx"/>
+                  <af:goMenuItem id="menuNPAlta" text="Component - navigationPane"
+                                 destination="/components/navigationPane.jspx"/>
+                  <af:goMenuItem id="menuSDIAlta" text="Component - showDetailItem"
+                                 destination="/components/showDetailItem.jspx"/>
+                  <af:goMenuItem id="menuPTAtla" text="Component - panelTabbed"
+                                 destination="/components/panelTabbed.jspx"/>
+                </af:group>
+                <af:group id="gPageTempsAlta">
+                  <af:goMenuItem id="menuFETAlta" text="Sample Page Template - File Explorer"
+                                 destination="/templates/fileExplorerUsage.jspx"/>
+                  <af:goMenuItem id="menuPPTAtla" text="Sample Page Template - Panel Page"
+                                 destination="/templates/panelPageUsage.jspx"/>
+                  <af:goMenuItem id="menuTTAlta" text="Sample Page Template - Tablet"
+                                 destination="/templates/tabletUsage.jspx"/>
+                </af:group>
+              </af:menu>
+            </f:facet>
+            </af:button>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/panelPageTemplate.jspx.source">
+            <f:facet name="customMenu">
+              <af:menu text="Related Demos" id="menuRelated">
+                <af:group id="gComps">
+                  <af:goMenuItem id="menuCNI" text="Component - commandNavigationItem"
+                                 destination="/components/commandNavigationItem.jspx"/>
+                  <af:goMenuItem id="menuDB" text="Component - decorativeBox"
+                                 destination="/components/decorativeBox.jspx"/>
+                  <af:goMenuItem id="menuNP" text="Component - navigationPane"
+                                 destination="/components/navigationPane.jspx"/>
+                  <af:goMenuItem id="menuSDI" text="Component - showDetailItem"
+                                 destination="/components/showDetailItem.jspx"/>
+                  <af:goMenuItem id="menuPT" text="Component - panelTabbed"
+                                 destination="/components/panelTabbed.jspx"/>
+                </af:group>
+                <af:group id="gPageTemps">
+                  <af:goMenuItem id="menuFET" text="Sample Page Template - File Explorer"
+                                 destination="/templates/fileExplorerUsage.jspx"/>
+                  <af:goMenuItem id="menuPPT" text="Sample Page Template - Panel Page"
+                                 destination="/templates/panelPageUsage.jspx"/>
+                  <af:goMenuItem id="menuTT" text="Sample Page Template - Tablet"
+                                 destination="/templates/tabletUsage.jspx"/>
+                </af:group>
+              </af:menu>
+            </f:facet>
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc">
+                <af:commandNavigationItem
+                  destination="index.jspx"
+                  text="Visual Designs" id="cni2"/>
+                <af:commandNavigationItem
+                  text="Tabs Visual Design Demo" id="cni3"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="navigation1">
+          <af:panelStretchLayout endWidth="70px" id="psl1">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation1" hint="tabs" id="np2">
+                <af:commandNavigationItem partialSubmit="true" text="Primary Tab 1"
+                  icon="/images/info_status.png" shortDesc="Info Panel"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni4">
+                </af:commandNavigationItem>
+                <af:commandNavigationItem partialSubmit="true" text="Disabled Primary Tab 2"
+                  disabled="true"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni5"/>
+                <af:commandNavigationItem partialSubmit="true" text="Primary Tab 3"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni6"/>
+                <af:commandNavigationItem partialSubmit="true" text="Primary Tab 4"
+                  selected="true"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni7"/>
+                <af:commandNavigationItem partialSubmit="true" text="Primary Tab 5"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni8"/>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:panelStretchLayout endWidth="70px" id="psl2">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation2" hint="tabs" id="np3">
+                <af:commandNavigationItem partialSubmit="true" text="Secondary Tab 1"
+                  icon="/images/info_status.png"
+                  shortDesc="Info Panel"
+                  selected="true"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni9"/>
+                <af:commandNavigationItem partialSubmit="true" text="Disabled Secondary Tab 2"
+                  disabled="true"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni10"/>
+                <af:commandNavigationItem partialSubmit="true" text="Secondary Tab 3"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni11"/>
+                <af:commandNavigationItem partialSubmit="true" text="Secondary Tab 4"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni12"/>
+                <af:commandNavigationItem partialSubmit="true" text="Secondary Tab 5"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni13"/>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl3">
+            <af:panelHeader text="Tertiary panelTabbed tabs (top only)"
+                            id="ph2">
+              <af:panelTabbed styleClass="AFStretchWidth" dimensionsFrom="auto"
+                              id="pt1" tabRemoval="allExceptLast" position="above">
+                <af:showDetailItem
+                  text="Tertiary Tab A"
+                  icon="/images/info_status.png"
+                  shortDesc="Info Panel" id="sdi1">
+                  <af:panelGroupLayout id="height1a" layout="vertical" inlineStyle="height: 5em;">
+                    <af:panelGroupLayout id="vert1a" layout="vertical">
+                      <af:outputText value="Tab A child" id="ot2"/>
+                      <af:outputText value="In this case, the tertiary tabs show tabs present in the background (default) theme."/>
+                      <af:outputText value="When present in the background (default) theme, there is no theme transition."/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+                <af:showDetailItem text="Tertiary Tab B" disclosed="true" id="sdi2">
+                  <af:panelGroupLayout id="heightb" layout="vertical" inlineStyle="height: 6em;">
+                    <af:panelGroupLayout id="vert1b" layout="vertical">
+                      <af:navigationPane shortDesc="navigation4" hint="bar" id="np4">
+                        <af:commandNavigationItem partialSubmit="true" text="4th L &quot;Tab&quot; 1"
+                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                          id="cni14">
+                          </af:commandNavigationItem>
+                        <af:commandNavigationItem partialSubmit="true" text="Disabled 4th L &quot;Tab&quot; 2"
+                          disabled="true"
+                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                          id="cni15"/>
+                        <af:commandNavigationItem partialSubmit="true" text="4th L &quot;Tab&quot; 3"
+                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                          id="cni16"/>
+                        <af:commandNavigationItem partialSubmit="true" text="4th L &quot;Tab&quot; 4"
+                          selected="true"
+                          icon="/images/info_status.png"
+                          shortDesc="Info Panel"
+                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                          id="cni17"/>
+                        <af:commandNavigationItem partialSubmit="true" text="4th L &quot;Tab&quot; 5"
+                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                          id="cni18"/>
+                      </af:navigationPane>
+                      <af:outputText value="Tab B child" id="ot3"/>
+                      <af:link text="Tabs Alternate Styles Demo - Alta v1.1" action="guide.alternateStylesTabs"/>
+                      <af:link text="Tabs Alternate Styles Demo - Alta v1" action="guide.alternateStylesTabsAltaV1"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+                <af:showDetailItem text="Disabled Tertiary Tab C" disabled="true" id="sdi3">
+                  <af:panelGroupLayout id="heightc" layout="vertical" inlineStyle="height: 5em;">
+                    <af:panelGroupLayout id="vert1c" layout="vertical">
+                      <af:outputText value="Tab C child" id="ot4"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+                <af:showDetailItem text="Tertiary Tab D" id="sdi4">
+                  <af:panelGroupLayout id="heightd" layout="vertical" inlineStyle="height: 5em;">
+                    <af:panelGroupLayout id="vert1d" layout="vertical" inlineStyle="padding: 0 5px 0 5px;">
+                      <af:outputText value="Tab D child" id="ot5"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+                <af:showDetailItem text="Tertiary Tab E" id="sdi5">
+                  <af:panelGroupLayout id="heighte" layout="vertical" inlineStyle="height: 5em;">
+                    <af:panelGroupLayout id="vert1e" layout="vertical">
+                      <af:outputText value="Tab E child" id="ot6"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+              </af:panelTabbed>
+            </af:panelHeader>
+            <af:spacer height="10px" id="s1"/>
+            <af:panelHeader text="Tertiary panelTabbed tabs (top and bottom)"
+                            id="ph3">
+              <af:panelTabbed styleClass="AFStretchWidth" dimensionsFrom="auto"
+                              id="pt2" tabRemoval="allExceptLast" position="both">
+                <af:showDetailItem
+                  textAndAccessKey="Tertiary Ta&amp;b A"
+                  icon="/images/info_status.png"
+                  shortDesc="Info Panel"
+                  disclosed="true" id="sdi6">
+                  <af:panelGroupLayout id="height2a" layout="vertical" inlineStyle="height: 5em;">
+                    <af:panelGroupLayout id="vert2a" layout="vertical">
+                      <af:navigationPane shortDesc="navigation4" hint="bar" id="np5">
+                        <af:commandNavigationItem partialSubmit="true" text="4th L &quot;Tab&quot; 1"
+                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                          id="cni19">
+                          </af:commandNavigationItem>
+                        <af:commandNavigationItem partialSubmit="true" text="Disabled 4th L &quot;Tab&quot; 2"
+                          disabled="true"
+                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                          id="cni20"/>
+                        <af:commandNavigationItem partialSubmit="true" text="4th L &quot;Tab&quot; 3"
+                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                          id="cni21"/>
+                        <af:commandNavigationItem partialSubmit="true" text="4th L &quot;Tab&quot; 4"
+                          selected="true"
+                          icon="/images/info_status.png"
+                          shortDesc="Info Panel"
+                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                          id="cni22"/>
+                        <af:commandNavigationItem partialSubmit="true" text="4th L &quot;Tab&quot; 5"
+                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                          id="cni23"/>
+                      </af:navigationPane>
+                      <af:outputText value="Tab A child" id="ot7"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+                <af:showDetailItem text="Tertiary Tab B" id="sdi7">
+                  <af:panelGroupLayout id="height2b" layout="vertical" inlineStyle="height: 5em;">
+                    <af:panelGroupLayout id="vert2b" layout="vertical">
+                      <af:outputText value="Tab B child" id="ot8"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+                <af:showDetailItem textAndAccessKey="Disabled Tertiary Tab C" disabled="true"
+                                   id="sdi8">
+                  <af:panelGroupLayout id="height2c" layout="vertical" inlineStyle="height: 5em;">
+                    <af:panelGroupLayout id="vert2c" layout="vertical">
+                      <af:outputText value="Tab C child" id="ot9"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+                <af:showDetailItem text="Tertiary Tab D" id="sdi9">
+                  <af:panelGroupLayout id="height2d" layout="vertical" inlineStyle="height: 5em;">
+                    <af:panelGroupLayout id="vert2d" layout="vertical">
+                      <af:outputText value="Tab D child" id="ot10"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+                <af:showDetailItem text="Tertiary Tab E" id="sdi10">
+                  <af:panelGroupLayout id="height2e" layout="vertical" inlineStyle="height: 5em;">
+                    <af:panelGroupLayout id="vert2e" layout="vertical">
+                      <af:outputText value="Tab E child" id="ot11"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+              </af:panelTabbed>
+            </af:panelHeader>
+            <af:spacer height="10px" id="s2"/>
+            <af:panelHeader text="Tertiary navigationPane tabs (in decBox)" id="ph4">
+              <af:decorativeBox dimensionsFrom="auto" topHeight="#{demoBranding.navigationTabBarHeight}">
+                <f:facet name="top">
+              <af:navigationPane shortDesc="navigation2" hint="tabs" id="np6" itemRemoval="all">
+                <af:commandNavigationItem partialSubmit="true" text="Tertiary Tab 1"
+                  icon="/images/info_status.png"
+                  shortDesc="Info Panel"
+                  selected="true"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni24"/>
+                <af:commandNavigationItem partialSubmit="true" text="Disabled Tertiary Tab 2"
+                  disabled="true"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni25"/>
+                <af:commandNavigationItem partialSubmit="true" text="Tertiary Tab 3"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni26"/>
+                <af:commandNavigationItem partialSubmit="true" text="Tertiary Tab 4"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni27"/>
+                <af:commandNavigationItem partialSubmit="true" text="Tertiary Tab 5"
+                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                  id="cni28"/>
+              </af:navigationPane>
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelGroupLayout layout="scroll">
+                    <af:spacer height="50px"/>
+                  </af:panelGroupLayout>  
+                </f:facet>
+              </af:decorativeBox>  
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="auxiliaryGlobal">
+          <af:panelTabbed position="both" id="ptAuxG" tabRemoval="allExceptLast">
+            <af:showDetailItem
+              textAndAccessKey="Primary Ta&amp;b A"
+              icon="/images/info_status.png"
+              shortDesc="Info Panel"
+              disclosed="true" id="sdiAuxGa"
+              stretchChildren="first">
+              <af:panelGroupLayout id="auxGSa" layout="scroll">
+                <af:panelGroupLayout id="auxGVa" layout="vertical">
+                  <af:outputText value="Tab A Child" id="otAuxGa"/>
+                  <af:outputText value="Primary tabs show the transition from global (dark) theme to 
+                    background2 (medium) theme."/>
+                  <af:spacer height="20px"/>
+                  <af:outputText value="ADF Faces skinning framework allows for 3 nested theme areas, 
+                    as well as a default theme. Traditionally, these three themes are called 'dark', 
+                    'medium', and 'light'. In the Skyros skin, we refer to these theme/areas as 
+                    Global, Background2, and Background, with Background being the same as the 
+                    default theme. In addition, there is also a branding area."/>
+                  <af:spacer height="12px"/>
+                  <af:outputText value="Primary tabs show the transition from the first theme (dark)
+                    to the second theme (medium). It is skinned on panelTabbed present in the dark 
+                    theme and navigationPane tabs in the medium theme. NavigationPane tabs having 
+                    this transition on theme medium may seem weird, but this is because it is 
+                    typically located inside the header facet of a decorativeBox that is theme 
+                    medium, and though it is inside theme medium (child of the decorativeBox) it is 
+                    showing the dark/medium transition."/>
+                  <af:spacer height="12px"/>
+                  <af:outputText value="Secondary tabs show the transition from the second theme 
+                    (medium) to the third theme (light). It is skinned on panelTabbed present in the 
+                    medium theme and navigationPane tabs in the light theme."/>
+                  <af:spacer height="12px"/>
+                  <af:outputText value="Tertiary tabs show the transition from the third theme
+                    (light) to the default theme. They also show the transition from default to 
+                    default themes. It is skinned on panelTabbed present in the light and default 
+                    themes and navigationPane tabs in the default theme."/>
+
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Primary Tab B" id="sdiAuxGb" stretchChildren="first">
+              <af:panelGroupLayout id="auxGSb" layout="scroll">
+                <af:panelGroupLayout id="auxGVb" layout="vertical">
+                  <af:outputText value="Tab B child" id="otAuxGb"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="Disabled Primary Tab C" disabled="true"
+                               id="sdiAuxGc" stretchChildren="first">
+              <af:panelGroupLayout id="auxGSc" layout="scroll">
+                <af:panelGroupLayout id="auxGVc" layout="vertical">
+                  <af:outputText value="Tab C child" id="otAuxGc"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Primary Tab D" id="sdiAuxGd" stretchChildren="first">
+              <af:panelGroupLayout id="auxGSd" layout="scroll">
+                <af:panelGroupLayout id="auxGVd" layout="vertical">
+                  <af:outputText value="Tab D child" id="otAuxGd"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Primary Tab E" id="sdiAuxGe" stretchChildren="first">
+              <af:panelGroupLayout id="auxGSe" layout="scroll">
+                <af:panelGroupLayout id="auxGVe" layout="vertical">
+                  <af:outputText value="Tab E child" id="otAuxGe"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet>
+        <f:facet name="auxiliary1Start">
+          <af:panelTabbed position="both" id="ptAux1" tabRemoval="allExceptLast">
+            <af:showDetailItem
+              textAndAccessKey="Secondary Ta&amp;b A"
+              icon="/images/info_status.png"
+              shortDesc="Info Panel"
+              disclosed="true" id="sdiAux1a"
+              stretchChildren="first">
+              <af:panelGroupLayout id="aux1Sa" layout="scroll">
+                <af:panelGroupLayout id="aux1Va" layout="vertical">
+                  <af:outputText value="Tab A child" id="otAux1a"/>
+                  <af:outputText value="Secondary tabs show the transition from background2 (medium) theme to background (light/default) theme."/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Secondary Tab B" id="sdiAux1b" stretchChildren="first">
+              <af:panelGroupLayout id="aux1Sb" layout="scroll">
+                <af:panelGroupLayout id="aux1Vb" layout="vertical">
+                  <af:outputText value="Tab B child" id="otAux1b"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="Disabled Secondary Tab C" disabled="true"
+                               id="sdiAux1c" stretchChildren="first">
+              <af:panelGroupLayout id="aux1Sc" layout="scroll">
+                <af:panelGroupLayout id="aux1Vc" layout="vertical">
+                  <af:outputText value="Tab C child" id="otAux1c"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Secondary Tab D" id="sdiAux1d" stretchChildren="first">
+              <af:panelGroupLayout id="aux1Sd" layout="scroll">
+                <af:panelGroupLayout id="aux1Vd" layout="vertical">
+                  <af:outputText value="Tab D child" id="otAux1d"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Secondary Tab E" id="sdiAux1e" stretchChildren="first">
+              <af:panelGroupLayout id="aux1Se" layout="scroll">
+                <af:panelGroupLayout id="aux1Ve" layout="vertical">
+                  <af:outputText value="Tab E child" id="otAux1e"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet>
+        <f:facet name="auxiliary2">
+          <af:panelTabbed position="both" id="ptAux2" tabRemoval="allExceptLast">
+            <af:showDetailItem
+              textAndAccessKey="Tertiary Ta&amp;b A"
+              icon="/images/info_status.png"
+              shortDesc="Info Panel"
+              disclosed="true" id="sdiAux2a"
+              stretchChildren="first">
+              <af:panelGroupLayout id="aux2Sa" layout="scroll">
+                <af:panelGroupLayout id="aux2Va" layout="vertical">
+                  <af:outputText value="Tab A child" id="otAux2a"/>
+                  <af:outputText value="In this case, the tertiary tabs show the transition from (light) theme to (default) theme."/>
+                  <af:outputText value="In Skyros skin, background refers to both light and default theme, as the skinning is the same."/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tertiary Tab B" id="sdiAux2b" stretchChildren="first">
+              <af:panelGroupLayout id="aux2Sb" layout="scroll">
+                <af:panelGroupLayout id="aux2Vb" layout="vertical">
+                  <af:outputText value="Tab B child" id="otAux2b"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="Disabled Tertiary Tab C" disabled="true"
+                               id="sdiAux2c" stretchChildren="first">
+              <af:panelGroupLayout id="aux2Sc" layout="scroll">
+                <af:panelGroupLayout id="aux2Vc" layout="vertical">
+                  <af:outputText value="Tab C child" id="otAux2c"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tertiary Tab D" id="sdiAux2d" stretchChildren="first">
+              <af:panelGroupLayout id="aux2Sd" layout="scroll">
+                <af:panelGroupLayout id="aux2Vd" layout="vertical">
+                  <af:outputText value="Tab D child" id="otAux2d"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tertiary Tab E" id="sdiAux2e" stretchChildren="first">
+              <af:panelGroupLayout id="aux2Se" layout="scroll">
+                <af:panelGroupLayout id="aux2Ve" layout="vertical">
+                  <af:outputText value="Tab E child" id="otAux2e"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

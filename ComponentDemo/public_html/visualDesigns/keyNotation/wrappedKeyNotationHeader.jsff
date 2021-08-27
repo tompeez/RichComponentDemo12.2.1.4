@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  version="2.1"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <af:componentDef
+    var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Renders a panel header with a wrapped key notation.</description>
+        <attribute>
+          <description>The description to put in the
+            body of the panel header</description>
+          <attribute-name>description</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelHeader text="Panel Header" id="dcph1">
+      <f:facet name="toolbar">
+        <af:toolbox id="dct1">
+          <af:toolbar id="dct2">
+            <af:commandToolbarButton
+              icon="/images/new_ena.png"
+              partialSubmit="true"
+              shortDesc="new" id="dcctb1"/>
+            <af:commandToolbarButton
+              icon="/images/update_ena.png"
+              partialSubmit="true"
+              shortDesc="update" id="dcctb2"/>
+            <af:commandToolbarButton
+              icon="/images/delete_ena.png"
+              partialSubmit="true"
+              shortDesc="delete" id="dcctb3"/>
+            <af:commandToolbarButton text="Cancel" id="dcctb4"/>
+            <af:commandToolbarButton text="Actions" id="dcctb5"/>
+            <af:commandToolbarButton text="Apply" id="dcctb6"/>
+          </af:toolbar>
+        </af:toolbox>
+      </f:facet>
+      <f:facet name="legend">
+        <af:panelGroupLayout
+          layout="horizontal"
+          styleClass="AFStampContainer" id="dcpgl1">
+          <f:facet name="separator">
+            <af:group id="dcg1">
+              <af:spacer width="8" id="dcs1"/>
+              <af:outputText value="|" id="dcot1"/>
+              <af:spacer width="8" id="dcs2"/>
+            </af:group>
+          </f:facet>
+          <af:outputText value="USD = United States Dollar" styleClass="AFKeyNotationText" id="dcot2"/>
+          <af:declarativeComponent
+            viewId="iconKey.jsff"
+            key="Indicates required fields" id="dcdc1">
+            <f:facet name="icon">
+              <af:outputText
+                value="*"
+                inlineStyle="color: #336699;" id="dcot3"/>
+            </f:facet>
+          </af:declarativeComponent>
+          <af:declarativeComponent
+            viewId="iconKey.jsff"
+            key="Indicates indexed fields" id="dcdc2">
+            <f:facet name="icon">
+              <af:outputText
+                value="**"
+                inlineStyle="color: #1cb103;" id="dcot4"/>
+            </f:facet>
+          </af:declarativeComponent>
+        </af:panelGroupLayout>
+      </f:facet>
+      <af:outputText
+        value="#{attrs.description}" id="dcot5"/>
+    </af:panelHeader>
+  </af:componentDef>
+</jsp:root>

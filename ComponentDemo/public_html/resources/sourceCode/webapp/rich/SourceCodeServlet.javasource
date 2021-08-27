@@ -1,0 +1,57 @@
+/** Copyright (c) 2006, 2009 Oracle and/or its affiliates. All rights reserved */
+package oracle.adfdemo.view.webapp.rich;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class SourceCodeServlet extends HttpServlet
+{
+  @Override
+  public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException
+  {
+  String webPage = req.getServletPath();
+  
+  // remove the '*.source' suffix that maps to this servlet
+  int source = webPage.indexOf(".source");
+  webPage = webPage.substring(0, source);
+
+  //remove "/faces" mapping
+  //webPage = StringUtils.remove(webPage, "/faces");
+  webPage = webPage.replaceAll("/faces", "");
+
+  // output an HTML page
+  res.setContentType("text/plain");
+  
+  // print some html
+  ServletOutputStream out = res.getOutputStream();
+  
+  // print the file
+  InputStream in = null;
+  try 
+  {
+      in = getServletConfig().getServletContext().getResourceAsStream(webPage);
+      if (in == null) {
+          out.print("Source code is not available.");
+          return;
+      }
+
+      int ch;
+      while ((ch = in.read()) !=-1) 
+      {
+          out.print((char)ch);
+      }
+  }
+  finally {
+      if (in != null) in.close();  // very important
+  }
+}
+
+}

@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="NBox Popup and Context Menus" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <!--<f:attribute name="documentTitle" value="Show And Hide Series"/>-->
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="NBox Popup"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="275"
+                            dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelStretchLayout id="psl1">
+                <f:facet name="top">
+                  <af:panelGroupLayout id="pgl1">
+                    <af:popup id="contextMenu1" contentDelivery="lazyUncached" launcherVar="source" 
+                          eventContext="launcher" clientComponent="true">
+                      <af:setPropertyListener from="#{nBoxPopups.model.rowData.name}"
+                                    to="#{nBoxPopups.menuSource}"
+                                    type="popupFetch"/>
+                      <af:menu id="m1">
+                        <af:commandMenuItem text="View Details for #{nBoxPopups.menuSource}"
+                                            actionListener="#{nBoxPopups.menuItemListener}" id="cmi1"/>
+                        <af:group id="g1">
+                          <af:commandMenuItem text="Add Note" actionListener="#{nBoxPopups.menuItemListener}"
+                                              id="cmi2"/>
+                          <af:commandMenuItem text="Send Message" actionListener="#{nBoxPopups.menuItemListener}"
+                                              id="cmi3"/>
+                          <af:commandMenuItem text="Edit Information" actionListener="#{nBoxPopups.menuItemListener}"
+                                              id="cmi4"/>
+                        </af:group>
+                      </af:menu>      
+                    </af:popup>
+                    <af:popup id="popup1" contentDelivery="lazyUncached" launcherVar="source"
+                              eventContext="launcher" clientComponent="true">
+                      <af:setPropertyListener from="#{nBoxPopups.model.rowData}"
+                                    to="#{nBoxPopups.popupSource}"
+                                    type="popupFetch"/>
+                      <af:panelWindow id="nw2" modal="false"
+                                 title="#{nBoxPopups.popupSource.name}">
+                        <af:panelGroupLayout id="pgl2">
+                          <af:outputText value="Position: #{nBoxPopups.popupSource.job}" id="ot1"/>
+                          <af:spacer id="s1" height="10"/>
+                          <af:outputText value="Role: #{nBoxPopups.popupSource.role}" id="ot2"/>
+                          <af:spacer id="s2" height="10"/>
+                          <af:outputText value="Experience: #{nBoxPopups.popupSource.experience} years" id="ot3"/>
+                        </af:panelGroupLayout>
+                      </af:panelWindow>       
+                    </af:popup>  
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                  <dvt:nBox value="#{nBoxPopups.model}" var="node" binding="#{nBoxPopups.NBox}" rowsTitle="Potential" columnsTitle="Performance"
+                            partialTriggers="::popupTrigger">
+                    <af:transition transition="auto" triggerType="dataChange"/>
+                    <f:facet name="rows">
+                      <af:group>
+                        <dvt:nBoxRow value="0"/>
+                        <dvt:nBoxRow value="1"/>
+                        <dvt:nBoxRow value="2"/>
+                      </af:group>
+                    </f:facet>
+                    <f:facet name="columns">
+                      <af:group>
+                        <dvt:nBoxColumn value="0"/>
+                        <dvt:nBoxColumn value="1"/>
+                        <dvt:nBoxColumn value="2"/>
+                      </af:group>
+                    </f:facet>
+                    <f:facet name="cells">
+                      <af:group>
+                        <dvt:nBoxCell row="0" column="0" showCount="on" label="Misaligned Talent"/>
+                        <dvt:nBoxCell row="0" column="1" showCount="on" label="Solid Talent"/>
+                        <dvt:nBoxCell row="0" column="2" showCount="on" label="Expert Talent"/>
+                        <dvt:nBoxCell row="1" column="0" showCount="on" label="Unproven Talent"/>
+                        <dvt:nBoxCell row="1" column="1" showCount="on" label="Core Talent"/>
+                        <dvt:nBoxCell row="1" column="2" showCount="on" label="Flexible Talent"/>
+                        <dvt:nBoxCell row="2" column="0" showCount="on" label="Evolving Talent"/>
+                        <dvt:nBoxCell row="2" column="1" showCount="on" label="Emerging Talent"/>
+                        <dvt:nBoxCell row="2" column="2" showCount="on" label="Top Talent"/>
+                      </af:group>
+                    </f:facet>
+                    <dvt:nBoxNode row="#{node.row}" column="#{node.column}" label="#{node.name}" secondaryLabel="#{node.job}" shortDesc="#{node.name} - #{node.job}">
+                       <af:showPopupBehavior triggerType="contextMenu"
+                          popupId="::contextMenu1"/>
+                       <af:showPopupBehavior triggerType="#{nBoxPopups.popupTrigger}"
+                          popupId="::popup1"
+                          align="endAfter"/>
+                      <f:facet name="icon">
+                        <dvt:marker source="/resources/images/nBox/#{node.image}"/>
+                      </f:facet>
+                    </dvt:nBoxNode>
+                  </dvt:nBox>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout id="pgl3">
+                <f:facet name="separator">
+                  <af:separator id="s3"/>
+                </f:facet>
+                <af:panelFormLayout id="pfl1">
+                  <af:group>
+                    <af:selectOneChoice id="popupTrigger" value="#{nBoxPopups.popupTrigger}" autoSubmit="true"
+                                        label="Popup Trigger Type">
+                      <af:selectItem value="click" label="click"/>
+                      <af:selectItem value="mouseHover" label="hover"/>
+                      <af:selectItem value="keyPress" label="key press"/>
+                      <af:selectItem value="focus" label="focus"/>
+                    </af:selectOneChoice>
+                    <af:spacer id="s4"/>
+                  </af:group>
+                </af:panelFormLayout>
+                <af:group>
+                  <af:spacer id="s5" height="10"/>
+                  <af:outputText value="Context Menu Action" id="ot4" inlineStyle="font-weight:bold"/>
+                  <af:spacer id="s6" height="5"/>                 
+                  <af:outputFormatted binding="#{nBoxPopups.outputFormatted}" value="#{nBoxPopups.contextMenuAction}"
+                                      id="of1" clientComponent="true"/>
+                </af:group>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+          <!-- END FEATURE DEMO -->
+          </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

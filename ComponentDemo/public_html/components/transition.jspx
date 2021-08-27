@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2013, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+  version="2.1">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document
+      title="transition Demo"
+      smallIconSource="#{aboutBean.smallIconSource}"
+      largeIconSource="#{aboutBean.largeIconSource}" theme="dark"
+      binding="#{templateBindings.documentComponent}" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="transition"/>
+        <f:attribute name="visualDesignName" value="deck"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="12" id="s1"/>
+            </f:facet>
+            <af:panelHeader
+              text="About This Demo" id="ph1">
+              <af:outputText
+                value="This page demonstrates how the af:transition tag may be used to define the
+backNavigate and forwardNavigate trigger types for af:deck." id="ot1"/>
+            </af:panelHeader>
+            <af:deck id="deck1" displayedChild="child1" inlineStyle="width:95px;height:137px">
+              <af:transition triggerType="backNavigate" transition="flipDown"/>
+              <af:transition triggerType="forwardNavigate" transition="flipEnd"/>
+              <af:commandLink id="child1" actionListener="#{requestScopeDeck.animateToJumpChild}" partialSubmit="true">
+                <af:setPropertyListener from="child2" to="#{requestScopeDeck.jumpChild}" type="action"/>
+                <af:image id="child1Img1" shortDesc="Playing card back" source="/images/card-back.png"
+                          inlineStyle="width:95px;height:137px"/>
+              </af:commandLink>
+              <af:commandLink id="child2" inlineStyle="font-size:36px"
+                              actionListener="#{requestScopeDeck.animateToJumpChild}" partialSubmit="true">
+                <af:setPropertyListener from="child1" to="#{requestScopeDeck.jumpChild}" type="action"/>
+                <af:image id="child2Img1" shortDesc="Playing card front" source="/images/card-front-a.png"
+                          inlineStyle="width:95px;height:137px"/>
+              </af:commandLink>
+            </af:deck>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

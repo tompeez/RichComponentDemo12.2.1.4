@@ -1,0 +1,866 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <!--Important! Do not change the value of "var" without modifying DemoTemplateBindings._isEditing() (evaluateExpressionGet)-->
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>This component lays out an entire page.</description>
+        <facet>
+          <description>
+            <![CDATA[The center content.
+                     This facet is only used if centerMode="none" (the default).
+                     If you are using this facet with gmChrome="shown" then the root tag of this
+                     facet must be the tag that your page is demonstrating or else the geometry
+                     management tests will be exercising some other component than the one you want.]]>
+          </description>
+          <facet-name>center</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The auxiliary content for the global layer.]]>
+          </description>
+          <facet-name>auxiliaryGlobal</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[An optional horizontally oriented region of contexual components for the main content.]]>
+          </description>
+          <facet-name>contextLocal</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown above the "demoTab" facet content of the tabbed layout.
+                     Configure its height via the demoTabHeaderHeight attribute.
+                     This facet is only used if centerMode="tabs".]]>
+          </description>
+          <facet-name>demoTabHeader</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown in the "demo" tab of the tabbed layout.
+                     This facet is only used if centerMode="tabs".
+                     If you are using this facet with gmChrome="shown" then the root tag of this
+                     facet must be the tag that your page is demonstrating or else the geometry
+                     management tests will be exercising some other component than the one you want.]]>
+          </description>
+          <facet-name>demoTab</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown in the "other" tab of the tabbed layout.
+                     This facet is only used if centerMode="tabs".]]>
+          </description>
+          <facet-name>otherTab</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The non-visual content (e.g. popups and scripts) to support your "demoTab" facet contents.
+                     This facet is only used if centerMode="tabs".]]>
+          </description>
+          <facet-name>demoTabNonVisual</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown above the "seriesComponent" facet content of the flowing series layout.
+                     This facet is only used if centerMode="series".]]>
+          </description>
+          <facet-name>seriesAbove</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The editor component for the flowing series layout.
+                     This facet is only used if centerMode="series".
+                     If you are using this facet with gmChrome="shown" then the root tag of this
+                     facet must be the tag that your page is demonstrating or else the geometry
+                     management tests will be exercising some other component than the one you want.]]>
+          </description>
+          <facet-name>seriesComponent</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown below the "seriesComponent" facet content of the flowing series layout.
+                     This facet is only used if centerMode="series".]]>
+          </description>
+          <facet-name>seriesBelow</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The non-visual content (e.g. popups and scripts) to support your "center" facet contents.
+                     This facet is only used if centerMode="none" (the default).]]>
+          </description>
+          <facet-name>centerNonVisual</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown above the center content facets.
+                     Configure its height via the centerHeaderHeight attribute.
+                     This facet is only used if centerMode="none" (the default).]]>
+          </description>
+          <facet-name>centerHeader</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown below the center content facets.
+                     Configure its height via the centerFooterHeight attribute.
+                     This facet is only used if centerMode="none" (the default).]]>
+          </description>
+          <facet-name>centerFooter</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown in a splitter pane on the start side of the center facet.
+                     Configure its width via the centerSplitStartWidth attribute.
+                     This facet is only used if centerMode="none" (the default).]]>
+          </description>
+          <facet-name>centerSplitStart</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown immediately below the center facet.
+                     Configure its width via the centerNotesHeight attribute.
+                     This facet is only used if centerMode="none" (the default).]]>
+          </description>
+          <facet-name>centerNotes</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown in a splitter pane on the end side of the center facet.
+                     Configure its width via the centerSplitEndWidth attribute.
+                     This facet is only used if centerMode="none" (the default).]]>
+          </description>
+          <facet-name>centerSplitEnd</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown in a splitter pane below the centerSplitStart, center, centerNotes, and centerSplitEnd facets.
+                     You cannot configure the height of this facet but you can configure the height of the facets above it via the centerSplitHeight attribute.
+                     This facet is only used if centerMode="none" (the default).]]>
+          </description>
+          <facet-name>centerSplitBottom</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The content shown in a splitter pane below the center content facets but above the centerFooter facet.
+                     Configure its height via the centerBottomCollapsibleHeight attribute.
+                     Configure whether it is initially collapsed via the centerBottomCollapsed attribute.
+                     This facet is only used if centerMode="none" (the default).]]>
+          </description>
+          <facet-name>centerBottomCollapsible</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[Content shown after the "Print Content" and "Show Attachment" buttons.]]>
+          </description>
+          <facet-name>extraBottomButtons</facet-name>
+        </facet>
+        <attribute>
+          <description>the id attribute of the command button inside the form whose action should be invoked by default,
+                       when the enter key is pressed with focus inside the form. Identifiers are relative to the form
+                       component, and must account for NamingContainers. You can use a single colon to start the search
+                       from the root.</description>
+          <attribute-name>defaultCommand</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>whether the form supports file upload.</description>
+          <attribute-name>usesUpload</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the branding title.</description>
+          <attribute-name>brandingTitle</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Specifies the height of the branding bar. This includes the borders and the box shadow</description>
+          <attribute-name>brandingBarHeight</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>96px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the branding logo styling.</description>
+          <attribute-name>logoStyleClass</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>AFBrandingLogo</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the alternate text and tooltip for the branding logo.</description>
+          <attribute-name>logoShortDesc</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>Demo home page</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the name of the component tag.</description>
+          <attribute-name>tagName</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Specifies the name of the visual design demo.</description>
+          <attribute-name>visualDesignName</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Specifies the top margin of the content area. This usually takes out the box shadow in the branding area.</description>
+          <attribute-name>contentAreaMarginTop</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>5px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the bottom margin of the content area. </description>
+          <attribute-name>contentAreaMarginBottom</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>10px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the start margin of the content area. </description>
+          <attribute-name>contentAreaMarginStart</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>20px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the end margin of the content area. </description>
+          <attribute-name>contentAreaMarginEnd</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>20px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of pixels that the editor content should consume (this is a width if the
+                       orientationis "start" or "end" or a height if the orientation is "bottom").</description>
+          <attribute-name>editorSize</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>340</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of pixels that the auxiliaryGlobal content should consume (this is a width
+                       if the orientationis "start" or "end" or a height if the orientation is "bottom").</description>
+          <attribute-name>auxiliaryGlobalSize</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>200</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of em's tall that the secondary header content should consume.</description>
+          <attribute-name>header2Size</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>0em</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies whether or not to hide the built-in editor.</description>
+          <attribute-name>customEditorPresent</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the kind of demo the tag represents.</description>
+          <attribute-name>demoKind</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Specifies a custom inlineStyle for the visible root element of the layout.</description>
+          <attribute-name>rootInlineStyle</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>For purposes of the component demo, if the current page is the document demo page.</description>
+          <attribute-name>editingDocument</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>For purposes of the component demo, if the current page is the form demo page.</description>
+          <attribute-name>editingForm</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Prefix for tag doc files</description>
+          <attribute-name>tagDocPrefix</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>af</default-value>
+        </attribute>
+        <attribute>
+          <description>The display mode for the center facets. Use "none" for the "center*" facets. Use "tabs" for a
+                       tabbed layout that uses the "demoTabHeader", "demoTab", and "otherTab" facets. Use "series" for a
+                       flowing series layout that uses the "seriesAbove", "seriesComponent", and "seriesBelow" facets.</description>
+          <attribute-name>centerMode</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>none</default-value>
+        </attribute>
+        <attribute>
+          <description>The height of the demoTabHeader facet.</description>
+          <attribute-name>demoTabHeaderHeight</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>auto</default-value>
+        </attribute>
+        <attribute>
+          <description>The height of the centerHeader facet.</description>
+          <attribute-name>centerHeaderHeight</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>auto</default-value>
+        </attribute>
+        <attribute>
+          <description>The height of the centerFooter facet.</description>
+          <attribute-name>centerFooterHeight</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>auto</default-value>
+        </attribute>
+        <attribute>
+          <description>The height of the area that houses the centerSplitStart, center, centerNotes, and centerSplitEnd
+                       facets. This height only applies if you are using the centerSplitBottom facet.</description>
+          <attribute-name>centerSplitHeight</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>200</default-value>
+        </attribute>
+        <attribute>
+          <description>If the center splitter should be positioned from the end. The default is to stretch the top of
+                       the splitter pane and have the bottom be fixed in size.</description>
+          <attribute-name>centerSplitPositionedFromEnd</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>true</default-value>
+        </attribute>
+        <attribute>
+          <description>The width of the area that houses the centerSplitStart facet.</description>
+          <attribute-name>centerSplitStartWidth</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>200</default-value>
+        </attribute>
+        <attribute>
+          <description>The height of the area that houses the centerNotes facet.</description>
+          <attribute-name>centerNotesHeight</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>auto</default-value>
+        </attribute>
+        <attribute>
+          <description>The width of the area that houses the centerSplitEnd facet.</description>
+          <attribute-name>centerSplitEndWidth</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>200</default-value>
+        </attribute>
+        <attribute>
+          <description>The height of the area that houses the centerBottomCollapsible facet.</description>
+          <attribute-name>centerBottomCollapsibleHeight</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>200</default-value>
+        </attribute>
+        <attribute>
+          <description>Whether the area that houses the centerBottomCollapsible facet is collapsed.</description>
+          <attribute-name>centerBottomCollapsed</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Specify "shown" to enable the geometry management capabilities of the tag you are demonstrating
+                       in your "center" or "demoTab" facets. Specify "hidden" if geometry management is not applicable
+                       for your tag--do not use "hidden" just because your tag simply doesn't support one or more of the
+                       geometry management scenarios (that situation requires you to use the gm*Notes attributes to
+                       explain what aspects are supported and warn about future changes in the modes or aspects that are
+                       not supported). Only use "hidden" for the rare case if your tag truly has no meaning for geometry
+                       management display within an ancestor.</description>
+          <attribute-name>gmChrome</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>hidden</default-value>
+        </attribute>
+        <attribute>
+          <description>The initial stretching mode for the tag you are demonstrating in the "center" or "demoTab"
+                       facets. The user will be able to toggle modes as long as gmDisabled is not false and gmChrome is
+                       not hidden. Specify "none" for a flowing mode where your tag is inside of a container that has an
+                       intrinsic width. Specify "first" for a stretching mode where your tag is stretched to fill the
+                       dimensions of the "center" or "demoTab" facets. Specify "noneWithZeroWidth" for a flowing mode
+                       where your tag is inside of a container that has an intrinsically zero-width container.</description>
+          <attribute-name>gmStretchChildren</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>#{mobileSettings.dimensionsFromChildren ? 'none' : 'first'}</default-value>
+        </attribute>
+        <attribute>
+          <description>Whether the user is forbidden from switching gmStretchChildren modes, the value you specify in
+                       gmDisabledNotes will be shown if this is the case.</description>
+          <attribute-name>gmDisabled</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Optional notes to display if gmDisabled="true".</description>
+          <attribute-name>gmDisabledNotes</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Optional styles to apply to the geometry management tester in series mode (when it should be
+                       stretched but isn't being stretched by its ancestor) to override the hard-coded stretched
+                       dimensions.</description>
+          <attribute-name>fakeStretchedStyle</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Optional notes to display if gmStretchChildren="none". Use this to warn if your tag does not
+                       support this geometry management mode or if there are any special circumstances such as attribute
+                       value combinations that someone trying to use your tag will need to know.</description>
+          <attribute-name>gmFlowNotes</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Optional notes to display if gmStretchChildren="noneWithZeroWidth". Use this to warn if your tag
+                       does not support this geometry management mode or if there are any special circumstances such as
+                       attribute value combinations that someone trying to use your tag will need to know.</description>
+          <attribute-name>gmFlowWithZeroWidthNotes</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Optional notes to display if gmStretchChildren="first". Use this to warn if your tag does not
+                       support this geometry management mode or if there are any special circumstances such as attribute
+                       value combinations that someone trying to use your tag will need to know.</description>
+          <attribute-name>gmStretchNotes</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>String representing a boolean for whether the ancestor of the center facet child does not always
+                       render a client id and as such we are better off ppr-replacing the parent component when updating
+                       component properties. In the pageTemplateDef for this template, we use the magical
+                       "partialTargetParent" attribute to cause the parent to be used as the partial target. See
+                       ComponentEditorHandler.update() for more details.</description>
+          <attribute-name>centerPartialTargetParent</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>String representing a boolean for whether the ancestor of the demoTab facet child does not always
+                       render a client id and as such we are better off ppr-replacing the parent component when updating
+                       component properties. In the pageTemplateDef for this template, we use the magical
+                       "partialTargetParent" attribute to cause the parent to be used as the partial target. See
+                       ComponentEditorHandler.update() for more details.</description>
+          <attribute-name>demoTabPartialTargetParent</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>PartialTriggers for the ancestor that houses the center facet.</description>
+          <attribute-name>centerPartialTriggers</attribute-name>
+          <!--
+            Note that the odd Array syntax is due to the Java Class.forName method syntax for
+            specifying an array of reference objects. The rich client may be enhanced at a later
+            date to allow the more friendly syntax of "java.lang.String[]"
+          -->
+          <attribute-class>[[Ljava.lang.String;</attribute-class>
+        </attribute>
+        <attribute>
+          <description>PartialTriggers for the ancestor that houses the demoTab facet.</description>
+          <attribute-name>demoTabPartialTriggers</attribute-name>
+          <!--
+            Note that the odd Array syntax is due to the Java Class.forName method syntax for
+            specifying an array of reference objects. The rich client may be enhanced at a later
+            date to allow the more friendly syntax of "java.lang.String[]"
+          -->
+          <attribute-class>[[Ljava.lang.String;</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Specifies if the gallery is visible.</description>
+          <attribute-name>galleryEnabled</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>true</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the height of the footer bar. This includes the borders</description>
+          <attribute-name>footerBarHeight</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>50px</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:resource type="css" source="/styles/customAlta.css"/>
+    <af:form defaultCommand="#{attrs.defaultCommand}" usesUpload="#{attrs.usesUpload}"
+             binding="#{templateBindings.formComponent}" id="myForm">
+      <af:panelStretchLayout id="ptpglwrp" topHeight="#{attrs.brandingBarHeight}" bottomHeight="#{!demoFind.galleryEnabled ? attrs.footerBarHeight : ''}"  dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}">
+        <f:facet name="top">
+          <af:group>
+            <af:popup id="popsch" contentDelivery="lazy" childCreation="deferred">
+              <af:declarativeComponent id="glryFind" viewId="demoFindField.jsff"/>
+            </af:popup>
+            <af:popup id="editorPopup" contentDelivery="lazy" childCreation="deferred"
+                                  rendered="#{!attrs.customEditorPresent and mobileSettings.simplifiedPresentation}">
+              <af:noteWindow id="editorNoteWindow">
+                <af:panelStretchLayout id="editorPsl" dimensionsFrom="auto"
+                                       inlineStyle="width:#{attrs.editorSize}px">
+                  <f:facet name="center">
+                    <af:declarativeComponent id="floatingTagEditor" viewId="tagEditor.jsff"
+                                             customEditorPresent="#{attrs.customEditorPresent}"
+                                             demoKind="#{attrs.demoKind}" gmChrome="#{attrs.gmChrome}"
+                                             gmStretchChildren="#{attrs.gmStretchChildren}"
+                                             gmDisabled="#{attrs.gmDisabled}"
+                                             gmDisabledNotes="#{attrs.gmDisabledNotes}"
+                                             gmFlowNotes="#{attrs.gmFlowNotes}"
+                                             gmFlowWithZeroWidthNotes="#{attrs.gmFlowWithZeroWidthNotes}"
+                                             gmStretchNotes="#{attrs.gmStretchNotes}"
+                                             editingDocument="#{attrs.editingDocument}"
+                                             editingForm="#{attrs.editingForm}"
+                                             tagDocPrefix="#{attrs.tagDocPrefix}"/>
+                  </f:facet>
+                </af:panelStretchLayout>
+              </af:noteWindow>
+            </af:popup>                        
+            <af:declarativeComponent id="bbar" viewId="/oracle/templates/brandingBar.jsff" showStatusIndicator="true"  logoShortDesc="#{attrs.logoShortDesc}" logoImagePath="/images/oracle_logo_lrg.png" logoSmallImagePath="/images/oracle_logo_sm.png">
+              <f:facet name="globalNavbar">
+                <af:toolbar id="ptnp1" styleClass="GlobalNavbar">
+                  <af:group id="grptb">
+                    
+                    <af:button icon="/images/alta_v1/project_ena.png" hoverIcon="/images/alta_v1/project_ovr.png" depressedIcon="/images/alta_v1/project_dwn.png"  rendered="#{(attrs.demoKind!='visualDesign') and
+                                        (attrs.demoKind!='styles') and
+                                        (attrs.demoKind!='confusedComponents') and
+                                        (attrs.demoKind!='feature')}" action="guide" immediate="true" shortDesc="Tag Guide"
+                                              id="ptcni9"/>
+                    <af:button icon="/images/alta_v1/project_ena.png" hoverIcon="/images/alta_v1/project_ovr.png" depressedIcon="/images/alta_v1/project_dwn.png"  rendered="#{attrs.demoKind=='visualDesign'}" action="visualDesigns"
+                                            text="Visual Designs" id="ptcni10"/>
+                    <af:button icon="/images/alta_v1/project_ena.png" hoverIcon="/images/alta_v1/project_ovr.png" depressedIcon="/images/alta_v1/project_dwn.png"  rendered="#{attrs.demoKind=='feature'}" action="feature" text="Feature Demos"
+                                              id="ptcni11"/>
+                    <af:button icon="/images/alta_v1/project_ena.png" hoverIcon="/images/alta_v1/project_ovr.png" depressedIcon="/images/alta_v1/project_dwn.png"  rendered="#{attrs.demoKind=='confusedComponents'}" action="confusedComponents"
+                                              text="Commonly Confused Components" id="ptcni14"/>
+                                            
+                    <af:button icon="/images/alta_v1/find_ena.png" hoverIcon="/images/alta_v1/find_ovr.png" depressedIcon="/images/alta_v1/find_dwn.png"  shortDesc="Search"
+                                              id="ptcni15">
+                      <af:showPopupBehavior popupId="::popsch" alignId="ptcni15"/>
+                    </af:button>
+                    <af:button  id="lnkBook" destination="/faces#{facesContext.viewRoot.viewId}"
+                                            rendered="#{attrs.mode != 'accessibility'}" shortDesc="Bookmarkable Link"
+                                            icon="/images/alta_v1/bookmark_ena.png" hoverIcon="/images/alta_v1/bookmark_ovr.png" depressedIcon="/images/alta_v1/bookmark_dwn.png"/>
+                    
+                    <af:button id="pslEditor" shortDesc="Editor" icon="/images/alta_v1/edit_ena.png" hoverIcon="/images/alta_v1/edit_ovr.png" depressedIcon="/images/alta_v1/edit_dwn.png"
+                                 rendered="#{!attrs.customEditorPresent and mobileSettings.simplifiedPresentation}">
+                      <af:showPopupBehavior popupId="editorPopup" align="afterStart"/>
+                    </af:button>
+                  </af:group>                    
+
+                  <af:button id="userdrp" text="anonymous@oracle.com" actionDelivery="none" styleClass="AFGlobalNavbarButton">
+                    <f:facet name="popup">
+                      <af:menu text="anonymous@oracle.com" id="ursmn1">
+                        <af:commandMenuItem text="Oracle RCF Home" immediate="true"
+                                                  shortDesc="Learn more about ADF Faces Rich Client" id="ptcni2"
+                                                  partialSubmit="true" action="#{aboutBean.goHome}"/>
+                        <af:group id="abtgrp">
+                          <af:commandMenuItem text="#{aboutBean.aboutLabel}"
+                                              shortDesc="View version information about the software used to generate this page"
+                                              id="ptcni1">
+                            <af:showPopupBehavior popupId="::about:about"/>
+                          </af:commandMenuItem>
+                        </af:group>
+                      </af:menu>
+                    </f:facet>
+                  </af:button>
+                </af:toolbar>
+              </f:facet>
+              
+              <f:facet name="appNavbar">
+                <af:group id="nvgrp">
+                  <af:declarativeComponent id="gToolsAlta" viewId="globalToolsAlta.jsff"
+                                           templateSource="/templates/pageTemplateDefs/tagDemoTemplateAlta.jspx.source"
+                                           tagDocShown="#{attrs.demoKind!='visualDesign' and attrs.demoKind!='feature' and attrs.demoKind!='confusedComponents' and attrs.tagName!=null}"
+                                           tagDocDestination="/docs/#{attrs.tagDocPrefix=='dvt' ? 'dvt/tagdoc/dvt' : 'tagdoc/af'}_#{attrs.tagName}.html"
+                                           skinDocShown="#{attrs.demoKind=='component' or attrs.demoKind=='styles'}"
+                                           skinDocDestination="/docs/skin-selectors.html##{attrs.tagName}"
+                                           skinDemoShown="#{attrs.demoKind=='component' or attrs.demoKind=='styles'}"
+                                           tagDemoShown="#{attrs.tagName!=null and attrs.demoKind=='styles'}"
+                                           tagDemoDestination="/components/#{attrs.tagName}.jspx"
+                                           visualDesignDemoShown="#{attrs.demoKind=='component'}"
+                                           visualDesignDemoDestination="/visualDesigns/#{attrs.visualDesignName}.jspx"
+                                           visualDesignDemoDisabled="#{''==attrs.visualDesignName}">
+                  </af:declarativeComponent>            
+                </af:group>
+              </f:facet>
+              <f:facet name="brandingTitle">
+                <af:group id="tGrp">
+                    <af:outputText inlineStyle="white-space: nowrap;" rendered="#{attrs.brandingTitle!=null}"
+                       value="#{attrs.brandingTitle}" id="ptot1"/>
+                    <af:outputText inlineStyle="white-space: nowrap;" rendered="#{attrs.tagName!=null}"
+                       value="#{attrs.tagName}#{attrs.demoKind=='feature'?'':' Demo'}" id="ptot2"/>
+                </af:group>
+              </f:facet>
+            </af:declarativeComponent>
+            <f:subview id="about">
+                <jsp:include page="/includes/aboutPopup.jspx"/>
+          </f:subview>
+          </af:group>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout id="contentArea" 
+          startWidth="#{attrs.contentAreaMarginStart}" endWidth="#{attrs.contentAreaMarginEnd}" 
+          topHeight="#{attrs.contentAreaMarginTop}" bottomHeight="#{attrs.contentAreaMarginBottom}" 
+          styleClass="AFStretchWidth" dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}">
+            <f:facet name="top">
+              <af:spacer id="spca1"/>
+            </f:facet>
+            <f:facet name="bottom">
+              <af:spacer id="spca2"/>
+            </f:facet>
+            <f:facet name="start">
+              <af:spacer id="spca3"/>
+            </f:facet>
+            <f:facet name="end">
+              <af:spacer id="spca4"/>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelStretchLayout dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}" id="contentmaxwidth" styleClass="ContentContainer BrandingMaxWidth">
+                <f:facet name="center">
+                  <af:decorativeBox id="contentBody" dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}" styleClass="AFStretchWidth">
+                    <f:facet name="center">
+                      <!-- Adding the panelSplitter for Accordion -->
+                      <af:panelSplitter orientation="horizontal" firstLandmark="navigation" splitterPosition="250" id="ptps3"
+                                        dimensionsFrom="auto">
+                        <f:facet name="first">
+                          <af:panelStretchLayout id="glry" dimensionsFrom="auto"
+                                                 rendered="#{demoFind.galleryEnabled and attrs.galleryEnabled and !mobileSettings.simplifiedPresentation}">
+                            <f:facet name="center">
+                              <af:declarativeComponent id="accMenu" viewId="componentGallerySideBar.jsff"
+                                                       mode="#{attrs.demoKind}"/>
+                            </f:facet>
+                          </af:panelStretchLayout>
+                        </f:facet>
+                        <f:facet name="second">
+                          <af:panelStretchLayout topHeight="#{attrs.header2Size}" id="ptpsl3" dimensionsFrom="auto">
+                            <f:facet name="top">
+                              <af:panelGroupLayout layout="vertical" id="ptpgl8">
+                                <af:facetRef facetName="contextLocal"/>
+                              </af:panelGroupLayout>
+                            </f:facet>
+                            <f:facet name="center">
+                              <af:panelSplitter orientation="horizontal" splitterPosition="#{attrs.editorSize}"
+                                                positionedFromEnd="true" id="ptps4" firstLandmark="main"
+                                                secondLandmark="complementary" dimensionsFrom="auto">
+                                <f:facet name="first">
+                                  <af:decorativeBox id="ptdb2" dimensionsFrom="auto">
+                                    <f:facet name="center">
+                                      <af:panelStretchLayout bottomHeight="2.8em" id="ptpsl4" dimensionsFrom="auto">
+                                        <!-- Mark the skip link target - skip link jumps here. -->
+                                        <af:skipLinkTarget />
+                                        <f:facet name="center">
+                                          <!-- This is the meat of the page -->
+                                          <af:switcher id="centerMode" defaultFacet="none" facetName="#{attrs.centerMode}">
+                                            <f:facet name="none">
+                                              <af:panelStretchLayout id="pslCHF" topHeight="#{attrs.centerHeaderHeight}"
+                                                                     bottomHeight="#{attrs.centerFooterHeight}"
+                                                                     dimensionsFrom="auto">
+                                                <f:facet name="top">
+                                                  <af:facetRef facetName="centerHeader"/>
+                                                </f:facet>
+                                                <f:facet name="center">
+                                                  <af:panelSplitter id="psCBC" orientation="vertical" positionedFromEnd="true"
+                                                                    splitterPosition="#{attrs.centerBottomCollapsibleHeight}"
+                                                                    collapsed="#{attrs.centerBottomCollapsed}"
+                                                                    dimensionsFrom="auto">
+                                                    <f:facet name="first">
+                                                      <af:panelSplitter id="psCV" orientation="vertical"
+                                                                        splitterPosition="#{attrs.centerSplitHeight}"
+                                                                        positionedFromEnd="#{attrs.centerSplitPositionedFromEnd}"
+                                                                        dimensionsFrom="auto">
+                                                        <f:facet name="first">
+                                                          <af:panelSplitter id="psCS" orientation="horizontal"
+                                                                            splitterPosition="#{attrs.centerSplitStartWidth}"
+                                                                            dimensionsFrom="auto">
+                                                            <f:facet name="first">
+                                                              <af:facetRef facetName="centerSplitStart"/>
+                                                            </f:facet>
+                                                            <f:facet name="second">
+                                                              <af:panelSplitter id="psCE" orientation="horizontal"
+                                                                                positionedFromEnd="true"
+                                                                                splitterPosition="#{attrs.centerSplitEndWidth}"
+                                                                                dimensionsFrom="auto">
+                                                                <f:facet name="first">
+                                                                  <af:panelStretchLayout id="pslCN"
+                                                                                         bottomHeight="#{attrs.centerNotesHeight}"
+                                                                                         partialTriggers="#{attrs.centerPartialTriggers}"
+                                                                                         dimensionsFrom="auto">
+                                                                    <f:facet name="center">
+                                                                      <aftest:testGeometryManagement id="tgmA"
+                                                                                                     stretchChildren="#{attrs.gmStretchChildren}"
+                                                                                                     disabled="#{attrs.gmDisabled}"
+                                                                                                     disabledNotes="#{attrs.gmDisabledNotes}"
+                                                                                                     flowNotes="#{attrs.gmFlowNotes}"
+                                                                                                     flowWithZeroWidthNotes="#{attrs.gmFlowWithZeroWidthNotes}"
+                                                                                                     stretchNotes="#{attrs.gmStretchNotes}"
+                                                                                                     chrome="#{attrs.gmChrome == 'shown' and attrs.customEditorPresent ? 'shown' : 'hidden'}">
+                                                                        <f:attribute name="partialTargetParent"
+                                                                                     value="#{attrs.centerPartialTargetParent}"/>
+                                                                        <af:facetRef facetName="center"/>
+                                                                        <f:facet name="nonVisual">
+                                                                          <af:facetRef facetName="centerNonVisual"/>
+                                                                        </f:facet>
+                                                                      </aftest:testGeometryManagement>
+                                                                    </f:facet>
+                                                                    <f:facet name="bottom">
+                                                                      <af:facetRef facetName="centerNotes"/>
+                                                                    </f:facet>
+                                                                  </af:panelStretchLayout>
+                                                                </f:facet>
+                                                                <f:facet name="second">
+                                                                  <af:facetRef facetName="centerSplitEnd"/>
+                                                                </f:facet>
+                                                              </af:panelSplitter>
+                                                            </f:facet>
+                                                          </af:panelSplitter>
+                                                        </f:facet>
+                                                        <f:facet name="second">
+                                                          <af:facetRef facetName="centerSplitBottom"/>
+                                                        </f:facet>
+                                                      </af:panelSplitter>
+                                                    </f:facet>
+                                                    <f:facet name="second">
+                                                      <af:facetRef facetName="centerBottomCollapsible"/>
+                                                    </f:facet>
+                                                  </af:panelSplitter>
+                                                </f:facet>
+                                                <f:facet name="bottom">
+                                                  <af:facetRef facetName="centerFooter"/>
+                                                </f:facet>
+                                              </af:panelStretchLayout>
+                                            </f:facet>
+                                            <f:facet name="tabs">
+                                              <af:panelTabbed id="centerTabs" dimensionsFrom="auto">
+                                                <af:showDetailItem id="demoTab" stretchChildren="first" text="Demo Example">
+                                                  <af:panelStretchLayout id="pslTabs" topHeight="#{attrs.demoTabHeaderHeight}"
+                                                                         partialTriggers="#{attrs.demoTabPartialTriggers}"
+                                                                         dimensionsFrom="auto">
+                                                    <f:facet name="top">
+                                                      <af:facetRef facetName="demoTabHeader"/>
+                                                    </f:facet>
+                                                    <f:facet name="center">
+                                                      <aftest:testGeometryManagement id="tgmB"
+                                                                                     stretchChildren="#{attrs.gmStretchChildren}"
+                                                                                     disabled="#{attrs.gmDisabled}"
+                                                                                     disabledNotes="#{attrs.gmDisabledNotes}"
+                                                                                     flowNotes="#{attrs.gmFlowNotes}"
+                                                                                     flowWithZeroWidthNotes="#{attrs.gmFlowWithZeroWidthNotes}"
+                                                                                     stretchNotes="#{attrs.gmStretchNotes}"
+                                                                                     chrome="#{attrs.gmChrome == 'shown' and attrs.customEditorPresent ? 'shown' : 'hidden'}">
+                                                        <f:attribute name="partialTargetParent"
+                                                                     value="#{attrs.demoTabPartialTargetParent}"/>
+                                                        <af:facetRef facetName="demoTab"/>
+                                                        <f:facet name="nonVisual">
+                                                          <af:facetRef facetName="demoTabNonVisual"/>
+                                                        </f:facet>
+                                                      </aftest:testGeometryManagement>
+                                                    </f:facet>
+                                                  </af:panelStretchLayout>
+                                                </af:showDetailItem>
+                                                <af:showDetailItem id="OtherTab" stretchChildren="first"
+                                                                   text="Other Examples">
+                                                  <af:facetRef facetName="otherTab"/>
+                                                </af:showDetailItem>
+                                              </af:panelTabbed>
+                                            </f:facet>
+                                            <f:facet name="series">
+                                              <af:panelGroupLayout layout="scroll" id="pglSeries">
+                                                <af:facetRef facetName="seriesAbove"/>
+                                                <aftest:testGeometryManagement id="tgmC"
+                                                                               stretchChildren="#{attrs.gmStretchChildren}"
+                                                                               disabled="#{attrs.gmDisabled}"
+                                                                               disabledNotes="#{attrs.gmDisabledNotes}"
+                                                                               flowNotes="#{attrs.gmFlowNotes}"
+                                                                               flowWithZeroWidthNotes="#{attrs.gmFlowWithZeroWidthNotes}"
+                                                                               stretchNotes="#{attrs.gmStretchNotes}"
+                                                                               chrome="#{attrs.gmChrome == 'shown' and attrs.customEditorPresent ? 'shown' : 'hidden'}"
+                                                                               fakeStretchedStyle="#{attrs.fakeStretchedStyle}">
+                                                  <f:attribute name="partialTargetParent"
+                                                               value="#{attrs.demoTabPartialTargetParent}"/>
+                                                  <af:facetRef facetName="seriesComponent"/>
+                                                </aftest:testGeometryManagement>
+                                                <af:facetRef facetName="seriesBelow"/>
+                                              </af:panelGroupLayout>
+                                            </f:facet>
+                                          </af:switcher>
+                                          <!-- End of the meat of the page -->
+                                        </f:facet>
+                                        <f:facet name="bottom">
+                                          <!-- Don't stretch the button -->
+                                          <af:panelGroupLayout layout="horizontal" id="ptpgl10"
+                                            inlineStyle="margin-top: 5px;" >
+                                            <af:button text="Print Content" icon="/images/print.png"
+                                                       id="ptcb1">
+                                              <af:showPrintablePageBehavior/>
+                                            </af:button>
+                                            <af:spacer id="ptpgl10s1" width="4px" height="4px"
+                                                       rendered="#{adfFacesContext.outputMode != 'attachment'}"/>
+                                            <af:resource type="javascript" source="/jsLibs/Offline.js"/>
+                                            <af:button text="Show Attachment"
+                                                       rendered="#{adfFacesContext.outputMode != 'attachment'}"
+                                                       id="ptOfflineCB">
+                                              <af:clientListener method="Offline.takeOffline" type="action"/>
+                                            </af:button>
+                                            <af:spacer id="ptpgl10s2" width="4px" height="4px"/>
+                                            <af:facetRef facetName="extraBottomButtons"/>
+                                          </af:panelGroupLayout>
+                                        </f:facet>
+                                      </af:panelStretchLayout>
+                                    </f:facet>
+                                  </af:decorativeBox>
+                                </f:facet>
+                                <f:facet name="second">
+                                  <af:panelStretchLayout id="pslEditor" dimensionsFrom="auto"
+                                                         rendered="#{!attrs.customEditorPresent and !mobileSettings.simplifiedPresentation}">
+                                    <f:facet name="center">
+                                      <af:declarativeComponent id="tagEditor" viewId="tagEditor.jsff"
+                                                               customEditorPresent="#{attrs.customEditorPresent}"
+                                                               demoKind="#{attrs.demoKind}" gmChrome="#{attrs.gmChrome}"
+                                                               gmStretchChildren="#{attrs.gmStretchChildren}"
+                                                               gmDisabled="#{attrs.gmDisabled}"
+                                                               gmDisabledNotes="#{attrs.gmDisabledNotes}"
+                                                               gmFlowNotes="#{attrs.gmFlowNotes}"
+                                                               gmFlowWithZeroWidthNotes="#{attrs.gmFlowWithZeroWidthNotes}"
+                                                               gmStretchNotes="#{attrs.gmStretchNotes}"
+                                                               editingDocument="#{attrs.editingDocument}"
+                                                               editingForm="#{attrs.editingForm}"
+                                                               tagDocPrefix="#{attrs.tagDocPrefix}"/>
+                                    </f:facet>
+                                  </af:panelStretchLayout>
+                                </f:facet>
+                              </af:panelSplitter>
+                              <!-- end of secondary auxiliary splitter -->
+                            </f:facet>
+                          </af:panelStretchLayout>
+                          <!-- end of secondary header layout -->
+                        </f:facet>
+                      </af:panelSplitter>
+                    </f:facet>
+                  </af:decorativeBox>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="bottom">
+          <af:panelGroupLayout halign="center"  layout="vertical" valign="middle" id="ptpglft" clientComponent="true"
+                                 styleClass="FooterBar #{mobileSettings.dimensionsFromChildren ? 'FooterBarFlow' : ''}" rendered="#{!demoFind.galleryEnabled}">        
+              <af:panelGroupLayout layout="vertical" valign="middle"  id="footPgl"
+                                 styleClass="FooterContentContainer BrandingMaxWidth">
+                <af:panelGroupLayout layout="vertical" valign="middle" id="footlnk">
+                  <af:navigationPane hint="bar" id="ftllnks">
+                    <af:commandNavigationItem id="ptfni0"
+                                              text="Home" shortDesc="Learn more about ADF Faces Rich Client"
+                                              action="#{aboutBean.goHome}"
+                                              />
+                    <af:commandNavigationItem id="ptfni1"
+                                              text="Tag Guide" action="guide"
+                                              />
+                    <af:commandNavigationItem id="ptfni2"
+                                              text="Feature Demos" action="feature"
+                                              />
+                    <af:commandNavigationItem id="ptfni3"
+                                              text="Visual Designs" action="visualDesigns"
+                                              />
+                    <af:commandNavigationItem text="About..."
+                                              shortDesc="View version information about the software used to generate this page"
+                                              id="ptfni5">
+                      <af:showPopupBehavior popupId="::about:about"/>
+                    </af:commandNavigationItem>
+                  </af:navigationPane>
+    
+                    <af:outputText id="ftot" value="Copyright &#169; 2013, Oracle and/or its affiliates. All rights reserved."/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </af:form>
+  </af:pageTemplateDef>
+</jsp:root>

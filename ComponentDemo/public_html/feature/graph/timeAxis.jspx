@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Graph Time Axis Demo"
+                     binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle"
+                             value="Graph Time Blackout Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Graph Time Blackout"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:outputText value="Time Axis usage examples" 
+                                       id="ot1" inlineStyle="font-size:large;"/>
+                        <af:panelGroupLayout layout="vertical" id="pgl2">
+                            <af:panelGroupLayout layout="horizontal" id="pgl3">
+                                <dvt:lineGraph id="lg1" subType="LINE_VERT_ABS"
+                                              
+                                               tabularData="#{timeBlackout.brokenTimeData}"
+                                               timeAxisType="TAT_DEFAULT_STRICT" >
+                                               <dvt:graphTitle text="TAT_DEFAULT: regular intervals and matching among series" horizontalAlignment="CENTER"/>
+                                </dvt:lineGraph>
+                            </af:panelGroupLayout>
+                            <af:separator id="s3"/>
+                            <af:panelGroupLayout layout="horizontal" id="pgl4">
+                                <dvt:barGraph id="bg1" subType="BAR_VERT_CLUST"
+                                             
+                                              timeAxisType="TAT_IRREGULAR_STRICT"
+                                              tabularData="#{timeBlackout.timeData}">
+                                              <dvt:graphTitle text="TAT_IRREGULAR_STRICT: Irregular time axis bar graph" horizontalAlignment="CENTER">
+                                        <dvt:graphFont id="graphFont1"/>
+                                    </dvt:graphTitle>
+                                </dvt:barGraph>
+                                <dvt:lineGraph id="lg4" subType="LINE_VERT_ABS"
+                                               timeAxisType="TAT_IRREGULAR"
+                                              
+                                               tabularData="#{timeBlackout.timeData}">
+                                    <dvt:graphTitle text="TAT_IRREGULAR: Line graph displaying same set of data, along with a shaded vertical area representing down time" horizontalAlignment="CENTER"/>
+                                    <dvt:referenceObjectSet>
+                                        <dvt:referenceObject type="RO_AREA"
+                                                             association="X1AXIS"
+                                                             lowValue="#{timeBlackout.startDate}"
+                                                             highValue="#{timeBlackout.endDate}"
+                                                             location="RO_BACK"
+                                                             color="#99999999"
+                                                             displayedInLegend="true"
+                                                             text="Blackout"
+                                                             id="ba1"/>
+                                    </dvt:referenceObjectSet>
+                                </dvt:lineGraph>
+                            </af:panelGroupLayout>
+                            <af:separator id="s2"/>
+                            <af:panelGroupLayout layout="horizontal" id="pgl5">
+                                <dvt:lineGraph id="lg2" subType="LINE_VERT_ABS"
+                                              
+                                               tabularData="#{timeBlackout.mixedTimeData}"
+                                               timeAxisType="TAT_MIXED_FREQUENCY_STRICT">
+                                               <dvt:graphTitle text="TAT_MIXED_FREQUENCY_STRICT: Mixed frequencny data has to be specified using a special format" horizontalAlignment="CENTER"/>
+                                </dvt:lineGraph>
+                                <dvt:lineGraph id="lg3" subType="LINE_VERT_ABS"
+                                              
+                                               tabularData="#{timeBlackout.mixedTimeData}"
+                                               timeAxisType="TAT_OFF">
+                                               <dvt:graphTitle text="TAT_OFF: Time axis disabled, displaying mixed frequency dataset" horizontalAlignment="CENTER"/>
+                                </dvt:lineGraph>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                        <!-- START SEE ALSO LINKS -->
+                        <af:outputText value="See also:"/>
+                        <af:panelList>                            
+                            <af:goLink text="Time Axis Demo Backing Bean"
+                                   destination="/resources/sourceCode/feature/rich/graph/TimeBlackoutSample.javasource"
+                                   id="gl1"/>
+                       </af:panelList>
+                        <!-- END SEE ALSO LINKS -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

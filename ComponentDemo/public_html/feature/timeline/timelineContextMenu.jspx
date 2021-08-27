@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Timeline Context Menu Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Timeline Context Menu Demo"/>
+                <!-- Tag Name -->
+                <f:attribute name="tagName" value="Timeline Context Menu"/>
+                <f:facet name="top">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                    <!-- START TAG DEMO -->
+                    
+                    <af:panelStretchLayout topHeight="auto">
+                        <f:facet name="top">
+                            <af:panelGroupLayout layout="vertical" id="pgl2">
+                                <af:popup contentDelivery="lazyUncached" id="contextMenu" launcherVar="source" eventContext="launcher"
+                                          clientComponent="true">
+                                    <af:setPropertyListener from="#{source.currentRowData}" to="#{timelineContextMenu.selectedItemMenu}"
+                                                            type="popupFetch"/>
+                                    <af:menu id="m2">
+                                        <af:commandMenuItem text="View Details of '#{timelineContextMenu.selectedItemMenu}'"
+                                                            actionListener="#{timelineContextMenu.menuItemListener}" id="cmi4"/>
+                                        <af:group id="g2">
+                                            <af:commandMenuItem text="Add Task for '#{timelineContextMenu.selectedItemMenu}'"
+                                                                actionListener="#{timelineContextMenu.menuItemListener}" id="cmi5"/>
+                                            <af:commandMenuItem text="Add Notes for '#{timelineContextMenu.selectedItemMenu}'"
+                                                                actionListener="#{timelineContextMenu.menuItemListener}" id="cmi6"/>
+                                        </af:group>
+                                    </af:menu>
+                                </af:popup>
+                                <f:verbatim>                        
+                                    <b>Demonstrates Context Menu in Timeline</b>                   
+                                    <ul>
+                                        <li>
+                                            This demo shows how to trigger context menus on Time Items using 
+                                            <b>dvt:showPopupBehavior</b>
+                                        </li>
+                                        <li>Right click on any Time Item to see the context menu and select an action.</li>
+                                    </ul>                                                                                    
+                                </f:verbatim>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelGroupLayout clientComponent="true" layout="scroll">
+                                <dvt:timeline id="tl1" startTime="2013-09-21" endTime="2013-09-27" itemSelection="multiple" orientation="horizontal"
+                                              summary="Timeline Context Menu Demo" styleClass="AFStretchWidth" inlineStyle="height:400px"
+                                              binding="#{editor.component}">
+                                    <dvt:timeSeries id="ts1" var="evt" value="#{timelineContextMenu.model}" binding="#{timelineContextMenu.timeSeries}">
+                                        <dvt:timeItem id="ti1" value="#{evt.date}" endTime="#{evt.endDate}" title="#{evt.description}" description="#{evt.date}">
+                                            <af:showPopupBehavior popupId="::contextMenu" align="afterStart" triggerType="contextMenu"/>
+                                        </dvt:timeItem>
+                                    </dvt:timeSeries>
+                                    <dvt:timeAxis id="ta1" scale="hours" zoomOrder="weeks days hours"/>
+                                    <dvt:timelineOverview id="ov1">
+                                        <dvt:timeAxis id="ta2" scale="months"/>
+                                    </dvt:timelineOverview>
+                                </dvt:timeline>
+                                <af:outputFormatted binding="#{timelineContextMenu.outputFormatted}"
+                                                    value="#{timelineContextMenu.status}" id="of1" clientComponent="true"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+
+                    <!-- END TAG DEMO -->
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                     <af:panelGroupLayout layout="scroll" id="pgl1">
+                        <!-- START SEE ALSO LINKS -->
+                        <af:outputText value="See also:" id="ot1"/>
+                        <af:panelList id="pl1">
+                            <af:goLink text="Timeline Index" destination="/feature/timeline/index.jspx" id="gl2"/>
+                        </af:panelList>
+                        <!-- END SEE ALSO LINKS -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

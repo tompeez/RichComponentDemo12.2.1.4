@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="dynTableFlatten" binding="#{templateBindings.documentComponent}"
+                     smallIconSource="#{aboutBean.smallIconSource}" largeIconSource="#{aboutBean.largeIconSource}"
+                     theme="dark" id="d1">
+            <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+                <f:attribute name="tagName" value="dynamicFaces"/>
+                <f:attribute name="demoKind" value="feature"/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout id="pgl1" layout="vertical">
+                        <af:outputText styleClass="AFInstructionText" value="This is the demo for the dynamic table with Panel Collection. User can use View menu to hide and show columns in the table. All columns are dynamically generated from an attribute model. 
+                                        The attribute model defines a list of attribute metadata from which a component is dynamically determined at
+                                        runtime. Each attribute metadata instances contains the type, name, length and other information about an
+                                        attribute. No static component is defined in the page source." id="ot1"/>
+                        <af:spacer height="20px" id="s1"/>
+                        <af:panelCollection id="pc1">
+                            <f:facet name="menus"/>
+                            <f:facet name="toolbar"/>
+                            <f:facet name="statusbar"/>
+                            <af:table value="#{TestDynCompBean.values}" var="row" varStatus="vs" rowSelection="single"
+                                      id="t1" width="100%">
+                                <af:iterator value="#{TestDynCompBean.attributesModel.attributes}" id="itr1" var="col">
+                                    <af:column headerText="#{col.label}" id="c1">
+                                        <af:dynamicComponent value="#{row[col.name]}" attributeModel="#{col}" id="dc1"/>
+                                    </af:column>
+                                </af:iterator>
+                            </af:table>
+                        </af:panelCollection>
+                    </af:panelGroupLayout>
+                    <f:facet name="centerBottomCollapsible">
+                        <af:panelGroupLayout layout="scroll" id="pgl4">
+                            <af:outputText value="See also:" id="ot14"/>
+                            <af:panelList id="pl1">
+                                <af:goLink text="Dynamic Faces Demo for Hierarchical Form"
+                                           destination="/feature/dynamicFaces/dynFormHierarchical.jspx" id="gltf"/>
+                                <af:goLink text="Dynamic Faces Demo for Form Flatten"
+                                           destination="/feature/dynamicFaces/dynFormFlatten.jspx" id="gl1"/>
+                                <af:goLink text="Dynamic Faces Demo for Table Flatten"
+                                           destination="/feature/dynamicFaces/dynTableFlatten.jspx" id="gl2"/>
+                                <af:goLink text="Dynamic Faces Demo for Hierarchical Table"
+                                           destination="/feature/dynamicFaces/dynTableHierarchical.jspx" id="gl3"/>
+                            </af:panelList>
+                        </af:panelGroupLayout>
+                    </f:facet>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Dialog help demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Header help"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="pgl1">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+          <af:panelGroupLayout layout="vertical" id="pgl2">
+            <f:facet name="separator">
+              <af:spacer height="10px" id="s2"/>
+            </f:facet>
+            <af:outputText value="See javadoc on ResourceBundleHelpProvider for details on                   how to access help, also see DemoHelpProvider for details on how to                   implement external URL."
+                           id="ot1"/>
+
+            <af:popup id="popupDialog" contentDelivery="lazyUncached">
+              <af:dialog helpTopicId="TOPICID_ALL" title="Search" type="okCancel"  binding="#{editor.component}"
+                         id="d2">
+                 <af:inputText label="Criteria" id="it1"/>
+              </af:dialog>
+            </af:popup>
+
+            <af:outputFormatted styleUsage="instruction" value="inline popup dialog with helpTopicId."
+                                id="of1"/>
+
+            <af:commandButton text="Show Dialog" id="cb1">
+               <af:showPopupBehavior popupId="popupDialog"/>
+            </af:commandButton>
+
+          </af:panelGroupLayout>
+
+          <af:panelGroupLayout layout="vertical" id="pgl3">
+            <f:facet name="separator">
+              <af:spacer height="10px" id="s3"/>
+            </f:facet>
+
+            <af:popup id="popupPanelWindow" contentDelivery="lazyUncached">
+              <af:panelWindow helpTopicId="TOPICID_ALL" title="Search" id="pw1">
+                 <af:inputText label="Criteria" id="it2"/>
+              </af:panelWindow>
+            </af:popup>
+
+            <af:outputFormatted styleUsage="instruction" value="inline popup panelWindow with helpTopicId."
+                                id="of2"/>
+
+            <af:commandButton text="Show panelWindow" id="cb2">
+               <af:showPopupBehavior popupId="popupPanelWindow"/>
+            </af:commandButton>
+
+          </af:panelGroupLayout>
+
+        </af:panelGroupLayout>
+
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

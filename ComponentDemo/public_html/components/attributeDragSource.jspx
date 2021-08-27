@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="attributeDragSource demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="attributeDragSource"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="dragNDrop"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+  <!-- if changes are made to this demo, please update attributeDropTarget also. -->
+            <af:outputText value="This demo shows drag and drop using af:attributeDragSource and af:attributeDropTarget"
+                           id="ot1"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer width="30px" id="s2"/>
+              </f:facet>
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <af:panelBox text="outputText Drag Source" id="pb1">
+                  <af:outputText id="outputDragSource" value="Drag Me!">
+                    <af:attributeDragSource attribute="value"/>
+                  </af:outputText>
+                </af:panelBox>
+                <af:spacer height="20" id="s3"/>
+                <af:panelBox text="inputText Drag Source" id="pb2">
+                  <af:inputText id="inputDragSource" value="Now Drag Me!" label="drag source"
+                                simple="true">
+                    <af:attributeDragSource attribute="value"/>
+                  </af:inputText>
+                </af:panelBox>
+              </af:panelGroupLayout>
+              <af:panelBox text="Drop Target accepting strings" id="pb3">
+                <af:outputText id="attributeDropTarget" value="Drop Here!">
+                  <af:attributeDropTarget attribute="value"/>
+                </af:outputText>
+              </af:panelBox>
+            </af:panelGroupLayout>
+            
+            <af:outputText value="This demo shows drag and drop using af:attributeDragSource and af:clientAttribute"
+                           id="ot2"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer width="30px" id="s4"/>
+              </f:facet>
+              <af:panelBox text="Object[] client attributeDragSource" id="pb4">
+                <af:outputText id="objectArrayDragSource" value="Drag to see drinks">
+                  <af:attributeDragSource attribute="drinks"/>
+                  <af:clientAttribute name="drinks" value="#{demoDropHandler.drinks}"/>
+                </af:outputText>
+              </af:panelBox>
+              <af:panelBox text="Drop Target accepting Object[] for custom drop handler"
+                           id="pb5">
+                <af:outputText id="stringArrayDropTarget" value="What to drink?">
+                  <af:dropTarget actions="COPY" dropListener="#{demoDropHandler.handleFireDrop}">
+                    <af:dataFlavor flavorClass="java.lang.Object[]"/>
+                  </af:dropTarget>
+                </af:outputText>
+              </af:panelBox>
+            </af:panelGroupLayout>
+            
+            <af:outputText value="This demo shows drag and drop between 2 input fields with a validation check on the dragSource"
+                           id="ot3"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl5">
+              <f:facet name="separator">
+                <af:spacer width="30px" id="s5"/>
+              </f:facet>
+              <af:panelBox text="inputText Drag Source accepting 2 or more characters" id="pb6">
+                <af:panelGroupLayout id="pgl7" layout="vertical">
+                  <af:outputText id="ot31"
+                                 value="Enter a value that is less than 2 characters and drag the value to trigger a validation error."/>
+                  <af:inputText id="iTDSErr" value="ABC" label="Enter 2 or more characters"
+                                simple="true">
+                    <af:validateLength minimum="2"/>
+                    <af:attributeDragSource attribute="value"/>
+                  </af:inputText>
+                </af:panelGroupLayout>
+              </af:panelBox>
+              <af:panelBox text="Drop Target accepting a string of any length" id="pb7">
+                <af:panelGroupLayout id="pgl9" layout="vertical">
+                  <af:outputText id="ot32" value="Invalid value should not be accepted."/>
+                  <af:inputText id="iTDT" value="XY">
+                    <af:attributeDropTarget attribute="value"/>
+                  </af:inputText>
+                </af:panelGroupLayout>
+              </af:panelBox>
+            </af:panelGroupLayout>               
+            
+            <af:outputText value="This demo shows drag and drop between 2 input fields with a validation check on the dropTarget"
+                           id="ot4"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl6">
+              <f:facet name="separator">
+                <af:spacer width="30px" id="s6"/>
+              </f:facet>
+              <af:panelBox text="inputText Drag Source" id="pb8">
+                <af:panelGroupLayout id="pgl8" layout="vertical">
+                  <af:outputText id="ot41"
+                                 value="Enter a value that is less than 2 characters and drag the value to the drop target to trigger validation error."/>
+                  <af:inputText id="iTDS" value="ABC" label="Enter 2 or more characters"
+                                simple="true">
+                    <af:attributeDragSource attribute="value"/>
+                  </af:inputText>
+                </af:panelGroupLayout>
+              </af:panelBox>
+              <af:panelBox text="Drop Target accepting strings of 2 or more characters" id="pb9">
+                <af:panelGroupLayout id="pgl10" layout="vertical">
+                  <af:outputText id="ot42"
+                                 value="Dropping an invalid value should trigger a validation error."/>
+                  <af:inputText id="iTDTErr" value="XY">
+                    <af:validateLength minimum="2"/>
+                    <af:attributeDropTarget attribute="value"/>
+                  </af:inputText>
+                </af:panelGroupLayout>
+              </af:panelBox>
+            </af:panelGroupLayout>  
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

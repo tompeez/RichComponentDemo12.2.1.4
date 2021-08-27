@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Editable TreeTable demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+
+          <af:panelStretchLayout topHeight="30" id="psl1" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:outputFormatted value="&lt;b>Editable TreeTable Demo&lt;/b>"
+                                  id="of1"/>
+            </f:facet>
+            <f:facet name="center">
+               <af:treeTable var="node" styleClass="AFStretchWidth" id="tree"
+                          rowSelection="single" binding="#{treeTableTestData.component}"
+                          value="#{treeTableTestData.treeModel}" summary="treeTable data"
+                         >
+              <f:facet name="nodeStamp">
+                <af:column headerText="Node Value" width="200" sortable="true" sortProperty="value" rowHeader="unstyled"
+                           id="c1">
+                  <af:panelGroupLayout id="pgl2">
+                    <af:image source="#{node.icon}"
+                              inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                              shortDesc="node icon" id="i1"/>
+                    <af:outputText id="valueStamp" value="#{node.value}"/>
+                  </af:panelGroupLayout>
+                </af:column>
+              </f:facet>
+              <af:column headerText="Size" align="end" id="c2">
+                <af:inputText id="size" value="#{node.size}" label="size" simple="true"/>
+              </af:column>
+              <af:column headerText="selectBooleanCheckbox" id="c3">
+                <af:selectBooleanCheckbox value="#{node.checked}" label="checkbox" simple="true"
+                                          id="sbc1"/>
+              </af:column>
+              <af:column headerText="selectOneChoice" id="c4">
+                <af:selectOneChoice id="targetCompactChoice" value="#{node.selectOneChoiceValue}"
+                                    label="choice" simple="true">
+                  <af:selectItem label="Mouse" value="Mouse" shortDesc="mouse from China"
+                                 id="si1"/>
+                  <af:selectItem label="Speaker" value="Speaker" rendered="true"
+                                 id="si2"/>
+                  <af:selectItem label="Head Phone" value="Head Phone"
+                                 shortDesc="Head Phone from China" id="si3"/>
+                </af:selectOneChoice>
+              </af:column>
+              <af:column headerText="selectOneListbox" id="c5">
+                <af:selectOneListbox id="targetSelectOneListbox" value="#{node.selectOneValue}"
+                                     valueChangeListener="#{node.selectOneValueChanged}"
+                                     label="listbox" simple="true">
+                  <af:selectItem label="Mouse" value="Mouse" shortDesc="mouse from China"
+                                 id="si4"/>
+                  <af:selectItem label="Speaker" value="Speaker" rendered="true"
+                                 id="si5"/>
+                  <af:selectItem label="Head Phone" value="Head Phone"
+                                 shortDesc="Head Phone from China" id="si6"/>
+                </af:selectOneListbox>
+              </af:column>
+              <af:column headerText="Date-Time Accessed" width="180" id="c6">
+                <af:inputDate columns="12" value="#{node.inputDate}" id="inptDateTimeInTable"
+                              contentStyle="width:150px" label="date" simple="true">
+                  <af:convertDateTime type="both" dateStyle="full" pattern="yyyy/MM/dd hh:mm:ss a z"/>
+                </af:inputDate>
+              </af:column>
+              <af:column headerText="inputListOfValues" id="c7">
+                <af:inputListOfValues label="Ename" id="idInputListOfValues" value="#{demoLOV.ename}"
+                                      autoSubmit="true" searchDesc="employee search"
+                                      model="#{demoLOV.listOfValuesModel}"/>
+              </af:column>
+              <af:column headerText="inputComboboxListOfValues" id="c8">
+                <af:inputComboboxListOfValues label="Fname" id="idInputComboboxListOfValues"
+                                              value="#{demoComboboxLOV.ename}" autoSubmit="true"
+                                              searchDesc="search for employee name"
+                                              model="#{demoComboboxLOV.listOfValuesModel}"/>
+              </af:column>
+            </af:treeTable>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

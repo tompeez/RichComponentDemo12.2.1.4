@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root
+  xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Content to be rendered in the toolbar area of a panelBox.</description>
+        <attribute>
+          <description>The key for this dashboard item.</description>
+          <attribute-name>key</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <required>true</required>
+        </attribute>
+        <attribute>
+          <description>The demoDashboardBean for the dashboard visual design demo.</description>
+          <attribute-name>demoDashboardBean</attribute-name>
+          <attribute-class>oracle.adfdemo.view.layout.DemoDashboardBean</attribute-class>
+          <required>true</required>
+        </attribute>
+        <attribute>
+          <description>Flag for whether this fragment is being displayed in a maximized mode.</description>
+          <attribute-name>maximized</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:toolbox id="dctbox">
+      <af:toolbar id="dctbar">
+        <f:facet name="separator">
+          <af:spacer width="2" id="dcs1"/>
+        </f:facet>
+        <af:commandImageLink id="min${attrs.key}"
+                             shortDesc="Minimize"
+                             partialSubmit="true"
+                             icon="/images/removeselected_ena.png"
+                             hoverIcon="/images/removeselected_ovr.png"
+                             depressedIcon="/images/removeselected_dwn.png"
+                             actionListener="#{attrs.demoDashboardBean.minimize}">
+          <f:attribute name="associatedPanelKey" value="#{attrs.key}"/>
+        </af:commandImageLink>
+        <af:commandImageLink id="max${attrs.key}"
+                             rendered="#{!attrs.maximized}"
+                             shortDesc="Maximize"
+                             partialSubmit="true"
+                             icon="/images/max_ena.png"
+                             hoverIcon="/images/max_ovr.png"
+                             depressedIcon="/images/max_dwn.png"
+                             actionListener="#{attrs.demoDashboardBean.maximize}">
+          <f:attribute name="associatedPanelKey" value="#{attrs.key}"/>
+        </af:commandImageLink>
+        <af:commandImageLink id="restore${attrs.key}"
+                             rendered="#{attrs.maximized}"
+                             shortDesc="Restore"
+                             partialSubmit="true"
+                             icon="/images/restore_ena.png"
+                             hoverIcon="/images/restore_ovr.png"
+                             depressedIcon="/images/restore_dwn.png"
+                             actionListener="#{demoDashboard.restore}"/>
+      </af:toolbar>
+    </af:toolbox>
+  </af:componentDef>
+</jsp:root>

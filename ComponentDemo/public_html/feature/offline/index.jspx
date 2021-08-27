@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Monitored SQL Execution Detail" id="d1" theme="dark">
+      <f:facet name="metaContainer">
+        <af:resource type="css">
+<![CDATA[
+          /* dummy style class to improve specificity */
+          DUMMY {} 
+          
+          /* bogusly copied pressed-in style information referring to skin file */
+          .ON_BUTTON.DUMMY {
+            color:white;
+            background-color: #A7B7D4;
+            background-image: url("/adf-richclient-demo-context-root/afr/fusion/button_bg_dwn.png");
+            border-color: #4E555E #8F9AAC #8F9AAC #4E555E;
+          }
+]]>
+        </af:resource>
+      </f:facet>
+      <af:form id="f1">
+        <af:decorativeBox id="contentBody"  dimensionsFrom="parent">
+          <f:facet name="center">
+            <af:panelStretchLayout  id="psl1" topHeight="auto" dimensionsFrom="parent">
+              <f:facet name="top">
+                <af:panelGroupLayout layout="vertical" id="header">
+                  <af:goLink id="goOTN" text="More on OTN" shortDesc="Oracle Technology Network" destination="http://www.oracle.com/technetwork/database/focus-areas/manageability/index.html"/>
+                  <af:panelBorderLayout id="branding">
+                    <f:facet name="start">
+                      <af:outputText id="ptitle" value="Active Reports"/>
+                    </f:facet>
+                    <f:facet name="end">
+                      <f:subview id="offline">
+                        <jsp:include page="offlineButton.jsff"/>
+                      </f:subview>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <af:outputText id="repTitle" value="Monitored SQL Execution Detail"/>
+                  <af:panelBox id="pbOverview" text="Overview">
+                    <af:panelGroupLayout id="overviewRow" layout="horizontal">
+                      <af:panelFormLayout id="ovfields">
+                        <af:panelLabelAndMessage id="plid"  label="SQL ID">
+                          <af:outputText id="otid" value="2h4rsxr1sd9s5"/>
+                        </af:panelLabelAndMessage>
+                        <af:panelLabelAndMessage id="plp"   label="Parallel">
+                          <af:outputText id="otp" value="64 4"/>
+                        </af:panelLabelAndMessage>
+                        <af:panelLabelAndMessage id="ples"  label="Execution Started">
+                          <af:outputText id="otes" value="64 4"/>
+                        </af:panelLabelAndMessage>
+                        <af:panelLabelAndMessage id="pllrt" label="Last Refresh Time">
+                          <af:outputText id="otlrt" value="64 4"/>
+                        </af:panelLabelAndMessage>
+                        <af:panelLabelAndMessage id="pleid" label="Execution ID">
+                          <af:outputText id="oteid" value="16777216"/>
+                        </af:panelLabelAndMessage>
+                        <af:panelLabelAndMessage id="plusr" label="User">
+                          <af:outputText id="otusr" value="FSTEST"/>
+                        </af:panelLabelAndMessage>
+                        <af:panelLabelAndMessage id="plfc" label="Fetch Calls">
+                          <af:outputText id="otfc" value="1"/>
+                        </af:panelLabelAndMessage>
+                      </af:panelFormLayout>
+                      <!-- Graph 1 -->
+                      <!-- Graph 2 -->
+                    </af:panelGroupLayout>
+                  </af:panelBox>
+                </af:panelGroupLayout>
+              </f:facet>
+              <f:facet name="center">
+                <af:panelBox id="pbDetails" text="Details">
+                  <af:panelStretchLayout id="stretchDetails">
+                    <f:facet name="top">
+                      <af:panelGroupLayout id="buttonBar" layout="horizontal">
+                        <af:resource type="javascript">
+<![CDATA[
+function changeDisplayedUsingSelectOne(valueChangeEvent)
+{
+  var page = AdfPage.PAGE;
+  var hide = page.findComponentByAbsoluteId(valueChangeEvent.getOldValue());
+  
+  hide.setVisible(false);
+  
+  var show = page.findComponentByAbsoluteId(valueChangeEvent.getNewValue());
+  show.setVisible(true);
+}
+
+// mark the table command button as initially set
+AdfPage.PAGE.setPageProperty("_currSetButtonId", "cbTable");
+
+function _toggleButton(button, isSet)
+{
+  var page     = AdfPage.PAGE;
+  var targetId = button.getProperty("_show");
+  var target   = page.findComponentByAbsoluteId(targetId);
+  target.setVisible(isSet);
+  
+  var styleClass    = null;
+  var currSetButton = null;
+  
+  if (isSet)
+  {
+    // make the button look pressed in
+    styleClass    = "ON_BUTTON DUMMY";
+    currSetButton = button.getAbsoluteId();
+  }
+
+  button.setStyleClass(styleClass);
+  
+  page.setPageProperty("_currSetButtonId", currSetButton);  
+}
+
+function changeDisplayedUsingAction(actionEvent)
+{
+  var page        = AdfPage.PAGE;
+  var oldButtonId = page.getPageProperty("_currSetButtonId");
+  var newButton   =  actionEvent.getSource()
+  
+  if (oldButtonId != newButton.getAbsoluteId())
+  {
+    _toggleButton(page.findComponentByAbsoluteId(oldButtonId), false);
+    _toggleButton(newButton, true);
+  }
+
+  // don't do default processing  
+  actionEvent.cancel();
+}
+
+]]>
+                        </af:resource>
+<!-- selectOneChoice way of switching
+                        <af:selectOneChoice id="flipper" label="Show" value="table:folderTable" valuePassThru="true">
+                          <af:selectItem id="sit" label="Table" value="table:folderTable"/>
+                          <af:selectItem id="sihv" label="Hiearchy Viewer" value="" rendered="false"/>
+                          <af:selectItem id="sitt" label="Tree Table" value="treeTable:folderTreeTable"/>
+                          <af:selectItem id="sig" label="Graph" value="" rendered="false"/>
+                          <af:clientListener method="changeDisplayedUsingSelectOne" type="valueChange"/>
+                        </af:selectOneChoice>
+-->
+<!-- fake button bar way of switching -->
+
+                        <af:commandButton id="cbTable" text="Table" styleClass="ON_BUTTON DUMMY">
+                          <af:clientListener method="changeDisplayedUsingAction" type="action"/>
+                          <af:clientAttribute name="_show" value="table:folderTable"/>
+                        </af:commandButton>
+                        <af:commandButton id="cbHV" text="HV" rendered="false"/>
+                        <af:commandButton id="cbTreeTable" text="Tree Table">
+                          <af:clientListener method="changeDisplayedUsingAction" type="action"/>
+                          <af:clientAttribute name="_show" value="treeTable:folderTreeTable"/>
+                        </af:commandButton>
+                        <af:commandButton id="cbGraph" text="Graph" rendered="false"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="center">
+                      <aftest:panelStackedLayout id="stack">
+                        <f:subview id="table">
+                          <jsp:include page="table.jsff"/>
+                        </f:subview>
+                        <f:subview id="treeTable">
+                          <jsp:include page="treeTable.jsff"/>
+                        </f:subview>
+                      </aftest:panelStackedLayout>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </af:panelBox>
+              </f:facet>
+              <f:facet name="bottom">
+                <af:panelGroupLayout layout="vertical" id="footer">
+                  <af:outputText id="cpright" value="Copyright 1996, 2011, Oracle and/or its affiliates. All rights Reserved"/>
+                  <af:outputText id="tmark" value="Oracle is a registered Trademark of Oracle Corporation and/or its affiliates"/>
+                  <af:outputText id="blahblahblah" value="Other names may be trademarks of their respective owners"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:panelStretchLayout>
+          </f:facet>
+        </af:decorativeBox>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

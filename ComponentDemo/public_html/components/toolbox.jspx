@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="toolbox Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="toolbox"/>
+        <f:attribute name="visualDesignName" value="toolbar"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="centerHeader">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputText value="This toolbox contains 5 rows showing sample use cases:"
+                           id="ot1"/>
+            <af:panelList id="pl1">
+              <af:outputText value="Row 1 contains a menuBar, a toolbar, and a second toolbar with a stretched inputText child."
+                             id="ot2"/>
+              <af:outputText value="Row 2 contains a single toolbar." id="ot3"/>
+              <af:outputText value="Row 3 contains a single toolbar with a stretched spacer after the folders button."
+                             id="ot4"/>
+              <af:outputText value="Row 4 contains a toolbar with flex=1 and second toolbar with flex=2. They both have strectched spacers as well."
+                             id="ot5"/>
+              <af:outputText value="Row 5 contains a toolbar with flex=2 and second toolbar with flex=1. They both have strectched spacers as well."
+                             id="ot6"/>
+            </af:panelList>
+            <af:spacer height="5px" id="sp2"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:toolbox binding="#{editor.component}" id="toolbox">
+            <af:group id="g1">
+              <af:menuBar id="mb1">
+                <af:menu text="file" id="m1">
+                  <af:commandMenuItem text="open" id="cmi1"/>
+                </af:menu>
+                <af:menu text="edit" id="m2">
+                  <af:commandMenuItem text="undo" id="cmi2"/>
+                </af:menu>
+              </af:menuBar>
+                <af:toolbar id="t1">
+                  <!-- <af:outputText value="text"/> -->
+                  <af:button text="Forward" icon="/images/fwdarrow_gray.gif"
+                                           id="ctb1"/>
+                  <af:inputText label="Address" id="it1"/>
+                  <af:button text="Search" icon="/images/search.gif"
+                                           id="ctb2"/>
+                </af:toolbar>
+                <af:toolbar stretchId="stretch2" id="t2" flex="1">
+                  <af:button text="Forward" icon="/images/fwdarrow_gray.gif"
+                                           id="ctb3"/>
+                  <af:outputLabel value="Address 2" for="stretch2" inlineStyle="white-space: nowrap;"
+                                  id="ol1"/>
+                  <af:inputText id="stretch2" simple="true" clientComponent="true" label="Address2"
+                                contentStyle="width: 100%"
+                                inlineStyle="display: block; min-width: 5em; padding-right: 1em;" />
+                  <af:button text="Search" icon="/images/search.gif"
+                                           id="ctb4"/>
+                </af:toolbar>
+              </af:group>
+            <af:toolbar id="t3">
+              <af:button text="Forward" icon="/images/fwdarrow_gray.gif"
+                                       id="ctb5"/>
+              <af:button icon="/images/uplevel.gif" shortDesc="uplevel"
+                                       id="ctb6"/>
+            </af:toolbar>
+            <af:toolbar flex="1" stretchId="stretch1" id="t4">
+              <af:group id="g2">
+                <af:button text="Forward" icon="/images/fwdarrow_gray.gif"
+                                         disabled="true" id="ctb7"/>
+                <af:button icon="/images/uplevel.gif" shortDesc="uplevel"
+                                         id="ctb8"/>
+              </af:group>
+              <af:button id="search" text="Search" icon="/images/search.gif"/>
+              <af:button text="Folders" icon="/images/folders.gif"
+                                       id="ctb9"/>
+              <!-- Insert a stretched spacer to push subsequent buttons to the right -->
+              <af:spacer id="stretch1" clientComponent="true"/>
+              <af:button text="Reports" id="ctb10"/>
+              <af:button id="toggleRefresh" text="Refresh:OFF"/>
+              <af:group id="g3">
+                <af:button icon="/images/arrange.gif" shortDesc="arrange"
+                                         id="ctb11">
+                  <f:facet name="popup">
+                    <af:menu id="m3">
+                      <af:commandMenuItem text="Thumbnails" id="cmi3"/>
+                      <af:commandMenuItem text="Tiles" id="cmi4"/>
+                      <af:commandMenuItem text="Icons" id="cmi5"/>
+                      <af:commandMenuItem text="List" id="cmi6"/>
+                      <af:commandMenuItem text="Details" type="radio" selected="true"
+                                          id="cmi7"/>
+                    </af:menu>
+                  </f:facet>
+                </af:button>
+              </af:group>
+            </af:toolbar>
+            <af:group id="g4">
+              <af:toolbar stretchId="stretchA" flex="1" id="t5">
+                <af:button text="Button 1" id="button1"/>
+                <af:spacer id="stretchA" clientComponent="true" width="1"/>
+                <af:button text="Button 2" id="button2"/>
+              </af:toolbar>
+              <af:toolbar stretchId="stretchB" flex="2" id="t6">
+                <af:button text="Button 3" id="button3"/>
+                <af:spacer id="stretchB" clientComponent="true" width="1"/>
+                <af:button text="Button 4" id="button4"/>
+              </af:toolbar>
+            </af:group>
+            <af:group id="g5">
+              <af:toolbar stretchId="stretchC" flex="2" id="t7">
+                <af:button text="Button 5" id="button5"/>
+                <af:spacer id="stretchC" clientComponent="true" width="1"/>
+                <af:button text="Button 6" id="button6"/>
+              </af:toolbar>
+              <af:toolbar stretchId="stretchD" flex="1" id="t8">
+                <af:button text="Button 7" id="button7"/>
+                <af:spacer id="stretchD" clientComponent="true" width="1"/>
+                <af:button text="Button 8" id="button8"/>
+              </af:toolbar>
+            </af:group>
+          </af:toolbox>
+      </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

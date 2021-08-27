@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2017, Oracle and/or its affiliates. All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Responsive form layout in dialog Demo" binding="#{templateBindings.documentComponent}"
+                 theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelFormLayout"/>
+        <f:attribute name="visualDesignName" value="formLayout"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:popup id="popupDialog" contentDelivery="lazyUncached">
+              <af:dialog id="dialog" title="Responsive Form Layout in Dialog" resize="on">
+                <af:panelGroupLayout layout="vertical" id="pgl2" >
+                  <af:panelFormLayout rows="10" labelWidth="33%" fieldWidth="67%" id="panelFormLayout1" layout="responsive">
+                    <af:inputText label="label 1" id="it1"/>
+                    <af:inputDate label="label 2" id="it2"/>
+                    <af:inputListOfValues label="label 3" id="it3"/>
+                    <af:inputComboboxListOfValues label="label 4" id="it4"/>
+                    <af:panelLabelAndMessage id="it4plm" label="label 5" for="it5">
+                      <af:inputText id="it5" simple="true" value="Testing" />
+                    </af:panelLabelAndMessage>
+                    <af:panelLabelAndMessage label="label 6" id="panelLabelAndMessage2">
+                      <af:outputText value="This is an outputText to ensure that text will wrap inside of a panelLabelAndMessage if necessary."
+                                     id="ot2"/>
+                    </af:panelLabelAndMessage>
+                    <af:panelLabelAndMessage label="label 7" labelStyle="vertical-align: middle;"
+                                             id="plam1">
+                      <af:commandButton text="Submit" id="cb19"/>
+                    </af:panelLabelAndMessage>
+                  </af:panelFormLayout>
+                </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+            <af:commandButton immediate="true" text="Show Dialog" id="cb1">
+              <af:showPopupBehavior popupId="popupDialog"/>
+            </af:commandButton>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Data Links Visual Design Demo" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.visualDesignTemplate}">
+        <f:attribute name="headerGlobalSize" value="45"/>
+        <f:attribute name="header1Size" value="22"/>
+        <f:attribute name="header2Size" value="20"/>
+        <f:attribute name="footer2Size" value="5"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:attribute name="auxiliaryGlobalSize" value="220"/>
+        <f:attribute name="auxiliary1StartSize" value="220"/>
+        <f:attribute name="auxiliary2Size" value="220"/>
+        <f:attribute name="auxiliaryGlobalCollapsed" value="false"/>
+        <f:attribute name="auxiliary1StartCollapsed" value="false"/>
+        <f:attribute name="auxiliary2Collapsed" value="false"/>
+        <f:facet name="branding">
+          <af:outputText value="Data Links Visual Design Demo" id="ot1"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:navigationPane hint="buttons" id="np1">
+            <af:commandNavigationItem destination="index.jspx" text="Visual Designs" id="vds"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/panelPageTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc">
+                <af:commandNavigationItem id="bcA" destination="index.jspx" text="Visual Designs"/>
+                <af:commandNavigationItem id="bcB" text="Data Links Visual Design Demo"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="navigation1">
+          <af:panelStretchLayout endWidth="40px" id="psl1" dimensionsFrom="auto">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation1" hint="tabs" id="np2">
+                <af:commandNavigationItem partialSubmit="true" text="Primary/Medium Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni4"></af:commandNavigationItem>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:panelStretchLayout endWidth="40px" id="psl2" dimensionsFrom="auto">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation2" hint="tabs" id="np3">
+                <af:commandNavigationItem partialSubmit="true" text="Secondary/Light Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni9"/>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+
+        <f:facet name="auxiliaryGlobal">
+          <af:panelGroupLayout layout="scroll">
+            <f:facet name="separator">
+              <af:separator/>
+            </f:facet>
+            <af:panelHeader text="Data Links (Global/Dark)">
+              <af:panelGroupLayout layout="vertical">
+                <af:spacer height="15px"/>
+                <af:outputText value="CommandLink"/>
+                <af:spacer height="5px"/>
+                <af:commandLink text="Link (Index)" shortDesc="commandLink to Index" action="guide"/>
+                <af:commandLink text="Link" disabled="true" shortDesc="commandLink disabled"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="GoLink"/>
+                <af:spacer height="5px"/>
+                <af:goLink text="Link" shortDesc="goLink"/>
+                <af:goLink text="Link (Oracle)" shortDesc="goLink to Oracle" destination="http://oracle.com"/>
+                <af:goLink text="Link" disabled="true" shortDesc="goLink disabled"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="CommandImageLink"/>
+                <af:spacer height="5px"/>
+                <af:commandImageLink text="Link (Index)" shortDesc="commandImageLink to Index" action="guide"
+                                     icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:commandImageLink text="Link" shortDesc="commandImageLink disabled"
+                                     disabled="true" icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="GoImageLink"/>
+                <af:spacer height="5px"/>
+                <af:goImageLink text="Link (Oracle)" shortDesc="goImageLink to Oracle" destination="http://oracle.com"
+                                     icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:goImageLink text="Link" shortDesc="goImageLink disabled"
+                                     disabled="true" icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="Link"/>
+                <af:spacer height="5px"/>
+                <af:link text="Link" shortDesc="link"/>
+                <af:link text="Link (Oracle)" shortDesc="link to Oracle" destination="http://oracle.com"/>
+                <af:link text="Link" disabled="true" shortDesc="link disabled"/>
+                <af:link text="Link" selected="true" shortDesc="link selected" destination="http://oracle.com"/>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="auxiliary1Start">
+          <af:panelGroupLayout layout="vertical">
+            <f:facet name="separator">
+              <af:separator/>
+            </f:facet>
+            <af:panelHeader text="Data Links (Primary/Medium)">
+              <af:panelGroupLayout layout="vertical">
+                <af:spacer height="15px"/>
+                <af:outputText value="CommandLink"/>
+                <af:spacer height="5px"/>
+                <af:commandLink text="Link (Index)" shortDesc="commandLink to Index" action="guide"/>
+                <af:commandLink text="Link" disabled="true" shortDesc="commandLink disabled"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="GoLink"/>
+                <af:spacer height="5px"/>
+                <af:goLink text="Link" shortDesc="goLink"/>
+                <af:goLink text="Link (Oracle)" shortDesc="goLink to Oracle" destination="http://oracle.com"/>
+                <af:goLink text="Link" disabled="true" shortDesc="goLink disabled"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="CommandImageLink"/>
+                <af:spacer height="5px"/>
+                <af:commandImageLink text="Link (Index)" shortDesc="commandImageLink to Index" action="guide"
+                                     icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:commandImageLink text="Link" shortDesc="commandImageLink disabled"
+                                     disabled="true" icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="GoImageLink"/>
+                <af:spacer height="5px"/>
+                <af:goImageLink text="Link (Oracle)" shortDesc="goImageLink to Oracle" destination="http://oracle.com"
+                                     icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:goImageLink text="Link" shortDesc="goImageLink disabled"
+                                     disabled="true" icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="Link"/>
+                <af:spacer height="5px"/>
+                <af:link text="Link" shortDesc="link"/>
+                <af:link text="Link (Oracle)" shortDesc="link to Oracle" destination="http://oracle.com"/>
+                <af:link text="Link" disabled="true" shortDesc="link disabled"/>
+                <af:link text="Link" selected="true" shortDesc="link selected" destination="http://oracle.com"/>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="auxiliary2">
+          <af:panelHeader text="Data Links (Secondary/Light)">
+            <af:panelGroupLayout layout="vertical">
+              <af:spacer height="15px"/>
+              <af:outputText value="CommandLink"/>
+              <af:spacer height="5px"/>
+              <af:commandLink text="Link (Index)" shortDesc="commandLink to Index" action="guide"/>
+              <af:commandLink text="Link" disabled="true" shortDesc="commandLink disabled"/>
+              <af:spacer height="15px"/>
+              <af:outputText value="GoLink"/>
+              <af:spacer height="5px"/>
+                <af:goLink text="Link" shortDesc="goLink"/>
+                <af:goLink text="Link (Oracle)" shortDesc="goLink to Oracle" destination="http://oracle.com"/>
+                <af:goLink text="Link" disabled="true" shortDesc="goLink disabled"/>
+              <af:spacer height="15px"/>
+              <af:outputText value="CommandImageLink"/>
+              <af:spacer height="5px"/>
+              <af:commandImageLink text="Link (Index)" shortDesc="commandImageLink to Index" action="guide"
+                                   icon="/images/smily-normal.gif" depressedIcon="/images/bold.gif"
+                                   hoverIcon="/images/smily-glasses.gif"
+                                   disabledIcon="/images/backarrow_gray.gif"/>
+              <af:commandImageLink text="Link" shortDesc="commandImageLink disabled" disabled="true"
+                                   icon="/images/smily-normal.gif" depressedIcon="/images/bold.gif"
+                                   hoverIcon="/images/smily-glasses.gif"
+                                   disabledIcon="/images/backarrow_gray.gif"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="GoImageLink"/>
+                <af:spacer height="5px"/>
+                <af:goImageLink text="Link (Oracle)" shortDesc="goImageLink to Oracle" destination="http://oracle.com"
+                                     icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:goImageLink text="Link" shortDesc="goImageLink disabled"
+                                     disabled="true" icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="Link"/>
+                <af:spacer height="5px"/>
+                <af:link text="Link" shortDesc="link"/>
+                <af:link text="Link (Oracle)" shortDesc="link to Oracle" destination="http://oracle.com"/>
+                <af:link text="Link" disabled="true" shortDesc="link disabled"/>
+                <af:link text="Link" selected="true" shortDesc="link selected" destination="http://oracle.com"/>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll">
+            <f:facet name="separator">
+              <af:separator/>
+            </f:facet>
+            <af:panelHeader text="Data Links (Default Theme)">
+              <af:panelGroupLayout layout="vertical">
+                <af:spacer height="15px"/>
+                <af:outputText value="CommandLink"/>
+                <af:spacer height="5px"/>
+                <af:commandLink text="Link (Index)" shortDesc="commandLink to Index" action="guide"/>
+                <af:commandLink text="Link" disabled="true" shortDesc="commandLink disabled"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="GoLink"/>
+                <af:spacer height="5px"/>
+                <af:goLink text="Link" shortDesc="goLink"/>
+                <af:goLink text="Link (Oracle)" shortDesc="goLink to Oracle" destination="http://oracle.com"/>
+                <af:goLink text="Link" disabled="true" shortDesc="goLink disabled"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="CommandImageLink"/>
+                <af:spacer height="5px"/>
+                <af:commandImageLink text="Link (Index)" shortDesc="commandImageLink to Index" action="guide"
+                                     icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:commandImageLink text="Link" shortDesc="commandImageLink disabled"
+                                     disabled="true" icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="GoImageLink"/>
+                <af:spacer height="5px"/>
+                <af:goImageLink text="Link (Oracle)" shortDesc="goImageLink to Oracle" destination="http://oracle.com"
+                                     icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:goImageLink text="Link" shortDesc="goImageLink disabled"
+                                     disabled="true" icon="/images/smily-normal.gif"
+                                     depressedIcon="/images/bold.gif"
+                                     hoverIcon="/images/smily-glasses.gif"
+                                     disabledIcon="/images/backarrow_gray.gif"/>
+                <af:spacer height="15px"/>
+                <af:outputText value="Link"/>
+                <af:spacer height="5px"/>
+                <af:link text="Link" shortDesc="link"/>
+                <af:link text="Link (Oracle)" shortDesc="link to Oracle" destination="http://oracle.com"/>
+                <af:link text="Link" disabled="true" shortDesc="link disabled"/>
+                <af:link text="Link" selected="true" shortDesc="link selected" destination="http://oracle.com"/>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+
+            <af:showDetailHeader text="Related Links" disclosed="true">
+              <af:panelList id="pl1">
+                <af:goLink text="Visual Design - globalLinks"
+                           destination="/visualDesigns/globalLinks.jspx"/>
+                <af:goLink text="Component - commandLink"
+                           destination="/components/commandLink.jspx"/>
+                <af:goLink text="Component - commandImageLink"
+                           destination="/components/commandImageLink.jspx"/>
+                <af:goLink text="Component - goLink" destination="/components/goLink.jspx"/>
+                <af:goLink text="Component - goImageLink"
+                           destination="/components/goImageLink.jspx"/>
+              </af:panelList>
+            </af:showDetailHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelWindow Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelWindow"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:popup id="popupDialog" contentDelivery="lazyUncached">
+              <af:panelWindow modal="true" title="Test Window" binding="#{editor.component}"
+                              id="panelWindow1" helpTopicId="TOPICID_ALL">
+                <af:panelGroupLayout id="pgl2">
+                  <af:selectManyListbox value="#{demoInput.manyListValue1}" simple="true"
+                                        label="Drinks" id="sml1">
+                    <af:selectItem label="coffee" value="bean" shortDesc="shortDesc text"
+                                   id="si1"/>
+                    <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                                  id="si2"/>
+                    <af:selectItem disabled="true" label="orange juice" value="orange"
+                                   id="si3"/>
+                    <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                                  id="si4"/>
+                    <af:selectItem label="milk" value="moo" id="si5"/>
+                    <f:selectItems value="#{demoInput.selectItems}" id="si6"/>
+                  </af:selectManyListbox>
+                </af:panelGroupLayout>
+              </af:panelWindow>
+            </af:popup>
+            <af:commandButton text="Show Window" id="commandButton">
+              <af:showPopupBehavior popupId="popupDialog"/>
+            </af:commandButton>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

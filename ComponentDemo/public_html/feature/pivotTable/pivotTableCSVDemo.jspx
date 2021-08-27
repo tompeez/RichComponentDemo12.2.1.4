@@ -1,0 +1,351 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{pivotTableFeatureLinks.csvRowsetPivotTableTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="usesUpload" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Pivot Table CSV Rowset Demo"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Pivot Table CSV Rowset"/>
+      
+      <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+              <af:panelSplitter id="myPageSplitter" orientation="vertical" splitterPosition="400" > 
+                 <f:facet name="first">
+                     <af:panelSplitter orientation="horizontal" splitterPosition="400"
+                                       id="ps1"> 
+                     <f:facet name="first">
+                      <dvt:pivotTable id="goodPT"
+                       binding="#{editor.component}"
+                       contentDelivery="immediate"
+                       value="#{pivotTableCSVDemo.dataModel}"
+                       headerFormat="#{pivotTableCSVDemo.getHeaderFormat}"
+                       dataFormat="#{pivotTableCSVDemo.getDataFormat}"
+                       partialTriggers="clearAll clearAll2 toggleEditEnabled toggleEditEnabled2 toggleStatusBar toggleStatusBar2 showColors showColors2 showBars showBars2 showText showText2 ::showTotals ::dataCheck0 ::dataCheck1 ::dataCheck2 ::slider0 ::slider1 ::slider2" 
+                       var="cellData"
+                       varStatus="cellStatus"
+                       summary="pivot table"
+                       headerSortMode="none"
+                       splitMode="enabled"
+                       >     
+                      <f:facet name="contextMenu">
+                          <af:popup id="pivotTableContextMenu" contentDelivery="lazyUncached">   
+                              <af:menu id="m1">       
+                                <af:group rendered="#{pivotTableCSVDemo.dataAttributeSelected}"
+                                          id="g1">
+                                    <af:commandMenuItem id="showText" 
+                                                        binding="#{pivotTableCSVDemo.textMenuItem}"
+                                                        actionListener="#{pivotTableCSVDemo.showText}"
+                                                        selected="#{pivotTableCSVDemo.textEnabled}"
+                                                        text="#{pivotTableCSVDemo.showTextDescription}"
+                                                        type="radio" />
+                                    <af:commandMenuItem  id="showColors" 
+                                                        binding="#{pivotTableCSVDemo.colorsMenuItem}"
+                                                        actionListener="#{pivotTableCSVDemo.showColors}"
+                                                        selected="#{pivotTableCSVDemo.colorsEnabled}"
+                                                        text="#{pivotTableCSVDemo.showColorsDescription}"
+                                                        type="radio" />
+                                    <af:commandMenuItem id="showBars" 
+                                                        binding="#{pivotTableCSVDemo.barsMenuItem}"
+                                                        actionListener="#{pivotTableCSVDemo.showBars}"
+                                                        selected="#{pivotTableCSVDemo.barsEnabled}"
+                                                        text="#{pivotTableCSVDemo.showBarsDescription}" 
+                                                        type="radio" />
+                                    <af:commandMenuItem id="clearAll" 
+                                                        actionListener="#{pivotTableCSVDemo.clearAllFormatting}"
+                                                        text="Clear All Colors and Bars"/>
+                                </af:group>
+                                <af:commandMenuItem clientComponent="true" id="ShowGraphItem" text="Show Selected Data In Graph" rendered="#{pivotTableCSVDemo.graphDataAvailable}">
+                                     <af:showPopupBehavior popupId="::graphPopup"/>
+                                </af:commandMenuItem>
+                                <af:commandMenuItem id="toggleEditEnabled" 
+                                                    actionListener="#{pivotTableCSVDemo.toggleEditEnabled}"
+                                                    selected="#{pivotTableCSVDemo.editEnabled}"
+                                                    text="Enable Editing"
+                                                    selectedText="Disable Editing"
+                                                    type="antonym"/>
+                                <af:commandMenuItem id="toggleStatusBar" 
+                                                    actionListener="#{pivotTableCSVDemo.toggleStatusBarRendered}"
+                                                    selected="#{pivotTableCSVDemo.pivotTable.statusBarRendered}"
+                                                    text="Show Status Bar"
+                                                    selectedText="Hide Status Bar"
+                                                    type="antonym"/>
+                              </af:menu>
+                          </af:popup>        
+                        </f:facet>
+                        <f:facet name="bodyContextMenu">
+                          <af:popup id="pivotTableContextMenu2" contentDelivery="lazyUncached">   
+                              <af:menu id="m3">       
+                                <af:group rendered="#{pivotTableCSVDemo.dataAttributeSelected}"
+                                          id="g3">
+                                    <af:commandMenuItem id="showText2" 
+                                                        binding="#{pivotTableCSVDemo.textMenuItem}"
+                                                        actionListener="#{pivotTableCSVDemo.showText}"
+                                                        selected="#{pivotTableCSVDemo.textEnabled}"
+                                                        text="#{pivotTableCSVDemo.showTextDescription}"
+                                                        type="radio" />
+                                    <af:commandMenuItem  id="showColors2" 
+                                                        binding="#{pivotTableCSVDemo.colorsMenuItem}"
+                                                        actionListener="#{pivotTableCSVDemo.showColors}"
+                                                        selected="#{pivotTableCSVDemo.colorsEnabled}"
+                                                        text="#{pivotTableCSVDemo.showColorsDescription}"
+                                                        type="radio" />
+                                    <af:commandMenuItem id="showBars2" 
+                                                        binding="#{pivotTableCSVDemo.barsMenuItem}"
+                                                        actionListener="#{pivotTableCSVDemo.showBars}"
+                                                        selected="#{pivotTableCSVDemo.barsEnabled}"
+                                                        text="#{pivotTableCSVDemo.showBarsDescription}" 
+                                                        type="radio" />
+                                    <af:commandMenuItem id="clearAll2" 
+                                                        actionListener="#{pivotTableCSVDemo.clearAllFormatting}"
+                                                        text="Clear All Colors and Bars"/>
+                                </af:group>
+                                <af:commandMenuItem clientComponent="true" id="ShowGraphItem2" text="Show Selected Data In Graph" rendered="#{pivotTableCSVDemo.graphDataAvailable}">
+                                     <af:showPopupBehavior popupId="::graphPopup"/>
+                                </af:commandMenuItem>
+                                <af:commandMenuItem id="toggleEditEnabled2" 
+                                                    actionListener="#{pivotTableCSVDemo.toggleEditEnabled}"
+                                                    selected="#{pivotTableCSVDemo.editEnabled}"
+                                                    text="Enable Editing"
+                                                    selectedText="Disable Editing"
+                                                    type="antonym"/>
+                                <af:commandMenuItem id="toggleStatusBar2" 
+                                                    actionListener="#{pivotTableCSVDemo.toggleStatusBarRendered}"
+                                                    selected="#{pivotTableCSVDemo.pivotTable.statusBarRendered}"
+                                                    text="Show Status Bar"
+                                                    selectedText="Hide Status Bar"
+                                                    type="antonym"/>
+                              </af:menu>
+                          </af:popup>        
+                        </f:facet>
+                        <dvt:dataCell>
+                          <af:switcher facetName="#{pivotTableCSVDemo.stampFacet}"
+                                       id="s2">
+                            <f:facet name="color">
+                             <af:outputText  value="" inlineStyle="#{cellStatus.cellFormat.textStyle}"
+                                            id="ot1"/> 
+                            </f:facet>
+                            <f:facet name="text">
+                             <af:outputText  value="#{cellData.dataValue}" inlineStyle="#{cellStatus.cellFormat.textStyle}" converter="#{cellStatus.cellFormat.converter}"
+                                            id="ot2"/> 
+                            </f:facet>
+                            <f:facet name="inputText">
+                             <af:inputText  value="#{cellData.dataValue}" contentStyle="#{cellStatus.cellFormat.textStyle}" converter="#{cellStatus.cellFormat.converter}" valueChangeListener="#{pivotTableCSVDemo.valueChanged}"
+                                           id="it1"/> 
+                            </f:facet>
+                            <f:facet name="image">
+                              <af:image source="/resources/images/pivotTableCSVDemo/green-gradient.png"
+                                        inlineStyle="#{cellStatus.cellFormat.textStyle}"
+                                        id="i1" shortDesc="image"/>
+                            </f:facet>                     
+                           </af:switcher>
+                        </dvt:dataCell>
+                      </dvt:pivotTable>
+                     </f:facet>              
+                     <f:facet name="second">
+                      <af:panelGroupLayout layout="default" id="pgl1">                 
+                      <af:panelGroupLayout layout="default" partialTriggers="showGraph"
+                                           id="pgl2">
+                       <dvt:graph shortDesc="graph" id="goodGraph"
+                           value="#{pivotTableCSVDemo.graphDataModel}"
+                           contentDelivery="immediate"
+                           animationOnDataChange="ON"
+                           animationOnDisplay="AUTO"
+                           dynamicResize="DYNAMIC_SIZE"
+                           imageFormat="FLASH"
+                           inlineStyle="width:100%;height:400px;"
+                           graphType="#{pivotTableCSVDemo.graphType}"
+                           rendered="#{pivotTableCSVDemo.graphEnabled}"
+                           partialTriggers="::goodPT ::dataCheck0 ::dataCheck1 ::dataCheck2 ::graphType ::showTotals ::slider0 ::slider1 ::slider2"
+                           >
+                       </dvt:graph>
+                       </af:panelGroupLayout>
+                       </af:panelGroupLayout>
+                     </f:facet>
+                   </af:panelSplitter>
+                 </f:facet>
+                 <f:facet name="second">
+                     <af:panelGroupLayout id="rowsetOptions" layout="scroll">
+                      <f:facet name="separator" >                
+                        <af:spacer height="10px" id="s3"/>
+                      </f:facet>
+                      <af:panelGroupLayout id="pgl3">
+                       <af:panelGroupLayout layout="vertical" id="pgl4">
+                         <f:facet name="separator">
+                           <af:spacer height="10px" id="s4"/>
+                         </f:facet>
+                         <af:spacer width="5px" id="s5"/>
+                         <af:panelGroupLayout layout="horizontal" valign="middle"
+                                              id="pgl5">
+                            <f:facet name="separator">
+                              <af:spacer width="5px" id="s6"/>
+                            </f:facet>                        
+                            <af:panelGroupLayout layout="horizontal" valign="top" partialTriggers="dataCheck0 dataCheck1 dataCheck2"
+                                                 id="pgl6">
+                              <af:selectBooleanCheckbox id="dataCheck0" autoSubmit="true" value="#{pivotTableCSVDemo.dataEnabled_0}" rendered="#{pivotTableCSVDemo.dataRendered_0}"/>
+                              <af:inputRangeSlider  id="slider0"
+                                                  label="#{pivotTableCSVDemo.dataLabel_0}" 
+                                                  minimum="#{pivotTableCSVDemo.dataMinimum_0}"
+                                                  maximum="#{pivotTableCSVDemo.dataMaximum_0}"
+                                                  value="#{pivotTableCSVDemo.dataValue_0}"
+                                                  majorIncrement="#{pivotTableCSVDemo.dataMajorIncrement_0}"
+                                                  minorIncrement="#{pivotTableCSVDemo.dataMinorIncrement_0}"
+                                                  minimumIncrement="1"                                              
+                                                  autoSubmit="true"
+                                                  rendered="#{pivotTableCSVDemo.dataRendered_0}"
+                                                  disabled="#{pivotTableCSVDemo.dataDisabled_0}" 
+                                                  partialTriggers="dataCheck0"
+                                                  />
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout layout="horizontal" valign="top"
+                                                 id="pgl7">
+                              <af:selectBooleanCheckbox id="dataCheck1" autoSubmit="true" value="#{pivotTableCSVDemo.dataEnabled_1}" rendered="#{pivotTableCSVDemo.dataRendered_1}"/>
+                              <af:inputRangeSlider  id="slider1"
+                                                  label="#{pivotTableCSVDemo.dataLabel_1}" 
+                                                  minimum="#{pivotTableCSVDemo.dataMinimum_1}"
+                                                  maximum="#{pivotTableCSVDemo.dataMaximum_1}"
+                                                  value="#{pivotTableCSVDemo.dataValue_1}"
+                                                  majorIncrement="#{pivotTableCSVDemo.dataMajorIncrement_1}"
+                                                  minorIncrement="#{pivotTableCSVDemo.dataMinorIncrement_1}"
+                                                  minimumIncrement="1"
+                                                  autoSubmit="true"
+                                                  rendered="#{pivotTableCSVDemo.dataRendered_1}"
+                                                  disabled="#{pivotTableCSVDemo.dataDisabled_1}"
+                                                  partialTriggers="dataCheck1"/>
+                              </af:panelGroupLayout>
+                              <af:panelGroupLayout layout="horizontal" valign="top"
+                                                   id="pgl8">
+                                <af:selectBooleanCheckbox id="dataCheck2" autoSubmit="true" value="#{pivotTableCSVDemo.dataEnabled_2}" rendered="#{pivotTableCSVDemo.dataRendered_2}"/>
+                                <af:inputRangeSlider  id="slider2"
+                                                  label="#{pivotTableCSVDemo.dataLabel_2}" 
+                                                  minimum="#{pivotTableCSVDemo.dataMinimum_2}"
+                                                  maximum="#{pivotTableCSVDemo.dataMaximum_2}"
+                                                  value="#{pivotTableCSVDemo.dataValue_2}"
+                                                  majorIncrement="#{pivotTableCSVDemo.dataMajorIncrement_2}"
+                                                  minorIncrement="#{pivotTableCSVDemo.dataMinorIncrement_2}"
+                                                  minimumIncrement="1"
+                                                  autoSubmit="true"
+                                                  rendered="#{pivotTableCSVDemo.dataRendered_2}"
+                                                  disabled="#{pivotTableCSVDemo.dataDisabled_2}" 
+                                                  partialTriggers="dataCheck2"
+                                                  />
+                            </af:panelGroupLayout>
+                         </af:panelGroupLayout>
+                         <af:panelGroupLayout layout="horizontal" partialTriggers="showGraph"
+                                              id="pgl9">
+                            <f:facet name="separator">
+                              <af:spacer width="5px" id="s7"/>
+                            </f:facet>
+                            <af:spacer id="s8"/>
+                            <af:selectBooleanCheckbox id="showTotals" autoSubmit="true" label="Show Totals" value="#{pivotTableCSVDemo.totalsEnabled}"/>                     
+                            <af:selectBooleanCheckbox id="showGraph"  autoSubmit="true" label="Show Graph" value="#{pivotTableCSVDemo.graphEnabled}"/>                     
+                            <af:selectOneChoice label="Graph Type"
+                                                id="graphType"
+                                                autoSubmit="true"
+                                                disabled="#{pivotTableCSVDemo.graphDisabled}"
+                                                value="#{pivotTableCSVDemo.graphTypeValue}"
+                                                partialTriggers="showGraph"
+                                                rendered="#{pivotTableCSVDemo.graphEnabled}"
+                                                >
+                              <af:selectItem label="Bar" value="BAR_VERT_CLUST"
+                                             id="si1"/>
+                              <af:selectItem label="Bar - Dual Y" value="BAR_VERT_CLUST2Y"
+                                             id="si2"/>
+                              <af:selectItem label="Stacked Bar" value="BAR_VERT_STACK"
+                                             id="si3"/>
+                              <af:selectItem label="Stacked Bar - Dual Y" value="BAR_VERT_STACK2Y"
+                                             id="si4"/>
+                              <af:selectItem label="Horizontal Bar" value="BAR_HORIZ_CLUST"
+                                             id="si5"/>
+                              <af:selectItem label="Horizontal Bar - Dual Y" value="BAR_HORIZ_CLUST_2Y"
+                                             id="si6"/>
+                              <af:selectItem label="Horizontal Stacked Bar" value="BAR_HORIZ_STACK"
+                                             id="si7"/>
+                              <af:selectItem label="Horizontal Stacked Bar - Dual Y" value="BAR_HORIZ_STACK_2Y"
+                                             id="si8"/>
+                              <af:selectItem label="Line" value="LINE_VERT_ABS"
+                                             id="si9"/>
+                              <af:selectItem label="Horizontal Line" value="LINE_HORIZ_ABS"
+                                             id="si10"/>
+                              <af:selectItem label="Horizontal Stacked Line" value="LINE_HORIZ_STACK"
+                                             id="si11"/>
+                              <af:selectItem label="Pie" value="PIE" id="si12"/>
+                              <af:selectItem label="Multi-Pie" value="PIE_MULTI"
+                                             id="si13"/>
+                              <af:selectItem label="Scatter" value="SCATTER"
+                                             id="si14"/>
+                              <af:selectItem label="Bubble" value="BUBBLE"
+                                             id="si15"/>
+                            </af:selectOneChoice>
+                         </af:panelGroupLayout>
+                         <af:separator id="sep1"/>
+                         <af:panelGroupLayout inlineStyle="padding-left:5px;" layout="horizontal" valign="middle"
+                                              id="pgl10">
+                            <f:facet name="separator">
+                              <af:spacer width="5px" id="s9"/>
+                            </f:facet>
+                            <af:commandButton id="sampleRowsetDataSourceButton"
+                                            text="#{pivotTableCSVDemo.sampleRowsetButtonText}" 
+                                            actionListener="#{pivotTableCSVDemo.handleRowsetDataSourceChange}"
+                                            inlineStyle="width:160px"
+                                          />
+                             <af:selectBooleanRadio group="xxx" autoSubmit="true"
+                                                   id="rowsetDataSourceType" text="Sample CSV File"
+                                                    value="#{pivotTableCSVDemo.notCustomRowset}" >
+                             </af:selectBooleanRadio>
+                             <af:selectBooleanRadio group="xxx" autoSubmit="true"
+                                                   id="rowsetDataSourceType2" text="Select CSV File" 
+                                                   value="#{pivotTableCSVDemo.customRowset}">
+                             </af:selectBooleanRadio>
+                            <af:commandButton id="uploadPivotTableData"
+                                            text="Upload File" 
+                                            disabled="#{pivotTableCSVDemo.notCustomRowset}" 
+                                            partialTriggers="rowsetDataSourceType rowsetDataSourceType2"
+                                            action="uploadPivotTableData"/>
+                            <af:goLink targetFrame="_blank" text="View Sample CSV File" destination="/feature/pivotTable/pivotTableCSVDemoData.csv"
+                                       id="gl1"/>
+                            <af:goLink targetFrame="_blank" text="View CSV File Format Description" destination="/feature/pivotTable/pivotTableCSVDemoReadme.txt"
+                                       id="gl2"/>
+                         </af:panelGroupLayout>
+                         <af:separator id="sep2"/>                         
+                       </af:panelGroupLayout>
+                     </af:panelGroupLayout>
+                      <af:popup id="graphPopup" contentDelivery="lazyUncached">        
+                          <af:dialog title="Graph - Selected Data" type="none"
+                                     id="d2">
+                               <dvt:graph shortDesc="graph" id="detailGraph"
+                                   tabularData="#{pivotTableCSVDemo.selectedGraphData}"
+                                   contentDelivery="immediate"
+                                   imageFormat="PNG_STAMPED"
+                                   graphType="#{pivotTableCSVDemo.selectedDataGraphType}"
+                                   >
+                                   <dvt:x1Title text="#{pivotTableCSVDemo.selectedDataX1Title}" />
+                                   <dvt:y1Title text="#{pivotTableCSVDemo.selectedDataY1Title}" />
+                               </dvt:graph>
+                           </af:dialog>
+                        </af:popup>
+                 </af:panelGroupLayout>              
+                 </f:facet>
+              </af:panelSplitter>
+        <!-- END FEATURE DEMO -->
+        <!-- put the popups at the end so that they can access the pivot table state when they are initialized -->
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/pivotTable/pivotTableFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>    
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

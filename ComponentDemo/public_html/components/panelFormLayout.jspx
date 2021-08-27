@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="panelFormLayout Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelFormLayout"/>
+        <f:attribute name="visualDesignName" value="formLayout"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="If a panelFormLayout component gets stretched by its parent, it will automatically display scroll bars if the panelFormLayout contents do not fit within the allocated dimensions."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="center">
+          <af:panelFormLayout binding="#{editor.component}" rows="10" labelWidth="33%"
+                              styleClass="p_AFClickToEdit" fieldWidth="67%" id="panelFormLayout1"
+                              >
+            <af:inputText editable="onAccess" columns="5" label="label 1" id="it1"/>
+            <af:group id="g1">
+              <af:inputText columns="5" label="grouped 1" shortDesc="This one is secret!"
+                            secret="true" id="it2"/>
+              <af:inputText columns="5" label="grouped 2" id="it3"/>
+              <af:inputText columns="5" label="grouped 3" id="it4" value="readonly" readOnly="true"/>
+            </af:group>
+            <af:inputDate id="df1" label="label 2"/>
+            <af:panelLabelAndMessage label="label 3" labelStyle="vertical-align: middle;"
+                                     id="plam1">
+              <af:commandButton text="Submit" id="cb1"/>
+            </af:panelLabelAndMessage>
+            <af:selectOneListbox id="sol" label="label 4" shortDesc="Select One Option">
+              <af:selectItem label="option 1" id="si1"/>
+              <af:selectItem label="option 2" id="si2"/>
+              <af:selectItem label="option 3" id="si3"/>
+              <af:selectItem label="option 4" id="si4"/>
+            </af:selectOneListbox>
+            <af:selectManyListbox id="rs" label="label 5" shortDesc="Select Option">
+              <af:selectItem label="option 1" id="si5"/>
+              <af:selectItem label="option 2" id="si6"/>
+              <af:selectItem label="option 3" id="si7"/>
+              <af:selectItem label="option 4" id="si8"/>
+            </af:selectManyListbox>
+            <af:panelLabelAndMessage label="label 6 is quite long to test wrapping"
+                                     labelStyle="vertical-align: middle;"
+                                     id="plam2">
+              <af:commandButton text="Show FacesMessage" partialSubmit="true"
+                                actionListener="#{demoPanelLabelAndMessage.createFacesMessage}"
+                                id="cb2"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="label 6a is quite long with no wrapping"
+                                     labelStyle="vertical-align: middle;white-space: nowrap;"
+                                     id="plam6">
+              <af:commandButton text="Show FacesMessage" partialSubmit="true"
+                                actionListener="#{demoPanelLabelAndMessage.createFacesMessage}"
+                                id="cb5"/>
+            </af:panelLabelAndMessage>
+            <af:inputText rows="2" label="label 7" id="it5"/>
+            <af:selectBooleanRadio id="rb" group="rbGroup" shortDesc="shortDesc text" label="label 8"/>
+            <af:selectBooleanCheckbox shortDesc="shortDesc text" label="label 9"
+                                      id="sbc1"/>
+            <af:inputText styleClass="AFDataText" label="label 10" value="hi" readOnly="true"
+                          id="it6"/>
+            <af:inputText styleClass="AFDataText" label="label 11" value="hi again"
+                          readOnly="true" id="it7"/>
+            <af:panelLabelAndMessage label="label 12" id="plam3">
+              <af:selectBooleanCheckbox shortDesc="shortDesc text" label="option 1"
+                                        id="sbc2"/>
+              <af:panelFormLayout id="pfl1">
+                <af:inputText styleClass="AFDataText" label="sub item 1" value="hello"
+                              id="it8"/>
+                <af:inputText styleClass="AFDataText" label="sub item 2" value="world"
+                              id="it9"/>
+                <af:selectOneChoice label="sub item 3" id="soc1">
+                  <af:selectItem label="coffee" value="bean" shortDesc="shortDesc text"
+                                 id="si9"/>
+                  <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                                id="si10"/>
+                  <af:selectItem label="milk" value="moo" rendered="false"
+                                 id="si11"/>
+                  <f:selectItems value="#{demoInput.selectItems}" id="si12"/>
+                </af:selectOneChoice>
+                <af:selectManyChoice label="sub item 4" id="smc1">
+                  <af:selectItem label="coffee" value="coffee" shortDesc="shortDesc text"
+                                 id="si13"/>
+                  <f:selectItem itemLabel="tea" itemValue="tea" itemDescription="Tea from China"
+                                id="si14"/>
+                  <af:selectItem label="milk" value="milk" rendered="false"
+                                 id="si15"/>
+                  <f:selectItems value="#{demoInput.selectItems}" id="si16"/>
+                </af:selectManyChoice>
+              </af:panelFormLayout>
+              <af:selectBooleanCheckbox shortDesc="shortDesc text" label="option 2"
+                                        id="sbc3"/>
+              <af:selectBooleanCheckbox shortDesc="shortDesc text" label="option 3"
+                                        id="sbc4"/>
+            </af:panelLabelAndMessage>
+            <af:inputColor id="inputColor" label="Label 13"/>
+            <af:selectManyChoice id="targetChoice" label="Label 14"
+                                 value="#{demoInput.manyListValue2}">
+              <af:selectItem label="coffee" value="coffee" shortDesc="shortDesc text"
+                             id="si17"/>
+              <f:selectItem itemLabel="tea" itemValue="tea" itemDescription="Tea from China"
+                            id="si18"/>
+              <af:selectItem label="milk" value="milk" rendered="false"
+                             id="si19"/>
+              <f:selectItems value="#{demoInput.selectItems}" id="si20"/>
+            </af:selectManyChoice>
+            <af:panelLabelAndMessage label="label 15 is quite long to test wrapping"
+                                     id="plam4">
+              <af:outputText value="This is an outputText to ensure that text will wrap inside of a panelLabelAndMessage if necessary."
+                             id="ot1"
+                             shortDesc="This is an outputText to ensure that text will wrap inside of a panelLabelAndMessage if necessary."/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="label 15a is quite long to test no wrapping by setting labelStyle='white-space: nowrap;'"
+                                     id="plam7"
+                                      labelStyle="white-space: nowrap;">
+              <af:outputText value="This is an outputText to ensure that text will not wrap inside of a panelLabelAndMessage"
+                             id="ot3" inlineStyle="white-space: nowrap"
+                             shortDesc="This is an outputText to ensure that text will not wrap inside of a panelLabelAndMessage"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage for="foo" label="label 16" id="plam5">
+              <f:facet name="end">
+                <af:outputText value="USD" id="ot2"/>
+              </f:facet>
+              <af:inputText simple="true" columns="3" id="foo"/>
+            </af:panelLabelAndMessage>
+            <f:facet name="footer">
+              <af:group id="g2">
+                <af:inputText rows="2" label="footer item 1" id="it10"/>
+                <af:group id="g3">
+                  <af:inputText columns="5" label="footer group item 1"
+                                id="it11"/>
+                  <af:inputText columns="5" label="footer group item 2"
+                                id="it12"/>
+                  <af:inputText columns="5" label="footer group item 3"
+                                id="it13"/>
+                </af:group>
+                <af:panelGroupLayout layout="horizontal" id="pgl2">
+                  <f:facet name="separator">
+                    <af:spacer width="10" id="s2"/>
+                  </f:facet>
+                  <af:commandButton text="Page 1" partialSubmit="true"
+                                    id="cb3"/>
+                  <af:commandButton text="Page 2" partialSubmit="true"
+                                    id="cb4"/>
+                </af:panelGroupLayout>
+              </af:group>
+            </f:facet>
+          </af:panelFormLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

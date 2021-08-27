@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Timeline Auto PPR Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Timeline Auto PPR Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Timeline Auto PPR"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+
+                        <af:panelBox text="Insert New Event">
+                            <af:panelGroupLayout layout="horizontal">
+                                <af:inputDate id="time" label="Time" value="#{autoppr.newEvent.date}" minValue="2011-01-01" maxValue="2011-12-31"/>
+                                <af:selectOneChoice id="type" label="Type" value="#{autoppr.newEvent.type}">
+                                    <af:selectItem id="person" label="Personal" value="person"/>
+                                    <af:selectItem id="employment" label="Employment" value="employment"/>
+                                    <af:selectItem id="compensation" label="Compensation" value="compensation"/>
+                                    <af:selectItem id="stock" label="Stock" value="stock"/>
+                                    <af:selectItem id="training" label="Training" value="training"/>
+                                </af:selectOneChoice>
+                                <af:inputText id="desc" label="Description" value="#{autoppr.newEvent.description}"/>
+                                <af:commandButton id="insert" partialSubmit="true" actionListener="#{autoppr.handleInsert}" text="Insert New Event"/>
+                            </af:panelGroupLayout>
+                        </af:panelBox>
+                        <af:panelBox text="Update/Delete Selected Events">
+                            <af:panelGroupLayout layout="horizontal">
+                                <af:panelGroupLayout id="updatePanel" rendered="#{autoppr.currentEvent != null}" layout="horizontal">
+                                    <af:inputDate id="id2" label="Time" value="#{autoppr.currentEvent.date}" minValue="2011-01-01" maxValue="2011-12-31"/>
+                                    <af:selectOneChoice id="soc2" label="Type" value="#{autoppr.currentEvent.type}">
+                                        <af:selectItem id="person2" label="Personal" value="person"/>
+                                        <af:selectItem id="employment2" label="Employment" value="employment"/>
+                                        <af:selectItem id="compensation2" label="Compensation" value="compensation"/>
+                                        <af:selectItem id="stock2" label="Stock" value="stock"/>
+                                        <af:selectItem id="training2" label="Training" value="training"/>
+                                    </af:selectOneChoice>
+                                    <af:inputText id="it2" label="Description" value="#{autoppr.currentEvent.description}"/>
+                                </af:panelGroupLayout>
+                                <af:commandButton id="update" partialSubmit="true" rendered="#{autoppr.currentEvent != null}" actionListener="#{autoppr.handleUpdate}" text="Update Event"/>
+                                <af:commandButton id="delete" partialSubmit="true" rendered="#{autoppr.currentEvent != null}" actionListener="#{autoppr.handleDelete}" text="Delete Event"/>
+                                <af:commandButton id="refresh" partialSubmit="true" actionListener="#{autoppr.handleRefresh}" text="Start Over"/>
+                            </af:panelGroupLayout>
+                        </af:panelBox>
+                        <dvt:timeline id="tl1" startTime="2011-01-01" endTime="2011-12-31" itemSelection="single"
+                                      inlineStyle="width:100%;height:400px" summary="Timeline Auto PPR Demo">
+                            <dvt:timeAxis id="ta1" scale="weeks"/>
+                            <dvt:timelineOverview id="ov1">
+                                <dvt:timeAxis id="ta2" scale="months"/>
+                            </dvt:timelineOverview>
+                            <dvt:timelineSeries id="ts1" var="evt" value="#{autoppr.updateableModel}" contentDelivery="lazy" selectionListener="#{autoppr.handleSelect}">
+                                <dvt:timelineItem id="ti1" value="#{evt.date}">
+                                    <af:panelGroupLayout id="pg1" layout="horizontal">
+                                        <af:image id="img1" inlineStyle="width:30px;height:30px" source="/resources/images/timeline/#{evt.type}.png"/>
+                                    <af:spacer width="3"/>
+                                        <af:panelGroupLayout id="pg2" layout="vertical">
+                                            <af:outputText id="ot1" inlineStyle="color:#084B8A" value="#{evt.description}" noWrap="true"/>
+                                            <af:outputText id="ot2" value="#{evt.date}" inlineStyle="color:#6e6e6e" noWrap="true">
+                                                <af:convertDateTime dateStyle="medium"/>
+                                            </af:outputText>
+                                        </af:panelGroupLayout>
+                                    </af:panelGroupLayout>
+                                </dvt:timelineItem>
+                            </dvt:timelineSeries>
+                        </dvt:timeline>
+
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                        <!-- START SEE ALSO LINKS -->
+                        <!-- END SEE ALSO LINKS -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

@@ -1,0 +1,335 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>This template is for the main index pages of the demo.</description>
+        <facet>
+          <description>
+            <![CDATA[This location typically contains tabs for the secondary layer.]]>
+          </description>
+          <facet-name>navigation2</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The primary center content.]]>
+          </description>
+          <facet-name>center1</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The secondary center content.]]>
+          </description>
+          <facet-name>center2</facet-name>
+        </facet>
+        <attribute>
+          <description>Display mode</description>
+          <attribute-name>mode</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>guide</default-value>
+        </attribute>
+        <attribute>
+          <description>The number of navigation tab levels to display (1 or 2).</description>
+          <attribute-name>navLevelCount</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>1</default-value>
+        </attribute>
+        <attribute>
+          <description>If true, the settings splitter panel will initially be collapsed.</description>
+          <attribute-name>collapsedSettings</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>The title in the branding bar</description>
+          <attribute-name>brandingTitle</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>ADF Faces Rich Client</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the height of the branding bar. This includes the borders and the box shadow</description>
+          <attribute-name>brandingBarHeight</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>96px</default-value>
+        </attribute>
+        <attribute>
+          <description>the id attribute of the command button inside the form whose action should be
+                       invoked by default, when the enter key is pressed with focus inside the form.
+                       Identifiers are relative to the form component, and must account for
+                       NamingContainers. You can use a single colon to start the search from the
+                       root.</description>
+          <attribute-name>defaultCommand</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>whether the form supports file upload.</description>
+          <attribute-name>usesUpload</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+            <description>whether to show the "link views" source menu items in the view source menu</description>
+            <attribute-name>showLinkViewsSource</attribute-name>
+            <attribute-class>boolean</attribute-class>
+            <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the branding logo styling.</description>
+          <attribute-name>logoStyleClass</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>AFBrandingLogo</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the alternate text and tooltip for the branding logo.</description>
+          <attribute-name>logoShortDesc</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>Demo home page</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the logo image path for the BrandingBar, necessary for high contrast mode</description>
+          <attribute-name>logoImagePath</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>/images/oracle_logo_lrg.png </default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the top margin of the content area. This usually takes out the box shadow in the branding area.</description>
+          <attribute-name>contentAreaMarginTop</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>5px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the bottom margin of the content area. </description>
+          <attribute-name>contentAreaMarginBottom</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>10px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the start margin of the content area. </description>
+          <attribute-name>contentAreaMarginStart</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>20px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the end margin of the content area. </description>
+          <attribute-name>contentAreaMarginEnd</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>20px</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies if we should be showing the footer</description>
+          <attribute-name>showFooter</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the height of the footer bar. This includes the borders</description>
+          <attribute-name>footerBarHeight</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>50px</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:resource type="css" source="/styles/customAlta.css"/>
+    <af:form defaultCommand="#{attrs.defaultCommand}" usesUpload="#{attrs.usesUpload}"
+             id="ptf1">
+      <af:panelStretchLayout id="ptpglwrp" topHeight="#{attrs.brandingBarHeight}" bottomHeight="#{attrs.showFooter ? attrs.footerBarHeight : ''}" dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}">
+        <f:facet name="top">
+          <af:group id="gnavgrp">
+            <af:popup id="popsch" contentDelivery="lazy" childCreation="deferred">
+              <af:declarativeComponent id="glryFind" viewId="demoFindField.jsff"/>
+            </af:popup>
+          <f:subview id="about">
+            <jsp:include page="/includes/aboutPopup.jspx"/>
+          </f:subview>
+          <af:declarativeComponent id="bbar" viewId="/oracle/templates/brandingBar.jsff" showStatusIndicator="true" logoImagePath="#{attrs.logoImagePath}" logoSmallImagePath="/images/oracle_logo_sm.png" logoShortDesc="#{attrs.logoShortDesc}">
+            <f:facet name="globalNavbar">
+              <af:toolbar id="ptnp1" styleClass="GlobalNavbar">
+                <af:group id="grptb">
+                      
+                  <af:button icon="/images/alta_v1/find_ena.png" hoverIcon="/images/alta_v1/find_ovr.png" depressedIcon="/images/alta_v1/find_dwn.png"  shortDesc="Search"
+                                            id="ptcni15">
+                    <af:showPopupBehavior popupId="::popsch" alignId="ptcni15"/>
+                  </af:button>
+                  <af:button  id="lnkBook" destination="/faces#{facesContext.viewRoot.viewId}"
+                                          rendered="#{attrs.mode != 'accessibility'}" shortDesc="Bookmarkable Link"
+                                          icon="/images/alta_v1/bookmark_ena.png" hoverIcon="/images/alta_v1/bookmark_ovr.png" depressedIcon="/images/alta_v1/bookmark_dwn.png"/>
+                    
+                  </af:group>                    
+
+                <af:button id="userdrp" text="anonymous@oracle.com" actionDelivery="none" styleClass="AFGlobalNavbarButton">
+                  <f:facet name="popup">
+                    <af:menu text="anonymous@oracle.com" id="ursmn1">
+                      <af:commandMenuItem text="Oracle RCF Home" immediate="true"
+                                                shortDesc="Learn more about ADF Faces Rich Client" id="ptcni2"
+                                                partialSubmit="true" action="#{aboutBean.goHome}"/>
+                      <af:group id="abtgrp">
+                        <af:commandMenuItem text="#{aboutBean.aboutLabel}"
+                                            shortDesc="View version information about the software used to generate this page"
+                                            id="ptcni1">
+                          <af:showPopupBehavior popupId="::about:about"/>
+                        </af:commandMenuItem>
+                      </af:group>
+                    </af:menu>
+                  </f:facet>
+                </af:button>
+              </af:toolbar>
+            </f:facet>
+            
+            <f:facet name="appNavbar">
+              <af:group id="nvgrp">
+                  <af:declarativeComponent id="gTools" viewId="globalToolsAlta.jsff"
+                                               templateSource="/templates/pageTemplateDefs/demoIndexTemplate.jspx.source"
+                                               showLinkViewsSource="#{attrs.showLinkViewsSource}"
+                                               showGallerySource="#{demoFind.galleryEnabled}">
+                    <f:facet name="search">
+                      <af:declarativeComponent id="glryFind" viewId="demoFindField.jsff"/>
+                    </f:facet>
+                  </af:declarativeComponent>            
+              </af:group>
+            </f:facet>
+            <f:facet name="brandingTitle">
+              <af:group id="tGrp">
+                <af:outputText value="#{attrs.brandingTitle}" id="ptot1"/>
+              </af:group>
+            </f:facet>
+          </af:declarativeComponent>
+          </af:group>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout id="contentArea" 
+          startWidth="#{attrs.contentAreaMarginStart}" endWidth="#{attrs.contentAreaMarginEnd}" 
+          topHeight="#{attrs.contentAreaMarginTop}" bottomHeight="#{attrs.contentAreaMarginBottom}" 
+          styleClass="AFStretchWidth" dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}">
+            <f:facet name="top">
+              <af:spacer id="spca1"/>
+            </f:facet>
+            <f:facet name="bottom">
+              <af:spacer id="spca2"/>
+            </f:facet>
+            <f:facet name="start">
+              <af:spacer id="spca3"/>
+            </f:facet>
+            <f:facet name="end">
+              <af:spacer id="spca4"/>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelStretchLayout dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}" id="contentmaxwidth" styleClass="ContentContainer BrandingMaxWidth">
+                <f:facet name="center">
+                  <af:decorativeBox topHeight="#{demoBranding.navigationTabBarHeight}"
+                                id="ptdb1" dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}" styleClass="AFStretchWidth">
+                    <f:facet name="center">
+                      <af:panelSplitter orientation="horizontal" splitterPosition="250" firstLandmark="navigation"
+                                        id="ptps2" dimensionsFrom="auto">
+                        <af:skipLinkTarget />
+                        <f:facet name="first">
+                          <af:panelStretchLayout id="glry" dimensionsFrom="auto"
+                                                 rendered="#{demoFind.galleryEnabled and !mobileSettings.simplifiedPresentation}">
+                            <f:facet name="center">
+                              <af:declarativeComponent id="accMenu"
+                                                       viewId="componentGallerySideBar.jsff"
+                                                       mode="#{attrs.mode}"/>
+                            </f:facet>
+                          </af:panelStretchLayout>
+                        </f:facet>
+                        <f:facet name="second">
+                          <af:switcher facetName="#{attrs.navLevelCount==2?'secondaryLayer':'primaryLayer'}"
+                                       id="pts5">
+                            <f:facet name="primaryLayer">
+                              <af:panelStretchLayout startWidth="3" id="ptpsl2"
+                                                     dimensionsFrom="auto">
+                                <f:facet name="start">
+                                  <af:spacer id="pts6"/>
+                                </f:facet>
+                                <f:facet name="center">
+                                  <af:decorativeBox id="ptdb2"
+                                                    centerLandmark="main" dimensionsFrom="auto">
+                                    <f:facet name="center">
+                                      <af:facetRef facetName="center1"/>
+                                    </f:facet>
+                                  </af:decorativeBox>
+                                </f:facet>
+                              </af:panelStretchLayout>
+                            </f:facet>
+                            <f:facet name="secondaryLayer">
+                              <!-- start of secondary decoration -->
+                              <af:decorativeBox topHeight="#{demoBranding.navigationTabBarHeight}"
+                                                id="ptdb3" dimensionsFrom="auto">
+                                <f:facet name="top">
+                                  <af:panelStretchLayout id="ptpsl3" dimensionsFrom="auto">
+                                    <f:facet name="center">
+                                      <af:facetRef facetName="navigation2"/>
+                                    </f:facet>
+                                  </af:panelStretchLayout>
+                                </f:facet>
+                                <f:facet name="center">
+                                  <af:panelStretchLayout startWidth="3" id="ptpsl4"
+                                                         dimensionsFrom="auto">
+                                    <f:facet name="start">
+                                      <af:spacer id="pts8"/>
+                                    </f:facet>
+                                    <f:facet name="center">
+                                      <af:decorativeBox id="ptdb4"
+                                                        dimensionsFrom="auto">
+                                        <f:facet name="center">
+                                          <af:facetRef facetName="center2"/>
+                                        </f:facet>
+                                      </af:decorativeBox>
+                                    </f:facet>
+                                  </af:panelStretchLayout>
+                                </f:facet>
+                              </af:decorativeBox>
+                              <!-- end of secondary decoration -->
+                            </f:facet>
+                          </af:switcher>
+                        </f:facet>
+                      </af:panelSplitter>
+                      <!-- end of outer primary auxiliary splitter -->
+                    </f:facet>
+                  </af:decorativeBox>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="bottom">
+          <af:panelGroupLayout halign="center"  layout="vertical" valign="middle" id="ptpglft" clientComponent="true"
+                                 styleClass="FooterBar #{mobileSettings.dimensionsFromChildren ? 'FooterBarFlow' : ''}" rendered="#{attrs.showFooter}">        
+              <af:panelGroupLayout layout="vertical" valign="middle"  id="footPgl"
+                                 styleClass="FooterContentContainer BrandingMaxWidth">
+                <af:panelGroupLayout layout="vertical" valign="middle" id="footlnk">
+                  <af:navigationPane hint="bar" id="ftllnks">
+                    <af:commandNavigationItem id="ptfni0"
+                                              text="Home" shortDesc="Learn more about ADF Faces Rich Client"
+                                              action="#{aboutBean.goHome}"
+                                              />
+                    <af:commandNavigationItem id="ptfni1"
+                                              text="Tag Guide" action="guide"
+                                              />
+                    <af:commandNavigationItem id="ptfni2"
+                                              text="Feature Demos" action="feature"
+                                              />
+                    <af:commandNavigationItem id="ptfni3"
+                                              text="Visual Designs" action="visualDesigns"
+                                              />
+                    <af:commandNavigationItem text="#{aboutBean.aboutLabel}"
+                                              shortDesc="View version information about the software used to generate this page"
+                                              id="ptfni5">
+                      <af:showPopupBehavior popupId="::about:about"/>
+                    </af:commandNavigationItem>
+                  </af:navigationPane>
+    
+                    <af:outputText id="ftot" value="Copyright &#169; 2013, Oracle and/or its affiliates. All rights reserved."/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </af:form>
+  </af:pageTemplateDef>
+</jsp:root>

@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:trh="http://myfaces.apache.org/trinidad/html" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="listView Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="css">
+      .taskName
+      {
+        font-size:125%; 
+        font-weight:bold;
+        min-width:300px;        
+      }
+      .taskProjectDesc
+      {
+        font-weight: bold;
+      }
+      .taskCreated
+      {
+        opacity: .75;
+        filter: alpha(opacity:.75);
+      }
+      </af:resource>
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="listView"/>
+        <f:attribute name="visualDesignName" value="listView"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="customEditorPresent" value="false"/>
+        <f:facet name="center">
+          <af:listView id="listView" binding="#{editor.component}" shortDesc="Tasks"
+                       var="item" varStatus="vs" partialTriggers="pprLV"
+                       value="#{demolistView.taskModel}" selection="multiple">
+           <af:listItem id="lvi" shortDesc="#{item.taskName}">
+              <af:showPopupBehavior popupId="::ctxtMenu" triggerType="contextMenu"/>
+                <trh:tableLayout id="pgrl" width="100%">
+                  <trh:rowLayout id="gr1">
+                    <trh:cellFormat id="gc1" rowSpan="3" valign="middle" inlineStyle="min-width: 45px; padding-left:20px; padding-right:10px" >
+                      <af:image rendered="#{vs.index %6 ==1}" source="/images/error.png" id="i1" shortDesc="Error at Line #{vs.index + 1}" />
+                      <af:outputText rendered="#{vs.index %6 !=1}" value="&#160;" id="otsp"/>
+                    </trh:cellFormat>
+                    
+                    <trh:cellFormat id="gc2" width="100%">
+                      <af:outputText id="outputText1" value="#{item.taskName}"
+                                       styleClass="taskName"/>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="gc5" rowSpan="3" valign="middle" width="100px" halign="end"  inlineStyle="padding-right:20px">
+                      <af:commandButton id="cb1" text="Action" shortDesc="Click To Invoke Action for Item #{vs.index + 1}">
+                        <af:showPopupBehavior popupId="::popupDialog" alignId="cb1"
+                                          align="afterStart"/>
+                      </af:commandButton>
+                    </trh:cellFormat>
+                </trh:rowLayout>
+                <trh:rowLayout id="gr2" >
+                  <trh:cellFormat id="gc3">
+                    <af:outputText id="outputText2" value="#{item.projectDesc}" styleClass="taskProjectDesc"/>
+                  </trh:cellFormat>
+                </trh:rowLayout>
+                <trh:rowLayout id="gr3">
+                  <trh:cellFormat id="gc4">
+                    <af:outputText id="outputText3" value="#{item.created}"  styleClass="taskCreated"/>
+                  </trh:cellFormat>
+                </trh:rowLayout>
+               </trh:tableLayout>
+            </af:listItem>
+          </af:listView>
+        </f:facet>
+        <f:facet name="centerSplitBottom">
+          <af:panelGroupLayout id="scroll" layout="scroll">
+            <af:panelFormLayout rows="1" id="mdlattrs">
+              <af:inputNumberSpinbox id="mdlProjectRows" label="Project Count" minimum="10" maximum="500" value="#{demolistView.taskCount}"/>
+              <af:selectBooleanCheckbox id="mdlunknwn" label="Make Unknown Count" value="#{demolistView.taskUnknownCount}"/>
+              <af:commandButton id="pprLV" text="PPR ListView" action="#{demolistView.refreshTaskModel}"/>
+            </af:panelFormLayout>
+            <af:popup id="popupDialog" contentDelivery="lazyUncached" eventContext="launcher">
+              <af:setPropertyListener from="#{vs.current}"
+                                      to="#{pageFlowScope.currentRow}"
+                                      type="popupFetch"/>
+              <af:dialog title="Text" id="d2">
+                <af:outputLabel id="ol"  for="ot1" value="You clicked on Action Item for: "/>
+                <af:outputText value="#{pageFlowScope.currentRow.taskName}" id="ot1"/>
+              </af:dialog>
+            </af:popup>
+            <af:popup id="ctxtMenu" contentDelivery="lazyUncached" eventContext="launcher">
+              <af:setPropertyListener from="#{vs.current}"
+                                      to="#{pageFlowScope.currentRow}"
+                                      type="popupFetch"/>
+              <af:menu id="m1">
+                <af:commandMenuItem text="taskName: #{pageFlowScope.currentRow.taskName}" id="cmi1"/>
+                <af:commandMenuItem text="project description: #{pageFlowScope.currentRow.projectDesc}" id="cmi2"/>
+                <af:commandMenuItem text="created: #{pageFlowScope.currentRow.created}" id="cmi3"/>
+              </af:menu>
+            </af:popup>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

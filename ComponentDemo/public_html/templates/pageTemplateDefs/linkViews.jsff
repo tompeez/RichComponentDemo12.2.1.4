@@ -1,0 +1,398 @@
+<?xml version='1.0' encoding='utf-8'?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          version="2.1">
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Dynamic declarative component for a list of demo links.</description>
+        <attribute>
+          <description>The overall header title.</description>
+          <attribute-name>title</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>Untitled</default-value>
+        </attribute>
+        <attribute>
+          <description>The value for the alphabetical view.</description>
+          <attribute-name>alphaItems</attribute-name>
+          <attribute-class>java.util.List</attribute-class>
+        </attribute>
+        <attribute>
+          <description>The value for the grouped view if there is only 1 heading for this view.</description>
+          <attribute-name>groupItems</attribute-name>
+          <attribute-class>java.util.List</attribute-class>
+        </attribute>
+        <attribute>
+          <description>The title for the first grouped view if there are 2 headings for this view.</description>
+          <attribute-name>groupTitle1</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value></default-value>
+        </attribute>
+        <attribute>
+          <description>The value for the first grouped view if there are 2 headings for this view.</description>
+          <attribute-name>groupItems1</attribute-name>
+          <attribute-class>java.util.List</attribute-class>
+        </attribute>
+        <attribute>
+          <description>The title for the second grouped view if there are 2 headings for this view.</description>
+          <attribute-name>groupTitle2</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value></default-value>
+        </attribute>
+        <attribute>
+          <description>The value for the second grouped view if there are 2 headings for this view.</description>
+          <attribute-name>groupItems2</attribute-name>
+          <attribute-class>java.util.List</attribute-class>
+        </attribute>
+        <attribute>
+          <description>The value for the tree view.</description>
+          <attribute-name>treeValue</attribute-name>
+          <attribute-class>org.apache.myfaces.trinidad.model.CollectionModel</attribute-class>
+        </attribute>
+        <attribute>
+          <description>The listBean for the tabular, carousel, tile, and row views.</description>
+          <attribute-name>listBean</attribute-name>
+          <attribute-class>oracle.adfdemo.view.nav.rich.DemoIndexListBean</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelHeader id="head" text="#{attrs.title}"
+                    partialTriggers="abcCtb grpCtb tblCtb treCtb carCtb thmCtb rowCtb thmRowPgIt:thmRowPgCl">
+      <f:facet name="toolbar">
+        <af:toolbar id="tbar1">
+          <af:commandToolbarButton id="abcCtb" partialSubmit="true"
+                                   shortDesc="Alphabetical view"
+                                   icon="/images/sortasc_ena.png"
+                                   hoverIcon="/images/sortasc_ovr.png"
+                                   depressedIcon="/images/sortasc_dwn.png"
+                                   selected="#{sessionScope.linkViewSortName == 'abc' or sessionScope.linkViewSortName == null}">
+            <af:setActionListener from="abc" to="#{sessionScope.linkViewSortName}"/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton id="grpCtb" partialSubmit="true"
+                                   shortDesc="Grouped view"
+                                   icon="/images/group_ena.png"
+                                   hoverIcon="/images/group_ovr.png"
+                                   depressedIcon="/images/group_dwn.png"
+                                   selected="#{sessionScope.linkViewSortName == 'grp'}">
+            <af:setActionListener from="grp" to="#{sessionScope.linkViewSortName}"/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton id="tblCtb" partialSubmit="true"
+                                   shortDesc="Tabular view"
+                                   icon="/images/view_as_table_ena.png"
+                                   hoverIcon="/images/view_as_table_ovr.png"
+                                   depressedIcon="/images/view_as_table_dwn.png"
+                                   selected="#{sessionScope.linkViewSortName == 'tbl'}">
+            <af:setActionListener from="tbl" to="#{sessionScope.linkViewSortName}"/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton id="treCtb" partialSubmit="true"
+                                   shortDesc="Hierarchical view"
+                                   icon="/images/view_as_hierarchy_ena.png"
+                                   hoverIcon="/images/view_as_hierarchy_ovr.png"
+                                   depressedIcon="/images/view_as_hierarchy_dwn.png"
+                                   selected="#{sessionScope.linkViewSortName == 'tre'}">
+            <af:setActionListener from="tre" to="#{sessionScope.linkViewSortName}"/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton id="carCtb" partialSubmit="true"
+                                   shortDesc="Carousel view"
+                                   icon="/images/view_as_carousel_ena.png"
+                                   hoverIcon="/images/view_as_carousel_ovr.png"
+                                   depressedIcon="/images/view_as_carousel_dwn.png"
+                                   selected="#{sessionScope.linkViewSortName == 'car'}">
+            <af:setActionListener from="car" to="#{sessionScope.linkViewSortName}"/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton id="thmCtb" partialSubmit="true"
+                                   rendered="#{sessionScope.linkViewSortName != 'thm' and sessionScope.linkViewSortName != 'row'}"
+                                   shortDesc="Tile view"
+                                   icon="/images/detailcolumnview_ena.png"
+                                   hoverIcon="/images/detailcolumnview_ovr.png"
+                                   depressedIcon="/images/detailcolumnview_dwn.png"
+                                   selected="#{sessionScope.linkViewSortName == 'thm'}">
+            <af:setActionListener from="thm" to="#{sessionScope.linkViewSortName}"/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton id="rowCtb" partialSubmit="true"
+                                   rendered="#{sessionScope.linkViewSortName != 'thm' and sessionScope.linkViewSortName != 'row'}"
+                                   shortDesc="Row view"
+                                   icon="/images/listview_ena.png"
+                                   hoverIcon="/images/listview_ovr.png"
+                                   depressedIcon="/images/listview_dwn.png"
+                                   selected="#{sessionScope.linkViewSortName == 'row'}">
+            <af:setActionListener from="row" to="#{sessionScope.linkViewSortName}"/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton id="thmOptCtb" partialSubmit="true"
+                                   rendered="#{sessionScope.linkViewSortName == 'thm' or sessionScope.linkViewSortName == 'row'}"
+                                   shortDesc="Tile view"
+                                   icon="/images/detailcolumnview_ena.png"
+                                   hoverIcon="/images/detailcolumnview_ovr.png"
+                                   depressedIcon="/images/detailcolumnview_dwn.png"
+                                   selected="#{sessionScope.linkViewSortName == 'thm'}">
+            <af:setActionListener from="thm" to="#{sessionScope.linkViewSortName}"/>
+            <af:clientListener type="action" method="handleThmRowToggle"/>
+            <af:clientAttribute name="thmView" value="yes"/>
+          </af:commandToolbarButton>
+          <af:commandToolbarButton id="rowOptCtb" partialSubmit="true"
+                                   rendered="#{sessionScope.linkViewSortName == 'thm' or sessionScope.linkViewSortName == 'row'}"
+                                   shortDesc="Row view"
+                                   icon="/images/listview_ena.png"
+                                   hoverIcon="/images/listview_ovr.png"
+                                   depressedIcon="/images/listview_dwn.png"
+                                   selected="#{sessionScope.linkViewSortName == 'row'}">
+            <af:setActionListener from="row" to="#{sessionScope.linkViewSortName}"/>
+            <af:clientListener type="action" method="handleThmRowToggle"/>
+            <af:clientAttribute name="thmView" value="no"/>
+          </af:commandToolbarButton>
+          <af:resource type="javascript">
+            function handleThmRowToggle(actionEvent)
+            {
+              // Client-side toggle between the tiled view and the rows view:
+              var eventSource = actionEvent.getSource();
+              var showThmView = eventSource.getProperty("thmView") == "yes";
+
+              var thmOptCtb = eventSource.findComponent("thmOptCtb");
+              var rowOptCtb = eventSource.findComponent("rowOptCtb");
+              var thmView = eventSource.findComponent("thmView");
+              var rowView = eventSource.findComponent("rowView");
+              var thmRowScroll = eventSource.findComponent("thmRowScroll");
+              if (thmView == null || thmView == null || thmOptCtb == null || rowOptCtb == null || thmRowScroll == null)
+              {
+                AdfLogger.LOGGER.severe(
+                  "Could not find a client component from the handleThmRowToggle handler's event source:" +
+                  "\n eventSource=" + eventSource +
+                  "\n thmOptCtb=" + thmOptCtb +
+                  "\n rowOptCtb=" + rowOptCtb +
+                  "\n thmView=" + thmView +
+                  "\n rowView=" + rowView +
+                  "\n thmRowScroll=" + thmRowScroll);
+                return;
+              }
+
+              // Toggle the selected states of the client-optimized toolbar buttons:
+              thmOptCtb.setSelected(showThmView);
+              rowOptCtb.setSelected(!showThmView);
+
+              // Toggle the visible states of the tiled and row content views:
+              thmView.setVisible(showThmView);
+              rowView.setVisible(!showThmView);
+
+              // Set the scroll position to the top:
+              var scrollElement = thmRowScroll.getPeer().getDomElement();
+              AdfAgent.AGENT.scrollToPos(scrollElement, 0, 0);
+            }
+          </af:resource>
+        </af:toolbar>
+      </f:facet>
+      <af:switcher facetName="#{sessionScope.linkViewSortName == 'thm' or sessionScope.linkViewSortName == 'row' ? 'thmOrRow' : sessionScope.linkViewSortName}"
+                   defaultFacet="abc" id="swchr">
+        <f:facet name="abc">
+          <af:panelGroupLayout layout="scroll" id="scroller">
+            <af:panelGroupLayout id="ieBug" layout="vertical" styleClass="AFStretchWidth">
+              <af:declarativeComponent id="abcCols" columnItems="#{attrs.alphaItems}"
+                                       viewId="/templates/pageTemplateDefs/demoIndexMultiColumnSections.jsff"/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="grp">
+          <af:panelGroupLayout layout="scroll" id="scroller2">
+            <af:panelGroupLayout id="ieBug2" layout="vertical" styleClass="AFStretchWidth">
+              <af:switcher id="groupSwitch" facetName="#{attrs.groupTitle1 == '' ? 'justOne' : 'two'}">
+                <f:facet name="justOne">
+                  <af:declarativeComponent id="grpCols" columnItems="#{attrs.groupItems}"
+                                           viewId="/templates/pageTemplateDefs/demoIndexMultiColumnSections.jsff"/>
+                </f:facet>
+                <f:facet name="two">
+                  <af:panelGroupLayout id="grpPGL" layout="vertical">
+                    <af:panelHeader id="headComp" text="#{attrs.groupTitle1}" size="1">
+                      <af:declarativeComponent id="grp1Cols" columnItems="#{attrs.groupItems1}"
+                                               viewId="/templates/pageTemplateDefs/demoIndexMultiColumnSections.jsff"/>
+                    </af:panelHeader>
+                    <af:spacer id="spSep" width="1px" height="4px"/>
+                    <af:panelHeader id="headOthr" text="#{attrs.groupTitle2}" size="1">
+                      <af:declarativeComponent id="grp2Cols" columnItems="#{attrs.groupItems2}"
+                                               viewId="/templates/pageTemplateDefs/demoIndexMultiColumnSections.jsff"/>
+                    </af:panelHeader>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:switcher>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="tbl">
+          <af:table id="tbl" var="row" value="#{attrs.listBean.list}" columnStretching="column:colText"
+                    summary="Links organized into a tabluar list">
+            <af:column id="colText" headerText="Name" rowHeader="unstyled">
+              <af:group id="gText">
+                <af:commandImageLink id="cmd" text="#{row.text}" action="#{row.getOutcome}"
+                                     inlineStyle="#{row.inlineStyle}" disabled="#{row.disabled}"
+                                     rendered="#{row.outcome != null}" icon="#{row.smallIcon}"
+                                     shortDesc="#{row.text}#{row.linkNote}"/>
+                <af:goImageLink id="go" text="#{row.text}" destination="#{row.destination}"
+                           inlineStyle="#{row.inlineStyle}" disabled="#{row.disabled}"
+                           rendered="#{row.outcome == null}" icon="#{row.smallIcon}"
+                           shortDesc="#{row.text}#{row.linkNote}"/>
+              </af:group>
+            </af:column>
+            <af:column id="colPath" headerText="Path" width="250px">
+              <af:outputText id="otPath" value="#{row.path}"/>
+            </af:column>
+            <af:column id="colDesc" headerText="Description">
+              <af:outputText id="otDesc" value="#{row.description}"/>
+            </af:column>
+            <af:column id="colNote" headerText="Note">
+              <af:outputText id="otNote" value="#{row.linkNote}"/>
+            </af:column>
+          </af:table>
+        </f:facet>
+        <f:facet name="tre">
+          <af:declarativeComponent id="tre" menuModel="#{attrs.treeValue}"
+                                   summary="Links organized in hierarchical groups"
+                                   viewId="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff"/>
+        </f:facet>
+        <f:facet name="car">
+          <af:panelGroupLayout id="carScroll" layout="scroll">
+            <af:panelGroupLayout id="carVert" layout="vertical" inlineStyle="padding:2px">
+              <af:carousel id="car" var="item" value="#{attrs.listBean.list}" styleClass="AFStretchWidth"
+                           inlineStyle="height:224px">
+                <!-- this is the only allowed use of % height units and only case where 100% for both is safe -->
+                <f:facet name="nodeStamp">
+                  <!-- For carousel items, we list deprecated items with (deprecated) as part of text,
+                       as setting carousel inlineStyle to item.inlineStyle doesn't resolve to change in item text. -->
+                  <af:carouselItem id="crslItem" text="#{item.text}#{item.deprecated eq 'true' ? ' (deprecated)' : ''}" 
+                                   shortDesc="#{item.text}#{item.deprecated eq 'true' ? ' (deprecated)' : ''}">
+                    <af:commandLink id="carLink" action="#{item.getOutcome}">
+                      <af:image id="img" source="#{item.carouselIcon}" shortDesc="#{item.text}#{item.deprecated eq 'true' ? ' (deprecated)' : ''}"
+                                inlineStyle="width:100%;height:100%;"/>
+                    </af:commandLink>
+                  </af:carouselItem>
+                </f:facet>
+              </af:carousel>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="thmOrRow">
+          <af:panelStretchLayout id="thmRowPsl" bottomHeight="auto" partialTriggers="thmRowSoc" dimensionsFrom="auto">
+            <f:facet name="center">
+              <af:panelGroupLayout id="thmRowScroll" layout="scroll" clientComponent="true">
+                <af:panelGroupLayout id="thmView" layout="default" visible="#{sessionScope.linkViewSortName == 'thm'}"
+                                     clientComponent="true">
+                  <af:iterator id="thm" var="row" value="#{attrs.listBean.list}"
+                               first="#{attrs.listBean.firstIndex}"
+                               rows="#{attrs.listBean.pageSize}">
+                    <af:panelGroupLayout id="iblkThm" layout="vertical" halign="center"
+                                         inlineStyle="width:20em;padding-top:10px;padding-bottom:10px;#{adfFacesContext.agent.agentName == 'ie' and fn:startsWith(adfFacesContext.agent.agentVersion,'7.') ? 'display:inline;zoom:1' : adfFacesContext.agent.agentName == 'gecko' and fn:startsWith(adfFacesContext.agent.agentVersion,'1.8.') ? 'display:-moz-inline-box;-moz-box-orient:vertical' : 'display:inline-block' }">
+                      <af:group id="g1Thm">
+                        <!-- The LinkViewsTileLargeImage style is required to support Firefox 2. -->
+                        <af:resource type="css">.LinkViewsTileLargeImage IMG{width:75px;height:75px;}</af:resource>
+                        <af:commandImageLink id="cmdImgThm" action="#{row.getOutcome}"
+                                             inlineStyle="height:75px;#{row.inlineStyle}" styleClass="LinkViewsTileLargeImage"
+                                             disabled="#{row.disabled}" rendered="#{row.outcome != null}"
+                                             icon="#{row.largeIcon}" shortDesc="#{row.text}#{row.linkNote}"/>
+                        <af:goImageLink id="goImgThm" destination="#{row.destination}"
+                                   inlineStyle="#{row.inlineStyle}" styleClass="LinkViewsTileLargeImage"
+                                   disabled="#{row.disabled}" rendered="#{row.outcome == null}"
+                                   icon="#{row.largeIcon}" shortDesc="#{row.text}#{row.linkNote}"/>
+                      </af:group>
+                      <af:group id="g2Thm">
+                        <af:commandImageLink id="cmdThm" text="#{row.text}" action="#{row.getOutcome}"
+                                             inlineStyle="#{row.inlineStyle}" disabled="#{row.disabled}"
+                                             rendered="#{row.outcome != null}" icon="#{row.smallIcon}"
+                                             shortDesc="#{row.text}#{row.linkNote}"/>
+                        <af:goImageLink id="goThm" text="#{row.text}" destination="#{row.destination}"
+                                   inlineStyle="#{row.inlineStyle}" disabled="#{row.disabled}"
+                                   rendered="#{row.outcome == null}" icon="#{row.smallIcon}"
+                                   shortDesc="#{row.text}#{row.linkNote}"/>
+                      </af:group>
+                      <af:outputText id="otThmPath" value="#{row.path}"/>
+                    </af:panelGroupLayout>
+                  </af:iterator>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="rowView" layout="vertical" styleClass="AFStretchWidth"
+                                     visible="#{sessionScope.linkViewSortName == 'row'}" clientComponent="true">
+                  <trh:tableLayout id="tlRow" cellPadding="10" width="100%">
+                    <af:iterator id="row" var="row" value="#{attrs.listBean.list}"
+                                 first="#{attrs.listBean.firstIndex}"
+                                 rows="#{attrs.listBean.pageSize}">
+                      <trh:rowLayout id="rlRow">
+                        <trh:cellFormat id="cfRowIcon" valign="top">
+                          <!-- The LinkViewsTileLargeImage style is required to support Firefox 2. -->
+                          <af:resource type="css">.LinkViewsTileLargeImage IMG{width:75px;height:75px;}</af:resource>
+                          <af:commandImageLink id="cmdImgRow" action="#{row.getOutcome}"
+                                               inlineStyle="#{row.inlineStyle}" styleClass="LinkViewsTileLargeImage"
+                                               disabled="#{row.disabled}" rendered="#{row.outcome != null}"
+                                               icon="#{row.largeIcon}" shortDesc="#{row.text}#{row.linkNote}"/>
+                          <af:goImageLink id="goImgRow" destination="#{row.destination}"
+                                          inlineStyle="#{row.inlineStyle}" styleClass="LinkViewsTileLargeImage"
+                                     disabled="#{row.disabled}" rendered="#{row.outcome == null}"
+                                     icon="#{row.largeIcon}" shortDesc="#{row.text}#{row.linkNote}"/>
+                        </trh:cellFormat>
+                        <trh:cellFormat id="cfRowDetail" valign="top" width="100%">
+                          <af:panelGroupLayout id="pglRowVert" layout="vertical">
+                            <af:commandImageLink id="cmdRow" text="#{row.text}" action="#{row.getOutcome}"
+                                                 inlineStyle="#{row.inlineStyle}" disabled="#{row.disabled}"
+                                                 rendered="#{row.outcome != null}" icon="#{row.smallIcon}"
+                                                 shortDesc="#{row.text}#{row.linkNote}"/>
+                            <af:goImageLink id="goRow" text="#{row.text}" destination="#{row.destination}"
+                                       inlineStyle="#{row.inlineStyle}" disabled="#{row.disabled}"
+                                       rendered="#{row.outcome == null}" icon="#{row.smallIcon}"
+                                       shortDesc="#{row.text}#{row.linkNote}"/>
+                            <af:panelFormLayout id="pflRow" maxColumns="1">
+                              <af:inputText id="itRowPath" readOnly="true" label="Path" value="#{row.path}"/>
+                              <af:inputText id="itRowDesc" readOnly="true" label="Description" value="#{row.description}"/>
+                              <af:inputText id="itRowNote" readOnly="true" label="Note" value="#{row.linkNote}"/>
+                            </af:panelFormLayout>
+                          </af:panelGroupLayout>
+                        </trh:cellFormat>
+                      </trh:rowLayout>
+                      <trh:rowLayout id="r2Row">
+                        <trh:cellFormat id="cfRowSep" columnSpan="2">
+                          <af:separator id="sepRow"/>
+                        </trh:cellFormat>
+                      </trh:rowLayout>
+                    </af:iterator>
+                  </trh:tableLayout>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="bottom">
+              <af:panelGroupLayout id="thmRowTbPad" layout="vertical" inlineStyle="padding-top:8px">
+                <af:panelStretchLayout id="thmRowTbPsl" startWidth="auto" endWidth="auto" dimensionsFrom="auto">
+                  <f:facet name="start">
+                    <af:outputFormatted id="thmRowFound"
+                                        value="&lt;b>#{1 + attrs.listBean.firstIndex}-#{1 + attrs.listBean.lastIndex} of #{attrs.listBean.listSize}&lt;/b> results found"/>
+                  </f:facet>
+                  <f:facet name="center">
+                    <af:panelGroupLayout id="thmRowPgStr" layout="vertical" halign="center"
+                                         styleClass="AFStretchWidth">
+                      <af:panelGroupLayout id="thmRowPages" layout="horizontal">
+                        <f:facet name="separator">
+                          <af:outputText id="thmRowPageSep" value="|" inlineStyle="padding-left:8px;padding-right:8px"/>
+                        </f:facet>
+                        <af:iterator id="thmRowPgIt" var="page" value="#{attrs.listBean.pageNumbers}">
+                          <af:commandLink id="thmRowPgCl" text="#{page}" partialSubmit="true"
+                                          rendered="#{page != 0 and attrs.listBean.currentPage != page}">
+                            <af:setActionListener from="#{page}" to="#{attrs.listBean.currentPage}"/>
+                          </af:commandLink>
+                          <af:outputText id="thmRowPgCur" value="#{page}" inlineStyle="font-weight:bold"
+                                         rendered="#{attrs.listBean.currentPage == page}"/>
+                          <af:outputText id="thmRowMore" value="..." rendered="#{page == 0}"/>
+                        </af:iterator>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <f:facet name="end">
+                    <af:selectOneChoice id="thmRowSoc" label="Items per page" autoSubmit="true"
+                                        value="#{attrs.listBean.pageSize}">
+                      <f:selectItems id="thmRowItems" value="#{attrs.listBean.pageSizes}"/>
+                    </af:selectOneChoice>
+                  </f:facet>
+                </af:panelStretchLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:switcher>
+    </af:panelHeader>
+  </af:componentDef>
+</jsp:root>

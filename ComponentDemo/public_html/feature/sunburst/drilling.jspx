@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Sunburst Drilling Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Sunburst Drilling Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Sunburst Drilling"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:group>
+                            <f:verbatim>
+                                <p>Drilling is used to navigate through a hierarchy and display more detailed
+                                   information. Try the following:</p>
+                                <ul>
+                                    <li>Click on a node to set that node as the root of the sunburst.</li>
+                                     
+                                    <li>Use the breadcrumbs to navigate back up the hierarchy.</li>
+                                     
+                                    <li>Use the slider to experiment with drilling when different levels of children are
+                                        displayed.</li>
+                                </ul>
+                                <p>Note: Drilling is most useful when the drill action results in the display of more
+                                   detailed data.</p>
+                            </f:verbatim>
+                            <dvt:sunburst id="sb1" inlineStyle="width:500px;height:550px;" value="#{sunburst.censusData}"
+                                          var="row" displayLevelsChildren="#{sunburst.displayLevelsChildren}" nodeSelection="none"
+                                          sizeLabel="Population" colorLabel="Median Household Income" legendSource="ag2"
+                                          animationOnDataChange="auto" partialTriggers="::ins10">
+                                <dvt:sunburstNode id="sn1" value="#{row.size}" label="#{row.text}"
+                                                  shortDesc="#{row.income}" drilling="replace">
+                                    <dvt:attributeGroups id="ag2" type="color" value="#{row.income > 50000}"
+                                                         label="#{row.income > 50000 ? 'Low Income' : 'High Income'}"/>
+                                </dvt:sunburstNode>
+                            </dvt:sunburst>
+                            <af:spacer height="20"/>
+                            <af:inputNumberSlider label="Display Levels Children" id="ins10"
+                                                  value="#{sunburst.displayLevelsChildren}" minimum="1" maximum="3"
+                                                  autoSubmit="true"/>
+                        </af:group>
+			<af:group>
+                          <af:panelGroupLayout layout="vertical">
+                            <af:outputText inlineStyle="font-size:large;" value="Drill Insert"/>
+                            <af:outputText value="Drill insert allows an end user to expand or collapse the children of a node.  Hover over a node to show the expand/collapse icon (where available):"/>
+                          </af:panelGroupLayout>
+                          <dvt:sunburst id="s2" inlineStyle="width:500px;height:550px;" value="#{sunburst.drillInsertData}" var="row" varStatus="status"
+                                        displayLevelsChildren="2" animationOnDataChange="auto" >
+                            <dvt:sunburstNode id="sn2" value="#{row.size}" fillColor="#{row.color}" label="#{row.text}" shortDesc="#{row.size}"
+                                              labelDisplay="rotated" drilling="#{status.model.depth lt 4 ? 'insert' : 'off'}"/>
+                          </dvt:sunburst>
+                        </af:group>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

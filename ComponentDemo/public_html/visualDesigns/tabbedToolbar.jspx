@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Tabbed Toolbar Visual Design Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Tabbed Toolbar Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelStretchLayout id="psl1" topHeight="auto" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:panelGroupLayout layout="scroll" id="pgl2">
+                <af:panelHeader text="Related Links" id="ph1">
+                  <af:panelList id="pl1" maxColumns="3" rows="3">
+                    <af:goLink text="Component - decorativeBox" destination="/components/decorativeBox.jspx"
+                               id="gl1"/>
+                    <af:goLink text="Component - navigationPane" destination="/components/navigationPane.jspx"
+                               id="gl2"/>
+                    <af:goLink text="Component - toolbar" destination="/components/toolbar.jspx"
+                               id="gl3"/>
+                    <af:goLink id="gl4" text="View Source - tabbedToolbar.jsff" targetFrame="_blank"
+                               destination="/visualDesigns/tabbedToolbar/tabbedToolbar.jsff.source"/>
+                    <af:goLink id="gl5" text="View Source - contentInsert.jsff" targetFrame="_blank"
+                               destination="/visualDesigns/tabbedToolbar/contentInsert.jsff.source"/>
+                    <af:goLink id="gl6" text="View Source - contentPageLayout.jsff" targetFrame="_blank"
+                               destination="/visualDesigns/tabbedToolbar/contentPageLayout.jsff.source"/>
+                    <af:goLink id="gl7" text="View Source - contentChart.jsff" targetFrame="_blank"
+                               destination="/visualDesigns/tabbedToolbar/contentChart.jsff.source"/>
+                    <af:goLink id="gl8" text="View Source - contentText.jsff" targetFrame="_blank"
+                               destination="/visualDesigns/tabbedToolbar/contentText.jsff.source"/>
+                    <af:goLink id="gl9" text="View Source - selectOneIcon.jsff" targetFrame="_blank"
+                               destination="/visualDesigns/tabbedToolbar/selectOneIcon.jsff.source"/>
+                  </af:panelList>
+                </af:panelHeader>
+                <af:spacer height="10px" id="s5"/>
+                <af:declarativeComponent id="tabbedToolbar" viewId="/visualDesigns/tabbedToolbar/tabbedToolbar.jsff"/>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelGroupLayout id="mainContent" layout="scroll">
+                <af:panelGroupLayout id="padding" layout="vertical" inlineStyle="padding:8px">
+                  <f:facet name="separator">
+                    <af:spacer id="s1" width="1px" height="8px"/>
+                  </f:facet>
+                  <af:outputText id="ot1" value="Main page content goes here."/>
+                  <af:selectOneRadio id="contextOptions" label="Contextual options" autoSubmit="true" valuePassThru="true"
+                                     value="chart">
+                    <f:selectItem id="chart" itemLabel="Chart" itemValue="chart"/>
+                    <f:selectItem id="text" itemLabel="Text" itemValue="text"/>
+                    <af:clientAttribute name="toolbar" value="tabbedToolbar"/>
+                    <af:clientListener type="valueChange" method="handleToolbarContextSwitch"/>
+                  </af:selectOneRadio>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

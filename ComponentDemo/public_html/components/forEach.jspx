@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="forEach Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="css">
+.employee.even,
+.empPfl.even
+{
+  background-color: #eee;
+}
+.employee *
+{
+  vertical-align: bottom !important;
+}
+.help img
+{
+  height: 16px;
+  width: 16px;
+}
+      </af:resource>
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="forEach"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="misc"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelSplitter id="ps1">
+            <f:facet name="first">
+              <af:panelGroupLayout id="pgl1" layout="scroll"
+                                   partialTriggers="np1:cni1 np1:cni2 np1:cni3 np1:cni4 np1:cni5">
+                <af:panelHeader text="For Each Demos:" id="ph1"/>
+                <af:navigationPane hint="list" id="np1">
+                  <af:commandNavigationItem text="Simple" id="cni1"
+                                            shortDesc="Simple for each usage showing different collections"
+                                            selected="#{forEachBean.selectedSubViewId eq 'simple.jsff'}"
+                                            partialSubmit="true">
+                    <f:setPropertyActionListener target="#{forEachBean.selectedSubViewId}"
+                                                 value="simple.jsff"/>
+                  </af:commandNavigationItem>
+                  <af:commandNavigationItem text="Sorting" id="cni2"
+                                            shortDesc="Example showing how to sort items"
+                                            selected="#{forEachBean.selectedSubViewId eq 'sort.jsff'}"
+                                            partialSubmit="true">
+                    <f:setPropertyActionListener target="#{forEachBean.selectedSubViewId}"
+                                                 value="sort.jsff"/>
+                  </af:commandNavigationItem>
+                  <af:commandNavigationItem text="Updates" id="cni3"
+                                            shortDesc="Example showing how to handle collection updates"
+                                            selected="#{forEachBean.selectedSubViewId eq 'updates.jsff'}"
+                                            partialSubmit="true">
+                    <f:setPropertyActionListener target="#{forEachBean.selectedSubViewId}"
+                                                 value="updates.jsff"/>
+                  </af:commandNavigationItem>
+                  <af:commandNavigationItem text="PPR" id="cni4"
+                                            shortDesc="Example showing declarative partial triggers"
+                                            selected="#{forEachBean.selectedSubViewId eq 'ppr.jsff'}"
+                                            partialSubmit="true">
+                    <f:setPropertyActionListener target="#{forEachBean.selectedSubViewId}"
+                                                 value="ppr.jsff"/>
+                  </af:commandNavigationItem>
+                  <af:commandNavigationItem text="Nested" id="cni5"
+                                            shortDesc="Nested for each tag example"
+                                            selected="#{forEachBean.selectedSubViewId eq 'nested.jsff'}"
+                                            partialSubmit="true">
+                    <f:setPropertyActionListener target="#{forEachBean.selectedSubViewId}"
+                                                 value="nested.jsff"/>
+                  </af:commandNavigationItem>
+                </af:navigationPane>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelStretchLayout id="psl1">
+                <f:facet name="center">
+                  <af:declarativeComponent id="dc1"
+                                           partialTriggers="::np1:cni1 ::np1:cni2 ::np1:cni3 ::np1:cni4 ::np1:cni5"
+                                           viewId="forEachIncludes/#{forEachBean.selectedSubViewId}"/>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

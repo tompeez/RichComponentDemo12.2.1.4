@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{pivotTableFeatureLinks.editablePivotTableTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Pivot Table Editing"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="Pivot Table Editing"/>    
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+          <!-- START TAG DEMO -->
+          <dvt:pivotTable id="goodPT"
+                          binding="#{editor.component}"
+                          contentDelivery="immediate"
+                          value="#{pivotTableEdit.dataModel}"                                        
+                          inlineStyle="width:700px;height:250px;"
+                          pivotLabelVisible="false"
+                          var="cellData"
+                          varStatus="cellStatus"
+                          sortMode="none"
+                          headerSortMode="none"
+                          summary="pivot table"
+                          sizingManager="#{pivotTableEdit.sizingManager}"
+                          splitMode="enabled"
+                          >  
+            <f:facet name="bodyContextMenu">
+              <af:popup id="bcmpop">
+                <af:menu id="bcm">
+                  <af:commandMenuItem id="bcmi1" text="Body Menu 1"/>
+                  <af:commandMenuItem id="bcmi2" text="Body Menu 2"/>
+                  <af:commandMenuItem id="bcmi3" text="Body Menu 3"/>
+                </af:menu>
+              </af:popup>
+            </f:facet>
+            <f:facet name="contextMenu">
+              <af:popup id="cmpop">
+                <af:menu id="cm">
+                  <af:commandMenuItem id="cmi1" text="Menu Item 1"/>
+                  <af:commandMenuItem id="cmi2" text="Menu Item 2"/>
+                  <af:commandMenuItem id="cmi3" text="Menu Item 3"/>
+                </af:menu>
+              </af:popup>
+            </f:facet>
+            
+            <dvt:dataCell>                    
+              <af:switcher id="sw" facetName="#{cellStatus.members.MeasDim.value}" defaultFacet="Other">
+                <f:facet name="Sales">
+                  <af:inputText  value="#{cellData.dataValue}"   id="it1"/>  
+                </f:facet>
+                <f:facet name="Units">
+                  <af:inputText  value="#{cellData.dataValue}"   id="it2">      
+                    <af:validateLength maximum="6" minimum="2" />
+                  </af:inputText>
+                </f:facet>
+                <f:facet name="Weight">
+                  <af:outputText value="#{cellData.dataValue}" id="ot7"/>
+                </f:facet>
+                <f:facet name="Color">
+                  <af:selectOneChoice id="idselectonechoice"
+                                      value="#{cellData.dataValue}" label="Color">
+                    <af:selectItem label="red" value="red" shortDesc="shortDesc sample"
+                                   id="si1"/>                                
+                    <af:selectItem label="coffee" value="coffee" shortDesc="Sample shortDesc text"
+                                   id="si2"/>                            
+                    <af:selectItem label="milk" value="milk" shortDesc="Another shortDesc sample"
+                                   id="si3"/>                            
+                  </af:selectOneChoice>
+                </f:facet>
+                <f:facet name="Available">
+                  <af:selectBooleanCheckbox id="idselectbooleancheckbox" label="Availability" text="Item Available"
+                                            autoSubmit="true" value="#{cellData.dataValue}"/>                    
+                </f:facet>
+                <f:facet name="Supply Date">
+                  <af:inputDate  value="#{cellData.dataValue}"
+                                 label="Change Date:" simple="true" id="id1">                        
+                    <af:validateDateTimeRange maximum="2020-12-31" minimum="1980-12-31" />
+                  </af:inputDate>
+                </f:facet>
+                <f:facet name="Link">
+                  <af:commandLink text="#{cellData.dataValue}" immediate="true" action="guide" id="idcommandlink"/>
+                </f:facet>
+                <f:facet name="Size">
+                  <af:inputComboboxListOfValues label="Size" id="idInputComboboxListOfValues"                                       
+                             value="#{cellData.dataValue}"  searchDesc="Search Size"                                        
+                             model="#{pivotTableEdit.listOfValuesModel}"                            
+                             columns="3"
+                             returnPopupListener="#{pivotTableEdit.handlePopupReturn}" />
+                </f:facet>
+                <f:facet name="Other">
+                  <af:outputText  value="#{cellData.dataValue}"   id="ot8"/>  
+                </f:facet>
+              </af:switcher>
+            </dvt:dataCell>
+          </dvt:pivotTable>
+          <!-- END TAG DEMO -->
+
+          <!-- Instruction Text -->
+          <af:panelAccordion id="pa1" inlineStyle="width:700px;height:300px">
+            <af:showDetailItem text="Single Click-to-Edit" id="sdi1">
+              <af:panelGroupLayout id="pg1">
+                <af:outputText id="ot1" inlineStyle="font-weight:bold" value="Instructions"/>
+                <af:panelList id="pl1">
+                  <af:outputText id="ot11" value="Single click on any cell will put the pivot table to edit mode."/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Stay in Edit Mode When Navigating Through Read-only Cell" id="sdi5">
+              <af:panelGroupLayout id="pg5">
+                <af:outputText id="ot5" inlineStyle="font-weight:bold" value="Instructions"/>
+                <af:panelList id="pl5">
+                  <af:outputText id="ot51" value="Click on Units/Boston, then tab through Price, which is a read-only cell, you should still be able to Tab/Enter to another cell and stay in edit mode."/>
+                  <af:outputText id="ot52" value="Pressing Tab key at the last cell of the column should not exit edit mode, the same goes for pressing Enter key at the last cell of the row."/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Expand Enter Key Support to All Component Types" id="sdi6">
+              <af:panelGroupLayout id="pg6">
+                <af:outputText id="ot6" inlineStyle="font-weight:bold" value="Instructions"/>
+                <af:panelList id="pl6">
+                  <af:outputText id="ot61" value="Pressing Enter key while in a cell should make the cell below the current cell editable.  The only exception is the link, which will only launch the link and the same cell stays selected."/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Ctrl Arrow Key Navigation" id="sdi2">
+              <af:panelGroupLayout id="pg2">
+                <af:outputText id="ot2" inlineStyle="font-weight:bold" value="Instructions"/>
+                <af:panelList id="pl2">
+                  <af:outputText id="ot21" value="Begin editing by clicking on any cell, then use ctrl + arrow keys to navigate between cells."/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Esc Key to Revert Edits" id="sdi4">
+              <af:panelGroupLayout id="pg4">
+                <af:outputText id="ot4" inlineStyle="font-weight:bold" value="Instructions"/>
+                <af:panelList id="pl4">
+                  <af:outputText id="ot41" value="Begin editing by clicking on any cell (ex: Sales, Boston), change the value in the cell."/>
+                  <af:outputText id="ot42" value="When you hit the Esc key, the value should be revert back to the original value (ex: 500)."/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelAccordion>                
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/pivotTable/pivotTableFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

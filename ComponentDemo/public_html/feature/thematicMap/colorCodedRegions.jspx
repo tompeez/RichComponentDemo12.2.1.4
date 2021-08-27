@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Thematic Map Color Coded Regions Demo"
+                     binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo"
+                             viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- MOD TAG TEMPLATE -->
+                <!-- Document Title -->
+                <f:attribute name="documentTitle"
+                             value="Thematic Map Color Coded Regions Demo"/>
+                <!-- Tag Name -->
+                <f:attribute name="tagName"
+                             value="Thematic Map Color Coded Regions"/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:facet name="center">
+                    <af:panelStretchLayout topHeight="auto" startWidth="auto"
+                                           id="psl1">
+                        <f:facet name="top">
+                            <af:panelGroupLayout layout="vertical" id="pgl1">
+                                <af:panelGroupLayout layout="horizontal"
+                                                     id="pgl2">
+                                    <af:spacer width="10px" id="s1"/>
+                                    <af:panelGroupLayout id="pgl3">
+                                        <f:verbatim>
+                                            <b>Demonstrates coloring regions of a Thematic Map based on data values</b>
+                                            <ul>
+                                                <li>Select a 'Comparison Type'.</li>
+                                                 
+                                                <li>Color shade
+                                                    indicates how severely an
+                                                    actual value deviates from
+                                                    its target.</li>
+                                            </ul>
+                                        </f:verbatim>
+                                    </af:panelGroupLayout>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                        </f:facet>
+
+                        <f:facet name="center">
+                            <af:panelSplitter orientation="horizontal" 
+                                    splitterPosition="270" positionedFromEnd="false"
+                                    styleClass="AFStretchWidth" id="ps1">
+                                <f:facet name="first">
+                                    <af:panelGroupLayout layout="vertical" id="pgl4">
+                                        <af:panelGroupLayout layout="vertical"
+                                                             id="pgl5">
+                                            <af:panelGroupLayout layout="vertical"
+                                                                 id="pgl6">
+                                                <af:panelGroupLayout layout="vertical"
+                                                                     inlineStyle="border-style:solid; border-width:1px; border-color:rgb(148,148,148); padding:5px; background-color:White; "
+                                                                     id="pgl7">
+                                                    <af:panelFormLayout id="pfl1">
+                                                        <af:selectOneChoice label="Comparison type:"
+                                                                            id="decompOptions"
+                                                                            autoSubmit="true"
+                                                                            value="#{tmapTargetActualBean.targetActualPair}"
+                                                                            valueChangeListener="#{tmapTargetActualBean.updateTargetActualPair}">
+                                                            <f:selectItems value="#{tmapTargetActualBean.decompOptions}"
+                                                                           id="si3"/>
+                                                        </af:selectOneChoice>
+                                                        <af:selectOneRadio label="Which is better?"
+                                                                           id="preferredOrder"
+                                                                           autoSubmit="true"
+                                                                           partialTriggers="decompOptions"
+                                                                           value="#{tmapTargetActualBean.preferredOrder}"
+                                                                           valueChangeListener="#{tmapTargetActualBean.updatePreferredOrder}">
+                                                            <f:selectItems value="#{tmapTargetActualBean.preferredOrderOptions}"
+                                                                           id="si23"/>
+                                                        </af:selectOneRadio>
+                                                        
+                                                    </af:panelFormLayout>
+                                                    <af:spacer height="10px" id="s2"/>
+                                                    <af:panelGroupLayout layout="vertical"
+                                                                         halign="center"
+                                                                         id="pgl8">
+                                                        <af:panelGroupLayout layout="horizontal"
+                                                                             id="pgl9">
+                                                            <af:iterator value="#{tmapTargetActualBean.positiveColorGradient}"
+                                                                         var="color"
+                                                                         varStatus="status"
+                                                                         id="i1">
+                                                                <af:panelGroupLayout inlineStyle="background-color:##{color}; width:10px; height:10px; "
+                                                                                     layout="horizontal"
+                                                                                     id="pgl10"/>
+                                                            </af:iterator>
+                                                            <af:iterator value="#{tmapTargetActualBean.negativeColorGradient}"
+                                                                         var="color"
+                                                                         varStatus="status"
+                                                                         id="i2">
+                                                                <af:panelGroupLayout inlineStyle="background-color:##{color}; width:10px; height:10px; "
+                                                                                     layout="horizontal"
+                                                                                     id="pgl11"/>
+                                                            </af:iterator>
+                                                        </af:panelGroupLayout>
+                                                        <table>
+                                                            <tr>
+                                                                <td>Better</td>
+                                                                <td width="100%"></td>
+                                                                <td>Worse</td>
+                                                            </tr>
+                                                        </table>
+                                                    </af:panelGroupLayout>
+                                                </af:panelGroupLayout>
+                                            </af:panelGroupLayout>
+                                        </af:panelGroupLayout>
+                                        <af:spacer width="5px" id="s3"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="second">
+                                    <dvt:thematicMap id="thematicMap" summary="Thematic map showing a comparison"
+                                                   basemap="usa">
+                                      <af:transition transition="auto" triggerType="display"/>
+                                      <dvt:areaLayer id="areaLayer" layer="states">
+                                        <dvt:areaDataLayer id="dataLayer" contentDelivery="immediate" value="#{tmapTargetActualBean.model}" var="row" varStatus="rowStatus"
+                                                           partialTriggers="::::decompOptions ::::preferredOrder">
+                                          <af:transition transition="auto" triggerType="dataChange"/>
+                                          <dvt:areaLocation id="areaLoc" name="#{row.name}">
+                                            <dvt:area id="area" fillColor="#{tmapTargetActualBean.colorObj}" shortDesc="#{tmapTargetActualBean.tooltip}"/>
+                                          </dvt:areaLocation>
+                                        </dvt:areaDataLayer>
+                                      </dvt:areaLayer>
+                                    </dvt:thematicMap> 
+                                </f:facet>
+                            </af:panelSplitter>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                    <!-- END TAG DEMO -->
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

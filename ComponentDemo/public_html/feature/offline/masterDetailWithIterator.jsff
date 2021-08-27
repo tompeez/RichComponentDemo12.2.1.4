@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:panelStretchLayout startWidth="450" endWidth="600px" bottomHeight="500" id="psl1" dimensionsFrom="auto">
+    <f:facet name="start">
+      <af:panelGroupLayout  layout="scroll" id="pgl0">
+        <af:outputText value="All Departments" id="oth1" inlineStyle="font-size:large;"/>
+    
+        <af:table id="tDept" var="dept" value="#{masterDetailBean.masterModel}"
+                  emptyText="No Rows Found" styleClass="AFStretchWidth" 
+                  rowSelection="single" columnStretching="last"
+                  inlineStyle="height:100px"
+                  selectedRowKeys="#{masterDetailBean.selectedRows}" 
+                  selectionListener="#{masterDetailBean.selectionChange}"
+                  summary="All Departments" rowBandingInterval="1" visible="true"
+                  contentDelivery="immediate" >
+          <af:clientListener type="selection" method="MasterDetail.updateDeptHeaderAndDetails"/>
+          <af:column id="c1" width="35">
+            <f:facet name="header">
+              <af:outputText value="Number" id="ot1"/>
+            </f:facet>
+            <af:outputText value="#{dept.deptno}" noWrap="true" id="dtDeptNo" 
+                           clientComponent="true">
+            </af:outputText>
+          </af:column>
+          <af:column id="c2" width="180">
+            <f:facet name="header">
+              <af:outputText value="Department" id="ot2"/>
+            </f:facet>
+          
+            <af:outputText value="#{dept.deptname}" noWrap="true" id="dtname" 
+                           clientComponent="true"/>
+          </af:column>
+          <af:column id="c3" width="50">
+            <f:facet name="header">
+              <af:outputText value="Code" id="ot3" />
+            </f:facet>
+          
+            <af:outputText value="#{dept.code}" noWrap="true" id="dtcode"
+                           clientComponent="true"/>
+          </af:column>                      
+          <af:column id="c4">
+            <f:facet name="header">
+              <af:outputText value="Department Head" id="ot4"/>
+            </f:facet>
+          
+            <af:outputText value="#{dept.empname}" noWrap="true" id="dtempname"
+                           clientComponent="true"/>
+
+            <af:outputText value="#{dept.empno}" noWrap="true" id="dtempno"
+                           clientComponent="true" visible="false"/>
+            <af:outputText value="#{dept.jobtitle}" noWrap="true" id="dtjobtitle"
+                           clientComponent="true" visible="false"/>
+            <af:outputText value="#{dept.phone}" noWrap="true" id="dtphone"
+                           clientComponent="true" visible="false"/>
+            <af:outputText value="#{dept.email}" noWrap="true" id="dtemail"
+                           clientComponent="true" visible="false"/>
+
+          </af:column>
+        </af:table>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="center">
+      <af:panelGroupLayout layout="scroll" id="pg20" inlineStyle="padding:10px;">
+        <af:outputText value="Department Head" id="oth2" inlineStyle="font-size:large;"/>
+        <af:panelFormLayout id="pflDeptH" rows="4">
+          
+          <af:panelLabelAndMessage id="plamdh1" for="dhempno" label="Employee Number">
+            <af:outputText clientComponent="true" id="dhempno" value="#{masterDetailBean.deptDetailForSelectedRow.empno}"/>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage id="plamdh2" for="dhempname" label="Employee Name">
+            <af:outputText clientComponent="true" id="dhempname" value="#{masterDetailBean.deptDetailForSelectedRow.empname}"/>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage id="plamdh3" for="dhjobtitle" label="Job Title">
+            <af:outputText clientComponent="true" id="dhjobtitle" value="#{masterDetailBean.deptDetailForSelectedRow.jobtitle}"/>
+          </af:panelLabelAndMessage>
+
+          <af:panelLabelAndMessage id="plamdh7" for="dhphone" label="Phone">
+            <af:outputText clientComponent="true" id="dhphone" value="#{masterDetailBean.deptDetailForSelectedRow.phone}"/>
+          </af:panelLabelAndMessage>
+
+          <af:panelLabelAndMessage id="plamdh8" for="dhemail" label="Email">
+            <af:outputText clientComponent="true" id="dhemail" value="#{masterDetailBean.deptDetailForSelectedRow.email}"/>
+          </af:panelLabelAndMessage>
+
+        </af:panelFormLayout> 
+    </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="bottom">
+      <af:panelStretchLayout startWidth="450" endWidth="600px" bottomHeight="500" id="psl2" dimensionsFrom="auto">
+        <f:facet name="start">
+          <af:panelGroupLayout  layout="scroll" id="pgl3">
+          <af:outputText value="All Employees" id="oth31" inlineStyle="font-size:large;"/>
+          <af:panelGroupLayout id="pglETWrap" clientComponent="true" layout="scroll">
+            <af:iterator id="itet" rows="0" varStatus="vs" var="deptvar" value="#{masterDetailBean.masterModel}">
+              <af:table id="tEmp" var="emp" value="#{deptvar.emps}"
+                          emptyText="No Rows Found" styleClass="AFStretchWidth" 
+                          horizontalGridVisible="true" editingMode="clickToEdit"
+                          rowSelection="single" columnStretching="last"
+                          summary="Employees" rowBandingInterval="0"
+                          inlineStyle="height:200px"
+                          visible="#{masterDetailBean.selectedRowKey == deptvar.deptno}">
+                  <af:clientListener method="MasterDetail.updateEmpHeader" type="selection"/>
+                  <af:clientAttribute name="masterIndex" value="#{vs.index}"/>
+                  
+                  <af:column id="c21" width="35">
+                    <f:facet name="header">
+                      <af:outputText value="Number" id="ot21"/>
+                    </f:facet>
+                    <af:outputText value="#{emp.empno}" noWrap="true" id="etempno" 
+                                   clientComponent="true">
+                    </af:outputText>
+                  </af:column>
+                  <af:column id="c22" width="150">
+                    <f:facet name="header">
+                      <af:outputText value="Employee Name" id="ot22"/>
+                    </f:facet>
+                    <af:outputText value="#{emp.empname}" noWrap="true" id="etempname" 
+                                   clientComponent="true">
+                    </af:outputText>
+                  </af:column>
+                  <af:column id="c23" width="150">
+                    <f:facet name="header">
+                      <af:outputText value="Job Title" id="ot23"/>
+                    </f:facet>
+                    <af:outputText value="#{emp.jobtitle}" noWrap="true" id="etjobtitle" 
+                                   clientComponent="true"/>
+                  <af:outputText value="#{emp.salary}" noWrap="true" id="etsalary"
+                                 clientComponent="true" visible="false"/>
+                  <af:outputText value="#{emp.commission}" noWrap="true" id="etcommission"
+                                 clientComponent="true" visible="false"/>
+                  <af:outputText value="#{emp.hiredate}" noWrap="true" id="ethiredate"
+                                 clientComponent="true" visible="false"/>
+                  <af:outputText value="#{emp.phone}" noWrap="true" id="etphone"
+                                 clientComponent="true" visible="false"/>                                         
+                  <af:outputText value="#{emp.email}" noWrap="true" id="etemail"
+                                 clientComponent="true" visible="false"/>                                         
+                  </af:column>
+              </af:table>
+            </af:iterator>
+          </af:panelGroupLayout>
+      </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pg40" inlineStyle="padding:10px;">
+          <af:outputText value="Employee Details" id="oth4" inlineStyle="font-size:large;"/>
+          <af:panelFormLayout id="pflEmp" rows="4">
+            
+            <af:panelLabelAndMessage id="plamef1" for="efempno" label="Employee Number">
+              <af:outputText clientComponent="true" id="efempno" value=""/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plamef2" for="efempname" label="Employee Name">
+              <af:outputText clientComponent="true" id="efempname" value=""/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plamef3" for="efjobtitle" label="Job Title">
+              <af:outputText clientComponent="true" id="efjobtitle" value=""/>
+            </af:panelLabelAndMessage>
+
+            <af:panelLabelAndMessage id="plamef4" for="efsalary" label="Salary">
+              <af:outputText clientComponent="true" id="efsalary" value=""/>
+            </af:panelLabelAndMessage>
+
+            <af:panelLabelAndMessage id="plamef5" for="efcommission" label="Commission">
+              <af:outputText clientComponent="true" id="efcommission" value=""/>
+            </af:panelLabelAndMessage>
+
+            <af:panelLabelAndMessage id="plamef6" for="efhiredate" label="Hire Date">
+              <af:outputText clientComponent="true" id="efhiredate" value=""/>
+            </af:panelLabelAndMessage>
+
+            <af:panelLabelAndMessage id="plamef7" for="efphone" label="Phone">
+              <af:outputText clientComponent="true" id="efphone" value=""/>
+            </af:panelLabelAndMessage>
+
+            <af:panelLabelAndMessage id="plamef8" for="efemail" label="Email">
+              <af:outputText clientComponent="true" id="efemail" value=""/>
+            </af:panelLabelAndMessage>
+
+          </af:panelFormLayout> 
+          </af:panelGroupLayout>
+
+        </f:facet>
+      </af:panelStretchLayout>
+    </f:facet>
+  </af:panelStretchLayout>
+</jsp:root>

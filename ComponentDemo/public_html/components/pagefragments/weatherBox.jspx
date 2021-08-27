@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+<component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+  <description>
+  This component will show weather forecasts in a box.
+  </description>
+  <facet>
+    <facet-name>forecastSummary</facet-name>
+    <description>This child draws out the summary forecast</description>
+  </facet>
+  <facet>
+    <facet-name>forecastDetail</facet-name>
+    <description>This child draws out the detailed forecast</description>
+  </facet>
+  <attribute>
+    <attribute-name>zip</attribute-name>
+    <description>The Zip code of the area</description>
+    <required>true</required>
+  </attribute>
+  <attribute>
+    <attribute-name>description</attribute-name>
+    <default-value>Unknown</default-value>
+    <description>The city/state of the zip code </description>
+  </attribute>
+</component>
+    </af:xmlContent>
+    <af:panelHeader text="Weather Forecast for Zip: #{attrs.zip}, #{attrs.description}"
+                    id="ptph1">
+      <af:facetRef facetName="forecastSummary"/>
+      <af:separator id="pts1"/>
+      <af:facetRef facetName="forecastDetail"/>
+    </af:panelHeader>
+  </af:pageTemplateDef>        
+</jsp:root>
+

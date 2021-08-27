@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2017, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="commandMenuItem Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        function doForceFullSubmit(event)
+        {
+          event.forceFullSubmit();
+          event.noResponseExpected();
+        }
+      </af:resource>                 
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="commandMenuItem"/>
+        <f:attribute name="visualDesignName" value="menu"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:outputText value="A series of commandMenuItem components inside of a menuBar and menu:"
+                           id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:menuBar id="mb1">
+                <af:menu textAndAccessKey="&amp;File" id="m1">
+                  <af:commandMenuItem textAndAccessKey="Open Web &amp;Location..."
+                                      accelerator="control L" disabled="true"
+                                      id="commandMenuItem1"/>
+                  <af:commandMenuItem textAndAccessKey="&amp;Open File..." accelerator="control O"
+                                      shortDesc="shortDesc" icon="/images/copy.gif" id="commandMenuItem2"/>
+                  <af:commandMenuItem textAndAccessKey="&amp;Open File..." accelerator="control O"
+                                      iconDelivery="inline" shortDesc="inline svg"
+                                      icon="/images/circle.svg" id="commandMenuItem3"/>
+                  <af:commandMenuItem textAndAccessKey="&amp;Open File..." accelerator="control O"
+                                      iconDelivery="fetchAndInline" shortDesc="fetch and inline svg"
+                                      icon="/images/circle.svg" id="commandMenuItem4"/>
+                  <af:commandMenuItem textAndAccessKey="&amp;Document History..." disabled="true"
+                                      id="commandMenuItem5"/>
+                  <af:commandMenuItem textAndAccessKey="C&amp;lose" accelerator="control W"
+                                      id="commandMenuItem6"/>
+                  <af:commandMenuItem textAndAccessKey="Sa&amp;ve" accelerator="control S" 
+                                      id="commandMenuItem7"/>
+                  <af:commandMenuItem text="Download" partialSubmit="false" 
+                                      action="#{testPostback.doDownload}" id="commandMenuItem8">
+                     <af:clientListener method="doForceFullSubmit" type="action"/> 
+                  </af:commandMenuItem>
+                  <af:commandMenuItem binding="#{editor.component}"
+                                      textAndAccessKey="&amp;Component Guide" accelerator="control C"
+                                      action="guide" id="commandMenuItem9"/>
+                </af:menu>
+                <af:menu textAndAccessKey="&amp;Special" id="m2">
+                  <af:group id="g1">
+                    <af:commandMenuItem text="Radio 1" type="radio" selected="true"
+                                        id="commandMenuItem10"/>
+                    <af:commandMenuItem text="Radio 2" type="radio" id="commandMenuItem11"/>
+                    <af:commandMenuItem text="Radio 3" type="radio" id="commandMenuItem12"/>
+                  </af:group>
+                  <af:group id="g2">
+                    <af:commandMenuItem text="Check 1" type="check" selected="true"
+                                        id="commandMenuItem13"/>
+                    <af:commandMenuItem text="Check 2" type="check" id="commandMenuItem14"/>
+                  </af:group>
+                  <af:commandMenuItem text="Open (antonym)" type="antonym"
+                                      selectedText="Close (antonym)" id="commandMenuItem15"/>
+                </af:menu>
+
+<!-- [darobin} no RCUX spec on how check/radio/antonym CMIs should look on a menuBar, but they do work,
+               not sure the antonym type should be supported on menuBar, though, as unlike the other menuBar
+               items it changes width on selection.
+                <af:group >
+                  <af:commandMenuItem text="Radio 1" type="radio" selected="true"
+                                      />
+                  <af:commandMenuItem text="Radio 2" type="radio" />
+                  <af:commandMenuItem text="Radio 3" type="radio" />
+                </af:group>
+                <af:group >
+                  <af:commandMenuItem text="Check 1" type="check" selected="true"
+                                      />
+                  <af:commandMenuItem text="Check 2" type="check" />
+                </af:group>
+                <af:commandMenuItem text="Open (antonym)" type="antonym"
+                                    selectedText="Close (antonym)" />
+-->
+                <af:commandMenuItem textAndAccessKey="&amp;Guide" icon="/images/copy.gif"
+                                    shortDesc="shortDesc" action="guide" />
+              </af:menuBar>
+            </af:panelGroupLayout>
+            <af:separator id="sep"/>
+            <af:panelGroupLayout id="pgl3" layout="default">
+              <af:outputText id="ot2" value="The commandMenuitem component does not have a container geometry test as a menu item is always contained on either a menu or menuBar."/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

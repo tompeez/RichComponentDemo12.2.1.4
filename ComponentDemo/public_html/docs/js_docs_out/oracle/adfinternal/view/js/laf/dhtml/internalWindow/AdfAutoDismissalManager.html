@@ -1,0 +1,1597 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>AdfAutoDismissalManager</title>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<script type="text/javascript">
+function handleOnload()
+{
+  if ((""+self.location).indexOf("file://") == 0)
+    return;
+  if (parent.document.documentElement.getAttribute("showprivate")=="true")
+  {
+    document.body.setAttribute("showprivate", "true");
+  }
+  else
+  {
+    document.body.setAttribute("showprivate", "false");
+  }
+  parent.document.title="AdfAutoDismissalManager";
+}
+function togglePrivate(desiredFlag)
+{
+  var currentFlag = document.body.getAttribute("showprivate")=="true";
+  var newFlag = "" + (!currentFlag);
+  if (desiredFlag != null)
+  {
+    newFlag = desiredFlag;
+  }  document.body.setAttribute("showprivate", newFlag);
+}
+</script>
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body onload="handleOnload()">
+<h1 style="color:#0D4988;font-size:18px;font-weight:bold;font-family:Tahoma, Verdana,Helvetica,sans-serif"><img alt="Oracle" src="../../../../../../.././doc-files/logo-oracle-red.png" align="top">JavaScript API Reference for Oracle ADF Faces</h1>
+<!-- ====== START OF NAVBAR ====== -->
+<p><a name="navbar_top" id="navbar_top"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a name="navbar_top_firstrow" id="navbar_top_firstrow"><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../../../oracle/adf/view/js/dnd/AdfAttributeDropTarget.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../../../oracle/adfinternal/view/js/automation/AdfAutomationHelper.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../../../index.html?oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfAutoDismissalManager.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfAutoDismissalManager.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<hr>
+<h1><span style="font-size: smaller">oracle.adfinternal.view.js.laf.dhtml.internalWindow</span><br>
+Class AdfAutoDismissalManager</h1>
+<div class="InternalClassOrPackageWarning">
+<h2>Warning:</h2>
+<ul>
+<li>This is an unsupported, internal implementation class.</li>
+<li>Use an API class that might provide equivalent functionality instead.</li>
+<li>This class will change without notice.</li>
+<li>It is not recommended that you use anything in this class.</li>
+</ul>
+</div>
+<pre>
+<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">org.ecmascript.object.Object</a>
+   |
+   +--<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">oracle.adf.view.js.base.AdfObject</a>
+         |
+         +--<strong>oracle.adfinternal.view.js.laf.dhtml.internalWindow.AdfAutoDismissalManager</strong>
+</pre>
+<hr>
+<pre>
+public class <strong>AdfAutoDismissalManager</strong>
+extends <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>
+</pre>
+<div>AdfAutoDismissallManager keeps track of all visible popups that have some form of autodismiss behavior. When a popup is shown, by calling somePeer.showPopup(component, contentDom, hints), the Id of the component is pushed onto a stack (except for popups with a AUTO_DISMISS_NEVER hint). The component is then said to be the 'owner' or the 'spawner' of the popup. The reason why the datastructure is a stack is that you might want to have one popup spawn the next, which are then opened and closed in recursive fashion. (see: AdfAutoDismissallManager.addBehavior() and AdfAutoDismissallManager._addComponent() ) However, just before the requested popup has it's owner's ID pushed onto the stack, the AutoDismissalManager unwinds the stack to close any other open popups, i.e. they are auto-dismissed one-by-one, unless the event target was inside the popup DOM or unless some special condition is true. This, w/o the special condition, is the default autodismiss behavior (i.e. AUTO_DISMISS_ALWAYS) but sometimes you want to make an exception, i.e. not dismiss, as for instance, in the case of menus. A submenu should't be dismissed if the item that spawned it is clicked. This is exactly what AUTO_DISMISS_MENU does. So to summarize the distinction: - AUTO_DISMISS_ALWAYS: dismiss unless event target was inside the popup DOM - AUTO_DISMISS_MENU: dismiss unless the event target was inside the popup DOM or the event target was inside the owner's DOM.</div>
+<p><br></p>
+<hr>
+<p><a name="field_summary" id="field_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_componentStack" title="field in this class">_componentStack</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_defaultPopupTimeout" title="field in this class">_defaultPopupTimeout</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from oracle.adf.view.js.base.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#constructor" title="field in oracle.adf.view.js.base.AdfObject">constructor</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#superclass" title="field in oracle.adf.view.js.base.AdfObject">superclass</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_org_ecmascript_object_Object" id="fields_inherited_from_class_org_ecmascript_object_Object"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from org.ecmascript.object.<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../org/ecmascript/object/Object.html#prototype" title="field in org.ecmascript.object.Object">prototype</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="constructor_summary" id="constructor_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%"><code>public</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#AdfAutoDismissalManager__" title="constructor in this class">AdfAutoDismissalManager</a></strong>()</code></dt>
+<dd>
+<div>AdfAutoDismissallManager keeps track of all visible popups that have some form of autodismiss behavior.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="method_summary" id="method_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#addBehavior_Object__Object_" title="method in this class">addBehavior</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hints)</code></dt>
+<dd>
+<div>Registers a component with the autoDismissalManager, to give it specific dismissal behavior.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_addComponent_Object__Object__Object_" title="method in this class">_addComponent</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> type, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hints)</code></dt>
+<dd>
+<div>Adds the component to the stack and removes (invokes dismissal) of non-ancestors.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_adjustPopupTimeout_Object_" title="method in this class">_adjustPopupTimeout</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> target)</code></dt>
+<dd>
+<div>Invoked by the _handleMouseOverTimeout when catching a mouse over event.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#cancelBlurTimeout__" title="method in this class">cancelBlurTimeout</a></strong>()</code></dt>
+<dd>
+<div>Cancels the _dismissBlurringElement timeout.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_cancelDismissal_HTMLElement__Object_" title="method in this class">_cancelDismissal</a></strong>(HTMLElement target, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> stackedObj)</code></dt>
+<dd>
+<div>Inspects the event target and the registered component information to determine if dismissal should be invoked.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#cancelPopupDismissTimeout_Object_" title="method in this class">cancelPopupDismissTimeout</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd>
+<div>The method cancels the auto dismiss timer set for the popup component</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_cancelTimeoutDismissalBehavior_Number_" title="method in this class">_cancelTimeoutDismissalBehavior</a></strong>(<a href="../../../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a> index)</code></dt>
+<dd>
+<div>A popup dismissal behavior for the noteWindow.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#changeBehavior_Object__Object_" title="method in this class">changeBehavior</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hints)</code></dt>
+<dd>
+<div>Changes the dismissal behavior of a component.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#closeAll__" title="method in this class">closeAll</a></strong>()</code></dt>
+<dd>
+<div>Closes all popups that were managed.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#dismiss_HTMLElement_" title="method in this class">dismiss</a></strong>(HTMLElement target)</code></dt>
+<dd>
+<div>Iterate over the components under dismissal management.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_dismissBlurringElement_Object_" title="method in this class">_dismissBlurringElement</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> state)</code></dt>
+<dd>
+<div>Timed callback invoked from the _handleBlur handler.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_dismissOnMouseOver_Object_" title="method in this class">_dismissOnMouseOver</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> target)</code></dt>
+<dd>
+<div>Invoked by the _handleMouseOverTimeout when catching a mouse over event.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#dispose__" title="method in this class">dispose</a></strong>()</code></dt>
+<dd>
+<div>Disposes the AdfDhtmlAutoDismissalManager instance.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getBehaviorCount__" title="method in this class">getBehaviorCount</a></strong>()</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../oracle/adf/view/js/component/AdfUIComponent.html" title="class in oracle.adf.view.js.component">AdfUIComponent</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getContainingComponent_Object_" title="method in this class">_getContainingComponent</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> domElement)</code></dt>
+<dd>
+<div>For a domElement, return the containing component, if present</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handleBlur_Object_" title="method in this class">_handleBlur</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> evt)</code></dt>
+<dd>
+<div>Handler is registered for Firefox.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handleFocusIn_Object_" title="method in this class">_handleFocusIn</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> evt)</code></dt>
+<dd>
+<div>Handles the focus in event (IE) specific if the target dom node is a IFRAME.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handleKeyUp_Object_" title="method in this class">_handleKeyUp</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> evt)</code></dt>
+<dd>
+<div>Invokes dismiss if the event has a source and target dom element and the TAB key was pressed.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handleMouseDown_Object_" title="method in this class">_handleMouseDown</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> evt)</code></dt>
+<dd>
+<div>Invokes dismiss if the event has a target and source element.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handleMouseOver_Object_" title="method in this class">_handleMouseOver</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> evt)</code></dt>
+<dd>
+<div>Invokes the _handleMouseOverTimeout event to handle the event in 300 ms.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handleMouseOverTimeout_Object_" title="method in this class">_handleMouseOverTimeout</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> state)</code></dt>
+<dd>
+<div>Called by _handleMouseOver in a 300 ms timed event.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#hasComponent_Object__Object_" title="method in this class">hasComponent</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hints)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#hasComponents__" title="method in this class">hasComponents</a></strong>()</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideComponentPopups_Object_" title="method in this class">_hideComponentPopups</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd>
+<div>Hides the target component with a cancel status.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideDismissalBehavior_Number_" title="method in this class">_hideDismissalBehavior</a></strong>(<a href="../../../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a> index)</code></dt>
+<dd>
+<div>A popup dismissal behavior for most types of popups.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_inactivateDismissalBehavior_Number_" title="method in this class">_inactivateDismissalBehavior</a></strong>(<a href="../../../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a> index)</code></dt>
+<dd>
+<div>A popup dismissal behavior for dialogs and panelWindows only.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#Init__" title="method in this class">Init</a></strong>()</code></dt>
+<dd>
+<div>Initializes the AdfDhtmlAutoDismissalManager instance.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_isComponentAncestor_Object__Object_" title="method in this class">_isComponentAncestor</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> ancestorClientId, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd>
+<div>Returns true if the provided ancestorClientId is for an ancestor of the provided component</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_isPopupAboveTopGlassPane_Object_" title="method in this class">_isPopupAboveTopGlassPane</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupOwner)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_isTargetInOwner_HTMLElement__Object_" title="method in this class">_isTargetInOwner</a></strong>(HTMLElement target, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupOwner)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_isTargetInPopup_HTMLElement__Object_" title="method in this class">_isTargetInPopup</a></strong>(HTMLElement target, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupList)</code></dt>
+<dd>
+<div>Returns true if the target is in the list of popups</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_registerEventHandlers__" title="method in this class">_registerEventHandlers</a></strong>()</code></dt>
+<dd>
+<div>Registers the keyup, mousedown, focusin, blur and mouseover listeners attached to the document or the window.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#removeBehavior_Object__Object_" title="method in this class">removeBehavior</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupId)</code></dt>
+<dd>
+<div>Unregisters a component from the autoDismissalManager and dismisses it.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#restartPopupDismissTimeout_Object_" title="method in this class">restartPopupDismissTimeout</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd>
+<div>The method starts the auto dismiss timer set for the popup component</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#stopPopupDismissTimeout_Object_" title="method in this class">stopPopupDismissTimeout</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd>
+<div>The method stops the auto dismiss timer set for the popup component</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_timeoutDismissalBehavior_Object_" title="method in this class">_timeoutDismissalBehavior</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> state)</code></dt>
+<dd>
+<div>Called for the AdfDhtmlPopupHints.AUTODISMISS_TIMEOUT behavior.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_undismissDueToActiveIframe_HTMLElement_" title="method in this class">_undismissDueToActiveIframe</a></strong>(HTMLElement activeElement)</code></dt>
+<dd>
+<div>Invoked by the _dismissBlurringElement when catching a dismiss from a user moving focus into an iframe (e.g.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_unregisterEventHandlers__" title="method in this class">_unregisterEventHandlers</a></strong>()</code></dt>
+<dd>
+<div>Unregisters the keyup, mousedown, focusin, blur and mouseover listeners attached to the document or the window.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Methods inherited from oracle.adf.view.js.base.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#adopt_Object_" title="method in oracle.adf.view.js.base.AdfObject">adopt</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#clone__" title="method in oracle.adf.view.js.base.AdfObject">clone</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createCallback_Object_" title="method in oracle.adf.view.js.base.AdfObject">createCallback</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createInitializedObject__" title="method in oracle.adf.view.js.base.AdfObject">createInitializedObject</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createSubclass_Function__Function__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">createSubclass</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#ensureClassInitialization_Function_" title="method in oracle.adf.view.js.base.AdfObject">ensureClassInitialization</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#equals_Object_" title="method in oracle.adf.view.js.base.AdfObject">equals</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#exportPrototypeSymbol_string__Object_" title="method in oracle.adf.view.js.base.AdfObject">exportPrototypeSymbol</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#getClass_Object_" title="method in oracle.adf.view.js.base.AdfObject">getClass</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyArrayProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyArrayProperty</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyMapProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyMapProperty</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#getTypeName__" title="method in oracle.adf.view.js.base.AdfObject">getTypeName</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#toDebugString__" title="method in oracle.adf.view.js.base.AdfObject">toDebugString</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#toString__" title="method in oracle.adf.view.js.base.AdfObject">toString</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="field_detail" id="field_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="O_componentStack" id="O_componentStack"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_componentStack</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_componentStack</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_defaultPopupTimeout" id="O_defaultPopupTimeout"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_defaultPopupTimeout</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_defaultPopupTimeout</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="constructor_detail" id="constructor_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="AdfAutoDismissalManager__" id="AdfAutoDismissalManager__"><!-- --></a></p>
+<h3 class="DetailHeader">AdfAutoDismissalManager</h3>
+<dl>
+<dt><code>public <strong>AdfAutoDismissalManager</strong>()</code></dt>
+<dd><br>
+<div>AdfAutoDismissallManager keeps track of all visible popups that have some form of autodismiss behavior. When a popup is shown, by calling somePeer.showPopup(component, contentDom, hints), the Id of the component is pushed onto a stack (except for popups with a AUTO_DISMISS_NEVER hint). The component is then said to be the 'owner' or the 'spawner' of the popup. The reason why the datastructure is a stack is that you might want to have one popup spawn the next, which are then opened and closed in recursive fashion. (see: AdfAutoDismissallManager.addBehavior() and AdfAutoDismissallManager._addComponent() ) However, just before the requested popup has it's owner's ID pushed onto the stack, the AutoDismissalManager unwinds the stack to close any other open popups, i.e. they are auto-dismissed one-by-one, unless the event target was inside the popup DOM or unless some special condition is true. This, w/o the special condition, is the default autodismiss behavior (i.e. AUTO_DISMISS_ALWAYS) but sometimes you want to make an exception, i.e. not dismiss, as for instance, in the case of menus. A submenu should't be dismissed if the item that spawned it is clicked. This is exactly what AUTO_DISMISS_MENU does. So to summarize the distinction: - AUTO_DISMISS_ALWAYS: dismiss unless event target was inside the popup DOM - AUTO_DISMISS_MENU: dismiss unless the event target was inside the popup DOM or the event target was inside the owner's DOM.</div>
+</dd>
+</dl>
+<hr>
+<p><a name="method_detail" id="method_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="addBehavior_Object__Object_" id="addBehavior_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader">addBehavior</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> addBehavior</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hints)</code></dt>
+<dd><br>
+<div>Registers a component with the autoDismissalManager, to give it specific dismissal behavior. There are 4 types of behaviors handled: 1) AdfDhtmlPopupHints.AUTODISMISS_MENU 2) AdfDhtmlPopupHints.AUTODISMISS_ALWAYS 3) AdfDhtmlPopupHints.AUTODISMISS_MOUSEOUT 4) AdfDhtmlPopupHints.AUTODISMISS_INACTIVATE 5) AdfDhtmlPopupHints.AUTODISMISS_TIMEOUT</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The owner-component that invoked the popup</td>
+</tr>
+<tr>
+<td valign="top"><code>hints</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The auto dismissal hints for setting its behavior</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_addComponent_Object__Object__Object_" id="O_addComponent_Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_addComponent</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _addComponent</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> type,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hints)</code></dt>
+<dd><br>
+<div>Adds the component to the stack and removes (invokes dismissal) of non-ancestors.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The owner-component to add</td>
+</tr>
+<tr>
+<td valign="top"><code>type</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>hints</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">popup hints</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_adjustPopupTimeout_Object_" id="O_adjustPopupTimeout_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_adjustPopupTimeout</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _adjustPopupTimeout</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> target)</code></dt>
+<dd><br>
+<div>Invoked by the _handleMouseOverTimeout when catching a mouse over event. Sets/Unsets timer for each component like the dismiss function but only for components registered with the AdfDhtmlPopupHints.AUTODISMISS_POPUP_TIMEOUT timeout period.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>target</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">src or target dom node associated with the mouse over event</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="cancelBlurTimeout__" id="cancelBlurTimeout__"><!-- --></a></p>
+<h3 class="DetailHeader">cancelBlurTimeout</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> cancelBlurTimeout</strong>()</code></dt>
+<dd><br>
+<div>Cancels the _dismissBlurringElement timeout. This is invoked by the AdfDhtmlRichTextEditorPeer.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_cancelDismissal_HTMLElement__Object_" id="O_cancelDismissal_HTMLElement__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_cancelDismissal</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _cancelDismissal</strong>(HTMLElement target,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> stackedObj)</code></dt>
+<dd><br>
+<div>Inspects the event target and the registered component information to determine if dismissal should be invoked. The dismissal type along with other popup hints are used to case out the rules.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>target</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The original event target</td>
+</tr>
+<tr>
+<td valign="top"><code>stackedObj</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The object on the dimissal stack.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - true if dismissal is cancled; otherwise; false will invoke dismissal behavior</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="cancelPopupDismissTimeout_Object_" id="cancelPopupDismissTimeout_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">cancelPopupDismissTimeout</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> cancelPopupDismissTimeout</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd><br>
+<div>The method cancels the auto dismiss timer set for the popup component</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The owner-component to check</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_cancelTimeoutDismissalBehavior_Number_" id="O_cancelTimeoutDismissalBehavior_Number_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_cancelTimeoutDismissalBehavior</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _cancelTimeoutDismissalBehavior</strong>(<a href="../../../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a> index)</code></dt>
+<dd><br>
+<div>A popup dismissal behavior for the noteWindow. This dismissal behavior is activated using the AdfDhtmlPopupHints.AUTODISMISS_TIMEOUT. The cancel timeout is called when the user mouse overs the content of the popup. The timeout dismisal is canceled and changes to the note window default, AdfDhtmlPopupHints.AUTODISMISS_MENU.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>index</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">into the private _componentStack</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="changeBehavior_Object__Object_" id="changeBehavior_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader">changeBehavior</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> changeBehavior</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hints)</code></dt>
+<dd><br>
+<div>Changes the dismissal behavior of a component. Note that you should not be using this method to set autodismiss behavior to HINT_AUTODISMISS_NEVER. If that is your desire, remove the item from the array instead.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The owner-component of the popup</td>
+</tr>
+<tr>
+<td valign="top"><code>hints</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">popup hints</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="closeAll__" id="closeAll__"><!-- --></a></p>
+<h3 class="DetailHeader">closeAll</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> closeAll</strong>()</code></dt>
+<dd><br>
+<div>Closes all popups that were managed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="dismiss_HTMLElement_" id="dismiss_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader">dismiss</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> dismiss</strong>(HTMLElement target)</code></dt>
+<dd><br>
+<div>Iterate over the components under dismissal management. Invoke _cancelDismissal for each component. If dismisal is not cancled, one of two dismissal behaviors are invoked (_hideDismissalBehavior, _inactivateDismissalBehavior). The behavior are determined when initially added based on the dismissal type.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>target</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The original event target</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_dismissBlurringElement_Object_" id="O_dismissBlurringElement_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_dismissBlurringElement</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _dismissBlurringElement</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> state)</code></dt>
+<dd><br>
+<div>Timed callback invoked from the _handleBlur handler.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>state</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">context of the timed event</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_dismissOnMouseOver_Object_" id="O_dismissOnMouseOver_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_dismissOnMouseOver</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _dismissOnMouseOver</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> target)</code></dt>
+<dd><br>
+<div>Invoked by the _handleMouseOverTimeout when catching a mouse over event. Invokes cancleDismissal for each component like the dismiss function but only for components registered with the AdfDhtmlPopupHints.AUTODISMISS_MOUSEOUT dismissal type.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>target</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">src or target dom node associated with the mouse over event</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="dispose__" id="dispose__"><!-- --></a></p>
+<h3 class="DetailHeader">dispose</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> dispose</strong>()</code></dt>
+<dd><br>
+<div>Disposes the AdfDhtmlAutoDismissalManager instance.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="getBehaviorCount__" id="getBehaviorCount__"><!-- --></a></p>
+<h3 class="DetailHeader">getBehaviorCount</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a> getBehaviorCount</strong>()</code></dt>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a></code> - the total number of behaviors managed</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_getContainingComponent_Object_" id="O_getContainingComponent_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getContainingComponent</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../oracle/adf/view/js/component/AdfUIComponent.html" title="class in oracle.adf.view.js.component">AdfUIComponent</a> _getContainingComponent</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> domElement)</code></dt>
+<dd><br>
+<div>For a domElement, return the containing component, if present</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>domElement</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the DOM element in question</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../oracle/adf/view/js/component/AdfUIComponent.html" title="class in oracle.adf.view.js.component">AdfUIComponent</a></code> - the containing component, if found. Returns null if component is not found.</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handleBlur_Object_" id="O_handleBlur_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handleBlur</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handleBlur</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> evt)</code></dt>
+<dd><br>
+<div>Handler is registered for Firefox. If the target node is the document, dismiss is called in 100 ms via a window timeout.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>evt</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">blur event</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handleFocusIn_Object_" id="O_handleFocusIn_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handleFocusIn</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handleFocusIn</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> evt)</code></dt>
+<dd><br>
+<div>Handles the focus in event (IE) specific if the target dom node is a IFRAME.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>evt</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">dom focus in event</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handleKeyUp_Object_" id="O_handleKeyUp_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handleKeyUp</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handleKeyUp</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> evt)</code></dt>
+<dd><br>
+<div>Invokes dismiss if the event has a source and target dom element and the TAB key was pressed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>evt</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">key up event</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handleMouseDown_Object_" id="O_handleMouseDown_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handleMouseDown</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handleMouseDown</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> evt)</code></dt>
+<dd><br>
+<div>Invokes dismiss if the event has a target and source element.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>evt</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handleMouseOver_Object_" id="O_handleMouseOver_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handleMouseOver</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handleMouseOver</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> evt)</code></dt>
+<dd><br>
+<div>Invokes the _handleMouseOverTimeout event to handle the event in 300 ms.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>evt</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">mouse over event</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_handleMouseOverTimeout_Object_" id="O_handleMouseOverTimeout_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handleMouseOverTimeout</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handleMouseOverTimeout</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> state)</code></dt>
+<dd><br>
+<div>Called by _handleMouseOver in a 300 ms timed event. Invokes the _dismissOnMouseOver.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>state</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">context of the timed event</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="hasComponent_Object__Object_" id="hasComponent_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader">hasComponent</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hasComponent</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hints)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The owner-component to check</td>
+</tr>
+<tr>
+<td valign="top"><code>hints</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">popup hints</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - true if the specific component (with specific popup if any) is managed.</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="hasComponents__" id="hasComponents__"><!-- --></a></p>
+<h3 class="DetailHeader">hasComponents</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hasComponents</strong>()</code></dt>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - true if any components are currently being managed.</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_hideComponentPopups_Object_" id="O_hideComponentPopups_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideComponentPopups</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideComponentPopups</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd><br>
+<div>Hides the target component with a cancel status. The AdfRichMenu is handled differently than a standard AdfRichPopup.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideDismissalBehavior_Number_" id="O_hideDismissalBehavior_Number_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideDismissalBehavior</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideDismissalBehavior</strong>(<a href="../../../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a> index)</code></dt>
+<dd><br>
+<div>A popup dismissal behavior for most types of popups. This dismissal behavior is activated using the AdfDhtmlPopupHints.AUTODISMISS_MENU, AdfDhtmlPopupHints.AUTODISMISS_ALWAYS, and AdfDhtmlPopupHints.AUTODISMISS_MOUSEOUT dismissal type. This dismissal behavior hides the popup and deregisters from the dismissal service. If the managed components are empty after deregistration, the event listeners on the document and body are unregistered.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>index</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">into the private _componentStack</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_inactivateDismissalBehavior_Number_" id="O_inactivateDismissalBehavior_Number_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_inactivateDismissalBehavior</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _inactivateDismissalBehavior</strong>(<a href="../../../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a> index)</code></dt>
+<dd><br>
+<div>A popup dismissal behavior for dialogs and panelWindows only. This dismissal behavior is activated using the AdfDhtmlPopupHints.AUTODISMISS_INACTIVATE dismissal type. If the dismissing dialog is the active dialog, change its state to inactive. The dalog/panelWindow activity is managed by the AdfDhtmlDialogManager service.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>index</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">into the private _componentStack</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="Init__" id="Init__"><!-- --></a></p>
+<h3 class="DetailHeader">Init</h3>
+<dl>
+<dt><code>protected <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> Init</strong>()</code></dt>
+<dd><br>
+<div>Initializes the AdfDhtmlAutoDismissalManager instance.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#Init__" title="method in oracle.adf.view.js.base.AdfObject">Init()</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_isComponentAncestor_Object__Object_" id="O_isComponentAncestor_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_isComponentAncestor</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _isComponentAncestor</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> ancestorClientId,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd><br>
+<div>Returns true if the provided ancestorClientId is for an ancestor of the provided component</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>ancestorClientId</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the client id of the ancestor component</td>
+</tr>
+<tr>
+<td valign="top"><code>component</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the component in question</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - true if the provided ancestorClientId is for an ancestor of the provided component</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_isPopupAboveTopGlassPane_Object_" id="O_isPopupAboveTopGlassPane_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_isPopupAboveTopGlassPane</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _isPopupAboveTopGlassPane</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupOwner)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>popupOwner</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the component that spawned/owns the popup</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - true if the popup is above modal glass</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_isTargetInOwner_HTMLElement__Object_" id="O_isTargetInOwner_HTMLElement__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_isTargetInOwner</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _isTargetInOwner</strong>(HTMLElement target,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupOwner)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>target</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The original event target</td>
+</tr>
+<tr>
+<td valign="top"><code>popupOwner</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the component that spawned/owns the popup</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - True if target is a DOM descendant of popupOwner</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_isTargetInPopup_HTMLElement__Object_" id="O_isTargetInPopup_HTMLElement__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_isTargetInPopup</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _isTargetInPopup</strong>(HTMLElement target,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupList)</code></dt>
+<dd><br>
+<div>Returns true if the target is in the list of popups</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>target</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The original event target</td>
+</tr>
+<tr>
+<td valign="top"><code>popupList</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the list of popups as per the somePeer.getAllPopups() method</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - true if target is a DOM or component descendant of at least one of the popups in the popupList.</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_registerEventHandlers__" id="O_registerEventHandlers__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_registerEventHandlers</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _registerEventHandlers</strong>()</code></dt>
+<dd><br>
+<div>Registers the keyup, mousedown, focusin, blur and mouseover listeners attached to the document or the window.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="removeBehavior_Object__Object_" id="removeBehavior_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader">removeBehavior</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> removeBehavior</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupId)</code></dt>
+<dd><br>
+<div>Unregisters a component from the autoDismissalManager and dismisses it.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The owner-component that invoked the popup</td>
+</tr>
+<tr>
+<td valign="top"><code>popupId</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">optional internal id that identifies a popup instance per component. Default is the component's clientId if not provided.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="restartPopupDismissTimeout_Object_" id="restartPopupDismissTimeout_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">restartPopupDismissTimeout</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> restartPopupDismissTimeout</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd><br>
+<div>The method starts the auto dismiss timer set for the popup component</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The owner-component to check</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="stopPopupDismissTimeout_Object_" id="stopPopupDismissTimeout_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">stopPopupDismissTimeout</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> stopPopupDismissTimeout</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> component)</code></dt>
+<dd><br>
+<div>The method stops the auto dismiss timer set for the popup component</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>component</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The owner-component to check</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_timeoutDismissalBehavior_Object_" id="O_timeoutDismissalBehavior_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_timeoutDismissalBehavior</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _timeoutDismissalBehavior</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> state)</code></dt>
+<dd><br>
+<div>Called for the AdfDhtmlPopupHints.AUTODISMISS_TIMEOUT behavior. The timeout period is defined by the "autoDismissalTimeout" property of the noteWindow and passed as a hint during registration. This timeout period will be canceled if the user mouse over the content of the popup.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>state</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">reference to the active instance and the internal stack object.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_undismissDueToActiveIframe_HTMLElement_" id="O_undismissDueToActiveIframe_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_undismissDueToActiveIframe</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _undismissDueToActiveIframe</strong>(HTMLElement activeElement)</code></dt>
+<dd><br>
+<div>Invoked by the _dismissBlurringElement when catching a dismiss from a user moving focus into an iframe (e.g. richTextEditor or inlineFrame). Since blur events don't tell you where the focus was moved to and since we cannot have access to the iframe contents, we can only look at the document's activeElement (if supported, not supported in Firefox 2).</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>activeElement</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The iframe that just became active</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_unregisterEventHandlers__" id="O_unregisterEventHandlers__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_unregisterEventHandlers</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _unregisterEventHandlers</strong>()</code></dt>
+<dd><br>
+<div>Unregisters the keyup, mousedown, focusin, blur and mouseover listeners attached to the document or the window.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<!-- ====== START OF NAVBAR ====== -->
+<hr>
+<p><a name="navbar_bottom" id="navbar_bottom"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../../../oracle/adf/view/js/dnd/AdfAttributeDropTarget.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../../../oracle/adfinternal/view/js/automation/AdfAutomationHelper.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../../../index.html?oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfAutoDismissalManager.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfAutoDismissalManager.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div class="CreationTime">Generated on 2018.06.28 06:41 UTC</div>
+<center>Copyright (c) 1998, 2018, Oracle and/or its affiliates. All rights reserved.</center>
+</body>
+</html>

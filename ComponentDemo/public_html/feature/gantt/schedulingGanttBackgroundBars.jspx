@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{ganttFeatureLinks.schedulingGanttBackgroundBarsTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Scheduling Gantt Background Bars"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Scheduling Gantt Background Bars"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START FEATURE DEMO -->
+        <dvt:schedulingGantt id="schedulingGantBackgroundBars"
+                             startTime="2006-12-21 06:00" 
+                             endTime="2006-12-21 18:00"
+                             value="#{schedulingGanttBackgroundBars.model}" 
+                             var="resourceObj"
+                             taskbarFormatManager="#{schedulingGanttBackgroundBars.taskbarFormatManager}"
+                             summary="Scheduling Gantt Background Bars Demo">
+          <f:facet name="major">
+            <dvt:timeAxis scale="days" id="ta1"/>
+          </f:facet>
+          <f:facet name="minor">
+            <dvt:timeAxis scale="hours" id="ta2"/>
+          </f:facet>
+          <f:facet name="nodeStamp">
+            <af:column headerText="Employee Name" id="c1">                        
+              <af:outputText value="#{resourceObj.resourceName}" id="ot1"/>
+            </af:column>
+          </f:facet>
+          <af:column headerText="Department" id="c2">
+            <af:outputText value="#{resourceObj.department}" id="ot2"/>
+          </af:column>
+          <dvt:ganttLegend keys="#{schedulingGanttBackgroundBars.legendKeys}" labels="#{schedulingGanttBackgroundBars.legendLabels}"
+                           id="gl1"/>
+        </dvt:schedulingGantt>
+        <!-- END FEATURE DEMO -->   
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/gantt/ganttFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

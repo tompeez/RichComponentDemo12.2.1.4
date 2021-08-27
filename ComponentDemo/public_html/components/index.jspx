@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Tag Guide" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="tmplt" viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/demoIndexTemplateAlta.jspx' : '/templates/pageTemplateDefs/demoIndexTemplate.jspx'}"
+                       showLinkViewsSource="true" mode="guide" navLevelCount="1">
+        <f:attribute name="showFooter" value="true"/>
+        <f:facet name="center1">
+          <af:declarativeComponent id="linkViews" viewId="/templates/pageTemplateDefs/linkViews.jsff"
+                                   title="Tag Guide"
+                                   alphaItems="#{demoIndex.tagGuideAlphaColumns}"
+                                   groupTitle1="Component Tags"
+                                   groupItems1="#{demoIndex.tagGuideComponentGroupColumns}"
+                                   groupTitle2="Other Tags"
+                                   groupItems2="#{demoIndex.tagGuideOtherGroupColumns}"
+                                   treeValue="#{DemoTGGroupMenuModel}"
+                                   listBean="#{demoIndex.tagGuideListBean}"/>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Thematic Map Election Results" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- MOD TAG TEMPLATE -->
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Thematic Map Election Results"/>
+        <!-- Tag Name -->
+        <f:attribute name="tagName" value="Thematic Map Election Results"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelStretchLayout id="psl1" topHeight="auto" styleClass="AFStretchWidth">
+            <f:facet name="top">
+              <af:panelGroupLayout>
+                <f:verbatim>                                                                          <b>This demo shows
+                                                                                                         the 2012
+                                                                                                         election
+                                                                                                         results by
+                                                                                                         county for
+                                                                                                         Florida. Here's
+                                                                                                         how we made it:</b>                           <ul>
+                    <li>We specified an isolatedRowKey attribute on the dvt:areaDatalayer tag to isolate on Florida
+                        using the states area layer and US basemap.</li>
+                    <li>We set the disclosedRowKey attribute on the dvt:areaDatalayer tag to initially show Florida
+                        drilled down to the county layer with counties colored by the winning candidate's color.</li>
+                    <li>To show each candidate's percent of the popular vote and color, we stamped status meter gauges
+                        into a table</li>
+                  </ul>                                          </f:verbatim>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelGroupLayout layout="vertical">
+                <af:spacer height="10"/>
+                <af:panelGridLayout>
+                  <af:gridRow marginBottom="4px">
+                    <af:gridCell>
+                      <af:outputText value="Overall Results" inlineStyle="font-size:20px;font-weight:bold;"/>
+                      <af:separator/>
+                    </af:gridCell>
+                    <af:gridCell marginStart="4px">
+                      <af:outputText value="Presidential Map" inlineStyle="font-size:20px;font-weight:bold;"/>
+                      <af:separator/>
+                    </af:gridCell>
+                  </af:gridRow>
+                  <af:gridRow>
+                    <af:gridCell valign="middle">
+                      <af:table value="#{electionBean.candidates}" var="row" rowBandingInterval="1" id="t1" columnStretching="last"
+                                autoHeightRows="0" width="660px" verticalGridVisible="false">
+                        <af:column sortable="false" align="center" inlineStyle="font-size:14px;">
+                          <f:facet name="header">
+                            <af:outputText value="Candidate" inlineStyle="color:#666666;font-size:16px;"/>
+                          </f:facet>
+                          <af:panelGroupLayout layout="horizontal">
+                            <af:image source="/resources/images/thematicMap/winnerCheck.png"
+                                      rendered="#{(row.name eq 'B. Obama')}"/>
+                            <af:spacer width="3"/>
+                            <af:outputText value="#{row.name}"
+                                           inlineStyle="#{(row.name eq 'B. Obama') ? 'font-weight:bold' : ''}"/>
+                          </af:panelGroupLayout>
+                        </af:column>
+                        <af:column sortable="false" align="center" inlineStyle="font-size:16px;">
+                          <f:facet name="header">
+                            <af:outputText value="Party" inlineStyle="color:#666666;font-size:16px;"/>
+                          </f:facet>
+                          <af:outputText value="#{row.party}"
+                                         inlineStyle="#{(row.name eq 'B. Obama') ? 'font-weight:bold' : ''}"/>
+                        </af:column>
+                        <af:column sortable="false" align="center" width="210px" inlineStyle="font-size:16px;">
+                          <f:facet name="header">
+                            <af:outputText value="% Popular Vote" inlineStyle="color:#666666;font-size:16px;"/>
+                          </f:facet>
+                          <af:panelGroupLayout layout="horizontal" halign="end">
+                            <af:outputText value="#{row.popularVotePercent} %"/>
+                            <af:spacer width="5"/>
+                            <dvt:statusMeterGauge value="#{row.popularVotePercent}"
+                                                  inlineStyle="height:20px;width:150px;" color="#{row.color}"
+                                                  plotArea="on">
+                                                  <dvt:gaugeMetricLabel rendered="false"/>
+                            </dvt:statusMeterGauge>
+                          </af:panelGroupLayout>
+                        </af:column>
+                        <af:column sortable="false" align="center" inlineStyle="font-size:16px;">
+                          <f:facet name="header">
+                            <af:outputText value="Popular Vote" inlineStyle="color:#666666;font-size:16px;"/>
+                          </f:facet>
+                          <af:outputText value="#{row.popularVote}"
+                                         inlineStyle="#{(row.name eq 'B. Obama') ? 'font-weight:bold' : ''}">
+                            <af:convertNumber/>
+                          </af:outputText>
+                        </af:column>
+                        <af:column sortable="false" align="center" inlineStyle="font-size:16px;">
+                          <f:facet name="header">
+                            <af:outputText value="Electoral Vote" inlineStyle="color:#666666;font-size:16px;"/>
+                          </f:facet>
+                          <af:outputText value="#{row.electoralVote}"
+                                         inlineStyle="#{(row.name eq 'B. Obama') ? 'font-weight:bold' : ''}"/>
+                        </af:column>
+                      </af:table>
+                    </af:gridCell>
+                    <af:gridCell marginStart="4px" valign="middle">
+                      <dvt:thematicMap id="thematicMap" basemap="usa" drilling="off"
+                                       controlPanelBehavior="hidden" summary="presidential map"
+                                       inlineStyle="background-color:transparent;width:400px;border:none;">
+                        <af:transition transition="auto" triggerType="display"/>
+                        <af:transition transition="auto" triggerType="drill"/>
+                        <dvt:areaLayer id="al1" layer="states">
+                          <dvt:areaDataLayer id="adl1" disclosedRowKeys="#{electionBean.disclosedRowKey}"
+                                             contentDelivery="lazy" isolatedRowKey="#{electionBean.isolatedRowKey}"
+                                             value="#{electionBean.state}" var="row" varStatus="rowStatus">
+                            <dvt:areaLocation id="loc1" name="#{row.id}">
+                              <dvt:area id="a1" fillColor="#{row.color}"/>
+                            </dvt:areaLocation>
+                          </dvt:areaDataLayer>
+                        </dvt:areaLayer>
+                        <dvt:areaLayer id="al2" layer="counties">
+                          <dvt:areaDataLayer id="adl2" value="#{electionBean.counties}" var="row" varStatus="rowStatus"
+                                             selectionMode="single" contentDelivery="lazy">
+                            <dvt:areaLocation id="loc2" name="#{row.id}">
+                              <dvt:area id="a2" fillColor="#{row.color}"></dvt:area>
+                            </dvt:areaLocation>
+                          </dvt:areaDataLayer>
+                        </dvt:areaLayer>
+                      </dvt:thematicMap>
+                    </af:gridCell>
+                  </af:gridRow>
+                </af:panelGridLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END TAG DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

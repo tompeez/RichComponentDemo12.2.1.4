@@ -1,0 +1,231 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <af:panelGroupLayout layout="vertical" halign="center">
+    <af:panelStretchLayout inlineStyle="max-width:980px;width:98%" startWidth="auto" endWidth="auto"
+                           dimensionsFrom="children">
+      <f:facet name="start">
+        <af:declarativeComponent viewId="electionPartyFilter.jsff" id="pFilter" partialTriggers=":::yearSelector:ins1"
+                                 democratLabel="#{electionMashup.currentModel.candidateDemocrat}"
+                                 republicanLabel="#{electionMashup.currentModel.candidateRepublican}"/>
+      </f:facet>
+      <f:facet name="end">
+        <af:panelGroupLayout layout="horizontal">
+          <af:inputText id="stateFilter" label="View" value="#{electionMashup.stateFilter}" autoSubmit="true"
+                        clientComponent="true" placeholder="All States">
+            <f:facet name="context">
+              <af:contextInfo>
+                <af:showPopupBehavior triggerType="contextInfo" popupId="stateFilterPopup" alignId="stateFilter"/>
+              </af:contextInfo>
+            </f:facet>
+          </af:inputText>
+          <af:popup id="stateFilterPopup">
+            <af:noteWindow>
+              <af:outputText value="Enter the name or abbreviations of the desired states in a space delimited list.  Use 'All States' to prevent filtering."/>
+            </af:noteWindow>
+          </af:popup>
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:panelStretchLayout>
+    <af:panelDashboard columns="3" rowHeight="33%" styleClass="AFStretchWidth"  dimensionsFrom="parent"
+                       inlineStyle="max-width:1000px;height:750px;"
+                       partialTriggers=":::yearSelector:ins1 pFilter stateFilter">
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <af:table value="#{electionMashup.currentModel.stateResults}" var="row" columnStretching="last"
+                    inlineStyle="border:none;" fetchSize="100">
+            <af:column headerText="State">
+              <af:outputText value="#{row.stateLabel}"/>
+            </af:column>
+            <af:column headerText="Electoral Votes">
+              <af:outputText value="#{row.electoralTotal}"/>
+            </af:column>
+            <af:column headerText="Winner">
+              <af:declarativeComponent viewId="legendItem.jsff"
+                                       color="#{row.electoralWinner eq 'Democrat' ? electionMashup.colorDemocrat : electionMashup.colorRepublican}"
+                                       label="#{row.electoralWinner}"/>
+            </af:column>
+          </af:table>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff" id="dc1">
+        <f:facet name="content">
+          <dvt:thematicMap basemap="usa" id="tm1" inlineStyle="border:none;" zooming="none" panning="none"
+                           animationOnDisplay="none" controlPanelBehavior="hidden" tooltipDisplay="shortDescOnly">
+            <dvt:areaLayer layer="states" id="al1" labelDisplay="off">
+              <dvt:areaDataLayer value="#{electionMashup.currentModel.stateResults}" var="row" id="adl1">
+                <dvt:areaLocation name="#{row.state}" id="al2">
+                  <dvt:area id="a1" shortDesc="#{row.electoralTooltip}">
+                    <dvt:attributeGroups type="color" value="#{row.electoralWinner}" id="ag1">
+                      <dvt:attributeMatchRule group="Democrat" id="amr1">
+                        <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+                      </dvt:attributeMatchRule>
+                      <dvt:attributeMatchRule group="Republican" id="amr2">
+                        <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+                      </dvt:attributeMatchRule>
+                    </dvt:attributeGroups>
+                  </dvt:area>
+                </dvt:areaLocation>
+              </dvt:areaDataLayer>
+            </dvt:areaLayer>
+          </dvt:thematicMap>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:thematicMap basemap="usa" id="tm2" inlineStyle="border:none;" zooming="none" panning="none"
+                           animationOnDisplay="none" controlPanelBehavior="hidden" tooltipDisplay="shortDescOnly">
+            <dvt:areaLayer layer="states" areaStyle="background-color:transparent;" labelDisplay="off">
+              <dvt:areaDataLayer value="#{electionMashup.currentModel.stateResults}" var="row"
+                                 animationOnDataChange="alphaFade">
+                <dvt:areaLocation name="#{row.state}">
+                  <dvt:marker width="#{row.electoralTotal*1.3}" height="#{row.electoralTotal*1.3}" value="#{row.state}"
+                              labelStyle="color: #{row.electoralWinner eq 'Democrat' ? '#FFFFFF' : '#000000'};"
+                              labelDisplay="#{row.electoralTotal*1.3 ge 20 ? 'on' : 'off'}"
+                              shortDesc="#{row.electoralTooltip}">
+                    <dvt:attributeGroups type="color" value="#{row.electoralWinner}">
+                      <dvt:attributeMatchRule group="Democrat">
+                        <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+                      </dvt:attributeMatchRule>
+                      <dvt:attributeMatchRule group="Republican">
+                        <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+                      </dvt:attributeMatchRule>
+                    </dvt:attributeGroups>
+                  </dvt:marker>
+                </dvt:areaLocation>
+              </dvt:areaDataLayer>
+            </dvt:areaLayer>
+          </dvt:thematicMap>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff" id="dc2">
+        <f:facet name="content">
+          <dvt:treemap value="#{electionMashup.currentModel.stateResults}" var="row" inlineStyle="border:none;"
+                       nodeSelection="none" sizeLabel="Electoral Votes" colorLabel="Winner" id="t1">
+            <dvt:treemapNode value="#{row.electoralTotal}" label="#{row.stateLabel}" shortDesc="#{row.electoralTooltip}"
+                             id="tn1">
+              <dvt:attributeGroups type="color" value="#{row.electoralWinner}" id="ag2">
+                <dvt:attributeMatchRule group="Democrat" id="amr3">
+                  <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+                </dvt:attributeMatchRule>
+                <dvt:attributeMatchRule group="Republican" id="amr4">
+                  <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+                </dvt:attributeMatchRule>
+              </dvt:attributeGroups>
+            </dvt:treemapNode>
+          </dvt:treemap>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:diagram layout="clump" selection="none" panning="none" zooming="none" controlPanelBehavior="hidden">
+            <dvt:clientLayout featureName="DemoClumpLayout" method="DemoClumpLayout.clumpLayout" name="clump">
+              <dvt:nodeAttributes node="stateNode">
+                <f:attribute name="group" value="electoralWinner"/>
+              </dvt:nodeAttributes>
+            </dvt:clientLayout>
+            <dvt:diagramNodes value="#{electionMashup.currentModel.stateResults}" var="node">
+              <dvt:diagramNode id="stateNode" nodeId="#{node.state}" shortDesc="#{node.electoralTooltip}">
+                <f:facet name="zoom100">
+                  <dvt:marker width="#{node.electoralTotal*1.3}"
+                              height="#{node.electoralTotal*1.3}"
+                              value="#{node.state}"
+                              labelStyle="color: #{node.electoralWinner eq 'Democrat' ? '#FFFFFF' : '#000000'};"
+                              labelDisplay="#{node.electoralTotal*1.3 ge 20 ? 'on' : 'off'}" shape="circle">
+                    <dvt:attributeGroups type="color" value="#{node.electoralWinner}" id="ag1">
+                        <dvt:attributeMatchRule group="Democrat">
+                            <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+                        </dvt:attributeMatchRule>
+                        <dvt:attributeMatchRule group="Republican">
+                            <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+                        </dvt:attributeMatchRule>
+                    </dvt:attributeGroups>
+                  </dvt:marker>
+                </f:facet>
+              </dvt:diagramNode>
+            </dvt:diagramNodes>
+          </dvt:diagram>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:barChart value="#{electionMashup.currentModel.stateResults}" var="row" animationIndicators="none" barGapRatio="0.25">
+            <f:facet name="dataStamp">
+              <dvt:chartDataItem group="#{row.stateLabel}" value="#{row.electoralTotal}"
+                                 shortDesc="#{row.electoralTooltip}">
+                <dvt:attributeGroups type="color" value="#{row.electoralWinner}">
+                  <dvt:attributeMatchRule group="Democrat">
+                    <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+                  </dvt:attributeMatchRule>
+                  <dvt:attributeMatchRule group="Republican">
+                    <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+                  </dvt:attributeMatchRule>
+                </dvt:attributeGroups>
+              </dvt:chartDataItem>
+            </f:facet>
+            <dvt:chartLegend rendered="false"/>
+            <dvt:chartYAxis title="Electoral Votes"/>
+          </dvt:barChart>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:horizontalBarChart value="#{electionMashup.currentModel.stateResults}" var="row" barGapRatio="0.25"
+                                  animationIndicators="none">
+            <f:facet name="dataStamp">
+              <dvt:chartDataItem group="#{row.stateLabel}" value="#{row.electoralTotal}"
+                                 shortDesc="#{row.electoralTooltip}">
+                <dvt:attributeGroups type="color" value="#{row.electoralWinner}">
+                  <dvt:attributeMatchRule group="Democrat">
+                    <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+                  </dvt:attributeMatchRule>
+                  <dvt:attributeMatchRule group="Republican">
+                    <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+                  </dvt:attributeMatchRule>
+                </dvt:attributeGroups>
+              </dvt:chartDataItem>
+            </f:facet>
+            <dvt:chartLegend rendered="false"/>
+            <dvt:chartYAxis title="Electoral Votes"/>
+          </dvt:horizontalBarChart>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:pieChart value="#{electionMashup.currentModel.stateResults}" var="row" sorting="on">
+            <dvt:pieDataItem label="#{row.stateLabel}" value="#{row.electoralTotal}" sliceLabel="#{row.stateLabel}"
+                             shortDesc="#{row.electoralTooltip}">
+              <dvt:attributeGroups type="color" value="#{row.electoralWinner}">
+                <dvt:attributeMatchRule group="Democrat">
+                  <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+                </dvt:attributeMatchRule>
+                <dvt:attributeMatchRule group="Republican">
+                  <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+                </dvt:attributeMatchRule>
+              </dvt:attributeGroups>
+            </dvt:pieDataItem>
+            <dvt:chartLegend rendered="false"/>
+          </dvt:pieChart>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:sunburst value="#{electionMashup.currentModel.stateResults}" var="row" sorting="on" nodeSelection="none"
+                        sizeLabel="Electoral Votes" colorLabel="Winner">
+            <dvt:sunburstNode value="#{row.electoralTotal}" label="#{row.stateLabel}"
+                              shortDesc="#{row.electoralTooltip}">
+              <dvt:attributeGroups type="color" value="#{row.electoralWinner}">
+                <dvt:attributeMatchRule group="Democrat">
+                  <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+                </dvt:attributeMatchRule>
+                <dvt:attributeMatchRule group="Republican">
+                  <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+                </dvt:attributeMatchRule>
+              </dvt:attributeGroups>
+            </dvt:sunburstNode>
+          </dvt:sunburst>
+        </f:facet>
+      </af:declarativeComponent>
+    </af:panelDashboard>
+  </af:panelGroupLayout>
+</jsp:root>

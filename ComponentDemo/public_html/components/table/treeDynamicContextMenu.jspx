@@ -1,0 +1,122 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="tree Dynamic Context Menu Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="tree"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelSplitter positionedFromEnd="true" splitterPosition="240" orientation="vertical"
+                            id="ps1">
+            <f:facet name="first">
+              <af:panelStretchLayout topHeight="auto" bottomHeight="auto"
+                                     id="psl1">
+                <f:facet name="top">
+                  <af:panelGroupLayout layout="vertical" id="pgl1">
+                    <af:outputFormatted value="&lt;b>Basic table&lt;/b>"
+                                        id="of1"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                  <af:tree id="folderTree" value="#{fs.treeModel}" contextMenuSelect="false"
+                           rowDisclosureListener="#{fs.toggle}" rowSelection="multiple"
+                           focusRowKey="#{fs.defaultFocusRowKey}" binding="#{editor.component}"
+                         focusListener="#{fs.onTreeFocus}"
+                         disclosedRowKeys="#{fs.treeDisclosedRowKeys}"
+                           var="node" summary="tree data">
+                    <f:facet name="contextMenu">
+                      <af:popup id="myPopup" contentDelivery="lazyUncached">
+                        <af:setPropertyListener from="#{fs.treeModel.rowData}"
+                                                to="#{dynamicContextMenuTable.currentTreeRowData}"
+                                                type="popupFetch"/>
+                        <af:menu id="m1">
+                          <af:menu text="Node Info (Dynamic)" id="m2">
+                            <af:commandMenuItem actionListener="#{dynamicContextMenuTable.alertTreeRowData}"
+                                                text="Name  - #{dynamicContextMenuTable.currentTreeRowData.name}"
+                                                id="cmi1"/>
+                            <af:commandMenuItem actionListener="#{dynamicContextMenuTable.alertTreeRowData}"
+                                                text="Path - #{dynamicContextMenuTable.currentTreeRowData.path}"
+                                                id="cmi2"/>
+                            <af:commandMenuItem actionListener="#{dynamicContextMenuTable.alertTreeRowData}"
+                                                text="Date - #{dynamicContextMenuTable.currentTreeRowData.lastModified}"
+                                                id="cmi3"/>
+                          </af:menu>
+                        </af:menu>
+                      </af:popup>
+                    </f:facet>
+                    <f:facet name="pathStamp">
+                      <af:panelGroupLayout id="pgl2">
+                        <af:image source="#{node.icon}" inlineStyle="vertical-align:middle;"
+                                  shortDesc="node" id="i1"/>
+                        <af:outputText value="#{node.name}" id="ot1"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="nodeStamp">
+                      <af:panelGroupLayout id="pgl3">
+                        <af:image source="#{node.statusIcon}" shortDesc="#{node.name} status"
+                                  inlineStyle="margin-right:3px; vertical-align:middle; height:12px; width:12px;"
+                                  id="i2"/>
+                        <af:image id="nodeIcon" source="#{node.icon}" shortDesc="#{node.name}"
+                                  inlineStyle="margin-right:6px; vertical-align:middle; height:16px; width:16px;"/>
+                        <af:outputText id="directoryStamp" value="#{node.name}"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:tree>
+                </f:facet>
+                <f:facet name="bottom">
+                  <af:panelGroupLayout layout="vertical" id="pgl4">
+                    <af:toolbar id="t1">
+                      <af:commandToolbarButton text="Export All Rows to Excel" immediate="true"
+                                               id="exportAll">
+                        <af:exportCollectionActionListener type="excelHTML" exportedId="table"
+                                                           filename="export.xls"
+                                                           title="ADF Faces Export - All"
+                                                           exportedRows="all"/>
+                      </af:commandToolbarButton>
+                      <af:commandToolbarButton text="Export Selected Rows to Excel" immediate="true"
+                                               id="exportSelected">
+                        <af:exportCollectionActionListener type="excelHTML" exportedId="table"
+                                                           filename="export.xls"
+                                                           title="ADF Faces Export - Selected Rows"
+                                                           exportedRows="selected"/>
+                      </af:commandToolbarButton>
+                      <af:commandToolbarButton text="Print Splitter Content"
+                                               id="ctb1">
+                        <af:showPrintablePageBehavior/>
+                      </af:commandToolbarButton>
+                    </af:toolbar>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="scroll" id="pgl5">
+                <af:outputText value="See also:" id="ot2"/>
+                <af:panelList id="pl1">
+                  <af:goLink text="tree" destination="../tree.jspx" id="gl1"/>
+                  <af:goLink text="panelCollection with Tree" destination="panelCollectionTree.jspx"
+                             id="gl2"/>
+                  <af:goLink text="panelCollection with Tree showing default menu and toolbar buttons"
+                             destination="panelCollectionTree2.jspx" id="gl3"/>
+                  <af:goLink text="Default Tree without images" destination="../tree2.jspx"
+                             id="gl4"/>
+                  <af:goLink text="Click-To-Edit Tree" destination="clickToEditTree.jspx"
+                             id="gl5"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

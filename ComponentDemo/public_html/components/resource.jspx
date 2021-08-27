@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+  version="2.1">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document
+      title="resource Demo"
+      smallIconSource="#{aboutBean.smallIconSource}"
+      largeIconSource="#{aboutBean.largeIconSource}" theme="dark"
+      binding="#{templateBindings.documentComponent}" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="resource"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="misc"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="12" id="s1"/>
+            </f:facet>
+            <af:panelHeader
+              text="About This Demo" id="ph1">
+              <af:outputText
+                value="This page demonstrates how the af:resource tag may be used to include
+CSS and JavaScript into the head element of the page from a component that is not located in
+the metaContainer facet of the document component" id="ot1"/>
+            </af:panelHeader>
+            <af:resource type="css" source="/components/resource/exampleResource.css" />
+            <af:resource type="javascript" source="/components/resource/exampleScript.js" />
+            <af:resource type="css">
+.italicBlue {
+ color: blue;
+ font-style: italic;
+}
+            </af:resource>
+            <af:outputText
+              styleClass="boldUnderlined"
+              value="This text should be bold and underlined according to the CSS file"
+                           id="ot2"/>
+            <af:outputText
+              styleClass="italicBlue"
+              value="This text should be blue and italic according to the in-line CSS"
+                           id="ot3"/>
+            <af:commandButton
+              text="Show alert dialog"
+              shortDesc="An alert dialog should be shown when clicking this button as a result of
+a function in an external javascript file function invocation" id="cb1">
+              <af:clientListener method="resourceDemo.showAlert" type="action" />
+            </af:commandButton>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

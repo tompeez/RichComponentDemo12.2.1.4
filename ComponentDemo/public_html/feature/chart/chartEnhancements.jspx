@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Chart Enhancements" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Chart Enhancements"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Chart Enhancements"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:panelHeader text="New to DVT Charts">
+                            <af:panelGroupLayout layout="horizontal" id="row1" valign="top">
+                                <dvt:lineChart value="#{chartDataSource.weeklyStockData}" timeAxisType="enabled" inlineStyle="width:600px"
+                                               var="row" zoomAndScroll="live" dataSelection="none">
+                                    <f:facet name="dataStamp">
+                                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                           value="#{row.value}"/>
+                                    </f:facet>
+                                    <f:facet name="overview">
+                                        <dvt:overview rendered="true"/>
+                                    </f:facet>
+                                    <dvt:chartXAxis viewportMinimum="#{chartDataSource.stockViewportMinimum}">
+                                        <dvt:majorTick rendered="true"/>
+                                    </dvt:chartXAxis>
+                                    <dvt:chartYAxis baselineScaling="min" title="Portfolio Value (thousands of USD)"/>
+                                    <dvt:chartLegend rendered="true" position="top"/>
+                                </dvt:lineChart>
+                                <af:panelHeader text="Redesigned Zoom and Scroll" id="ph3">
+                                    <af:panelList>
+                                        <af:outputFormatted value="Live zoom and scroll handled through client-side rendering"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:outputFormatted value="New overview facet to help visualize current viewport"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:outputFormatted value="Automatic y-axis rescaling for area, bar, combo, and line charts"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:goLink text="Demo page" destination="zoomAndScroll.jspx"
+                                                   inlineStyle="font-size:14px"/>
+                                    </af:panelList>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                            <af:separator/>
+                            <af:panelGroupLayout layout="horizontal" id="row2" valign="top">
+                                <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row" inlineStyle="width:600px"
+                                                 zoomAndScroll="live" dataSelection="multiple">
+                                    <f:facet name="dataStamp">
+                                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}"
+                                                           y="#{row.y}" z="#{row.z}"/>
+                                    </f:facet>
+                                    <dvt:chartLegend rendered="false"/>
+                                </dvt:bubbleChart>
+                                <af:panelHeader text="Marquee Zoom and Selection" id="ph4">
+                                    <af:panelList>
+                                        <af:outputFormatted value="Real-time marquee zoom and selection vastly improves data interaction"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:goLink text="Demo page" destination="zoomAndScroll.jspx"
+                                                   inlineStyle="font-size:14px"/>
+                                    </af:panelList>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                            <af:separator/>
+                            <af:panelGroupLayout layout="horizontal" id="row3" valign="top">
+                                <dvt:horizontalBarChart value="#{chartDataSource.monthlyTimeData}" var="row" inlineStyle="width:600px"
+                                                        hoverBehavior="dim" timeAxisType="enabled">
+                                    <f:facet name="dataStamp">
+                                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                           value="#{row.value}"/>
+                                    </f:facet>
+                                    <dvt:chartLegend rendered="false"/>
+                                </dvt:horizontalBarChart>
+                                <af:panelHeader text="Redesigned Time Axis" id="ph5">
+                                    <af:panelList>
+                                        <af:outputFormatted value="Vertical time-axis support"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:outputFormatted value="Mixed Frequency time-axis"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:outputFormatted value="Irregular interval support"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:outputFormatted value="Support for Stack chart"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:goLink text="Demo page" destination="timeAxis.jspx"
+                                                   inlineStyle="font-size:14px"/>
+                                    </af:panelList>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                            <af:separator/>
+                            <af:panelGroupLayout layout="horizontal" id="row4" valign="top">
+                                <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row" inlineStyle="width:600px"
+                                               hideAndShowBehavior="withRescale">
+                                    <f:facet name="dataStamp">
+                                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                           value="#{row.value}"/>
+                                    </f:facet>
+                                    <dvt:chartLegend rendered="true"/>
+                                </dvt:areaChart>
+                                <af:panelHeader text="Hide and Show Series with Rescale" id="ph1">
+                                    <af:panelList>
+                                        <af:outputFormatted value="Client-side rendering allows axis to rescale based on the available data in real-time"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:goLink text="Demo page" destination="hideAndShow.jspx"
+                                                   inlineStyle="font-size:14px"/>
+                                    </af:panelList>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                            <af:separator/>
+                            <af:panelGroupLayout layout="horizontal" id="row5" valign="top">
+                                <af:panelSplitter id="ps2" inlineStyle="width:600px">
+                                    <f:facet name="first">
+                                        <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row">
+                                            <f:facet name="dataStamp">
+                                                <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                                   value="#{row.value}"/>
+                                            </f:facet>
+                                            <dvt:chartLegend rendered="false"/>
+                                        </dvt:barChart>
+                                    </f:facet>
+                                    <f:facet name="second">
+                                        <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row">
+                                            <f:facet name="dataStamp">
+                                                <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                                   value="#{row.value}"/>
+                                            </f:facet>
+                                            <dvt:chartLegend rendered="false"/>
+                                        </dvt:lineChart>
+                                    </f:facet>
+                                </af:panelSplitter>
+                                <af:panelHeader text="Chart Rescale" id="ph2">
+                                    <af:panelList>
+                                        <af:outputFormatted value="Client-side rendering allows the entire chart to rescale to dynamic container dimensions"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:goLink text="Demo page" destination="layout.jspx"
+                                                   inlineStyle="font-size:14px"/>
+                                    </af:panelList>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                            <af:separator/>
+                            <af:panelGroupLayout layout="horizontal" id="row6" valign="top">
+                                <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row" inlineStyle="width:600px">
+                                    <f:facet name="dataStamp">
+                                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}"
+                                                           y="#{row.y}" z="#{row.z}" label="#{row.group}"/>
+                                    </f:facet>
+                                    <dvt:chartLegend rendered="false"/>
+                                </dvt:bubbleChart>
+                                <af:panelHeader text="Improved Data Labeling" id="ph6">
+                                    <af:panelList>
+                                        <af:outputFormatted value="Custom label placement"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:outputFormatted value="Dynamic default font sizing"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:outputFormatted value="Contrasting default black/white label coloring depending on background color"
+                                                            inlineStyle="width:400px;font-size:14px"/>
+                                        <af:goLink text="Demo page" destination="dataLabels.jspx"
+                                                   inlineStyle="font-size:14px"/>
+                                    </af:panelList>
+                                </af:panelHeader>
+                            </af:panelGroupLayout>
+                        </af:panelHeader>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

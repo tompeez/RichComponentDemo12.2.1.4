@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Arc Diagram Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Arc Diagram Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Arc Diagram"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout>
+            <f:facet name="center">
+              <af:panelStretchLayout topHeight="auto">
+                <f:facet name="top">
+                  <af:outputFormatted  value="The diagram below uses characters from Victor Hugo's &quot;Les Miserables&quot; novel to demonstrate an arc diagram. 
+                                        Nodes represent the characters from the novel. Links connect any pair of characters that appear in the same chapter of the book. 
+                                        The link width reflects the number of such co-appearances. &lt;br&gt;
+                                        The original data is from D. E. Knuth, &quot;The Stanford GraphBase: A Platform for Combinatorial Computing.&quot;" inlineStyle="font-size:14px"/>
+                </f:facet>
+                <f:facet name="center">
+                  <dvt:diagram summary="Diagram" id="diagram1" layout="circle">
+                    <dvt:clientLayout name="circle" method="DemoArcLayout.arcLayout" featureName="DemoArcLayout"/>
+                    <dvt:diagramNodes id="diagramNodes1" value="#{diagramArc.nodes}" var="node">
+                      <dvt:diagramNode id="node1" nodeId="#{node.id}" shortDesc="#{node.name}" showNodeActions="false"
+                                       selectable="false">
+                        <f:facet name="zoom100">
+                          <dvt:marker id="marker1" shape="circle" fillColor="#{node.color}" borderStyle="solid"
+                                      borderWidth=".5" borderColor="#444444" width="#{node.size}"
+                                      height="#{node.size}"/>
+                        </f:facet>
+                        <f:facet name="label">
+                          <af:outputText value="#{node.name}" inlineStyle="font-size:12px;color:#000000"/>
+                        </f:facet>
+                      </dvt:diagramNode>
+                    </dvt:diagramNodes>
+                    <dvt:diagramLinks id="diagramLinks1" value="#{diagramArc.links}" var="link">
+                      <dvt:diagramLink id="link1" startNode="#{link.start}" endNode="#{link.end}"
+                                       shortDesc="#{link.desc}" linkColor="rgba(0,0,0,0.2)" linkWidth="#{link.width}"/>
+                    </dvt:diagramLinks>
+                  </dvt:diagram>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

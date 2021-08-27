@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Editable Table Demo with InputColor" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelSplitter positionedFromEnd="true" splitterPosition="160" orientation="vertical"
+                            >
+            <f:facet name="first">
+              <af:panelStretchLayout topHeight="auto" bottomHeight="auto"
+                                     >
+                <f:facet name="top">
+                  <af:panelGroupLayout layout="vertical" >
+                    <af:outputFormatted value="&lt;b>Editable Table Demo with InputColor in a column&lt;/b>"
+                                        />
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                  <af:table rowSelection="single" id='table1' var="row" value="#{tableTestData}"
+                      binding="#{editor.component}"
+                      summary="table data">
+                    <af:column width="40" rowHeader="true" headerText="Number" id="c1">
+                      <af:outputText value="#{row.no}" id="ot1"/>
+                    </af:column>
+                    <af:column headerText="Name" id="c2" width="130">
+                      <af:panelGroupLayout id="pgl2">
+                        <af:image source="#{row.icon}"
+                                  inlineStyle="width:16px; height:14px;vertical-align:middle"
+                                  shortDesc="row icon" id="i1"/>
+                        <af:outputText inlineStyle="margin-left:8px"
+                                       value="#{row.name}" id="ot2"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                    <af:column headerText="Size" id="c3">
+                      <af:inputText value="#{row.size}" label="size" simple="true"
+                                    id="it1"/>
+                    </af:column>
+                    <af:column headerText="Date Modified" id="c4">
+                      <af:inputDate value="#{row.inputDate}" id="inptDateInTable" label="date"
+                                    simple="true"/>
+                    </af:column>
+                    <af:column headerText="A Spinbox" id="c5">
+                      <af:inputNumberSpinbox value="#{row.testSpinbox}" id="spinboxInTable"
+                                             label="year" simple="true"/>
+                    </af:column>
+                    <af:column align="start" sortable="false" headerText="" id="c6">
+                      <f:facet name="header">
+                        <af:selectBooleanCheckbox text="select all" simple="true" id="headerCheckbox"
+                                                  clientComponent="true" autoSubmit="true"
+                                                  valueChangeListener="#{tableTestData.selectAllValueChanged}"/>
+                      </f:facet>
+                      <af:selectBooleanCheckbox id="targetBooleanCheckbox" text="Cool"
+                                                value="#{row.selectBooleanValue2}"/>
+                    </af:column>
+                    <af:column headerText="inputColor" id="c7" >
+                      <af:inputColor id="inputColorInTable" value="#{demoColor.colorValue5}" contentStyle="width:55px;"
+                                     label="color" simple="true"/>
+                    </af:column>
+                  </af:table>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="scroll" id="pgl1">
+                <af:outputText value="See also:" id="ot3"/>
+                <af:panelList id="pl1">
+                  <af:goLink text="panelCollection" destination="/components/panelCollection.jspx"
+                             id="gl1"/>
+                  <af:goLink text="panelCollection with Column Group"
+                             destination="panelCollectionColumnGroup.jspx"
+                             id="gl2"/>
+                  <af:goLink text="ColumnGroup Table" destination="columnGroupTable.jspx"
+                             id="gl3"/>
+                  <af:goLink text="Editable Table" destination="editableTable.jspx"
+                             id="gl4"/>
+                  <af:goLink text="Filterable Table" destination="filterableTable.jspx"
+                             id="gl5"/>
+                  <af:goLink text="Filterable PanelCollection"
+                             destination="filterablePanelCollection.jspx"
+                             id="gl6"/>
+                  <af:goLink text="Filterable Column Group Table"
+                             destination="filterableColumnGroupTable.jspx"
+                             id="gl7"/>
+                  <af:goLink text="Search Region With Filterable Table"
+                             destination="queryWithFilterTable.jspx" id="gl8"/>
+                  <af:goLink text="panelCollection with Table showing default menu and toolbar buttons"
+                             destination="panelCollectionTable2.jspx" id="gl9"/>
+                  <af:goLink text="Table With a detailStamp Facet"
+                             destination="detailStampTable.jspx" id="gl10"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

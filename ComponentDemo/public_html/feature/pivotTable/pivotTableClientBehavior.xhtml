@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2010, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<ui:composition
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces"
+  xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test">
+  <af:document
+    id="d1"
+    title="#{pivotTableFeatureLinks.clientBehaviorPivotTableTitle}"
+    binding="#{templateBindings.documentComponent}"
+    theme="dark">
+    <f:facet name="metaContainer">
+      <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+      <f:subview id="meta">
+        <ui:include src="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+      </f:subview>
+    </f:facet>
+    <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+      <f:attribute name="tagName" value="Client Behavior Support"/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <af:inputText id="it1" value="#{pivotTableSelection.selectedCells}" label="Selection change updated by ajax when you click on Pivot Table"/>
+          <dvt:pivotTable contentDelivery="immediate" value="#{pivotTableSelection.dataModel}" id="pt1" headerSortMode="none" splitMode="enabled">
+            <f:ajax render=":dmoTpl:it1"/>
+          </dvt:pivotTable>
+        </af:panelGroupLayout>
+      </f:facet>
+       <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <ui:include src="/feature/pivotTable/pivotTableFeatureLinks.jspx"/>
+          </f:subview>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document>
+</ui:composition>

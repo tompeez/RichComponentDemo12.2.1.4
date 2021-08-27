@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="activeCommandToolbarButton Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        function doForceFullSubmit(event)
+        {
+          event.forceFullSubmit();
+          event.noResponseExpected();
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="activeCommandToolbarButton"/>
+        <f:attribute name="visualDesignName" value="toolbar"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:outputText value="This is a demo page for the activeCommandToolbarButton component."
+                             id="ot1"/>
+              <af:spacer height="5px" id="s2"/>
+              <af:outputText value="The activeCommandToolbarButton component is not configured to do anything active in
+              this demo bundle. The activeCommandToolbarButton component was added for a very specific use case and
+              we expect very few application developers to use this component."
+                             id="ot2"/>
+              <af:spacer height="5px" id="s3"/>
+              <af:panelList id="pl1">
+                <af:outputText value="Toggle and radio functionality is implemented through the testCommandToolbarButtonBean."
+                               id="ot3"/>
+                <af:outputText value="The folders button uses a hover icon."
+                               id="ot4"/>
+                <af:outputText value="Bold, Italic and Underline are independant toggle buttons."
+                               id="ot5"/>
+                <af:outputText value="The three text alignment buttons are mutually exclusive radio buttons."
+                               id="ot6"/>
+                <af:outputText value="The arrange button is bound to the editor, and for now throws a popup when pressed on the arrow."
+                               id="ot7"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+            <af:toolbox id="toolbox1">
+              <af:group id="g1">
+                <af:toolbar id="t1">
+                  <af:group id="g2">
+                    <af:activeCommandToolbarButton text="No icon" shortDesc="No icon"
+                                                   id="activeCommandToolbarButton1"/>
+                    <af:activeCommandToolbarButton text="back" shortDesc="back" disabled="true"
+                                                   icon="/images/backarrow.gif"
+                                                   disabledIcon="/images/backarrow_gray.gif"
+                                                   id="activeCommandToolbarButton2"/>
+                    <af:activeCommandToolbarButton text="forward" shortDesc="forward"
+                                                   icon="/images/icon_forward_button.gif"
+                                                   id="actb1"/>
+                  </af:group>
+                  <af:group id="g3">
+                    <af:activeCommandToolbarButton id="search" text="Search" shortDesc="search"
+                                                   accessKey="r" icon="/images/search.gif"
+                                                   partialSubmit="#{portletInfo.portlet}"
+                                                   action="#{testPostback.doDownload}">
+                                                    <af:clientListener method="doForceFullSubmit" type="action"/>
+                    </af:activeCommandToolbarButton>
+                    <af:activeCommandToolbarButton text="Folders" shortDesc="folders"
+                                                   icon="/images/smily-normal.gif"
+                                                   depressedIcon="/images/bold.gif"
+                                                   hoverIcon="/images/smily-glasses.gif" type="check"
+                                                   id="activeCommandToolbarButton4"/>
+                    <af:commandButton id="click" text="Click"/>
+                    <af:commandButton id="me" text="Me"/>
+                    <af:commandLink id="link" text="Link"/>
+                  </af:group>
+                  <af:group id="g4">
+                    <af:activeCommandToolbarButton id="bold" shortDesc="bold" icon="/images/bold.gif"
+                                                   type="check" selected="false"/>
+                    <af:activeCommandToolbarButton id="italic" shortDesc="italic"
+                                                   icon="/images/italic.gif" type="check"
+                                                   selected="false"/>
+                    <af:activeCommandToolbarButton id="underline" shortDesc="underline"
+                                                   icon="/images/underline.gif" type="check"
+                                                   selected="false"/>
+                  </af:group>
+                  <af:group id="g5">
+                    <af:activeCommandToolbarButton id="alignLeft" shortDesc="align left"
+                                                   icon="/images/alignleft.gif" type="radio"
+                                                   selected="true"/>
+                    <af:activeCommandToolbarButton id="alignCenter" shortDesc="align center"
+                                                   icon="/images/aligncenter.gif" type="radio"
+                                                   selected="false"/>
+                    <af:activeCommandToolbarButton id="alignRight" shortDesc="align right"
+                                                   icon="/images/alignright.gif" type="radio"
+                                                   selected="false"/>
+                  </af:group>
+                  <af:group id="g6">
+                    <af:activeCommandToolbarButton id="boundButton" visible="true" text="Arrange"
+                                                   shortDesc="arrange" icon="/images/arrange.gif"
+                                                   binding="#{editor.component}" partialSubmit="true">
+                      <f:facet name="popup">
+                        <af:panelGroupLayout id="pgl3">
+                          <af:selectManyListbox value="#{demoInput.manyListValue1}" label="drinks"
+                                                simple="true" id="sml1">
+                            <af:selectItem label="coffee" value="bean"
+                                           id="si1"/>
+                            <f:selectItem itemLabel="tea" itemValue="leaf"
+                                          itemDescription="Tea from China"
+                                          id="si2"/>
+                            <af:selectItem disabled="true" label="orange juice" value="orange"
+                                           id="si3"/>
+                            <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                                          id="si4"/>
+                            <af:selectItem label="milk" value="moo" id="si5"/>
+                            <f:selectItems value="#{demoInput.selectItems}"
+                                           id="si6"/>
+                          </af:selectManyListbox>
+                        </af:panelGroupLayout>
+                      </f:facet>
+                    </af:activeCommandToolbarButton>
+                  </af:group>
+                </af:toolbar>
+                <af:toolbar id="t2">
+                  <af:group id="g7">
+                    <af:activeCommandToolbarButton text="Wrap" shortDesc="wrap"
+                                                   icon="/images/wrap.gif"
+                                                   id="activeCommandToolbarButton12"/>
+                  </af:group>
+                </af:toolbar>
+                <!--
+                <af:toolbar>
+                  <af:group>
+                    <af:activeCommandToolbarButton
+                      text="Info"
+                      icon="/images/info.png" />
+                    <af:activeCommandToolbarButton
+                      icon="/images/file.gif" />
+                  </af:group>
+                </af:toolbar>
+                -->
+                <af:toolbar id="t3">
+                  <af:group id="g8">
+                    <af:activeCommandToolbarButton text="File" shortDesc="file"
+                                                   icon="/images/file.gif"
+                                                   id="activeCommandToolbarButton13"/>
+                  </af:group>
+                </af:toolbar>
+              </af:group>
+            </af:toolbox>
+            <af:panelGroupLayout id="pgl4" layout="default">
+
+              <af:outputText id="ot8" value="See also the "/>
+              <af:commandLink id="cl1" text="geometry management demo"
+                              action="guide.activeCommandToolbarButtonGeometry"/>
+              <af:outputText id="ot9" value=" for this component."/>
+              <af:spacer height="5px"/>
+
+            <af:panelHeader text="Deprecated">
+              <af:spacer height="5px"/>
+              <af:outputText value="Please note that activeCommandToolbarButton is deprecated. Please use "/>
+              <af:link text="af:button" destination="/components/button.jspx"/>
+              <af:outputText value=" instead."/>
+            </af:panelHeader>  
+
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

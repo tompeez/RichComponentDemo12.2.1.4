@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="Marker Shapes and Colors Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Marker Shapes and Colors Demo"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Marker Shapes and Colors"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+
+          <af:panelGroupLayout layout="horizontal" id="p2">
+              <af:panelGroupLayout layout="vertical" id="pgl4">
+                  <af:outputText value="Normal series shapes and colors." id="ot3"/>
+                                                
+                  <dvt:bubbleGraph id="graph1" subType="BUBBLE" dataSelection="single">
+                    <af:dragSource actions="MOVE"/>
+                    <dvt:seriesSet>
+                        <dvt:series shape="human" index="0"/>
+                        <dvt:series shape="human" index="1"/>
+                    </dvt:seriesSet>
+                  </dvt:bubbleGraph>
+              </af:panelGroupLayout>
+              
+              <af:panelGroupLayout layout="vertical" id="pgl5">
+                  <af:outputText value="Custom shapes from SVG definition."
+                                 id="ot4"/>
+                  <dvt:bubbleGraph id="graph2" subType="BUBBLE" dataSelection="single">
+                    <af:dragSource actions="MOVE"/>
+                    <dvt:seriesSet>
+                      <dvt:series index="0" shapePath="/resources/svg/cherry.svg"/>
+                      <dvt:series index="1" shapePath="/resources/svg/drink.svg"/>
+                      <dvt:series index="2" shapePath="/resources/svg/cherry.svg"/>
+                      <dvt:series index="3" shapePath="/resources/svg/drink.svg"/>
+                    </dvt:seriesSet>
+                  </dvt:bubbleGraph>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl6">
+                  <dvt:scatterGraph shortDesc="Graph" value="#{markerShapeColor.data}"
+                                    id="graph3" dataSelection="single">
+                    <af:dragSource actions="MOVE"/>
+                    <dvt:y1Title text="Cost"/>
+                    <dvt:x1Title text="Sales"/>
+
+                    <dvt:seriesSet>
+                      <dvt:series index="0" color="#ff0000" shapePath="/resources/svg/drink.svg"/>
+                      <dvt:series index="1" color="#ff0000" shapePath="/resources/svg/runner.svg"/>
+                      <dvt:series index="2" color="#ff0000" shapePath="/resources/svg/cherry.svg"/>
+                      <dvt:series index="3" color="#0000ff" shapePath="/resources/svg/drink.svg"/>
+                      <dvt:series index="4" color="#0000ff" shapePath="/resources/svg/runner.svg"/>
+                      <dvt:series index="5" color="#0000ff" shapePath="/resources/svg/cherry.svg"/>
+                    </dvt:seriesSet>
+                  </dvt:scatterGraph>
+              </af:panelGroupLayout>
+          </af:panelGroupLayout>
+                 
+          <af:panelGroupLayout layout="horizontal" id="p1">
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                  <af:outputText value="Normal series shapes and colors." id="ot1"/>
+                                
+                  <dvt:scatterGraph shortDesc="Graph" value="#{markerShapeColor.data}"
+                                    id="sg1">
+                    <dvt:y1Title text="Cost"/>
+                    <dvt:x1Title text="Sales"/>
+                  </dvt:scatterGraph>
+              </af:panelGroupLayout>
+              
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                  <af:outputText value="Custom data-driven shapes and colors."
+                                 id="ot2"/>
+                  <dvt:scatterGraph shortDesc="Graph" markerColorAttribute="Product" markerShapeAttribute="Brand" value="#{markerShapeColor.data}"
+                                    id="sg2">
+                    <dvt:y1Title text="Cost"/>
+                    <dvt:x1Title text="Sales"/>
+
+                    <dvt:seriesSet>
+                      <dvt:series index="4" color="#0000ff"/>
+                      <dvt:series index="3" color="#ff0000"/>
+                    </dvt:seriesSet>
+                  </dvt:scatterGraph>
+              </af:panelGroupLayout>
+              
+          </af:panelGroupLayout>
+          <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet> 
+      <f:facet name="centerBottomCollapsible">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <!-- START SEE ALSO LINKS -->
+            <af:outputText value="See also:"/>
+            <af:panelList>              
+              <af:goLink text="Graph Number Format Backing Bean" destination="/resources/sourceCode/feature/rich/graph/MarkerShapeColor.javasource" id="gl1"/>
+            </af:panelList>
+            <!-- END SEE ALSO LINKS -->
+          </af:panelGroupLayout>
+       </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

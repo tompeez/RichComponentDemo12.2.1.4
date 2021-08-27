@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Table Dynamic Context Menu Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+
+        <f:facet name="center">
+          <af:panelSplitter positionedFromEnd="true" splitterPosition="240" orientation="vertical"
+                            id="ps1" dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelStretchLayout topHeight="auto" bottomHeight="auto" dimensionsFrom="auto"
+                                     id="psl1">
+                <f:facet name="top">
+                  <af:panelGroupLayout layout="vertical" id="pgl1">
+                    <af:outputFormatted value="&lt;b>Basic table&lt;/b>"
+                                        id="of1"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                  <af:table rowSelection="multiple" columnSelection="multiple" columnBandingInterval="0"
+                            contextMenuSelect="true"
+                            var="test1" value="#{dynamicContextMenuTable.data}" id="table"
+                            summary="table data" rowBandingInterval="0" styleClass="AFStretchWidth">
+                    <f:facet name="contextMenu">
+                      <af:popup id="myPopup" contentDelivery="lazyUncached">
+                        <af:setPropertyListener from="#{dynamicContextMenuTable.data.rowData}"
+                                                        to="#{dynamicContextMenuTable.currentRowData}"
+                                                        type="popupFetch"/>
+                        <af:menu id="m1">
+                          <af:commandMenuItem actionListener="#{dynamicContextMenuTable.alertRowData}"  text="Row Number - #{dynamicContextMenuTable.currentRowData.no}"
+                                              id="cmi1"/>
+                          <af:commandMenuItem actionListener="#{dynamicContextMenuTable.alertRowData}"  text="Name - #{dynamicContextMenuTable.currentRowData.name}"
+                                              id="cmi2"/>
+                          <af:commandMenuItem actionListener="#{dynamicContextMenuTable.alertRowData}"  text="Date - #{dynamicContextMenuTable.currentRowData.date}"
+                                              id="cmi3"/>
+                        </af:menu>
+                      </af:popup>
+                    </f:facet>
+                    <af:column width="40" align="center" rowHeader="true" headerText="Number"
+                               id="c1">
+                      <af:outputText value="#{test1.no}" id="ot1"/>
+                    </af:column>
+                    <af:column displayIndex="3" headerText="Number" align="right" sortProperty="no"
+                               sortable="true" id="c2">
+                      <af:outputText value="#{test1.no}" id="ot2"/>
+                    </af:column>
+                    <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                               id="c3">
+                      <af:panelGroupLayout id="pgl2">
+                        <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                  shortDesc="icon" id="i1"/>
+                        <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                       id="ot3"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                    <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                               displayIndex="2" align="end" id="c4">
+                      <af:outputText value="#{test1.size}" id="ot4"/>
+                    </af:column>
+                    <af:column align="center" headerText="Date Modified"
+                               id="c5">
+                      <af:outputText value="#{test1.date}" id="ot5"/>
+                    </af:column>
+                    <af:column headerText="Col5" id="c6">
+                      <af:outputText value="#{test1.col5}" id="ot6"/>
+                    </af:column>
+                    <af:column headerText="Col6" id="c7">
+                      <af:outputText value="#{test1.col6}" id="ot7"/>
+                    </af:column>
+                    <af:column headerText="Col7" align="end" id="c8">
+                      <af:outputText value="#{test1.col7}" id="ot8"/>
+                    </af:column>
+                    <af:column headerText="Col8" align="end" id="c9">
+                      <af:outputText value="#{test1.col8}" id="ot9"/>
+                    </af:column>
+                    <af:column headerText="Col9" id="c10">
+                      <af:outputText value="#{test1.col9}" id="ot10"/>
+                    </af:column>
+                    <af:column headerText="Col10" id="c11">
+                      <af:outputText value="#{test1.col10}" id="ot11"/>
+                    </af:column>
+                    <af:column headerText="Col11" align="end" id="c12">
+                      <af:outputText value="#{test1.col11}" id="ot12"/>
+                    </af:column>
+                    <af:column headerText="Col12" align="end" id="c13">
+                      <af:outputText value="#{test1.col12}" id="ot13"/>
+                    </af:column>
+                  </af:table>
+                </f:facet>
+                <f:facet name="bottom">
+                  <af:panelGroupLayout layout="vertical" id="pgl3">
+                    <af:toolbar id="t1">
+                      <af:commandToolbarButton text="Export All Rows to Excel" immediate="true"
+                                               id="export">
+                        <af:exportCollectionActionListener type="excelHTML" exportedId="table"
+                                                           filename="export.xls"
+                                                           title="ADF Faces Export - All" exportedRows="all"/>
+                      </af:commandToolbarButton>
+                      <af:commandToolbarButton text="Export Selected Rows to Excel" immediate="true"
+                                               id="exportSelected">
+                        <af:exportCollectionActionListener type="excelHTML" exportedId="table"
+                                                           filename="export.xls"
+                                                           title="ADF Faces Export - Selected Rows"
+                                                           exportedRows="selected"/>
+                      </af:commandToolbarButton>
+                      <af:commandToolbarButton text="Print Splitter Content"
+                                               id="ctb1">
+                        <af:showPrintablePageBehavior/>
+                      </af:commandToolbarButton>
+                    </af:toolbar>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="scroll" id="pgl4">
+                <af:outputText value="See also:" id="ot14"/>
+                <af:panelList id="pl1">
+                  <af:goLink text="table" destination="../table.jspx" id="gl1"/>
+                  <af:goLink text="panelCollection" destination="../panelCollection.jspx"
+                             id="gl2"/>
+                  <af:goLink text="panelCollection with Column Group"
+                             destination="panelCollectionColumnGroup.jspx"
+                             id="gl3"/>
+                  <af:goLink text="ColumnGroup Table" destination="columnGroupTable.jspx"
+                             id="gl4"/>
+                  <af:goLink text="Editable Table" destination="editableTable.jspx"
+                             id="gl5"/>
+                  <af:goLink text="Click-To-Edit Table" destination="clickToEditTable.jspx"
+                             id="gl6"/>
+                  <af:goLink text="Editable Table with Input Color"
+                             destination="editableTableInputColor.jspx"
+                             id="gl7"/>
+                  <af:goLink text="panelCollection with editable table"
+                             destination="panelCollectionEditableTable.jspx"
+                             id="gl8"/>
+                  <af:goLink text="Filterable Table" destination="filterableTable.jspx"
+                             id="gl9"/>
+                  <af:goLink text="Filterable PanelCollection"
+                             destination="filterablePanelCollection.jspx"
+                             id="gl10"/>
+                  <af:goLink text="Filterable Column Group Table"
+                             destination="filterableColumnGroupTable.jspx"
+                             id="gl11"/>
+                  <af:goLink text="Search Region With Filterable Table"
+                             destination="queryWithFilterTable.jspx" id="gl12"/>
+                  <af:goLink text="panelCollection with Table showing default menu and toolbar buttons"
+                             destination="panelCollectionTable2.jspx"
+                             id="gl13"/>
+                  <af:goLink text="Table Showing Total/Subtotal rows"
+                             destination="tableTotalRow.jspx" id="gl14"/>
+                  <af:goLink text="Table with Column Footers"
+                             destination="tableColumnFooter.jspx" id="gl15"/>
+                  <af:goLink text="Table With a detailStamp Facet"
+                             destination="detailStampTable.jspx" id="gl16"/>
+                  <af:goLink text="PanelCollection With a detailStamp Facet (Show Detail column)"
+                             destination="panelCollectionDetailStamp.jspx"
+                             id="gl17"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

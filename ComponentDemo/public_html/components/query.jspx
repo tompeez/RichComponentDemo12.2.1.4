@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="query Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="query"/>
+        <f:attribute name="visualDesignName" value="query"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmFlowNotes" value="If you use type=&quot;stretch&quot; when flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmFlowWithZeroWidthNotes" value="If you use type=&quot;stretch&quot; when flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmStretchNotes" value="You cannot use type=&quot;flow&quot; when stretching this component."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This is a demo for the query component.
+                                Use the editor to the right to adjust the attributes for this demo.&lt;/b>"
+                                id="of1"/>
+            <af:outputText rendered="#{demoSkin.altaBased}" value="Use 'AFHeaderWithHR' styleClass to enable horizontal rule for Alta based skins."
+                           id="ot2"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:query id="highSalariedClerksQueryId" rows="3" maxColumns="2" type="default"
+                    binding="#{editor.component}" headerText="Search" disclosed="true"
+                    resultComponentId="::resultTextId" value="#{demoQuery.queryDescriptor}"
+                    model="#{demoQuery.queryModel}" queryListener="#{demoQuery.processQuery}"
+                    queryOperationListener="#{demoQuery.queryOperationListener.processQueryOperation}"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:spacer height="5px" id="s2"/>
+            <af:outputText id="resultTextId" partialTriggers="highSalariedClerksQueryId"
+                           value="Query statement is as follows: #{demoQuery.sqlString}"/>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputText value="See also:" id="ot3"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem text="Demo that toggles between the query and quickQuery components."
+                                          destination="/components/queryToggle.jspx"
+                                          id="cni1"/>
+                <af:commandNavigationItem text="Demo that handles CRITERION_UPDATE event."
+                                          destination="/components/query/queryWithCriterionUpdateEvent.jspx"
+                                          id="cni2"/>
+                <af:commandNavigationItem text="Demo that handles Query in Popup."
+                                          destination="/components/query/queryInPopup.jspx"
+                                          id="cni3"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,776 @@
+/* Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.*/
+/* demoComponentsInputSelect skin extends demoComponents skin which extends the richcomponents-simple skin.
+It is used to demo the components skinning hooks.
+The .jspx demo files that this skin is for are in the skinningKeys directory. */
+/* If you are writing your own skin, you don't need to add the ".DemoWrapper-foo" parts shown
+   before the selectors in this file.  These are only present here in order to maximize the
+   usability of the demo pages--so that you can turn on and off each selector individually. */
+/* Demo ALL your public skinning keys */
+/* This file has all the input and select components.
+The skins are broken up so that we do not hit the IE 4096 selector limit */
+
+/* aliases */
+/* change all access-keys to purple, unless overridden by the individual component's
+::access-key pseudo-element */
+.AFFormAccessKeyStyle:alias { color: purple; font-weight: bold; font-size: 14px}
+
+.AFChangedIcon:alias {content:"C"; color: Aqua; font-weight: bold; padding: 3px}
+
+/* FF3 doesn't resize selectManyListbox the way we want, so let's let the labels wrap so that it can */
+@agent gecko and (version: 1.9) {
+  af|panelSplitter::pane af|selectManyListbox::content {
+    white-space: normal;
+  }
+}
+
+/* af|inputColor */
+af|inputColor::launch-icon{
+  content:url('/images/update.gif');
+}
+af|inputColor::launch-icon-style {
+  -tr-inhibit: background-image;
+}
+.DemoWrapper-inputColor af|inputColor {background-color:pink}
+.DemoWrapper-inputColor_access-key af|inputColor::access-key {color: aqua}
+.DemoWrapper-inputColor_content af|inputColor::content {background-color:purple}
+.DemoWrapper-inputColor_label af|inputColor::label[theme="default"] {color:red}
+.DemoWrapper-inputColor_launch-icon-style af|inputColor::launch-icon-style {border-width:3px}
+.DemoWrapper-inputColor_read-only af|inputColor:read-only {background-color:yellow}
+.DemoWrapper-inputColor_read-only_content af|inputColor:read-only::content {background-color:purple}
+.DemoWrapper-inputColor_read-only_label af|inputColor:read-only::label {color:blue}
+.DemoWrapper-inputColor_disabled af|inputColor:disabled {background-color:#00C000}
+.DemoWrapper-inputColor_disabled_content af|inputColor:disabled::content {background-color:#00C0C0}
+.DemoWrapper-inputColor_disabled_label af|inputColor:disabled::label {color:#0000C0}
+af|inputColor::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|inputColor::dynamic-help-icon-style {-tr-inhibit: all}
+af|inputColor::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|inputColor::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-inputColor_dynamic-help-icon-style af|inputColor::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-inputColor_dynamic-help-icon-style-hover af|inputColor::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-inputColor_dynamic-help-icon-style-active af|inputColor::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|inputComboboxListOfValues */
+.DemoWrapper-inputComboboxListOfValues af|inputComboboxListOfValues {background-color:green;}
+.DemoWrapper-inputComboboxListOfValues_access-key af|inputComboboxListOfValues::access-key {color:aqua;}
+.DemoWrapper-inputComboboxListOfValues_container af|inputComboboxListOfValues::container {border:1px solid blue;}
+.DemoWrapper-inputComboboxListOfValues_content af|inputComboboxListOfValues::content {background-color:red;}
+.DemoWrapper-inputComboboxListOfValues_label af|inputComboboxListOfValues::label {font-weight: bold;}
+
+.DemoWrapper-inputComboboxListOfValues_read-only af|inputComboboxListOfValues:read-only {background-color:yellow}
+.DemoWrapper-inputComboboxListOfValues_read-only_content af|inputComboboxListOfValues:read-only::content {background-color:purple}
+.DemoWrapper-inputComboboxListOfValues_read-only_label af|inputComboboxListOfValues:read-only::label {color:blue}
+
+.DemoWrapper-inputComboboxListOfValues_disabled af|inputComboboxListOfValues:disabled {background-color:#00C000}
+.DemoWrapper-inputComboboxListOfValues_disabled_content af|inputComboboxListOfValues:disabled::content {background-color:#00C0C0}
+.DemoWrapper-inputComboboxListOfValues_disabled_label af|inputComboboxListOfValues:disabled::label {color:#0000C0}
+
+/*ADF Faces Properties*/
+af|inputComboboxListOfValues { -tr-dropdown-number-of-rows: 25; }
+af|inputComboboxListOfValues { -tr-dropdown-row-height: 16; }
+
+af|inputComboboxListOfValues::popup-create-icon-style {-tr-inhibit: background-image; border: solid thin blue;}
+af|inputComboboxListOfValues::popup-create-icon-style:hover{-tr-inhibit: background-image; border: solid thin green;}
+af|inputComboboxListOfValues::popup-create-icon-style:active{-tr-inhibit: background-image; border: solid thin red;}
+af|inputComboboxListOfValues::popup-create-icon-style:disabled {-tr-inhibit: background-image; border: solid thin pink;}
+af|inputComboboxListOfValues::popup-create-icon {content : url('/images/copy.gif');}
+
+af|inputComboboxListOfValues::dropdown-icon{
+  content: "%";
+  font-size: 10px;
+  font-weight: bold;
+  vertical-align: baseline;
+}
+
+af|inputComboboxListOfValues::dropdown-disabled-icon{
+  content: "$";
+  font-size: 10px;
+  font-weight: bold;
+  vertical-align: baseline;
+}
+
+af|inputComboboxListOfValues::dropdown-icon-style{
+  -tr-inhibit: background-image;
+  padding:1px 2px 3px 2px;
+  line-height: 7px;
+}
+
+@agent ie
+{
+  af|inputComboboxListOfValues::dropdown-cell,
+  af|inputComboboxListOfValues:disabled::dropdown-cell {
+    vertical-align: 5%;
+  }
+}
+
+.DemoWrapper-inputComboboxListOfValues_dropdown_icon_style af|inputComboboxListOfValues::dropdown-icon-style{
+  background-color: Fuchsia;
+}
+.DemoWrapper-inputComboboxListOfValues_dropdown_cell af|inputComboboxListOfValues::dropdown-cell{
+  background-color: Lime;
+  background-image: none;
+}
+.DemoWrapper-inputComboboxListOfValues_dropdown_cell_hover af|inputComboboxListOfValues::dropdown-cell:hover{
+  background-color: Green;
+  background-image: none;
+}
+.DemoWrapper-inputComboboxListOfValues_dropdown_cell_active af|inputComboboxListOfValues::dropdown-cell:active{
+  background-color: Navy;
+  background-image: none;
+}
+.DemoWrapper-inputComboboxListOfValues_disabled_dropdown_cell af|inputComboboxListOfValues:disabled::dropdown-cell{
+  background-color: Red;
+}
+
+af|inputComboboxListOfValues::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|inputComboboxListOfValues::dynamic-help-icon-style {-tr-inhibit: all}
+af|inputComboboxListOfValues::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|inputComboboxListOfValues::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-inputComboboxListOfValues_dynamic-help-icon-style af|inputComboboxListOfValues::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-inputComboboxListOfValues_dynamic-help-icon-style-hover af|inputComboboxListOfValues::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-inputComboboxListOfValues_dynamic-help-icon-style-active af|inputComboboxListOfValues::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|inputDate */
+.DemoWrapper-inputDate af|inputDate {background-color:pink}
+.DemoWrapper-inputDate_access-key af|inputDate::access-key {color: aqua}
+.DemoWrapper-inputDate_content af|inputDate::content {background-color:red}
+.DemoWrapper-inputDate_label af|inputDate::label {color:red}
+.DemoWrapper-inputDate_read-only af|inputDate:read-only {background-color:yellow}
+.DemoWrapper-inputDate_read-only_content af|inputDate:read-only::content {background-color:purple}
+.DemoWrapper-inputDate_read-only_label af|inputDate:read-only::label {color:blue}
+
+.DemoWrapper-inputDate_disabled af|inputDate:disabled {background-color:#00C000}
+.DemoWrapper-inputDate_disabled_content af|inputDate:disabled::content {background-color:#00C0C0}
+.DemoWrapper-inputDate_disabled_label af|inputDate:disabled::label {color:#0000C0}
+
+.DemoWrapper-inputDate_read-only_truncate af|inputDate:read-only.truncate af|inputDate::content {
+  display:block; width:100px; height:12px; background-color:pink; border: 1px black dotted; overflow:hidden}
+
+.DemoWrapper-inputDate_launch-icon-style af|inputDate::launch-icon-style {
+  background-image:url("/images/timedate_ena_big.png");
+  padding-right: 50px;
+  font-size: 50px;
+}
+/** styles the mouse down clickable launch icon **/
+.DemoWrapper-inputDate_launch-icon-style_active af|inputDate::launch-icon-style:active {
+  background-image:url("/images/timedate_dwn_big.png");
+  padding-right: 50px;
+  font-size: 50px;
+}
+/** styles the disabled clickable launch icon **/
+.DemoWrapper-inputDate_launch-icon-style_disabled af|inputDate::launch-icon-style:disabled {background-color:pink}
+.DemoWrapper-inputDate_launch-icon-style_disabled_active af|inputDate::launch-icon-style:disabled:active,
+.DemoWrapper-inputDate_launch-icon-style_disabled_active af|inputDate::launch-icon-style:disabled:hover
+{
+  background-image:url("/images/timedate_dis_big.png");
+  padding-right: 50px;
+  font-size: 50px;
+}
+
+/** styles the mouseover launch icon **/
+.DemoWrapper-inputDate_launch-icon-style_hover af|inputDate::launch-icon-style:hover {
+  background-image:url("/images/timedate_ovr_big.png");
+  padding-right: 50px;
+  font-size: 50px;
+}
+
+af|inputDate::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|inputDate::dynamic-help-icon-style {-tr-inhibit: all}
+af|inputDate::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|inputDate::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-inputDate_dynamic-help-icon-style af|inputDate::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-inputDate_dynamic-help-icon-style-hover af|inputDate::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-inputDate_dynamic-help-icon-style-active af|inputDate::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|inputFile */
+.DemoWrapper-inputFile af|inputFile {background-color:pink}
+.DemoWrapper-inputFile_access-key af|inputFile::access-key {color: aqua}
+.DemoWrapper-inputFile_content af|inputFile::content {background-color:purple}
+.DemoWrapper-inputFile_label af|inputFile::label[theme="default"]{color:red}
+.DemoWrapper-inputFile_read-only af|inputFile:read-only {background-color:yellow}
+.DemoWrapper-inputFile_read-only_content af|inputFile:read-only::content{background-color:purple}
+.DemoWrapper-inputFile_read-only_label af|inputFile:read-only::label {color:blue;}
+.DemoWrapper-inputFile_disabled af|inputFile:disabled {background-color:#00C000}
+.DemoWrapper-inputFile_disabled_content af|inputFile:disabled::content {background-color:#00C0C0}
+.DemoWrapper-inputFile_disabled_label af|inputFile:disabled::label {color:#0000C0}
+af|inputFile::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|inputFile::dynamic-help-icon-style {-tr-inhibit: all}
+af|inputFile::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|inputFile::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-inputFile_dynamic-help-icon-style af|inputFile::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-inputFile_dynamic-help-icon-style-hover af|inputFile::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-inputFile_dynamic-help-icon-style-active af|inputFile::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|inputListOfValues */
+.DemoWrapper-inputListOfValues af|inputListOfValues {background-color:green}
+.DemoWrapper-inputListOfValues_access-key af|inputListOfValues::access-key {color:aqua}
+.DemoWrapper-inputListOfValues_content af|inputListOfValues::content {background-color:red;}
+.DemoWrapper-inputListOfValues_label af|inputListOfValues::label {font-weight: bold;}
+
+.DemoWrapper-inputListOfValues_read-only af|inputListOfValues:read-only {background-color:yellow}
+.DemoWrapper-inputListOfValues_read-only_content af|inputListOfValues:read-only::content {background-color:Fuchsia}
+.DemoWrapper-inputListOfValues_read-only_label af|inputListOfValues:read-only::label {color:blue}
+
+.DemoWrapper-inputListOfValues_disabled af|inputListOfValues:disabled {background-color:#00C000}
+.DemoWrapper-inputListOfValues_disabled_content af|inputListOfValues:disabled::content {background-color:#00C0C0}
+.DemoWrapper-inputListOfValues_disabled_label af|inputListOfValues:disabled::label {color:#0000C0}
+
+af|inputListOfValues::popup-create-icon-style {-tr-inhibit: background-image; border: solid thin blue;}
+af|inputListOfValues::popup-create-icon-style:hover{-tr-inhibit: background-image; border: solid thin green}
+af|inputListOfValues::popup-create-icon-style:active{-tr-inhibit: background-image;border: solid thin red}
+af|inputListOfValues::popup-create-icon-style:disabled {-tr-inhibit: background-image;border: solid thin pink}
+af|inputListOfValues::popup-create-icon {content : url('/images/info.png');}
+
+af|inputListOfValues::search-icon-style {
+  -tr-inhibit: background-image;
+  border: 1px solid red;
+  font-size: 11px;
+  padding: 1px 3px;
+  text-decoration: none;
+  vertical-align: 0%;
+}
+
+af|inputListOfValues::search-icon-style:hover {
+  -tr-inhibit: background-image;
+  border: 1px solid green;
+  text-decoration: underline;
+}
+
+af|inputListOfValues::search-icon-style:active {
+  -tr-inhibit: background-image;
+  border: 1px solid blue;
+  color: Purple;
+}
+
+af|inputListOfValues::search-icon-style:disabled,
+af|inputListOfValues::search-icon-style:disabled:hover,
+af|inputListOfValues::search-icon-style:disabled:active {
+  -tr-inhibit: background-image;
+  border: 1px solid #C5C5C0;
+  color: #C5C5C0;
+  text-decoration: none;
+}
+
+af|inputListOfValues::search-icon{
+  content: "%";
+  font-weight: bold;
+}
+
+af|inputListOfValues::search-disabled-icon{
+  content: "$";
+  font-weight: bold;
+}
+
+af|inputListOfValues::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|inputListOfValues::dynamic-help-icon-style {-tr-inhibit: all}
+af|inputListOfValues::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|inputListOfValues::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-inputListOfValues_dynamic-help-icon-style af|inputListOfValues::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-inputListOfValues_dynamic-help-icon-style-hover af|inputListOfValues::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-inputListOfValues_dynamic-help-icon-style-active af|inputListOfValues::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|inputNumberSlider */
+.DemoWrapper-inputNumberSlider af|inputNumberSlider
+{background-color: orange;}
+.DemoWrapper-inputNumberSlider_access-key af|inputNumberSlider::access-key
+{color: aqua;}
+.DemoWrapper-inputNumberSlider_content af|inputNumberSlider::content
+{width: 300px;}
+.DemoWrapper-inputNumberSlider_label af|inputNumberSlider::label[theme="default"]
+{color: Green;}
+.DemoWrapper-inputNumberSlider_minus-icon-style af|inputNumberSlider::minus-icon-style
+{background-image: url('/images/demoSkin/slider_decreasebutcon_m_n.png');}
+.DemoWrapper-inputNumberSlider_thumb-icon-style af|inputNumberSlider::thumb-icon-style
+{background-image: url('/images/demoSkin/slider_thumb_vert_m_n.png');}
+.DemoWrapper-inputNumberSlider_bar-outer-border af|inputNumberSlider::bar-outer-border
+{background:Teal; border-color: Red;}
+.DemoWrapper-inputNumberSlider_bar-inner-border af|inputNumberSlider::bar-inner-border
+{border-color: yellow;}
+.DemoWrapper-inputNumberSlider_zero-tick af|inputNumberSlider::zero-tick
+{border-color: Yellow;}
+.DemoWrapper-inputNumberSlider_minor-tick af|inputNumberSlider::minor-tick
+{border-color: Red; }
+.DemoWrapper-inputNumberSlider_major-tick af|inputNumberSlider::major-tick
+{border-color: Aqua; }
+.DemoWrapper-inputNumberSlider_tick-value-zero af|inputNumberSlider::tick-value-zero
+{color: Orange; }
+.DemoWrapper-inputNumberSlider_tick-value af|inputNumberSlider::tick-value
+{color: Maroon; }
+.DemoWrapper-inputNumberSlider_thumb-value-line af|inputNumberSlider::thumb-value-line
+{border-color: pink;}
+.DemoWrapper-inputNumberSlider_thumb-value af|inputNumberSlider::thumb-value
+{border-color: Chartreuse; color: Chartreuse;}
+
+af|inputNumberSlider::plus-icon-style {
+  -tr-inhibit: background-image;
+}
+af|inputNumberSlider::plus-icon { content: '+';}
+
+af|inputNumberSlider:disabled::plus-icon-style {
+  -tr-inhibit: background-image;
+}
+af|inputNumberSlider::plus-disabled-icon {
+  text-decoration: line-through;
+  content: 'plus';
+}
+
+.DemoWrapper-inputNumberSlider_vertical af|inputNumberSlider:vertical
+{background-color: orange;}
+.DemoWrapper-inputNumberSlider_vertical_content af|inputNumberSlider:vertical::content
+{height: 300px;}
+.DemoWrapper-inputNumberSlider_vertical_minus-icon-style af|inputNumberSlider:vertical::minus-icon-style
+{background-image: url('/images/demoSkin/slider_decreasebutcon_m_n.png');}
+.DemoWrapper-inputNumberSlider_vertical_thumb-icon-style af|inputNumberSlider:vertical::thumb-icon-style
+{background-image: url('/images/demoSkin/slider_thumb_m_n.png');}
+.DemoWrapper-inputNumberSlider_vertical_bar-outer-border af|inputNumberSlider:vertical::bar-outer-border
+{background:Teal; border-color: Red;}
+.DemoWrapper-inputNumberSlider_vertical_bar-inner-border af|inputNumberSlider:vertical::bar-inner-border
+{border-color: yellow;}
+.DemoWrapper-inputNumberSlider_vertical_zero-tick af|inputNumberSlider:vertical::zero-tick
+{border-color: Yellow;}
+.DemoWrapper-inputNumberSlider_vertical_minor-tick af|inputNumberSlider:vertical::minor-tick
+{border-color: Red; }
+.DemoWrapper-inputNumberSlider_vertical_major-tick af|inputNumberSlider:vertical::major-tick
+{border-color: Aqua; }
+.DemoWrapper-inputNumberSlider_vertical_tick-value-zero af|inputNumberSlider:vertical::tick-value-zero
+{color: Orange; }
+.DemoWrapper-inputNumberSlider_vertical_tick-value af|inputNumberSlider:vertical::tick-value
+{color: Maroon; }
+.DemoWrapper-inputNumberSlider_vertical_thumb-value-line af|inputNumberSlider:vertical::thumb-value-line
+{border-color: pink;}
+.DemoWrapper-inputNumberSlider_vertical_thumb-value af|inputNumberSlider:vertical::thumb-value
+{border-color: Chartreuse; color: Chartreuse;}
+af|inputNumberSlider::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|inputNumberSlider::dynamic-help-icon-style {-tr-inhibit: all}
+af|inputNumberSlider::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|inputNumberSlider::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-inputNumberSlider_dynamic-help-icon-style af|inputNumberSlider::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-inputNumberSlider_dynamic-help-icon-style-hover af|inputNumberSlider::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-inputNumberSlider_dynamic-help-icon-style-active af|inputNumberSlider::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|inputNumberSpinbox */
+.DemoWrapper-inputNumberSpinbox af|inputNumberSpinbox {background-color:pink}
+.DemoWrapper-inputNumberSpinbox_access-key af|inputNumberSpinbox::access-key {color: aqua;}
+.DemoWrapper-inputNumberSpinbox_content af|inputNumberSpinbox::content {background-color:red}
+.DemoWrapper-inputNumberSpinbox_label af|inputNumberSpinbox::label[theme="default"] {color:red}
+.DemoWrapper-inputNumberSpinbox_read-only af|inputNumberSpinbox:read-only {background-color:yellow}
+.DemoWrapper-inputNumberSpinbox_read-only_content af|inputNumberSpinbox:read-only::content {background-color:purple}
+.DemoWrapper-inputNumberSpinbox_read-only_label af|inputNumberSpinbox:read-only::label {color:blue}
+.DemoWrapper-inputNumberSpinbox_disabled af|inputNumberSpinbox:disabled {background-color:#00C000}
+.DemoWrapper-inputNumberSpinbox_disabled_content af|inputNumberSpinbox:disabled::content {background-color:#00C0C0}
+.DemoWrapper-inputNumberSpinbox_disabled_label af|inputNumberSpinbox:disabled::label {color:#0000C0}
+.DemoWrapper-inputNumberSpinbox_incrementor-icon-style af|inputNumberSpinbox::incrementor-icon-style { background-image:url('/afr/go_dwn.png');}
+.DemoWrapper-inputNumberSpinbox_decrementor-icon-style af|inputNumberSpinbox::decrementor-icon-style { background-image:url('/afr/go_dwn_rtl.png');}
+.DemoWrapper-inputNumberSpinbox_spinbox-cell_disabled af|inputNumberSpinbox::spinbox-cell:disabled {border-width:3px}
+
+af|inputNumberSpinbox::spinbox-cell,
+af|inputNumberSpinbox::spinbox-cell:hover,
+af|inputNumberSpinbox::spinbox-cell:active,
+af|inputNumberSpinbox::incrementor-icon-style,
+af|inputNumberSpinbox::incrementor-icon-style:hover,
+af|inputNumberSpinbox::incrementor-icon-style:active {
+  -tr-inhibit: background-image;
+}
+af|inputNumberSpinbox::incrementor-icon { content: 'UP';}
+
+af|inputNumberSpinbox::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|inputNumberSpinbox::dynamic-help-icon-style {-tr-inhibit: all}
+af|inputNumberSpinbox::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|inputNumberSpinbox::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-inputNumberSpinbox_dynamic-help-icon-style af|inputNumberSpinbox::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-inputNumberSpinbox_dynamic-help-icon-style-hover af|inputNumberSpinbox::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-inputNumberSpinbox_dynamic-help-icon-style-active af|inputNumberSpinbox::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|inputRangeSlider */
+.DemoWrapper-inputRangeSlider af|inputRangeSlider
+{background-color: orange;}
+.DemoWrapper-inputRangeSlider_content af|inputRangeSlider::content
+{width: 300px;}
+.DemoWrapper-inputRangeSlider_label af|inputRangeSlider::label[theme="default"]
+{color: Green;}
+.DemoWrapper-inputRangeSlider_minus-icon-style af|inputRangeSlider::minus-icon-style
+{background-image: url('/images/demoSkin/slider_decreasebutcon_m_n.png');}
+.DemoWrapper-inputRangeSlider_plus-icon-style af|inputRangeSlider::plus-icon-style
+{background-image: url('/images/demoSkin/slider_increasebutcon_m_n.png');}
+.DemoWrapper-inputRangeSlider_thumb-icon-style af|inputRangeSlider::thumb-icon-style
+{background-image: url('/images/demoSkin/slider_thumb_vert_m_n.png');}
+.DemoWrapper-inputRangeSlider_range af|inputRangeSlider::range
+{background: Purple;}
+.DemoWrapper-inputRangeSlider_bar-outer-border af|inputRangeSlider::bar-outer-border
+{background:Teal; border-color: Red;}
+.DemoWrapper-inputRangeSlider_bar-inner-border af|inputRangeSlider::bar-inner-border
+{border-color: yellow;}
+.DemoWrapper-inputRangeSlider_zero-tick af|inputRangeSlider::zero-tick
+{border-color: Yellow;}
+.DemoWrapper-inputRangeSlider_minor-tick af|inputRangeSlider::minor-tick
+{border-color: Red; }
+.DemoWrapper-inputRangeSlider_major-tick af|inputRangeSlider::major-tick
+{border-color: Aqua; }
+.DemoWrapper-inputRangeSlider_tick-value-zero af|inputRangeSlider::tick-value-zero
+{color: Orange; }
+.DemoWrapper-inputRangeSlider_tick-value af|inputRangeSlider::tick-value
+{color: Maroon; }
+.DemoWrapper-inputRangeSlider_thumb-value-line af|inputRangeSlider::thumb-value-line
+{border-color: pink;}
+.DemoWrapper-inputRangeSlider_thumb-value af|inputRangeSlider::thumb-value
+{border-color: Chartreuse; color: Chartreuse;}
+
+.DemoWrapper-inputRangeSlider_vertical af|inputRangeSlider:vertical
+{background-color: orange;}
+.DemoWrapper-inputRangeSlider_vertical_content af|inputRangeSlider:vertical::content
+{height: 300px;}
+.DemoWrapper-inputRangeSlider_vertical_minus-icon-style af|inputRangeSlider:vertical::minus-icon-style
+{background-image: url('/images/demoSkin/slider_decreasebutcon_m_n.png');}
+.DemoWrapper-inputRangeSlider_vertical_plus-icon-style af|inputRangeSlider:vertical::plus-icon-style
+{background-image: url('/images/demoSkin/slider_increasebutcon_m_n.png');}
+.DemoWrapper-inputRangeSlider_vertical_thumb-icon-style af|inputRangeSlider:vertical::thumb-icon-style
+{background-image: url('/images/demoSkin/slider_thumb_m_n.png');}
+.DemoWrapper-inputRangeSlider_vertical_range af|inputRangeSlider:vertical::range
+{background: Purple;}
+.DemoWrapper-inputRangeSlider_vertical_bar-outer-border af|inputRangeSlider:vertical::bar-outer-border
+{background:Teal; border-color: Red;}
+.DemoWrapper-inputRangeSlider_vertical_bar-inner-border af|inputRangeSlider:vertical::bar-inner-border
+{border-color: yellow;}
+.DemoWrapper-inputRangeSlider_vertical_zero-tick af|inputRangeSlider:vertical::zero-tick
+{border-color: Yellow;}
+.DemoWrapper-inputRangeSlider_vertical_minor-tick af|inputRangeSlider:vertical::minor-tick
+{border-color: Red; }
+.DemoWrapper-inputRangeSlider_vertical_major-tick af|inputRangeSlider:vertical::major-tick
+{border-color: Aqua; }
+.DemoWrapper-inputRangeSlider_vertical_tick-value-zero af|inputRangeSlider:vertical::tick-value-zero
+{color: Orange; }
+.DemoWrapper-inputRangeSlider_vertical_tick-value af|inputRangeSlider:vertical::tick-value
+{color: Maroon; }
+.DemoWrapper-inputRangeSlider_vertical_thumb-value-line af|inputRangeSlider:vertical::thumb-value-line
+{border-color: pink;}
+.DemoWrapper-inputRangeSlider_vertical_thumb-value af|inputRangeSlider:vertical::thumb-value
+{border-color: Chartreuse; color: Chartreuse;}
+af|inputRangeSlider::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|inputRangeSlider::dynamic-help-icon-style {-tr-inhibit: all}
+af|inputRangeSlider::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|inputRangeSlider::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-inputRangeSlider_dynamic-help-icon-style af|inputRangeSlider::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-inputRangeSlider_dynamic-help-icon-style-hover af|inputRangeSlider::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-inputRangeSlider_dynamic-help-icon-style-active af|inputRangeSlider::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|inputText */
+.DemoWrapper-inputText af|inputText {background-color:pink}
+.DemoWrapper-inputText_access-key af|inputText::access-key {color: aqua;}
+.DemoWrapper-inputText_content af|inputText::content {background-color:red}
+.DemoWrapper-inputText_label af|inputText::label {font-weight: bold}
+.DemoWrapper-inputText_read-only af|inputText:read-only {background-color:yellow}
+.DemoWrapper-inputText_read-only_content af|inputText:read-only::content {background-color:purple}
+.DemoWrapper-inputText_read-only_label af|inputText:read-only::label {color:blue}
+.DemoWrapper-inputText_disabled af|inputText:disabled {background-color:#00C000}
+.DemoWrapper-inputText_disabled_content af|inputText:disabled::content {background-color:#00C0C0}
+.DemoWrapper-inputText_disabled_label af|inputText:disabled::label {color:#0000C0}
+.DemoWrapper-inputText_read-only_truncate_inputText_content af|inputText:read-only.truncate af|inputText::content {
+  display:block; width:300px; height:12px; background-color:white; border: 1px black dotted; overflow:hidden}
+af|inputText::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|inputText::dynamic-help-icon-style {-tr-inhibit: all}
+af|inputText::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|inputText::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-inputText_dynamic-help-icon-style af|inputText::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-inputText_dynamic-help-icon-style-hover af|inputText::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-inputText_dynamic-help-icon-style-active af|inputText::dynamic-help-icon-style:active {background-color: blue}
+
+
+/* af|selectBooleanCheckbox */
+.DemoWrapper-selectBooleanCheckbox af|selectBooleanCheckbox {background-color:pink}
+.DemoWrapper-selectBooleanCheckbox_access-key af|selectBooleanCheckbox::access-key {color:aqua;}
+.DemoWrapper-selectBooleanCheckbox_content af|selectBooleanCheckbox::content {background-color:red}
+.DemoWrapper-selectBooleanCheckbox_content-input af|selectBooleanCheckbox::content-input {background-color:green}
+.DemoWrapper-selectBooleanCheckbox_label af|selectBooleanCheckbox::label {color:red}
+.DemoWrapper-selectBooleanCheckbox_item-text af|selectBooleanCheckbox::item-text {color:Navy; font-weight: bold}
+.DemoWrapper-selectBooleanCheckbox_read-only af|selectBooleanCheckbox:read-only {background-color:yellow}
+.DemoWrapper-selectBooleanCheckbox_read-only_content af|selectBooleanCheckbox:read-only::content {background-color:purple; color:white}
+.DemoWrapper-selectBooleanCheckbox_read-only_label af|selectBooleanCheckbox:read-only::label {color:blue;font-weight: bold}
+.DemoWrapper-selectBooleanCheckbox_disabled af|selectBooleanCheckbox:disabled {background-color:#00C000}
+.DemoWrapper-selectBooleanCheckbox_disabled_content af|selectBooleanCheckbox:disabled::content {background-color:#00C0C0}
+.DemoWrapper-selectBooleanCheckbox_disabled_content-input af|selectBooleanCheckbox:disabled::content-input {background-color:red}
+.DemoWrapper-selectBooleanCheckbox_disabled_label af|selectBooleanCheckbox:disabled::label {color:#0000C0;font-weight: bold}
+.DemoWrapper-selectBooleanCheckbox_disabled_item-text af|selectBooleanCheckbox:disabled::item-text {color:#FFFAFA;font-weight: bold}
+af|selectBooleanCheckbox::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|selectBooleanCheckbox::dynamic-help-icon-style {-tr-inhibit: all}
+af|selectBooleanCheckbox::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|selectBooleanCheckbox::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-selectBooleanCheckbox_dynamic-help-icon-style af|selectBooleanCheckbox::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-selectBooleanCheckbox_dynamic-help-icon-style-hover af|selectBooleanCheckbox::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-selectBooleanCheckbox_dynamic-help-icon-style-active af|selectBooleanCheckbox::dynamic-help-icon-style:active {background-color: blue}
+af|selectBooleanCheckbox::selected-icon {content: 'X'; color: black;}
+af|selectBooleanCheckbox::unselected-icon {content: 'V'; color: black;}
+
+/* af|selectBooleanRadio */
+.DemoWrapper-selectBooleanRadio af|selectBooleanRadio {background-color:pink}
+.DemoWrapper-selectBooleanRadio_access-key af|selectBooleanRadio::access-key {color:aqua;}
+.DemoWrapper-selectBooleanRadio_content af|selectBooleanRadio::content {background-color:red}
+.DemoWrapper-selectBooleanRadio_content-input af|selectBooleanRadio::content-input {background-color:green}
+.DemoWrapper-selectBooleanRadio_label af|selectBooleanRadio::label {color:red}
+.DemoWrapper-selectBooleanRadio_item-text af|selectBooleanRadio::item-text {color:Navy}
+.DemoWrapper-selectBooleanRadio_read-only af|selectBooleanRadio:read-only {background-color:yellow}
+.DemoWrapper-selectBooleanRadio_read-only_content af|selectBooleanRadio:read-only::content {background-color:purple; color:white}
+.DemoWrapper-selectBooleanRadio_read-only_label af|selectBooleanRadio:read-only::label {color:blue}
+.DemoWrapper-selectBooleanRadio_disabled af|selectBooleanRadio:disabled {background-color:#00C000}
+.DemoWrapper-selectBooleanRadio_disabled_content af|selectBooleanRadio:disabled::content {background-color:#00C0C0}
+.DemoWrapper-selectBooleanRadio_disabled_content-input af|selectBooleanRadio:disabled::content-input {background-color:red}
+.DemoWrapper-selectBooleanRadio_disabled_label af|selectBooleanRadio:disabled::label {color:#0000C0}
+.DemoWrapper-selectBooleanRadio_disabled_item-text af|selectBooleanRadio:disabled::item-text {color:#FFFAFA}
+af|selectBooleanRadio::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|selectBooleanRadio::dynamic-help-icon-style {-tr-inhibit: all}
+af|selectBooleanRadio::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|selectBooleanRadio::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-selectBooleanRadio_dynamic-help-icon-style af|selectBooleanRadio::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-selectBooleanRadio_dynamic-help-icon-style-hover af|selectBooleanRadio::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-selectBooleanRadio_dynamic-help-icon-style-active af|selectBooleanRadio::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|selectManyChoice */
+.DemoWrapper-selectManyChoice af|selectManyChoice {background-color:pink}
+.DemoWrapper-selectManyChoice_access-key af|selectManyChoice::access-key {color: aqua;}
+.DemoWrapper-selectManyChoice_content af|selectManyChoice::content {background-color:red}
+af|document .DemoWrapper-selectManyChoice_label af|selectManyChoice::label {color:red}
+.DemoWrapper-selectManyChoice_dropdown af|selectManyChoice::dropdown {border: 1px solid green}
+.DemoWrapper-selectManyChoice_dropdown-icon-style af|selectManyChoice::dropdown-icon-style {background-image: url('/afr/scrollDown_n.png')}
+.DemoWrapper-selectManyChoice_dropdown-panel af|selectManyChoice::dropdown-panel {background-color: pink}
+.DemoWrapper-selectManyChoice_item af|selectManyChoice::item {color: red}
+.DemoWrapper-selectManyChoice_separator af|selectManyChoice::separator {border-bottom:1px solid #97FF93}
+
+.DemoWrapper-selectManyChoice_read-only af|selectManyChoice:read-only {background-color:yellow}
+.DemoWrapper-selectManyChoice_read-only_content af|selectManyChoice:read-only::content {background-color:purple; color:white}
+.DemoWrapper-selectManyChoice_read-only_label af|selectManyChoice:read-only::label {color:blue}
+.DemoWrapper-selectManyChoice_disabled af|selectManyChoice:disabled {background-color:#00C000}
+
+.DemoWrapper-selectManyChoice_disabled_content af|selectManyChoice:disabled::content {background-color:#00C000}
+.DemoWrapper-selectManyChoice_disabled_label af|selectManyChoice:disabled::label {color:#00C000}
+.DemoWrapper-selectManyChoice_disabled_dropdown af|selectManyChoice:disabled::dropdown {background-color:#33C033}
+.DemoWrapper-selectManyChoice_disabled_dropdown-icon-style af|selectManyChoice:disabled::dropdown-icon-style {background-image: url('/afr/alertModifier_error.png')}
+af|selectManyChoice::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|selectManyChoice::dynamic-help-icon-style {-tr-inhibit: all}
+af|selectManyChoice::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|selectManyChoice::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-selectManyChoice_dynamic-help-icon-style af|selectManyChoice::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-selectManyChoice_dynamic-help-icon-style-hover af|selectManyChoice::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-selectManyChoice_dynamic-help-icon-style-active af|selectManyChoice::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|selectManyListbox */
+.DemoWrapper-selectManyListbox af|selectManyListbox {background-color:pink}
+.DemoWrapper-selectManyListbox_content af|selectManyListbox::content {background-color:red}
+.DemoWrapper-selectManyListbox_access-key af|selectManyListbox::access-key {color:green;font-weight:bolder}
+.DemoWrapper-selectManyListbox_options af|selectManyListbox::options {border: 5px solid blue}
+.DemoWrapper-selectManyListbox_content-input af|selectManyListbox::content-input {margin:5px}
+.DemoWrapper-selectManyListbox_label af|selectManyListbox::label[theme="medium"] {color:red}
+.DemoWrapper-selectManyListbox_all-option af|selectManyListbox::all-option {color:blue; font-style:italic}
+.DemoWrapper-selectManyListbox_item af|selectManyListbox::item {color:blue}
+/* this is an override of the item override to give the disabled higher specificity */
+.DemoWrapper-selectManyListbox_item af|selectManyListbox:disabled::item {color:inherit; background-color:transparent; border-color:transparent}
+.DemoWrapper-selectManyListbox_separator af|selectManyListbox::separator {border-bottom:1px solid #97FF93}
+.DemoWrapper-selectManyListbox_read-only af|selectManyListbox:read-only {background-color:#00C000}
+.DemoWrapper-selectManyListbox_read-only_content af|selectManyListbox:read-only::content {background-color:#00C0C0}
+.DemoWrapper-selectManyListbox_read-only_label af|selectManyListbox:read-only::label[theme="medium"] {color:#0000C0}
+.DemoWrapper-selectManyListbox_disabled af|selectManyListbox:disabled {background-color:yellow}
+.DemoWrapper-selectManyListbox_disabled_content af|selectManyListbox:disabled::content {background-color:purple; color:Silver }
+.DemoWrapper-selectManyListbox_disabled_label af|selectManyListbox:disabled::label {color:blue}
+af|selectManyListbox::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|selectManyListbox::dynamic-help-icon-style {-tr-inhibit: all}
+af|selectManyListbox::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|selectManyListbox::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-selectManyListbox_dynamic-help-icon-style af|selectManyListbox::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-selectManyListbox_dynamic-help-icon-style-hover af|selectManyListbox::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-selectManyListbox_dynamic-help-icon-style-active af|selectManyListbox::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|selectOneChoice */
+.DemoWrapper-selectOneChoice af|selectOneChoice {background-color:pink}
+.DemoWrapper-selectOneChoice_access-key af|selectOneChoice::access-key {color: aqua;}
+.DemoWrapper-selectOneChoice_content af|selectOneChoice::content {background-color:red}
+af|document .DemoWrapper-selectOneChoice_label af|selectOneChoice::label {color:red}
+.DemoWrapper-selectOneChoice_compact-content af|selectOneChoice::compact-content {border: 2px solid #0000CC}
+.DemoWrapper-selectOneChoice_compact-dropdown af|selectOneChoice::compact-dropdown {border: 1px solid green}
+.DemoWrapper-selectOneChoice_compact-dropdown-icon-style af|selectOneChoice::compact-dropdown-icon-style {background-image: url('/afr/scrollDown_n.png')}
+.DemoWrapper-selectOneChoice_dropdown-panel af|selectOneChoice::dropdown-panel {background-color: pink}
+.DemoWrapper-selectOneChoice_item af|selectOneChoice::item {color: red}
+.DemoWrapper-selectOneChoice_separator af|selectOneChoice::separator {border-bottom:1px solid #97FF93}
+.DemoWrapper-selectOneChoice_read-only af|selectOneChoice:read-only {background-color:yellow}
+.DemoWrapper-selectOneChoice_read-only_content af|selectOneChoice:read-only::content {background-color:purple}
+.DemoWrapper-selectOneChoice_read-only_label af|selectOneChoice:read-only::label {color:blue}
+.DemoWrapper-selectOneChoice_disabled af|selectOneChoice:disabled {background-color:#00C000}
+.DemoWrapper-selectOneChoice_disabled_content af|selectOneChoice:disabled::content {background-color:#00C0C0}
+.DemoWrapper-selectOneChoice_disabled_label af|selectOneChoice:disabled::label {color:#0000C0}
+af|selectOneChoice::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|selectOneChoice::dynamic-help-icon-style {-tr-inhibit: all}
+af|selectOneChoice::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|selectOneChoice::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-selectOneChoice_dynamic-help-icon-style af|selectOneChoice::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-selectOneChoice_dynamic-help-icon-style-hover af|selectOneChoice::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-selectOneChoice_dynamic-help-icon-style-active af|selectOneChoice::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|selectOneListbox */
+.DemoWrapper-selectOneListbox af|selectOneListbox {background-color:pink}
+.DemoWrapper-selectOneListbox_content af|selectOneListbox::content {background-color:red;border: 1px solid green; width: 200px}
+.DemoWrapper-selectOneListbox_item af|selectOneListbox::item {background-color:red;border: 1px solid red}
+.DemoWrapper-selectOneListbox_item_hover af|selectOneListbox::item:hover {background-color:yellow;border: 1px dotted red}
+.DemoWrapper-selectOneListbox_item_disabled af|selectOneListbox::item:disabled {background-color:beige;border: 1px solid beige; color: DarkGrey}
+.DemoWrapper-selectOneListbox_label.ExtraCSSSpecificity af|selectOneListbox::label {color:red}
+.DemoWrapper-selectOneListbox_separator af|selectOneListbox::separator {border-bottom-color:blue}
+.DemoWrapper-selectOneListbox_access-key af|selectOneListbox::access-key {color:blue}
+.DemoWrapper-selectOneListbox_disabled af|selectOneListbox:disabled {background-color:yellow}
+.DemoWrapper-selectOneListbox_disabled_content af|selectOneListbox:disabled::content {background-color:purple;font-size:20px}
+.DemoWrapper-selectOneListbox_disabled_item af|selectOneListbox:disabled::item {background-color:purple;color:white;border: 1px solid purple;font-size:20px}
+.DemoWrapper-selectOneListbox_disabled_label af|selectOneListbox:disabled::label {color:blue}
+.DemoWrapper-selectOneListbox_read-only af|selectOneListbox:read-only {background-color:#00C000}
+.DemoWrapper-selectOneListbox_read-only_content af|selectOneListbox:read-only::content {background-color:green}
+.DemoWrapper-selectOneListbox_read-only_label af|selectOneListbox:read-only::label {color:green}
+af|selectOneListbox::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|selectOneListbox::dynamic-help-icon-style {-tr-inhibit: all}
+af|selectOneListbox::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|selectOneListbox::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-selectOneListbox_dynamic-help-icon-style af|selectOneListbox::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-selectOneListbox_dynamic-help-icon-style-hover af|selectOneListbox::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-selectOneListbox_dynamic-help-icon-style-active af|selectOneListbox::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|selectOneRadio */
+.DemoWrapper-selectOneRadio af|selectOneRadio {background-color:pink}
+.DemoWrapper-selectOneRadio_access-key af|selectOneRadio::access-key {color: aqua;}
+.DemoWrapper-selectOneRadio_content af|selectOneRadio::content {background-color:red}
+.DemoWrapper-selectOneRadio_content-input af|selectOneRadio::content-input {background-color:green}
+.DemoWrapper-selectOneRadio_label af|selectOneRadio::label[theme="default"] {color:red}
+.DemoWrapper-selectOneRadio_item-text af|selectOneRadio::item-text {color:green}
+.DemoWrapper-selectOneRadio_item-text_disabled af|selectOneRadio::item-text:disabled {color:InactiveCaption}
+.DemoWrapper-selectOneRadio_read-only af|selectOneRadio:read-only {background-color:yellow}
+.DemoWrapper-selectOneRadio_read-only_content af|selectOneRadio:read-only::content {background-color:purple; color:white}
+.DemoWrapper-selectOneRadio_read-only_label af|selectOneRadio:read-only::label {color:blue}
+.DemoWrapper-selectOneRadio_disabled af|selectOneRadio:disabled {background-color:#00C000}
+.DemoWrapper-selectOneRadio_disabled_content af|selectOneRadio:disabled::content {background-color:#00C0C0}
+.DemoWrapper-selectOneRadio_disabled_content-input af|selectOneRadio:disabled::content-input {background-color:red}
+.DemoWrapper-selectOneRadio_disabled_label af|selectOneRadio:disabled::label {color:#0000C0}
+.DemoWrapper-selectOneRadio_disabled_item-text af|selectOneRadio:disabled::item-text {color:#00FF7F}
+af|selectOneRadio::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|selectOneRadio::dynamic-help-icon-style {-tr-inhibit: all}
+af|selectOneRadio::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|selectOneRadio::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-selectOneRadio_dynamic-help-icon-style af|selectOneRadio::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-selectOneRadio_dynamic-help-icon-style-hover af|selectOneRadio::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-selectOneRadio_dynamic-help-icon-style-active af|selectOneRadio::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|selectManyCheckbox */
+.DemoWrapper-selectManyCheckbox af|selectManyCheckbox {background-color:pink}
+.DemoWrapper-selectManyCheckbox_access-key af|selectManyCheckbox::access-key {color: aqua;}
+.DemoWrapper-selectManyCheckbox_content af|selectManyCheckbox::content {background-color:red}
+.DemoWrapper-selectManyCheckbox_content-input af|selectManyCheckbox::content-input {background-color:green}
+.DemoWrapper-selectManyCheckbox_label af|selectManyCheckbox::label {font-weight:bold}
+.DemoWrapper-selectManyCheckbox_item-text af|selectManyCheckbox::item-text {color:orange}
+.DemoWrapper-selectManyCheckbox_item-text_disabled af|selectManyCheckbox::item-text:disabled {color:InactiveCaption}
+.DemoWrapper-selectManyCheckbox_read-only af|selectManyCheckbox:read-only {background-color:yellow}
+.DemoWrapper-selectManyCheckbox_read-only_content af|selectManyCheckbox:read-only::content {background-color:purple; color:white}
+.DemoWrapper-selectManyCheckbox_read-only_label af|selectManyCheckbox:read-only::label {color:blue}
+.DemoWrapper-selectManyCheckbox_disabled af|selectManyCheckbox:disabled {background-color:#00C000}
+.DemoWrapper-selectManyCheckbox_disabled_content af|selectManyCheckbox:disabled::content {background-color:#00C0C0}
+.DemoWrapper-selectManyCheckbox_disabled_content-input af|selectManyCheckbox:disabled::content-input {background-color:red}
+.DemoWrapper-selectManyCheckbox_disabled_label af|selectManyCheckbox:disabled::label {color:#0000C0}
+.DemoWrapper-selectManyCheckbox_disabled_item-text af|selectManyCheckbox:disabled::item-text {color:#FF4500}
+af|selectManyCheckbox::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|selectManyCheckbox::dynamic-help-icon-style {-tr-inhibit: all}
+af|selectManyCheckbox::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|selectManyCheckbox::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-selectManyCheckbox_dynamic-help-icon-style af|selectManyCheckbox::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-selectManyCheckbox_dynamic-help-icon-style-hover af|selectManyCheckbox::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-selectManyCheckbox_dynamic-help-icon-style-active af|selectManyCheckbox::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|selectManyShuttle */
+.DemoWrapper-selectManyShuttle                      af|selectManyShuttle {background-color:pink}
+.DemoWrapper-selectManyShuttle_content              af|selectManyShuttle::content {background-color:red}
+.DemoWrapper-selectManyShuttle_content-input        af|selectManyShuttle::content-input {cursor:help}
+.DemoWrapper-selectManyShuttle_access-key           af|selectManyShuttle::access-key {color:green}
+.DemoWrapper-selectManyShuttle_item-label           af|selectManyShuttle::item-label {color:yellow}
+.DemoWrapper-selectManyShuttle_icon-label           af|selectManyShuttle::icon-label {color:pink}
+.DemoWrapper-selectManyShuttle_label                af|selectManyShuttle::label {color:red}
+.DemoWrapper-selectManyShuttle_container            af|selectManyShuttle::container {border-width: 3px}
+.DemoWrapper-selectManyShuttle_description          af|selectManyShuttle::description {background-color: gray}
+.DemoWrapper-selectManyShuttle_desc-cell            af|selectManyShuttle::desc-cell {border-color: blue}
+.DemoWrapper-selectManyShuttle_desc-area            af|selectManyShuttle::desc-area {font-family: Tahoma; color: purple;}
+.DemoWrapper-selectManyShuttle_item-label-disabled  af|selectManyShuttle::item-label:disabled {color:orange}
+.DemoWrapper-selectManyShuttle_icon-container       af|selectManyShuttle::icon-container {background-color: yellow}
+.DemoWrapper-selectManyShuttle_options              af|selectManyShuttle::options {font-size: 20px}
+.DemoWrapper-selectManyShuttle_header               af|selectManyShuttle::header {text-decoration: underline;}
+.DemoWrapper-selectManyShuttle_move-horizontal-icon-style-hover af|selectManyShuttle::move-horizontal-icon-style:hover {background-image:url('/afr/go_dwn.png');}
+.DemoWrapper-selectManyShuttle_remove-horizontal-icon-style-hover af|selectManyShuttle::remove-horizontal-icon-style:hover {background-image:url('/afr/go_dwn_rtl.png');}
+
+af|selectManyShuttle::moveall-horizontal-icon-style,
+af|selectManyShuttle::moveall-horizontal-icon-style:hover,
+af|selectManyShuttle::moveall-horizontal-icon-style:active {
+  -tr-inhibit: background-image;
+}
+af|selectManyShuttle::moveall-horizontal-icon { content: '>>';}
+
+af|selectManyShuttle::moveall-horizontal-icon-style:disabled,
+af|selectManyShuttle::moveall-horizontal-icon-style:disabled:hover,
+af|selectManyShuttle::moveall-horizontal-icon-style:disabled:active {
+  -tr-inhibit: background-image;
+}
+af|selectManyShuttle::moveall-horizontal-disabled-icon {
+  text-decoration: line-through;
+  content: '>>';
+}
+
+.DemoWrapper-selectManyShuttle_disabled              af|selectManyShuttle:disabled {background-color:#00C000}
+.DemoWrapper-selectManyShuttle_disabled_content      af|selectManyShuttle:disabled::content {background-color:#00C0C0}
+.DemoWrapper-selectManyShuttle_disabled_content-input af|selectManyShuttle:disabled::content-input {cursor:cell}
+.DemoWrapper-selectManyShuttle_disabled_item-label   af|selectManyShuttle:disabled::item-label {color:blue}
+.DemoWrapper-selectManyShuttle_disabled_label        af|selectManyShuttle:disabled::label {color:#0000C0}
+.DemoWrapper-selectManyShuttle_disabled_container    af|selectManyShuttle:disabled::container {border-width: 10px}
+.DemoWrapper-selectManyShuttle_disabled_item-label-disabled  af|selectManyShuttle:disabled::item-label:disabled {color:aqua;}
+.DemoWrapper-selectManyShuttle_disabled_icon-container af|selectManyShuttle:disabled::icon-container {background-color: gray;}
+.DemoWrapper-selectManyShuttle_disabled_options      af|selectManyShuttle:disabled::options {font-size: 15px}
+.DemoWrapper-selectManyShuttle_disabled_header       af|selectManyShuttle:disabled::header {text-decoration: line-through;}
+af|selectManyShuttle::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|selectManyShuttle::dynamic-help-icon-style {-tr-inhibit: all}
+af|selectManyShuttle::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|selectManyShuttle::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-selectManyShuttle_dynamic-help-icon-style af|selectManyShuttle::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-selectManyShuttle_dynamic-help-icon-style-hover af|selectManyShuttle::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-selectManyShuttle_dynamic-help-icon-style-active af|selectManyShuttle::dynamic-help-icon-style:active {background-color: blue}
+
+/* af|selectOrderShuttle */
+.DemoWrapper-selectOrderShuttle                      af|selectOrderShuttle {background-color:pink}
+.DemoWrapper-selectOrderShuttle_content              af|selectOrderShuttle::content {background-color:red}
+.DemoWrapper-selectOrderShuttle_content-input        af|selectOrderShuttle::content-input {cursor:help}
+.DemoWrapper-selectOrderShuttle_access-key           af|selectOrderShuttle::access-key {color:green}
+.DemoWrapper-selectOrderShuttle_item-label           af|selectOrderShuttle::item-label {color:yellow}
+.DemoWrapper-selectOrderShuttle_icon-label           af|selectOrderShuttle::icon-label {color:pink}
+.DemoWrapper-selectOrderShuttle_label                af|selectOrderShuttle::label {color:red}
+.DemoWrapper-selectOrderShuttle_container            af|selectOrderShuttle::container {border-width: 3px}
+.DemoWrapper-selectOrderShuttle_description          af|selectOrderShuttle::description {background-color: gray}
+.DemoWrapper-selectOrderShuttle_desc-cell            af|selectOrderShuttle::desc-cell {border-color: blue}
+.DemoWrapper-selectOrderShuttle_desc-area            af|selectOrderShuttle::desc-area {font-family: Tahoma; color: purple;}
+.DemoWrapper-selectOrderShuttle_item-label-disabled  af|selectOrderShuttle::item-label:disabled {color:orange}
+.DemoWrapper-selectOrderShuttle_icon-container       af|selectOrderShuttle::icon-container {background-color: yellow}
+.DemoWrapper-selectOrderShuttle_options              af|selectOrderShuttle::options {font-size: 20px}
+.DemoWrapper-selectOrderShuttle_header               af|selectOrderShuttle::header {text-decoration: underline;}
+.DemoWrapper-selectOrderShuttle_move-horizontal-icon-style-hover af|selectOrderShuttle::move-horizontal-icon-style:hover {background-image:url('/afr/go_dwn.png');}
+.DemoWrapper-selectOrderShuttle_remove-horizontal-icon-style-hover af|selectOrderShuttle::remove-horizontal-icon-style:hover {background-image:url('/afr/go_dwn_rtl.png');}
+.DemoWrapper-selectOrderShuttle_move-up-icon-style         af|selectOrderShuttle::move-up-icon-style {background-image:url('/afr/go_dwn.png');}
+.DemoWrapper-selectOrderShuttle_move-up-icon-style_hover   af|selectOrderShuttle::move-up-icon-style:hover {background-image:url('/afr/go_dwn.png');}
+.DemoWrapper-selectOrderShuttle_move-down-icon-style       af|selectOrderShuttle::move-down-icon-style {background-image:url('/afr/go_dwn_rtl.png');}
+.DemoWrapper-selectOrderShuttle_move-down-icon-style_hover af|selectOrderShuttle::move-down-icon-style:hover {background-image:url('/afr/go_dwn_rtl.png');}
+.DemoWrapper-selectOrderShuttle_move-top-icon       af|selectOrderShuttle::move-top-icon {content: "TOP"}
+
+
+.DemoWrapper-selectOrderShuttle_disabled              af|selectOrderShuttle:disabled {background-color:#00C000}
+.DemoWrapper-selectOrderShuttle_disabled_content      af|selectOrderShuttle:disabled::content {background-color:#00C0C0}
+.DemoWrapper-selectOrderShuttle_disabled_content-input af|selectOrderShuttle:disabled::content-input {cursor:cell}
+.DemoWrapper-selectOrderShuttle_disabled_item-label   af|selectOrderShuttle:disabled::item-label {color:blue}
+.DemoWrapper-selectOrderShuttle_disabled_label        af|selectOrderShuttle:disabled::label {color:#0000C0}
+.DemoWrapper-selectOrderShuttle_disabled_container    af|selectOrderShuttle:disabled::container {border-width: 10px}
+.DemoWrapper-selectOrderShuttle_disabled_item-label-disabled  af|selectOrderShuttle:disabled::item-label:disabled {color:aqua;}
+.DemoWrapper-selectOrderShuttle_disabled_icon-container af|selectOrderShuttle:disabled::icon-container {background-color: gray;}
+.DemoWrapper-selectOrderShuttle_disabled_options      af|selectOrderShuttle:disabled::options {font-size: 15px;}
+.DemoWrapper-selectOrderShuttle_disabled_header       af|selectOrderShuttle:disabled::header {text-decoration: line-through;}
+.DemoWrapper-selectOrderShuttle_disabled_move-up-icon-style      af|selectOrderShuttle:disabled::move-up-icon-style {background-image:url('/afr/go_dwn.png');}
+.DemoWrapper-selectOrderShuttle_disabled_move-up-icon-style_hover  af|selectOrderShuttle:disabled::move-up-icon-style:hover {background-image:url('/afr/go_dwn.png');}
+.DemoWrapper-selectOrderShuttle_disabled_move-down-icon-style      af|selectOrderShuttle:disabled::move-down-icon-style {background-image:url('/afr/go_dwn_rtl.png');}
+.DemoWrapper-selectOrderShuttle_disabled_move-down-icon-style_hover af|selectOrderShuttle:disabled::move-down-icon-style:hover {background-image:url('/afr/go_dwn_rtl.png');}
+af|selectOrderShuttle::dynamic-help-icon {content: '?'; color: black; padding: 3px}
+af|selectOrderShuttle::dynamic-help-icon-style {-tr-inhibit: all}
+af|selectOrderShuttle::dynamic-help-icon-style:hover {-tr-inhibit: all}
+af|selectOrderShuttle::dynamic-help-icon-style:active {-tr-inhibit: all}
+.DemoWrapper-selectOrderShuttle_dynamic-help-icon-style af|selectOrderShuttle::dynamic-help-icon-style {background-color: red}
+.DemoWrapper-selectOrderShuttle_dynamic-help-icon-style-hover af|selectOrderShuttle::dynamic-help-icon-style:hover {background-color: green}
+.DemoWrapper-selectOrderShuttle_dynamic-help-icon-style-active af|selectOrderShuttle::dynamic-help-icon-style:active {background-color: blue}

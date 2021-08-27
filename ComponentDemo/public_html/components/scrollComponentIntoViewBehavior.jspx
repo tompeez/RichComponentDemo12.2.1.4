@@ -1,0 +1,430 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="scrollComponentIntoViewBehavior Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="scrollComponentIntoViewBehavior"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="behavior"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <af:outputFormatted value="&lt;B>Basic Scroll a component into view.&lt;/B>"
+                                    id="of1"/>
+                <af:panelGroupLayout layout="scroll" inlineStyle="width:100px; height: 40px"
+                                     id="pgl4">
+                  <af:panelGroupLayout layout="horizontal" inlineStyle="margin-left: 50px"
+                                       id="pgl5">
+                    <af:inputText clientComponent="true" inlineStyle="width: 350px" id="idInputText"
+                                  label="String Value with Large Label"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+                <af:commandButton immediate="true" text="Scroll into view"
+                                  id="cb1">
+                  <af:scrollComponentIntoViewBehavior componentId="idInputText"
+                                                      subTargetId="content"/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl6">
+                <af:outputFormatted value="&lt;B>Scroll a component into view and focus.&lt;/B>"
+                                    id="of2"/>
+                <af:panelGroupLayout layout="scroll" inlineStyle="width:100px; height: 40px"
+                                     id="pgl7">
+                  <af:panelGroupLayout layout="horizontal" inlineStyle="margin-left: 50px"
+                                       id="pgl8">
+                    <af:inputText clientComponent="true" inlineStyle="width: 350px" id="idInputText2"
+                                  label="String Value with Large Label"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+                <af:commandButton immediate="true" text="Scroll into view"
+                                  id="cb2">
+                  <af:scrollComponentIntoViewBehavior componentId="idInputText2" subTargetId="content"
+                                                      focus="true"/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl9">
+                <af:outputFormatted value="&lt;B>Scroll a RTE into view.&lt;/B>"
+                                    id="of3"/>
+                <af:panelStretchLayout inlineStyle="width:500px; height: 100px"
+                                       id="psl1">
+                  <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="pgl10">
+                      <af:outputFormatted value="The Rich Input Text is displayed below with some text containing sections. Clicking on the links below will make the
+                                            rich text editor jump to the appropriate section. The rich text editor is inside a scrolled region so that
+                                            editor will also scroll into view. &lt;br>&lt;br>&lt;br>&lt;br>&lt;br>"
+                                          id="of4"/>
+                      <af:richTextEditor id="idRichTextEditor" value="#{demoInput.richSectionedValue}"
+                                         contentStyle="width:480px;"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:panelStretchLayout>
+                <af:panelGroupLayout layout="horizontal" id="pgl11">
+                  <af:commandLink immediate="true" text="Introduction" id="cl1">
+                    <af:scrollComponentIntoViewBehavior componentId="idRichTextEditor" focus="true"
+                                                        subTargetId="Introduction"/>
+                  </af:commandLink>
+                  <af:outputText value=" | " id="ot1"/>
+                  <af:commandLink immediate="true" text="The Table Model"
+                                  id="cl2">
+                    <af:scrollComponentIntoViewBehavior componentId="idRichTextEditor" focus="true"
+                                                        subTargetId="The_Table_Model"/>
+                  </af:commandLink>
+                  <af:outputText value=" | " id="ot2"/>
+                  <af:commandLink immediate="true" text="Columns" id="cl3">
+                    <af:scrollComponentIntoViewBehavior componentId="idRichTextEditor" focus="true"
+                                                        subTargetId="Columns"/>
+                  </af:commandLink>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl12">
+                <af:outputFormatted value="&lt;B>Scroll a ReadOnly RTE into view.&lt;/B>"
+                                    id="of5"/>
+                <af:panelStretchLayout inlineStyle="width:500px; height: 100px"
+                                       id="psl2">
+                  <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="pgl13">
+                      <af:outputFormatted value="The Rich Input Text is displayed below with some text containing sections. Clicking on the links below will make the
+                                            rich text editor jump to the appropriate section. The rich text editor is inside a scrolled region so that
+                                            editor will also scroll into view. &lt;br>&lt;br>&lt;br>&lt;br>&lt;br>"
+                                          id="of6"/>
+                      <af:richTextEditor clientComponent="true" readOnly="true"
+                                         id="idRichTextEditorRO"
+                                         value="#{demoInput.richSectionedValue}"
+                                         contentStyle="width:480px;"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:panelStretchLayout>
+                <af:panelGroupLayout layout="horizontal" id="pgl14">
+                  <af:commandLink immediate="true" text="Introduction" id="cl4">
+                    <af:scrollComponentIntoViewBehavior componentId="idRichTextEditorRO" focus="true"
+                                                        subTargetId="Introduction"/>
+                  </af:commandLink>
+                  <af:outputText value=" | " id="ot3"/>
+                  <af:commandLink immediate="true" text="The Table Model"
+                                  id="cl5">
+                    <af:scrollComponentIntoViewBehavior componentId="idRichTextEditorRO" focus="true"
+                                                        subTargetId="The_Table_Model"/>
+                  </af:commandLink>
+                  <af:outputText value=" | " id="ot4"/>
+                  <af:commandLink immediate="true" text="Columns" id="cl6">
+                    <af:scrollComponentIntoViewBehavior componentId="idRichTextEditorRO" focus="true"
+                                                        subTargetId="Columns"/>
+                  </af:commandLink>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl15">
+                <af:outputFormatted value="&lt;B>Scroll an InlineFrame and its content into view.&lt;/B>"
+                                    id="of7"/>
+                <af:panelStretchLayout inlineStyle="width:500px; height: 100px"
+                                       id="psl3">
+                  <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="pgl16">
+                      <af:outputFormatted value="The Inline Frame is displayed below with some content containing content with ids. Clicking on the link below will make the
+                                            InlineFrame jump to the element in the bottom of the page. The InlineFrame  is inside a scrolled region so that
+                                            it will also scroll into view. &lt;br>&lt;br>&lt;br>&lt;br>"
+                                          id="of8"/>
+                      <af:inlineFrame source="htmlDocuments/text01.html"
+                                      shortDesc="Sample Text with Preferred Sizing" sizing="preferred"
+                                      id="iframe1" clientComponent="true"
+                                      inlineStyle="border: 1px solid black; background-color:#E0E0E0; width:480px"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:panelStretchLayout>
+                <af:panelGroupLayout layout="horizontal" id="pgl17">
+                  <af:commandLink immediate="true" text="scroll Into View"
+                                  id="cl7">
+                    <af:scrollComponentIntoViewBehavior componentId="iframe1" focus="true"
+                                                        subTargetId="sample1"/>
+                  </af:commandLink>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl18">
+                <af:outputFormatted value="&lt;B>Scroll a column into view.&lt;/B>"
+                                    id="of9"/>
+                <af:panelStretchLayout styleClass="AFStretchWidth" id="psl4">
+                  <f:facet name="center">
+                    <af:panelCollection id="panelCollection">
+                      <f:facet name="afterToolbar">
+                        <af:group id="g1">
+                          <af:toolbar binding="#{tableTabScroll.linksToolbar}"
+                                      id="t1">
+                            <af:group id="g2">
+                              <af:commandLink text="Group1" id="cl8">
+                                <af:scrollComponentIntoViewBehavior componentId="table:colGroup1"/>
+                              </af:commandLink>
+                            </af:group>
+                            <af:group id="g3">
+                              <af:commandLink text="Group2" id="cl9">
+                                <af:scrollComponentIntoViewBehavior componentId="table:colGroup2"/>
+                              </af:commandLink>
+                            </af:group>
+                            <af:group id="g4">
+                              <af:commandLink text="Group3" id="cl10">
+                                <af:scrollComponentIntoViewBehavior componentId="table:colGroup3"/>
+                              </af:commandLink>
+                            </af:group>
+                            <af:group id="g5">
+                              <af:commandLink text="Group4" id="cl11">
+                                <af:scrollComponentIntoViewBehavior componentId="table:colGroup4"/>
+                              </af:commandLink>
+                            </af:group>
+                            <af:group id="g6">
+                              <af:commandLink text="Group5" id="cl12">
+                                <af:scrollComponentIntoViewBehavior componentId="table:colGroup5"/>
+                              </af:commandLink>
+                            </af:group>
+                            <af:group id="g7">
+                              <af:commandLink text="Group6" id="cl13">
+                                <af:scrollComponentIntoViewBehavior componentId="table:colGroup6"/>
+                              </af:commandLink>
+                            </af:group>
+                            <af:group id="g8">
+                              <af:commandLink text="Group7" id="cl14">
+                                <af:scrollComponentIntoViewBehavior componentId="table:colGroup7"/>
+                              </af:commandLink>
+                            </af:group>
+                          </af:toolbar>
+                          <af:toolbar id="t2">
+                            <af:selectBooleanCheckbox autoSubmit="true"
+                                                      label="&#160;&#160;clickToEdit"
+                                                      value="#{tableTabScroll.clickToEdit}"
+                                                      id="sbc1"/>
+                          </af:toolbar>
+                        </af:group>
+                      </f:facet>
+                      <af:table var="test1" value="#{tableTabScroll.data}" id="table"
+                                rowSelection="multiple" editingMode="clickToEdit"
+                                binding="#{tableTabScroll.table}" columnSelection="multiple"
+                                summary="table data">
+                        <af:column width="20" rowHeader="true" id="c1"></af:column>
+                        <af:column headerText="col1" id="c2">
+                          <af:inputText value="#{test1.col1}" id="it1"/>
+                        </af:column>
+                        <af:column headerText="col2" id="c3">
+                          <af:inputText value="#{test1.col2}" id="it2"/>
+                        </af:column>
+                        <af:column headerText="col3" frozen="true" id="c4">
+                          <af:inputText value="#{test1.col3}" id="it3"/>
+                        </af:column>
+                        <af:column align="center" id="colGroup1"
+                                   rendered="#{tableTabScroll.currentGroup == 0 || tableTabScroll.currentGroup == 1}">
+                          <f:facet name="header">
+                            <af:outputText inlineStyle="font-weight:bold" value="Group1"
+                                           id="ot5"/>
+                          </f:facet>
+                          <af:column headerText="col4" id="c5">
+                            <af:inputText value="#{test1.col4}" id="it4"/>
+                          </af:column>
+                          <af:column headerText="col5" id="c6">
+                            <af:inputText value="#{test1.col5}" id="it5"/>
+                          </af:column>
+                          <af:column headerText="Col6 " id="c7">
+                            <af:inputText value="#{test1.col6}" id="it6"/>
+                          </af:column>
+                          <af:column headerText="Col7" align="center" id="c8">
+                            <af:inputText value="#{test1.col7}" id="it7"/>
+                          </af:column>
+                          <af:column headerText="Col8 (Sortable)" align="center" sortProperty="col8"
+                                     sortable="true" id="c9">
+                            <af:inputText value="#{test1.col8}" id="it8"/>
+                          </af:column>
+                          <af:column headerText="Col9" align="center" id="c10">
+                            <af:inputText value="#{test1.col9}" id="it9"/>
+                          </af:column>
+                          <af:column headerText="Col10" align="center" id="c11">
+                            <af:inputText value="#{test1.col10}" id="it10"/>
+                          </af:column>
+                        </af:column>
+                        <af:column align="center" id="colGroup2"
+                                   rendered="#{tableTabScroll.currentGroup == 0 || tableTabScroll.currentGroup == 2}">
+                          <f:facet name="header">
+                            <af:outputText inlineStyle="font-weight:bold" value="Group2"
+                                           id="ot6"/>
+                          </f:facet>
+                          <af:column headerText="Col11" align="center" noWrap="false"
+                                     id="c12">
+                            <af:inputText value="#{test1.col11}" id="it11"/>
+                          </af:column>
+                          <af:column headerText="Col12" align="center" id="c13">
+                            <af:inputText value="#{test1.col12}" id="it12"/>
+                          </af:column>
+                          <af:column headerText="Col13" id="c14">
+                            <af:inputText value="#{test1.col13}" id="it13"/>
+                          </af:column>
+                          <af:column headerText="Col14" id="c15">
+                            <af:inputText value="#{test1.col14}" id="it14"/>
+                          </af:column>
+                          <af:column headerText="Col15" id="c16">
+                            <af:inputText value="#{test1.col15}" id="it15"/>
+                          </af:column>
+                          <af:column headerText="Col16" id="c17">
+                            <af:inputText value="#{test1.col16}" id="it16"/>
+                          </af:column>
+                          <af:column headerText="Col17" id="c18">
+                            <af:inputText value="#{test1.col17}" id="it17"/>
+                          </af:column>
+                        </af:column>
+                        <af:column align="center" id="colGroup3"
+                                   rendered="#{tableTabScroll.currentGroup == 0 || tableTabScroll.currentGroup == 3}">
+                          <f:facet name="header">
+                            <af:outputText inlineStyle="font-weight:bold" value="Group3"
+                                           id="ot7"/>
+                          </f:facet>
+                          <af:column headerText="Col18" id="c19">
+                            <af:inputText value="#{test1.col18}" id="it18"/>
+                          </af:column>
+                          <af:column headerText="Col19" id="c20">
+                            <af:inputText value="#{test1.col19}" id="it19"/>
+                          </af:column>
+                          <af:column headerText="Col20" id="c21">
+                            <af:inputText value="#{test1.col20}" id="it20"/>
+                          </af:column>
+                          <af:column headerText="Col21" id="c22">
+                            <af:inputText value="#{test1.col21}" id="it21"/>
+                          </af:column>
+                          <af:column headerText="Col22" id="c23">
+                            <af:inputText value="#{test1.col22}" id="it22"/>
+                          </af:column>
+                          <af:column headerText="Col23" id="c24">
+                            <af:inputText value="#{test1.col23}" id="it23"/>
+                          </af:column>
+                          <af:column headerText="Col24" id="c25">
+                            <af:inputText value="#{test1.col24}" id="it24"/>
+                          </af:column>
+                        </af:column>
+                        <af:column align="center" id="colGroup4"
+                                   rendered="#{tableTabScroll.currentGroup == 0 || tableTabScroll.currentGroup == 4}">
+                          <f:facet name="header">
+                            <af:outputText inlineStyle="font-weight:bold" value="Group4"
+                                           id="ot8"/>
+                          </f:facet>
+                          <af:column headerText="Col25" id="c26">
+                            <af:inputText value="#{test1.col25}" id="it25"/>
+                          </af:column>
+                          <af:column headerText="Col26" id="c27">
+                            <af:inputText value="#{test1.col26}" id="it26"/>
+                          </af:column>
+                          <af:column headerText="Col27" id="c28">
+                            <af:inputText value="#{test1.col27}" id="it27"/>
+                          </af:column>
+                          <af:column headerText="Col28" id="c29">
+                            <af:inputText value="#{test1.col28}" id="it28"/>
+                          </af:column>
+                          <af:column headerText="Col29" id="c30">
+                            <af:inputText value="#{test1.col29}" id="it29"/>
+                          </af:column>
+                          <af:column headerText="Col30" id="c31">
+                            <af:inputText value="#{test1.col30}" id="it30"/>
+                          </af:column>
+                          <af:column headerText="Col31" id="c32">
+                            <af:inputText value="#{test1.col31}" id="it31"/>
+                          </af:column>
+                        </af:column>
+                        <af:column align="center" id="colGroup5"
+                                   rendered="#{tableTabScroll.currentGroup == 0 || tableTabScroll.currentGroup == 5}">
+                          <f:facet name="header">
+                            <af:outputText inlineStyle="font-weight:bold" value="Group5"
+                                           id="ot9"/>
+                          </f:facet>
+                          <af:column headerText="Col32" id="c33">
+                            <af:inputText value="#{test1.col32}" id="it32"/>
+                          </af:column>
+                          <af:column headerText="Col33" id="c34">
+                            <af:inputText value="#{test1.col33}" id="it33"/>
+                          </af:column>
+                          <af:column headerText="Col34" id="c35">
+                            <af:inputText value="#{test1.col34}" id="it34"/>
+                          </af:column>
+                          <af:column headerText="Col35" id="c36">
+                            <af:inputText value="#{test1.col35}" id="it35"/>
+                          </af:column>
+                          <af:column headerText="Col36" id="c37">
+                            <af:inputText value="#{test1.col36}" id="it36"/>
+                          </af:column>
+                          <af:column headerText="Col37" id="c38">
+                            <af:inputText value="#{test1.col37}" id="it37"/>
+                          </af:column>
+                          <af:column headerText="Col38" id="c39">
+                            <af:inputText value="#{test1.col38}" id="it38"/>
+                          </af:column>
+                        </af:column>
+                        <af:column align="center" id="colGroup6"
+                                   rendered="#{tableTabScroll.currentGroup == 0 || tableTabScroll.currentGroup == 6}">
+                          <f:facet name="header">
+                            <af:outputText inlineStyle="font-weight:bold" value="Group6"
+                                           id="ot10"/>
+                          </f:facet>
+                          <af:column headerText="Col39" id="c40">
+                            <af:inputText value="#{test1.col39}" id="it39"/>
+                          </af:column>
+                          <af:column headerText="Col40" id="c41">
+                            <af:inputText value="#{test1.col40}" id="it40"/>
+                          </af:column>
+                          <af:column headerText="Col41" id="c42">
+                            <af:inputText value="#{test1.col41}" id="it41"/>
+                          </af:column>
+                          <af:column headerText="Col42" id="c43">
+                            <af:inputText value="#{test1.col42}" id="it42"/>
+                          </af:column>
+                          <af:column headerText="Col43" id="c44">
+                            <af:inputText value="#{test1.col43}" id="it43"/>
+                          </af:column>
+                          <af:column headerText="Col44" id="c45">
+                            <af:inputText value="#{test1.col44}" id="it44"/>
+                          </af:column>
+                          <af:column headerText="Col45" id="c46">
+                            <af:inputText value="#{test1.col45}" id="it45"/>
+                          </af:column>
+                        </af:column>
+                        <af:column align="center" id="colGroup7"
+                                   rendered="#{tableTabScroll.currentGroup == 0 || tableTabScroll.currentGroup == 7}">
+                          <f:facet name="header">
+                            <af:outputText inlineStyle="font-weight:bold" value="Group7"
+                                           id="ot11"/>
+                          </f:facet>
+                          <af:column headerText="Col46" id="c47">
+                            <af:inputText value="#{test1.col46}" id="it46"/>
+                          </af:column>
+                          <af:column headerText="Col47" id="c48">
+                            <af:inputText value="#{test1.col47}" id="it47"/>
+                          </af:column>
+                          <af:column headerText="Col48" id="c49">
+                            <af:inputText value="#{test1.col48}" id="it48"/>
+                          </af:column>
+                          <af:column headerText="Col49" id="c50">
+                            <af:inputText value="#{test1.col49}" id="it49"/>
+                          </af:column>
+                          <af:column headerText="Col50" id="c51">
+                            <af:inputText value="#{test1.col50}" id="it50"/>
+                          </af:column>
+                          <af:column headerText="Col51" id="c52">
+                            <af:inputText value="#{test1.col51}" id="it51"/>
+                          </af:column>
+                          <af:column headerText="Col52" id="c53">
+                            <af:inputText value="#{test1.col52}" id="it52"/>
+                          </af:column>
+                        </af:column>
+                      </af:table>
+                    </af:panelCollection>
+                  </f:facet>
+                </af:panelStretchLayout>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

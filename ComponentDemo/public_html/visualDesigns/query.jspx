@@ -1,0 +1,100 @@
+<?xml version="1.0"   encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Query Visual Design Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Query Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelGroupLayout layout="vertical" inlineStyle="margin:0 10px 0 10px"
+                                 id="pgl2">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>Demo of query component that is a subHeader of
+                                  another panelHeader. &lt;/b>" id="of1"/>
+              <af:panelHeader text="Employees (header)" id="ph1">
+                <f:facet name="toolbar">
+                   <af:toolbar id="t1">
+                    <af:commandToolbarButton icon="/images/new_ena.png" partialSubmit="true"
+                                             shortDesc="new" id="ctb1"/>
+                    <af:commandToolbarButton icon="/images/update_ena.png" partialSubmit="true"
+                                             shortDesc="update" id="ctb2"/>
+                    <af:commandToolbarButton icon="/images/delete_ena.png" partialSubmit="true"
+                                             shortDesc="delete" id="ctb3"/>
+                    <af:commandToolbarButton text="Cancel" />
+                    <af:commandToolbarButton text="Actions" />
+                    <af:commandToolbarButton text="Apply" />
+                  </af:toolbar>
+                </f:facet>
+
+                  <af:outputText value="The search panel appears as a subHeader of the Employees
+                    header. The search panel should therefore reflect the subHeader UI
+                    characteristics. " id="ot1"/>
+
+                <af:query id="empquery" disclosed="true"
+                          headerText="Search"
+                          resultComponentId="::resultTextId"
+                          value="#{demoQuery.queryDescriptor}"
+                          model="#{demoQuery.queryModel}"
+                          queryListener="#{demoQuery.processQuery}" helpTopicId="TOPICID_ALL"/>
+                <af:outputText id="resultTextId" inlineStyle="color:red;"
+                  value="Query statement is as follows: #{demoQuery.sqlString}"/>
+
+              </af:panelHeader>
+
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;p>&lt;b>Demo of query component that is a subsubHeader
+                                  nested 2 levels within panelHeaders. &lt;/b>&lt;/p>"
+                                  id="of2"/>
+              <af:panelHeader text="Human Resources(header)" id="ph2">
+
+                  <af:outputText id="resultTextId2" inlineStyle="color:red;"
+                    value="Query statement is as follows: #{demoQuery.sqlString}"/>
+
+                <af:panelHeader text="Employees (sub-header)" id="ph3">
+                  <f:facet name="toolbar">
+                     <af:toolbar id="t2">
+                      <af:commandToolbarButton icon="/images/new_ena.png" partialSubmit="true"
+                                               shortDesc="new" id="ctb4"/>
+                      <af:commandToolbarButton icon="/images/update_ena.png" partialSubmit="true"
+                                               shortDesc="update" id="ctb5"/>
+                      <af:commandToolbarButton icon="/images/delete_ena.png" partialSubmit="true"
+                                               shortDesc="delete" id="ctb6"/>
+                      <af:commandToolbarButton text="Cancel" />
+                      <af:commandToolbarButton text="Actions" />
+                      <af:commandToolbarButton text="Apply" />
+                    </af:toolbar>
+                  </f:facet>
+
+                    <af:outputText value="This search panel can be used to search for Employees."
+                                   id="ot2"/>
+
+                  <af:query id="empquery2" disclosed="true"
+                            headerText="Search"
+                            resultComponentId="::resultTextId2"
+                            value="#{demoQuery.queryDescriptor}"
+                            model="#{demoQuery.queryModel}"
+                            modeButtonPosition="footer"
+                            queryListener="#{demoQuery.processQuery}" helpTopicId="TOPICID_ALL"/>
+                </af:panelHeader>
+              </af:panelHeader>
+
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

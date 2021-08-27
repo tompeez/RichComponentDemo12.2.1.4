@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="table Demo" id="d1" maximized="false">
+      <af:form id="f1">
+        <af:spacer height="20" id="s1"/>
+        <af:outputText value="To enable paging mode, you should have:" id="ot-page1"/>
+        <br/>
+	<af:outputText value="1. set scrollPolicy='page'" id="ot-page2"/>
+	<br/>
+        <af:outputText value="2. set autoHeightRows='0'" id="ot-page3"/>
+        <br/>
+        <af:outputText value="3. the table should be put inside a flowing container" id="ot-page4"/>
+        <af:spacer height="20" id="s2"/>
+        <af:goLink text="paging table"
+         destination="/components/table.jspx"
+           id="go_table"/>
+        <af:spacer height="20" id="s3"/>
+        <af:panelCollection id="pc1" inlineStyle="width:100%; height:100%">
+           <af:table var="test1" value="#{tableTestData}" id="table" styleClass="AFStretchWidth" 
+                      summary="table data" autoHeightRows="0" fetchSize="20" scrollPolicy="page">
+              <af:column width="20" align="center" rowHeader="true" headerText="No"
+                         id="c1">
+                <af:outputText value="#{test1.no}" id="ot1"/>
+              </af:column>
+              <af:column displayIndex="3" headerText="No." align="right" sortProperty="no"
+                         sortable="true" id="c2">
+                <af:outputText value="#{test1.no}" id="ot2"/>
+              </af:column>
+              <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                         id="c3">
+                <af:panelGroupLayout id="pgl2">
+                  <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                            shortDesc="icon" id="i1"/>
+                  <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                 id="ot3"/>
+                </af:panelGroupLayout>
+              </af:column>
+                    <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                               displayIndex="2" align="end" id="c4">
+                      <af:outputText value="#{test1.size}" id="ot4"/>
+                    </af:column>
+                    <af:column align="center" headerText="Date Modified"
+                               id="c5">
+                      <af:outputText value="#{test1.date}" id="ot5"/>
+                    </af:column>
+	    </af:table>
+        </af:panelCollection>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

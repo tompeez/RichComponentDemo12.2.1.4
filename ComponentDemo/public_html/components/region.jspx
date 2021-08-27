@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          version="1.2"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="region Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="region"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="customEditorPresent" value="false"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmFlowNotes" value="When flowing this component, the size comes from children inside of the region."/>
+        <f:attribute name="gmFlowWithZeroWidthNotes" value="When flowing this component, the size comes from the children inside of the region."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesComponent">
+          <af:region
+            showHeader="never"
+            text="Region"
+            value="#{regionModel.region1}"
+            binding="#{editor.component}"
+            regionNavigationListener="#{demoRegionNavigationListener.processRegionNavigation}"
+            shortDesc="This is the region" id="region1" showDisclosure="false"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:separator/>
+            <af:button text="Check uncommitted data from outside of a region" immediate="true"
+                                partialSubmit="true" actionListener="#{demoPanelLabelAndMessage.createFacesMessage}">
+              <af:checkRegionUncommittedDataBehavior  regionIds="region1"/>
+            </af:button>
+            <af:spacer width="10" id="s2"/>
+            <!-- to test instantiatiation of the component subtrees for regions which are not
+            rendered (eg. regions which are nested within a non-disclosed showDetail or
+            showDetailItem).-->
+            <af:showDetail id="sd1"
+                           disclosedText="Hide Draggable Region"
+                           undisclosedText="Show Draggable Region">
+              <af:region
+                showHeader="ifNeeded"
+                text="Draggable Region"
+                value="#{regionModel.region2}"
+                regionNavigationListener="#{demoRegionNavigationListener.processRegionNavigation}"
+                shortDesc="This is the region" id="r1">
+                <af:componentDragSource/>
+              </af:region>
+            </af:showDetail>
+            <af:outputText value="The following is a recursive navigation to the same view in a region"
+                           id="ot3"/>
+            <af:region
+                showHeader="always"
+                text="Recursive Region"
+                value="#{regionModel.recursiveRegionModel}"
+                shortDesc="This is the region" id="rRegion">
+            </af:region>
+            <af:outputText value="The following will be updated by the regionNavigationListener:"
+                           id="ot1"/>
+            <af:panelFormLayout maxColumns="1" id="pfl1">
+              <af:panelLabelAndMessage label="Old View ID" id="plam1">
+                <af:outputText
+                  clientComponent="true"
+                  id="oldViewIdComponent"
+                  binding="#{demoRegionNavigationListener.oldViewIdComponent}"
+                  value="#{demoRegionNavigationListener.oldViewId}"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="New View ID" id="plam2">
+                <af:outputText
+                  clientComponent="true"
+                  id="newViewIdComponent"
+                  binding="#{demoRegionNavigationListener.newViewIdComponent}"
+                  value="#{demoRegionNavigationListener.newViewId}"/>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:outputText value="See also:" id="ot2"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem text="Demo that queues outcome on parent"
+                                          destination="region/regionContext.jspx"
+                                          id="cni1"/>
+                <af:commandNavigationItem text="Demo that queues DropEvent on table inside a region"
+                                          destination="region/clientEventInRegion.jspx"
+                                          id="cni2"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

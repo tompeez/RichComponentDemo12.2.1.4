@@ -1,0 +1,2805 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>AdfOverflowSupport</title>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
+<script type="text/javascript">
+function handleOnload()
+{
+  if ((""+self.location).indexOf("file://") == 0)
+    return;
+  if (parent.document.documentElement.getAttribute("showprivate")=="true")
+  {
+    document.body.setAttribute("showprivate", "true");
+  }
+  else
+  {
+    document.body.setAttribute("showprivate", "false");
+  }
+  parent.document.title="AdfOverflowSupport";
+}
+function togglePrivate(desiredFlag)
+{
+  var currentFlag = document.body.getAttribute("showprivate")=="true";
+  var newFlag = "" + (!currentFlag);
+  if (desiredFlag != null)
+  {
+    newFlag = desiredFlag;
+  }  document.body.setAttribute("showprivate", newFlag);
+}
+</script>
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body onload="handleOnload()">
+<h1 style="color:#0D4988;font-size:18px;font-weight:bold;font-family:Tahoma, Verdana,Helvetica,sans-serif"><img alt="Oracle" src="../../../../../../.././doc-files/logo-oracle-red.png" align="top">JavaScript API Reference for Oracle ADF Faces</h1>
+<!-- ====== START OF NAVBAR ====== -->
+<p><a name="navbar_top" id="navbar_top"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a name="navbar_top_firstrow" id="navbar_top_firstrow"><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../../../oracle/adfinternal/view/js/agent/opera/AdfOperaNavigationHistoryAgent.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../../../oracle/adf/view/js/base/AdfPage.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../../../index.html?oracle/adfinternal/view/js/laf/dhtml/rich/AdfOverflowSupport.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfOverflowSupport.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<hr>
+<h1><span style="font-size: smaller">oracle.adfinternal.view.js.laf.dhtml.rich</span><br>
+Class AdfOverflowSupport</h1>
+<div class="InternalClassOrPackageWarning">
+<h2>Warning:</h2>
+<ul>
+<li>This is an unsupported, internal implementation class.</li>
+<li>Use an API class that might provide equivalent functionality instead.</li>
+<li>This class will change without notice.</li>
+<li>It is not recommended that you use anything in this class.</li>
+</ul>
+</div>
+<pre>
+<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">org.ecmascript.object.Object</a>
+   |
+   +--<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">oracle.adf.view.js.base.AdfObject</a>
+         |
+         +--<strong>oracle.adfinternal.view.js.laf.dhtml.rich.AdfOverflowSupport</strong>
+</pre>
+<hr>
+<pre>
+public class <strong>AdfOverflowSupport</strong>
+extends <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>
+</pre>
+<div>Support class for handling overflow layout for a component. Note that if you use AdfOverflowSupport, you will need to call removeOverflowSupport from your component's ComponentRemoved method. The call to removeOverflowSupport should be before cleaning up any overflow elements, as removeOverflowSupport will be removing any components that were currently in an overflow popup when the parent component was removed.</div>
+<p><br></p>
+<hr>
+<p><a name="field_summary" id="field_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_DEPRESSED_STYLE_CLASS" title="field in this class">_DEPRESSED_STYLE_CLASS</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_element" title="field in this class">_element</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_firstVisibleStep" title="field in this class">_firstVisibleStep</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_lastVisibleStep" title="field in this class">_lastVisibleStep</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_orientation" title="field in this class">_orientation</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_peer" title="field in this class">_peer</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_POPUP_ID_END" title="field in this class">_POPUP_ID_END</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_POPUP_ID_START" title="field in this class">_POPUP_ID_START</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_position" title="field in this class">_position</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_steps" title="field in this class">_steps</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_type" title="field in this class">_type</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_useRovingTabIndex" title="field in this class">_useRovingTabIndex</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from oracle.adf.view.js.base.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#constructor" title="field in oracle.adf.view.js.base.AdfObject">constructor</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#superclass" title="field in oracle.adf.view.js.base.AdfObject">superclass</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_org_ecmascript_object_Object" id="fields_inherited_from_class_org_ecmascript_object_Object"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from org.ecmascript.object.<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../org/ecmascript/object/Object.html#prototype" title="field in org.ecmascript.object.Object">prototype</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="constructor_summary" id="constructor_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%"><code>public</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#AdfOverflowSupport_String__AdfRichUIPeer__Object__Object__Object__Object_" title="constructor in this class">AdfOverflowSupport</a></strong>(<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> overflowId, <a href="../../../../../../../oracle/adf/view/js/laf/rich/AdfRichUIPeer.html" title="class in oracle.adf.view.js.laf.rich">AdfRichUIPeer</a> peer, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> type, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> position, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> orientation, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> useRovingTabIndex)</code></dt>
+<dd>
+<div>Support class for handling overflow layout for a component.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="method_summary" id="method_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#addDropListElements_Array_" title="method in this class">addDropListElements</a></strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elementArray)</code></dt>
+<dd>
+<div>For overflow supporting a droplist, add the elements to display in the droplist popup.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#addElement_HTMLElement_" title="method in this class">addElement</a></strong>(HTMLElement element)</code></dt>
+<dd>
+<div>Adds an element to the last created step.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#addOverflowElement_HTMLElement_" title="method in this class">addOverflowElement</a></strong>(HTMLElement element)</code></dt>
+<dd>
+<div>Adds an overflow element to the last created step.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_binarySearchAdjustSteps_Object__Object__Object__Object__Object_" title="method in this class">_binarySearchAdjustSteps</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hasAvailableSpace, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableWidth, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableHeight, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> lowerRange, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> upperRange)</code></dt>
+<dd>
+<div>Binary search when removing/adding items to overflow to maximize performance.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/primitive/boolean.html" title="class in org.ecmascript.primitive">boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_canMoveFocus_HTMLElement_" title="method in this class">_canMoveFocus</a></strong>(HTMLElement popupContainer)</code></dt>
+<dd>
+<div>Can we move focus, for roving tab index case.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_closeOverflowPopups__" title="method in this class">_closeOverflowPopups</a></strong>()</code></dt>
+<dd>
+<div>Close overflow popups</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_createOverflowPopupHints__" title="method in this class">_createOverflowPopupHints</a></strong>()</code></dt>
+<dd>
+<div>Initializes the hints used for showing an overflow container.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#createStep__" title="method in this class">createStep</a></strong>()</code></dt>
+<dd>
+<div>Creates a new overflow step.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public HTMLElement</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#createSwapPosition_HTMLElement_" title="method in this class">createSwapPosition</a></strong>(HTMLElement element)</code></dt>
+<dd>
+<div>Creates a swap position for an element in the component.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_endOverflowButtonMouseOut_Event_" title="method in this class">_endOverflowButtonMouseOut</a></strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd>
+<div>Callback for when the end overflow button receives mouse out event.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_endOverflowButtonMouseUp_Event_" title="method in this class">_endOverflowButtonMouseUp</a></strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd>
+<div>Callback for when the end overflow button receives mouse up event.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_endOverflowButtonPressed_Event_" title="method in this class">_endOverflowButtonPressed</a></strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd>
+<div>Callback for when the end overflow button is pressed.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#focusNextChild_HTMLElement_" title="method in this class">focusNextChild</a></strong>(HTMLElement popupContainer)</code></dt>
+<dd>
+<div>Focuses on the next child.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#focusPreviousChild_HTMLElement_" title="method in this class">focusPreviousChild</a></strong>(HTMLElement popupContainer)</code></dt>
+<dd>
+<div>Focuses on the previous child.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private Integer</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getAvailableHeight__" title="method in this class">_getAvailableHeight</a></strong>()</code></dt>
+<dd>
+<div>Get the available height.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private Integer</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getAvailableWidth__" title="method in this class">_getAvailableWidth</a></strong>()</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private HTMLElement</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getElement_String__String_" title="method in this class">_getElement</a></strong>(<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> overflowId, <a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> subString)</code></dt>
+<dd>
+<div>Returns a subElement.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../../../oracle/adf/view/js/component/AdfUIComponent.html" title="class in oracle.adf.view.js.component">AdfUIComponent</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getOverflowChildComponents_AdfUIComponent__Array_AdfUIComponent__" title="method in this class">getOverflowChildComponents</a></strong>(<a href="../../../../../../../oracle/adf/view/js/component/AdfUIComponent.html" title="class in oracle.adf.view.js.component">AdfUIComponent</a> baseComponent, <a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a>&lt;<a href="../../../../../../../oracle/adf/view/js/component/AdfUIComponent.html" title="class in oracle.adf.view.js.component">AdfUIComponent</a>&gt; children)</code></dt>
+<dd>
+<div>Returns an array of overflow child components present in either the start or end overflow containers.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#handleResize__" title="method in this class">handleResize</a></strong>()</code></dt>
+<dd>
+<div>Handles the showing and hiding of elements and corresponding overflow elements when the component is resized.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_handleResizeTypeBoth_Object__Object_" title="method in this class">_handleResizeTypeBoth</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableWidth, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableHeight)</code></dt>
+<dd>
+<div>Handles the showing and hiding of elements for type both overflow.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hasAvailableSpace_Object__Object_" title="method in this class">_hasAvailableSpace</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableWidth, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableHeight)</code></dt>
+<dd>
+<div>Checks if the element that contains overflowing elements has available space.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideAllSteps__" title="method in this class">_hideAllSteps</a></strong>()</code></dt>
+<dd>
+<div>Hide all steps, regardless if there's actually room for them.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideElements_Array_" title="method in this class">_hideElements</a></strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elements)</code></dt>
+<dd>
+<div>Hides DOMElements by giving them a style display none.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideEndContainer__" title="method in this class">_hideEndContainer</a></strong>()</code></dt>
+<dd>
+<div>Callback invoked when the end contanier popup is hidden</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideEndStep__" title="method in this class">_hideEndStep</a></strong>()</code></dt>
+<dd>
+<div>Hides the last visible overflow step on the end side.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideOneStep__" title="method in this class">_hideOneStep</a></strong>()</code></dt>
+<dd>
+<div>Hide one step.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideOverflowButtons__" title="method in this class">_hideOverflowButtons</a></strong>()</code></dt>
+<dd>
+<div>If overflow buttons are currently visible (based on our step values), then change css to make them invisible.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideOverflowElements_Array__Boolean_" title="method in this class">_hideOverflowElements</a></strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elements, <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> isStart)</code></dt>
+<dd>
+<div>Removes overflow elements from an overflow container.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideStartContainer__" title="method in this class">_hideStartContainer</a></strong>()</code></dt>
+<dd>
+<div>Callback invoked when the start contanier popup is hidden</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideStartStep__" title="method in this class">_hideStartStep</a></strong>()</code></dt>
+<dd>
+<div>Hides the last visible overflow step on the start side.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideStep_Object__Boolean_" title="method in this class">_hideStep</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> step, <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> isStart)</code></dt>
+<dd>
+<div>Hides an overflow step.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_hideSteps_Object__Object__Object_" title="method in this class">_hideSteps</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableWidth, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableHeight, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hasAvailableSpace)</code></dt>
+<dd>
+<div>Hide any steps that won't fit.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#Init_String__AdfRichUIPeer__Object__Object__Object__Object_" title="method in this class">Init</a></strong>(<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> overflowId, <a href="../../../../../../../oracle/adf/view/js/laf/rich/AdfRichUIPeer.html" title="class in oracle.adf.view.js.laf.rich">AdfRichUIPeer</a> peer, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> type, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> position, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> orientation, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> useRovingTabIndex)</code></dt>
+<dd>
+<div>Initializes an AdfOverflowSupport instance.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#InitClass__" title="method in this class">InitClass</a></strong>()</code></dt>
+<dd>
+<div>Initializes the AdfOverflowSupport class</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_initEndButtonEventHandling__" title="method in this class">_initEndButtonEventHandling</a></strong>()</code></dt>
+<dd>
+<div>Adds eventListeners to an end overflow indicator.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_initializeEndContainerCallback__" title="method in this class">_initializeEndContainerCallback</a></strong>()</code></dt>
+<dd>
+<div>Initialize callback for end container</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_initializeStartContainerCallback__" title="method in this class">_initializeStartContainerCallback</a></strong>()</code></dt>
+<dd>
+<div>Initialize callback for start Container</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_initStartButtonEventHandling__" title="method in this class">_initStartButtonEventHandling</a></strong>()</code></dt>
+<dd>
+<div>Adds eventListeners to a start overflow indicator.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_isActiveStepInOverflow__" title="method in this class">_isActiveStepInOverflow</a></strong>()</code></dt>
+<dd>
+<div>For type 'both' overflow, we also track an activeStep.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#isInOverflow_HTMLElement_" title="method in this class">isInOverflow</a></strong>(HTMLElement domElement)</code></dt>
+<dd>
+<div>If the item is in overflow, returns the overflow location (only really matters for overflow type "both").</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#needsOverflow_String_" title="method in this class">needsOverflow</a></strong>(<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> overflowId)</code></dt>
+<dd>
+<div>Checks if overflow is needed.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_numberOfVisibleSteps__" title="method in this class">_numberOfVisibleSteps</a></strong>()</code></dt>
+<dd>
+<div>Returns the number of currently visible steps.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_overflowButtonPressed_Object__Object__Object_" title="method in this class">_overflowButtonPressed</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupId, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupContainer, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupHints)</code></dt>
+<dd>
+<div>Overflow button pressed.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#removeAllItemsFromOverflow__" title="method in this class">removeAllItemsFromOverflow</a></strong>()</code></dt>
+<dd>
+<div>Remove all items from overflow, regardingless of the current size.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_removeEndButtonCallbacks__" title="method in this class">_removeEndButtonCallbacks</a></strong>()</code></dt>
+<dd>
+<div>Removes event listeners from the end overflow indicator.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#removeOverflowSupport_Object_" title="method in this class">removeOverflowSupport</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> ignoreOverflowComponentCleanup)</code></dt>
+<dd>
+<div>Removes all callbacks and references to DOMElements that were created by the overflow support instance.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_removeStartButtonCallbacks__" title="method in this class">_removeStartButtonCallbacks</a></strong>()</code></dt>
+<dd>
+<div>Removes event listeners from the start overflow indicator.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_removeSteps__" title="method in this class">_removeSteps</a></strong>()</code></dt>
+<dd>
+<div>Removes all references to DomElements from all created steps.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_resetActiveDescendant_HTMLElement_" title="method in this class">_resetActiveDescendant</a></strong>(HTMLElement popupContainer)</code></dt>
+<dd>
+<div>Sets the first child as the active descendant.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_setActiveStep__" title="method in this class">_setActiveStep</a></strong>()</code></dt>
+<dd>
+<div>Initializes the active step.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_setDepressedStyle_HTMLElement__Boolean_" title="method in this class">_setDepressedStyle</a></strong>(HTMLElement targetElement, <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> depressed)</code></dt>
+<dd>
+<div>Overflow buttons use the depressed pseudo state instead of active.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_showAllSteps__" title="method in this class">_showAllSteps</a></strong>()</code></dt>
+<dd>
+<div>Show all steps, regardless if there's actually room for them.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_showElements_Array_" title="method in this class">_showElements</a></strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elements)</code></dt>
+<dd>
+<div>Shows DOMElements by removing style display none.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_showEndStep__" title="method in this class">_showEndStep</a></strong>()</code></dt>
+<dd>
+<div>Shows the first overflow step on the end side that is currently not visible.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_showOneStep__" title="method in this class">_showOneStep</a></strong>()</code></dt>
+<dd>
+<div>Show one step.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_showOverflowButtons_Object_" title="method in this class">_showOverflowButtons</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> force)</code></dt>
+<dd>
+<div>If overflow buttons are needed (based on our step values), then change css to make them visible.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_showOverflowElements_Array__Boolean_" title="method in this class">_showOverflowElements</a></strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elements, <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> isStart)</code></dt>
+<dd>
+<div>Adds overflow elements to an overflow container.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#showOverflowPopup_String_" title="method in this class">showOverflowPopup</a></strong>(<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> location)</code></dt>
+<dd>
+<div>Opens the overflow popup.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_showStartStep__" title="method in this class">_showStartStep</a></strong>()</code></dt>
+<dd>
+<div>Shows the first overflow step on the start side that is currently not visible.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_showStep_Object__Boolean_" title="method in this class">_showStep</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> step, <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> isStart)</code></dt>
+<dd>
+<div>Shows an overflow step.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_showSteps_Object__Object__Object_" title="method in this class">_showSteps</a></strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableWidth, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableHeight, <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hasAvailableSpace)</code></dt>
+<dd>
+<div>Show as many steps as will fit.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_startOverflowButtonMouseOut_Event_" title="method in this class">_startOverflowButtonMouseOut</a></strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd>
+<div>Callback for when the start overflow button receives mouse out event.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_startOverflowButtonMouseUp_Event_" title="method in this class">_startOverflowButtonMouseUp</a></strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd>
+<div>Callback for when the start overflow button receives mouse over event.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_startOverflowButtonPressed_Event_" title="method in this class">_startOverflowButtonPressed</a></strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd>
+<div>Callback for when the start overflow button is pressed.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_supportsBothOverflow__" title="method in this class">_supportsBothOverflow</a></strong>()</code></dt>
+<dd>
+<div>Returns true if we are supporting both overflow (overflow type both or droplist)</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_supportsDroplist__" title="method in this class">_supportsDroplist</a></strong>()</code></dt>
+<dd>
+<div>Returns true if we are supporting droplist button</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_supportsEndOverflow__" title="method in this class">_supportsEndOverflow</a></strong>()</code></dt>
+<dd>
+<div>Returns true if we are supporting end overflow (overflow type end or both)</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_supportsStartOverflow__" title="method in this class">_supportsStartOverflow</a></strong>()</code></dt>
+<dd>
+<div>Returns true if we are supporting start overflow (overflow type start or both)</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_swapElements_Array__Boolean_" title="method in this class">_swapElements</a></strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elements, <a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> show)</code></dt>
+<dd>
+<div>Swaps DOMElements from their normal position, to their position in the overflow container.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#updateActiveDescendant_HTMLElement_" title="method in this class">updateActiveDescendant</a></strong>(HTMLElement newActiveDescendant)</code></dt>
+<dd>
+<div>Update the set active descendant to a new child element.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Methods inherited from oracle.adf.view.js.base.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#adopt_Object_" title="method in oracle.adf.view.js.base.AdfObject">adopt</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#clone__" title="method in oracle.adf.view.js.base.AdfObject">clone</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createCallback_Object_" title="method in oracle.adf.view.js.base.AdfObject">createCallback</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createInitializedObject__" title="method in oracle.adf.view.js.base.AdfObject">createInitializedObject</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#createSubclass_Function__Function__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">createSubclass</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#ensureClassInitialization_Function_" title="method in oracle.adf.view.js.base.AdfObject">ensureClassInitialization</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#equals_Object_" title="method in oracle.adf.view.js.base.AdfObject">equals</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#exportPrototypeSymbol_string__Object_" title="method in oracle.adf.view.js.base.AdfObject">exportPrototypeSymbol</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#getClass_Object_" title="method in oracle.adf.view.js.base.AdfObject">getClass</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyArrayProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyArrayProperty</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyMapProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyMapProperty</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#getTypeName__" title="method in oracle.adf.view.js.base.AdfObject">getTypeName</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#toDebugString__" title="method in oracle.adf.view.js.base.AdfObject">toDebugString</a>, <a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#toString__" title="method in oracle.adf.view.js.base.AdfObject">toString</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="field_detail" id="field_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="O_DEPRESSED_STYLE_CLASS" id="O_DEPRESSED_STYLE_CLASS"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_DEPRESSED_STYLE_CLASS</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_DEPRESSED_STYLE_CLASS</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_element" id="O_element"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_element</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_element</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_firstVisibleStep" id="O_firstVisibleStep"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_firstVisibleStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_firstVisibleStep</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_lastVisibleStep" id="O_lastVisibleStep"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_lastVisibleStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_lastVisibleStep</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_orientation" id="O_orientation"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_orientation</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_orientation</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_peer" id="O_peer"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_peer</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_peer</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_POPUP_ID_END" id="O_POPUP_ID_END"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_POPUP_ID_END</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_POPUP_ID_END</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_POPUP_ID_START" id="O_POPUP_ID_START"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_POPUP_ID_START</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_POPUP_ID_START</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_position" id="O_position"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_position</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_position</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_steps" id="O_steps"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_steps</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_steps</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_type" id="O_type"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_type</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_type</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_useRovingTabIndex" id="O_useRovingTabIndex"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_useRovingTabIndex</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_useRovingTabIndex</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="constructor_detail" id="constructor_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="AdfOverflowSupport_String__AdfRichUIPeer__Object__Object__Object__Object_" id="AdfOverflowSupport_String__AdfRichUIPeer__Object__Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader">AdfOverflowSupport</h3>
+<dl>
+<dt><code>public <strong>AdfOverflowSupport</strong>(<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> overflowId,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../oracle/adf/view/js/laf/rich/AdfRichUIPeer.html" title="class in oracle.adf.view.js.laf.rich">AdfRichUIPeer</a> peer,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> type,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> position,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> orientation,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> useRovingTabIndex)</code></dt>
+<dd><br>
+<div>Support class for handling overflow layout for a component. Note that if you use AdfOverflowSupport, you will need to call removeOverflowSupport from your component's ComponentRemoved method. The call to removeOverflowSupport should be before cleaning up any overflow elements, as removeOverflowSupport will be removing any components that were currently in an overflow popup when the parent component was removed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>overflowId</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The id of the element in the component that can have overflow, most of the time this is the rootElement of a component</td>
+</tr>
+<tr>
+<td valign="top"><code>peer</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The peer of the component that needs overflow support</td>
+</tr>
+<tr>
+<td valign="top"><code>type</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>position</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>orientation</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>useRovingTabIndex</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="method_detail" id="method_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="addDropListElements_Array_" id="addDropListElements_Array_"><!-- --></a></p>
+<h3 class="DetailHeader">addDropListElements</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> addDropListElements</strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elementArray)</code></dt>
+<dd><br>
+<div>For overflow supporting a droplist, add the elements to display in the droplist popup.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>elementArray</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">an array of elements to display in the overflow droplist popup.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="addElement_HTMLElement_" id="addElement_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader">addElement</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> addElement</strong>(HTMLElement element)</code></dt>
+<dd><br>
+<div>Adds an element to the last created step. This element will be hidden if the component has not enough space to show this element. Then the corresponding overflow elements added to the same step will show up in the overflow box. If the element itself should show up in the overflow box <code><a href="#createSwapPosition_HTMLElement_" title="method in this class">createSwapPosition(HTMLElement)</a></code> can be used. More elements can be added to one step. This method shouldn't be called if no step is created yet.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>element</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The element to add to the step</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+<dt>See also:</dt>
+<dd><code><a href="#createStep__" title="method in this class">for creating steps</a></code></dd>
+<dd><code><a href="#addOverflowElement_HTMLElement_" title="method in this class">for adding corresponding overflow elements</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="addOverflowElement_HTMLElement_" id="addOverflowElement_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader">addOverflowElement</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> addOverflowElement</strong>(HTMLElement element)</code></dt>
+<dd><br>
+<div>Adds an overflow element to the last created step. This overflow element will show up in the overflow box, if the component has not enough space to show the corresponding elements added to the same step. If an element that is added to the step should show up in the overflow box itself <code><a href="#createSwapPosition_HTMLElement_" title="method in this class">createSwapPosition(HTMLElement)</a></code> can be used. More overflow elements can be added to one step. This method shouldn't be called if no step is created yet.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>element</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The overflow element to add to the step</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+<dt>See also:</dt>
+<dd><code><a href="#addElement_HTMLElement_" title="method in this class">for adding corresponding elements</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_binarySearchAdjustSteps_Object__Object__Object__Object__Object_" id="O_binarySearchAdjustSteps_Object__Object__Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_binarySearchAdjustSteps</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _binarySearchAdjustSteps</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hasAvailableSpace,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableWidth,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableHeight,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> lowerRange,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> upperRange)</code></dt>
+<dd><br>
+<div>Binary search when removing/adding items to overflow to maximize performance. This method determines within 1 how many steps should be displayed, so that when done it can rejoin the normal show/remove step algorithm.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>hasAvailableSpace</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>availableWidth</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>availableHeight</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>lowerRange</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>upperRange</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - Last calculated has available space value</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_canMoveFocus_HTMLElement_" id="O_canMoveFocus_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_canMoveFocus</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/primitive/boolean.html" title="class in org.ecmascript.primitive">boolean</a> _canMoveFocus</strong>(HTMLElement popupContainer)</code></dt>
+<dd><br>
+<div>Can we move focus, for roving tab index case.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>popupContainer</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The overflow popup container. Cannot be null.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/boolean.html" title="class in org.ecmascript.primitive">boolean</a></code> - can we move focus</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_closeOverflowPopups__" id="O_closeOverflowPopups__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_closeOverflowPopups</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _closeOverflowPopups</strong>()</code></dt>
+<dd><br>
+<div>Close overflow popups</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_createOverflowPopupHints__" id="O_createOverflowPopupHints__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_createOverflowPopupHints</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _createOverflowPopupHints</strong>()</code></dt>
+<dd><br>
+<div>Initializes the hints used for showing an overflow container.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - hints for the overflow popup</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="createStep__" id="createStep__"><!-- --></a></p>
+<h3 class="DetailHeader">createStep</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> createStep</strong>()</code></dt>
+<dd><br>
+<div>Creates a new overflow step. In one step all added elements will be hidden and all added overflow elements will be placed in the overflow box. Most of the time one element and one overflow element are added to one step. But if there are elements that shouldn't be visible seperately it is possible to add them together to one step.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+<dt>See also:</dt>
+<dd><code><a href="#addElement_HTMLElement_" title="method in this class">to add an element to a step</a></code></dd>
+<dd><code><a href="#addOverflowElement_HTMLElement_" title="method in this class">to add an overflow element to a step</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="createSwapPosition_HTMLElement_" id="createSwapPosition_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader">createSwapPosition</h3>
+<dl>
+<dt><code>public <strong>HTMLElement createSwapPosition</strong>(HTMLElement element)</code></dt>
+<dd><br>
+<div>Creates a swap position for an element in the component. This is used when an element should be visible in the component if there is enough space and in the overflow box when there isn't enough space. Two swap positions are created for the element. One is inserted in the DOM just before the element. The other is returned and can be used as overflow element or inside an overflow element, that should then be added to the step with <code><a href="#addOverflowElement_HTMLElement_" title="method in this class">addOverflowElement(HTMLElement)</a></code>. These positions will be used to move the element from it's current position in the component to the position in the overflow box during overflow.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>element</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The element to create a swap position for</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code>HTMLElement</code> - the swap position for the element that can be placed in the overflow box</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_endOverflowButtonMouseOut_Event_" id="O_endOverflowButtonMouseOut_Event_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_endOverflowButtonMouseOut</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _endOverflowButtonMouseOut</strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd><br>
+<div>Callback for when the end overflow button receives mouse out event. Make sure depressed style is removed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The event received</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_endOverflowButtonMouseUp_Event_" id="O_endOverflowButtonMouseUp_Event_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_endOverflowButtonMouseUp</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _endOverflowButtonMouseUp</strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd><br>
+<div>Callback for when the end overflow button receives mouse up event. Make sure depressed style is removed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The event received</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_endOverflowButtonPressed_Event_" id="O_endOverflowButtonPressed_Event_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_endOverflowButtonPressed</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _endOverflowButtonPressed</strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd><br>
+<div>Callback for when the end overflow button is pressed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The event received</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="focusNextChild_HTMLElement_" id="focusNextChild_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader">focusNextChild</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> focusNextChild</strong>(HTMLElement popupContainer)</code></dt>
+<dd><br>
+<div>Focuses on the next child. This method is for overflow when useRovingTabIndex is true. This should be called when there is an arrow down key event on a child in the overflow popup.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>popupContainer</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The overflow popup container. Cannot be null.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="focusPreviousChild_HTMLElement_" id="focusPreviousChild_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader">focusPreviousChild</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> focusPreviousChild</strong>(HTMLElement popupContainer)</code></dt>
+<dd><br>
+<div>Focuses on the previous child. This method is for overflow when useRovingTabIndex is true. This should be called when there is an arrow up key event on a child in the overflow popup.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>popupContainer</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The overflow popup container. Cannot be null.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_getAvailableHeight__" id="O_getAvailableHeight__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getAvailableHeight</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong>Integer _getAvailableHeight</strong>()</code></dt>
+<dd><br>
+<div>Get the available height. A 5px addition allows for the overlap pixels used by simple border tabs.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code>Integer</code> - the height of the element + a grace value of 5px.</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_getAvailableWidth__" id="O_getAvailableWidth__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getAvailableWidth</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong>Integer _getAvailableWidth</strong>()</code></dt>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code>Integer</code> - the width of the element + a grace value of 3px</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_getElement_String__String_" id="O_getElement_String__String_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getElement</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong>HTMLElement _getElement</strong>(<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> overflowId,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> subString)</code></dt>
+<dd><br>
+<div>Returns a subElement.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>overflowId</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The id of the element in the component that can have overflow</td>
+</tr>
+<tr>
+<td valign="top"><code>subString</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Used to create the subId of the subElement</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code>HTMLElement</code> - the subElement</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="getOverflowChildComponents_AdfUIComponent__Array_AdfUIComponent__" id="getOverflowChildComponents_AdfUIComponent__Array_AdfUIComponent__"><!-- --></a></p>
+<h3 class="DetailHeader">getOverflowChildComponents</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../../../oracle/adf/view/js/component/AdfUIComponent.html" title="class in oracle.adf.view.js.component">AdfUIComponent</a> getOverflowChildComponents</strong>(<a href="../../../../../../../oracle/adf/view/js/component/AdfUIComponent.html" title="class in oracle.adf.view.js.component">AdfUIComponent</a> baseComponent,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a>&lt;<a href="../../../../../../../oracle/adf/view/js/component/AdfUIComponent.html" title="class in oracle.adf.view.js.component">AdfUIComponent</a>&gt; children)</code></dt>
+<dd><br>
+<div>Returns an array of overflow child components present in either the start or end overflow containers.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>baseComponent</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">(that supports overflow) to start looking from</td>
+</tr>
+<tr>
+<td valign="top"><code>children</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">array to store child components in. Descendent components will be added to the end of the array. This param is optional, if not passed in an array will be created.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../oracle/adf/view/js/component/AdfUIComponent.html" title="class in oracle.adf.view.js.component">AdfUIComponent</a></code> - array of child components, may be empty</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="handleResize__" id="handleResize__"><!-- --></a></p>
+<h3 class="DetailHeader">handleResize</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> handleResize</strong>()</code></dt>
+<dd><br>
+<div>Handles the showing and hiding of elements and corresponding overflow elements when the component is resized. And also makes the overflow indicators visible if needed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_handleResizeTypeBoth_Object__Object_" id="O_handleResizeTypeBoth_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_handleResizeTypeBoth</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _handleResizeTypeBoth</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableWidth,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableHeight)</code></dt>
+<dd><br>
+<div>Handles the showing and hiding of elements for type both overflow.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>availableWidth</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>availableHeight</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hasAvailableSpace_Object__Object_" id="O_hasAvailableSpace_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hasAvailableSpace</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _hasAvailableSpace</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableWidth,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableHeight)</code></dt>
+<dd><br>
+<div>Checks if the element that contains overflowing elements has available space.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>availableWidth</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>availableHeight</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - true if there is available space</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideAllSteps__" id="O_hideAllSteps__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideAllSteps</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideAllSteps</strong>()</code></dt>
+<dd><br>
+<div>Hide all steps, regardless if there's actually room for them.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideElements_Array_" id="O_hideElements_Array_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideElements</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideElements</strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elements)</code></dt>
+<dd><br>
+<div>Hides DOMElements by giving them a style display none. Saves the old style, so it can be restored in <code><a href="#O_showElements_Array_" title="method in this class">_showElements(Array)</a></code></div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>elements</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Array of DOMElements</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideEndContainer__" id="O_hideEndContainer__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideEndContainer</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideEndContainer</strong>()</code></dt>
+<dd><br>
+<div>Callback invoked when the end contanier popup is hidden</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideEndStep__" id="O_hideEndStep__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideEndStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideEndStep</strong>()</code></dt>
+<dd><br>
+<div>Hides the last visible overflow step on the end side.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideOneStep__" id="O_hideOneStep__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideOneStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideOneStep</strong>()</code></dt>
+<dd><br>
+<div>Hide one step. For use by start or end type overflow containers.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideOverflowButtons__" id="O_hideOverflowButtons__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideOverflowButtons</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideOverflowButtons</strong>()</code></dt>
+<dd><br>
+<div>If overflow buttons are currently visible (based on our step values), then change css to make them invisible. This is done temporarily during resize so that overflow button size does not enter into our sizing calculations when figuring out what can fit before overflow.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideOverflowElements_Array__Boolean_" id="O_hideOverflowElements_Array__Boolean_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideOverflowElements</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideOverflowElements</strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elements,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> isStart)</code></dt>
+<dd><br>
+<div>Removes overflow elements from an overflow container.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>elements</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Array of DOMElements that should be removed from an overflow container</td>
+</tr>
+<tr>
+<td valign="top"><code>isStart</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Indicates if elements will be removed from start container</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideStartContainer__" id="O_hideStartContainer__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideStartContainer</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideStartContainer</strong>()</code></dt>
+<dd><br>
+<div>Callback invoked when the start contanier popup is hidden</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideStartStep__" id="O_hideStartStep__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideStartStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideStartStep</strong>()</code></dt>
+<dd><br>
+<div>Hides the last visible overflow step on the start side.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideStep_Object__Boolean_" id="O_hideStep_Object__Boolean_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _hideStep</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> step,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> isStart)</code></dt>
+<dd><br>
+<div>Hides an overflow step.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>step</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The step to hide</td>
+</tr>
+<tr>
+<td valign="top"><code>isStart</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Indicates if the step gets hidden on the start side</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_hideSteps_Object__Object__Object_" id="O_hideSteps_Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_hideSteps</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _hideSteps</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableWidth,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableHeight,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hasAvailableSpace)</code></dt>
+<dd><br>
+<div>Hide any steps that won't fit.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>availableWidth</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>availableHeight</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>hasAvailableSpace</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - true if at least one step was hidden</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="Init_String__AdfRichUIPeer__Object__Object__Object__Object_" id="Init_String__AdfRichUIPeer__Object__Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader">Init</h3>
+<dl>
+<dt><code>protected <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> Init</strong>(<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> overflowId,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../oracle/adf/view/js/laf/rich/AdfRichUIPeer.html" title="class in oracle.adf.view.js.laf.rich">AdfRichUIPeer</a> peer,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> type,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> position,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> orientation,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> useRovingTabIndex)</code></dt>
+<dd><br>
+<div>Initializes an AdfOverflowSupport instance.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>overflowId</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The id of the element in the component that can have overflow, most of the time this is the rootElement of a component</td>
+</tr>
+<tr>
+<td valign="top"><code>peer</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The peer of the component that needs overflow support</td>
+</tr>
+<tr>
+<td valign="top"><code>type</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>position</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>orientation</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>useRovingTabIndex</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>.<a href="../../../../../../../oracle/adf/view/js/base/AdfObject.html#Init__" title="method in oracle.adf.view.js.base.AdfObject">Init()</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="InitClass__" id="InitClass__"><!-- --></a></p>
+<h3 class="DetailHeader">InitClass</h3>
+<dl>
+<dt><code>protected static <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> InitClass</strong>()</code></dt>
+<dd><br>
+<div>Initializes the AdfOverflowSupport class</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_initEndButtonEventHandling__" id="O_initEndButtonEventHandling__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_initEndButtonEventHandling</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _initEndButtonEventHandling</strong>()</code></dt>
+<dd><br>
+<div>Adds eventListeners to an end overflow indicator.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_initializeEndContainerCallback__" id="O_initializeEndContainerCallback__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_initializeEndContainerCallback</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _initializeEndContainerCallback</strong>()</code></dt>
+<dd><br>
+<div>Initialize callback for end container</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_initializeStartContainerCallback__" id="O_initializeStartContainerCallback__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_initializeStartContainerCallback</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _initializeStartContainerCallback</strong>()</code></dt>
+<dd><br>
+<div>Initialize callback for start Container</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_initStartButtonEventHandling__" id="O_initStartButtonEventHandling__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_initStartButtonEventHandling</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _initStartButtonEventHandling</strong>()</code></dt>
+<dd><br>
+<div>Adds eventListeners to a start overflow indicator.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_isActiveStepInOverflow__" id="O_isActiveStepInOverflow__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_isActiveStepInOverflow</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _isActiveStepInOverflow</strong>()</code></dt>
+<dd><br>
+<div>For type 'both' overflow, we also track an activeStep. Returns true if the activeStep is in either start or end overflow.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - true if the activeStep is in either start or end overflow.</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="isInOverflow_HTMLElement_" id="isInOverflow_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader">isInOverflow</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> isInOverflow</strong>(HTMLElement domElement)</code></dt>
+<dd><br>
+<div>If the item is in overflow, returns the overflow location (only really matters for overflow type "both").</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>domElement</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the element in question</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code> - location Returns overflow location that contains the item, either "start" or "end". Null if element is not in overflow.</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="needsOverflow_String_" id="needsOverflow_String_"><!-- --></a></p>
+<h3 class="DetailHeader">needsOverflow</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> needsOverflow</strong>(<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> overflowId)</code></dt>
+<dd><br>
+<div>Checks if overflow is needed. This method is called before initializing the overflow support class. This way the overflow class doesn't get initialized unnecessarry, which improves performance.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>overflowId</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The id of the element in the component that can have overflow</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - true If the element needs to overflow</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_numberOfVisibleSteps__" id="O_numberOfVisibleSteps__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_numberOfVisibleSteps</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _numberOfVisibleSteps</strong>()</code></dt>
+<dd><br>
+<div>Returns the number of currently visible steps. This could include items that don't actually switch into overflow, like group separators, breadcrumb dividers, etc.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - the number of currently visible steps</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_overflowButtonPressed_Object__Object__Object_" id="O_overflowButtonPressed_Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_overflowButtonPressed</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _overflowButtonPressed</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupId,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupContainer,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> popupHints)</code></dt>
+<dd><br>
+<div>Overflow button pressed. If the overflow container is not currently visible, we show it. If the overflow container is currently visible, we hide it.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>popupId</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>popupContainer</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>popupHints</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="removeAllItemsFromOverflow__" id="removeAllItemsFromOverflow__"><!-- --></a></p>
+<h3 class="DetailHeader">removeAllItemsFromOverflow</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> removeAllItemsFromOverflow</strong>()</code></dt>
+<dd><br>
+<div>Remove all items from overflow, regardingless of the current size. This is useful when overflow needs to be undone for calculations of preferred size.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_removeEndButtonCallbacks__" id="O_removeEndButtonCallbacks__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_removeEndButtonCallbacks</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _removeEndButtonCallbacks</strong>()</code></dt>
+<dd><br>
+<div>Removes event listeners from the end overflow indicator.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="removeOverflowSupport_Object_" id="removeOverflowSupport_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">removeOverflowSupport</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> removeOverflowSupport</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> ignoreOverflowComponentCleanup)</code></dt>
+<dd><br>
+<div>Removes all callbacks and references to DOMElements that were created by the overflow support instance.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>ignoreOverflowComponentCleanup</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_removeStartButtonCallbacks__" id="O_removeStartButtonCallbacks__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_removeStartButtonCallbacks</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _removeStartButtonCallbacks</strong>()</code></dt>
+<dd><br>
+<div>Removes event listeners from the start overflow indicator.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_removeSteps__" id="O_removeSteps__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_removeSteps</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _removeSteps</strong>()</code></dt>
+<dd><br>
+<div>Removes all references to DomElements from all created steps.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_resetActiveDescendant_HTMLElement_" id="O_resetActiveDescendant_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_resetActiveDescendant</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _resetActiveDescendant</strong>(HTMLElement popupContainer)</code></dt>
+<dd><br>
+<div>Sets the first child as the active descendant. Resets previous activeDescendant if present.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>popupContainer</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">popup container element. Optional - if not known we'll figure it out.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_setActiveStep__" id="O_setActiveStep__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_setActiveStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _setActiveStep</strong>()</code></dt>
+<dd><br>
+<div>Initializes the active step. This is the step that contains a DOMElement that is currently active and therefore should stay visible (for example an active tab).</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_setDepressedStyle_HTMLElement__Boolean_" id="O_setDepressedStyle_HTMLElement__Boolean_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_setDepressedStyle</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _setDepressedStyle</strong>(HTMLElement targetElement,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> depressed)</code></dt>
+<dd><br>
+<div>Overflow buttons use the depressed pseudo state instead of active. This method sets the depressed style state.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>targetElement</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the dom element to set the style on</td>
+</tr>
+<tr>
+<td valign="top"><code>depressed</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the new depressed state</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_showAllSteps__" id="O_showAllSteps__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_showAllSteps</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _showAllSteps</strong>()</code></dt>
+<dd><br>
+<div>Show all steps, regardless if there's actually room for them.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_showElements_Array_" id="O_showElements_Array_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_showElements</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _showElements</strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elements)</code></dt>
+<dd><br>
+<div>Shows DOMElements by removing style display none. Restoring the old style that was saved in <code><a href="#O_hideElements_Array_" title="method in this class">_hideElements(Array)</a></code>.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>elements</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Array of DOMElements</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_showEndStep__" id="O_showEndStep__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_showEndStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _showEndStep</strong>()</code></dt>
+<dd><br>
+<div>Shows the first overflow step on the end side that is currently not visible.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_showOneStep__" id="O_showOneStep__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_showOneStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _showOneStep</strong>()</code></dt>
+<dd><br>
+<div>Show one step. For use by start or end type overflow containers.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_showOverflowButtons_Object_" id="O_showOverflowButtons_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_showOverflowButtons</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _showOverflowButtons</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> force)</code></dt>
+<dd><br>
+<div>If overflow buttons are needed (based on our step values), then change css to make them visible.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>force</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_showOverflowElements_Array__Boolean_" id="O_showOverflowElements_Array__Boolean_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_showOverflowElements</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _showOverflowElements</strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elements,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> isStart)</code></dt>
+<dd><br>
+<div>Adds overflow elements to an overflow container.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>elements</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Array of DOMElements that should be added to an overflow container</td>
+</tr>
+<tr>
+<td valign="top"><code>isStart</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">If true elements will be added to the start container if false elements will be added to the end container</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="showOverflowPopup_String_" id="showOverflowPopup_String_"><!-- --></a></p>
+<h3 class="DetailHeader">showOverflowPopup</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> showOverflowPopup</strong>(<a href="../../../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> location)</code></dt>
+<dd><br>
+<div>Opens the overflow popup. Used with automation testing.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>location</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">overflow location to open, either "start" or "end", defaults to "end".</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_showStartStep__" id="O_showStartStep__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_showStartStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _showStartStep</strong>()</code></dt>
+<dd><br>
+<div>Shows the first overflow step on the start side that is currently not visible.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_showStep_Object__Boolean_" id="O_showStep_Object__Boolean_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_showStep</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _showStep</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> step,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> isStart)</code></dt>
+<dd><br>
+<div>Shows an overflow step.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>step</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The step to show</td>
+</tr>
+<tr>
+<td valign="top"><code>isStart</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Indicates if the step gets shown on the start side</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_showSteps_Object__Object__Object_" id="O_showSteps_Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_showSteps</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _showSteps</strong>(<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableWidth,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> availableHeight,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hasAvailableSpace)</code></dt>
+<dd><br>
+<div>Show as many steps as will fit.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>availableWidth</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>availableHeight</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>hasAvailableSpace</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - final has available space value</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_startOverflowButtonMouseOut_Event_" id="O_startOverflowButtonMouseOut_Event_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_startOverflowButtonMouseOut</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _startOverflowButtonMouseOut</strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd><br>
+<div>Callback for when the start overflow button receives mouse out event. Make sure depressed style is removed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The event received</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_startOverflowButtonMouseUp_Event_" id="O_startOverflowButtonMouseUp_Event_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_startOverflowButtonMouseUp</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _startOverflowButtonMouseUp</strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd><br>
+<div>Callback for when the start overflow button receives mouse over event. Make sure depressed style is removed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The event received</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_startOverflowButtonPressed_Event_" id="O_startOverflowButtonPressed_Event_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_startOverflowButtonPressed</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _startOverflowButtonPressed</strong>(<a href="../../../../../../../org/w3c/dom/events/Event.html" title="class in org.w3c.dom.events">Event</a> event)</code></dt>
+<dd><br>
+<div>Callback for when the start overflow button is pressed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>event</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The event received</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_supportsBothOverflow__" id="O_supportsBothOverflow__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_supportsBothOverflow</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _supportsBothOverflow</strong>()</code></dt>
+<dd><br>
+<div>Returns true if we are supporting both overflow (overflow type both or droplist)</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - true if we are supporting both overflow</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_supportsDroplist__" id="O_supportsDroplist__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_supportsDroplist</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _supportsDroplist</strong>()</code></dt>
+<dd><br>
+<div>Returns true if we are supporting droplist button</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - true if we are supporting droplist button</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_supportsEndOverflow__" id="O_supportsEndOverflow__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_supportsEndOverflow</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _supportsEndOverflow</strong>()</code></dt>
+<dd><br>
+<div>Returns true if we are supporting end overflow (overflow type end or both)</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - true if we are supporting end overflow</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_supportsStartOverflow__" id="O_supportsStartOverflow__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_supportsStartOverflow</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _supportsStartOverflow</strong>()</code></dt>
+<dd><br>
+<div>Returns true if we are supporting start overflow (overflow type start or both)</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - true if we are supporting start overflow</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_swapElements_Array__Boolean_" id="O_swapElements_Array__Boolean_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_swapElements</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _swapElements</strong>(<a href="../../../../../../../org/ecmascript/object/Array.html" title="class in org.ecmascript.object">Array</a> elements,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> show)</code></dt>
+<dd><br>
+<div>Swaps DOMElements from their normal position, to their position in the overflow container.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>elements</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">Array of swapElements, swapElements is an array of a three DomElements: the DomElement that needs to be swapped, and two anchor elements that indicate its normal position and its position in the overflow container</td>
+</tr>
+<tr>
+<td valign="top"><code>show</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">If true the DomElement gets placed on its normal position otherwise it gets placed on its position in the overflow container</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="updateActiveDescendant_HTMLElement_" id="updateActiveDescendant_HTMLElement_"><!-- --></a></p>
+<h3 class="DetailHeader">updateActiveDescendant</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> updateActiveDescendant</strong>(HTMLElement newActiveDescendant)</code></dt>
+<dd><br>
+<div>Update the set active descendant to a new child element. This method is for overflow when useRovingTabIndex is true. This should be called when there is a focus event on a child in the overflow popup.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>newActiveDescendant</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The new child element to set as the active descendant. Cannot be null.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<!-- ====== START OF NAVBAR ====== -->
+<hr>
+<p><a name="navbar_bottom" id="navbar_bottom"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../../../oracle/adfinternal/view/js/agent/opera/AdfOperaNavigationHistoryAgent.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../../../oracle/adf/view/js/base/AdfPage.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../../../index.html?oracle/adfinternal/view/js/laf/dhtml/rich/AdfOverflowSupport.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfOverflowSupport.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div class="CreationTime">Generated on 2018.06.28 06:41 UTC</div>
+<center>Copyright (c) 1998, 2018, Oracle and/or its affiliates. All rights reserved.</center>
+</body>
+</html>

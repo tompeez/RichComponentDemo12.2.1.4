@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2"
+          xmlns:h="http://java.sun.com/jsf/html">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="componentDragSource demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="componentDragSource"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="dragNDrop"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="Drag a panelBox onto another panelBox, and the dragged panelBox will be dropped after the dropped panelBox."
+                           id="ot1"/>
+            <af:outputText value="Using the ComponentDragSource discriminant attribute, panelBoxes in each column can only be reordered within that column"
+                           id="ot2"/>
+            <h:panelGrid id="panelBoxGrid" columns="2">
+              <af:panelGroupLayout id="column1" layout="scroll">
+                <af:panelGroupLayout id="dropBox1-1" layout="scroll"
+                                     inlineStyle="width: 225px; height: 75px; padding: 5px;">
+                  <af:dropTarget actions="MOVE"
+                                 dropListener="#{demoDropHandler.handleComponentMove}">
+                    <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                  </af:dropTarget>
+                  <af:panelBox id="panelBox1-1" text="Background Dark"
+                               ramp="core" background="dark" styleClass="AFStretchWidth"
+                               contentStyle="height: 50px; vertical-align: top;">
+                    <af:outputText value="dark panel box content" id="ot1-1"/>
+                    <af:componentDragSource/>
+                  </af:panelBox>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="dropBox1-2" layout="scroll"
+                                     inlineStyle="width: 225px; height: 75px; padding: 5px;">
+                  <af:dropTarget actions="MOVE"
+                                 dropListener="#{demoDropHandler.handleComponentMove}">
+                    <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                  </af:dropTarget>
+                  <af:panelBox id="panelBox1-2" text="Background Default" ramp="highlight"
+                               background="default" styleClass="AFStretchWidth"
+                               contentStyle="height: 50px; vertical-align: top;">
+                    <af:outputText value="default panel box content" id="ot1-2"/>
+                    <af:componentDragSource/>
+                  </af:panelBox>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="dropBox3" layout="scroll"
+                                     inlineStyle="width: 225px; height: 75px; padding: 5px;">
+                  <af:dropTarget actions="MOVE"
+                                 dropListener="#{demoDropHandler.handleComponentMove}">
+                    <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                  </af:dropTarget>
+                  <af:panelBox id="panelBox3" text="Background Light" ramp="highlight"
+                               background="light" styleClass="AFStretchWidth"
+                               contentStyle="height: 50px; vertical-align: top;">
+                    <af:outputText value="light panel box content" id="ot4"/>
+                    <af:componentDragSource/>
+                  </af:panelBox>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="column2" layout="scroll">
+                <af:panelGroupLayout id="dropBox2-1" layout="scroll"
+                                     inlineStyle="width: 225px; height: 75px; padding: 5px;">
+                  <af:dropTarget actions="MOVE"
+                                 dropListener="#{demoDropHandler.handleComponentMove}">
+                    <af:dataFlavor flavorClass="javax.faces.component.UIComponent" discriminant="col2"/>
+                  </af:dropTarget>
+                  <af:panelBox id="panelBox2-1" text="Background Dark"
+                               ramp="core" background="dark" styleClass="AFStretchWidth"
+                               contentStyle="height: 50px; vertical-align: top;">
+                    <af:outputText value="dark panel box content" id="ot2-1"/>
+                    <af:componentDragSource discriminant="col2"/>
+                  </af:panelBox>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="dropBox2-2" layout="scroll"
+                                     inlineStyle="width: 225px; height: 75px; padding: 5px;">
+                  <af:dropTarget actions="MOVE"
+                                 dropListener="#{demoDropHandler.handleComponentMove}">
+                    <af:dataFlavor flavorClass="javax.faces.component.UIComponent" discriminant="col2"/>
+                  </af:dropTarget>
+                  <af:panelBox id="panelBox2-2" text="Background Default" ramp="highlight"
+                               background="default"
+                               styleClass="AFStretchWidth"
+                               contentStyle="height: 50px; vertical-align: top;">
+                    <af:outputText value="dark panel box content" id="ot2-2"/>
+                    <af:componentDragSource discriminant="col2"/>
+                  </af:panelBox>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="dropBox2-3" layout="scroll"
+                                     inlineStyle="width: 225px; height: 75px; padding: 5px;">
+                  <af:dropTarget actions="MOVE"
+                                 dropListener="#{demoDropHandler.handleComponentMove}">
+                    <af:dataFlavor flavorClass="javax.faces.component.UIComponent" discriminant="col2"/>
+                  </af:dropTarget>
+                  <af:panelBox id="panelBox2-3" text="Background Light" ramp="highlight"
+                               background="light"
+                               styleClass="AFStretchWidth"
+                               contentStyle="height: 50px; vertical-align: top;">
+                    <af:outputText value="dark panel box content" id="ot2-3"/>
+                    <af:componentDragSource discriminant="col2"/>
+                  </af:panelBox>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+
+            </h:panelGrid>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

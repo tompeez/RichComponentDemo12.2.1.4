@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="form Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="defaultCommand" value=":dmoTpl:button2"/>
+        <f:attribute name="tagName" value="form"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="editingForm" value="true"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmDisabled" value="true"/>
+        <f:attribute name="gmDisabledNotes" value="Attempting to stretch a form is currently unsupported except if its ancestor is an af:document.  Otherwise stretching a form is unsupported and the result may change in the future."/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:outputFormatted value="&lt;b>Use the editor to the right to adjust the attributes for the form.&lt;/b>"
+                                  id="of1"/>
+              <af:outputText value="The form component isn't obviously visible like other components. Try setting the inlineStyle to 'border-top:10px solid red'."
+                             id="ot1"/>
+              <af:separator id="s2"/>
+              <af:spacer height="5px" id="s3"/>
+              <af:outputText value="To see the defaultCommand in action enter some text below and hit enter. You can use the property editor to change the default command either to null (clear the field) or to dmoTpl:button1."
+                             id="ot2"/>
+              <af:spacer height="5px" id="s4"/>
+              <af:inputText label="enter text and hit enter button" value="#{demoForm.value}"
+                            id="it1"/>
+              <af:spacer height="5px" id="s5"/>
+              <af:panelGroupLayout id="pgl3">
+                <af:commandButton text="button 1" id="button1" partialSubmit="true"
+                                  actionListener="#{demoForm.actionListener}"/>
+                <af:spacer width="10" id="s6"/>
+                <af:commandButton text="button 2" id="button2" partialSubmit="true"
+                                  actionListener="#{demoForm.actionListener}"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="pgl4">
+                <af:spacer height="5px" id="s7"/>
+                <af:outputText value="The submitted value was: " id="ot3"/>
+                <af:outputText value="#{demoForm.value}" partialTriggers="button1 button2"
+                               id="ot4"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="pgl5">
+                <af:outputText value="The submitting button was: " id="ot5"/>
+                <af:outputText value="#{demoForm.buttonText}" partialTriggers="button1 button2"
+                               id="ot6"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

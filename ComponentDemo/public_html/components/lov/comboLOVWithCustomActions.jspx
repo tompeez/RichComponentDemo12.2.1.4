@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="inputComboboxListOfValues Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputComboboxListOfValues"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:popup clientComponent="true" id="createpopup">
+              <af:dialog title="Create Employee" id="d2">
+                <af:inputText label="Name" id="it1"/>
+              </af:dialog>
+            </af:popup>
+            <af:popup clientComponent="true" id="popup2">
+              <af:dialog title="External Contacts" id="d3">
+                <af:outputText value="Contact1" id="ot1"/>
+              </af:dialog>
+            </af:popup>
+            <af:popup id="popupId">
+              <af:dialog id="d4">
+                <af:panelGroupLayout id="pgl2">
+                  <af:outputText value="output" id="ot2"/>
+                  <af:outputText value="output" id="ot3"/>
+                </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+            <f:facet name="separator">
+              <af:spacer height="2px" id="s1"/>
+            </f:facet>
+            <af:outputFormatted value="&lt;P>inputComboboxListOfValues provides the ability to specify custom actions through a facet 'customActions'"
+                                id="of1"/>
+
+            <af:inputComboboxListOfValues label="Ename" id="idInputComboboxListOfValues"
+                                          binding="#{editor.component}"
+                                          value="#{demoComboboxLOV.ename}"
+                                          autoSubmit="true"
+                                          popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name"
+                                          validator="#{demoComboboxLOV.validate}"
+                                          createPopupId="popupId"
+                                          model="#{demoComboboxLOV.listOfValuesModel}"
+                                          columns="45">
+              <f:facet name="customActions">
+                <af:group id="g1">
+                  <af:commandLink text="Create..." id="cl1">
+                    <af:showPopupBehavior popupId="createpopup"/>
+                  </af:commandLink>
+                  <af:commandLink text="Search External Contacts..." id="cl2">
+                    <af:showPopupBehavior popupId="popup2"/>
+                  </af:commandLink>
+                </af:group>
+              </f:facet>
+            </af:inputComboboxListOfValues>
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+              <af:commandButton text="full postback" id="coreCommand"/>
+              <af:panelGroupLayout id="pgl4">
+                <af:outputText value="The submitted value was: " id="ot4"/>
+                <af:outputText id="result" value="#{demoComboboxLOV.ename}"
+                               partialTriggers="richCommand idInputComboboxListOfValues"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="masonryLayout Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="masonryLayout"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:attribute name="centerBottomCollapsed" value="true"/>
+        <f:facet name="center">
+          <af:masonryLayout binding="#{editor.component}" id="ml1"
+                            reorderListener="#{demoMasonryLayout.handleBasicReorder}">
+            <af:dropTarget actions="MOVE" dropListener="#{demoMasonryLayout.handleDrop}">
+              <af:dataFlavor flavorClass="javax.faces.component.UIComponent"
+                             discriminant="masonryTile"/>
+            </af:dropTarget>
+            <af:iterator var="row" varStatus="stat"
+                         value="#{demoMasonryLayout.basicData}" id="it1">
+              <af:panelBox id="pb1" text="#{row.symbol}" showDisclosure="false"
+                           styleClass="#{row.symbol == 'H' ? 'AFMasonryTileSize2x1' : 'AFMasonryTileSize1x1'}">
+                <af:componentDragSource discriminant="masonryTile"/>
+                <af:outputText id="ot1" value="#{row.name}"/>
+              </af:panelBox>
+            </af:iterator>
+          </af:masonryLayout>
+        </f:facet>
+        <f:facet name="centerFooter">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <af:panelGroupLayout layout="vertical" inlineStyle="padding: 4px;" id="pgl2">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:spacer height="5px" id="s2"/>
+              <!-- Other pages of interest -->
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <af:outputFormatted value="&lt;B>See also:&lt;/B>" id="of1"/>
+                <af:goLink text="masonryLayoutBehavior Tag Demo"
+                           destination="masonryLayoutBehavior.jspx" id="gl1"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

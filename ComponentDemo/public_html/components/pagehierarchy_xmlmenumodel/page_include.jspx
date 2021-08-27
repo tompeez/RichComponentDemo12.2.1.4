@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Page Hierarchy Demo" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate viewId="#{templates.visualDesignTemplate}" id="pt1">
+        <f:attribute name="headerGlobalSize" value="45"/>
+        <f:attribute name="navigation3Size" value="75"/>
+        <f:attribute name="header2Size" value="15"/>
+        <f:attribute name="footer2Size" value="1"/>
+        <f:attribute name="footerGlobalSize" value="1"/>
+        <f:facet name="branding">
+          <af:outputText value="Page Hierarchy Demo" id="ot1"/>
+        </f:facet>
+
+        <jsp:include page="/components/pagehierarchy_xmlmenumodel/navigation_panelPageTemplate_include.jspx"/>
+
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+            <f:subview id="hierarchy">
+              <jsp:include page="/components/pagehierarchy_xmlmenumodel/page_content_include.jspx"/>
+            </f:subview>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

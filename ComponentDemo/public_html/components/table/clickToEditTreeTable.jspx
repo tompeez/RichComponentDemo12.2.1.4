@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="ClickToEdit Tree Table Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="treeTable"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+            <f:facet name="viewMenu">
+              <af:commandMenuItem text="Edit All" partialSubmit="true"
+                                  actionListener="#{tableTestData.toggleClickToEdit}" type="check"
+                                  id="eami" selected="false"/>
+            </f:facet>
+            <f:facet name="toolbar">
+              <af:toolbar>
+                <af:commandToolbarButton actionListener="#{tableTestData.toggleClickToEdit}"
+                                         id="eactb" type="check" selected="false"
+                                         icon="/images/editAll.png"
+                                         hoverIcon="/images/editAll-hvr.png"
+                                         depressedIcon="/images/editAll-dwn.png"/>
+              </af:toolbar>
+            </f:facet>
+            <af:treeTable var="node"
+                          id="tree" editingMode="clickToEdit" rowSelection="single" varStatus="vs"
+                          binding="#{editor.component}" value="#{treeTableTestData.treeModel}"
+                          summary="treeTable data">
+              <f:facet name="nodeStamp">
+                <af:column headerText="Node Value" width="200" sortable="true" rowHeader="unstyled"
+                           sortProperty="value" id="c1">
+                  <af:panelGroupLayout id="pgl2">
+                    <af:image source="#{node.icon}"
+                              inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                              shortDesc="node icon" id="i1"></af:image>
+                    <af:outputText id="valueStamp" value="#{node.value}"/>
+                  </af:panelGroupLayout>
+                </af:column>
+              </f:facet>
+              <af:column width="40" rowHeader="true" align="center" headerText="Number" id="crh">
+                <af:image source="/images/lock.png"
+                          inlineStyle="width:16px; height:16px;vertical-align:middle"
+                          shortDesc="locked row" id="lc" rendered="#{vs.index == 4}"/>
+              </af:column>
+              <af:column headerText="Size" align="end" id="c2">
+                <af:inputText id="size" value="#{node.size}" label="size" simple="true"
+                              disabled="#{vs.index == 4}"/>
+              </af:column>
+              <af:column headerText="Required field" showRequired="true" sortable="false" id="c3">
+                <af:inputText value="#{node.requiredField}" required="true" label="test Required"
+                              simple="true" id="it1" disabled="#{vs.index == 4}"/>
+              </af:column>
+              <af:column headerText="Col1" id="c4">
+                <af:selectBooleanCheckbox value="#{node.checked}" label="checkbox" simple="true"
+                                          id="sbc1" disabled="#{vs.index == 4}"/>
+              </af:column>
+              <af:column headerText="Col2" id="c5">
+                <af:selectOneChoice id="targetCompactChoice" value="#{node.selectOneChoiceValue}"
+                                    label="choice" simple="true" disabled="#{vs.index == 4}">
+                  <af:selectItem label="Mouse" value="Mouse" shortDesc="mouse from China" id="si1"/>
+                  <af:selectItem label="Speaker" value="Speaker" rendered="true" id="si2"/>
+                  <af:selectItem label="Head Phone" value="Head Phone"
+                                 shortDesc="Head Phone from China" id="si3"/>
+                </af:selectOneChoice>
+              </af:column>
+              <af:column headerText="Date-Time Accessed" id="c6">
+                <af:inputDate value="#{node.inputDate}" id="inptDateTimeInTable" label="date"
+                              simple="true" disabled="#{vs.index == 4}">
+                  <af:convertDateTime type="both"/>
+                </af:inputDate>
+              </af:column>
+              <af:column headerText="inputListOfValues" id="c7">
+                <af:inputListOfValues label="Ename" id="idInputListOfValues"
+                                      value="#{demoLOV.ename}" autoSubmit="true"
+                                      searchDesc="employee search"
+                                      model="#{demoLOV.listOfValuesModel}"
+                                      disabled="#{vs.index == 4}"/>
+              </af:column>
+              <af:column headerText="inputComboboxListOfValues" id="c8">
+                <af:inputComboboxListOfValues label="Ename" id="idInputComboboxListOfValues"
+                                              value="#{demoComboboxLOV.ename}" autoSubmit="true"
+                                              searchDesc="search for employee name"
+                                              model="#{demoComboboxLOV.listOfValuesModel}"
+                                              disabled="#{vs.index == 4}"/>
+              </af:column>
+            </af:treeTable>
+          </af:panelCollection>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

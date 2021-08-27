@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Client-side Converters and Validators" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="converters"/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelHeader text="Client-side Converters and Validators"
+                            id="ph1">
+              <af:outputText styleClass="AFInstructionText" value="In the following examples, converters
+            and validators run on the client, avoiding a round trip." id="ot1"/>
+              <af:spacer height="5" id="s1"/>
+              <af:outputText styleClass="AFInstructionText" value='If you would like to see the error
+            text generated when a user enters incorrect values, type "asdf" in the
+            fields below.  Note that you do not need to press Submit for the field to
+            turn red.  It is sufficient to simply step off the field (a server
+            round trip is not required as the ADF Faces framework provides client-side
+            validators and converters.)' id="ot2"/>
+              <af:spacer height="5" id="s2"/>
+              <af:outputText styleClass="AFInstructionText" value="Futhermore, notice that the error message does
+            not appear until you put focus in the field with an error.  This is to
+            allow for 'heads down' data entry." id="ot3"/>
+              <af:spacer height="5" id="s3"/>
+              <af:outputText styleClass="AFInstructionText" value="Finally, notice that when you fix
+            the error and enter valid data, the red border goes away as soon as you step off the field
+            (again, because of our client-side processing)." id="ot4"/>
+              <af:spacer height="10" id="s4"/>
+              <af:panelHeader text="Client Converters" id="ph2">
+                <af:panelFormLayout id="pfl1">
+                  <af:inputText value="#{validate.integer}" label="integer converter"
+                                shortDesc="shortDesc text: examples of unconvertable values: 'a' or '11111111111'"
+                                id="it1"/>
+                  <af:inputText value="#{validate.longValue}" label="long converter"
+                                shortDesc="shortDesc text: examples of unconvertable values: 'a' or '11111111111111111111'"
+                                id="it2"/>
+                  <af:inputText value="#{validate.short}" label="short converter"
+                                shortDesc="shortDesc text: examples of unconvertable values: 'a' or '111111'"
+                                id="it3"/>
+                  <af:inputText value="#{validate.byte}" label="byte converter"
+                                shortDesc="shortDesc text: examples of unconvertable values: 'a' or '1111'"
+                                id="it4"/>
+                  <af:inputText value="#{validate.float}" label="float converter"
+                                shortDesc="shortDesc text: examples of unconvertable values: 'a' or 'cat'"
+                                id="it5"/>
+                  <af:inputText value="#{validate.double}" label="double converter"
+                                shortDesc="shortDesc text: shortDesc text: examples of unconvertable values: 'a' or 'cat'"
+                                id="it6"/>
+                  <af:inputText label="color converter" value="#{validate.color}"
+                                shortDesc="shortDesc text: examples of unconvertable values: '9/05' or 'cat'"
+                                id="it7"/>
+                  <af:inputText label="color converter, patterns='RRGGBB'" value="#{validate.color2}"
+                                shortDesc="shortDesc text: examples of unconvertable values: '9/05' or 'cat'"
+                                id="it8">
+                    <af:convertColor patterns="RRGGBB"/>
+                  </af:inputText>
+                  <af:inputText label="date converter" value="#{validate.date}"
+                                shortDesc="shortDesc text: examples of unconvertable values: '#FFFF' or 'cat'"
+                                id="it9"/>
+                  <af:inputText label="date converter, dateStyle='short'" value="#{validate.date2}"
+                                shortDesc="shortDesc text: examples of unconvertable values: '#FFFF' or 'cat'"
+                                id="it10">
+                    <af:convertDateTime dateStyle="short"/>
+                  </af:inputText>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Client Validators" id="ph3">
+                <af:spacer height="10" id="s5"/>
+                <af:panelFormLayout id="pfl2">
+                  <af:inputText value="#{validate.integer}" label="long range validator"
+                                shortDesc="shortDesc text: examples of values that will fail validation: '4' or '7'"
+                                id="it11">
+                    <af:validateLongRange minimum="5" maximum="6"/>
+                  </af:inputText>
+                  <af:inputText value="#{validate.double}" label="double range validator"
+                                shortDesc="shortDesc text: examples of values that will fail validation: '5.1' or '6.8'"
+                                id="it12">
+                    <af:validateDoubleRange minimum="5.2" maximum="6.7"/>
+                  </af:inputText>
+                  <af:inputText value="#{validate.lengthValue}" label="length validator"
+                                shortDesc="shortDesc text: values longer than 4 will fail, for example: '44444444' or 'Seven'"
+                                id="it13">
+                    <af:validateLength maximum="4"/>
+                  </af:inputText>
+                  <af:inputText value="#{validate.regExpValue}" label="reg exp validator"
+                                shortDesc="shortDesc text: examples of values that will fail validation: 1','2','4' all values other than '9'"
+                                id="it14">
+                    <af:validateRegExp pattern="[9]"/>
+                  </af:inputText>
+                  <af:inputText value="#{validate.byteLengthValue}" label="byte length validator"
+                                shortDesc="shortDesc text: examples of values that will fail validation: 'ffffff' or '777777'"
+                                id="it15">
+                    <af:validateByteLength encoding="ISO-8859-1" maximum="4"/>
+                  </af:inputText>
+                  <af:inputText value="#{validate.date}" label="date range validator"
+                                shortDesc="shortDesc text: examples of values that will fail validation: 11-11-11"
+                                id="it16">
+                    <af:validateDateTimeRange minimum="2005-11-16" maximum="2007-12-16"/>
+                  </af:inputText>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Required" id="ph4">
+                <af:inputText required="true" label="required field" id="it17"/>
+              </af:panelHeader>
+            </af:panelHeader>
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <af:commandButton text="Submit" id="cb1"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <af:spacer height="10" id="s6"/>
+              <af:outputText value="See also:" id="ot5"/>
+              <af:panelList id="pl1">
+                <af:goLink text="convertColor" destination="validate/convertColor.jspx"
+                           id="gl1"/>
+                <af:goLink text="convertDateTime" destination="validate/convertDateTime.jspx"
+                           id="gl2"/>
+                <af:goLink text="convertNumber" destination="validate/convertNumber.jspx"
+                           id="gl3"/>
+                <af:goLink text="validateByteLength" destination="validate/validateByteLength.jspx"
+                           id="gl4"/>
+                <af:goLink text="validateDateRestriction"
+                           destination="validate/validateDateRestriction.jspx"
+                           id="gl5"/>
+                <af:goLink text="validateDateTimeRange"
+                           destination="validate/validateDateTimeRange.jspx"
+                           id="gl6"/>
+                <af:goLink text="validateDoubleRange"
+                           destination="validate/validateDoubleRange.jspx"
+                           id="gl7"/>
+                <af:goLink text="validateLength" destination="validate/validateLength.jspx"
+                           id="gl8"/>
+                <af:goLink text="validateLongRange" destination="validate/validateLongRange.jspx"
+                           id="gl9"/>
+                <af:goLink text="validateRegExp" destination="validate/validateRegExp.jspx"
+                           id="gl10"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

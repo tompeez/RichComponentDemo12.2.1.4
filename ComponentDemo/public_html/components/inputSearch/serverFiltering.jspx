@@ -1,0 +1,253 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2017, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="inputSearch serverFiltering Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        function _getFilterParams(context)
+        {
+          var searchTerms = context.searchTerms;
+          var isStartsWith = context.criteria == AdfRichInputSearch.CRITERIA_STARTS_WITH;
+          queryString = isStartsWith ? "filter=startsWith;" : "filter=contains;";
+
+          var filterAttributes = context.filterAttributes;
+          for (var i = 0, len = filterAttributes.length; i &lt; len; i++)
+            queryString += filterAttributes[i] + ",";
+
+          // remove trailing comma and append ; separator to append search terms
+          queryString = queryString.substr(0, queryString.length - 1) + ";";
+
+          for (var i = 0, len = searchTerms.length; i &lt; len; i++)
+            queryString += searchTerms[i] + ",";
+
+          // remove trailing comma
+          return queryString.substr(0, queryString.length - 1);
+        }
+
+        // Gets the value of the component based on which inputSearch is dependent on
+        function _getParentComponentValue()
+        {
+          var parentComp = AdfPage.PAGE.findComponent('dmoTpl:soc1');
+          var parentCompValue = parentComp.getValue();
+          return parentCompValue ? parentComp.getSelectItems()[parentComp.getValue()].getLabel() : null;
+        }
+
+        function _getDependentLovParams()
+        {
+          var filterVal = _getParentComponentValue();
+          if (filterVal)
+            return "deptName=" + filterVal;
+        }
+
+        // Invoked only during client filtering. this variable refers to inputSearch component
+        var filterValue;
+        function filterEmpForDept(suggestionItem, itemIndex)
+        {
+          // get the filterValue once for the 0th row and use the same for subsequent row filtering
+          if (itemIndex == 0)
+            filterValue = _getParentComponentValue();
+
+          return (filterValue &amp;&amp; suggestionItem.data['deptName'] == filterValue);
+        }
+
+        // this variable will refer to searchSection component
+        var test  = {};
+        test.simpleQueryParamProvider = function(request, context)
+        {
+          // Set query parameters for server filtering based on search terms
+          if (context.searchTerms)
+            request.queryString = _getFilterParams(context);
+          return request;
+        }
+
+        // this variable will refer to searchSection component
+        function dependentLovAndQueryParamProvider(request, context)
+        {
+          var dependentLovParams = _getDependentLovParams();
+          if (context.searchTerms)
+          {
+            // Set query parameters for server filtering based on search terms
+            // and dependent lov's parent component value
+            request.queryString = _getFilterParams(context);
+            if (dependentLovParams)
+              request.queryString += '&amp;' + dependentLovParams;
+          }
+          // set other query parameters like that for dependent lov
+          else if (dependentLovParams)
+          {
+            request.queryString = dependentLovParams;
+          }
+          return request;
+        }
+
+        /**
+         * Strips off the 'cache' search parameter in the url
+         */
+        function ignoreCacheAttr(normalizedUrl)
+        {
+          return normalizedUrl.replace(/cache=[a-z]+?(?:&amp;|$)/, '');
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputSearch"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s2"/>
+              </f:facet>
+              <af:messages id="m1"/>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="This is a simple test case for rich inputSearch
+                                  component with server filtering.&lt;" id="of1"/>
+              <af:inputSearch binding="#{editor.component}"
+                            id="iSearch"
+                            label="Select a person from the list: "
+                            valueAttribute="id"
+                            displayAttributes="fName lName id"
+                            value="#{inputSearchDemo.employeesSet}"
+                            selectionConverter="#{inputSearchDemo.selectionConverter}"
+                            partialTriggers="richCommand">
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                <f:converter converterId="oracle.adfdemo.InputSearchDemoConverter" />
+                <af:searchSection type="default"
+                                  dataUrl="/rest/employees?cache=etag&amp;limit=125000"
+                                  filterParameters="test.simpleQueryParamProvider"/>
+              </af:inputSearch>
+              <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+              <af:commandButton text="full postback" id="commandButton1"/>
+
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The submitted value was: " id="ot1"/>
+                <af:outputText partialTriggers="richCommand iSearch" id="result"
+                                value="#{inputSearchDemo.employeesSet}"/>
+              </af:panelGroupLayout>
+              <af:spacer height="25px" id="s0"/>
+            </af:panelGroupLayout>
+
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer height="25px" id="s3"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction" value="&lt;b>Additional Demos&lt;/b>"
+                                  id="of2"/>
+              <af:panelGroupLayout layout="vertical" id="pgl5">
+                  <af:outputFormatted value="This demo shows dependency based filtering with long
+                                       lists requiring server filtering in inputSearch" id="ot2"/>
+                  <af:selectOneChoice id="soc1" label="Department">
+                    <af:selectItem value="Accounting" label="Accounting" />
+                    <af:selectItem value="Payroll" label="Payroll" />
+                    <af:selectItem value="Human Resources" label="Human Resources" />
+                    <af:selectItem value="Sales" label="Sales" />
+                    <af:selectItem value="Marketing" label="Marketing" />
+                    <af:selectItem value="Customer Support" label="Customer Support" />
+                    <af:selectItem value="Logistics" label="Logistics" />
+                    <af:selectItem value="After sales" label="After sales" />
+                    <af:selectItem value="Professional Services" label="Professional Services" />
+                    <af:selectItem value="Billing" label="Billing" />
+                    <af:selectItem value="IT" label="IT" />
+                    <af:selectItem value="Real Estate" label="Real Estate" />
+                    <af:selectItem value="Security" label="Security" />
+                    <af:selectItem value="Public Relations" label="Public Relations" />
+                    <af:selectItem value="Front Desk" label="Front Desk" />
+                    <af:selectItem value="Legal" label="Legal" />
+                    <af:selectItem value="Inventory" label="Inventory" />
+                    <af:selectItem value="Purchasing" label="Purchasing" />
+                    <af:selectItem value="Licenses" label="Licenses" />
+                    <af:selectItem value="Operations" label="Operations" />
+                  </af:selectOneChoice>
+                  <af:inputSearch id="iSearch1"
+                                label="Employee"
+                                valueAttribute="id"
+                                displayAttributes="fName lName"
+                                filterAttributes="fName lName tags"
+                                selectionConverter="#{inputSearchDemo.selectionConverter}"
+                                filter="filterEmpForDept"
+                                autoSubmit="true"
+                                contentMode="table">
+                    <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                    <f:converter converterId="oracle.adfdemo.InputSearchDemoConverter" />
+                    <af:searchSection type="default" filterParameters="dependentLovAndQueryParamProvider"
+                      dataUrl="/#{request.contextPath}/rest/employees?cache=etag&amp;limit=125000" />
+                    <f:facet name="contentHeader">
+                      <af:sanitized >
+                        <th>Name</th> <th>Department</th> <th>Contact Email</th> <th><span style="font-style: italic;">Specializations</span></th>
+                      </af:sanitized>
+                    </f:facet>
+                    <f:facet name="contentStamp">
+                      <af:sanitized >
+                        <td>{{fName}} {{lName}}</td> <td>{{deptName}}</td> <td>{{email}}</td> <td><span style="font-style: italic;">{{tags}}</span></td>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:inputSearch>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl8">
+                  <af:outputFormatted value="This demo shows af:suggestionsSection working with af:inputSearch
+                                      configured for server filtering:" id="ot5"/>
+                  <af:inputSearch id="iSearch4"
+                            label="Select a person from the list (Filter by name and job title): "
+                            valueAttribute="id"
+                            displayAttributes="fName lName"
+                            filterAttributes="fName lName jobTitle id"
+                            selectionConverter="#{inputSearchDemo.selectionConverter}"
+                            autoSubmit="true"
+                            contentMode="list">
+                    <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                    <af:searchSection type="default"
+                                      filterParameters="test.simpleQueryParamProvider"
+                                      dataUrl="/rest/employees?cache=etag&amp;limit=125000" />
+                    <af:suggestionsSection dontCache="lName jobTitle" displayCount="15" cacheKeyGenerator="ignoreCacheAttr">
+                      <f:facet name="header">
+                        <af:sanitized>
+                          <th colspan="4">Recent Items</th>
+                        </af:sanitized>
+                      </f:facet>
+                    </af:suggestionsSection>
+                    <f:facet name="contentStamp">
+                      <af:sanitized>
+                        <div style="height: 68px; line-height: 18px; white-space: nowrap">
+                          <div style="padding: 0px; margin: 0px; width: 64px; display: inline-block;">
+                            <img src="../../images/people/{{profileKey}}" height="56" width="56" style="vertical-align: bottom; border: 2px solid #B8AE07; padding: 2px; border-radius: 10px;"/>
+                          </div>
+                          <div style="padding-left: 10px; display: inline-block;">
+                            <div style="color: #4646D0;font-size: medium;">{{fName}} {{lName}}</div>
+                            <div style="color: #4F4F4F;">{{jobTitle}} {{id}}</div>
+                            <div style="color: #4F4F4F; font-size: smaller;font-style: italic;">{{email}}</div>
+                          </div>
+                        </div>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:inputSearch>
+              </af:panelGroupLayout>
+
+              <af:panelGroupLayout layout="vertical" id="pgl16">
+                <af:separator id="s6"/>
+                <af:outputFormatted styleUsage="instruction"
+                                    value="&lt;b>Links To other inputSearch picker Demos&lt;/b>"
+                                    id="of5"/>
+                <af:panelList id="pl1">
+                  <af:goLink text="Dependent Lists"
+                             destination="/faces/components/inputSearch/dependentLov.jspx"
+                             id="gl0"/>
+                  <af:goLink text="Preferred Suggestions (af:suggestionsSection)"
+                            destination="/faces/components/suggestionsSection.jspx"
+                            id="gl1"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

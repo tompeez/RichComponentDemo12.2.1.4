@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Demo of Table Header/Footer Declarative PPR" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelStretchLayout id="pgl1" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:outputFormatted value="&lt;b>Change Cost/Sales amounts. The totals should update.&lt;/b>"
+                                  id="of1"/>
+            </f:facet>
+            <f:facet name="center">
+              <af:table rowSelection="single" id="table1" var="row" contentDelivery="immediate"
+                        rowBandingInterval="0" value="#{tableFooterTotalData.data}"
+                        binding="#{editor.component}" columnSelection="none"
+                        disableColumnReordering="true" columnStretching="last"
+                        summary="table total data" styleClass="AFStretchWidth">
+                <af:column width="20" rowHeader="true" headerText=""
+                            id="c1"/>
+                <af:column headerText="Name" align="#{row.align}" rowHeader="unstyled"
+                            id="c2">
+                  <af:outputText inlineStyle="margin-left:8px" value="#{row.name}"
+                                 id="ot1"/>
+                  <f:facet name="footer" >
+                    <af:outputFormatted value="&lt;b>Total&lt;/b>" inlineStyle="margin-left:8px"/>
+                  </f:facet>
+
+                </af:column>
+                <af:column headerText="ID1"  id="c3">
+                  <af:outputText inlineStyle="margin-left:8px" value="#{row.id1}"
+                                 id="ot2"/>
+                </af:column>
+                <af:column headerText="ID2"  id="c4">
+                  <af:outputText inlineStyle="margin-left:8px" value="#{row.id2}"
+                                 id="ot3"/>
+                </af:column>
+                <af:column width="150"
+                            align="end" id="c5">
+                  <af:inputText value="#{row.cost}" id="costStamp" autoSubmit="true">
+                    <f:convertNumber
+                                     maxFractionDigits="2"/>
+                  </af:inputText>
+
+                  <f:facet name="header">
+                    <h:panelGrid columns="2" id="pg1">
+                      <af:outputFormatted value="&lt;b>Total Costs&lt;/b>"
+                                          id="of2"/>
+                      <af:outputText inlineStyle="margin-left:8px" partialTriggers="costStamp"
+                                     value="#{tableFooterTotalData.totalCost}"
+                                     id="ot4">
+                        <f:convertNumber
+                                         maxFractionDigits="2"/>
+                      </af:outputText>
+                    </h:panelGrid>
+                  </f:facet>
+                  <f:facet name="footer">
+                    <h:panelGrid columns="2" id="pg2">
+                      <af:outputFormatted value="&lt;b>Total Costs&lt;/b>"
+                                          id="of3"/>
+                      <af:outputText inlineStyle="margin-left:8px" partialTriggers="costStamp"
+                                     value="#{tableFooterTotalData.totalCost}"
+                                     id="ot5">
+                        <f:convertNumber
+                                         maxFractionDigits="2"/>
+                      </af:outputText>
+                    </h:panelGrid>
+                  </f:facet>
+                </af:column>
+                <af:column
+                           align="end" id="c6">
+                  <af:inputText value="#{row.sale}" id="salesStamp" autoSubmit="true">
+                    <f:convertNumber
+                                     maxFractionDigits="2"/>
+                  </af:inputText>
+                  <f:facet name="footer">
+                    <h:panelGrid columns="2" id="pg3">
+                      <af:outputFormatted value="&lt;b>Total Sales&lt;/b>"
+                                          id="of4"/>
+                      <af:outputText inlineStyle="margin-left:8px" partialTriggers="salesStamp"
+                                     value="#{tableFooterTotalData.totalSales}"
+                                     id="ot6">
+                        <f:convertNumber
+                                         maxFractionDigits="2"/>
+                      </af:outputText>
+                    </h:panelGrid>
+                  </f:facet>
+                  <f:facet name="header">
+                    <h:panelGrid columns="2" id="pg4">
+                      <af:outputFormatted value="&lt;b>Total Sales&lt;/b>"
+                                          id="of5"/>
+                      <af:outputText inlineStyle="margin-left:8px" partialTriggers="salesStamp"
+                                     value="#{tableFooterTotalData.totalSales}"
+                                     id="ot7">
+                        <f:convertNumber
+                                         maxFractionDigits="2"/>
+                      </af:outputText>
+                    </h:panelGrid>
+                  </f:facet>
+                </af:column>
+              </af:table>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

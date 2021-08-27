@@ -1,0 +1,234 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelDrawer Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelDrawer"/>
+        <f:attribute name="visualDesignName" value="tabs"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelTabbed partialTriggers="sor2 sor3 sor4"
+                          position="#{sessionScope.panelTabbedPosition == null? 'start' : sessionScope.panelTabbedPosition}"
+                          dimensionsFrom="#{sessionScope.panelTabbedDimensionsFrom}"
+                          id="binky">
+            <af:showDetailItem textAndAccessKey="Ta&amp;b 1" 
+                         icon="/images/icon_pie_24X24_ena.png"
+                         hoverIcon="/images/icon_pie_24X24_ovr.png"
+                         depressedIcon="/images/icon_pie_24X24_sel.png" 
+                         disabledIcon="/images/icon_pie_24X24_dis.png" >
+              <af:outputText value="Tab 1 First Child"/>
+              <af:outputText value="Tab 1 Second Child"/>
+              <af:spacer height="300px"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tab 2" disclosed="true"
+                         icon="/images/icon_chat_24X24_ena.png"
+                         hoverIcon="/images/icon_chat_24X24_ovr.png"
+                         depressedIcon="/images/icon_chat_24X24_sel.png" 
+                         disabledIcon="/images/icon_chat_24X24_dis.png" 
+                        stretchChildren="#{requestScope.showDetailItemStretchChildren}">
+            <af:panelDrawer binding="#{editor.component}" height="100%"
+                            partialTriggers="sbc1 drawerToggle" id="myDrawer">
+              <af:showDetailItem textAndAccessKey="Ta&amp;b 1" 
+                                 icon="/images/icon_library_24X24_ena.png"
+                                 hoverIcon="/images/icon_library_24X24_ovr.png"
+                                 depressedIcon="/images/icon_library_24X24_sel.png" 
+                                 disabledIcon="/images/icon_library_24X24_dis.png" 
+                                 shortDesc="tab 1 short desc" id="sdi1">
+                <af:commandButton partialSubmit="true" text="Cause Partial Submit"/>
+                <af:outputText value="Tab 1 First Child"/>
+                <af:outputText value="Tab 1 Second Child"/>
+                <af:spacer height="1000" width="200" inlineStyle="border:1px solid red"/>
+              </af:showDetailItem>
+              <af:showDetailItem text="Tab 2" 
+                                 icon="/images/icon_chat_24X24_ena.png"
+                                 hoverIcon="/images/icon_chat_24X24_ovr.png"
+                                 depressedIcon="/images/icon_chat_24X24_sel.png" 
+                                 disabledIcon="/images/icon_chat_24X24_dis.png" 
+                                 shortDesc="tab 2 short desc" id="sdi2">
+                <af:outputText value="Tab 2 First Child"/>
+                <af:outputText value="Tab 2 Second Child"/>
+                <af:showDetail disclosed="false">
+                  <af:inputText required="true" label="inside 1" id="drawerIt1"/>
+                  <af:inputText required="true" label="inside 2" id="drawerIt2"/>
+                  <af:inputText id="drawerIt3" validator="#{demoInput.validateServerOnly}" label="inside 3"/>
+                  <af:inputText id="drawerIt4" validator="#{demoInput.validateServerOnly}" label="inside 4"/>
+                </af:showDetail>
+                <af:commandButton partialSubmit="true" text="Cause Partial Submit"/>
+                <af:spacer width="1000" height="250"
+                           inlineStyle="border:1px solid red"/>
+              </af:showDetailItem>
+              <af:showDetailItem textAndAccessKey="Disabled tab &amp;3" disabled="true" 
+                                 icon="/images/icon_pie_24X24_ena.png"
+                                 hoverIcon="/images/icon_pie_24X24_ovr.png"
+                                 depressedIcon="/images/icon_pie_24X24_sel.png" 
+                                 disabledIcon="/images/icon_pie_24X24_dis.png" 
+                                 shortDesc="tab 3 short desc"  id="sdi3">
+                <af:outputText value="Tab 3 Only Child"/>
+                <af:spacer height="150px"/>
+              </af:showDetailItem>
+              <af:showDetailItem text="Tab 4" 
+                                 icon="/images/icon_briefcase_24X24_ena.png"
+                                 hoverIcon="/images/icon_briefcase_24X24Ovr.png"
+                                 depressedIcon="/images/icon_briefcase_24X24_sel.png" 
+                                 disabledIcon="/images/icon_briefcase_24X24_dis.png" 
+                                 shortDesc="tab 4 short desc"  id="sdi4">
+                <af:outputText value="Tab 4 First Child"/>
+                <af:outputText value="Tab 4 Second Child"/>
+                <af:commandButton partialSubmit="true" text="Cause Partial Submit"/>
+                <af:selectBooleanCheckbox id="sbc1" label="show text" autoSubmit="true"
+                                          value="#{requestScope.showText}"/>
+                <af:outputText rendered="#{requestScope.showText}"
+                               value="Wide text 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 "/>
+                <af:spacer height="180px"/>
+              </af:showDetailItem>
+            </af:panelDrawer>                                       
+                                         
+                <af:resource type="javascript">
+                  function toggleDrawer(event)
+                  {
+                    event.cancel();
+                    var eventComp = event.getSource();
+                    var drawer = eventComp.findComponent("sdi4");
+                    var disclosed = drawer.getDisclosed();
+                    drawer.setDisclosed(!disclosed);
+                  }
+                </af:resource>
+                <af:outputText value="Wide text 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 "/>
+                <!--af:showDetail disclosed="false">
+                  <af:inputText required="true" label="inside 1" id="drawerIt1a"/>
+                  <af:inputText required="true" label="inside 2" id="drawerIt2a"/>
+                  <af:inputText id="drawerIt3a" validator="#{demoInput.validateServerOnly}" label="inside 3"/>
+                  <af:inputText id="drawerIt4a" validator="#{demoInput.validateServerOnly}" label="inside 4"/>
+                </af:showDetail-->
+                <af:commandButton text="toggle drawer on server"
+                                  actionListener="#{drawer.toggle}"
+                                  id="drawerToggle"/>
+                <af:commandButton text="toggle drawer on client">
+                  <af:clientListener method="toggleDrawer" type="action"/>
+                </af:commandButton>
+                <af:showDetail undisclosedText="other panelDrawer demos" disclosed="true">
+                  <af:panelList>
+                    <af:goLink destination="panelDrawer/panelDrawerInPopup.jspx" text="panelDrawer in popup"/>
+                    <af:goLink destination="panelDrawer/panelDrawerInGrid.jspx" text="panelDrawer in panelGridLayout"/>
+                    <af:goLink destination="panelDrawer/panelDrawerAndPanelStretchLayout.jspx" text="panelDrawer in panelStretchLayout"/>
+                    <af:goLink destination="panelDrawer/panelDrawerDecorativeBox.jspx" text="panelDrawer in decorativeBox"/>
+                    <af:goLink destination="panelDrawer/panelDrawerSplitter.jspx" text="panelDrawer in splitter"/>
+                    <af:goLink destination="panelDrawer/panelDrawerThemes.jspx" text="panelDrawer in different themes"/>
+                    <af:goLink destination="panelDrawer/panelDrawerScrolling.jspx" text="panelDrawer in scrolling panelTabbed"/>
+                    <af:goLink destination="panelDrawer/panelDrawerScrollingPage.jspx" text="panelDrawer in page that uses browser scroll bar"/>
+                  </af:panelList>
+                </af:showDetail>
+                <af:showDetail undisclosedText="change attributes" disclosed="false">
+                  <af:panelFormLayout>
+                    <af:selectOneRadio label="change panelTabbed position attribute"
+                                       value="#{sessionScope.panelTabbedPosition}"
+                                       id="sor2" autoSubmit="true">
+                      <af:selectItem label="above" value="above"/>
+                      <af:selectItem label="below" value="below"/>
+                      <af:selectItem label="both" value="both"/>
+                      <af:selectItem label="left" value="left"/>
+                      <af:selectItem label="right" value="right"/>
+                      <af:selectItem label="start" value="start"/>
+                      <af:selectItem label="end" value="end"/>
+                    </af:selectOneRadio>
+                    <af:selectOneRadio label="change panelTabbed dimensionsFrom attribute"
+                                       value="#{sessionScope.panelTabbedDimensionsFrom}"
+                                       id="sor3" autoSubmit="true">
+                      <af:selectItem label="auto" value="auto"/>
+                      <af:selectItem label="parent" value="parent"/>
+                      <af:selectItem label="disclosedChild"
+                                     value="disclosedChild"/>
+                    </af:selectOneRadio>
+                    <af:selectOneRadio id="sor4"
+                                       label="set showDetailItem stretchChildren attribute"
+                                       autoSubmit="true"
+                                       value="#{requestScope.showDetailItemStretchChildren}">
+                      <af:selectItem value="none" label="none"/>
+                      <af:selectItem value="first" label="first"/>
+                    </af:selectOneRadio>
+                  </af:panelFormLayout>
+                </af:showDetail>
+                <af:outputText value="Wide text 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 "/>
+                <af:commandButton partialSubmit="true"
+                                  text="Cause Partial Submit"/>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="Disabled tab &amp;3"
+                               disabled="true" 
+                         icon="/images/icon_stats24X24_ena.png"
+                         hoverIcon="/images/icon_stats24X24_ovr.png"
+                         depressedIcon="/images/icon_stats24X24_sel.png" 
+                         disabledIcon="/images/icon_stats24X24_dis.png" >
+              <af:outputText value="Tab 3 Only Child"/>
+              <af:spacer height="250px"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tab 4" 
+                         icon="/images/icon_subscriptions2_24X24_ena.png"
+                         hoverIcon="/images/icon_subscriptions2_24X24_ovr.png"
+                         depressedIcon="/images/icon_subscriptions2_24X24_sel.png" 
+                         disabledIcon="/images/icon_subscriptions2_24X24_dis.png" >
+              <af:outputText value="Tab 4 First Child"/>
+              <af:outputText value="Tab 4 Second Child"/>
+              <af:commandButton partialSubmit="true"
+                                text="Cause Partial Submit"/>
+              <af:spacer height="280px"/>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="Ta&amp;b 5" 
+                               icon="/images/icon_library_24X24_ena.png"
+                               hoverIcon="/images/icon_library_24X24_ovr.png"
+                               depressedIcon="/images/icon_library_24X24_sel.png" 
+                               disabledIcon="/images/icon_library_24X24_dis.png" 
+                               shortDesc="tab 5 short desc" >
+              <af:outputText value="Tab 5 First Child"/>
+              <af:outputText value="Tab 5 Second Child"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tab 6" 
+                               icon="/images/icon_chat_24X24_ena.png"
+                               hoverIcon="/images/icon_chat_24X24_ovr.png"
+                               depressedIcon="/images/icon_chat_24X24_sel.png" 
+                               disabledIcon="/images/icon_chat_24X24_dis.png" 
+                               shortDesc="tab 6 short desc">
+              <af:outputText value="Tab 6 First Child"/>
+              <af:outputText value="Tab 6 Second Child"/>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="tab &amp;7" 
+                               icon="/images/icon_pie_24X24_ena.png"
+                               hoverIcon="/images/icon_pie_24X24_ovr.png"
+                               depressedIcon="/images/icon_pie_24X24_sel.png" 
+                               disabledIcon="/images/icon_pie_24X24_dis.png" 
+                               shortDesc="tab 7 short desc">
+              <af:outputText value="Tab 7 Only Child"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tab 8" 
+                               icon="/images/icon_briefcase_24X24_ena.png"
+                               hoverIcon="/images/icon_briefcase_24X24Ovr.png"
+                               depressedIcon="/images/icon_briefcase_24X24_sel.png" 
+                               disabledIcon="/images/icon_briefcase_24X24_dis.png" 
+                               shortDesc="tab 8 short desc">
+              <af:outputText value="Tab 8 First Child"/>
+              <af:outputText value="Tab 8 Second Child"/>
+              <af:spacer height="180px"/>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+        <af:panelGroupLayout />
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{pivotTableFeatureLinks.adjustablePivotTableTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Adjustable Pivot Table"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="Adjustable Pivot Table"/>    
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START TAG DEMO -->
+              <dvt:pivotTable id="goodPT"
+                   binding="#{editor.component}"
+                   contentDelivery="immediate"
+                   value="#{pivotTableAdjustable.dataModel}"                                         
+                   partialTriggers="::shapeChangeButton"
+                   summary="pivot table"
+                   inlineStyle="width:600px;height:400px"
+                   columnFetchSize="25"
+                   rowFetchSize="30"
+                   splitMode="enabled"
+                   />
+        <!-- END TAG DEMO -->
+            <af:panelGroupLayout layout="vertical" id="pgl1">
+              <f:facet name="separator">
+                <af:spacer height="3px" id="s2"/>
+              </f:facet>
+              <af:inputText id="columnEdgeMemberCountInputText"
+                            value="#{pivotTableAdjustable.columnEdgeMemberCounts}"
+                            label = "Column Edge Member Counts"
+                            contentStyle="width:70px"
+                            shortDesc="The number of members in each layer of the column edge, as a comma-separated list."
+                            partialTriggers="shapeChangeButton"
+                            />
+              <af:inputText id="rowEdgeMemberCountInputText"
+                            value="#{pivotTableAdjustable.rowEdgeMemberCounts}"
+                            label = "Row Edge Member Counts"
+                            contentStyle="width:70px"
+                            shortDesc="The number of members in each layer of the row edge, as a comma-separated list."
+                            partialTriggers="shapeChangeButton"
+                            />
+              <af:selectBooleanCheckbox id="coordCheckbox" 
+                                        value="#{pivotTableAdjustable.coordinateMode}" 
+                                        label="Coordinate Mode" 
+                                        shortDesc="Whether to display row/column coordinates in each cell rather than normal values.  Useful for testing."
+                                        partialTriggers="shapeChangeButton"
+                                        />                                        
+              <af:commandButton id="shapeChangeButton"
+                                text="Apply Changes"
+                                partialSubmit="true"
+                                />
+              <af:spacer     id="spacer3" height="20px"/>
+              
+              <af:outputFormatted id="expl1" value="&lt;b>Instructions:&lt;/b>    The text fields indicate the number of members in each layer.  E.g.:"/>
+              <!--  TBD: consider using af:verbatim to embed a small table with columns Entered Value, Result, and Number of Rows or Columns. 
+                    That might be easier to read than this bulleted list. -->
+              <af:panelList id="list">
+                  <af:outputText id="expl3" value="Enter 6,4 for 2 layers containing 6 and 4 members respectively, for a product of 6x4=24 rows or columns."/>
+                  <af:outputText id="expl8" value="Enter as many layers and members as you like, e.g. 3,1,6,20,5, which yields 1,800 rows or columns."/>
+                  <af:outputText id="expl4" value="Enter 20 for 1 layer containing 20 members, yielding 20 rows or columns."/>
+                  <af:outputText id="expl5" value="Leave it blank for 0 layers, yielding 1 row or column."/>
+                  <af:outputText id="expl6" value='Entering 0 for any layer results in a product of 0 rows or columns, causing the "No data" message to display.'/>
+                  <af:outputText id="expl7" value='Submitting new member counts discards all changes made to the Pivot Table, e.g. sorting.'/>
+              </af:panelList>  
+
+              <af:spacer height="25px" id="s3"/>
+            </af:panelGroupLayout>                    
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">     
+        <f:subview id="links">
+            <jsp:include page="/feature/pivotTable/pivotTableFeatureLinks.jspx" flush="true"/>
+        </f:subview>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

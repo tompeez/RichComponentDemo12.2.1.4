@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Table Column Footers Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputFormatted value="&lt;b>Table with Column Footers&lt;/b>"
+                                id="of1"/>
+            <af:table rowSelection="single" id="table1" var="row" rowBandingInterval="0"
+                      value="#{tableFooterTotalData.data}" binding="#{editor.component}"
+                      columnSelection="none" disableColumnReordering="true" columnStretching="last"
+                      inlineStyle="height:250px; width:600px;" summary="table total data"
+                     >
+              <af:column width="20" rowHeader="true" headerText="" styleClass="#{row.dataRow?'':'AFTableCellSubtotal'}"
+                         id="c1"/>
+              <af:column headerText="Name" align="#{row.align}" styleClass="#{row.dataRow?'':'AFTableCellSubtotal'}" rowHeader="unstyled"
+                         id="c2">
+                <af:outputText inlineStyle="margin-left:8px" value="#{row.name}"
+                               id="ot1"/>
+                <f:facet name="footer" >
+                  <af:outputFormatted value="&lt;b>Total&lt;/b>" inlineStyle="margin-left:8px"/>
+                </f:facet>                         
+              </af:column>
+              <af:column headerText="ID1" styleClass="#{row.dataRow?'':'AFTableCellSubtotal'}"
+                         id="c3">
+                <af:outputText inlineStyle="margin-left:8px" value="#{row.id1}"
+                               id="ot2"/>
+              </af:column>
+              <af:column headerText="ID2" styleClass="#{row.dataRow?'':'AFTableCellSubtotal'}"
+                         id="c4">
+                <af:outputText inlineStyle="margin-left:8px" value="#{row.id2}"
+                               id="ot3"/>
+              </af:column>
+              <af:column headerText="Costs" width="115" align="end" styleClass="#{row.dataRow?'':'AFTableCellSubtotal'}"
+                         id="c5">
+                <af:outputText value="#{row.cost}" id="ot4">
+                  <f:convertNumber currencySymbol="$" type="currency" maxFractionDigits="2"/>
+                </af:outputText>
+                <f:facet name="footer">
+                  <h:panelGrid columns="2" id="pg1">
+                    <af:outputFormatted value="&lt;b>Total&lt;/b>" id="of2"/>
+                    <af:outputText inlineStyle="margin-left:8px"
+                                   value="#{tableFooterTotalData.totalCost}"
+                                   id="ot5">
+                      <f:convertNumber currencySymbol="$" type="currency" maxFractionDigits="2"/>
+                    </af:outputText>
+                  </h:panelGrid>
+                </f:facet>
+              </af:column>
+              <af:column headerText="Sales" align="end" styleClass="#{row.dataRow?'':'AFTableCellSubtotal'}"
+                         id="c6">
+                <af:outputText value="#{row.sale}" id="ot6">
+                  <f:convertNumber currencySymbol="$" type="currency" maxFractionDigits="2"/>
+                </af:outputText>
+                <f:facet name="footer">
+                  <h:panelGrid columns="2" id="pg2">
+                    <af:outputFormatted value="&lt;b>Total&lt;/b>" id="of3"/>
+                    <af:outputText inlineStyle="margin-left:8px"
+                                   value="#{tableFooterTotalData.totalSales}"
+                                   id="ot7">
+                      <f:convertNumber currencySymbol="$" type="currency" maxFractionDigits="2"/>
+                    </af:outputText>
+                  </h:panelGrid>
+                </f:facet>
+              </af:column>
+            </af:table>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:outputText value="See also:" id="ot8"/>
+              <af:panelList maxColumns="2" rows="8" id="pl1">
+                <af:goLink text="Table" destination="../table.jspx" id="gl1"/>
+                <af:goLink text="PanelCollection" destination="../panelCollection.jspx"
+                           id="gl2"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

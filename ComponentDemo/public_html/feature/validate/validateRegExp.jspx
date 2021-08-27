@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="validateRegExp Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="validateRegExp"/>
+        <f:attribute name="demoKind" value="validator"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:messages id="m1"/>
+            <af:outputText styleClass="AFInstructionText"
+                           value="Example to demonstrate the expression validator.  Enter a value and tab out of the field."
+                           id="ot1"/>
+            <af:panelFormLayout id="pfl1">
+              <af:spacer height="10" id="s1"/>
+              <af:inputText value="#{validate.regExpValue}" label="Reg exp validator"
+                            id="it1">
+                <af:validateRegExp pattern="[9]"
+                                   hint="Examples of values that will fail validation: 1','2','4' all values other than '9'"/>
+              </af:inputText>
+              <af:inputText value="#{validate.regExpValue4}"
+                            label="Reg exp validator for phone number with custom message and hint"
+                            id="it2">
+                <af:validateRegExp pattern="[(][0-9][0-9][0-9][)][0-9][0-9][0-9][-][0-9][0-9][0-9][0-9]"
+                                   messageDetailNoMatch="The value {1} doesn't match the pattern: (xxx)xxx-xxxx"
+                                   hint="Example format: (xxx)xxx-xxxx"/>
+              </af:inputText>
+              <af:inputText value="#{validate.regExpValue2}"
+                            label="Reg exp validator with custom message and hint"
+                            id="it3">
+                <af:validateRegExp pattern="[9]"
+                                   messageDetailNoMatch="The value {1} doesn't match the following pattern: {2}"
+                                   hint="Examples of values that will fail validation: 1','2','4' all values other than '9'"/>
+              </af:inputText>
+              <af:inputText value="#{validate.regExpValue3}"
+                            label="Reg exp validator with custom hint and short desc"
+                            shortDesc="examples of values that will fail validation: 1','2','4' all values other than '9'"
+                            id="it4">
+                <af:validateRegExp pattern="[9]" hint="The pattern {0}"/>
+              </af:inputText>
+            </af:panelFormLayout>
+            <af:commandButton text="Submit" id="cb1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

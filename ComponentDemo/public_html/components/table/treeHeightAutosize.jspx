@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Tree AutoHeight Rows Demo" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelTabbed dimensionsFrom="auto">
+            <af:showDetailItem text="Tree Height AutoSized"
+                               stretchChildren="first">
+              <af:panelGroupLayout layout="scroll">
+                <af:outputFormatted value="&lt;b>Tree using 'autoHeightRows'= #{treeAutoHeightData.autoHeightRows}&lt;/b>"
+                                    id="of1"/>
+                <af:panelGroupLayout layout="horizontal" id="pglh1">
+                  <af:selectBooleanCheckbox text="Content Delivery Lazy  "
+                                            id="sbc1">
+                    <af:setPropertyListener from="#{facesContext.externalContext.requestParameterMap['dmoTpl:sbc1']}"
+                                            to="#{pageFlowScope.isLazy}"
+                                            type="valueChange"/>
+                  </af:selectBooleanCheckbox>
+                  <af:commandButton partialSubmit="false" text="Refresh Page"
+                                    id="cb1"/>
+                </af:panelGroupLayout>
+                <af:separator id="spt"/>
+                <af:tree var="node"
+                         summary="Tree AutoHeight Rows Demo" id="tt1"
+                         varStatus="vs" rowSelection="single"
+                         value="#{treeAutoHeightData.treeModel}"
+                         contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}"
+                         autoHeightRows="#{treeAutoHeightData.autoHeightRows}">
+                  <f:facet name="nodeStamp">
+                    <af:panelGroupLayout id="pgl3">
+                      <af:image source="#{node.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i1"/>
+                      <af:outputText value="#{node.value}" id="ot2"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <f:facet name="pathStamp">
+                    <af:panelGroupLayout id="pgl4">
+                      <af:image source="#{node.icon}"
+                                inlineStyle="vertical-align:middle;" id="i2"/>
+                      <af:outputFormatted value="&lt;b> #{node.value} &lt;/b>"
+                                          id="of2"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:tree>
+                <af:outputFormatted id="ot11"
+                                    value="&lt;b>Output text following auto-height tree&lt;/b>"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="PanelCollection Tree Height AutoSized"
+                               stretchChildren="first">
+              <af:panelGroupLayout layout="scroll">
+                <af:outputFormatted value="&lt;b>Tree using 'autoHeightRows'= #{treeAutoHeightData.autoHeightRows}&lt;/b>"
+                                    id="of1a"/>
+                <af:panelGroupLayout layout="horizontal" id="pglh1a">
+                  <af:selectBooleanCheckbox text="Content Delivery Lazy  "
+                                            id="sbc1a">
+                    <af:setPropertyListener from="#{facesContext.externalContext.requestParameterMap['dmoTpl:sbc1']}"
+                                            to="#{pageFlowScope.isLazy}"
+                                            type="valueChange"/>
+                  </af:selectBooleanCheckbox>
+                  <af:commandButton partialSubmit="false" text="Refresh Page"
+                                    id="cb1a"/>
+                </af:panelGroupLayout>
+                <af:separator id="spta"/>
+                <af:panelCollection>
+                  <af:tree var="node"
+                           summary="Tree AutoHeight Rows Demo" id="tt1a"
+                           varStatus="vs" rowSelection="single"
+                           value="#{treeAutoHeightData.treeModel}"
+                           contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}"
+                           autoHeightRows="#{treeAutoHeightData.autoHeightRows}">
+                    <f:facet name="nodeStamp">
+                      <af:panelGroupLayout id="pgl3a">
+                        <af:image source="#{node.icon}"
+                                  inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                  id="i1"/>
+                        <af:outputText value="#{node.value}" id="ot2a"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="pathStamp">
+                      <af:panelGroupLayout id="pgl4a">
+                        <af:image source="#{node.icon}"
+                                  inlineStyle="vertical-align:middle;"
+                                  id="i2a"/>
+                        <af:outputFormatted value="&lt;b> #{node.value} &lt;/b>"
+                                            id="of2a"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:tree>
+                </af:panelCollection>
+                <af:outputFormatted id="ot11a"
+                                    value="&lt;b>Output text following auto-height tree&lt;/b>"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

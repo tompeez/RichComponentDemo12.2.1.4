@@ -1,0 +1,1994 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+
+<features xmlns="http://xmlns.oracle.com/adf/faces/feature">
+
+  <feature>
+    <feature-name>AdfBootstrap</feature-name>
+    <feature-class>oracle/adfinternal/view/js/bootstrap/AdfBootstrap.js</feature-class>
+    <feature-class>oracle/adf/view/js/base/AdfStrings.js</feature-class>
+    <feature-class>oracle/adf/view/js/assert/AdfAssert.js</feature-class>
+    <feature-class>oracle/adf/view/js/base/AdfObject.js</feature-class>
+    <feature-class>oracle/adf/view/js/profiling/AdfProfilerStub.js</feature-class>
+    <feature-class>oracle/adf/view/js/logging/AdfLogRecord.js</feature-class>
+    <feature-class>oracle/adf/view/js/logging/AdfLogWriter.js</feature-class>
+    <feature-class>oracle/adf/view/js/logging/AdfBufferedLogWriter.js</feature-class>
+    <feature-class>oracle/adf/view/js/logging/AdfLogger.js</feature-class>
+    <feature-class>oracle/adf/view/js/logging/AdfAlertLogWriter.js</feature-class>
+    <feature-class>oracle/adf/view/js/logging/AdfClientFileLogWriter.js</feature-class>
+    <feature-class>oracle/adf/view/js/logging/AdfStatusLogWriter.js</feature-class>
+    <feature-class>oracle/adf/view/js/logging/AdfConsoleLogWriter.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfBaseEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfPhasedEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfComponentEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfDomComponentEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfComponentFocusEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfDomComponentFocusEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfUIInputEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/agent/AdfAgent.js</feature-class>
+    <feature-class>oracle/adf/view/js/agent/AdfTouchMoveManager.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/agent/AdfNavigationHistoryAgent.js</feature-class>
+    <feature-class>
+      oracle/adfinternal/view/js/logging/AdfSeleniumPerformanceLogWriter.js
+    </feature-class>
+
+    <!-- IE-specific agent classes -->
+    <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIELogWriter.js' : null}
+    </feature-class>
+     <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIEConsoleLogWriter.js' : null}
+    </feature-class>
+   <feature-class>
+      ${agent.ie ?'oracle/adfinternal/view/js/agent/ie/AdfIEAgent.js' : null}
+      </feature-class>
+    <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIE6Agent.js' : null}
+    </feature-class>
+     <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIE8Agent.js' : null}
+    </feature-class>
+     <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIE9Agent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfCompositeLogWriter.js' : null}
+    </feature-class>
+   <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIESwitchingLogWriter.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIENavigationHistoryAgent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIE8NavigationHistoryAgent.js' : null}
+    </feature-class>
+
+    <!-- Todo: aschwart - selectively include Agent classes -->
+
+    <feature-class>
+      ${agent.gecko ? 'oracle/adfinternal/view/js/agent/gecko/AdfGeckoLogWriter.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.gecko ? 'oracle/adfinternal/view/js/agent/gecko/AdfFireBugLogWriter.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.gecko ? 'oracle/adfinternal/view/js/agent/gecko/AdfGeckoAgent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.gecko ? 'oracle/adfinternal/view/js/agent/gecko/AdfGecko17Agent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.gecko ? 'oracle/adfinternal/view/js/agent/gecko/AdfGecko19Agent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.gecko ? 'oracle/adfinternal/view/js/agent/gecko/AdfGeckoNavigationHistoryAgent.js' : null}
+    </feature-class>
+
+    <!-- Todo: aschwart - Trinidad does not yet have an Opera agent - makes it difficult
+         to exclude these -->
+    <feature-class>oracle/adfinternal/view/js/agent/opera/AdfOperaLogWriter.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/agent/opera/AdfOperaAgent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/agent/opera/AdfOperaNavigationHistoryAgent.js</feature-class>
+
+    <feature-class>
+      ${agent.webkit ? 'oracle/adfinternal/view/js/agent/safari/AdfSafariLogWriter.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.webkit ? 'oracle/adfinternal/view/js/agent/safari/AdfSafariAgent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.webkit ? 'oracle/adfinternal/view/js/agent/safari/AdfSafariMobileAgent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.webkit ? 'oracle/adfinternal/view/js/agent/safari/AdfSafariTouchMoveManager.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.webkit ? 'oracle/adfinternal/view/js/agent/safari/AdfSafariNavigationHistoryAgent.js' : null}
+    </feature-class>
+
+    <feature-class>oracle/adf/view/js/base/AdfPage.js</feature-class>
+    <feature-class>oracle/adf/view/js/base/AdfLookAndFeel.js</feature-class>
+    <feature-class>oracle/adf/view/js/base/AdfKeyStroke.js</feature-class>
+    <feature-class>oracle/adf/view/js/base/AdfLocaleContext.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/util/AdfInputFileUtils.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlLookAndFeel.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPage.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlRichDialogService.js</feature-class>
+    <feature-class>oracle/adf/view/js/laf/inlineEditor/AdfRichInlineEditor.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfCore</feature-name>
+    <feature-class>oracle/adf/view/js/datatransfer/AdfDataFlavor.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlZOrderManager.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/comm/AdfXMLRequest.js</feature-class>
+    <feature-class>oracle/adf/view/js/dnd/AdfDnDContext.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfAutoDismissalManager.js</feature-class>
+    <feature-class>oracle/adf/view/js/base/AdfClientBehavior.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfJsfAjaxRequestEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/base/AdfCollections.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/comm/AdfMarshalingService.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/comm/AdfDataTransferRequestEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/comm/AdfIFrameDataTransferRequestEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/comm/AdfDataTransferService.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfCustomEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfRowKeySetChangeEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfFocusEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfSelectionEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfColumnSelectionEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfRowDisclosureEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfDropEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/convert/AdfMissingConverter.js</feature-class>
+
+    <feature-class>oracle/adfinternal/view/js/event/AdfAutoSubmitEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfSubmittedValueChangedEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfRedirectEvent.js</feature-class>
+
+    <feature-class>oracle/adf/view/js/component/AdfUIUtils.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/AdfShuttleUtils.js</feature-class>
+    <feature-class>oracle/adf/view/js/datatransfer/AdfTransferable.js</feature-class>
+    <feature-class>oracle/adf/view/js/datatransfer/AdfObjectTransferable.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfBusyStateEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfPropertyChangeEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/AdfUIComponent.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/AdfUIComponents.js</feature-class>
+    <!-- We have so many dependencies on AdfRichPopup (eg. many instanceof
+         AdfRichPopup checks), leaving AdfRichPopup definition in AdfCore -->
+    <feature-class>oracle/adf/view/js/component/AdfUIPopupBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/AdfUIPopup.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichPopupBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichPopup.js</feature-class>
+
+    <!-- AdfDhtmlPage depends on AdfRichForm and AdfRichSubform -->
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIValueBase.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIValue.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIEditableValueBase.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIEditableValue.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIForm.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichForm.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUISubform.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichSubform.js</feature-class>
+
+    <!-- AdfMessageUtils depends on AdfRichMessage and AdfRichDocument -->
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIMessage.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichMessage.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIDocument.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichDocument.js</feature-class>
+
+    <!-- Too many dependencies on AdfRichMenu - pulling it into AdfCore -->
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIPanel.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichMenu.js</feature-class>
+
+    <feature-class>oracle/adf/view/js/event/AdfActionEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfDisclosureEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfDialogEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfLaunchPopupEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfReturnPopupDataEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfPollEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfPopupCanceledEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfPopupClosedEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfPopupOpeningEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfPopupOpenedEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfQueryEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfQueryOperationEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfReturnEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfReturnPopupEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfValueChangeEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfSortEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfDomUIInputEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfItemEvent.js</feature-class>
+
+    <feature-class>
+      ${agent.gecko ? 'oracle/adfinternal/view/js/agent/gecko/AdfGeckoUIInputEvent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIEUIInputEvent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIE9UIInputEvent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.webkit ? 'oracle/adfinternal/view/js/agent/safari/AdfSafariUIInputEvent.js' : null}
+    </feature-class>
+
+    <feature-class>oracle/adf/view/js/dnd/AdfDragSource.js</feature-class>
+    <feature-class>oracle/adf/view/js/dnd/AdfDropTarget.js</feature-class>
+    <feature-class>oracle/adf/view/js/dnd/AdfDragRecognizer.js</feature-class>
+    <feature-class>oracle/adf/view/js/base/AdfUIPeer.js</feature-class>
+    <feature-class>oracle/adf/view/js/base/AdfFacesMessage.js</feature-class>
+
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfFocusUtils.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDomUtils.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfEventUtils.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfStyleUtils.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfMessageUtils.js</feature-class>
+
+    <!-- Todo: aschwart - break out overflow feature? -->
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfOverflowSupport.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfConveyorBeltSupport.js</feature-class>
+
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlShadowDecorator.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlZOrderLayer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlModalityManager.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfAbstractFloatingElement.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfRepositionable.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlDialogManager.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlPositionManager.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlPopupWindowFactory.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlPopupWindow.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlSimpleFloat.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlPopupSelector.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfInputComboboxListOfValuesWindow.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlNoteWindowPopupSelector.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlPopupMenu.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlTooltipManager.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlTooltip.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfPopupScopingUtils.js</feature-class>
+
+    <!-- Todo: aschwart - check to see who has dependencies on AdfDhtmLElementAnimator -->
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlElementAnimator.js</feature-class>
+
+    <feature-class>oracle/adf/view/js/laf/rich/AdfRichUIPeer.js</feature-class>
+
+    <!-- Todo aschwart: Break out base classes into features? -->
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlShowDisclosurePeer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputChooseBindingUtils.js</feature-class>
+
+    <!-- Todo aschwart: Break out internal events into features? -->
+    <feature-class>oracle/adfinternal/view/js/event/AdfContentFetchEvent.js</feature-class>
+
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfInitializationBehavior.js</feature-class>
+
+    <feature-class>oracle/adf/view/js/data/AdfSelectItem.js</feature-class>
+    <feature-class>oracle/adf/view/js/data/AdfRangeValue.js</feature-class>
+
+    <!--
+      Ideally we wouldn't need to pull this in here.  However,
+      AdfDhtmlInlineFramePeer.__iframeLoadHandler() is called before
+      our partitions are loaded, so only way to ensure this method
+      is present at iframe load time is to include it in core.
+    -->
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInlineFramePeer.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIValue</feature-name>
+
+    <!-- AdfUIValue pulled into AdfCore due to AdfDhtmlPage dependencies -->
+
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlValuePeer.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIEditableValue</feature-name>
+
+    <!-- AdfUIEditableValue pulled into AdfCore due to AdfDhtmlPage dependencies -->
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlEditableValuePeer.js</feature-class>
+
+    <feature-dependency>AdfUIValue</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIForm</feature-name>
+
+    <!-- AdfUIForm pulled into AdfCore due to AdfDhtmlPage dependencies -->
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUISubform</feature-name>
+
+    <!-- AdfUISubform pulled into AdfCore due to AdfDhtmlPage dependencies -->
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUICollection</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUICollection.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIIterator</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIIterator.js</feature-class>
+
+    <feature-dependency>AdfUICollection</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIPoll</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIPoll.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIDocument</feature-name>
+
+    <!-- AdfUIDocument pulled into AdfCore due to AdfDhtmlPage dependencies -->
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIInclude</feature-name>
+    <feature-class>oracle/adf/view/js/component/fragment/AdfUIInclude.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIDeclarativeComponent</feature-name>
+    <feature-class>oracle/adf/view/js/component/fragment/AdfUIDeclarativeComponent.js</feature-class>
+
+    <feature-dependency>AdfUIInclude</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIDynamicDeclarativeComponent</feature-name>
+    <feature-class>oracle/adf/view/js/component/fragment/AdfUIDynamicDeclarativeComponent.js</feature-class>
+
+    <feature-dependency>AdfUIInclude</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIDialog</feature-name>
+    <feature-class>oracle/adf/view/js/component/AdfUIDialogBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/AdfUIDialog.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUICalendar</feature-name>
+    <feature-class>oracle/adf/view/js/component/AdfUICalendar.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfCalendarDisplayChangeEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfCalendarActivityEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfCalendarEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfCalendarActivityDurationChangeEvent.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIChoose</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIChoose.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUICommand</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUICommand.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIDecorateCollection</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIDecorateCollection.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIGo</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIGo.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIInput</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIInput.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputBasePeer.js</feature-class>
+
+    <feature-dependency>AdfUIEditableValue</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIRegion</feature-name>
+    <feature-class>oracle/adf/view/js/component/fragment/AdfUIRegion.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIInputPopup</feature-name>
+    <feature-class>oracle/adf/view/js/component/AdfUIInputPopupBase.js</feature-class>
+
+    <feature-dependency>AdfUIInput</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIPopup</feature-name>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUINavigationPath</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUINavigationPath.js</feature-class>
+
+    <feature-dependency>AdfUICollection</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUINavigationLevel</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUINavigationLevel.js</feature-class>
+
+    <feature-dependency>AdfUICollection</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIObject</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIObject.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIOutput</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIOutput.js</feature-class>
+
+    <feature-dependency>AdfUIValue</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIPanel</feature-name>
+
+    <!-- AdfUIPanel pulled into AdfCore due to AdfRichMenu dependencies -->
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIProcess</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIProcess.js</feature-class>
+
+    <feature-dependency>AdfUICollection</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIProgress</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIProgress.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIReset</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIReset.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUISelectBoolean</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUISelectBoolean.js</feature-class>
+
+    <feature-dependency>AdfUIEditableValue</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUISelectInput</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUISelectInput.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUISelectOne</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUISelectOneBase.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUISelectOne.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectOnePeer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectOneListbasePeer.js</feature-class>
+
+    <feature-dependency>AdfUIEditableValue</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUISelectMany</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUISelectManyBase.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUISelectMany.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectManyPeer.js</feature-class>
+
+    <feature-dependency>AdfUIEditableValue</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUISelectOrder</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUISelectOrder.js</feature-class>
+
+    <feature-dependency>AdfUISelectMany</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIShowOne</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIShowOne.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIShowMany</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIShowMany.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIShowDetail</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIShowDetailBase.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIShowDetail.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIQuery</feature-name>
+    <feature-class>oracle/adf/view/js/component/AdfUIQuery.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUITable</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUITableBase.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUITable.js</feature-class>
+
+    <feature-dependency>AdfUIIterator</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUITable2</feature-name>
+    <feature-class>oracle/adf/view/js/component/AdfUITable2.js</feature-class>
+
+    <feature-dependency>AdfUITable</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIColumn</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIColumn.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfUITree</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUITreeBase.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUITree.js</feature-class>
+
+    <feature-dependency>AdfUICollection</feature-dependency>
+
+  </feature>
+
+
+  <feature>
+    <feature-name>AdfUITreeTable</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUITreeTableBase.js</feature-class>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUITreeTable.js</feature-class>
+
+    <feature-dependency>AdfUITree</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIMessage</feature-name>
+
+    <!-- AdfUIMessage class in core due to AdfMessageUtils dependency -->
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfUIMessages</feature-name>
+    <feature-class>org/apache/myjs/trinidad/component/AdfUIMessages.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichBreadCrumbs</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichBreadCrumbs.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlBreadCrumbsPeer.js</feature-class>
+
+    <feature-dependency>AdfUINavigationPath</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichCalendar</feature-name>
+    <feature-class>oracle/adfinternal/view/js/data/AdfCalendarActivity.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichCalendarBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichCalendar.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlCalendarPeer.js</feature-class>
+    <feature-dependency>AdfUICalendar</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichCarousel</feature-name>
+    <feature-class>oracle/adf/view/js/event/AdfCarouselSpinEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfCarouselDataFetchEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichCarouselBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichCarousel.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichCarouselItem.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlCarouselPeer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlCarouselItemPeer.js</feature-class>
+    <feature-dependency>AdfUIPanel</feature-dependency>
+    <feature-dependency>AdfUIIterator</feature-dependency>
+    <feature-dependency>AdfRichInputNumberSlider</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichChooseColor</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichChooseColorBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichChooseColor.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlChooseColorPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIChoose</feature-dependency>
+
+    <!--
+      Todo aschwart: AdfDhtmlChooseColorPeer has a circular dependency
+        on AdfDhtmlInputColorPeer.  For the moment, avoid specifying
+        the dependency here.  The color components should work just
+        fine as the presence of an af:chooseColor implies that an
+        af:inputColor is also present on the page (and thus, that
+        AdfDhtmlInputColorPeer will be present as well.)  Leaving
+        a todo here as we should still consider breaking the circular
+        dependency.
+
+    <feature-dependency>AdfRichInputColor</feature-dependency>
+    -->
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichChooseDate</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichChooseDate.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlChooseDatePeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIChoose</feature-dependency>
+
+    <!-- Peer performs instanceof AdfRichDialog test -->
+    <feature-dependency>AdfRichDialog</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichColumn</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichColumn.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlColumnPeer.js</feature-class>
+
+    <feature-dependency>AdfUIColumn</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichCommandButton</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichCommandButton.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlButtonPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUICommand</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichCommandImageLink</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichCommandImageLink.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlCommandImageLinkPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUICommand</feature-dependency>
+
+    <!-- AdfDhtmlCommandImageLinkPeer extends AdfDhtmlCommandLinkPeer -->
+    <feature-dependency>AdfRichCommandLink</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichCommandLink</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichCommandLink.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlCommandLinkPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUICommand</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichCommandMenuItem</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichCommandMenuItemBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichCommandMenuItem.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfMenuUtils.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlCommandMenuItemPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUICommand</feature-dependency>
+
+    <!-- Peer performs instanceof AdfRichMenu test.  Also has various
+        direct dependencies on AdfDhtmlMenuPeer. -->
+    <feature-dependency>AdfRichMenu</feature-dependency>
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichCommandNavigationItem</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichCommandNavigationItem.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlCommandNavigationItemPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUICommand</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlCommandLinkPeer -->
+    <feature-dependency>AdfRichCommandLink</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichCommandToolbarButton</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichCommandToolbarButtonBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichCommandToolbarButton.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlCommandToolbarButtonPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUICommand</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichCommandTrainStop</feature-name>
+    <feature-class>oracle/adfinternal/view/js/component/rich/nav/AdfRichCommandTrainStop.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlCommandTrainStopPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <!-- Peer extends AdfDhtmlCommandNavigationItemPeer -->
+    <feature-dependency>AdfRichCommandNavigationItem</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichContextInfo</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichContextInfo.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlContextInfoPeer.js</feature-class>
+    <feature-class>oracle/adf/view/js/event/AdfContextInfoEvent.js</feature-class>
+
+    <feature-dependency>AdfUIObject</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichDecorativeBox</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichDecorativeBox.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlDecorativeBoxPeer.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichDeclarativeComponent</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/fragment/AdfRichDeclarativeComponent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlDeclarativeComponentPeer.js</feature-class>
+
+    <feature-dependency>AdfUIDeclarativeComponent</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichDynamicDeclarativeComponent</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/fragment/AdfRichDynamicDeclarativeComponent.js</feature-class>
+
+    <feature-dependency>AdfUIDynamicDeclarativeComponent</feature-dependency>
+
+    <!-- we reuse the peer from the declarative component -->
+    <feature-dependency>AdfRichDeclarativeComponent</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichDocument</feature-name>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlDocumentPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIDocument</feature-dependency>
+
+    <!-- Peer calls AdfDhtmlPanelWindowPeer.initPositionWrapper() -
+         messaging-related depdency.  However, this is only called
+         when messages (and thus dialog/panelWindow) are present, so
+         we do not need to specify a hard dependency.  The advantage of
+         not specifying this dependency explicitly is that AdfRichDocument
+         can live in the core partition without also having to pull
+         in panelWindow/dialog.
+
+    <feature-dependency>AdfRichPanelWindow</feature-dependency>
+
+    -->
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichForm</feature-name>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlFormPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIForm</feature-dependency>
+
+    <!-- Peer calls AdfDhtmlSubformPeer.getDefaultCommandSubform() -->
+    <feature-dependency>AdfRichSubform</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichGoButton</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichGoButton.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlGoButtonPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIGo</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichGoImageLink</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichGoImageLink.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlGoImageLinkPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIGo</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichGoLink</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichGoLink.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlGoLinkPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIGo</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichGoMenuItem</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichGoMenuItemBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichGoMenuItem.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfMenuUtils.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlGoMenuItemPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIGo</feature-dependency>
+
+    <!-- Peer performs instanceof AdfRichMenu test.  Also has various
+        direct dependencies on AdfDhtmlMenuPeer. -->
+    <feature-dependency>AdfRichMenu</feature-dependency>
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichIcon</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichIcon.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlIconPeer.js</feature-class>
+
+    <feature-dependency>AdfUIObject</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichImage</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichImageBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichImage.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlImagePeer.js</feature-class>
+
+    <feature-dependency>AdfUIObject</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichInlineFrame</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichInlineFrame.js</feature-class>
+
+    <!--
+      Peer class moved up into AdfCore since iframe onload handler
+      calls into AdfDhtmlFranmeInlinePeer.__iframeLoadHandler for
+      auto-sizing before our library partitions are loaded.
+    -->
+
+    <feature-dependency>AdfUIObject</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichInputColor</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputColorBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputColor.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputColorPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUISelectInput</feature-dependency>
+
+    <feature-dependency>AdfRichChooseColor</feature-dependency>
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichInputComboboxListOfValues</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputComboboxListOfValues.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputComboboxListOfValuesPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <!-- Peer references AdfDhtmlTablePeer._ROW_KEY -->
+    <feature-dependency>AdfRichTable</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlInputListOfValuesBasePeer - pull in
+         AdfRichInputListOfValues feature to pick up the base -->
+    <feature-dependency>AdfRichInputListOfValues</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichInputDate</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputDateBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputDate.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputDatePeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUISelectInput</feature-dependency>
+
+    <feature-dependency>AdfRichChooseDate</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlInputTextPeer -->
+    <feature-dependency>AdfRichInputText</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichInputFile</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputFile.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputFilePeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <!-- Peer extends AdfDhtmlInputTextPeer -->
+    <feature-dependency>AdfRichInputText</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichInputListOfValues</feature-name>
+    <feature-class>oracle/adfinternal/view/js/event/AdfLovInternalEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfLovInternalPopupClosedEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputListOfValues.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputListOfValuesBasePeer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputListOfValuesPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIInputPopup</feature-dependency>
+
+    <!-- Base peer performs instanceof AdfRichTable test -->
+    <feature-dependency>AdfRichTable</feature-dependency>
+
+    <!-- Base peer performs instanceof AdfRichDialog test -->
+    <feature-dependency>AdfRichDialog</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichInputNumberSlider</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputNumberSliderBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputNumberSlider.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputNumberSliderPeer.js</feature-class>
+
+    <!-- Peer extends AdfDhtmlInputNumberSpinboxPeer -->
+    <feature-dependency>AdfRichInputNumberSpinbox</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichInputNumberSpinbox</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputNumberSpinboxBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputNumberSpinbox.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputNumberSpinboxBasePeer.js</feature-class>
+
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputNumberSpinboxPeer.js</feature-class>
+
+    <feature-dependency>AdfUIInput</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichInputRangeSlider</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputRangeSliderBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputRangeSlider.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputRangeSliderPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <!-- Peer extends AdfDhtmlInputNumberSliderPeer -->
+    <feature-dependency>AdfRichInputNumberSlider</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichInputText</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichInputText.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlInputTextPeer.js</feature-class>
+
+    <feature-dependency>AdfUIInput</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichCodeEditor</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichCodeEditorBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichCodeEditor.js</feature-class>
+    <feature-class>oracle/adf/view/js/base/AdfMarker.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlCodeEditorPeer.js</feature-class>     
+    <feature-dependency>AdfUIInput</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichMedia</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichMedia.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlMediaPeer.js</feature-class>
+
+    <feature-dependency>AdfUIObject</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichMenuBar</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichMenuBar.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlMenuBarPeer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfToolbarUtils.js</feature-class>
+
+    <feature-dependency>AdfUIMenuBar</feature-dependency>
+    <feature-dependency>AdfUIPanel</feature-dependency>
+    
+    <feature-dependency>AdfRichCommandNavigationItem</feature-dependency>
+
+  </feature>
+  
+  <feature>
+    <feature-name>AdfUIMenuBar</feature-name>
+    <feature-class>oracle/adf/view/js/component/AdfUIMenuBar.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+  </feature> 
+
+  <feature>
+    <feature-name>AdfRichMenu</feature-name>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlMenuPeer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfMenuUtils.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+    <!-- Peer performs instanceof AdfRichMenuBar test -->
+    <feature-dependency>AdfRichMenuBar</feature-dependency>
+
+    <!-- Peer performs instanceof AdfRichPopup test, plus popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichMessage</feature-name>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlMessagePeer.js</feature-class>
+
+    <feature-dependency>AdfUIMessage</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichMessages</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichMessages.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlMessagesPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIMessages</feature-dependency>
+
+    <!-- Peer performs instanceof AdfRichDocument test -->
+    <feature-dependency>AdfRichDocument</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichNavigationPane</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichNavigationPane.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlNavigationPanePeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUINavigationLevel</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichOutputFormatted</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichOutputFormatted.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlOutputFormattedPeer.js</feature-class>
+
+    <feature-dependency>AdfUIOutput</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichOutputLabel</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichOutputLabel.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlOutputLabelPeer.js</feature-class>
+
+    <feature-dependency>AdfUIOutput</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelAccordion</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelAccordion.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelAccordionPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-class>oracle/adfinternal/view/js/event/AdfReorderEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/util/AdfSubIdUtils.js</feature-class>
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelBorderLayout</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelBorderLayout.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelBorderLayoutPeer.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelBox</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelBoxBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelBox.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelBoxPeer.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+    <!-- Peer calls AdfDhtmlShowDetailPeer.ExtendPeer() -->
+    <feature-dependency>AdfRichShowDetail</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelCollection</feature-name>
+    <feature-class>oracle/adfinternal/view/js/event/AdfPanelCollectionDialogFetchEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichPanelCollectionBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichPanelCollection.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelCollectionPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIDecorateCollection</feature-dependency>
+
+    <!-- Peer has various references to AdfDhtmlTablePeer and AdfRichTable -->
+    <feature-dependency>AdfRichTable</feature-dependency>
+
+    <!-- Peer performs one instanceOf AdfRichTreeTable test -->
+    <feature-dependency>AdfRichTreeTable</feature-dependency>
+
+    <!-- Peer performs one instanceOf AdfRichTree test -->
+    <feature-dependency>AdfRichTree</feature-dependency>
+
+    <!-- Peer references AdfRichColumn.FROZEN, NOWRAP -->
+    <feature-dependency>AdfRichColumn</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelFormLayout</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelFormLayout.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelFormLayoutPeer.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelGroupLayout</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelGroupLayout.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelGroupLayoutPeer.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelHeader</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelHeader.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelHeaderPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelLabelAndMessage</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelLabelAndMessage.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelLabelAndMessagePeer.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelList</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelList.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelListPeer.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelSplitter</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelSplitterBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelSplitter.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelSplitterPeer.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelStretchLayout</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelStretchLayout.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelStretchLayoutPeer.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelDashboard</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelDashboard.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelDashboardPeer.js</feature-class>
+    <feature-dependency>AdfUIPanel</feature-dependency>
+    <feature-dependency>AdfDashboardDropTarget</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelTabbed</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichPanelTabbed.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPanelTabbedPeer.js</feature-class>
+
+    <feature-dependency>AdfUIShowOne</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPoll</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichPoll.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPollPeer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfPollHelper.js</feature-class>
+
+    <feature-dependency>AdfUIPoll</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPopup</feature-name>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlPopupPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIPopup</feature-dependency>
+
+    <!-- Peer calls AdfDhtmlFormPeer.__GetDefaultCommandTriggerId() -->
+    <feature-dependency>AdfRichForm</feature-dependency>
+
+    <!-- Peer calls AdfDhtmlSubformPeer.getDefaultCommandSubform() -->
+    <feature-dependency>AdfRichSubform</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichProgressIndicator</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichProgressIndicator.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlProgressIndicatorPeer.js</feature-class>
+
+    <feature-dependency>AdfUIProgress</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichQuery</feature-name>
+    <feature-class>oracle/adfinternal/view/js/event/AdfQueryInternalEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichQuery.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlQueryPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIQuery</feature-dependency>
+
+    <!-- Peer calls AdfDhtmlShowDetailPeer.ExtendPeer() -->
+    <feature-dependency>AdfRichShowDetail</feature-dependency>
+
+    <feature-dependency>AdfRichPanelHeader</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichQuickQuery</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichQuickQuery.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlQuickQueryPeer.js</feature-class>
+
+    <feature-dependency>AdfUIQuery</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichRegion</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/fragment/AdfRichRegionBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/fragment/AdfRichRegion.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlRegionPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIRegion</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlPanelBoxPeer -->
+    <feature-dependency>AdfRichPanelBox</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichResetButton</feature-name>
+    <feature-class>oracle/adfinternal/view/js/event/AdfResetEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichResetButton.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlResetButtonPeer.js</feature-class>
+
+    <feature-dependency>AdfUIReset</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichTextEditor</feature-name>
+
+    <feature-class>oracle/adfinternal/view/js/agent/AdfEditingAgent.js</feature-class>
+    <feature-class>
+      ${agent.gecko ? 'oracle/adfinternal/view/js/agent/gecko/AdfGeckoEditingAgent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIEEditingAgent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.webkit ? 'oracle/adfinternal/view/js/agent/safari/AdfSafariEditingAgent.js' : null}
+    </feature-class>
+
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichTextEditorBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichTextEditor.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlRichTextEditorPeer.js</feature-class>
+
+    <!-- AdfDhtmlRichTextEditorPeer requires AdfRichTextEditorBehaviorManager,
+         so we bundle the behavior manager here. -->
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfRichTextEditorBehaviorManager.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIInput</feature-dependency>
+
+    <!-- Peer performs instanceof tests for components below -->
+    <feature-dependency>AdfRichSelectOneChoice</feature-dependency>
+    <feature-dependency>AdfRichInputNumberSpinbox</feature-dependency>
+    <feature-dependency>AdfRichCommandToolbarButton</feature-dependency>
+    <feature-dependency>AdfRichInputColor</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSelectBooleanCheckbox</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectBooleanCheckbox.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectBooleanCheckboxPeer.js</feature-class>
+
+    <feature-dependency>AdfUISelectBoolean</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSelectBooleanRadio</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectBooleanRadio.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectBooleanRadioPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUISelectBoolean</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlSelectBooleanCheckboxPeer -->
+    <feature-dependency>AdfRichSelectBooleanCheckbox</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSelectManyCheckbox</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectManyCheckbox.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectManyCheckboxPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUISelectMany</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSelectManyChoice</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectManyChoice.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectManyChoicePeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUISelectMany</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlSelectManyListbox -->
+    <feature-dependency>AdfRichSelectManyListbox</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSelectManyListbox</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectManyListbox.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectManyListboxPeer.js</feature-class>
+
+    <feature-dependency>AdfUISelectMany</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSelectManyShuttle</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectManyShuttleBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectManyShuttle.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectManyShuttlePeer.js</feature-class>
+
+    <feature-dependency>AdfUISelectMany</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSelectOneChoice</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectOneChoice.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectOneChoicePeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUISelectOne</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlSelectOneListbox -->
+    <feature-dependency>AdfRichSelectOneListbox</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSelectOneListbox</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectOneListbox.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectOneListboxPeer.js</feature-class>
+
+    <feature-dependency>AdfUISelectOne</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSelectOneRadio</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectOneRadio.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSelectOneRadioPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUISelectOne</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSelectOrderShuttle</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectOrderShuttleBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/input/AdfRichSelectOrderShuttle.js</feature-class>
+
+    <feature-dependency>AdfUISelectOrder</feature-dependency>
+
+    <!-- No feature class - uses AdfDhtmlSelectManyShuttlePeer. -->
+    <feature-dependency>AdfRichSelectManyShuttle</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSeparator</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichSeparator.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSeparatorPeer.js</feature-class>
+
+    <feature-dependency>AdfUIObject</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichShowDetailHeader</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichShowDetailHeader.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlShowDetailHeaderPeer.js</feature-class>
+
+    <feature-dependency>AdfUIShowDetail</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlPanelHeaderPeer -->
+    <feature-dependency>AdfRichPanelHeader</feature-dependency>
+
+    <!-- Peer calls AdfDhtmlShowDetailPeer.ExtendPeer() -->
+    <feature-dependency>AdfRichShowDetail</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichShowDetailItem</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichShowDetailItem.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlShowDetailItemPeer.js</feature-class>
+
+    <feature-dependency>AdfUIShowDetail</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichShowDetail</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichShowDetail.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlShowDetailPeer.js</feature-class>
+
+    <feature-dependency>AdfUIShowDetail</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSpacer</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichSpacer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSpacerPeer.js</feature-class>
+
+    <feature-dependency>AdfUIObject</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichStatusIndicator</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichStatusIndicator.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlStatusIndicatorPeer.js</feature-class>
+
+    <feature-dependency>AdfUIObject</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichSubform</feature-name>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlSubformPeer.js</feature-class>
+
+    <feature-dependency>AdfUISubform</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichTable</feature-name>
+    <feature-class>oracle/adfinternal/view/js/event/AdfTableDataFetchEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfRangeChangeEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/event/AdfTableShowColumnsEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichTableBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichTable.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfTableUtils.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlTablePeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUITable2</feature-dependency>
+
+    <!-- Peer references AdfMenuUtils.AFR_TARGETROWCURRENCY and
+         AdfMenuUtils.AFR_TARGETCOMPONENTID -->
+    <feature-dependency>AdfRichCommandMenuItem</feature-dependency>
+    <feature-dependency>AdfRichGoMenuItem</feature-dependency>
+
+    <!-- Peer references various AdfRichColumn properties -->
+    <feature-dependency>AdfRichColumn</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichOutputText</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichOutputTextBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/output/AdfRichOutputText.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlTextPeer.js</feature-class>
+
+    <feature-dependency>AdfUIOutput</feature-dependency>
+    <feature-dependency>AdfInlineEditing</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichToolbar</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichToolbarBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichToolbar.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlToolbarPeer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfToolbarUtils.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+    <feature-dependency>AdfRichSpacer</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichToolbox</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/layout/AdfRichToolbox.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlToolboxPeer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfToolbarUtils.js</feature-class>
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichTrainButtonBar</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichTrainButtonBar.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlTrainButtonBarPeer.js</feature-class>
+
+    <feature-dependency>AdfUIProcess</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichTrain</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/nav/AdfRichTrain.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlTrainPeer.js</feature-class>
+
+    <feature-dependency>AdfUIProcess</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichTree</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichTreeBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichTree.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlTreePeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUITree</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlTreeTablePeer -->
+    <feature-dependency>AdfRichTreeTable</feature-dependency>
+
+    <!-- Popup hints -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichTreeTable</feature-name>
+    <feature-class>oracle/adfinternal/view/js/event/AdfTreeExpandAllEvent.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichTreeTableBase.js</feature-class>
+    <feature-class>oracle/adf/view/js/component/rich/data/AdfRichTreeTable.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfTreeUtils.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlTreeTablePeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUITreeTable</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlTablePeer -->
+    <feature-dependency>AdfRichTable</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichPanelWindow</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichPanelWindow.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlPanelWindowPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+    <!-- Peer performs instanceof AdfRichPopup tests -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfDialogServicePopupContainer</feature-name>
+    <feature-class>oracle/adfinternal/view/js/event/AdfDialogServicePopupContainerRemoveEvent.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/component/rich/AdfDialogServicePopupContainer.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlDialogServicePopupContainerPeer.js</feature-class>
+    <!-- Dependencies -->
+    <feature-dependency>AdfUIObject</feature-dependency>
+  </feature>
+
+
+  <feature>
+    <feature-name>AdfRichDialog</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichDialog.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlDialogPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIDialog</feature-dependency>
+
+    <!-- Peer extends AdfDhtmlPanelWindowPeer -->
+    <feature-dependency>AdfRichPanelWindow</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfRichNoteWindow</feature-name>
+    <feature-class>oracle/adf/view/js/component/rich/AdfRichNoteWindow.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/internalWindow/AdfDhtmlNoteWindowPeer.js</feature-class>
+
+    <!-- Dependencies -->
+
+    <feature-dependency>AdfUIPanel</feature-dependency>
+
+    <!-- Peer extends AdfRichUIPeer -->
+    <feature-dependency>AdfRichPopup</feature-dependency>
+
+  </feature>
+
+  <!-- Behavior features -->
+
+  <feature>
+    <feature-name>AdfRichTextEditorInsertBehavior</feature-name>
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfRichTextEditorBehavior.js</feature-class>
+
+    <!-- Behavior implementation depends on AdfDhtmlRichTextEditorPeer -->
+    <feature-dependency>AdfRichTextEditor</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfInsertTextBehavior</feature-name>
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfInsertTextBehavior.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/agent/AdfEditingAgent.js</feature-class>
+    <feature-class>
+      ${agent.gecko ? 'oracle/adfinternal/view/js/agent/gecko/AdfGeckoEditingAgent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.ie ? 'oracle/adfinternal/view/js/agent/ie/AdfIEEditingAgent.js' : null}
+    </feature-class>
+    <feature-class>
+      ${agent.webkit ? 'oracle/adfinternal/view/js/agent/safari/AdfSafariEditingAgent.js' : null}
+    </feature-class>
+
+    <!-- Behavior implementation depends on AdfDhtmlInputTextPeer -->
+    <feature-dependency>AdfRichInputText</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfAutoSuggestBehavior</feature-name>
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfAutoSuggestBehavior.js</feature-class>
+
+    <!-- Behavior implementation depends on AdfUIEditableValue -->
+    <feature-dependency>AdfUIEditableValue</feature-dependency>
+    <feature-dependency>AdfUIPopup</feature-dependency>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfJsfClientBehavior</feature-name>
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfJsfClientBehavior.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfPanelDashboardBehavior</feature-name>
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfPanelDashboardBehavior.js</feature-class>
+
+    <!-- Behavior implementation depends on AdfDhtmlPanelDashboardPeer -->
+    <feature-dependency>AdfRichPanelDashboard</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfShowPopupBehavior</feature-name>
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfShowPopupBehavior.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfShowPrintablePageBehavior</feature-name>
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfShowPrintablePageBehavior.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfScrollComponentIntoViewBehavior</feature-name>
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfScrollComponentIntoViewBehavior.js</feature-class>
+  </feature>
+  
+  <feature>
+    <feature-name>AdfCheckUncommittedDataBehavior</feature-name>
+    <feature-class>oracle/adfinternal/view/js/behavior/AdfCheckUncommittedDataBehavior.js</feature-class>
+  </feature>
+
+  <!-- Drag and drop features -->
+
+  <feature>
+    <feature-name>AdfDragAndDrop</feature-name>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlDnDContext.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfCollectionDragSource</feature-name>
+    <feature-class>oracle/adfinternal/view/js/dnd/AdfStampedDragSource.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/dnd/AdfTableDragSource.js</feature-class>
+    <feature-dependency>AdfDragAndDrop</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfCalendarDragSource</feature-name>
+    <feature-class>oracle/adfinternal/view/js/dnd/AdfCalendarDragSource.js</feature-class>
+    <feature-dependency>AdfDragAndDrop</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfStampedDropTarget</feature-name>
+    <feature-class>oracle/adfinternal/view/js/dnd/AdfStampedDropTarget.js</feature-class>
+    <feature-dependency>AdfDragAndDrop</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfCollectionDropTarget</feature-name>
+    <feature-class>oracle/adfinternal/view/js/dnd/AdfTableDropTarget.js</feature-class>
+    <feature-dependency>AdfStampedDropTarget</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfCalendarDropTarget</feature-name>
+    <feature-class>oracle/adfinternal/view/js/dnd/AdfCalendarDropTarget.js</feature-class>
+    <feature-dependency>AdfDragAndDrop</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfDashboardDropTarget</feature-name>
+    <feature-class>oracle/adfinternal/view/js/dnd/AdfDashboardDropTarget.js</feature-class>
+    <feature-dependency>AdfStampedDropTarget</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfAttributeDragSource</feature-name>
+    <feature-class>oracle/adf/view/js/dnd/AdfAttributeDragSource.js</feature-class>
+    <feature-dependency>AdfDragAndDrop</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfAttributeDropTarget</feature-name>
+    <feature-class>oracle/adf/view/js/dnd/AdfAttributeDropTarget.js</feature-class>
+    <feature-dependency>AdfDragAndDrop</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfComponentDragSource</feature-name>
+    <feature-class>oracle/adf/view/js/dnd/AdfComponentDragSource.js</feature-class>
+    <feature-dependency>AdfDragAndDrop</feature-dependency>
+  </feature>
+
+  <feature>
+    <feature-name>AdfDropTarget</feature-name>
+    <feature-class>oracle/adf/view/js/dnd/AdfBasicDropTarget.js</feature-class>
+    <feature-dependency>AdfDragAndDrop</feature-dependency>
+  </feature>
+
+  <!-- Inline editing feature -->
+  <feature>
+    <feature-name>AdfInlineEditing</feature-name>
+
+    <feature-class>oracle/adf/view/js/laf/inlineEditor/AdfRichPlainTextEditor.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/inlineEditor/AdfDhtmlSimpleLabelEditor.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/inlineEditor/AdfDhtmlSimpleTextEditor.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/inlineEditor/AdfDhtmlButtonTextEditor.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/inlineEditor/AdfDhtmlNavigationItemTextEditor.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/inlineEditor/AdfDhtmlSelectBooleanTextEditor.js</feature-class>
+
+  </feature>
+
+  <feature>
+    <feature-name>AdfEndUserMonitoring</feature-name>
+    <feature-class>oracle/adfinternal/view/js/monitoring/AdfUserActivityInfo.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfActiveDataService</feature-name>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfDhtmlActiveData.js</feature-class>
+  </feature>
+
+  <feature>
+    <feature-name>AdfAutomationTest</feature-name>
+
+    <feature-class>oracle/adfinternal/view/js/util/AdfSubIdUtils.js</feature-class>
+    <feature-class>oracle/adfinternal/view/js/laf/dhtml/rich/AdfRichUIPeerSubIdImpl.js</feature-class>
+
+    <feature-dependency>AdfRichInputComboboxListOfValues</feature-dependency>
+    <feature-dependency>AdfRichProgressIndicator</feature-dependency>
+    <feature-dependency>AdfRichInputColor</feature-dependency>
+    <feature-dependency>AdfRichInputDate</feature-dependency>
+    <feature-dependency>AdfRichInputFile</feature-dependency>
+    <feature-dependency>AdfRichInputListOfValues</feature-dependency>
+    <feature-dependency>AdfRichInputNumberSpinbox</feature-dependency>
+    <feature-dependency>AdfRichInputRangeSlider</feature-dependency>
+    <feature-dependency>AdfRichNavigationPane</feature-dependency>
+    <feature-dependency>AdfRichCommandNavigationItem</feature-dependency>
+    <feature-dependency>AdfRichRegion</feature-dependency>
+    <feature-dependency>AdfRichSelectBooleanRadio</feature-dependency>
+    <feature-dependency>AdfRichSelectManyCheckbox</feature-dependency>
+    <feature-dependency>AdfRichSelectManyChoice</feature-dependency>
+    <feature-dependency>AdfRichSelectOneChoice</feature-dependency>
+    <feature-dependency>AdfRichSelectOrderShuttle</feature-dependency>
+    <feature-dependency>AdfRichSelectOneRadio</feature-dependency>
+    <feature-dependency>AdfRichTable</feature-dependency>
+    <feature-dependency>AdfRichCarousel</feature-dependency>
+    <feature-dependency>AdfRichTextEditor</feature-dependency>
+    <feature-dependency>AdfRichCodeEditor</feature-dependency>
+    <feature-dependency>AdfRichToolbar</feature-dependency>
+    <feature-dependency>AdfRichTreeTable</feature-dependency>
+    <feature-dependency>AdfRichTree</feature-dependency>
+    <feature-dependency>AdfRichMessage</feature-dependency>
+    <feature-dependency>AdfRichMessages</feature-dependency>
+    <feature-dependency>AdfRichOutputLabel</feature-dependency>
+    <feature-dependency>AdfRichPanelSplitter</feature-dependency>
+    <feature-dependency>AdfRichQuery</feature-dependency>
+    <feature-dependency>AdfRichQuickQuery</feature-dependency>
+    <feature-dependency>AdfRichShowDetailItem</feature-dependency>
+    <feature-dependency>AdfRichPanelTabbed</feature-dependency>
+    <feature-dependency>AdfRichShowDetailHeader</feature-dependency>
+    <feature-dependency>AdfRichPanelAccordion</feature-dependency>
+    <feature-dependency>AdfRichDialog</feature-dependency>
+    <feature-dependency>AdfRichCommandMenuItem</feature-dependency>
+    <feature-dependency>AdfRichGoMenuItem</feature-dependency>
+    <feature-dependency>AdfRichCommandTrainStop</feature-dependency>
+    <feature-dependency>AdfRichTrain</feature-dependency>
+    <feature-dependency>AdfRichTrainButtonBar</feature-dependency>
+    <feature-dependency>AdfRichCommandToolbarButton</feature-dependency>
+    <feature-dependency>AdfRichCalendar</feature-dependency>
+    <feature-dependency>AdfRichPanelCollection</feature-dependency>
+    
+  </feature>
+</features>

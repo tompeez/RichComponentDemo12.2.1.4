@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map Styling" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Thematic Map Styling"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Thematic Map Styling"/>
+        <f:facet name="center">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+          <af:panelSplitter orientation="horizontal" splitterPosition="350" positionedFromEnd="true"
+                            styleClass="AFStretchWidth" id="ps1">
+            <f:facet name="first">
+              <dvt:thematicMap id="thematicMap" summary="Thematic map showing custom marker and area labels" 
+                               basemap="usa" partialTriggers="::it3 ::it4">
+                <af:transition transition="auto" triggerType="display"/>
+                <dvt:areaLayer id="areaLayer" layer="states" labelDisplay="on"
+                               labelStyle="#{stylesBean.areaLayerLabelStyle}" areaStyle="#{stylesBean.areaLayerStyle}">
+                  <dvt:areaDataLayer id="dataLayer" contentDelivery="immediate" value="#{stateData.colorModel}"
+                                     var="row" varStatus="rowStatus" selectionMode="single"
+                                     partialTriggers="::::it5 ::::it6">
+                    <dvt:areaLocation id="dataLoc" name="#{row.name}">
+                      <dvt:area id="a1" fillColor="#{row.color}" labelDisplay="on" value="#{row.data}"
+                                rendered="#{row.data > 5.5}" labelStyle="#{stylesBean.areaLabelStyle}"
+                                shortDesc="#{row.data}">
+                        <af:convertNumber pattern="#{stylesBean.areaPattern}"/>
+                      </dvt:area>
+                    </dvt:areaLocation>
+                  </dvt:areaDataLayer>
+                  <dvt:pointDataLayer id="pdl1" contentDelivery="immediate" value="#{stateData.pointModel}" var="row"
+                                      varStatus="rowStatus" selectionMode="single"
+                                      partialTriggers="::::it1 ::::it2 ::::soc1 ::::ic1 ::::ins1">
+                    <dvt:pointLocation id="pl1" type="pointXY" pointX="#{row.longitude}" pointY="#{row.latitude}">
+                      <dvt:marker id="m1" value="#{row.value}" shortDesc="#{row.value}" gradientEffect="none"
+                                  labelDisplay="on" labelPosition="bottom" labelStyle="#{stylesBean.markerLabelStyle}"
+                                  shape="diamond" scaleX="3" scaleY="3" borderColor="#{stylesBean.markerBorderColor}"
+                                  borderWidth="#{stylesBean.markerBorderWidth}"
+                                  borderStyle="#{stylesBean.markerBorderStyle}">
+                        <af:convertNumber pattern="#{stylesBean.markerPattern}"/>
+                      </dvt:marker>
+                    </dvt:pointLocation>
+                  </dvt:pointDataLayer>
+                </dvt:areaLayer>
+              </dvt:thematicMap>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="vertical">
+                <f:verbatim>                           
+                  <b>This demo shows the use of styling attributes to override the default skin styling in a Thematic Map.</b>    
+                  <ul>
+                    <li>Control the number format for labels using an af:convertNumber tag</li>
+                    <li>Override the default marker borders set in the skin by using the marker border attributes</li>
+                    <li>Style labels by using the labelStyle attribute on dvt:marker and dvt:area tags</li>
+                    <li>Change the default area layer colors by using the areaStyle attribute which supports
+                        background-color and border-color</li>
+                    <li>For an invisible area layer you can specify
+                        areaStyle="background-color:transparent;border-color:transparent;"</li>
+                  </ul>                                                                                      
+                </f:verbatim>
+                <af:spacer height="10px"/>
+                <af:separator/>
+                <af:spacer height="10px"/>
+                <af:outputText value="Marker Styling" inlineStyle="font-weight:bold;font-size:14px;color:#0F2B71;"/>
+                <af:inputNumberSlider id="ins1" label="Marker border width" value="#{stylesBean.markerBorderWidth}"
+                                      maximum="3" autoSubmit="true"/>
+                <af:inputColor id="ic1" label="Marker border color" value="#{stylesBean.markerBorderColor}"
+                               autoSubmit="true"/>
+                <af:selectOneChoice id="soc1" label="Marker border style" value="#{stylesBean.markerBorderStyle}"
+                                    autoSubmit="true">
+                  <af:selectItem label="solid"/>
+                  <af:selectItem label="none"/>
+                </af:selectOneChoice>
+                <af:inputText id="it1" label="Marker label style" value="#{stylesBean.markerLabelStyle}"
+                              autoSubmit="true"/>
+                <af:inputText id="it2" label="Marker label pattern" value="#{stylesBean.markerPattern}"
+                              autoSubmit="true"/>
+                <af:spacer height="10px"/>
+                <af:separator/>
+                <af:spacer height="10px"/>
+                <af:outputText value="Area Layer Styling" inlineStyle="font-weight:bold;font-size:14px;color:#0F2B71;"/>
+                <af:inputText id="it3" label="Area layer style" value="#{stylesBean.areaLayerStyle}" autoSubmit="true"/>
+                <af:inputText id="it4" label="Area layer label style" value="#{stylesBean.areaLayerLabelStyle}"
+                              autoSubmit="true"/>
+                <af:spacer height="10px"/>
+                <af:separator/>
+                <af:spacer height="10px"/>
+                <af:outputText value="Area Styling" inlineStyle="font-weight:bold;font-size:14px;color:#0F2B71;"/>
+                <af:inputText id="it5" label="Area label style" value="#{stylesBean.areaLabelStyle}" autoSubmit="true"/>
+                <af:inputText id="it6" label="Area label pattern" value="#{stylesBean.areaPattern}" autoSubmit="true"/>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

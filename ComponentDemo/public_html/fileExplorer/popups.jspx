@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <!-- popup for about File Explorer -->
+  <af:popup id="aboutPopup" clientComponent="true">
+    <af:panelWindow id="aboutPopupWindow" modal="true"
+                    title="#{explorerBundle['global.branding_name']}">
+      <af:panelGroupLayout layout="vertical" inlineStyle="width: 400px"
+                           id="pgl1">
+        <!-- Use af:panelHeader to show header info for about popup -->
+        <af:panelHeader text="#{explorerBundle['about.fileexplorer']}" size="0"
+                        id="ph1">
+          <f:facet name="context">
+            <af:image source="/fileExplorer/images/oracle_Logo.png"
+                      shortDesc="#{explorerBundle['global.oracle']}" id="i1"/>
+          </f:facet>
+          <f:facet name="info">
+            <af:panelGroupLayout id="pgl2">
+              <af:goLink textAndAccessKey="#{explorerBundle['navglobal.oracledotcom']}"
+                         destination="http://www.oracle.com" id="gl1"/>
+            </af:panelGroupLayout>
+          </f:facet>
+          <af:panelGroupLayout layout="vertical" id="pgl3">
+            <f:facet name="separator">
+              <af:spacer height="20" width="0" id="s1"/>
+            </f:facet>
+            <af:outputFormatted value="#{explorerBundle['about.fileexplorerdesc']}"
+                                id="of1"/>
+            <af:outputFormatted value="#{explorerBundle['about.richadfdesc']}"
+                                id="of2"/>
+          </af:panelGroupLayout>
+        </af:panelHeader>
+        <af:spacer height="20" width="0" id="s2"/>
+        <af:outputFormatted value="#{explorerBundle['about.copyright']}"
+                            id="of3"/>
+      </af:panelGroupLayout>
+    </af:panelWindow>
+  </af:popup>
+  <!-- popup for delete confirmation dialog -->
+  <af:popup id="deletePopupDialog">
+    <af:dialog title="#{explorerBundle['deletepopup.popuptitle']}"
+               type="yesNo"
+               dialogListener="#{explorer.headerManager.deleteItemFromDialog}"
+               id="d1">
+      <af:panelGroupLayout id="pgl4">
+        <af:outputFormatted value="#{explorerBundle['deletepopup.confirmation']}"
+                            id="of4"/>
+      </af:panelGroupLayout>
+    </af:dialog>
+  </af:popup>
+</jsp:root>

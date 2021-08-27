@@ -1,0 +1,788 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<!--
+PageMetaData:
+name: Auto-Height Tables
+categories: tableAndTree
+tags: table, panelCollection
+-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Table Height Autosize Demo" id="d1" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelTabbed id="ptb" dimensionsFrom="auto">
+            <af:showDetailItem stretchChildren="first" text="Table - Height Autosize" id="sdi1">
+              <af:panelGroupLayout layout="scroll" id="pgl">
+                <af:panelGroupLayout layout="horizontal" id="pglh1">
+                  <af:selectBooleanCheckbox text="Content Delivery Lazy &#160;" id="sbc1">
+                    <af:setPropertyListener from="#{facesContext.externalContext.requestParameterMap['dmoTpl:sbc1']}"
+                                                      to="#{pageFlowScope.isLazy}" type="valueChange"/>
+                  </af:selectBooleanCheckbox>
+                  <af:commandButton partialSubmit="false" text="Refresh Page" id="cb1"/>
+                </af:panelGroupLayout>
+                <af:separator id="emsp1"/>
+                <af:outputFormatted value="&lt;b>Table with autoHeightRows='5' and no data&lt;/b>"
+                                    id="ofem1"/>
+                <af:table rowSelection="single" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}"
+                    autoHeightRows="5" summary="table with autoHeightRows and empty text"
+                    var="test1" emptyText="#{emptyTable.emptyText}"
+                    value="#{emptyTable.data}" id="te1">
+                  <af:column width="40" headerText="Number" id="c1">
+                    <af:outputText value="rh" id="ot1"/>
+                  </af:column>
+                  <af:column headerText="Size" id="c2">
+                    <af:outputText value="size" id="ot2"/>
+                  </af:column>
+                  <af:column headerText="Date Modified" id="c3">
+                    <af:outputText value="date" id="ot3"/>
+                  </af:column>
+                  <af:column headerText="Col5" id="c4">
+                    <af:outputText value="col5" id="ot4"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="c5">
+                    <af:outputText value="col6" id="ot5"/>
+                  </af:column>
+                </af:table>
+                <af:separator id="fszsp"/>
+                <af:outputFormatted value="&lt;b>Table with autoHeightRows='5' and fetchSize='6'&lt;/b>"
+                                    id="ofsz1"/>
+                <af:table value="#{smallDataSet}" var="test1" id="tblfs" 
+                          contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" autoHeightRows="5" fetchSize="6" summary="table data">
+                  <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                             id="cfs1">
+                    <af:outputText value="#{test1.no}" id="otfs1"/>
+                  </af:column>
+                  <af:column displayIndex="3" headerText="Number" sortable="true" id="cfs2">
+                    <af:outputText value="#{test1.no}" id="otfs2"/>
+                  </af:column>
+                  <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                             id="cfs3">
+                    <af:panelGroupLayout id="pgfsl2">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                shortDesc="icon" id="i1"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}" id="ofst3"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                             displayIndex="2" id="cfs4">
+                    <af:outputText value="#{test1.size}" id="otfs4"/>
+                  </af:column>
+                  <af:column align="center" headerText="Date Modified" id="cfs5">
+                    <af:outputText value="#{test1.date}" id="otfs5"/>
+                  </af:column>
+                  <af:column headerText="Col5" id="cfs6">
+                    <af:outputText value="#{test1.col5}" id="otfs6"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="cfs7">
+                    <af:outputText value="#{test1.col6}" id="otfs7"/>
+                  </af:column>
+                  <af:column headerText="Col7" id="cfs8">
+                    <af:outputText value="#{test1.col7}" id="otfs8"/>
+                  </af:column>
+                  <af:column headerText="Col8" id="cfs9">
+                    <af:outputText value="#{test1.col8}" id="otfs9"/>
+                  </af:column>
+                  <af:column headerText="Col9" id="cfs10">
+                    <af:outputText value="#{test1.col9}" id="otfs10"/>
+                  </af:column>
+                  <af:column headerText="Col10" id="cfs11">
+                    <af:outputText value="#{test1.col10}" id="otfs11"/>
+                  </af:column>
+                  <af:column headerText="Col11" id="cfs12">
+                    <af:outputText value="#{test1.col11}" id="otfs12"/>
+                  </af:column>
+                  <af:column headerText="Col12" id="c13">
+                    <af:outputText value="#{test1.col12}" id="otfs13"/>
+                  </af:column>
+                </af:table>
+                <af:separator id="spt"/>
+                <af:outputFormatted value="&lt;b>Table with autoHeightRows='10' and scrollbars (default table width)&lt;/b>"
+                                    id="of1"/>
+                <af:table value="#{smallDataSet}" var="test1" id="table" 
+                          contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" autoHeightRows="10" summary="table data">
+                  <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                             id="c1">
+                    <af:outputText value="#{test1.no}" id="ot1"/>
+                  </af:column>
+                  <af:column displayIndex="3" headerText="Number" sortable="true" id="c2">
+                    <af:outputText value="#{test1.no}" id="ot2"/>
+                  </af:column>
+                  <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                             id="c3">
+                    <af:panelGroupLayout id="pgl2">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                shortDesc="icon" id="i1"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}" id="ot3"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                             displayIndex="2" id="c4">
+                    <af:outputText value="#{test1.size}" id="ot4"/>
+                  </af:column>
+                  <af:column align="center" headerText="Date Modified" id="c5">
+                    <af:outputText value="#{test1.date}" id="ot5"/>
+                  </af:column>
+                  <af:column headerText="Col5" id="c6">
+                    <af:outputText value="#{test1.col5}" id="ot6"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="c7">
+                    <af:outputText value="#{test1.col6}" id="ot7"/>
+                  </af:column>
+                  <af:column headerText="Col7" id="c8">
+                    <af:outputText value="#{test1.col7}" id="ot8"/>
+                  </af:column>
+                  <af:column headerText="Col8" id="c9">
+                    <af:outputText value="#{test1.col8}" id="ot9"/>
+                  </af:column>
+                  <af:column headerText="Col9" id="c10">
+                    <af:outputText value="#{test1.col9}" id="ot10"/>
+                  </af:column>
+                  <af:column headerText="Col10" id="c11">
+                    <af:outputText value="#{test1.col10}" id="ot11"/>
+                  </af:column>
+                  <af:column headerText="Col11" id="c12">
+                    <af:outputText value="#{test1.col11}" id="ot12"/>
+                  </af:column>
+                  <af:column headerText="Col12" id="c13">
+                    <af:outputText value="#{test1.col12}" id="ot13"/>
+                  </af:column>
+                </af:table>
+                <af:separator id="s2"/>
+                <af:outputFormatted value="&lt;b>Table with autoHeightRows='20' and no scrollbars (500px width)&lt;/b>"
+                                    id="of2"/>
+                <af:table inlineStyle="width:500px" columnBandingInterval="1"
+                          value="#{smallDataSet}" var="test1" id="table2"
+                          contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" autoHeightRows="20" summary="table data">
+                  <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                             id="c14">
+                    <af:outputText value="#{test1.no}" id="ot14"/>
+                  </af:column>
+                  <af:column displayIndex="3" headerText="Number" sortable="true" id="c15">
+                    <af:outputText value="#{test1.no}" id="ot15"/>
+                  </af:column>
+                  <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                             id="c16">
+                    <af:panelGroupLayout id="pgl3">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                shortDesc="icon" id="i2"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}" id="ot16"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                             displayIndex="2" id="c17">
+                    <af:outputText value="#{test1.size}" id="ot17"/>
+                  </af:column>
+                  <af:column align="center" headerText="Date Modified" id="c18">
+                    <af:outputText value="#{test1.date}" id="ot18"/>
+                  </af:column>
+                </af:table>
+                <af:separator id="s8"/>
+                <af:outputFormatted value="&lt;b>Table with autoHeightRows='10', columnStretching='last', column wrapping and scrollbars (AFStretchWidth)&lt;/b>"
+                                    id="ofac1"/>
+                <af:table value="#{smallDataSet}" var="test1" id="tahcs1"
+                          styleClass="AFStretchWidth" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}"
+                          autoHeightRows="10" summary="table data" columnStretching="last">
+                  <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                             id="c81">
+                    <af:outputText value="#{test1.no}" id="ot81"/>
+                  </af:column>
+                  <af:column displayIndex="3" headerText="Number" sortable="true" id="c82">
+                    <af:outputText value="#{test1.no}" id="ot82"/>
+                  </af:column>
+                  <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                             id="c83">
+                    <af:panelGroupLayout id="pg8l2">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                shortDesc="icon" id="i81"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}" id="ot83"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                             displayIndex="2" id="c84">
+                    <af:outputText value="#{test1.size}" id="ot84"/>
+                  </af:column>
+                  <af:column align="center" headerText="Date Modified" id="c85">
+                    <af:outputText value="#{test1.date}" id="ot85"/>
+                  </af:column>
+                  <af:column headerText="Col5" id="c86">
+                    <af:outputText value="#{test1.col5}" id="ot86"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="c87">
+                    <af:outputText value="#{test1.col6}" id="ot87"/>
+                  </af:column>
+                  <af:column headerText="Col7" id="c88">
+                    <af:outputText value="#{test1.col7}" id="ot88"/>
+                  </af:column>
+                  <af:column headerText="Col8" id="c89">
+                    <af:outputText value="#{test1.col8}" id="ot89"/>
+                  </af:column>
+                  <af:column headerText="Col10" id="c810">
+                    <af:outputText value="#{test1.col10}" id="ot810"/>
+                  </af:column>
+                  <af:column headerText="Date with Wrap" id="c814" noWrap="false">
+                    <af:outputText value="#{test1.longStringDate}" id="ot814"/>
+                  </af:column>
+                </af:table>
+                <af:separator id="s9"/>
+                <af:outputFormatted value="&lt;b>Table with autoHeightRows='20', columnStretching='last', column wrapping and no scrollbars (AFStretchWidth)&lt;/b>"
+                                    id="ofac2"/>
+                <af:table value="#{smallDataSet}" var="test1" id="tahcs2"
+                          styleClass="AFStretchWidth" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}"
+                          autoHeightRows="20" summary="table data" columnStretching="last">
+                  <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                             id="c91">
+                    <af:outputText value="#{test1.no}" id="ot91"/>
+                  </af:column>
+                  <af:column displayIndex="3" headerText="Number" sortable="true" id="c92">
+                    <af:outputText value="#{test1.no}" id="ot92"/>
+                  </af:column>
+                  <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                             id="c93">
+                    <af:panelGroupLayout id="pg9l2">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                shortDesc="icon" id="i911"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}" id="ot93"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                             displayIndex="2" id="c94">
+                    <af:outputText value="#{test1.size}" id="ot94"/>
+                  </af:column>
+                  <af:column align="center" headerText="Date Modified" id="c95">
+                    <af:outputText value="#{test1.date}" id="ot95"/>
+                  </af:column>
+                  <af:column headerText="Col5" id="c96">
+                    <af:outputText value="#{test1.col5}" id="ot96"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="c97">
+                    <af:outputText value="#{test1.col6}" id="ot97"/>
+                  </af:column>
+                  <af:column headerText="Col7" id="c98">
+                    <af:outputText value="#{test1.col7}" id="ot98"/>
+                  </af:column>
+                  <af:column headerText="Col8" id="c99">
+                    <af:outputText value="#{test1.col8}" id="ot99"/>
+                  </af:column>
+                  <af:column headerText="Col10" id="c910">
+                    <af:outputText value="#{test1.col10}" id="ot910"/>
+                  </af:column>
+                  <af:column headerText="Date with Wrap" id="c914" noWrap="false">
+                    <af:outputText value="#{test1.longStringDate}" id="ot914"/>
+                  </af:column>
+                </af:table>
+                <af:separator id="vrss1"/>
+                <af:outputFormatted value="&lt;b>Table with autoHeightRows='10', columnStretching='last', column wrapping, variable row height and scrollbars (AFStretchWidth)&lt;/b>"
+                                    id="ofvr1"/>
+                <af:table value="#{smallDataSet}" var="test1" id="tahvr1"
+                          styleClass="AFStretchWidth"
+                          contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" varStatus="vs"
+                          autoHeightRows="10" summary="table data" columnStretching="last">
+                  <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                             id="cvr1">
+                    <af:outputText value="#{test1.no}" id="otvr1"/>
+                  </af:column>
+                  <af:column id="vric" headerText="Image" width="225">
+                    <af:image source="/images/bar-chart-multicolor.png"
+                              rendered="#{vs.index % 3 == 0?'true': 'false'}" shortDesc="bar chart"
+                              id="vri1"/>
+                  </af:column>
+                  <af:column displayIndex="3" headerText="Number" sortable="true" id="cvr2">
+                    <af:outputText value="#{test1.no}" id="otvr2"/>
+                  </af:column>
+                  <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                             id="cvr3">
+                    <af:panelGroupLayout id="pgvrl">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                shortDesc="icon" id="ivr1"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                     id="otvr3"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                             displayIndex="2" id="cvr4">
+                    <af:outputText value="#{test1.size}" id="otvr4"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="cvr7">
+                    <af:outputText value="#{test1.col6}" id="otvr7"/>
+                  </af:column>
+                  <af:column headerText="Col7" id="cvr8">
+                    <af:outputText value="#{test1.col7}" id="otvr8"/>
+                  </af:column>
+                  <af:column headerText="Col8" id="cvr9">
+                    <af:outputText value="#{test1.col8}" id="otvr9"/>
+                  </af:column>
+                  <af:column headerText="Col10" id="cvr10">
+                    <af:outputText value="#{test1.col10}" id="otvr10"/>
+                  </af:column>
+                  <af:column headerText="Date with Wrap" id="cvr14"
+                             noWrap="#{vs.index % 3 == 0?'true': 'false'}">
+                    <af:outputText value="#{test1.longStringDate}" id="otvr14"/>
+                  </af:column>
+                </af:table>
+                <af:separator id="vrss2"/>
+                <af:outputFormatted value="&lt;b>Table with autoHeightRows='20', columnStretching='last', column wrapping, variable row height  and no scrollbars (AFStretchWidth)&lt;/b>"
+                                    id="ofvrs2"/>
+                <af:table value="#{smallDataSet}" var="test1" id="tahvrs2"
+                          styleClass="AFStretchWidth" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}"
+                          autoHeightRows="20" summary="table data" columnStretching="last"
+                          varStatus="vs">
+                  <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                             id="cvrs1">
+                    <af:outputText value="#{test1.no}" id="otvrs1"/>
+                  </af:column>
+                  <af:column id="vrsic" headerText="Image" width="225">
+                    <af:image source="/images/bar-chart-multicolor.png"
+                              rendered="#{vs.index % 3 == 0?'true': 'false'}" shortDesc="bar chart"
+                              id="vrsi1"/>
+                  </af:column>
+                  <af:column displayIndex="3" headerText="Number" sortable="true" id="cvrs2">
+                    <af:outputText value="#{test1.no}" id="otvrs2"/>
+                  </af:column>
+                  <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                             id="cvrs3">
+                    <af:panelGroupLayout id="pgvrs2">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                shortDesc="icon" id="ivrs1"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                     id="otvrs3"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                             displayIndex="2" id="cvrs4">
+                    <af:outputText value="#{test1.size}" id="otvrs4"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="cvrs7">
+                    <af:outputText value="#{test1.col6}" id="otvrs7"/>
+                  </af:column>
+                  <af:column headerText="Col7" id="cvrs8">
+                    <af:outputText value="#{test1.col7}" id="otvrs8"/>
+                  </af:column>
+                  <af:column headerText="Col8" id="cvrs9">
+                    <af:outputText value="#{test1.col8}" id="otvrs9"/>
+                  </af:column>
+                  <af:column headerText="Col10" id="cvrs10">
+                    <af:outputText value="#{test1.col10}" id="otvrs10"/>
+                  </af:column>
+                  <af:column headerText="Date with Wrap" id="cvrs14"
+                             noWrap="#{vs.index % 3 == 0?'true': 'false'}">
+                    <af:outputText value="#{test1.longStringDate}" id="otvrs14"/>
+                  </af:column>
+                </af:table>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem stretchChildren="first"
+                               text="Table in PanelCollection - Height Autosize " id="sdi2">
+              <af:panelGroupLayout layout="scroll" id="pg2">
+               <af:panelGroupLayout layout="horizontal" id="pglh2">
+                  <af:selectBooleanCheckbox text="Content Delivery Lazy &#160;" value="#{pageFlowScope.isLazy}" id="sbc2">
+                    <af:setPropertyListener from="#{facesContext.externalContext.requestParameterMap['dmoTpl:sbc2']}"
+                                                      to="#{pageFlowScope.isLazy}" type="valueChange"/>
+                  </af:selectBooleanCheckbox>
+                  <af:commandButton partialSubmit="false" text="Refresh Page" id="cb2"/>
+                </af:panelGroupLayout>
+                <af:separator id="pcesp1"/>
+                <af:outputFormatted value="&lt;b>PanelCollection containing a table with autoHeightRows='5' and no data&lt;/b>"
+                                    id="ofpcem1"/>
+                <af:panelCollection id="pce">
+                  <af:table rowSelection="single" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}"
+                      autoHeightRows="5" summary="table with autoHeightRows and empty text"
+                      var="test1" emptyText="#{emptyTable.emptyText}"
+                      value="#{emptyTable.data}" id="tpce1">
+                    <af:column width="40" headerText="Number" id="cpcepc1">
+                      <af:outputText value="rh" id="otpce1"/>
+                    </af:column>
+                    <af:column headerText="Size" id="cpce2">
+                      <af:outputText value="size" id="otpce2"/>
+                    </af:column>
+                    <af:column headerText="Date Modified" id="cpce3">
+                      <af:outputText value="date" id="ote3"/>
+                    </af:column>
+                    <af:column headerText="Col5" id="cpce4">
+                      <af:outputText value="col5" id="otpce4"/>
+                    </af:column>
+                    <af:column headerText="Col6" id="cpce5">
+                      <af:outputText value="col6" id="otpce5"/>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
+                <af:separator id="fspcsp"/>
+                <af:outputFormatted value="&lt;b>PanelCollection containing a table with autoHeightRows='5' and fetchSize='6'&lt;/b>"
+                                    id="ofszpc1"/>
+                <af:panelCollection id="pcfse">
+                  <af:table value="#{smallDataSet}" var="test1" id="tblpcfs" 
+                            contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" autoHeightRows="5" fetchSize="6" summary="table data">
+                    <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                               id="cfspc1">
+                      <af:outputText value="#{test1.no}" id="otfspc1"/>
+                    </af:column>
+                    <af:column displayIndex="3" headerText="Number" sortable="true" id="cfspc2">
+                      <af:outputText value="#{test1.no}" id="otfspc2"/>
+                    </af:column>
+                    <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                               id="cfspc3">
+                      <af:panelGroupLayout id="pgfspcl2">
+                        <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                  shortDesc="icon" id="ipc1"/>
+                        <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}" id="ofstpc3"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                    <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                               displayIndex="2" id="cfspc4">
+                      <af:outputText value="#{test1.size}" id="otfspc4"/>
+                    </af:column>
+                    <af:column align="center" headerText="Date Modified" id="cfspc5">
+                      <af:outputText value="#{test1.date}" id="otfspc5"/>
+                    </af:column>
+                    <af:column headerText="Col5" id="cfspc6">
+                      <af:outputText value="#{test1.col5}" id="otfspc6"/>
+                    </af:column>
+                    <af:column headerText="Col6" id="cfspc7">
+                      <af:outputText value="#{test1.col6}" id="otfspc7"/>
+                    </af:column>
+                    <af:column headerText="Col7" id="cfspc8">
+                      <af:outputText value="#{test1.col7}" id="otfspc8"/>
+                    </af:column>
+                    <af:column headerText="Col8" id="cfspc9">
+                      <af:outputText value="#{test1.col8}" id="otfspc9"/>
+                    </af:column>
+                    <af:column headerText="Col9" id="cfspc10">
+                      <af:outputText value="#{test1.col9}" id="otfspc10"/>
+                    </af:column>
+                    <af:column headerText="Col10" id="cfspc11">
+                      <af:outputText value="#{test1.col10}" id="otfspc11"/>
+                    </af:column>
+                    <af:column headerText="Col11" id="cfspc12">
+                      <af:outputText value="#{test1.col11}" id="otfspc12"/>
+                    </af:column>
+                    <af:column headerText="Col12" id="cpc13">
+                      <af:outputText value="#{test1.col12}" id="otfspc13"/>
+                    </af:column>
+                  </af:table>
+                  </af:panelCollection>
+                <af:separator id="spt2"/>
+                <af:outputFormatted value="&lt;b>PanelCollection containing a table with autoHeightRows='10' and scrollbars (default panelCollection width)&lt;/b>"
+                                    id="of3"/>
+                <af:panelCollection id="pc1">
+                  <af:table value="#{smallDataSet}"
+                            rowSelection="multiple" columnSelection="multiple" var="test1"
+                            id="tablepc1" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" autoHeightRows="10"
+                            summary="table data">
+                    <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                               id="c19">
+                      <af:outputText value="#{test1.no}" id="ot19"/>
+                    </af:column>
+                    <af:column displayIndex="3" headerText="Number" sortable="true" id="c20">
+                      <af:outputText value="#{test1.no}" id="ot20"/>
+                    </af:column>
+                    <af:column displayIndex="1" headerText="Name" sortProperty="name"
+                               sortable="true" id="c21">
+                      <af:panelGroupLayout id="pgl4">
+                        <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                  shortDesc="icon" id="i3"/>
+                        <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                       id="ot21"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                    <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                               displayIndex="2" id="c22">
+                      <af:outputText value="#{test1.size}" id="ot22"/>
+                    </af:column>
+                    <af:column align="center" headerText="Date Modified" id="c23">
+                      <af:outputText value="#{test1.date}" id="ot23"/>
+                    </af:column>
+                    <af:column headerText="Col5" id="c24">
+                      <af:outputText value="#{test1.col5}" id="ot24"/>
+                    </af:column>
+                    <af:column headerText="Col6" id="c25">
+                      <af:outputText value="#{test1.col6}" id="ot25"/>
+                    </af:column>
+                    <af:column headerText="Col7" id="c26">
+                      <af:outputText value="#{test1.col7}" id="ot26"/>
+                    </af:column>
+                    <af:column headerText="Col8" id="c27">
+                      <af:outputText value="#{test1.col8}" id="ot27"/>
+                    </af:column>
+                    <af:column headerText="Col9" id="c28">
+                      <af:outputText value="#{test1.col9}" id="ot28"/>
+                    </af:column>
+                    <af:column headerText="Col10" id="c29">
+                      <af:outputText value="#{test1.col10}" id="ot29"/>
+                    </af:column>
+                    <af:column headerText="Col11" id="c30">
+                      <af:outputText value="#{test1.col11}" id="ot30"/>
+                    </af:column>
+                    <af:column headerText="Col12" id="c31">
+                      <af:outputText value="#{test1.col12}" id="ot31"/>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
+                <af:separator id="s4"/>
+                <af:outputFormatted value="&lt;b>PanelCollection containing a Table with autoHeightRows='15' and no scrollbars (default panelCollection width)&lt;/b>"
+                                    id="of4"/>
+                <af:panelCollection id="pc2">
+                  <f:facet name="afterToolbar">
+                    <af:toolbar id="t1">
+                      <af:commandToolbarButton text="tb1" id="ctb1"/>
+                      <af:commandToolbarButton text="tb2" id="ctb2"/>
+                    </af:toolbar>
+                  </f:facet>
+                  <af:table rowSelection="multiple"
+                            columnSelection="multiple" value="#{smallDataSet}" var="test1"
+                            id="tablepc2" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" autoHeightRows="15"
+                            summary="table data">
+                    <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                               id="c32">
+                      <af:outputText value="#{test1.no}" id="ot32"/>
+                    </af:column>
+                    <af:column displayIndex="3" headerText="Number" sortable="true" id="c33">
+                      <af:outputText value="#{test1.no}" id="ot33"/>
+                    </af:column>
+                    <af:column displayIndex="1" headerText="Name" sortProperty="name"
+                               sortable="true" id="c34">
+                      <af:panelGroupLayout id="pgl5">
+                        <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                  shortDesc="icon" id="i4"/>
+                        <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                       id="ot34"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                    <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                               displayIndex="2" id="c35">
+                      <af:outputText value="#{test1.size}" id="ot35"/>
+                    </af:column>
+                    <af:column align="center" headerText="Date Modified" id="c36">
+                      <af:outputText value="#{test1.date}" id="ot36"/>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
+                <af:separator id="s11"/>
+                <af:outputFormatted value="&lt;b>PanelCollection containing a table with autoHeightRows='10', columnStretching='last', column wrapping and scrollbars (AFStretchWidth)&lt;/b>"
+                                    id="ofac3"/>
+                <af:panelCollection id="pc5" styleClass="AFStretchWidth">
+                  <f:facet name="menus"/>
+                  <f:facet name="toolbar"/>
+                  <f:facet name="statusbar"/>
+                  <af:table value="#{smallDataSet}" var="test1"
+                            id="tahcs3" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" autoHeightRows="10"
+                            summary="table data" columnStretching="last">
+                    <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                               id="c101">
+                      <af:outputText value="#{test1.no}" id="ot101"/>
+                    </af:column>
+                    <af:column displayIndex="3" headerText="Number" sortable="true" id="c102">
+                      <af:outputText value="#{test1.no}" id="ot102"/>
+                    </af:column>
+                    <af:column displayIndex="1" headerText="Name" sortProperty="name"
+                               sortable="true" id="c103">
+                      <af:panelGroupLayout id="pg10l2">
+                        <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                  shortDesc="icon" id="i101"/>
+                        <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                       id="ot103"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                    <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                               displayIndex="2" id="c104">
+                      <af:outputText value="#{test1.size}" id="ot104"/>
+                    </af:column>
+                    <af:column align="center" headerText="Date Modified" id="c105">
+                      <af:outputText value="#{test1.date}" id="ot105"/>
+                    </af:column>
+                    <af:column headerText="Col5" id="c106">
+                      <af:outputText value="#{test1.col5}" id="ot106"/>
+                    </af:column>
+                    <af:column headerText="Col6" id="c107">
+                      <af:outputText value="#{test1.col6}" id="ot107"/>
+                    </af:column>
+                    <af:column headerText="Col7" id="c108">
+                      <af:outputText value="#{test1.col7}" id="ot108"/>
+                    </af:column>
+                    <af:column headerText="Col8" id="c109">
+                      <af:outputText value="#{test1.col8}" id="ot109"/>
+                    </af:column>
+                    <af:column headerText="Col10" id="c1010">
+                      <af:outputText value="#{test1.col10}" id="ot1010"/>
+                    </af:column>
+                    <af:column headerText="Date with Wrap" id="c1014" noWrap="false">
+                      <af:outputText value="#{test1.longStringDate}" id="ot1014"/>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
+                <af:separator id="s12"/>
+                <af:outputFormatted value="&lt;b>PanelCollection containing a table with autoHeightRows='20', columnStretching='last', column wrapping and no scrollbars (AFStretchWidth)&lt;/b>"
+                                    id="ofac4"/>
+                <af:panelCollection id="pc6" styleClass="AFStretchWidth">
+                  <f:facet name="menus"/>
+                  <f:facet name="toolbar"/>
+                  <f:facet name="statusbar"/>
+                  <af:table value="#{smallDataSet}" var="test1"
+                            id="tahcs4" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" autoHeightRows="20"
+                            summary="table data" columnStretching="last">
+                    <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                               id="c111">
+                      <af:outputText value="#{test1.no}" id="ot111"/>
+                    </af:column>
+                    <af:column displayIndex="3" headerText="Number" sortable="true" id="c112">
+                      <af:outputText value="#{test1.no}" id="ot112"/>
+                    </af:column>
+                    <af:column displayIndex="1" headerText="Name" sortProperty="name"
+                               sortable="true" id="c113">
+                      <af:panelGroupLayout id="pg11l2">
+                        <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                  shortDesc="icon" id="i1111"/>
+                        <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                       id="ot113"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                    <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                               displayIndex="2" id="c114">
+                      <af:outputText value="#{test1.size}" id="ot114"/>
+                    </af:column>
+                    <af:column align="center" headerText="Date Modified" id="c115">
+                      <af:outputText value="#{test1.date}" id="ot115"/>
+                    </af:column>
+                    <af:column headerText="Col5" id="c116">
+                      <af:outputText value="#{test1.col5}" id="ot116"/>
+                    </af:column>
+                    <af:column headerText="Col6" id="c117">
+                      <af:outputText value="#{test1.col6}" id="ot117"/>
+                    </af:column>
+                    <af:column headerText="Col7" id="c118">
+                      <af:outputText value="#{test1.col7}" id="ot118"/>
+                    </af:column>
+                    <af:column headerText="Col8" id="c119">
+                      <af:outputText value="#{test1.col8}" id="ot119"/>
+                    </af:column>
+                    <af:column headerText="Col10" id="c1110">
+                      <af:outputText value="#{test1.col10}" id="ot1110"/>
+                    </af:column>
+                    <af:column headerText="Date with Wrap" id="c1114" noWrap="false">
+                      <af:outputText value="#{test1.longStringDate}" id="ot1114"/>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
+                <af:separator id="vrsp1"/>
+                <af:outputFormatted value="&lt;b>Table with autoHeightRows='10', columnStretching='last', column wrapping, variable row height and scrollbars (AFStretchWidth)&lt;/b>"
+                                    id="ofvrp1"/>
+                <af:panelCollection id="pc7" styleClass="AFStretchWidth">
+                  <f:facet name="menus"/>
+                  <f:facet name="toolbar"/>
+                  <f:facet name="statusbar"/>
+                  <af:table value="#{smallDataSet}" var="test1"
+                            id="tahvrp1" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" varStatus="vs"
+                            autoHeightRows="10" summary="table data" columnStretching="last">
+                    <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                               id="cvrp1">
+                      <af:outputText value="#{test1.no}" id="otvrp1"/>
+                    </af:column>
+                    <af:column id="vripc" headerText="Image" width="225">
+                      <af:image source="/images/bar-chart-multicolor.png"
+                                rendered="#{vs.index % 3 == 0?'true': 'false'}"
+                                shortDesc="bar chart" id="vrip1"/>
+                    </af:column>
+                    <af:column displayIndex="3" headerText="Number" sortable="true" id="cvrp2">
+                      <af:outputText value="#{test1.no}" id="otvrp2"/>
+                    </af:column>
+                    <af:column displayIndex="1" headerText="Name" sortProperty="name"
+                               sortable="true" id="cvrp3">
+                      <af:panelGroupLayout id="pgvrpl">
+                        <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                  shortDesc="icon" id="ivrp1"/>
+                        <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                       id="otvrp3"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                    <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                               displayIndex="2" id="cvrp4">
+                      <af:outputText value="#{test1.size}" id="otvrp4"/>
+                    </af:column>
+                    <af:column headerText="Col6" id="cvrp7">
+                      <af:outputText value="#{test1.col6}" id="otvrp7"/>
+                    </af:column>
+                    <af:column headerText="Col7" id="cvrp8">
+                      <af:outputText value="#{test1.col7}" id="otvrp8"/>
+                    </af:column>
+                    <af:column headerText="Col8" id="cvrp9">
+                      <af:outputText value="#{test1.col8}" id="otvrp9"/>
+                    </af:column>
+                    <af:column headerText="Col10" id="cvrp10">
+                      <af:outputText value="#{test1.col10}" id="otvrp10"/>
+                    </af:column>
+                    <af:column headerText="Date with Wrap" id="cvr1p4"
+                               noWrap="#{vs.index % 3 == 0?'true': 'false'}">
+                      <af:outputText value="#{test1.longStringDate}" id="otvrp14"/>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
+                <af:separator id="vrssp2"/>
+                <af:outputFormatted value="&lt;b>Table with autoHeightRows='20', columnStretching='last', column wrapping, variable row height  and no scrollbars (AFStretchWidth)&lt;/b>"
+                                    id="ofvrsp2"/>
+                <af:panelCollection id="pc8" styleClass="AFStretchWidth">
+                  <f:facet name="menus"/>
+                  <f:facet name="toolbar"/>
+                  <f:facet name="statusbar"/>
+                  <af:table value="#{smallDataSet}" var="test1"
+                            id="tahvrsp2" contentDelivery="#{pageFlowScope.isLazy != null ? 'lazy':'immediate'}" autoHeightRows="20"
+                            summary="table data" columnStretching="last" varStatus="vs">
+                    <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                               id="cvrsp1">
+                      <af:outputText value="#{test1.no}" id="otvrsp1"/>
+                    </af:column>
+                    <af:column id="vrsipc" headerText="Image" width="225">
+                      <af:image source="/images/bar-chart-multicolor.png"
+                                rendered="#{vs.index % 3 == 0?'true': 'false'}"
+                                shortDesc="bar chart" id="vrsip1"/>
+                    </af:column>
+                    <af:column displayIndex="3" headerText="Number" sortable="true" id="cvrsp2">
+                      <af:outputText value="#{test1.no}" id="otvrs2"/>
+                    </af:column>
+                    <af:column displayIndex="1" headerText="Name" sortProperty="name"
+                               sortable="true" id="cvrsp3">
+                      <af:panelGroupLayout id="pgvrsp2">
+                        <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                  shortDesc="icon" id="ivrsp1"/>
+                        <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                       id="otvrsp3"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                    <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                               displayIndex="2" id="cvrsp4">
+                      <af:outputText value="#{test1.size}" id="otvrsp4"/>
+                    </af:column>
+                    <af:column headerText="Col6" id="cvrsp7">
+                      <af:outputText value="#{test1.col6}" id="otvrsp7"/>
+                    </af:column>
+                    <af:column headerText="Col7" id="cvrsp8">
+                      <af:outputText value="#{test1.col7}" id="otvrsp8"/>
+                    </af:column>
+                    <af:column headerText="Col8" id="cvrsp9">
+                      <af:outputText value="#{test1.col8}" id="otvrsp9"/>
+                    </af:column>
+                    <af:column headerText="Col10" id="cvrsp10">
+                      <af:outputText value="#{test1.col10}" id="otvrsp10"/>
+                    </af:column>
+                    <af:column headerText="Date with Wrap" id="cvrsp14"
+                               noWrap="#{vs.index % 3 == 0?'true': 'false'}">
+                      <af:outputText value="#{test1.longStringDate}" id="otvrsp14"/>
+                    </af:column>
+                  </af:table>
+                </af:panelCollection>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

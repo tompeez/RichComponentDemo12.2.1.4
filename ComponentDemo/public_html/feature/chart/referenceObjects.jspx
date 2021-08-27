@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Reference Objects - Areas and Lines" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Reference Object Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Reference Objects - Areas and Lines"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            
+            <af:showDetailHeader text="Reference Lines" disclosed="true">
+             <af:panelGroupLayout layout="horizontal">
+                <dvt:lineChart value="#{chartDataSource.dailyTimeData}" var="row" timeAxisType="enabled" inlineStyle="width:450px">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="Series 1" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartYAxis maximum="100">
+                    <dvt:referenceLine color="#31C831" lineWidth="3" displayInLegend="on" 
+                    value="75" text="High Target Value" shortDesc="High Target Value: 75" lineStyle="dashed"/>
+                    <dvt:referenceLine color="#FFD500" lineWidth="3" displayInLegend="on"
+                    value="45" text="Mid Target Value" shortDesc="Mid Target Value: 45" lineStyle="dashed"/>
+                    <dvt:referenceLine color="#FF0000" lineWidth="3" displayInLegend="on"
+                    value="15" text="Low Target Value" shortDesc="Low Target Value: 15" lineStyle="dashed"/>
+                  </dvt:chartYAxis>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:lineChart>
+                <dvt:barChart value="#{chartDataSource.yearlyIrregularTimeData}" var="row" timeAxisType="enabled" inlineStyle="width:450px">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}" rendered="#{row.series == 'Series 1'}"/>
+                  </f:facet>
+                  <dvt:chartYAxis maximum="100">
+                    <dvt:referenceLine color="#A0CEEC" displayInLegend="on" text="Target Value" lineWidth="3"
+                                       shortDesc="Target Value">
+                       <af:iterator id="it1" value="#{chartDataSource.yearlyIrregularTimeData}" var="row">
+                         <dvt:referenceLineItem x="#{row.group}" value="#{row.value + 15}" rendered="#{row.series == 'Series 1'}"/>
+                       </af:iterator>
+                    </dvt:referenceLine>
+                  </dvt:chartYAxis>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:barChart>
+                <dvt:scatterChart  value="#{chartDataSource.defaultScatterData}" var="row" inlineStyle="width:450px">
+                  <f:facet name="dataStamp">
+                     <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"/>
+                  </f:facet>
+                  <dvt:chartYAxis maximum="100">
+                    <dvt:referenceLine color="#A0CEEC" displayInLegend="on" text="Target Value" lineWidth="3" lineType="stepped"
+                                       shortDesc="Target Value">
+                      <dvt:referenceLineItem x="0" value="30"/>
+                      <dvt:referenceLineItem x="10" value="40"/>
+                      <dvt:referenceLineItem x="20" value="60"/>
+                      <dvt:referenceLineItem x="30" value="55"/>
+                      <dvt:referenceLineItem x="40" value="40"/>
+                      <dvt:referenceLineItem x="50" value="30"/>
+                      <dvt:referenceLineItem x="60" value="50"/>
+                    </dvt:referenceLine>
+                  </dvt:chartYAxis>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:scatterChart>
+              </af:panelGroupLayout>
+            </af:showDetailHeader>
+              <af:showDetailHeader text="Reference Areas" disclosed="true">
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:barChart value="#{chartDataSource.dailyTimeData}" var="row" timeAxisType="enabled" inlineStyle="width:650px">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartYAxis>
+                       <dvt:referenceArea color="#A0CEEC" displayInLegend="on" maximum="90"
+                                          minimum="25" text="Target Range" shortDesc="Target Range"/>
+                  </dvt:chartYAxis>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:barChart>
+                <dvt:lineChart value="#{chartDataSource.yearlySingleTimeData}" var="row" timeAxisType="enabled" inlineStyle="width:650px">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <f:facet name="seriesStamp">
+                    <dvt:chartSeriesStyle series="#{row.series}" lineType="curved"/>
+                  </f:facet>
+                  <dvt:chartYAxis>
+                    <dvt:referenceArea color="#A0CEEC" displayInLegend="on" text="Target Range" lineType="curved"
+                                       shortDesc="Target Range">
+                       <af:iterator id="it3" value="#{chartDataSource.yearlySingleTimeData}" var="row">
+                         <dvt:referenceAreaItem x="#{row.group}" minimum="#{row.value - 15}" maximum="#{row.value + 15}"/>
+                       </af:iterator>
+                    </dvt:referenceArea>
+                  </dvt:chartYAxis>
+                  <dvt:chartLegend rendered="true"/>
+                </dvt:lineChart>
+             </af:panelGroupLayout>
+        </af:showDetailHeader>
+          
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

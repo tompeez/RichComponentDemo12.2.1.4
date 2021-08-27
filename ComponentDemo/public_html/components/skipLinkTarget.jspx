@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document maximized="false" title="skipLinkTarget Demo" id="d1">
+      <af:form id="f1">
+
+        <af:resource type="javascript">
+function focusOnFirstTabItem(event)
+{
+  // This same method is used by popup when it is confused and doesn't know where to return focus to
+  // on the page. It's a good test for bug 9703817 and bug 9981236.
+  AdfFocusUtils.focusFirstDocumentTabStop();
+}
+        </af:resource>
+        <af:panelGroupLayout layout="vertical" id="pgl1">
+          <af:navigationPane hint="buttons" id="np1">
+            <af:commandNavigationItem text="View Page Source"
+                                      destination="#{facesContext.viewRoot.viewId}.source"
+                                      id="cni1"/>
+          </af:navigationPane>
+          
+          <af:panelHeader text="skipLinkTarget Demo" id="ph1">
+            <af:skipLinkTarget text="skip down to the good stuff"/>
+            
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s1"/>
+              </f:facet>
+              
+              <af:outputText value="This page demonstrates how to use the af:skipLinkTarget tag.
+                 af:skipLinkTarget provides an easy way to skip over contents which are repeated
+                 on multiple pages, such as navigational contents.  Simply place the
+                 af:skipLinkTarget tag inside of an ADF Faces component somewhere after the 
+                 repeated contents. For compatibility with screen readers, it's best to choose the
+                 container of the main content of the first item in the main content, even it its not
+                 normally focusable. ADF Faces automatically generates a 'skip link' at the
+                 start of the page.  Activating this link skips over any contents before the
+                 skipLinkTarget." id="ot1"/>
+              
+              <af:outputText value="In this demo, the af:skipLinkTarget tag is placed inside of
+                the 'skipLinkTarget Demo' panelHeader.  As a result, activating the skip link should
+                jump over the 'View Page Source' link above and put focus on the panelHeader. A 
+                subsequent press of tab key will bring focus to the first tabstop inside or after the 
+                panelHeader." id="ot2"/>
+
+              <af:outputText value="Note that we add the af:skipLinkTarget directly inside of 
+                that page to make it easy to see how the tag is used.  However, af:skipLinkTarget 
+                is typically placed in a page template, not the page itself.  Placing the
+                af:skipLinkTarget in the page template is a better approach, since this
+                means that app developers do not need to remember to add the af:skipLinkTarget 
+                to every page." id="ot3"/>
+
+              <af:outputText value="The skipLinkTarget on this page uses a custom text attribute."/> 
+
+              <af:outputText id="ot4" value="To see the skip link, hit the tab key and it should
+                appear near the top-left of your browser. Use the enter key to activate the skip 
+                link, focus will go to the 'skipLinkTarget Demo' panelHeader and the skip link will 
+                be hidden."/>
+                
+              <af:button text="Go to Tag Guide page" immediate="true" action="guide" id="cb1"/>
+
+              <af:outputText id="ot5" value="This button will move focus to the first focusable item AFTER the skipLink,
+                which is the 'View Page Source' link"/>
+
+              <af:button text="Focus to first tabable item (skip skip link)" partialSubmit="true">
+                <af:clientListener method="focusOnFirstTabItem" type="action"/>
+              </af:button>
+
+            </af:panelGroupLayout>
+          </af:panelHeader>
+          
+        </af:panelGroupLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

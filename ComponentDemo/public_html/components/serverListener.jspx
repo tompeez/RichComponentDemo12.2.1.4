@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="serverListener Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+
+  function myPopupClosed(event)
+  {
+    var popup = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:demoPopup");
+    AdfCustomEvent.queue(popup, "myPopupClosedEvent",
+                         // Send two parameters
+                         {skyIsBlue:true, grassIsBlue:false},
+                         // immediate
+                         true);
+  }
+
+  // the server-side code renders a call to this function after the
+  // selectManyCheckbox's valueChangeEvent is sent to the server.
+  function showMyPopup()
+  {
+    // todo, need a way to align this, but this is called from server-side code.
+    var popup = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:demoPopup");
+    popup.show({align:AdfRichPopup.ALIGN_AFTER_END, alignId:"dmoTpl:selectManyCheckboxId"})
+  }
+
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="serverListener"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="behavior"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:popup id="demoPopup" contentDelivery="lazyUncached">
+              <af:dialog closeIconVisible="false"
+                         title="Infos for the selected Item" okVisible="false"
+                         visible="true" cancelVisible="true" id="d2">
+                <af:inputText value="#{personBean.selectedPerson.firstname}"
+                              label="Firstname" readOnly="true" id="it1"/>
+                <af:inputText value="#{personBean.selectedPerson.secondname}"
+                              label="Secondname" readOnly="true" id="it2"/>
+                <af:inputText value="#{personBean.selectedPerson.age}" label="Age"
+                              readOnly="true" id="it3"/>
+                <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:outputText value="A clientListener and a serverListener are children of the af:popup."
+                               id="ot1"/>
+
+                <af:outputText value="af:clientListener method='myPopupClosed' type='popupClosed'"
+                               id="ot2"/>
+                <af:outputText value="In this demo myPopupClosed queues a custom event called 'myPopupClosedEvent' when the popup is closed."
+                               id="ot3"/>
+                <af:outputText value="This in turn calls the af:serverListener type='myPopupClosedEvent' and calls its server-side method."
+                               id="ot4"/>
+                </af:panelGroupLayout>
+              </af:dialog>
+
+                <af:clientListener method="myPopupClosed" type="popupClosed"/>
+                <af:serverListener type="myPopupClosedEvent"
+                                   method="#{personBean.popupClosedEvent}"/>
+            </af:popup>
+            <af:outputText value="The serverListener tag is a declarative way to register a server-side listener that should be executed when a custom client event is fired."
+                           id="ot5"/>
+            <af:outputText value="Select a checkbox to display a popup with details about the person. This uses a serverListener (view source to see how it works)"
+                           id="ot6"/>
+            <af:outputText value="A clientListener and a serverListener are children of the af:popup."
+                           id="ot7"/>
+            <af:selectManyCheckbox value="#{personBean.manyListValue}" id="selectManyCheckboxId"
+                                   label="Select for Details"
+                                   valueChangeListener="#{personBean.checkboxValueChanged}"
+                                   autoSubmit="true">
+              <f:selectItems value="#{personBean.persons}" id="si1"/>
+            </af:selectManyCheckbox>
+            <af:outputText value="#{personBean.outputTextValue}" binding="#{personBean.outputText}" id="outputTextId"
+                           clientComponent="true"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

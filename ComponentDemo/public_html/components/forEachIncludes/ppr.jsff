@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2012, 2013, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>forEach PPR demo</description>
+      </component>
+    </af:xmlContent>
+    <af:panelStretchLayout id="dc_psl1">
+      <f:facet name="center">
+        <af:panelTabbed id="dc_pt1">
+          <af:showDetailItem text="Declarative" id="dc_sdi1">
+            <af:panelGroupLayout layout="scroll">
+              <af:showDetail disclosedText="Hide notes" undisclosedText="Show notes" disclosed="true"
+                             id="dc_sd1">
+                <af:outputText value="Example showing how to add partial targets in the page source that refer to components created in a for each loop. The end facet has the value from the server that is updated when the input text value changes"
+                               inlineStyle="padding: 1em 0; display: block;" id="dc_ot1"/>
+              </af:showDetail>
+              <af:panelFormLayout id="dc_pfl1" maxColumns="2"
+                                  rows="#{forEachBean.pprDemoPanelFormLayoutRowsCount}">
+                <af:forEach var="emp" varStatus="vs" items="#{forEachBean.employeeMap}">
+                  <af:group id="dc_g1${vs.key}">
+                    <af:panelLabelAndMessage id="plam_fn_${vs.key}" label="First name:">
+                      <af:inputText label="First name" value="#{emp.firstName}" id="fn_${vs.key}"
+                                    autoSubmit="true" simple="true"/>
+                      <f:facet name="end">
+                        <af:outputText id="fn_ot_${vs.key}" partialTriggers="fn_#{vs.key}"
+                                       value="#{emp.firstName}"/>
+                      </f:facet>
+                    </af:panelLabelAndMessage>
+                    <af:panelLabelAndMessage id="plam_ln_${vs.key}" label="Last name:">
+                      <af:inputText label="Last name" value="#{emp.lastName}" id="ln_${vs.key}"
+                                    autoSubmit="true" simple="true"/>
+                      <f:facet name="end">
+                        <af:outputText id="ln_ot_${vs.key}" partialTriggers="ln_#{vs.key}"
+                                       value="#{emp.lastName}"/>
+                      </f:facet>
+                    </af:panelLabelAndMessage>
+                    <af:panelLabelAndMessage id="plam_s_${vs.key}" label="Salary:">
+                      <af:inputText label="Salary" value="#{emp.salary}" id="s_${vs.key}"
+                                    autoSubmit="true" simple="true">
+                        <af:convertNumber type="currency"/>
+                      </af:inputText>
+                      <f:facet name="end">
+                        <af:outputText id="s_ot_${vs.key}" partialTriggers="s_#{vs.key}"
+                                       value="#{emp.salary}">
+                          <af:convertNumber type="currency"/>
+                        </af:outputText>
+                      </f:facet>
+                    </af:panelLabelAndMessage>
+                  </af:group>
+                </af:forEach>
+              </af:panelFormLayout>
+            </af:panelGroupLayout>
+          </af:showDetailItem>
+          <af:showDetailItem text="Programmatic" id="dc_sdi2" stretchChildren="first">
+            <af:panelGridLayout id="dc_pgl2">
+              <af:gridRow marginTop="5px" height="auto" id="dc_gr1">
+                <af:gridCell marginStart="5px" marginEnd="5px" width="100%" id="dc_gc1"
+                             halign="stretch">
+                  <af:showDetail disclosedText="Hide notes" undisclosedText="Show notes"
+                                 disclosed="true" id="dc_sd2">
+                    <af:outputText value="Example using partial triggers built using backing bean code"
+                                   inlineStyle="padding: 1em 0; display: block;" id="dc_ot2"/>
+                  </af:showDetail>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow marginTop="5px" height="100%" id="dc_gr2">
+                <af:gridCell marginStart="5px" marginEnd="5px" width="100%" id="dc_gc2"
+                             halign="stretch" valign="stretch">
+                  <af:panelGroupLayout layout="scroll" id="dc_pgl1">
+                    <af:forEach var="emp" varStatus="vs" items="#{forEachBean.employeeMap}">
+                      <af:panelFormLayout rows="1" id="dc_pfl_${vs.key}" maxColumns="3"
+                                          labelAlignment="start" fieldWidth="24ex"
+                                          labelWidth="12ex"
+                                          styleClass="empPfl #{vs.count % 2 eq 0 ? 'even' : 'odd'}">
+                        <af:panelLabelAndMessage id="fnl_${vs.key}" label="First Name:">
+                          <af:outputText value="#{emp.firstName}" id="dc_ot4"/>
+                        </af:panelLabelAndMessage>
+                        <af:panelLabelAndMessage id="lnl_${vs.key}" label="Last Name:">
+                          <af:outputText value="#{emp.lastName}" id="dc_ot5"/>
+                        </af:panelLabelAndMessage>
+                        <af:inputText id="salary_${vs.key}" label="Salary:" value="#{emp.salary}"
+                                      autoSubmit="true"/>
+                      </af:panelFormLayout>
+                    </af:forEach>
+                  </af:panelGroupLayout>
+                </af:gridCell>
+              </af:gridRow>
+              <af:gridRow marginTop="12px" marginBottom="12px" height="auto" id="dc_gr3">
+                <af:gridCell marginStart="5px" marginEnd="5px" width="100%" id="dc_gc3"
+                             halign="stretch">
+                  <af:panelLabelAndMessage label="Total salary:" id="dc_plam1"
+                                           inlineStyle="padding: 4px">
+                    <af:outputText value="#{forEachBean.totalEmployeeMapSalary}"
+                                   partialTriggers="#{forEachBean.salaryPartialTriggers}"
+                                   id="dc_ot3">
+                      <af:convertNumber type="currency"/>
+                    </af:outputText>
+                  </af:panelLabelAndMessage>
+                </af:gridCell>
+              </af:gridRow>
+            </af:panelGridLayout>
+          </af:showDetailItem>
+        </af:panelTabbed>
+      </f:facet>
+      <f:facet name="top">
+        <af:panelHeader text="Using partial triggers in a for each tag" id="dc_ph1"/>
+      </f:facet>
+    </af:panelStretchLayout>
+  </af:componentDef>
+</jsp:root>

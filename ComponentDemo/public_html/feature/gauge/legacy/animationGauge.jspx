@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view><af:document title="Gauge Animation Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo"
+                     viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Gauge Animation Demo"/>
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Gauge Animation"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+          <af:outputText value="Specify a new value to watch the gauges animate."
+                         id="ot1"/>
+          <af:panelGroupLayout layout="horizontal" id="pgl2">
+            <dvt:gauge value="#{gaugeData.gaugeValue}" minValue="0" maxValue="100" gaugeType="DIAL"
+                       animationOnDisplay="AUTO" animationOnDataChange="ON"
+                       
+                       partialTriggers="::inputValue" id="g1" shortDesc="Gauge Animation Sample">
+              <dvt:indicator useThresholdFillColor="true"/>
+              <dvt:bottomLabel text="Sales"/>
+              <dvt:thresholdSet>
+                <dvt:threshold thresholdMaxValue="25.0" fillColor="#ff7b52"/>
+                <dvt:threshold thresholdMaxValue="65.0"/>
+                <dvt:threshold/>
+              </dvt:thresholdSet>
+            </dvt:gauge>
+            <dvt:gauge value="#{gaugeData.gaugeValue}" minValue="0" maxValue="100"
+                       gaugeType="STATUSMETER" animationOnDisplay="AUTO" animationOnDataChange="ON"
+                       
+                       partialTriggers="::inputValue" id="g2" shortDesc="Gauge Animation Sample">
+              <dvt:bottomLabel text="Sales"/>
+              <dvt:thresholdSet>
+                <dvt:threshold thresholdMaxValue="25.0" fillColor="#ff7b52"/>
+                <dvt:threshold thresholdMaxValue="65.0"/>
+                <dvt:threshold/>
+              </dvt:thresholdSet>
+            </dvt:gauge>
+            <dvt:gauge value="#{gaugeData.gaugeValue}" minValue="0" maxValue="100"
+                       gaugeType="VERTICALSTATUSMETER" animationOnDisplay="AUTO"
+                       
+                       animationOnDataChange="ON" partialTriggers="::inputValue" id="g3"
+                       shortDesc="Gauge Animation Sample">
+              <dvt:bottomLabel text="Sales"/>
+              <dvt:thresholdSet>
+                <dvt:threshold thresholdMaxValue="25.0" fillColor="#ff7b52"/>
+                <dvt:threshold thresholdMaxValue="65.0"/>
+                <dvt:threshold/>
+              </dvt:thresholdSet>
+            </dvt:gauge>
+          </af:panelGroupLayout>
+          <af:inputText label="Gauge Value " id="inputValue" value="#{gaugeData.gaugeValue}"
+                        autoSubmit="true" converter="javax.faces.Double"/>
+          <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

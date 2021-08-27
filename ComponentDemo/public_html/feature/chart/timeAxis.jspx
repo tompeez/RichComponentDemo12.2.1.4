@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Chart Time Axis" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Chart Time Axis Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Time Axis"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:panelDashboard columns="3" rowHeight="240px" styleClass="AFStretchWidth" dimensionsFrom="children">
+              <af:panelBox text="Time Axis Nested Labels: Day and Time" showDisclosure="false">
+                <dvt:comboChart value="#{chartDataSource.hourlyTimeData}" var="row" hoverBehavior="dim" timeAxisType="enabled">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartXAxis>
+                    <dvt:majorTick rendered="true"/>
+                    <dvt:minorTick lineStyle="dotted" rendered="true"/>
+                  </dvt:chartXAxis>
+                </dvt:comboChart>
+              </af:panelBox>
+              <af:panelBox text="Time Axis Nested Labels: Year and Month" showDisclosure="false">
+                <dvt:horizontalBarChart value="#{chartDataSource.monthlyTimeData}" var="row" hoverBehavior="dim" timeAxisType="enabled">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                </dvt:horizontalBarChart>
+              </af:panelBox>
+              <af:panelBox text="Time Axis with Irregular Intervals" showDisclosure="false">
+                <dvt:barChart value="#{chartDataSource.yearlyIrregularTimeData}" var="row" hoverBehavior="dim" timeAxisType="enabled">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartXAxis>
+                    <dvt:majorTick rendered="true"/>
+                  </dvt:chartXAxis>
+                </dvt:barChart>
+              </af:panelBox>
+              <af:panelBox text="timeAxisType= skipGaps" showDisclosure="false">
+                <dvt:barChart value="#{chartDataSource.yearlyIrregularTimeData}" var="row" hoverBehavior="dim" timeAxisType="skipGaps">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartXAxis>
+                    <dvt:majorTick rendered="true"/>
+                  </dvt:chartXAxis>
+                </dvt:barChart>
+              </af:panelBox>
+              <af:panelBox text="Mixed Frequency Time Axis" showDisclosure="false">
+                <dvt:comboChart value="#{chartDataSource.yearlyMixedFrequencyTimeData}" var="row" hoverBehavior="dim" timeAxisType="mixedFrequency">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"/>
+                  </f:facet>
+                </dvt:comboChart>
+              </af:panelBox>
+            </af:panelDashboard>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

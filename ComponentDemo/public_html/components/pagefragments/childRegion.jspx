@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:panelHeader text="This is child region :#{demo.viewId}" id="ph1">
+    <af:inputText label="Change Name:"  
+      value="#{regionModel.childRegionModel.fullName}" partialTriggers="recursion cb3" id="it1"/>
+    <af:panelGroupLayout id="pgl1" layout="horizontal">
+      <f:facet name="separator">
+        <af:spacer id="sp1" width="2px"/>
+      </f:facet>
+      
+      <af:commandButton text="Next Region on Parent" shortDesc="Queues outcome on immediate parent"
+        actionListener="#{regionModel.childRegionModel.goParentNext}" id="cb1"/>
+      
+      <af:commandButton text="Navigate View Root" shortDesc="Queues outcome on root"
+        actionListener="#{regionModel.childRegionModel.goRootOutcome}" id="cb2"/>
+  
+      <af:commandButton text="Fire recursive invocation" id="recursion"
+                        actionListener="#{regionModel.childRegionModel.invokeRecursively}"/>
+      
+      <af:resetButton text="Reset Region" id="rb3" shortDesc="calls ResetUtils.reset."/>
+    </af:panelGroupLayout>
+  </af:panelHeader>
+</jsp:root>

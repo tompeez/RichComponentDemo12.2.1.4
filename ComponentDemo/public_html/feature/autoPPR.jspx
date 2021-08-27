@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Automatic Partial Page Rendering (auto-PPR) Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="auto-PPR"/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="gmStretchChildren" value="#{mobileSettings.dimensionsFromChildren ? 'none' : 'first'}" />
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelHeader text="Automatic Partial Page Rendering" id="ph1">
+              <af:outputText styleClass="AFInstructionText"
+                             value="Automatic Partial Page Rendering is an ADS (Active Data Service) related feature. If a component is bound to a binding object that is not marked as pushing change events, it is treated as an auto PPR candidate. That is, if the binding fires data change events, the component will be added to list of components to be PPR'ed. When a new request comes, the updated data will be sent to client automatically, without the application developer having to set partialTriggers."
+                             id="ot1"/>
+            </af:panelHeader>
+            <af:panelHeader text="Demos" id="ph2">
+              <af:panelList listStyle="list-style-type:decimal" id="pl1">
+                <af:subform id="s1">
+                  <af:panelGroupLayout layout="vertical" id="pgl2">
+                    <af:outputText value="The model for this demo changes every second. The button cause a PPR request, and the output below is automatically updated despite the fact that it has no partial trigger set."
+                                   id="ot2"/>
+                    <af:commandButton id="refresh" text="Submit PPR button" shortDesc="Click to refresh auto-ppr content" partialSubmit="true"/>
+                    <af:inputText id="inputTextComponent1" shortDesc="Type and tab-out to refresh auto-ppr content" autoSubmit="true"/>
+                    <af:outputText value="#{simpleAutoPPRBean.firstRow.value}"
+                                   id="ot3"/>
+                  </af:panelGroupLayout>
+                </af:subform>
+                <af:subform id="s2">
+                  <af:panelGroupLayout layout="vertical" id="pgl3">
+                    <af:outputText value="The model above this demo changes every second. The inputText cause a PPR request, and the output above is automatically updated despite the fact that it has no partial trigger set."
+                                   id="ot4"/>
+                    <af:inputText id="inputTextComponent2" autoSubmit="true"/>
+                  </af:panelGroupLayout>
+                </af:subform>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map Flight Tracker" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Thematic Map Flight Tracker"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Thematic Map Flight Tracker"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth" topHeight="auto">
+            <f:facet name="top">
+              <af:panelGroupLayout layout="vertical" styleClass="AfStretchHeight">
+                <f:verbatim>                     
+                  <b><p>This demo shows a flight tracker for OracleAir flights. Select one or more airplane markers to track 
+                  flights on the right.  Press the play button to start the demo.</p>
+                  <p>Here's how we made it:</p></b>                     
+                    <ul>
+                      <li>Airplane images were rotated using the rotation attribute on the dvt:marker tag.</li>
+                      <li>Default, hover, selected, and hover/selected airplane images were specified using the dvt:marker source attributes.</li>
+                      <li>An af:poll element was used to update the point data layer airplane lat long positions.</li>
+                    </ul>
+                  </f:verbatim>
+                <af:panelGroupLayout layout="horizontal" styleClass="AfStretchHeight">
+                  <af:commandButton id="playBtn" text="Play" disabled="#{flightTrackerBean.started and !flightTrackerBean.paused}"
+                             binding="#{flightTrackerBean.playButton}" partialSubmit="true"
+                             actionListener="#{flightTrackerBean.playListener}"/>
+                  <af:spacer width="10px"/>
+                  <af:commandButton id="stopBtn" text="Stop" disabled="#{flightTrackerBean.paused || !flightTrackerBean.started}"
+                             binding="#{flightTrackerBean.pauseButton}" partialSubmit="true"
+                             actionListener="#{flightTrackerBean.stopListener}"/>
+                  <af:spacer width="10px"/>
+                  <af:poll id="poll1" interval="#{(!flightTrackerBean.started || flightTrackerBean.paused) ? -1 : 1000}" pollListener="#{flightTrackerBean.pollListener}"/>
+                  <af:spacer height="30px"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelSplitter orientation="horizontal" splitterPosition="440" positionedFromEnd="true"
+                                styleClass="AFStretchWidth" id="ps1">
+                <f:facet name="first">
+                  <dvt:thematicMap id="thematicMap" basemap="world" tooltipDisplay="auto" summary="invisible area layers">
+                    <af:transition transition="none" triggerType="display"/>
+                    <dvt:areaLayer id="al1" layer="countries">
+                      <dvt:pointDataLayer id="pdl1" contentDelivery="immediate" value="#{flightTrackerBean.flights}"
+                                          selectionListener="#{flightTrackerBean.processSelection}" var="row"
+                                          varStatus="rowStatus" selectionMode="multiple" partialTriggers="::::sbcb1"
+                                          selectedRowKeys="#{flightTrackerBean.selectedKeys}">
+                        
+                        <af:transition transition="auto" triggerType="dataChange"/>
+                        <dvt:pointLocation id="pl1" type="pointXY" pointX="#{row.currentLongLat.x}"
+                                           pointY="#{row.currentLongLat.y}">
+                          <dvt:marker id="m1" labelPosition="bottom" scaleX="3" scaleY="3"
+                                      rotation="#{row.rotation}" shortDesc="OracleAir #{row.flightNumber}"
+                                      sourceHover="/resources/images/thematicMap/planeHover.png"
+                                      source="/resources/images/thematicMap/plane.png"
+                                      sourceSelected="/resources/images/thematicMap/planeSel.png"
+                                      sourceHoverSelected="/resources/images/thematicMap/planeHoverSel.png"
+                                      labelDisplay="#{flightTrackerBean.showFlightNo ? 'on' : 'off'}" value="Flight #{row.flightNumber}"/>
+                        </dvt:pointLocation>
+                      </dvt:pointDataLayer>
+                    </dvt:areaLayer>
+                  </dvt:thematicMap>
+                </f:facet>
+                <f:facet name="second">
+                  <af:panelGroupLayout>
+                    <af:selectBooleanCheckbox text="Show Flight Labels" value="#{flightTrackerBean.showFlightNo}" autoSubmit="true"
+                                              id="sbcb1"/>
+                    <af:panelGridLayout>
+                      <af:iterator value="#{flightTrackerBean.flights}" var="row" id="it1">
+                        <af:gridRow>
+                          <af:gridCell halign="center">
+                            <af:image source="/resources/images/thematicMap/planeHover.png" rendered="#{row.selected}"
+                                      inlineStyle="width:15px;height:15px;"/>
+                          </af:gridCell>
+                          <af:gridCell marginStart="5px" halign="center">
+                            <af:outputText value="OracleAir #{row.flightNumber}"
+                                           inlineStyle="font-weight:bold;font-size:14px;#{row.selected ? 'color:red;' : ''}"/>
+                          </af:gridCell>
+                          <af:gridCell marginStart="5px" halign="center">
+                            <af:outputText value="#{row.departureCityName}" inlineStyle="font-size:14px;"/>
+                          </af:gridCell>
+                          <af:gridCell marginStart="2px" halign="center">
+                            <af:outputText value="to" inlineStyle="font-size:14px;"/>
+                          </af:gridCell>
+                          <af:gridCell marginStart="2px" halign="center">
+                            <af:outputText value="#{row.arrivalCityName}" inlineStyle="font-size:14px;"/>
+                          </af:gridCell>
+                          <af:gridCell marginStart="5px" halign="center">
+                            <af:outputText value="#{row.destinationReached ? 'Arrived' : 'In Flight'}" 
+                                           inlineStyle="font-size:14px;color:#{row.destinationReached ? '#FF0000' : '#0000FF'};"/>
+                          </af:gridCell>
+                        </af:gridRow>
+                        <af:gridRow>
+                          <af:gridCell/>
+                          <af:gridCell marginStart="5px" halign="center"/>
+                          <af:gridCell marginStart="5px" halign="center">
+                            <af:outputText value="#{row.departureTime}"/>
+                          </af:gridCell>
+                          <af:gridCell marginStart="2px" halign="center"/>
+                          <af:gridCell marginStart="2px" halign="center">
+                            <af:outputText value="#{row.arrivalTime}"/>
+                          </af:gridCell>
+                          <af:gridCell marginStart="5px" halign="center">
+                            <af:outputText value="#{row.flightDuration}" inlineStyle="font-weight:bold;"/>
+                          </af:gridCell>
+                        </af:gridRow>
+                        <af:gridRow marginBottom="15px">
+                          <af:gridCell/>
+                          <af:gridCell marginStart="5px" rendered="#{row.selected}" halign="center">
+                            <af:outputText value="#{row.longString}#{row.currentLongLat.y > 0 ? 'N' : 'S'} #{row.latString}#{row.currentLongLat.x > 0 ? 'E' : 'W'}"/>
+                          </af:gridCell>
+                        </af:gridRow>
+                      </af:iterator>
+                    </af:panelGridLayout>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:panelSplitter>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="start"/>
+        <f:facet name="end"></f:facet>
+        <f:facet name="top"/>
+        <!-- END FEATURE DEMO -->
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

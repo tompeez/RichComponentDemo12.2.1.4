@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Retirement Calculator" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Retirement Calculator"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Retirement Calculator"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:panelGroupLayout layout="vertical" halign="center">
+                            <af:panelGroupLayout layout="horizontal">
+                                <af:panelFormLayout labelWidth="125" rows="3">
+                                    <af:inputNumberSpinbox id="ins1" autoSubmit="true" label="Current Age"
+                                                           value="#{retirementCalculator.currentAge}"/>
+                                    <af:inputNumberSpinbox id="ins2" autoSubmit="true" label="Retirement Age"
+                                                           value="#{retirementCalculator.retirementAge}"/>
+                                    <af:inputNumberSpinbox id="ins4" autoSubmit="true" label="Life Expectancy"
+                                                           value="#{retirementCalculator.lifeExpectancy}"/>
+                                </af:panelFormLayout>
+                                <af:spacer width="10"/>
+                                <af:panelFormLayout labelWidth="150">
+                                    <af:inputText id="it1" autoSubmit="true" label="Current Savings"
+                                                  value="#{retirementCalculator.currentSavings}">
+                                        <af:convertNumber maxFractionDigits="0"/>
+                                    </af:inputText>
+                                    <af:inputText id="it2" autoSubmit="true" label="Annual Contribution"
+                                                  value="#{retirementCalculator.annualContribution}">
+                                        <af:convertNumber maxFractionDigits="0"/>
+                                    </af:inputText>
+                                    <af:inputText id="it3" autoSubmit="true" label="Social Security Income"
+                                                  value="#{retirementCalculator.socialSecurityIncome}">
+                                        <af:convertNumber maxFractionDigits="0"/>
+                                    </af:inputText>
+                                    <af:inputText id="it4" autoSubmit="true" label="Spending in Retirement"
+                                                  contentStyle="color:#ED6647;"
+                                                  value="#{retirementCalculator.retirementSpending}">
+                                        <af:convertNumber maxFractionDigits="0"/>
+                                    </af:inputText>
+                                </af:panelFormLayout>
+                            </af:panelGroupLayout>
+                            <af:spacer height="20"/>
+                            <af:panelGroupLayout layout="horizontal">
+                                <af:panelGroupLayout layout="vertical" halign="center">
+                                    <af:outputLabel value="Rate of Return (Before Retirement)"/>
+                                    <af:inputNumberSlider id="ins3" autoSubmit="true"
+                                                          value="#{retirementCalculator.rateOfReturn}" minimum="0"
+                                                          maximum="0.10" majorIncrement="0.02" minorIncrement="0.005"
+                                                          contentStyle="width:250px;">
+                                        <af:convertNumber type="percent" maxFractionDigits="1" minFractionDigits="1"/>
+                                    </af:inputNumberSlider>
+                                </af:panelGroupLayout>
+                                <af:spacer width="30"/>
+                                <af:panelGroupLayout layout="vertical" halign="center">
+                                    <af:outputLabel value="Rate of Return (After Retirement)"/>
+                                    <af:inputNumberSlider id="ins5" autoSubmit="true"
+                                                          value="#{retirementCalculator.retiredRateOfReturn}"
+                                                          minimum="0" maximum="0.10" majorIncrement="0.02"
+                                                          minorIncrement="0.005" contentStyle="width:250px;">
+                                        <af:convertNumber type="percent" maxFractionDigits="1" minFractionDigits="1"/>
+                                    </af:inputNumberSlider>
+                                </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                            <af:spacer height="20"/>
+                            <af:outputText partialTriggers="ins1 ins2 ins3 ins4 ins5 it1 it2 it3 it4"
+                                           value="#{retirementCalculator.message}"
+                                           inlineStyle="font-size:medium;color:#{retirementCalculator.savingEnough ? '#409c5b' : '#ED6647'};"/>
+                            <af:panelGroupLayout layout="horizontal">
+                                <!-- Spacer to offset the visual weight of the legend, which makes the chart appear uncentered. -->
+                                <af:spacer width="50"/>
+                                <dvt:comboChart inlineStyle="width:800px; height:450px;"
+                                                value="#{retirementCalculator.chartData}" var="row" stack="on" barGapRatio="0.2"
+                                                dataCursor="on" animationIndicators="none"
+                                                footnote="*Assumes a 3% inflation rate."
+                                                partialTriggers="::ins1 ::ins2 ::ins3 ::ins4 ::ins5 ::it1 ::it2 ::it3 ::it4">
+                                    <f:facet name="dataStamp">
+                                        <af:group>
+                                            <dvt:chartDataItem series="" group="#{row.age}" value="#{row.totalSavings}"
+                                                               shortDesc="#{row.shortDesc}"
+                                                               color="#{row.age le retirementCalculator.retirementAge ? '#267DB3' : row.totalSavings ge 0 ? '#1d6089' : '#ED6647'}"/>
+                                        </af:group>
+                                    </f:facet>
+                                    <f:facet name="seriesStamp">
+                                        <af:group>
+                                            <dvt:chartSeriesStyle series="" displayInLegend="off"/>
+                                            <!-- TODO REMOVE THIS and series="" once bug fixed-->
+                                            <dvt:chartSeriesStyle series="Shortfall" type="bar" color="#ED6647"
+                                                                  displayInLegend="on"/>
+                                            <dvt:chartSeriesStyle series="After Retirement" type="bar" color="#1d6089"
+                                                                  displayInLegend="on"/>
+                                            <dvt:chartSeriesStyle series="Before Retirement" type="bar" color="#267DB3"
+                                                                  displayInLegend="on"/>
+                                        </af:group>
+                                    </f:facet>
+                                    <af:transition triggerType="dataChange" transition="auto"/>
+                                    <af:transition triggerType="display" transition="auto"/>
+                                    <dvt:chartXAxis title="Age">
+                                        <dvt:chartTickLabel rotation="off"/>
+                                        <dvt:referenceLine value="#{retirementCalculator.retirementAge}" color="#888888"
+                                                           text="Retirement Age" lineWidth="2" displayInLegend="on"/>
+                                    </dvt:chartXAxis>
+                                    <dvt:chartYAxis title="Retirement Savings ($)"
+                                                    dataMaximum="#{retirementCalculator.maxSavings}">
+                                        <dvt:referenceLine value="#{retirementCalculator.minimumNeededToRetire}"
+                                                           color="#68C182" lineStyle="dashed" text="Savings Needed"
+                                                           lineWidth="2" displayInLegend="on" location="front"/>
+                                    </dvt:chartYAxis>
+                                </dvt:comboChart>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

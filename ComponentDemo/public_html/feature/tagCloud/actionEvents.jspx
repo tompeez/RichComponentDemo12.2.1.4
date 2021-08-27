@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Tag Cloud Action Events Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Tag Cloud Action Event Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Tag Cloud Action Event"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout topHeight="auto" bottomHeight="auto">
+            <f:facet name="top">
+              <af:panelGroupLayout layout="vertical">
+                <f:verbatim>                   <b>Demonstrates Action Event in Tag Cloud using Social data</b>                   <ul>
+                    <li>Action: Click on any Tag Cloud item to see the use of the action attribute for navigating to Tag
+                        cloud features demo page.</li>
+                    <li>Action Listener: Click on any Tag Cloud item to see the use of action listener.</li>
+                  </ul>                 </f:verbatim>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelSplitter orientation="horizontal" dimensionsFrom="auto" splitterPosition="300"
+                                positionedFromEnd="true" styleClass="AFStretchWidth" id="ps1">
+                <f:facet name="first">
+                  <!-- START FEATURE DEMO -->
+                  <af:panelTabbed id="pt1" contentDelivery="lazyUncached">
+                    <af:showDetailItem text="Action" id="sdi1" disclosed="true" stretchChildren="first">
+                      <af:panelGroupLayout clientComponent="true">
+                        <dvt:tagCloud id="tc1" value="#{tagCloudActionModel.model}" var="item" layout="cloud"
+                                      inlineStyle="max-width:600px;margin:auto;width:100%;height:400px;"
+                                      selectionMode="none" contentDelivery="whenAvailable" rendered="true">
+                          <af:transition transition="auto" triggerType="display"/>
+                          <dvt:tagCloudItem label="#{item.word}" value="#{item.frequency}" shortDesc="#{item.shortDesc}"
+                                            action="feature.tagCloudFeatures" id="t1"></dvt:tagCloudItem>
+                        </dvt:tagCloud>
+                      </af:panelGroupLayout>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Action Listener" disclosed="true" stretchChildren="first">
+                      <af:panelGroupLayout clientComponent="true">
+                        <dvt:tagCloud id="tc2" value="#{tagCloudActionModel.model}" var="item" layout="cloud"
+                                      inlineStyle="max-width:600px;margin:auto;width:100%;height:400px;"
+                                      selectionMode="none" contentDelivery="whenAvailable" rendered="true">
+                          <af:transition transition="auto" triggerType="display"/>
+                          <dvt:tagCloudItem label="#{item.word}" value="#{item.frequency}"
+                                            actionListener="#{tagCloudActionModel.actionListener}"
+                                            shortDesc="#{item.shortDesc}" id="t3"></dvt:tagCloudItem>
+                        </dvt:tagCloud>
+                        <af:outputFormatted value="#{tagCloudActionModel.actionListenerString}" id="of1"
+                                            partialTriggers="tc2" clientComponent="true"/>
+                        <af:spacer height="10px"/>
+                      </af:panelGroupLayout>
+                    </af:showDetailItem>
+                  </af:panelTabbed>
+                </f:facet>
+              </af:panelSplitter>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

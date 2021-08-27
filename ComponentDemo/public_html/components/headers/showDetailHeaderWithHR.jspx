@@ -1,0 +1,497 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="showDetailHeader demo with horizontal rule" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="showDetailHeader"/>
+        <f:attribute name="visualDesignName" value="headers"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmFlowNotes" value="If you use type=&quot;stretch&quot; when flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmFlowWithZeroWidthNotes" value="If you use type=&quot;stretch&quot; when flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmStretchNotes" value="You cannot use type=&quot;flow&quot; when stretching this component.  Instruction text, the &quot;help&quot;, &quot;info&quot;, and &quot;legend&quot; facets will not be displayed when stretched."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="centerHeader">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:commandLink id="headerStyle" text="Click to see the skinning keys used with AFHeaderHR styleClass"
+                         inlineStyle=" font-weight:bold; text-decoration:underline;">
+            <af:showPopupBehavior popupId="headerStylesPopup" triggerType="action"
+                                  alignId="headerStyle"/>
+            </af:commandLink>
+            <af:spacer height="5px" id="sp"/>
+            <af:popup id="headerStylesPopup">
+              <af:dialog contentWidth="400" contentHeight="300" id="nw1">
+                <af:panelGroupLayout layout="scroll" id="pglstyle">
+                      <code> <br/>
+                              Add the following lines to your custom skin and set AFHeaderHR as the styleClass 
+                              for PanelHeader, ShowDetailHeader and query components to get the styles applied.
+                             <br/><br/>
+                            
+                             <span style="color:Maroon;">.AFHeaderHR > af|panelHeader::content0,<br/>
+                                                        .AFHeaderHR > af|showDetailHeader::content0,<br/>
+                                                        .AFHeaderHR > af|query::content0,<br/>
+                                                        .AFHeaderHR > af|panelHeader::content1,<br/>
+                                                        .AFHeaderHR > af|showDetailHeader::content1,<br/>
+                                                        .AFHeaderHR > af|query::content1,<br/>
+                                                        .AFHeaderHR > af|panelHeader::content2,<br/>
+                                                        .AFHeaderHR > af|showDetailHeader::content2,<br/>
+                                                        .AFHeaderHR > af|query::content2,<br/>
+                                                        .AFHeaderHR > af|panelHeader::content3,<br/>
+                                                        .AFHeaderHR > af|showDetailHeader::content3,<br/>
+                                                        .AFHeaderHR > af|query::content3,<br/>
+                                                        .AFHeaderHR > af|panelHeader::content4,<br/>
+                                                        .AFHeaderHR > af|showDetailHeader::content4,<br/>
+                                                        .AFHeaderHR > af|query::content4,<br/>
+                                                        .AFHeaderHR > af|panelHeader::content5,<br/>
+                                                        .AFHeaderHR > af|showDetailHeader::content5<br/>
+                                                        .AFHeaderHR > af|query::content5
+                             {<br/>
+                                  <span style="white-space: noWrap">&#160; border-top: 1px solid -tr-property-ref(".AFPanelBorderColor:alias","color");</span> <br/>
+                                   &#160; padding-top: 5px;
+                            <br/>}</span><br/>
+                            <br/>
+                            <span style="white-space: noWrap">&#47;*needed because of stretching container around the content.*&#47;</span><br/>
+                            <span style="color:Maroon;">.AFHeaderWithHR > * > af|panelHeader::content0,<br/>
+                            .AFHeaderWithHR > * > af|showDetailHeader::content0,<br/>
+                            .AFHeaderWithHR > * > af|query::content0,<br/>
+                            .AFHeaderWithHR > * > af|panelHeader::content1,<br/>
+                            .AFHeaderWithHR > * > af|showDetailHeader::content1,<br/>
+                            .AFHeaderWithHR > * > af|query::content1,<br/>
+                            .AFHeaderWithHR > * > af|panelHeader::content2,<br/>
+                            .AFHeaderWithHR > * > af|showDetailHeader::content2,<br/>
+                            .AFHeaderWithHR > * > af|query::content2,<br/>
+                            .AFHeaderWithHR > * > af|panelHeader::content3,<br/>
+                            .AFHeaderWithHR > * > af|showDetailHeader::content3,<br/>
+                            .AFHeaderWithHR > * > af|query::content3,<br/>
+                            .AFHeaderWithHR > * > af|panelHeader::content4,<br/>
+                            .AFHeaderWithHR > * > af|showDetailHeader::content4,<br/>
+                            .AFHeaderWithHR > * > af|query::content4,<br/>
+                            .AFHeaderWithHR > * > af|panelHeader::content5,<br/>
+                            .AFHeaderWithHR > * > af|showDetailHeader::content5,<br/>
+                            .AFHeaderWithHR > * > af|query::content5
+                            {<br/>
+                              <span style="white-space: noWrap">&#160; border-top: 1px solid -tr-property-ref(".AFPanelBorderColor:alias","color");</span> <br/>
+                              &#160; padding-top: 5px;
+                            <br/>}</span>
+                            <br/><br/>
+                            <span style="color:Maroon;">@agent gecko {<br/>
+                                                        &#160;.AFHeaderHR > af|panelHeader::content0,<br/>
+                                                        &#160;.AFHeaderHR > af|showDetailHeader::content0,<br/>
+                                                        &#160;.AFHeaderHR > af|query::content0,<br/>
+                                                        &#160;.AFHeaderHR > af|panelHeader::content1,<br/>
+                                                        &#160;.AFHeaderHR > af|showDetailHeader::content1,<br/>
+                                                        &#160;.AFHeaderHR > af|query::content1,<br/>
+                                                        &#160;.AFHeaderHR > af|panelHeader::content2,<br/>
+                                                        &#160;.AFHeaderHR > af|showDetailHeader::content2,<br/>
+                                                        &#160;.AFHeaderHR > af|query::content2,<br/>
+                                                        &#160;.AFHeaderHR > af|panelHeader::content3,<br/>
+                                                        &#160;.AFHeaderHR > af|showDetailHeader::content3,<br/>
+                                                        &#160;.AFHeaderHR > af|query::content3,<br/>
+                                                        &#160;.AFHeaderHR > af|panelHeader::content4,<br/>
+                                                        &#160;.AFHeaderHR > af|showDetailHeader::content4,<br/>
+                                                        &#160;.AFHeaderHR > af|query::content4,<br/>
+                                                        &#160;.AFHeaderHR > af|panelHeader::content5,<br/>
+                                                        &#160;.AFHeaderHR > af|showDetailHeader::content5<br/>
+                                                        &#160;.AFHeaderHR > af|query::content5
+                             &#160;{<br/>
+                                    &#160;&#160; padding-top: 4px;<br/>
+                            &#160;}<br/><br/>
+                            &#160;.AFHeaderWithHR > * > af|panelHeader::content0,<br/>
+  &#160;.AFHeaderWithHR > * > af|panelHeader::content1,<br/>
+  &#160;.AFHeaderWithHR > * > af|panelHeader::content2,<br/>
+  &#160;.AFHeaderWithHR > * > af|panelHeader::content3,<br/>
+  &#160;.AFHeaderWithHR > * > af|panelHeader::content4,<br/>
+  &#160;.AFHeaderWithHR > * > af|panelHeader::content5,<br/>
+  &#160;.AFHeaderWithHR > * > af|showDetailHeader::content0,<br/>
+  &#160;.AFHeaderWithHR > * > af|showDetailHeader::content1,<br/>
+  &#160;.AFHeaderWithHR > * > af|showDetailHeader::content2,<br/>
+  &#160;.AFHeaderWithHR > * > af|showDetailHeader::content3,<br/>
+  &#160;.AFHeaderWithHR > * > af|showDetailHeader::content4,<br/>
+  &#160;.AFHeaderWithHR > * > af|showDetailHeader::content5,<br/>
+  &#160;.AFHeaderWithHR > * > af|query::content0,<br/>
+  &#160;.AFHeaderWithHR > * > af|query::content1,<br/>
+  &#160;.AFHeaderWithHR > * > af|query::content2,<br/>
+  &#160;.AFHeaderWithHR > * > af|query::content3,<br/>
+  &#160;.AFHeaderWithHR > * > af|query::content4,<br/>
+  &#160;.AFHeaderWithHR > * > af|query::content5 {<br/>
+    &#160;&#160;padding-top: 4px;<br/>
+  &#160;}
+                            <br/>}</span>
+                            <br/>                        
+                      </code>
+                </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:showDetailHeader icon="/images/guy.gif" text="Header Text - alternate Style - with horizontal rule" type="default" styleClass="AFHeaderWithHR"
+                               binding="#{editor.component}" helpTopicId="TOPICID_ALL"
+                               id="showDetailHeader">
+            <f:facet name="context">
+              <af:selectOneChoice mode="compact" simple="true" label="option">
+                <af:selectItem label="Option A" value="a" />
+                <af:selectItem label="Option B" value="b" />
+              </af:selectOneChoice>
+            </f:facet>
+            <f:facet name="toolbar">
+              <af:toolbar id="t1">
+                <af:button icon="/images/new_ena.png" partialSubmit="true"
+                                         shortDesc="new" id="ctb1"/>
+                <af:button icon="/images/update.gif" partialSubmit="true"
+                                         shortDesc="update" id="ctb2"/>
+                <af:button icon="/images/void.gif" partialSubmit="true"
+                                         shortDesc="void" id="ctb3"/>
+                <af:button text="Cancel"/>
+                <af:button text="Actions"/>
+                <af:button text="Apply"/>
+              </af:toolbar>
+            </f:facet>
+            <f:facet name="menuBar">
+              <af:menuBar id="mb1">
+                <af:menu text="menu 1" id="m1">
+                  <af:menu text="menu 2" id="m2">
+                    <af:commandMenuItem text="item 2.1" id="cmi1"/>
+                  </af:menu>
+                  <af:commandMenuItem text="item 1.1" id="cmi2"/>
+                  <af:commandMenuItem text="item 1.2" id="cmi3"/>
+                </af:menu>
+              </af:menuBar>
+            </f:facet>
+            <f:facet name="legend">
+              <af:declarativeComponent viewId="/visualDesigns/headerLegend/component.jsff"
+                                     pageStampType="taskStamp" />
+            </f:facet>
+            <af:showDetailHeader text="Automatic SubHeader" helpTopicId="TOPICID_ALL" styleClass="AFHeaderWithHR"
+                                 id="showDetailHeader2">
+              <f:facet name="toolbar">
+                <af:toolbar id="t2">
+                  <af:button icon="/images/new_ena.png" partialSubmit="true"
+                                           shortDesc="new" id="ctb4"/>
+                  <af:button icon="/images/update.gif" partialSubmit="true"
+                                           shortDesc="update" id="ctb5"/>
+                  <af:button icon="/images/void.gif" partialSubmit="true"
+                                           shortDesc="void" id="ctb6"/>
+                  <af:button text="Cancel"/>
+                  <af:button text="Actions"/>
+                  <af:button text="Apply"/>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="menuBar">
+                <af:menuBar id="mb2">
+                  <af:menu text="menu 1" id="m3">
+                    <af:menu text="menu 2" id="m4">
+                      <af:commandMenuItem text="item 2.1" id="cmi4"/>
+                    </af:menu>
+                    <af:commandMenuItem text="item 1.1" id="cmi5"/>
+                    <af:commandMenuItem text="item 1.2" id="cmi6"/>
+                  </af:menu>
+                </af:menuBar>
+              </f:facet>
+              <af:showDetailHeader text="Automatic SubSubHeader" styleClass="AFHeaderWithHR" id="showDetailHeader3">
+                <f:facet name="context">
+                  <af:selectOneChoice mode="compact" simple="true" label="option">
+                    <af:selectItem label="Option A" value="a" />
+                    <af:selectItem label="Option B" value="b" />
+                  </af:selectOneChoice>
+                </f:facet>
+                <f:facet name="legend">
+                  <af:declarativeComponent viewId="/visualDesigns/headerLegend/component.jsff"
+                                         pageStampType="taskStamp" />
+                </f:facet>
+              </af:showDetailHeader>
+              <af:showDetailHeader icon="/images/guy.gif" text="Level 1 Header" size="1" styleClass="AFHeaderWithHR"
+                                   id="showDetailHeader4">
+                <af:outputText value="The header that contains this text should be fixed at size=1 reguardless of the size of the parent header.  In other words, it's style won't change when the size in the grid below is changed."
+                               id="ot6"/>
+                <af:showDetailHeader text="SubSub Header under Level 1 Header" styleClass="AFHeaderWithHR"
+                                     id="sdh1">
+                  <af:outputText value="The header containing this text should be fixed as size=2 because the header above it is fixed at a size=1 using the size attribute."
+                                 id="ot7"/>
+                </af:showDetailHeader>
+              </af:showDetailHeader>
+            </af:showDetailHeader>
+          </af:showDetailHeader>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <af:outputText value="Example showing all five levels." id="ot8"/>
+              <af:showDetailHeader icon="/images/guy.gif" styleClass="AFHeaderWithHR"
+                                   text="Nested ShowDetailHeaders - Root Level 0"
+                                   helpTopicId="TOPICID_ALL" id="showDetailHeader5">
+                <f:facet name="context">
+                  <af:selectOneChoice mode="compact" simple="true" label="option">
+                    <af:selectItem label="Option A" value="a" />
+                    <af:selectItem label="Option B" value="b" />
+                  </af:selectOneChoice>
+                </f:facet>
+                <f:facet name="toolbar">
+                  <af:toolbar id="t3">
+                    <af:button icon="/images/new_ena.png" partialSubmit="true"
+                                             shortDesc="new" id="ctb7"/>
+                    <af:button icon="/images/update.gif" partialSubmit="true"
+                                             shortDesc="update" id="ctb8"/>
+                    <af:button icon="/images/void.gif" partialSubmit="true"
+                                             shortDesc="void" id="ctb9"/>
+                    <af:button text="Cancel"/>
+                    <af:button text="Actions"/>
+                    <af:button text="Apply"/>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="menuBar">
+                  <af:menuBar id="mb3">
+                    <af:menu text="menu 1" id="m5">
+                      <af:menu text="menu 2" id="m6">
+                        <af:commandMenuItem text="item 2.1" id="cmi7"/>
+                      </af:menu>
+                      <af:commandMenuItem text="item 1.1" id="cmi8"/>
+                      <af:commandMenuItem text="item 1.2" id="cmi9"/>
+                    </af:menu>
+                  </af:menuBar>
+                </f:facet>
+                <f:facet name="legend">
+                  <af:declarativeComponent viewId="/visualDesigns/headerLegend/component.jsff"
+                                         pageStampType="taskStamp" />
+                </f:facet>
+                <af:showDetailHeader text="Automatic SubHeader - Level 1" helpTopicId="TOPICID_ALL"
+                                    styleClass="AFHeaderWithHR" id="showDetailHeader6">
+                  <f:facet name="toolbar">
+                    <af:toolbar id="t4">
+                      <af:button icon="/images/new_ena.png" partialSubmit="true"
+                                               shortDesc="new" id="ctb10"/>
+                      <af:button icon="/images/update.gif" partialSubmit="true"
+                                               shortDesc="update" id="ctb11"/>
+                      <af:button icon="/images/void.gif" partialSubmit="true"
+                                               shortDesc="void" id="ctb12"/>
+                      <af:button text="Cancel"/>
+                      <af:button text="Actions"/>
+                      <af:button text="Apply"/>
+                    </af:toolbar>
+                  </f:facet>
+                  <f:facet name="menuBar">
+                    <af:menuBar id="mb4">
+                      <af:menu text="menu 1" id="m7">
+                        <af:menu text="menu 2" id="m8">
+                          <af:commandMenuItem text="item 2.1" id="cmi10"/>
+                        </af:menu>
+                        <af:commandMenuItem text="item 1.1" id="cmi11"/>
+                        <af:commandMenuItem text="item 1.2" id="cmi12"/>
+                      </af:menu>
+                    </af:menuBar>
+                  </f:facet>
+                  <af:showDetailHeader text="Automatic SubSubHeader - Level 2" styleClass="AFHeaderWithHR"
+                                       id="showDetailHeader7">
+                    <f:facet name="context">
+                      <af:selectOneChoice mode="compact" simple="true" label="option">
+                        <af:selectItem label="Option A" value="a" />
+                        <af:selectItem label="Option B" value="b" />
+                      </af:selectOneChoice>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="t5">
+                        <af:button icon="/images/new_ena.png" partialSubmit="true"
+                                                 shortDesc="new" id="ctb13"/>
+                        <af:button icon="/images/update.gif" partialSubmit="true"
+                                                 shortDesc="update" id="ctb14"/>
+                        <af:button icon="/images/void.gif" partialSubmit="true"
+                                                 shortDesc="void" id="ctb15"/>
+                        <af:button text="Cancel"/>
+                        <af:button text="Actions"/>
+                        <af:button text="Apply"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="menuBar">
+                      <af:menuBar id="mb5">
+                        <af:menu text="menu 1" id="m9">
+                          <af:menu text="menu 2" id="m10">
+                            <af:commandMenuItem text="item 2.1" id="cmi13"/>
+                          </af:menu>
+                          <af:commandMenuItem text="item 1.1" id="cmi14"/>
+                          <af:commandMenuItem text="item 1.2" id="cmi15"/>
+                        </af:menu>
+                      </af:menuBar>
+                    </f:facet>
+                    <f:facet name="legend">
+                      <af:declarativeComponent viewId="/visualDesigns/headerLegend/component.jsff"
+                                             pageStampType="taskStamp" />
+                    </f:facet>
+                  </af:showDetailHeader>
+                  <af:showDetailHeader icon="/images/guy.gif" text="Level 1 Header" size="1" styleClass="AFHeaderWithHR"
+                                       id="showDetailHeader8">
+                    <f:facet name="toolbar">
+                      <af:toolbar id="t6">
+                        <af:button icon="/images/new_ena.png" partialSubmit="true"
+                                                 shortDesc="new" id="ctb16"/>
+                        <af:button icon="/images/update.gif" partialSubmit="true"
+                                                 shortDesc="update" id="ctb17"/>
+                        <af:button icon="/images/void.gif" partialSubmit="true"
+                                                 shortDesc="void" id="ctb18"/>
+                        <af:button text="Cancel"/>
+                        <af:button text="Actions"/>
+                        <af:button text="Apply"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="menuBar">
+                      <af:menuBar id="mb6">
+                        <af:menu text="menu 1" id="m11">
+                          <af:menu text="menu 2" id="m12">
+                            <af:commandMenuItem text="item 2.1" id="cmi16"/>
+                          </af:menu>
+                          <af:commandMenuItem text="item 1.1" id="cmi17"/>
+                          <af:commandMenuItem text="item 1.2" id="cmi18"/>
+                        </af:menu>
+                      </af:menuBar>
+                    </f:facet>
+                    <af:outputText value="Output text inside level 1 header."
+                                   id="ot13"/>
+                    <af:showDetailHeader text="Sub Header under Level 1 Header - Level 2" styleClass="AFHeaderWithHR"
+                                         id="showDetailHeader9">
+                      <f:facet name="toolbar">
+                        <af:toolbar id="t7">
+                          <af:button icon="/images/new_ena.png" partialSubmit="true"
+                                                   shortDesc="new" id="ctb19"/>
+                          <af:button icon="/images/update.gif" partialSubmit="true"
+                                                   shortDesc="update"
+                                                   id="ctb20"/>
+                          <af:button icon="/images/void.gif" partialSubmit="true"
+                                                   shortDesc="void" id="ctb21"/>
+                          <af:button text="Cancel"/>
+                          <af:button text="Actions"/>
+                          <af:button text="Apply"/>
+                        </af:toolbar>
+                      </f:facet>
+                      <f:facet name="menuBar">
+                        <af:menuBar id="mb7">
+                          <af:menu text="menu 1" id="m13">
+                            <af:menu text="menu 2" id="m14">
+                              <af:commandMenuItem text="item 2.1" id="cmi19"/>
+                            </af:menu>
+                            <af:commandMenuItem text="item 1.1" id="cmi20"/>
+                            <af:commandMenuItem text="item 1.2" id="cmi21"/>
+                          </af:menu>
+                        </af:menuBar>
+                      </f:facet>
+                      <af:outputText value="Output text inside level 2 header."
+                                     id="ot14"/>
+                      <af:showDetailHeader text="Sub Header under Level 2 Header - Level 3" styleClass="AFHeaderWithHR"
+                                           id="showDetailHeader10">
+                        <f:facet name="toolbar">
+                          <af:toolbar id="t8">
+                            <af:button icon="/images/new_ena.png" partialSubmit="true"
+                                                     shortDesc="new"
+                                                     id="ctb22"/>
+                            <af:button icon="/images/update.gif" partialSubmit="true"
+                                                     shortDesc="update"
+                                                     id="ctb23"/>
+                            <af:button icon="/images/void.gif" partialSubmit="true"
+                                                     shortDesc="void"
+                                                     id="ctb24"/>
+                            <af:button text="Cancel"/>
+                            <af:button text="Actions"/>
+                            <af:button text="Apply"/>
+                          </af:toolbar>
+                        </f:facet>
+                        <f:facet name="menuBar">
+                          <af:menuBar id="mb8">
+                            <af:menu text="menu 1" id="m15">
+                              <af:menu text="menu 2" id="m16">
+                                <af:commandMenuItem text="item 2.1" id="cmi22"/>
+                              </af:menu>
+                              <af:commandMenuItem text="item 1.1" id="cmi23"/>
+                              <af:commandMenuItem text="item 1.2" id="cmi24"/>
+                            </af:menu>
+                          </af:menuBar>
+                        </f:facet>
+                        <af:outputText value="Output text inside level 3 subheader."
+                                       id="ot15"/>
+                        <af:showDetailHeader text="Sub Header under Level 3 Header - Level 4" styleClass="AFHeaderWithHR"
+                                             id="showDetailHeader11">
+                          <f:facet name="toolbar">
+                            <af:toolbar id="t9">
+                              <af:button icon="/images/new_ena.png"
+                                                       partialSubmit="true" shortDesc="new"
+                                                       id="ctb25"/>
+                              <af:button icon="/images/update.gif"
+                                                       partialSubmit="true" shortDesc="update"
+                                                       id="ctb26"/>
+                              <af:button icon="/images/void.gif" partialSubmit="true"
+                                                       shortDesc="void"
+                                                       id="ctb27"/>
+                              <af:button text="Cancel"/>
+                              <af:button text="Actions"/>
+                              <af:button text="Apply"/>
+                            </af:toolbar>
+                          </f:facet>
+                          <f:facet name="menuBar">
+                            <af:menuBar id="mb9">
+                              <af:menu text="menu 1" id="m17">
+                                <af:menu text="menu 2" id="m18">
+                                  <af:commandMenuItem text="item 2.1"
+                                                      id="cmi25"/>
+                                </af:menu>
+                                <af:commandMenuItem text="item 1.1" id="cmi26"/>
+                                <af:commandMenuItem text="item 1.2" id="cmi27"/>
+                              </af:menu>
+                            </af:menuBar>
+                          </f:facet>
+                          <af:outputText value="Output text inside level 4 subheader."
+                                         id="ot16"/>
+                          <af:showDetailHeader text="Sub Header under Level 4 Header - Level 5" styleClass="AFHeaderWithHR"
+                                               id="showDetailHeader12">
+                            <f:facet name="toolbar">
+                              <af:toolbar id="t10">
+                                <af:button icon="/images/new_ena.png"
+                                                         partialSubmit="true" shortDesc="new"
+                                                         id="ctb28"/>
+                                <af:button icon="/images/update.gif"
+                                                         partialSubmit="true" shortDesc="update"
+                                                         id="ctb29"/>
+                                <af:button icon="/images/void.gif"
+                                                         partialSubmit="true" shortDesc="void"
+                                                         id="ctb30"/>
+                                <af:button text="Cancel"/>
+                                <af:button text="Actions"/>
+                                <af:button text="Apply"/>
+                              </af:toolbar>
+                            </f:facet>
+                            <f:facet name="menuBar">
+                              <af:menuBar id="mb10">
+                                <af:menu text="menu 1" id="m19">
+                                  <af:menu text="menu 2" id="m20">
+                                    <af:commandMenuItem text="item 2.1"
+                                                        id="cmi28"/>
+                                  </af:menu>
+                                  <af:commandMenuItem text="item 1.1"
+                                                      id="cmi29"/>
+                                  <af:commandMenuItem text="item 1.2"
+                                                      id="cmi30"/>
+                                </af:menu>
+                              </af:menuBar>
+                            </f:facet>
+                            <af:outputText value="Output text inside level 5 subheader."
+                                           id="ot17"/>
+                          </af:showDetailHeader>
+                        </af:showDetailHeader>
+                      </af:showDetailHeader>
+                    </af:showDetailHeader>
+                  </af:showDetailHeader>
+                </af:showDetailHeader>
+              </af:showDetailHeader>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

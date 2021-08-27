@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:attributeMatchRule&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:attributeMatchRule&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:attributeMatchRule attributeMatchRule attribute match rule</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.attributeGroups.UIAttributeMatchRule<br>
+<b>Component type:</b> oracle.dss.adf.attributeGroups.AttributeMatchRule<br></p>
+<p>The attributeMatchRule tag is a child of attributeGroups that can be used to override the default values provided by the attributeGroups. This tag is used to replace an attribute when the data matches a certain value.</p>
+<p>The attributeMatchRule tag uses child &lt;f:attribute&gt; tags to define the override values, where the name property defines the type of attribute (such as "color" or "shape"), and the value property defines the override value to use (such as "red" or "square"). When the value property of the attributeGroups tag matches the value in the group property of the attributeMatchRule, then the style value given in the child &lt;f:attribute&gt; will be assigned to that group of data instead of the next value from the default ramp.</p>
+<p>The &lt;f:attribute&gt; name must match one of the attributes listed in the type of the top level attributeGroups tag. If the value provided by an override also happens to be in the built-in ramp returned by the attributeGroups, then that value will only be used by the overrides and will be skipped in the built-in ramp.</p>
+<h4>Sample</h4>
+<p>This is an example of how attributeGroups and attributeMatchRule can be used with the Thematic Map component:</p>
+<pre>
+       &lt;dvt:thematicMap id="map" basemap="usa"&gt;
+         &lt;dvt:areaLayer id="al1" layer="states"&gt;
+             &lt;dvt:areaDataLayer id="adl1" value="#{bean.model}" var="row" ...&gt;
+                &lt;dvt:areaLocation id="al1" name="#{row.name}"&gt;
+                    &lt;!--Each stamped marker gets assigned a color and shape from the attributeGroups--&gt;
+                    &lt;dvt:marker id="m1"&gt;
+                        &lt;dvt:attributeGroups id="ag1" type="shape color" value="#{row.category}"&gt;
+                            &lt;!--If the row's category is "category1", then force the marker shape to be a diamond--&gt;
+                            &lt;dvt:attributeMatchRule id="amr1" group="category1"&gt;
+                                &lt;f:attribute name="shape" value="diamond"/&gt;
+                            &lt;/dvt:attributeMatchRule&gt;
+                        &lt;/dvt:attributeGroups&gt;
+                    &lt;/dvt:marker&gt;
+                &lt;/dvt:areaLocation&gt;
+             &lt;/dvt:areaDataLayer&gt;
+         &lt;/dvt:areaLayer&gt;
+       &lt;/dvt:thematicMap&gt;
+       
+</pre>
+<h4>Relationship with other tags</h4>
+<p>The &lt;dvt:attributeMatchRule&gt; tag can have the following children:</p>
+<ul>
+<li>&lt;f:attribute&gt;</li>
+</ul>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.attributeGroups.UIAttributeMatchRule</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">an EL reference that will store the component instance on a bean. This can be used to give programmatic access to a component from a backing bean, or to move creation of the component to a backing bean.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">group</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Category value to match with. If the attributeGroup's value matches this group value, then use the specified overrides</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered. The default value is true.</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

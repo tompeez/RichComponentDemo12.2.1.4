@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <f:loadBundle
+      basename="oracle.adfdemo.view.explorer.rich.resource.FileExplorerBundle"
+      var="explorerBundle"/>
+    <af:document title="#{explorerBundle['global.branding_name']}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <af:group id="g1">
+          <!-- Include the JScript file for client side actions -->
+          <af:resource type="javascript" source="/fileExplorer/jsLibs/explorer.js"/>
+        </af:group>
+      </f:facet>
+      <af:pageTemplate id="fe" viewId="#{demoSkin.altaBased ? '/fileExplorer/templates/fileExplorerTemplateAlta.jspx' :  '/fileExplorer/templates/fileExplorerTemplate.jspx'}">
+        <!-- Set the attributes of the page template -->
+        <f:attribute name="headerSize" value="#{demoSkin.altaBased? '115' :'80'}"/>
+        <f:attribute name="navigatorsSize" value="370"/>
+        <f:attribute name="footerGlobalSize" value="25"/>
+        <f:facet name="branding">
+          <af:outputText value="#{explorerBundle['global.branding_name']}" id="ot1" styleClass="AFBrandingBarTitle" />
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <!-- Provides area to support global navigation -->
+          <af:navigationPane hint="bar" id="np1">
+            <af:commandNavigationItem action="feature" text="Feature Demos" id="cni1"/>
+            <af:commandNavigationItem
+              id="oracleNavGlobalLink"
+              icon="/fileExplorer/images/oracle_Logo.png"
+              destination="http://www.oracle.com"
+              shortDesc="http://www.oracle.com/"
+              textAndAccessKey="#{explorerBundle['navglobal.oracledotcom']}"/>
+            <af:commandNavigationItem text="Page Source"
+                                      shortDesc="View the server-side tags used to build this page"
+                                      destination="#{facesContext.viewRoot.viewId}.source"
+                                      id="pgSrc"/>
+            <af:commandNavigationItem text="Template Source"
+                                      shortDesc="View the server-side tags used to build the template used by this page"
+                                      destination="/fileExplorer/templates/fileExplorerTemplate.jspx.source"
+                                      id="tmplSrc"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="header">
+          <af:group id="g2">
+            <!-- The file explorer header with all the menus and toolbar buttons -->
+            <f:subview id="header">
+              <jsp:include page="/fileExplorer/header.jspx"/>
+            </f:subview>
+            <!-- af:messages for global messages -->
+            <af:messages id="m1"/>
+            <!-- Popup menu definition -->
+            <f:subview id="popups">
+              <jsp:include page="/fileExplorer/popups.jspx"/>
+            </f:subview>
+            <f:subview id="help">
+              <jsp:include page="/fileExplorer/help.jspx"/>
+            </f:subview>
+          </af:group>
+        </f:facet>
+        <f:facet name="navigators">
+          <!-- The auxiliarry area for navigating the file explorer -->
+          <f:subview id="navigators">
+            <jsp:include page="/fileExplorer/navigators.jspx"/>
+          </f:subview>
+        </f:facet>
+        <f:facet name="contentViews">
+          <!-- show the contents of the selected folder in the folders navigator -->
+          <f:subview id="contentViews">
+            <jsp:include page="/fileExplorer/contentViews.jspx"/>
+          </f:subview>
+        </f:facet>
+        <f:facet name="appAbout">
+          <!-- Provide a link to open popup to show information about file explorer -->
+          <af:commandLink id="feAppAbout" text="#{explorerBundle['menuitem.about']}"
+                          immediate="true" inlineStyle="white-space:nowrap" rendered="#{not demoSkin.altaBased}">
+            <af:showPopupBehavior popupId="fe:popups:aboutPopup"/>
+          </af:commandLink>
+        </f:facet>
+        <f:facet name="appCopyright">
+          <!-- Copyrights info about File Explorer demo -->
+          <af:outputText value="#{explorerBundle['about.copyright']}" id="copy" noWrap="true"/>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

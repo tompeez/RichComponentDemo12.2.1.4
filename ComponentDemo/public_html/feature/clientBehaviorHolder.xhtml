@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<ui:composition
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test">
+  <af:document
+    id="d1"
+    title="Client Behavior Support"
+    binding="#{templateBindings.documentComponent}"
+    theme="dark">
+    <f:facet name="metaContainer">
+      <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+      <f:subview id="meta">
+        <ui:include src="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+      </f:subview>
+    </f:facet>
+    <af:resource type="javascript">
+function checkPrevent()
+{
+  var comp = AdfPage.PAGE.findComponentByAbsoluteLocator("dmoTpl:sbc1");
+  if (comp.getValue() == true)
+  {
+    var clientId = comp.getClientId();
+    var page = AdfPage.PAGE;
+    page.clearMessages(clientId);
+    page.addMessage(clientId,
+      new AdfFacesMessage(AdfFacesMessage.TYPE_INFO,
+        "Submission Prevented",
+        "Form submission is being prevented by the behavior function"));
+    page.showMessages(clientId);
+    window.setTimeout(
+      function ()
+      {
+        page.clearMessages(clientId);
+      }, 5000);
+    return false;
+  }
+}
+function handleBlur(componentEvent)
+{
+  var blurComp = componentEvent.getSource();
+  var updateComp = AdfPage.PAGE.findComponentByAbsoluteLocator("dmoTpl:ot1");
+  updateComp.setValue(blurComp.getValue());
+}
+    </af:resource>
+    <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+      <f:attribute name="tagName" value="Client Behavior Support"/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      <f:facet name="center">
+        <af:panelHeader text="Client Behavior Support">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator />
+            </f:facet>
+            <af:panelHeader text="Command button and blur">
+              <af:panelFormLayout id="pfl1">
+                <af:inputText id="it1" label="Enter text:" value="#{requestScope.inputTextValue}" clientComponent="true">
+                  <aftest:callFunction function="handleBlur" event="blur" />
+                </af:inputText>
+                <af:selectBooleanCheckbox id="sbc1" label="Prevent submission" clientComponent="true"
+                  value="#{requestScope.preventSubmissionValue}" />
+                <af:inputText readOnly="true" id="it2" value="#{requestScope.inputTextValue}"
+                  label="Value that was entered:" partialTriggers="cb1 cb2" />
+                <af:panelLabelAndMessage label="Value detected on blur:" id="plam1">
+                  <af:outputText readOnly="true" id="ot1" value="" clientComponent="true" partialTriggers="cb1 cb2" />
+                </af:panelLabelAndMessage>
+                <af:commandButton id="cb1" partialSubmit="true" text="Submit">
+                  <aftest:callFunction function="checkPrevent" />
+                </af:commandButton>
+                <af:commandButton id="cb2" text="Submit via JSF Ajax">
+                  <aftest:callFunction function="checkPrevent" />
+                  <f:ajax render="it2" />
+                </af:commandButton>
+              </af:panelFormLayout>
+            </af:panelHeader>
+            <af:panelHeader text="Ajax during value change" id="ph1">
+              <af:panelFormLayout id="pfl2">
+                <af:inputText id="it4" label="Enter text:" value="#{requestScope.inputText2Value}">
+                  <f:ajax render="it5" />
+                </af:inputText>
+                <af:inputText readOnly="true" id="it5" value="#{requestScope.inputText2Value}"
+                  label="Value updated by ajax on value change:" />
+              </af:panelFormLayout>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </af:panelHeader>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document>
+</ui:composition>

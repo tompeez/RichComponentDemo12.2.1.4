@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map Popup Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demoTemplate"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <!--<f:attribute name="documentTitle" value="Show And Hide Series"/>-->
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Thematic Map Popups"/>
+        <af:popup id="pop1" contentDelivery="lazyUncached" launcherVar="source"
+                  eventContext="launcher">
+          <af:setPropertyListener from="#{tmapPopupBean.colorModel.rowData}"
+                                  to="#{tmapPopupBean.source}"
+                                  type="popupFetch"/>
+          <af:dialog id="nw1" modal="false" type="none"
+                     title="Results - #{tmapPopupBean.source.fullName}">
+            <af:panelGroupLayout id="pgl6">
+              <af:panelGroupLayout id="pgl7" layout="horizontal"
+                                   halign="center">
+                <af:outputText value="Candidate 1" id="ot2"
+                               inlineStyle="color:#{tmapPopupBean.strColor2}; font-size:medium;"/>
+                <af:spacer width="50" height="10" id="spacer1"/>
+                <af:outputText value="Candidate 2" id="ot1"
+                               inlineStyle="color:#{tmapPopupBean.strColor1}; font-size:medium;"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout id="pgl5" layout="horizontal" halign="center">
+                <dvt:pieChart value="#{tmapPopupBean.graphData[tmapPopupBean.source]}" var="row" 
+                  inlineStyle="height:250px;width:250px"
+                  id="pc1">
+                  <dvt:pieDataItem label="#{row.series}" value="#{row.value}" color="#{row.series == 'Series1' ? tmapPopupBean.color1 : tmapPopupBean.color2}" id="pdi1"/>
+                  <dvt:chartLegend rendered="false" id="cl1"/>
+                </dvt:pieChart>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="pop2" contentDelivery="lazyUncached" launcherVar="source"
+                  eventContext="launcher">
+          <af:setPropertyListener from="#{tmapPopupBean.pointModel.rowData}"
+                                  to="#{tmapPopupBean.noteSource}"
+                                  type="popupFetch"/>
+          <af:noteWindow id="nw2">
+            <af:panelGroupLayout id="pgl8" halign="center" layout="vertical">
+              <af:outputText value="Latitude: #{tmapPopupBean.noteSource.latitude}"
+                             id="ot4"/>
+              <af:outputText value="Longitude: #{tmapPopupBean.noteSource.longitude}"
+                             id="ot5"/>
+            </af:panelGroupLayout>
+          </af:noteWindow>
+       </af:popup>
+        
+        <f:facet name="center">        
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout id="panelStretch" styleClass="AFStretchWidth"
+                                 topHeight="auto">                                            
+            <f:facet name="bottom">            
+            </f:facet>
+            <f:facet name="center">            
+              <dvt:thematicMap id="thematicMap"
+                               basemap="usa" summary="Thematic map showing voting data in the United States">
+                <af:transition transition="auto" triggerType="display"/>
+                <dvt:legend label="Legend">
+                  <dvt:showLegendGroup label="Voting Majority">
+                    <dvt:legendSection source="areaLayer:dataLayer:area1"/>
+                  </dvt:showLegendGroup>
+                  <dvt:legendSection source="areaLayer:pointLayer:marker1"/>
+                </dvt:legend>
+                <dvt:areaLayer id="areaLayer" layer="states">
+                  <dvt:areaDataLayer id="dataLayer" contentDelivery="immediate"
+                                     value="#{tmapPopupBean.colorModel}"
+                                     var="row" varStatus="rowStatus">
+                    <dvt:areaLocation id="areaLoc" name="#{row.name}">
+                      <dvt:area id="area1"
+                                fillColor="#{row.value > 50 ? tmapPopupBean.color1 : tmapPopupBean.color2}"
+                                destination="#{row.name == 'CA' ? 'http://www.oracle.com' : null}">
+                        <f:attribute name="legendLabel" value="#{row.value > 50 ? 'Candidate 2' : 'Candidate 1'}" />
+                        <af:showPopupBehavior triggerType="click"
+                                              popupId="::::pop1"
+                                              alignId="area1"
+                                              align="endAfter"/>
+                      </dvt:area>
+                    </dvt:areaLocation>
+                  </dvt:areaDataLayer>
+                  <dvt:pointDataLayer id="pointLayer"
+                                      value="#{tmapPopupBean.pointModel}" var="row"
+                                      varStatus="rowStatus"
+                                      contentDelivery="immediate">
+                    <dvt:pointLocation id="pointLoc" type="pointXY"
+                                       pointX="#{row.longitude}"
+                                       pointY="#{row.latitude}">
+                      <dvt:marker id="marker1" shape="human" fillColor="#FF9900"
+                                  scaleX="5.5" scaleY="5.5"
+                                  destination="#{row.name == 'CA_SAN_FRANCISCO' ? 'http://www.oracle.com' : null}">
+                        <f:attribute name="legendLabel" value="Location of Interest" />
+                        <af:showPopupBehavior triggerType="mouseHover"                        
+                                              alignId="marker1"
+                                              popupId="::::pop2"
+                                              align="endAfter"/>
+                      </dvt:marker>
+                    </dvt:pointLocation>
+                  </dvt:pointDataLayer>
+                </dvt:areaLayer>
+              </dvt:thematicMap>
+            </f:facet>
+            <f:facet name="start"/>
+            <f:facet name="end"/>
+            <f:facet name="top">
+              <af:panelGroupLayout layout="vertical" id="pgl1">
+                <af:panelGroupLayout layout="horizontal" id="pgl3">
+                  <af:spacer width="10px" id="s2"/>
+                  <af:panelGroupLayout id="pgl4">
+                    <f:verbatim>
+                      <b>Demonstrates display of popups using
+                         af:showPopupBehavior on areas and markers</b>
+                      <ul>
+                        <li>Click on any colored region to bring up its
+                            corresponding af:dialog popup</li>
+                         
+                        <li>Hover over any human marker to bring up its
+                            corresponding af:noteWindow popup</li>
+                    
+                        <li>Click California or San Francisco will bring you to
+                            the oracle site</li>
+                      </ul>
+                    </f:verbatim>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

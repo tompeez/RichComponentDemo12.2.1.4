@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view><af:document title="Specialized Graphs" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo"
+                     viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Specialized Graphs"/>
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Specialized Graphs"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+          <af:panelGroupLayout layout="vertical" id="pgl2">
+          
+          <af:panelGroupLayout layout="horizontal" id="pgl3">
+                  <af:panelGroupLayout layout="vertical" id="pgl31">
+                          <af:outputText value="This graph shows the attractiveness factor of the cities."
+                                         id="ot11"/>
+                          <af:outputText value="Click on an icon on the legend to hide the city."
+                                         id="ot12"/>
+                          <dvt:radarGraph shortDesc="City Detail" id="g1"  tabularData="#{specializedGraphBean.radarData}" seriesRolloverBehavior="RB_HIGHLIGHT" hideAndShowBehavior="withoutRescale">
+                            <dvt:graphTitle id="gt1" text="Radar Graph - City Detail"/>
+                            <dvt:y1Axis id="ya1" axisMaxAutoScaled="false" axisMaxValue="100"/>
+                          </dvt:radarGraph>
+                  </af:panelGroupLayout>
+          
+          <af:panelGroupLayout layout="vertical" id="pgl32">
+                  <af:outputText value="The waterfall graph shows the change in inventory in days."
+                                 id="ot2"/>
+                      <dvt:graph 
+                         graphType="BAR_VERT_FLOAT_STACK" 
+                         shortDesc="Graph" id="g2"  
+                         value="#{specializedGraphBean.graphDataModel}" 
+                         binding="#{specializedGraphBean.waterFallGraph}" 
+                         styleRuleBundle="#{specializedGraphBean.conditionalFormattingVector}">
+                        <dvt:graphTitle id="gt2" text="Waterfall Graph - Inventory"/>
+                      </dvt:graph>
+                  </af:panelGroupLayout>
+          </af:panelGroupLayout>
+          
+          <af:panelGroupLayout layout="horizontal" id="pgl4">
+              <af:panelGroupLayout layout="vertical" id="pgl41">
+                      <af:outputText value="The 5 values box plot."
+                                     id="ot4"/>
+                   <dvt:graph shortDesc="gr" id="graph2" tabularData="#{specializedGraphBean.boxPlotData}" binding="#{specializedGraphBean.fiveValueGraph}">
+                        <dvt:graphTitle id="gt3" text="Box Plot - 5 values"/>
+                        <dvt:seriesSet>
+                            <dvt:series color="#008200" lineStyle="LS_DOTTED" borderColor="#2121ff"/>
+                        </dvt:seriesSet>
+                        <dvt:referenceObjectSet>
+                            <dvt:referenceObject lineValue="35.0"/>
+                        </dvt:referenceObjectSet>
+                    </dvt:graph>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="vertical" id="pgl42">
+                    <af:outputText value="The 7 values box plot. The alerts are outliers."/>
+                    <dvt:graph shortDesc="gr" id="graph1" binding="#{specializedGraphBean.sevenValueGraph}">
+                        <dvt:graphTitle id="gt4" text="Box Plot - 7 values"/>
+                        <dvt:alertSet>
+                            <dvt:alert xValue="Group A" yValue="95" text="#{specializedGraphBean.text}95"/>
+                            <dvt:alert xValue="Group B" yValue="85" text="#{specializedGraphBean.text}85" />
+                            <dvt:alert xValue="Group E" yValue="15" text="#{specializedGraphBean.text}15"/>
+                        </dvt:alertSet>
+                        <dvt:seriesSet>
+                            <dvt:series markerColor="#ff8400" markerShape="MS_TRIANGLE_DOWN"/>
+                        </dvt:seriesSet>
+                    </dvt:graph>
+                </af:panelGroupLayout>
+          
+          </af:panelGroupLayout>
+          
+                     
+          </af:panelGroupLayout>
+          <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">
+        <af:panelGroupLayout layout="scroll" id="pgl1">
+          <!-- START SEE ALSO LINKS -->
+          <af:outputText value="See also:"/>
+            <af:panelList id="pl1">             
+             <af:goLink text="Specialized Graph Backing Bean" destination="/resources/sourceCode/feature/rich/graph/SpecializedGraphBean.javasource" id="gl1"/>
+            </af:panelList>
+          <!-- END SEE ALSO LINKS -->
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

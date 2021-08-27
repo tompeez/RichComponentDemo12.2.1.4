@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2012, Oracle and/or its affiliates. All rights reserved. -->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  version="2.1"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef
+    var="attrs"
+    componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>forEach sorting demo</description>
+      </component>
+    </af:xmlContent>
+    <af:panelHeader text="Sorting a collection model in a for each tag example" id="dc_ph2">
+      <af:panelGroupLayout id="dc_pgl1" layout="scroll">
+        <af:showDetail undisclosedText="Show notes" disclosedText="Hide notes" id="dc_sd1">
+          <af:outputText value="This example shows the how a for each tag may be backed by a
+                                collection model to permit reordering of components in JSP while
+                                retaining component state with the item in the for each loop instead
+                                of the index." id="dc_ot4"
+                         inlineStyle="display: block; padding: 8px 0px;"/>
+          <af:outputText value="Normally, in a JSTL for each loop, the components are mapped to the
+                                index of a for each loop. By using keys from a collection model, the
+                                ADF for each loop is able to tie the components to the key of an
+                                item in the collection rather than the index. This allows the items
+                                to be reordered and have the component state stay with the object."
+                         id="dc_ot3" inlineStyle="display: block; padding: 8px 0px;"/>
+          <af:outputText value="Note that the components must be reordered in the parent's children
+                                list as well. Otherwise, the component state will be correct, but
+                                the component will render in the wrong location. Also, the map
+                                must keep its iteration order constant." id="dc_ot2"
+                         inlineStyle="display: block; padding: 8px 0px;"/>
+        </af:showDetail>
+        <af:panelHeader text="Sort options" id="dc_ph1">
+          <af:panelGroupLayout layout="vertical" id="dc_pgl2">
+            <af:panelFormLayout id="dc_pfl1">
+              <af:selectOneRadio label="Property:" value="#{forEachBean.sortProperty}"
+                                 layout="horizontal">
+                <f:selectItem itemLabel="(none)" itemValue="#{null}" />
+                <af:selectItem label="First name" value="firstName" />
+                <af:selectItem label="Last name" value="lastName" />
+              </af:selectOneRadio>
+              <af:selectOneRadio label="Order:" value="#{forEachBean.sortAscending}"
+                                 layout="horizontal">
+                <af:selectItem label="Ascending" value="#{true}" />
+                <af:selectItem label="Descending" value="#{false}" />
+              </af:selectOneRadio>
+              <f:facet name="footer">
+                <af:button id="applySort"
+                           text="Apply sort"
+                           partialSubmit="true"
+                           actionListener="#{forEachBean.sortModel}"/>
+              </f:facet>
+            </af:panelFormLayout>
+          </af:panelGroupLayout>
+        </af:panelHeader>
+        <af:panelHeader text="For each tag" id="dc_ph3">
+          <af:panelGroupLayout id="forEachParent" layout="vertical">
+            <af:forEach var="emp" varStatus="vs" items="#{forEachBean.employeeModel}">
+              <af:declarativeComponent id="dc${vs.key}" viewId="employeeDetails.jsff"
+                                       employee="#{emp}"
+                                       varStatus="#{vs}"
+                                       styleClass="#{vs.count % 2 eq 0 ? 'even' : 'odd'}"
+                                       rowKey="#{vs.key}" />
+            </af:forEach>
+          </af:panelGroupLayout>
+        </af:panelHeader>
+      </af:panelGroupLayout>
+    </af:panelHeader>
+  </af:componentDef>
+</jsp:root>

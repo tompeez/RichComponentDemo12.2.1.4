@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2017, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="panelTabbed Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelTabbed"/>
+        <f:attribute name="visualDesignName" value="tabs"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerBottomCollapsibleHeight" value="300"/>
+        <f:attribute name="centerBottomCollapsed" value="true"/>
+        <!-- Removing the broken container geometry so that panelTabbed defaults to stretched.
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmFlowNotes" value="If you use dimensionsFrom=&quot;parent&quot; when flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmFlowWithZeroWidthNotes" value="Notice how styleClass=&quot;AFStretchWidth&quot; or inlineStyle with percent widths resolve when there is no intrinsic width, if no inlineStyle or styleClass is provided then the default dimensions from the skin are used."/>
+        <f:attribute name="gmStretchNotes" value="You cannot use dimensionsFrom=&quot;disclosedChild&quot; when stretching this component."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        -->
+        <f:facet name="center">
+          <af:panelTabbed childCreation="lazy" styleClass="AFStretchWidth" id="ShowOneTab" binding="#{editor.component}" 
+          dimensionsFrom="auto" maxTabSize="100px" minTabSize="36px" truncationStyle="none">
+                  <af:showDetailItem id="tab1" textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}"
+                                     shortDesc="Info Panel" depressedIcon="/images/warning_status.png"
+                                     hoverIcon="/images/error_status.png" >
+                    <af:outputText value="Tab 1 First Child" id="tot1"/>
+                    <af:outputText value="Tab 1 Second Child" id="tot2"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="tab2" textAndAccessKey="&amp;Tasks" disclosed="true" icon="/images/info_status.png"
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="To see a vertical panelTabbed, check out the panel drawer demo page. It has a panelDrawer on the left and a panelDrawer on the right." />
+                    <af:link text="Panel Drawer Demo" action="guide.panelDrawer"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="tab3" textAndAccessKey="Disabled tab &amp;3" disabled="true"
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                  </af:showDetailItem>
+                  <af:showDetailItem id="stab4" icon="/images/info_status.png" shortDesc="information"
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 4 First Child" id="tot5"/>
+                    <af:outputText value="Tab 4 Second Child" id="tot6"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 5" icon="/images/circle.svg" iconDelivery="inline" shortDesc="circle"
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 5 First Child"/>
+                    <af:outputText value="Tab 5 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 6" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 6 First Child"/>
+                    <af:outputText value="Tab 6 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 7" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 7 First Child"/>
+                    <af:outputText value="Tab 7 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 8" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 8 First Child"/>
+                    <af:outputText value="Tab 8 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 9" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 9 First Child"/>
+                    <af:outputText value="Tab 9 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 10" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 10 First Child"/>
+                    <af:outputText value="Tab 10 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 11" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 11 First Child"/>
+                    <af:outputText value="Tab 11 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 12" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 12 First Child"/>
+                    <af:outputText value="Tab 12 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 13" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 13 First Child"/>
+                    <af:outputText value="Tab 13 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 14" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 14 First Child"/>
+                    <af:outputText value="Tab 14 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Tab 15" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 15 First Child"/>
+                    <af:outputText value="Tab 15 Second Child"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Cached SVG Icon" icon="/images/circle.svg" iconDelivery="fetchAndInline" 
+                                     itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    <af:outputText value="Tab 16 First Child"/>
+                    <af:outputText value="Tab 16 Second Child"/>
+                  </af:showDetailItem>
+                  
+          </af:panelTabbed>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+          <af:panelTabbed position="both" id="panelTabbed2">
+            <af:showDetailItem disclosed="true" textAndAccessKey="&amp;First Pane"
+                               stretchChildren="first" id="sdi2">
+              <f:facet name="toolbar">
+                <af:outputText id="toolbar1" value="Toolbar 1"/>
+              </f:facet>
+              <af:panelGroupLayout layout="scroll" id="pgl2">
+                <af:outputText value="Sample content." id="tot7"/>
+                <af:outputText value="Even more sample content in the same pane."
+                               id="tot8"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="&amp;ResizeNotify"
+                               stretchChildren="first" id="sdi3">
+              <f:facet name="toolbar">
+                <af:outputText value="Toolbar 2" id="tot9"/>
+              </f:facet>
+              <aftest:panelResizeNotify id="resizeNotify"
+                                        inlineStyle="padding:0px;border-width:0px;margin:0px"/>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="PanelS&amp;tretchLayout"
+                               stretchChildren="first" id="sdi4">
+              <f:facet name="toolbar">
+                <af:outputText value="Toolbar 3" id="tot10"/>
+              </f:facet>
+              <af:panelStretchLayout id="pane3Stretch" partialTriggers="stretchUpdater"
+                                     topHeight="20" startWidth="100" endWidth="100"
+                                     bottomHeight="20">
+                <f:facet name="top">
+                  <af:outputText value="Top" inlineStyle="background-color: #FF6666;"
+                                 id="tot11"/>
+                </f:facet>
+                <f:facet name="start">
+                  <af:outputText value="Start" inlineStyle="background-color: #FFFF66;"
+                                 id="tot12"/>
+                </f:facet>
+                <f:facet name="end">
+                  <af:outputText value="End" inlineStyle="background-color: #66FF66;"
+                                 id="tot13"/>
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="auto" id="psl1">
+                    <f:facet name="top">
+                      <af:panelGroupLayout layout="vertical" id="pgl3">
+                        <af:outputText value="Clicking the button causes the
+                          panelStretchLayout to be replaced via partial page
+                          rendering. The contents of the pane should fill the
+                          pane after the partial page replacement."
+                                       id="ot14"/>
+                        <af:commandButton text="Update PanelStretchLayout" partialSubmit="true"
+                                          id="stretchUpdater"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="center">
+                      <aftest:panelResizeNotify id="prn1"/>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+                <f:facet name="bottom">
+                  <af:outputText value="Bottom" inlineStyle="background-color: #6666FF;"
+                                 id="ot15"/>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Invisible Pane" visible="false"
+                               id="sdi5">
+              <f:facet name="toolbar">
+                <af:outputText value="Invisible Toolbar" id="ot16"/>
+              </f:facet>
+              <af:outputText value="Invisible Body" id="ot17"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Not Rendered Pane" rendered="false"
+                               id="sdi6">
+              <f:facet name="toolbar">
+                <af:outputText value="Not Rendered Toolbar" id="ot18"/>
+              </f:facet>
+              <af:outputText value="Not Rendered Body" id="ot19"/>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="PanelS&amp;plitter"
+                               stretchChildren="first" id="sdi7">
+              <af:panelSplitter id="splitme" partialTriggers="splitUpdater">
+                <f:facet name="first">
+                  <af:outputText value="First Pane" id="ot20"/>
+                </f:facet>
+                <f:facet name="second">
+                  <af:panelStretchLayout topHeight="auto" id="psl2">
+                    <f:facet name="top">
+                      <af:panelGroupLayout layout="vertical" id="pgl4">
+                        <af:outputText value="Clicking the button causes the
+                          panelSplitter to be replaced via partial page
+                          rendering. The contents of the pane should fill the
+                          pane after the partial page replacement."
+                                       id="ot21"/>
+                        <af:commandButton text="Update PanelSplitter" partialSubmit="true"
+                                          id="splitUpdater"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="center">
+                      <aftest:panelResizeNotify id="prn2"/>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelSplitter>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="&amp;Overflow Pane"
+                               id="sdi8">
+              <af:panelGroupLayout layout="scroll" id="pgl5">
+                <f:subview id="overflowPane">
+                  <jsp:include page="/includes/overflowContent.jspx"/>
+                </f:subview>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="T&amp;able"
+                               stretchChildren="first" id="sdi9">
+              <f:subview id="tablePane">
+                <jsp:include page="/includes/stretchedTableContent.jspx"/>
+              </f:subview>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="Accordion"
+                               stretchChildren="first" id="sdi10">
+              <af:panelAccordion discloseNone="true" discloseMany="true"
+                                 id="pa1">
+                <af:showDetailItem disclosed="true" textAndAccessKey="Accordion pane 1" flex="1"
+                                   stretchChildren="first" id="sdi11">
+                  <f:facet name="toolbar">
+                    <af:outputText value="Toolbar" id="ot22"/>
+                  </f:facet>
+                  <aftest:panelResizeNotify id="accordionResizeNotify1"
+                                            inlineStyle="padding:0px;border-width:0px;margin:0px"/>
+                </af:showDetailItem>
+                <af:showDetailItem disclosed="true" textAndAccessKey="Accordion pane 2" flex="2"
+                                   stretchChildren="first" id="sdi12">
+                  <f:facet name="toolbar">
+                    <af:outputText value="Toolbar" id="ot23"/>
+                  </f:facet>
+                  <aftest:panelResizeNotify id="accordionResizeNotify2"
+                                            inlineStyle="padding:0px;border-width:0px;margin:0px"/>
+                </af:showDetailItem>
+              </af:panelAccordion>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="panelTabbed"
+                               stretchChildren="first" id="sdi1">
+              <af:panelTabbed id="pt1" position="both">
+                <af:showDetailItem disclosed="true" textAndAccessKey="Nested tab pane 1" flex="1"
+                                   stretchChildren="first" id="sdi15">
+                  <f:facet name="toolbar">
+                    <af:outputText value="Toolbar" id="ot1"/>
+                  </f:facet>
+                  <aftest:panelResizeNotify id="prn3"
+                                            inlineStyle="padding:0px;border-width:0px;margin:0px"/>
+                </af:showDetailItem>
+                <af:showDetailItem textAndAccessKey="Nested tab pane 2" flex="2"
+                                   stretchChildren="first" id="sdi16">
+                  <f:facet name="toolbar">
+                    <af:outputText value="Toolbar" id="ot2"/>
+                  </f:facet>
+                  <aftest:panelResizeNotify id="prn4"
+                                            inlineStyle="padding:0px;border-width:0px;margin:0px"/>
+                </af:showDetailItem>
+              </af:panelTabbed>
+            </af:showDetailItem>
+            <af:showDetailItem text="InlineFrame" stretchChildren="first"
+                               id="sdi13">
+              <af:inlineFrame source="http://www.w3.org/TR/REC-CSS2/" inlineStyle="border: 0px;"
+                              shortDesc="Sample shortDesc text" id="if1"/>
+            </af:showDetailItem>
+            <af:showDetailItem icon="/images/error.png" shortDesc="Error Panel"
+                               textAndAccessKey="&amp;Last Pane" stretchChildren="first"
+                               id="sdi14">
+              <af:panelGroupLayout layout="scroll" id="pgl6">
+                <af:outputText value="Sample content." id="ot24"/>
+                <af:outputText value="Even more sample content in the same pane."
+                               id="ot25"/>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

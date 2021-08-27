@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:loadBundle basename="oracle.adfdemo.view.explorer.rich.resource.FileExplorerBundle"
+                var="explorerBundle"/>
+  <af:panelStretchLayout id="psttbl">
+    <f:facet name="top">
+      <af:panelGroupLayout id="pglsp">
+        <af:resource type="javascript">
+<![CDATA[
+        function popupOpeningTableHandler(event) 
+        {
+          var _NAMES = ['Icon', 'Name', 'Type', 'Size', 'LastModified'];
+
+          var popup = event.getSource();
+          var table = popup.findComponent("folderTable");
+          var selectedRowKeys = table.getSelectedRowKeys();
+          var rowkey;
+          for (rowkey in selectedRowKeys)
+            break;
+           
+          if (!rowkey) 
+          {
+            event.cancel();
+            return;
+          }
+            
+          var row = table.getRowIndex(rowkey);
+          for (var i = 0; i < _NAMES.length; i++)
+          {
+            var tId = 't' + _NAMES[i];
+            var sId = 's' + _NAMES[i];
+            var target = popup.findComponent(tId);
+            var source = table.findComponent(sId, row);
+            if (target.getSource)
+              target.setSource(source.getSource());
+            else
+              target.setValue(source.getValue());
+            
+          }
+        } 
+        
+        function dialogTableHandler(event) 
+        {
+          event.cancel();
+          var popup = event.getSource().getParent();
+          if (event.getOutcome() == AdfDialogEvent.OUTCOME_CANCEL)
+            popup.cancel();
+          else
+            popup.hide();
+        }
+        
+]]>
+        </af:resource>
+        <af:popup id="propertiesPopup" childCreation="deferred">
+          <af:dialog title="#{explorerBundle['global.properties']}"
+                     stretchChildren="first" resize="on" contentWidth="175"
+                     contentHeight="100" modal="false" type="ok">
+              <af:panelGroupLayout layout="vertical">
+                <af:image id="tIcon" clientComponent="true"/>
+                <af:panelFormLayout maxColumns="2">
+                 <af:panelLabelAndMessage for="tName" label="#{explorerBundle['contents.name']}">
+                   <af:outputText id="tName" clientComponent="true" />
+                 </af:panelLabelAndMessage>
+                 <af:panelLabelAndMessage for="tType" label="#{explorerBundle['contents.type']}">
+                   <af:outputText id="tType" clientComponent="true"/>
+                 </af:panelLabelAndMessage>                    
+                 <af:panelLabelAndMessage for="tSize" label="#{explorerBundle['contents.size']}">             
+                  <af:outputText id="tSize" clientComponent="true"/>
+                 </af:panelLabelAndMessage> 
+                 <af:panelLabelAndMessage for="tLastModified" label="#{explorerBundle['contents.lastmodified']}">             
+                  <af:outputText id="tLastModified" clientComponent="true"/>
+                 </af:panelLabelAndMessage> 
+               </af:panelFormLayout>    
+            </af:panelGroupLayout>
+            <af:clientListener method="dialogTableHandler" type="dialog"/>
+          </af:dialog>
+          <af:clientListener method="popupOpeningTableHandler" type="popupOpening"/>
+        </af:popup>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="center">
+      <af:table id="folderTable" var="file"
+                value="#{explorer.navigatorManager.foldersNavigator.rootlessFoldersTreeModel}"
+                binding="#{explorer.contentViewManager.tableContentView.contentTable}"
+                emptyText="#{explorerBundle['global.no_row']}"
+                rowSelection="single" columnStretching="last"
+                selectionListener="#{explorer.contentViewManager.tableContentView.tableSelectFileItem}"
+                summary="table data" rowBandingInterval="0" visible="true">
+        <f:facet name="contextMenu">
+          <af:popup id="context1">
+            <af:menu id="m1">
+              <af:commandMenuItem text="#{explorerBundle['menuitem.properties']}"
+                                  id="cmi1">
+               <af:showPopupBehavior popupId="::propertiesPopup"/>
+              </af:commandMenuItem>
+              <af:commandMenuItem text="#{explorerBundle['menuitem.delete']}"
+                                  icon="/fileExplorer/images/delete_ena.png"
+                                  disabled="#{explorer.headerManager.disabledDeleteItem}"
+                                  actionListener="#{explorer.headerManager.deleteItem}"
+                                  id="cmi2"/>
+              <af:commandMenuItem text="#{explorerBundle['menuitem.copy']}"
+                                  disabled="#{explorer.headerManager.disabledCopyItem}"
+                                  actionListener="#{explorer.headerManager.copySelectedItem}"
+                                  id="cmi3"/>
+              <af:commandMenuItem text="#{explorerBundle['menuitem.paste']}"
+                                  disabled="#{explorer.headerManager.disabledPasteItem}"
+                                  actionListener="#{explorer.headerManager.pasteItemToCurrentLocation}"
+                                  id="cmi4"/>
+            </af:menu>
+          </af:popup>
+        </f:facet>
+         
+        <af:dragSource actions="MOVE" discriminant="fileModel"
+                       dragDropEndListener="#{explorer.contentViewManager.tableContentView.onTableDragDropEnd}"/>
+         
+        <af:collectionDropTarget actions="COPY MOVE" modelName="fileModel"
+                                 dropListener="#{explorer.contentViewManager.tableContentView.onTableDrop}"/>
+        <af:column width="180" sortable="true" sortProperty="name" id="c1">
+          <f:facet name="header">
+            <af:outputText value="#{explorerBundle['contents.name']}" id="ot1"/>
+          </f:facet>
+          <af:panelGroupLayout id="pgl1">
+            <af:image source="#{file.icon}"
+                      inlineStyle="margin-right:3px; vertical-align:middle;"
+                      shortDesc="file icon" id="sIcon" clientComponent="true"/>
+            <af:outputText value="#{file.name}" noWrap="true" id="sName" clientComponent="true"/>
+          </af:panelGroupLayout>
+        </af:column>
+        <af:column width="70" sortable="true" align="end"
+                   sortProperty="property.size" id="c2">
+          <f:facet name="header">
+            <af:outputText value="#{explorerBundle['contents.size']}" id="ot3"/>
+          </f:facet>
+          <af:outputText value="#{file.property.size}" noWrap="true" id="sSize" clientComponent="true"/>
+        </af:column>
+        <af:column width="120" sortable="true" sortProperty="type" id="c3">
+          <f:facet name="header">
+            <af:outputText value="#{explorerBundle['contents.type']}" id="ot5"/>
+          </f:facet>
+          <af:outputText value="#{file.type}" noWrap="true" id="sType" clientComponent="true"/>
+        </af:column>
+        <af:column width="140" noWrap="false" sortable="true"
+                   sortProperty="property.lastModified" id="c4">
+          <f:facet name="header">
+            <af:outputText value="#{explorerBundle['contents.lastmodified']}"
+                           id="ot7"/>
+          </f:facet>
+          <af:outputText value="#{file.property.lastModified}" id="sLastModified" clientComponent="true"/>
+        </af:column>
+        <af:column width="100" id="c5">
+          <f:facet name="header">
+            <af:outputText value="#{explorerBundle['global.properties']}"
+                           id="ot9"/>
+          </f:facet>
+          <af:commandLink text="#{explorerBundle['global.properties']}"
+                          id="cl1">
+            <af:showPopupBehavior popupId="::propertiesPopup"/>
+          </af:commandLink>
+        </af:column>
+      </af:table>
+    </f:facet>
+  </af:panelStretchLayout>
+</jsp:root>

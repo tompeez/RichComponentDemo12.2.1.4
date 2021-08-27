@@ -1,0 +1,1349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>AdfUserActivityInfo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<script type="text/javascript">
+function handleOnload()
+{
+  if ((""+self.location).indexOf("file://") == 0)
+    return;
+  if (parent.document.documentElement.getAttribute("showprivate")=="true")
+  {
+    document.body.setAttribute("showprivate", "true");
+  }
+  else
+  {
+    document.body.setAttribute("showprivate", "false");
+  }
+  parent.document.title="AdfUserActivityInfo";
+}
+function togglePrivate(desiredFlag)
+{
+  var currentFlag = document.body.getAttribute("showprivate")=="true";
+  var newFlag = "" + (!currentFlag);
+  if (desiredFlag != null)
+  {
+    newFlag = desiredFlag;
+  }  document.body.setAttribute("showprivate", newFlag);
+}
+</script>
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body onload="handleOnload()">
+<h1 style="color:#0D4988;font-size:18px;font-weight:bold;font-family:Tahoma, Verdana,Helvetica,sans-serif"><img alt="Oracle" src="../../../../.././doc-files/logo-oracle-red.png" align="top">JavaScript API Reference for Oracle ADF Faces</h1>
+<!-- ====== START OF NAVBAR ====== -->
+<p><a name="navbar_top" id="navbar_top"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a name="navbar_top_firstrow" id="navbar_top_firstrow"><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../org/apache/myjs/trinidad/component/AdfUIValue.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../oracle/adfinternal/view/js/laf/dhtml/rich/AdfUserInactivityTimeoutHelper.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../index.html?oracle/adfinternal/view/js/monitoring/AdfUserActivityInfo.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfUserActivityInfo.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<hr>
+<h1><span style="font-size: smaller">oracle.adfinternal.view.js.monitoring</span><br>
+Class AdfUserActivityInfo</h1>
+<div class="InternalClassOrPackageWarning">
+<h2>Warning:</h2>
+<ul>
+<li>This is an unsupported, internal implementation class.</li>
+<li>Use an API class that might provide equivalent functionality instead.</li>
+<li>This class will change without notice.</li>
+<li>It is not recommended that you use anything in this class.</li>
+</ul>
+</div>
+<pre>
+<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">org.ecmascript.object.Object</a>
+   |
+   +--<a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">oracle.adf.view.js.base.AdfObject</a>
+         |
+         +--<strong>oracle.adfinternal.view.js.monitoring.AdfUserActivityInfo</strong>
+</pre>
+<hr>
+<pre>
+public class <strong>AdfUserActivityInfo</strong>
+extends <a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>
+</pre>
+<div>AdfUserActivityInfo class holds user activity information pertaining to a request. At any point in time there may be more than one instance of AdfUserActivityInfo, especially when we need to keep track of information for more than one request (such one or more previous requests in addition to the primary). These are distinguished by its type (AdfUserActivityInfo.PRIMARY, AdfUserActivityInfo.PREVIOUS etc.). The info they keep track of can be one or more of the following properties. tla are used to keep the payload small when the object is marshaled. cid - the String context identifier for a primary request or a secondary request. pid - the context identifier of the parent (or primary) for the secondary, or null if its the parent. cet - the end time of the previous user action. For current requests the client end time is null. Client end time is typically available in the subsequent request. cst - the current start time of the client request in UTC using the client's clock. rrt - the time PPR response is received by DTS. Does not include processing response on client. eif - info pertaining to the primary event that caused this server request. If an attribute change caused this request, eventInfo may be null. (but pprTargets will be non-null) ety - type of event cld - clientId of the component that raised the event cty - component type cdn - display name of the component rvd - array of region view Ids rvn - array of region view names ppr - a list of component ids that have registered as partial targets (on the client) for the current request. If there are no partial targets, this will be null.</div>
+<p><br></p>
+<hr>
+<p><a name="field_summary" id="field_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#PREVIOUS" title="field in this class">PREVIOUS</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_PREVIOUS_PREFIX" title="field in this class">_PREVIOUS_PREFIX</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#PRIMARY" title="field in this class">PRIMARY</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#SECONDARY" title="field in this class">SECONDARY</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from oracle.adf.view.js.base.<a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../oracle/adf/view/js/base/AdfObject.html#constructor" title="field in oracle.adf.view.js.base.AdfObject">constructor</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#superclass" title="field in oracle.adf.view.js.base.AdfObject">superclass</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_org_ecmascript_object_Object" id="fields_inherited_from_class_org_ecmascript_object_Object"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from org.ecmascript.object.<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../org/ecmascript/object/Object.html#prototype" title="field in org.ecmascript.object.Object">prototype</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="constructor_summary" id="constructor_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%"><code>public</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#AdfUserActivityInfo__" title="constructor in this class">AdfUserActivityInfo</a></strong>()</code></dt>
+<dd>
+<div>AdfUserActivityInfo class holds user activity information pertaining to a request.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="method_summary" id="method_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#cleanInstanceMap__" title="method in this class">cleanInstanceMap</a></strong>()</code></dt>
+<dd>
+<div>Flushes the instance map, by calling cleanup() on all the objects stored in the AdfUserActivityInfo._instanceMap map.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#cleanup__" title="method in this class">cleanup</a></strong>()</code></dt>
+<dd>
+<div>Flushes the contents of the AdfUserActivityInfo object and initializes them to null.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getAsObject_String__String_" title="method in this class">_getAsObject</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> userActInfoStr, <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd>
+<div>Takes the JSON String representation passed in (userActInfoStr) and unmarshals it to retrieve the JS Object out of it and then updates the UserActivityInfo object of the specified "type".</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getAsString_Object_" title="method in this class">_getAsString</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> userActInfo)</code></dt>
+<dd>
+<div>Returns a String that is a string representation of the AdfUserActivtyInfo object in JSON format.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getClientEndTime__" title="method in this class">getClientEndTime</a></strong>()</code></dt>
+<dd>
+<div>Returns the client end time</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getClientStartTime__" title="method in this class">getClientStartTime</a></strong>()</code></dt>
+<dd>
+<div>Returns the client start time</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getContextId__" title="method in this class">getContextId</a></strong>()</code></dt>
+<dd>
+<div>Returns the context Id</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getCurrentTime__" title="method in this class">_getCurrentTime</a></strong>()</code></dt>
+<dd>
+<div>Returns the current time.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getEventInfo__" title="method in this class">getEventInfo</a></strong>()</code></dt>
+<dd>
+<div>Returns the eventInfo</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../oracle/adfinternal/view/js/monitoring/AdfUserActivityInfo.html" title="class in oracle.adfinternal.view.js.monitoring">AdfUserActivityInfo</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getInstance_String_" title="method in this class">getInstance</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd>
+<div>Returns a new instance by type.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getMarshaledObject__" title="method in this class">getMarshaledObject</a></strong>()</code></dt>
+<dd>
+<div>Marshals information for the previous and the current (or primary) requests to be sent to server.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getParentContextId__" title="method in this class">getParentContextId</a></strong>()</code></dt>
+<dd>
+<div>Returns the parent context Id for the secondary request case.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getPprTargets__" title="method in this class">getPprTargets</a></strong>()</code></dt>
+<dd>
+<div>Returns the partial targets</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getPreviousKeyInSequence_Number_" title="method in this class">_getPreviousKeyInSequence</a></strong>(<a href="../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a> sequenceNum)</code></dt>
+<dd>
+<div>Returns the key used for a previous request identified by the sequenceNum.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getResponseTime__" title="method in this class">getResponseTime</a></strong>()</code></dt>
+<dd>
+<div>Returns the end time when a PPR response was received.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getSessionStorageProperty_Object_" title="method in this class">_getSessionStorageProperty</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> propKey)</code></dt>
+<dd>
+<div>Returns the value stored in the agent specific sessionStorage.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#Init__" title="method in this class">Init</a></strong>()</code></dt>
+<dd>
+<div>Method to initialize AdfUserActivityInfo instance.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#removeFromSessionStorageByType_String_" title="method in this class">removeFromSessionStorageByType</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd>
+<div>Removes information pertaining to the specified type from the session storage.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_removeSessionStorageProperty_String_" title="method in this class">_removeSessionStorageProperty</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> propKey)</code></dt>
+<dd>
+<div>Attempts to remove the propValue from the agent specific sessionStorage.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#restoreFromSessionStorage__" title="method in this class">restoreFromSessionStorage</a></strong>()</code></dt>
+<dd>
+<div>Restores the user activity information stored in the session storage into UserActivityInfo objects.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#saveToSessionStorage__" title="method in this class">saveToSessionStorage</a></strong>()</code></dt>
+<dd>
+<div>Before the redirect request happens save all user activity information for the previous request and the clientStartTime for the redirect (or the new primary request) in the session storage.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#saveToSessionStorageByType_String_" title="method in this class">saveToSessionStorageByType</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd>
+<div>Saves information pertaining to the specified type into the session storage.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#setClientEndTime_Object_" title="method in this class">setClientEndTime</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> clientEndTime)</code></dt>
+<dd>
+<div>Sets the client end time.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#setClientStartTime_Object_" title="method in this class">setClientStartTime</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> clientStartTime)</code></dt>
+<dd>
+<div>Sets the client start time.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#setContextId_Object_" title="method in this class">setContextId</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> contextId)</code></dt>
+<dd>
+<div>Sets the context id.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#setEventInfo_String__Object__String__String_" title="method in this class">setEventInfo</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> eventType, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> clientId, <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> componentType, <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> compDisplayName)</code></dt>
+<dd>
+<div>Sets the event info.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#setParentContextId_Object_" title="method in this class">setParentContextId</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> parentContextId)</code></dt>
+<dd>
+<div>Sets the parent context id.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#setPprTargets_Object_" title="method in this class">setPprTargets</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> pprTargets)</code></dt>
+<dd>
+<div>Sets the Partial targets.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#setRequestSentTime_String_" title="method in this class">setRequestSentTime</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd>
+<div>Sets the time the PPR request was sent.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#setResponseReceivedTime_String_" title="method in this class">setResponseReceivedTime</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd>
+<div>Sets the end time response was received.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#setResponseTime_Object_" title="method in this class">setResponseTime</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> responseEndTime)</code></dt>
+<dd>
+<div>Sets the end time when a PPR response was received on the client.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_setSessionStorageProperty_String__String_" title="method in this class">_setSessionStorageProperty</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> propKey, <a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> propValue)</code></dt>
+<dd>
+<div>Attempts to set the propValue into the agent specific sessionStorage.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Methods inherited from oracle.adf.view.js.base.<a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../oracle/adf/view/js/base/AdfObject.html#adopt_Object_" title="method in oracle.adf.view.js.base.AdfObject">adopt</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#clone__" title="method in oracle.adf.view.js.base.AdfObject">clone</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#createCallback_Object_" title="method in oracle.adf.view.js.base.AdfObject">createCallback</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#createInitializedObject__" title="method in oracle.adf.view.js.base.AdfObject">createInitializedObject</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#createSubclass_Function__Function__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">createSubclass</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#ensureClassInitialization_Function_" title="method in oracle.adf.view.js.base.AdfObject">ensureClassInitialization</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#equals_Object_" title="method in oracle.adf.view.js.base.AdfObject">equals</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#exportPrototypeSymbol_string__Object_" title="method in oracle.adf.view.js.base.AdfObject">exportPrototypeSymbol</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#getClass_Object_" title="method in oracle.adf.view.js.base.AdfObject">getClass</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyArrayProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyArrayProperty</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyMapProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyMapProperty</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#getTypeName__" title="method in oracle.adf.view.js.base.AdfObject">getTypeName</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#toDebugString__" title="method in oracle.adf.view.js.base.AdfObject">toDebugString</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#toString__" title="method in oracle.adf.view.js.base.AdfObject">toString</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="field_detail" id="field_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="PREVIOUS" id="PREVIOUS"><!-- --></a></p>
+<h3 class="DetailHeader">PREVIOUS</h3>
+<dl>
+<dt><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>PREVIOUS</strong></code></dt>
+</dl>
+<hr>
+<p><a name="O_PREVIOUS_PREFIX" id="O_PREVIOUS_PREFIX"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_PREVIOUS_PREFIX</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_PREVIOUS_PREFIX</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="PRIMARY" id="PRIMARY"><!-- --></a></p>
+<h3 class="DetailHeader">PRIMARY</h3>
+<dl>
+<dt><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>PRIMARY</strong></code></dt>
+</dl>
+<hr>
+<p><a name="SECONDARY" id="SECONDARY"><!-- --></a></p>
+<h3 class="DetailHeader">SECONDARY</h3>
+<dl>
+<dt><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>SECONDARY</strong></code></dt>
+</dl>
+<hr>
+<p><a name="constructor_detail" id="constructor_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="AdfUserActivityInfo__" id="AdfUserActivityInfo__"><!-- --></a></p>
+<h3 class="DetailHeader">AdfUserActivityInfo</h3>
+<dl>
+<dt><code>public <strong>AdfUserActivityInfo</strong>()</code></dt>
+<dd><br>
+<div>AdfUserActivityInfo class holds user activity information pertaining to a request. At any point in time there may be more than one instance of AdfUserActivityInfo, especially when we need to keep track of information for more than one request (such one or more previous requests in addition to the primary). These are distinguished by its type (AdfUserActivityInfo.PRIMARY, AdfUserActivityInfo.PREVIOUS etc.). The info they keep track of can be one or more of the following properties. tla are used to keep the payload small when the object is marshaled. cid - the String context identifier for a primary request or a secondary request. pid - the context identifier of the parent (or primary) for the secondary, or null if its the parent. cet - the end time of the previous user action. For current requests the client end time is null. Client end time is typically available in the subsequent request. cst - the current start time of the client request in UTC using the client's clock. rrt - the time PPR response is received by DTS. Does not include processing response on client. eif - info pertaining to the primary event that caused this server request. If an attribute change caused this request, eventInfo may be null. (but pprTargets will be non-null) ety - type of event cld - clientId of the component that raised the event cty - component type cdn - display name of the component rvd - array of region view Ids rvn - array of region view names ppr - a list of component ids that have registered as partial targets (on the client) for the current request. If there are no partial targets, this will be null.</div>
+</dd>
+</dl>
+<hr>
+<p><a name="method_detail" id="method_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="cleanInstanceMap__" id="cleanInstanceMap__"><!-- --></a></p>
+<h3 class="DetailHeader">cleanInstanceMap</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> cleanInstanceMap</strong>()</code></dt>
+<dd><br>
+<div>Flushes the instance map, by calling cleanup() on all the objects stored in the AdfUserActivityInfo._instanceMap map. This function can be called when its no longer needed to store any userActivity data. Usage : AdfUserActivityInfo.cleanInstanceMap()</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="cleanup__" id="cleanup__"><!-- --></a></p>
+<h3 class="DetailHeader">cleanup</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> cleanup</strong>()</code></dt>
+<dd><br>
+<div>Flushes the contents of the AdfUserActivityInfo object and initializes them to null. This method is called on an instance of AdfUserActivityInfo. Usage : userActivityInfo.cleanup() where userActivityInfo is an instance of AdfUserActivityInfo.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_getAsObject_String__String_" id="O_getAsObject_String__String_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getAsObject</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _getAsObject</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> userActInfoStr,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd><br>
+<div>Takes the JSON String representation passed in (userActInfoStr) and unmarshals it to retrieve the JS Object out of it and then updates the UserActivityInfo object of the specified "type". In some cases, if a value already exists in the object, it takes precedence over the value stored in session storage as it may be older.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>userActInfoStr</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the marshaled JSON String representation of UserActivityInfo Object</td>
+</tr>
+<tr>
+<td valign="top"><code>type</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the type of AdfUserActivityInfo object.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_getAsString_Object_" id="O_getAsString_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getAsString</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> _getAsString</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> userActInfo)</code></dt>
+<dd><br>
+<div>Returns a String that is a string representation of the AdfUserActivtyInfo object in JSON format.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>userActInfo</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">UserActivityInfo instance</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code> - the JSON String representation of UserActivityInfo Object</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="getClientEndTime__" id="getClientEndTime__"><!-- --></a></p>
+<h3 class="DetailHeader">getClientEndTime</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> getClientEndTime</strong>()</code></dt>
+<dd><br>
+<div>Returns the client end time</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code> - client end time</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="getClientStartTime__" id="getClientStartTime__"><!-- --></a></p>
+<h3 class="DetailHeader">getClientStartTime</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> getClientStartTime</strong>()</code></dt>
+<dd><br>
+<div>Returns the client start time</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code> - client start time</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="getContextId__" id="getContextId__"><!-- --></a></p>
+<h3 class="DetailHeader">getContextId</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> getContextId</strong>()</code></dt>
+<dd><br>
+<div>Returns the context Id</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code> - context Id</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_getCurrentTime__" id="O_getCurrentTime__"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getCurrentTime</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _getCurrentTime</strong>()</code></dt>
+<dd><br>
+<div>Returns the current time.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="getEventInfo__" id="getEventInfo__"><!-- --></a></p>
+<h3 class="DetailHeader">getEventInfo</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> getEventInfo</strong>()</code></dt>
+<dd><br>
+<div>Returns the eventInfo</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - eventInfo</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="getInstance_String_" id="getInstance_String_"><!-- --></a></p>
+<h3 class="DetailHeader">getInstance</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../oracle/adfinternal/view/js/monitoring/AdfUserActivityInfo.html" title="class in oracle.adfinternal.view.js.monitoring">AdfUserActivityInfo</a> getInstance</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd><br>
+<div>Returns a new instance by type. Internally UserActivityInfo maintains a static map, of UserActivityInfo objects. This is required in cases where we need to store data for more than one request. The method should be called when caller needs a UserActivityInfo object for the specified type. AdfUserActivityInfo.PREVIOUS - the request prior to the "primary". AdfUserActivityInfo.PRIMARY - the primary request. The one that is being sent to the server. AdfUserActivityInfo.SECONDARY - the secondary request that is associated to its primary request.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>type</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the type of request.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../oracle/adfinternal/view/js/monitoring/AdfUserActivityInfo.html" title="class in oracle.adfinternal.view.js.monitoring">AdfUserActivityInfo</a></code> - an instance of UserActivityInfo object if one already exists for the type, otherwise a new instance of UserActivityInfo object is created.</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="getMarshaledObject__" id="getMarshaledObject__"><!-- --></a></p>
+<h3 class="DetailHeader">getMarshaledObject</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> getMarshaledObject</strong>()</code></dt>
+<dd><br>
+<div>Marshals information for the previous and the current (or primary) requests to be sent to server. This method is usually called when a partial request is about to be made to the server. A call to this method cleans up all UserActivityInfo objects. TODO If we cleanup our data at the end of this call then in the event of an error with the request, all past data gets lost. particularly if there were previous requests' data. Perhaps we should cleanup after a successful partial response returns.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code> - an XML String representation of the given dom node and its children</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="getParentContextId__" id="getParentContextId__"><!-- --></a></p>
+<h3 class="DetailHeader">getParentContextId</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> getParentContextId</strong>()</code></dt>
+<dd><br>
+<div>Returns the parent context Id for the secondary request case.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code> - praent context Id</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="getPprTargets__" id="getPprTargets__"><!-- --></a></p>
+<h3 class="DetailHeader">getPprTargets</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> getPprTargets</strong>()</code></dt>
+<dd><br>
+<div>Returns the partial targets</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code> - comma separated string of partial target ids</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_getPreviousKeyInSequence_Number_" id="O_getPreviousKeyInSequence_Number_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getPreviousKeyInSequence</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _getPreviousKeyInSequence</strong>(<a href="../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a> sequenceNum)</code></dt>
+<dd><br>
+<div>Returns the key used for a previous request identified by the sequenceNum. Else returns the key for the previous.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>sequenceNum</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">a number reprensenting the previous request in ascending sequence from the current (primary) request.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="getResponseTime__" id="getResponseTime__"><!-- --></a></p>
+<h3 class="DetailHeader">getResponseTime</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> getResponseTime</strong>()</code></dt>
+<dd><br>
+<div>Returns the end time when a PPR response was received. For streaming request this reperesnts the time when all streaming response has been written. This also does not include the client response processing time. See getClientEndTime.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code> - response end time</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_getSessionStorageProperty_Object_" id="O_getSessionStorageProperty_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getSessionStorageProperty</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _getSessionStorageProperty</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> propKey)</code></dt>
+<dd><br>
+<div>Returns the value stored in the agent specific sessionStorage. Or null if a value is not found for propKey or if it cannot be found due to unforeseen errors.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>propKey</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - a valid value or null</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="Init__" id="Init__"><!-- --></a></p>
+<h3 class="DetailHeader">Init</h3>
+<dl>
+<dt><code>protected <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> Init</strong>()</code></dt>
+<dd><br>
+<div>Method to initialize AdfUserActivityInfo instance.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>.<a href="../../../../../oracle/adf/view/js/base/AdfObject.html#Init__" title="method in oracle.adf.view.js.base.AdfObject">Init()</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="removeFromSessionStorageByType_String_" id="removeFromSessionStorageByType_String_"><!-- --></a></p>
+<h3 class="DetailHeader">removeFromSessionStorageByType</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> removeFromSessionStorageByType</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd><br>
+<div>Removes information pertaining to the specified type from the session storage.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>type</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the type of AdfUserActivityInfo object.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_removeSessionStorageProperty_String_" id="O_removeSessionStorageProperty_String_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_removeSessionStorageProperty</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _removeSessionStorageProperty</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> propKey)</code></dt>
+<dd><br>
+<div>Attempts to remove the propValue from the agent specific sessionStorage. If agent code throws an error this method logs a message and returns a boolean false.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>propKey</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">a non-null key. Callers are expected to pass a valid propKey</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - true if the value was removed successfully from sessionStorage, false otherwise</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="restoreFromSessionStorage__" id="restoreFromSessionStorage__"><!-- --></a></p>
+<h3 class="DetailHeader">restoreFromSessionStorage</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> restoreFromSessionStorage</strong>()</code></dt>
+<dd><br>
+<div>Restores the user activity information stored in the session storage into UserActivityInfo objects. Once the information is restored the session storage data is removed.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="saveToSessionStorage__" id="saveToSessionStorage__"><!-- --></a></p>
+<h3 class="DetailHeader">saveToSessionStorage</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> saveToSessionStorage</strong>()</code></dt>
+<dd><br>
+<div>Before the redirect request happens save all user activity information for the previous request and the clientStartTime for the redirect (or the new primary request) in the session storage.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="saveToSessionStorageByType_String_" id="saveToSessionStorageByType_String_"><!-- --></a></p>
+<h3 class="DetailHeader">saveToSessionStorageByType</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> saveToSessionStorageByType</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd><br>
+<div>Saves information pertaining to the specified type into the session storage.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>type</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the type of AdfUserActivityInfo object.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="setClientEndTime_Object_" id="setClientEndTime_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">setClientEndTime</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> setClientEndTime</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> clientEndTime)</code></dt>
+<dd><br>
+<div>Sets the client end time.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>clientEndTime</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="setClientStartTime_Object_" id="setClientStartTime_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">setClientStartTime</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> setClientStartTime</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> clientStartTime)</code></dt>
+<dd><br>
+<div>Sets the client start time.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>clientStartTime</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="setContextId_Object_" id="setContextId_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">setContextId</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> setContextId</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> contextId)</code></dt>
+<dd><br>
+<div>Sets the context id.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>contextId</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="setEventInfo_String__Object__String__String_" id="setEventInfo_String__Object__String__String_"><!-- --></a></p>
+<h3 class="DetailHeader">setEventInfo</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> setEventInfo</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> eventType,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> clientId,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> componentType,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> compDisplayName)</code></dt>
+<dd><br>
+<div>Sets the event info. Also determines the region info for the current event component.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>eventType</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">type of the event</td>
+</tr>
+<tr>
+<td valign="top"><code>clientId</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>componentType</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">type of the component</td>
+</tr>
+<tr>
+<td valign="top"><code>compDisplayName</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">displayName of the component</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="setParentContextId_Object_" id="setParentContextId_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">setParentContextId</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> setParentContextId</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> parentContextId)</code></dt>
+<dd><br>
+<div>Sets the parent context id.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>parentContextId</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="setPprTargets_Object_" id="setPprTargets_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">setPprTargets</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> setPprTargets</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> pprTargets)</code></dt>
+<dd><br>
+<div>Sets the Partial targets.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>pprTargets</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="setRequestSentTime_String_" id="setRequestSentTime_String_"><!-- --></a></p>
+<h3 class="DetailHeader">setRequestSentTime</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> setRequestSentTime</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd><br>
+<div>Sets the time the PPR request was sent. For streaming request this is when the streaming reponse was initiated. See AdfDhtmlPage#streamingResponseStarted and AdfXmlHttpDataTransferService.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>type</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the type of user request.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="setResponseReceivedTime_String_" id="setResponseReceivedTime_String_"><!-- --></a></p>
+<h3 class="DetailHeader">setResponseReceivedTime</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> setResponseReceivedTime</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> type)</code></dt>
+<dd><br>
+<div>Sets the end time response was received. For streaming requests this is when the streaming reponse has been written. See AdfDhtmlPage#streamingResponseWritten.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>type</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the type of user request.</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="setResponseTime_Object_" id="setResponseTime_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">setResponseTime</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> setResponseTime</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> responseEndTime)</code></dt>
+<dd><br>
+<div>Sets the end time when a PPR response was received on the client. For streaming request this reperesnts the time when all streaming response has been written. This also does not include the client response processing time.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>responseEndTime</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a></code> - responseEndTime</dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_setSessionStorageProperty_String__String_" id="O_setSessionStorageProperty_String__String_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_setSessionStorageProperty</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a> _setSessionStorageProperty</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> propKey,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> propValue)</code></dt>
+<dd><br>
+<div>Attempts to set the propValue into the agent specific sessionStorage. If agent code throws an error this method logs a message and returns a boolean false.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>propKey</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">a non-null key. Callers are expected to pass a valid propKey</td>
+</tr>
+<tr>
+<td valign="top"><code>propValue</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">a non-null value. Callers are expected to pass a valid propValue</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/primitive/Boolean.html" title="class in org.ecmascript.primitive">Boolean</a></code> - true if the value was set into sessionStorage, false otherwise</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<!-- ====== START OF NAVBAR ====== -->
+<hr>
+<p><a name="navbar_bottom" id="navbar_bottom"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../org/apache/myjs/trinidad/component/AdfUIValue.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../oracle/adfinternal/view/js/laf/dhtml/rich/AdfUserInactivityTimeoutHelper.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../index.html?oracle/adfinternal/view/js/monitoring/AdfUserActivityInfo.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfUserActivityInfo.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div class="CreationTime">Generated on 2018.06.28 06:41 UTC</div>
+<center>Copyright (c) 1998, 2018, Oracle and/or its affiliates. All rights reserved.</center>
+</body>
+</html>

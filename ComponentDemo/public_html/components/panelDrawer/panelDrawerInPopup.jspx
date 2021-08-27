@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="PanelDrawer In Popup"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelDrawer"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:outputText value="In this example we're using a panelDrawer inside a popup."/>
+            <af:commandButton text="launch popup">
+              <af:showPopupBehavior popupId="popupDialog"/>
+            </af:commandButton>
+            <af:popup id="popupDialog" contentDelivery="lazyUncached">
+              <af:dialog id="dialog">
+                <af:panelGridLayout dimensionsFrom="auto"
+                                    inlineStyle="width:700px;height:500px;">
+                  <af:gridRow height="100%">
+                    <af:gridCell width="100%" halign="stretch" valign="stretch">
+                      <af:panelGridLayout id="psl"
+                                          inlineStyle="border:black 1px solid"
+                                          dimensionsFrom="parent">
+                        <af:gridRow height="100%">
+                          <af:gridCell width="100%" halign="stretch"
+                                       valign="stretch">
+                            <af:calendar id="cal2"
+                                         value="#{calendarBean.calendarModel}"/>
+                          </af:gridCell>
+                          <af:gridCell>
+                            <af:panelDrawer binding="#{editor.component}"
+                                            height="100%"
+                                            width="#{drawer.width}" id="drawer"
+                                            alignId="psl">
+                              <af:showDetailItem textAndAccessKey="tab &amp;3"
+                                                 icon="/images/icon_pie_24X24_ena.png"
+                                                 hoverIcon="/images/icon_pie_24X24_ovr.png"
+                                                 depressedIcon="/images/icon_pie_24X24_sel.png"
+                                                 disabledIcon="/images/icon_pie_24X24_dis.png"
+                                                 shortDesc="tab short desc"
+                                                 id="sdi3"
+                                                 disclosureListener="#{drawer.widthListener}">
+                                <af:outputText value="Tab Child Text"/>
+                                <af:spacer height="150px"/>
+                              </af:showDetailItem>
+                              <af:showDetailItem textAndAccessKey="Calendar"
+                                                 stretchChildren="first"
+                                                 icon="/images/icon_library_24X24_ena.png"
+                                                 hoverIcon="/images/icon_library_24X24_ovr.png"
+                                                 depressedIcon="/images/icon_library_24X24_sel.png"
+                                                 disabledIcon="/images/icon_library_24X24_dis.png"
+                                                 shortDesc="Calendar short desc"
+                                                 id="sdi1"
+                                                 disclosureListener="#{drawer.widthListener}">
+                                <af:panelGridLayout dimensionsFrom="parent">
+                                  <af:gridRow height="100%">
+                                    <af:gridCell width="100%" halign="stretch"
+                                                 valign="stretch">
+                                      <af:calendar id="cal"
+                                                   value="#{calendarBean.calendarModel}"/>
+                                    </af:gridCell>
+                                  </af:gridRow>
+                                </af:panelGridLayout>
+                              </af:showDetailItem>
+                            </af:panelDrawer>
+                          </af:gridCell>
+                        </af:gridRow>
+                      </af:panelGridLayout>
+                    </af:gridCell>
+                  </af:gridRow>
+                </af:panelGridLayout>
+              </af:dialog>
+            </af:popup>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

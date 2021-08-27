@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Graph Context Menu Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Graph Context Menu Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Graph Context Menus"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <dvt:scatterGraph binding="#{contextMenu.graph}" subType="SCATTER"
+                              dataSelection="multiple" id="graph">
+              <f:facet name="contextMenu">
+                <af:popup contentDelivery="lazyUncached" id="p1">
+                  <af:menu id="m1">
+                    <af:commandMenuItem text="Show Details"
+                                        actionListener="#{contextMenu.menuItemListener}"
+                                        id="cmi1"/>
+                    <af:group id="g1">
+                      <af:commandMenuItem text="Add Task for #{contextMenu.currentSeriesId}"
+                                          actionListener="#{contextMenu.menuItemListener}"
+                                          id="cmi2"/>
+                      <af:commandMenuItem text="Add Task"
+                                          actionListener="#{contextMenu.menuItemListener}"
+                                          id="cmi3"/>
+                      <af:commandMenuItem text="Add Notes"
+                                          actionListener="#{contextMenu.menuItemListener}"
+                                          id="cmi4"/>
+                    </af:group>
+                  </af:menu>
+                </af:popup>
+              </f:facet>
+              <f:facet name="bodyContextMenu">
+                <af:popup contentDelivery="immediate" id="p2">
+                  <af:menu id="m2">
+                    <af:goMenuItem text="www.oracle.com"
+                                   destination="http://www.oracle.com"
+                                   id="gmi1"/>
+                  </af:menu>
+                </af:popup>
+              </f:facet>
+              <f:facet name="multiSelectContextMenu">
+                <af:popup contentDelivery="lazyUncached" id="p3">
+                  <af:menu id="m3">
+                    <af:commandMenuItem text="Compare Selected Objects"
+                                        actionListener="#{contextMenu.menuItemListener}"
+                                        id="cmi5"/>
+                  </af:menu>
+                </af:popup>
+              </f:facet>
+            </dvt:scatterGraph>
+            <af:outputFormatted binding="#{contextMenu.outputFormatted}"
+                           value="#{contextMenu.status}" id="of1" clientComponent="true"
+                           inlineStyle="font-size:120.0%;"/>          
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+            <af:panelGroupLayout layout="scroll" id="pgl2">            
+                <!-- START SEE ALSO LINKS --> 
+                <af:outputText value="See also:" id="ot1"/>
+                <af:panelList id="pl1">
+                     <af:goLink text="Context Menu Backing Bean" destination="/resources/sourceCode/feature/rich/graph/ContextMenuSample.javasource" id="gl1"/>
+                </af:panelList>            
+                <!-- END SEE ALSO LINKS -->
+            </af:panelGroupLayout>
+      </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="attributeDropTarget demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="attributeDropTarget"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="dragNDrop"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+  <!-- if changes are made to this demo, please update attributeDragSource also. -->
+            <af:outputText value="This demo shows drag and drop using af:attributeDragSource and af:attributeDropTarget"
+                           id="ot1"/>
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer width="30px" id="s2"/>
+              </f:facet>
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <af:panelBox text="outputText Drag Source" id="pb1">
+                  <af:outputText id="outputDragSource" value="Drag Me!">
+                    <af:attributeDragSource attribute="value"/>
+                  </af:outputText>
+                </af:panelBox>
+                <af:spacer height="20" id="s3"/>
+                <af:panelBox text="inputText Drag Source" id="pb2">
+                  <af:inputText id="inputDragSource" value="Now Drag Me!" label="drag source"
+                                simple="true">
+                    <af:attributeDragSource attribute="value"/>
+                  </af:inputText>
+                </af:panelBox>
+              </af:panelGroupLayout>
+              <af:panelBox text="Drop Target accepting a string" id="pb3">
+                <af:outputText id="attributeDropTarget" value="Drop Here!">
+                  <af:attributeDropTarget attribute="value"/>
+                </af:outputText>
+              </af:panelBox>
+            </af:panelGroupLayout>
+            <af:outputText value="This demo shows dragging an image onto a drop target that accepts values
+             (uses af:attributeDragSource, af:clientListener, af:attributeDropTarget)" id="ot3"/>
+
+            <af:panelGroupLayout layout="horizontal" id="pgl4">
+              <af:panelBox text="Drag image to dropTarget accepting a string" id="pb5">
+                <af:image source="/images/bar-chart-multicolor.png" id="i2"
+                          shortDesc="Drag me! ">
+                  <af:attributeDragSource attribute="UPC"/>
+                  <af:clientAttribute name="UPC" value="Bar Chart!"/>
+                </af:image>
+              </af:panelBox>
+              <af:spacer width="30" id="s5"/>
+              <af:panelBox text="inputText Drop Target" id="pb6">
+                <af:inputText id="inputTextDropTarget" value="value attr drop target">
+                  <af:attributeDropTarget attribute="value"/>
+                </af:inputText>
+            </af:panelBox>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

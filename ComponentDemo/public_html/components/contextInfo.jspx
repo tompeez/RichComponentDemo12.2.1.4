@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2019, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="contextInfo Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="contextInfo"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:panelGroupLayout>
+                <af:popup id="binky">
+                  <af:dialog id="d2" title="Employee Information" modal="false">
+                    <af:panelFormLayout id="pfl2a">
+                      <af:inputText readOnly="true" label="name" value="Jane Doe" id="ot0a"/>
+                      <af:inputText readOnly="true" label="group" value="Human Resources"
+                                    id="ot1a"/>
+                      <af:inputText readOnly="true" label="location" value="Las Vegas, NV"
+                                    id="ot2a"/>
+                      <af:inputText readOnly="true" label="grade" value="Vice President" id="ot3a"/>
+                    </af:panelFormLayout>
+                  </af:dialog>
+                </af:popup>
+                <af:popup id="binky2" contentDelivery="lazyUncached">
+                  <af:dialog id="d22" title="Employee Information" modal="false">
+                    <af:panelFormLayout id="pfl2b">
+                      <af:inputText readOnly="true" label="value in inputText is"
+                                    value="#{demoInput.value}" id="ot60"/>
+                      <af:inputText readOnly="true" label="name" value="Jane Doe" id="ot0b"/>
+                      <af:inputText readOnly="true" label="group" value="Human Resources"
+                                    id="ot1b"/>
+                      <af:inputText readOnly="true" label="location" value="Las Vegas, NV"
+                                    id="ot2b"/>
+                      <af:inputText readOnly="true" label="grade" value="Vice President" id="ot3b"/>
+                    </af:panelFormLayout>
+                  </af:dialog>
+                </af:popup>
+                <af:popup id="binky3" contentDelivery="lazyUncached">
+                  <af:dialog id="dialog1" title="Employee Information" modal="false">
+                    <af:panelFormLayout id="pfl3">
+                      <af:inputText readOnly="true" label="value in select is"
+                                    value="#{demoInput.choiceValue}" id="it3"/>
+                      <af:inputText readOnly="true" label="name" value="Jane Doe" id="it4"/>
+                      <af:inputText readOnly="true" label="group" value="Human Resources" id="it5"/>
+                      <af:inputText readOnly="true" label="location" value="Las Vegas, NV"
+                                    id="it6"/>
+                      <af:inputText readOnly="true" label="grade" value="Vice President" id="it7"/>
+                    </af:panelFormLayout>
+                  </af:dialog>
+                </af:popup>
+                <af:popup id="binky4" contentDelivery="lazyUncached">
+                  <af:dialog id="dialog2" title="Employee Information" modal="false">
+                    <af:panelFormLayout id="pfl4">
+                      <af:inputText readOnly="true" label="value in LOV is"
+                                    value="#{demoComboboxLOV.ename}" id="it8"/>
+                      <af:inputText readOnly="true" label="name" value="Jane Doe" id="it9"/>
+                      <af:inputText readOnly="true" label="group" value="Human Resources"
+                                    id="it10"/>
+                      <af:inputText readOnly="true" label="location" value="Las Vegas, NV"
+                                    id="it11"/>
+                      <af:inputText readOnly="true" label="grade" value="Vice President" id="it12"/>
+                    </af:panelFormLayout>
+                  </af:dialog>
+                </af:popup>
+                <af:popup id="binky5" contentDelivery="lazyUncached">
+                  <af:dialog id="d23" title="Employee Information" modal="false">
+                    <af:panelLabelAndMessage label="value in inputText is:"
+                                             rendered="#{demoInput.date != null}">
+                      <af:outputText value="#{demoInput.date}" id="ot61"/>
+                    </af:panelLabelAndMessage>
+                    <af:outputText value="The field is empty" rendered="#{demoInput.date == null}"/>
+                  </af:dialog>
+                </af:popup>
+                <af:popup id="binky6" contentDelivery="lazyUncached">
+                  <af:dialog id="dialog3" title="Employee Information" modal="false">
+                    <af:panelFormLayout id="pfl5">
+                      <af:inputText readOnly="true" label="value in inputListOfValues is"
+                                    value="#{demoLOV.ename}" id="it13"/>
+                      <af:inputText readOnly="true" label="name" value="Jane Doe" id="it14"/>
+                      <af:inputText readOnly="true" label="group" value="Human Resources"
+                                    id="it15"/>
+                      <af:inputText readOnly="true" label="location" value="Las Vegas, NV"
+                                    id="it16"/>
+                      <af:inputText readOnly="true" label="grade" value="Vice President" id="it17"/>
+                    </af:panelFormLayout>
+                  </af:dialog>
+                </af:popup>
+                <af:panelHeader text="Basic Demo" size="3">
+                  <af:spacer height="10"/>
+                  <af:outputText clientComponent="true" value="Hover over the icon and click"
+                                 id="hover">
+                    <f:facet name="context">
+                      <af:contextInfo id="ci1" binding="#{editor.component}">
+                        <af:showPopupBehavior align="beforeStart" popupId="binky"
+                                              triggerType="contextInfo"/>
+                      </af:contextInfo>
+                    </f:facet>
+                  </af:outputText>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+              <af:spacer height="10px" id="s2"/>
+            </af:panelGroupLayout>
+            <af:panelHeader text="On Controls In a PanelFormLayout." size="3">
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <af:outputText value="In this demo we're using the showPopupBehavior tag attached to the contextInfo to open the popup. In order for the value of the form controls to be shown in the popup note that 'autoSubmit' is set to true and the popup has 'contentDelivery' set to 'lazyUncached'."
+                               id="outputText3"/>
+                <af:spacer height="10px" id="spacer2"/>
+                <af:panelFormLayout id="pfl1">
+                  <af:panelLabelAndMessage label="outputText with context facet" id="plam4">
+                    <af:outputText clientComponent="true" value="outputText" id="jane">
+                      <f:facet name="context">
+                        <af:contextInfo id="ci3">
+                          <af:showPopupBehavior align="beforeStart" popupId="binky"
+                                                triggerType="contextInfo"/>
+                        </af:contextInfo>
+                      </f:facet>
+                    </af:outputText>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="outputFormatted with context facet"
+                                           id="panelLabelAndMessage1">
+                    <af:outputFormatted clientComponent="true" value="&lt;b>Out&lt;/b>putFormatted"
+                                        id="outputFormatted1">
+                      <f:facet name="context">
+                        <af:contextInfo id="contextInfo4">
+                          <af:showPopupBehavior align="beforeStart" popupId="binky"
+                                                triggerType="contextInfo"/>
+                        </af:contextInfo>
+                      </f:facet>
+                    </af:outputFormatted>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="commandLink with context facet"
+                                           id="panelLabelAndMessage2">
+                    <af:commandLink clientComponent="true" text="commandLink" action="guide"
+                                    id="commandLink1">
+                      <f:facet name="context">
+                        <af:contextInfo id="contextInfo5">
+                          <af:showPopupBehavior align="beforeStart" popupId="binky"
+                                                triggerType="contextInfo"/>
+                        </af:contextInfo>
+                      </f:facet>
+                    </af:commandLink>
+                  </af:panelLabelAndMessage>
+                  <af:panelLabelAndMessage label="link with context facet" >
+                    <af:link clientComponent="true" text="link" action="guide" id="link1" icon="/images/file.gif">
+                      <f:facet name="context">
+                        <af:contextInfo id="contextInfo7">
+                          <af:showPopupBehavior align="beforeStart" popupId="binky"
+                                                triggerType="contextInfo"/>
+                        </af:contextInfo>
+                      </f:facet>
+                    </af:link>
+                  </af:panelLabelAndMessage>
+                  <af:inputText id="it1" clientComponent="true" label="inputText with context facet"
+                                value="#{demoInput.value}" autoSubmit="true">
+                    <f:facet name="context">
+                      <af:contextInfo id="contextInfo2">
+                        <af:showPopupBehavior align="beforeStart" popupId="binky2"
+                                              triggerType="contextInfo"/>
+                      </af:contextInfo>
+                    </f:facet>
+                  </af:inputText>
+                  <af:selectOneChoice id="targetChoice" clientComponent="true" autoSubmit="true"
+                                      value="#{demoInput.choiceValue}"
+                                      label="selectOneChoice with context facet">
+                    <af:selectItem label="coffee" value="coffee" shortDesc="Sample shortDesc text"
+                                   id="si1"/>
+                    <f:selectItem itemLabel="tea" itemValue="tea" itemDescription="Tea from China"
+                                  id="si2"/>
+                    <af:selectItem label="milk" value="milk" rendered="false" id="si3"/>
+                    <f:selectItems value="#{demoInput.selectItems}" id="si4"/>
+                    <f:facet name="context">
+                      <af:contextInfo id="contextInfo3">
+                        <af:showPopupBehavior align="beforeStart" popupId="binky3"
+                                              triggerType="contextInfo"/>
+                      </af:contextInfo>
+                    </f:facet>
+                  </af:selectOneChoice>
+                  <af:inputComboboxListOfValues label="inputComboboxListOfValues with context facet"
+                                                id="idInputComboboxListOfValues"
+                                                value="#{demoComboboxLOV.ename}" autoSubmit="true"
+                                                popupTitle="Search and Select: Ename"
+                                                searchDesc="Choose a name"
+                                                validator="#{demoComboboxLOV.validate}"
+                                                model="#{demoComboboxLOV.listOfValuesModel}"
+                                                columns="45">
+                    <f:facet name="context">
+                      <af:contextInfo id="contextInfo3a">
+                        <af:showPopupBehavior align="beforeStart" popupId="binky4"
+                                              triggerType="contextInfo"/>
+                      </af:contextInfo>
+                    </f:facet>
+                  </af:inputComboboxListOfValues>
+                  <af:inputListOfValues label="inputListOfValues with context facet"
+                                        id="idInputListOfValues" value="#{demoLOV.ename}"
+                                        autoSubmit="true" popupTitle="Search and Select: Ename"
+                                        searchDesc="Choose a name" validator="#{demoLOV.validate}"
+                                        model="#{demoLOV.listOfValuesModel}" columns="45">
+                    <f:facet name="context">
+                      <af:contextInfo id="contextInfo4a">
+                        <af:showPopupBehavior align="beforeStart" popupId="binky6"
+                                              triggerType="contextInfo"/>
+                      </af:contextInfo>
+                    </f:facet>
+                  </af:inputListOfValues>
+                  <af:inputSearch id="iSearch"
+                                label="inputSearch with context facet"
+                                valueAttribute="id"
+                                displayAttributes="fName lName id"
+                                selectionMode="multiple"
+                                value="#{inputSearchDemo.employeesSet}"
+                                selectionConverter="#{inputSearchDemo.selectionConverter}">
+                    <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                    <f:converter converterId="oracle.adfdemo.InputSearchDemoConverter" />
+                    <af:searchSection type="default"
+                                      dataUrl="/rest/employees?cache=etag&amp;limit=5000" />
+                   <f:facet name="context">
+                      <af:contextInfo id="iSearchContext">
+                        <af:showPopupBehavior align="beforeStart" popupId="binky6"
+                                              triggerType="contextInfo"/>
+                      </af:contextInfo>
+                    </f:facet>
+                  </af:inputSearch>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="Using ContextInfoListener Instead of ShowPopupBehavior." size="3">
+              <af:panelGroupLayout layout="vertical" id="panelGroupLayout1">
+                <af:spacer height="10"/>
+                <af:outputText clientComponent="true"
+                               value="clicking the contextInfo icon will call the contextInfoListener, which will navigate to the component index page"
+                               id="ot10">
+                  <f:facet name="context">
+                    <af:contextInfo id="ci2"
+                                    contextInfoListener="#{demoInput.contextInfoListener}"/>
+                  </f:facet>
+                </af:outputText>
+                <af:spacer height="10"/>
+                <af:outputText value="In the next example:"/>
+                <af:panelList>
+                  <af:outputText value="we don't want to show the contextInfo unless the field is not empty. If you remove the text from the field and press enter the contextInfo should disappear. To achieve this the inputText has autoSubmit set to true, the contextInfo has a partialTrigger pointing to the inputText, and visible on the contextInfo is bound based on whether the value of the field is null."/>
+                  <af:outputText value="the popup is not opened when the field has an error. If you type 'cat' in the inputText and press the contextInfo the popup does not open. This is achieved by adding a contextInfoListener which programatically opens the popup, but only if the parent (the inputText) is valid. The inputText has a partialTrigger that points to the contextInfo so that when the contextInfo is clicked the value is validated and focus moves to the inputText if there's an error."/>
+                </af:panelList>
+                <af:inputText id="it2" clientComponent="true" partialTriggers="contextInfo6"
+                              label="contextInfo with contextInfoListener" value="#{demoInput.date}"
+                              autoSubmit="true">
+                  <f:facet name="context">
+                    <af:contextInfo id="contextInfo6" visible="#{demoInput.date != null}"
+                                    partialTriggers="it2"
+                                    contextInfoListener="#{demoInput.contextInfoListener2}"/>
+                  </f:facet>
+                </af:inputText>
+                <af:spacer height="10"/>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="In a Table" size="3">
+              <af:panelGroupLayout layout="vertical" id="pgl4">
+                <af:popup id="iteratorpop" contentDelivery="lazyUncached" eventContext="launcher">
+                  <af:setPropertyListener from="#{sharedPopup.myCollectionModel.rowData}"
+                                          to="#{sharedPopup.currEmp}" type="popupFetch"/>
+                  <af:dialog type="ok" id="d3" title="person info" modal="false">
+                    <af:panelFormLayout id="pfl2">
+                      <af:panelLabelAndMessage label="name" id="plam0">
+                        <af:outputText value="#{sharedPopup.currEmp.name}" id="ot0"/>
+                      </af:panelLabelAndMessage>
+                      <af:panelLabelAndMessage label="group" id="plam1">
+                        <af:outputText value="#{sharedPopup.currEmp.category}" id="ot1"/>
+                      </af:panelLabelAndMessage>
+                      <af:panelLabelAndMessage label="location" id="plam2">
+                        <af:outputText value="#{sharedPopup.currEmp.location}" id="ot2"/>
+                      </af:panelLabelAndMessage>
+                      <af:panelLabelAndMessage label="grade" id="plam3">
+                        <af:outputText value="#{sharedPopup.currEmp.grade}" id="ot3"/>
+                      </af:panelLabelAndMessage>
+                    </af:panelFormLayout>
+                  </af:dialog>
+                </af:popup>
+                <af:table autoHeightRows="3" contentDelivery="immediate" width="600px"
+                          summary="Table for contextInfo demo"
+                          value="#{sharedPopup.myCollectionModel}" var="propertyRow" id="i1">
+                  <af:column headerText="contextInfo on column" width="150px" id="c1">
+                    <f:facet name="context">
+                      <af:contextInfo id="ciCol2">
+                        <af:showPopupBehavior popupId="::iteratorpop" triggerType="contextInfo"
+                                              align="beforeStart"/>
+                      </af:contextInfo>
+                    </f:facet>
+                    <af:outputText clientComponent="true" value="Name: #{propertyRow.name}"
+                                   id="colName2"/>
+                  </af:column>
+                  <af:column headerText="contextInfo on end aligned column" width="150px"
+                             align="end" id="c3">
+                    <f:facet name="context">
+                      <af:contextInfo id="ciCol3">
+                        <af:showPopupBehavior popupId="::iteratorpop" triggerType="contextInfo"
+                                              align="beforeStart"/>
+                      </af:contextInfo>
+                    </f:facet>
+                    <af:outputText clientComponent="true" value="Name: #{propertyRow.name}"
+                                   id="colName3"/>
+                  </af:column>
+                  <af:column headerText="contextInfo on outputText inside table" id="c2">
+                    <af:panelGroupLayout id="pgl5">
+                      <af:outputText clientComponent="true" value="Name: " id="name"/>
+                      <af:outputText clientComponent="true" value="#{propertyRow.name}"
+                                     id="colName">
+                        <f:facet name="context">
+                          <af:contextInfo id="ciCol1">
+                            <af:showPopupBehavior popupId="::iteratorpop" triggerType="contextInfo"
+                                                  align="beforeStart"/>
+                          </af:contextInfo>
+                        </f:facet>
+                      </af:outputText>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <!--af:column headerText="wrapping text" id="c4" noWrap="false">
+                  <af:outputText value="text to cause wrapping text to cause wrapping text to cause wrapping text to cause wrapping "
+                                 id="ot12"/>
+                </af:column-->
+                </af:table>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="In a PanelHeader." size="3">
+              <af:panelGroupLayout layout="vertical" id="pgl6">
+                <af:panelHeader text="Header Text">
+                  <f:facet name="context">
+                    <af:outputText clientComponent="true" value="Context Text" id="outputText1">
+                      <f:facet name="context">
+                        <af:contextInfo id="contextInfo1">
+                          <af:showPopupBehavior align="beforeStart" popupId="binky"
+                                                triggerType="contextInfo"/>
+                        </af:contextInfo>
+                      </f:facet>
+                    </af:outputText>
+                  </f:facet>
+                  <af:outputText value="Content text"/>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

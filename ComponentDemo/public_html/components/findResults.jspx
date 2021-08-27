@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document id="doc" title="Find Results" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark">
+      <af:resource type="javascript">
+        function invokeSoleResultIfPossible(loadEvent)
+        {
+          var soleGo = AdfPage.PAGE.findComponent("tmplt:soleGo");
+          if (soleGo != null)
+          {
+            document.location = soleGo.getDestination();
+          }
+          else
+          {
+            var soleCmd = AdfPage.PAGE.findComponent("tmplt:soleCmd");
+            if (soleCmd != null)
+            {
+              (new AdfActionEvent(soleCmd)).queue();
+              return;
+            }
+          }
+        }
+      </af:resource>
+      <af:clientListener method="invokeSoleResultIfPossible" type="load"/>
+      <af:pageTemplate id="tmplt" viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/demoIndexTemplateAlta.jspx' : '/templates/pageTemplateDefs/demoIndexTemplate.jspx'}">
+        <f:attribute name="mode" value="index"/>
+        <f:facet name="center1">
+          <af:panelGroupLayout id="scroll" layout="scroll">
+            <af:panelGroupLayout id="soleResult" layout="vertical" visible="false"
+                                 rendered="#{demoFind.foundMatchCount == 1}">
+              <af:goLink id="soleGo" text="#{demoFind.foundMatches[0].destination}"
+                         destination="#{demoFind.foundMatches[0].destination}.jspx"
+                         rendered="#{demoFind.foundMatches[0].destination != null}"
+                         clientComponent="true"/>
+              <af:commandLink id="soleCmd" text="#{demoFind.foundMatches[0].outcome}"
+                              action="#{demoFind.foundMatches[0].getOutcome}"
+                              rendered="#{demoFind.foundMatches[0].destination == null}"
+                              clientComponent="true"/>
+            </af:panelGroupLayout>
+            <af:panelHeader id="ph"
+                            text='Matches for "#{demoFind.searchText}" (#{demoFind.foundMatchCount})'>
+              <af:panelList id="pl" listStyle="list-style-type: decimal;">
+                <af:iterator id="matches" var="match" value="#{demoFind.foundMatches}" rows="0">
+                  <af:goLink id="gl" text="#{match.text}"
+                             destination="#{match.destination}.jspx"
+                             rendered="#{match.destination != null}"/>
+                  <af:commandLink id="cl" text="#{match.text}" action="#{match.getOutcome}"
+                                  rendered="#{match.destination == null}"/>
+                </af:iterator>
+              </af:panelList>
+              <af:panelList id="plNone" rendered="#{demoFind.foundMatchCount == 0}">
+                <af:panelGroupLayout id="notFound" layout="default">
+                  <af:outputText id="none1" value="No matches were found.  Consider visiting the "/>
+                  <af:commandLink id="tagGuide" text="tag guide" action="guide"/>
+                  <af:outputText id="none2" value=" or other "/>
+                  <af:commandLink id="indexPages" text="index pages" action="index"/>
+                  <af:outputText id="none3" value=" instead."/>
+                </af:panelGroupLayout>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

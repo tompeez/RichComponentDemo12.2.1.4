@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Table insert/update/delete Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value="table"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelSplitter positionedFromEnd="true" splitterPosition="210"
+                            orientation="vertical" id="ps1" dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelStretchLayout topHeight="auto" bottomHeight="auto" dimensionsFrom="auto">
+                <f:facet name="top">
+                  <af:panelGroupLayout layout="vertical">
+                    <af:outputFormatted value="&lt;b>Table insert/update/delete - Select a row and perform insert/update/delete action&lt;/b>"/>
+                    <af:spacer height="5px"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelCollection binding="#{editor.component}" id="pc1" styleClass="AFStretchWidth">
+                    <f:facet name="menus">
+                      <af:menu text="Actions" id="m1">
+                        <af:commandMenuItem text="Insert Before" id="cmi1"
+                                            actionListener="#{tableInsertUpdateDelete.insertBefore}"/>
+                        <af:commandMenuItem text="Insert After" id="cmi2"
+                                            actionListener="#{tableInsertUpdateDelete.insertAfter}"/>
+                        <af:commandMenuItem text="Insert Start" disabled="true"
+                                            id="cmi3"
+                                            actionListener="#{tableInsertUpdateDelete.insertStart}"/>
+                        <af:commandMenuItem text="Update" id="cmi4"
+                                            actionListener="#{tableInsertUpdateDelete.update}"/>
+                        <af:commandMenuItem text="Delete" id="cmi5"
+                                            actionListener="#{tableInsertUpdateDelete.delete}"/>
+                      </af:menu>
+                    </f:facet>
+                    <f:facet name="toolbar">
+                      <af:toolbar id="t1">
+                        <af:commandToolbarButton shortDesc="Insert Before"
+                                                 icon="/images/insert-before.png"
+                                                 actionListener="#{tableInsertUpdateDelete.insertBefore}"
+                                                 id="ctb1"></af:commandToolbarButton>
+                        <af:commandToolbarButton shortDesc="Insert After"
+                                                 icon="/images/insert-after.png"
+                                                 actionListener="#{tableInsertUpdateDelete.insertAfter}"
+                                                 id="ctb2"></af:commandToolbarButton>
+                        <af:commandToolbarButton shortDesc="Insert Start"
+                                                 icon="/images/player-top.png"
+                                                 actionListener="#{tableInsertUpdateDelete.insertStart}"
+                                                 id="ctb3"></af:commandToolbarButton>
+                        <af:commandToolbarButton shortDesc="Update"
+                                                 icon="/images/update_ena.png"
+                                                 actionListener="#{tableInsertUpdateDelete.update}"
+                                                 id="ctb4"></af:commandToolbarButton>
+                        <af:commandToolbarButton shortDesc="Delete"
+                                                 icon="/images/delete_ena.png"
+                                                 actionListener="#{tableInsertUpdateDelete.delete}"
+                                                 id="ctb5"></af:commandToolbarButton>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="secondaryToolbar">
+                      <af:toolbar id="t2">
+                        <af:commandToolbarButton immediate="true"
+                                                 text="TagGuide" action="guide"
+                                                 id="ctb41"/>
+                      </af:toolbar>
+                    </f:facet>
+                    <f:facet name="afterToolbar">
+                      <af:menuBar>
+                        <af:goMenuItem text="view page source"
+                                       destination="#{facesContext.viewRoot.viewId}.source"/>
+                      </af:menuBar>
+                    </f:facet>
+                    <af:table rowSelection="single" columnSelection="none"
+                              columnBandingInterval="1" var="row" varStatus="vs"
+                              binding="#{tableInsertUpdateDelete.component}"
+                              selectionListener="#{fs.select}"
+                              value="#{tableInsertUpdateDelete.model}"
+                              id="table" summary="table data">
+                      <af:column rowHeader="true" id="c1" width="10">
+                        <af:outputText value="#{vs.index}"/>
+                      </af:column>
+                      <af:column headerText="ID" id="c2">
+                        <af:outputText value="#{row.id}" id="ot1"/>
+                      </af:column>
+                      <af:column headerText="Name" id="c3">
+                        <af:outputText value="#{row.name}" id="ot2"/>
+                      </af:column>
+                      <af:column headerText="Costs" id="c4">
+                        <af:outputText value="#{row.cost}" id="ot3">
+                          <f:convertNumber currencySymbol="$" type="currency"
+                                           maxFractionDigits="2"/>
+                        </af:outputText>
+                      </af:column>
+                      <af:column headerText="Sales" id="c5">
+                        <af:outputText value="#{row.sale}" id="ot4">
+                          <f:convertNumber currencySymbol="$" type="currency"
+                                           maxFractionDigits="2"/>
+                        </af:outputText>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="scroll" id="pgl2">
+                <af:outputText value="See also:" id="ot14"/>
+                <af:panelList id="pl1">
+                  <af:goLink text="Table Demo"
+                             destination="/components/table.jspx" id="gl4"/>
+                  <af:goLink text="PanelCollection Demo"
+                             destination="/components/panelCollection.jspx"
+                             id="gl5"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

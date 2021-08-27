@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelHeader Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelHeader"/>
+        <f:attribute name="visualDesignName" value="headers"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmFlowNotes" value="If you use type=&quot;stretch&quot; when flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmFlowWithZeroWidthNotes" value="If you use type=&quot;stretch&quot; when flowing this component, then the size comes from the inlineStyle, the styleClass, or from the skin."/>
+        <f:attribute name="gmStretchNotes" value="You cannot use type=&quot;flow&quot; when stretching this component.  Instruction text, the &quot;help&quot;, &quot;info&quot;, and &quot;legend&quot; facets will not be displayed when stretched."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="vertical">
+            <af:panelHeader icon="/images/guy.gif" text="Automatic Header" type="default"
+                            binding="#{editor.component}" helpTopicId="TOPICID_ALL"
+                            id="panelHeader">
+              <f:facet name="context">
+                <af:selectOneChoice mode="compact" simple="true" label="option">
+                  <af:selectItem label="Option A" value="a"/>
+                  <af:selectItem label="Option B" value="b"/>
+                </af:selectOneChoice>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="t1">
+                  <af:button icon="/images/new_ena.png" partialSubmit="true"
+                                           shortDesc="new" id="ctb1"/>
+                  <af:button icon="/images/update_ena.png" partialSubmit="true"
+                                           shortDesc="update" id="ctb2"/>
+                  <af:button icon="/images/delete_ena.png" partialSubmit="true"
+                                           shortDesc="delete" id="ctb3"/>
+                  <af:button text="Cancel"/>
+                  <af:button text="Actions"/>
+                  <af:button text="Apply"/>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="menuBar">
+                <af:menuBar id="mb1">
+                  <af:menu text="menu 1" id="m1">
+                    <af:menu text="menu 2" id="m2">
+                      <af:commandMenuItem text="item 2.1" id="cmi1"/>
+                    </af:menu>
+                    <af:commandMenuItem text="item 1.1" id="cmi2"/>
+                    <af:commandMenuItem text="item 1.2" id="cmi3"/>
+                  </af:menu>
+                </af:menuBar>
+              </f:facet>
+              <f:facet name="legend">
+                <af:declarativeComponent viewId="/visualDesigns/headerLegend/component.jsff"
+                                         pageStampType="taskStamp" />
+              </f:facet>
+              <af:panelHeader text="Automatic SubHeader" helpTopicId="TOPICID_ALL"
+                              id="panelHeader2">
+                <f:facet name="toolbar">
+                  <af:toolbar id="t2">
+                    <af:button icon="/images/new_ena.png" partialSubmit="true"
+                                             shortDesc="new" id="ctb4"/>
+                    <af:button icon="/images/update_ena.png" partialSubmit="true"
+                                             shortDesc="update" id="ctb5"/>
+                    <af:button icon="/images/delete_ena.png" partialSubmit="true"
+                                             shortDesc="delete" id="ctb6"/>
+                    <af:button text="Cancel"/>
+                    <af:button text="Actions"/>
+                    <af:button text="Apply"/>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="menuBar">
+                  <af:menuBar id="mb2">
+                    <af:menu text="menu 1" id="m3">
+                      <af:menu text="menu 2" id="m4">
+                        <af:commandMenuItem text="item 2.1" id="cmi4"/>
+                      </af:menu>
+                      <af:commandMenuItem text="item 1.1" id="cmi5"/>
+                      <af:commandMenuItem text="item 1.2" id="cmi6"/>
+                    </af:menu>
+                  </af:menuBar>
+                </f:facet>
+                <f:facet name="context">
+                  <af:selectOneChoice mode="compact" simple="true" label="option">
+                    <af:selectItem label="Option A" value="a"/>
+                    <af:selectItem label="Option B" value="b"/>
+                  </af:selectOneChoice>
+                </f:facet>
+                <af:panelHeader text="Automatic SubSubHeader" helpTopicId="TOPICID_ALL"
+                                id="panelHeader3">
+                  <f:facet name="context">
+                    <af:selectOneChoice mode="compact" simple="true" label="option">
+                      <af:selectItem label="Option A" value="a"/>
+                      <af:selectItem label="Option B" value="b"/>
+                    </af:selectOneChoice>
+                  </f:facet>
+                  <f:facet name="legend">
+                    <af:declarativeComponent viewId="/visualDesigns/headerLegend/component.jsff"
+                                           pageStampType="taskStamp" />
+                  </f:facet>
+                </af:panelHeader>
+                <af:panelHeader icon="/images/guy.gif" text="Level 1 Header" size="0"
+                                id="panelHeader4">
+                  <af:outputText value="The header that contains this text should be fixed at size=0 reguardless of the size of the parent header.  In other words, it's style won't change when the size in the grid below is changed."
+                                 id="ot8"/>
+                  <af:panelHeader text="SubSub Header under Level 1 Header" size="2"
+                                  id="panelHeader5">
+                    <af:outputText value="The header containing this text should be fixed as size=2 reguardless of the above header."
+                                   id="ot9"/>
+                  </af:panelHeader>
+                </af:panelHeader>
+              </af:panelHeader>
+            </af:panelHeader>
+             <af:spacer height="15px" id="spacerSeeAlso"/>
+              <af:panelGroupLayout id="pglSeeAlso" layout="default" rendered="#{demoSkin.altaBased}">
+                  <af:outputText id="otSeeAlso" value="See also: "/>
+                  <af:commandLink id="clSeeAlso" text="PanelHeader with horizontal rule"
+                                  action="guide.panelHeaderWithHR"/>
+              </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

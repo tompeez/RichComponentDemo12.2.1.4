@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Tag Cloud Attribute Groups Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Tag Cloud Attribute Groups Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Tag Cloud Attribute Groups"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout topHeight="auto" bottomHeight="auto" endWidth="300px">
+            <f:facet name="top">
+              <!-- START TAG DEMO -->
+              <af:panelGroupLayout layout="vertical" id="pgl5">
+                <f:verbatim>                   <b>Demonstrates Attribute Groups in Tag Cloud using Census data</b>                   <ul>
+                    <li>Attribute Groups Match Rule: Uses attribute match rule to categorize Tag Cloud items based on
+                        population.</li>
+                    <li>Attribute Groups Exception Rule: Using attribute match and exception rule to categorize tag
+                        cloud items based on population except a specific state.</li>
+                  </ul>                                    </f:verbatim>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelSplitter orientation="horizontal" dimensionsFrom="auto" splitterPosition="300" id="ps1">
+                <f:facet name="first">
+                  <af:panelTabbed id="pt1" contentDelivery="lazyUncached">
+                    <af:showDetailItem text="Attribute Groups Match Rule" id="sdi1" disclosed="true"
+                                       disclosureListener="#{tagCloudAttrGroups.reset}">
+                      <dvt:tagCloud id="tc1" value="#{tagCloudAttrGroups.model}" var="item" layout="cloud"
+                                    inlineStyle="max-width:1000px;margin:auto;width:70%;height:400px;"
+                                    selectionMode="none" contentDelivery="whenAvailable" rendered="true"
+                                    legendSource="ag1" styleClass="AFStretchWidth"
+                                    emptyText="No Tag Cloud Data to display">
+                        <af:transition transition="auto" triggerType="display"/>
+                        <dvt:tagCloudItem label="#{item.word}" value="#{item.frequency}" id="t1"
+                                          shortDesc="#{item.shortDesc}" inlineStyle="color:#FFAAFF;">
+                          <dvt:attributeGroups id="ag1" type="color"
+                                               value="#{item.frequency > 5 ? 'High Population' : 'Low Population'}"
+                                               label="#{item.frequency > 5 ? 'High Population' : 'Low Population'}">
+                            <dvt:attributeMatchRule group="Low Population">
+                              <f:attribute name="color" value="#267db3"/>
+                            </dvt:attributeMatchRule>
+                            <dvt:attributeMatchRule group="High Population">
+                              <f:attribute name="color" value="#ed6647"/>
+                            </dvt:attributeMatchRule>
+                          </dvt:attributeGroups>
+                        </dvt:tagCloudItem>
+                      </dvt:tagCloud>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Attribute Groups Exception Rule" id="sdi2" disclosed="false"
+                                       disclosureListener="#{tagCloudAttrGroups.reset}" stretchChildren="first">
+                      <dvt:tagCloud id="tc2" value="#{tagCloudAttrGroups.model}" var="item" layout="cloud"
+                                    styleClass="AFStretchWidth" selectionMode="none" contentDelivery="whenAvailable"
+                                    rendered="true" legendSource="ag2"
+                                    inlineStyle="max-width:1000px;margin:auto;width:70%;height:400px;"
+                                    emptyText="No Tag Cloud Data to display">
+                        <af:transition transition="auto" triggerType="display"/>
+                        <dvt:tagCloudItem label="#{item.word}" value="#{item.frequency}" id="t2"
+                                          shortDesc="#{item.shortDesc}" inlineStyle="color:#FFAAFF;">
+                          <dvt:attributeGroups id="ag2" type="color"
+                                               value="#{item.frequency > 5 ? 'High Population' : 'Low Population'}"
+                                               label="#{item.frequency > 5 ? 'High Population' : 'Low Population'}">
+                            <dvt:attributeMatchRule group="Low Population">
+                              <f:attribute name="color" value="#267db3"/>
+                            </dvt:attributeMatchRule>
+                            <dvt:attributeMatchRule group="High Population">
+                              <f:attribute name="color" value="#ed6647"/>
+                            </dvt:attributeMatchRule>
+                            <dvt:attributeExceptionRule id="aer1" label="Alaska" condition="#{item.word == 'Alaska'}">
+                              <f:attribute name="color" value="#000000"/>
+                            </dvt:attributeExceptionRule>
+                          </dvt:attributeGroups>
+                        </dvt:tagCloudItem>
+                      </dvt:tagCloud>
+                    </af:showDetailItem>
+                  </af:panelTabbed>
+                </f:facet>
+              </af:panelSplitter>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

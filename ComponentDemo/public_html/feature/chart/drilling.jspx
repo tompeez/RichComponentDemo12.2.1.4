@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Chart Drilling" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Chart Drilling Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Drilling"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:panelGroupLayout layout="vertical">
+              <af:group>
+                <af:outputText inlineStyle="font-size:large;" value="Drill Listener"/>
+                <af:spacer width="50px"/>
+                <af:outputText partialTriggers="barChartDrill pieChartDrill funnelChartDrill areaChartDrill stockChartDrill"
+                               value="#{chartSample.drillState}" inlineStyle="font-size:larger;"/>
+                <af:panelGroupLayout layout="horizontal">
+                  <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row" id="barChartDrill"
+                                drilling="#{chartSample.drilling}" drillListener="#{chartSample.drillListener}"
+                                partialTriggers="::drillChoice ::dataItemDrillChoice ::sDrillChoice ::gDrillChoice">
+                    <f:facet name="dataStamp">
+                      <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"
+                                         drilling="#{(row.series == 'Series 1')? chartSample.dataItemDrilling : 'inherit'}"/>
+                    </f:facet>
+                    <f:facet name="seriesStamp">
+                      <dvt:chartSeriesStyle series="Series 1" drilling="#{chartSample.seriesDrilling}"/>
+                    </f:facet>
+                    <f:facet name="groupStamp">
+                      <dvt:chartGroup group="Group A" drilling="#{chartSample.groupDrilling}"/>
+                    </f:facet>
+                  </dvt:barChart>
+                  <dvt:pieChart value="#{chartDataSource.defaultPieData}" var="row" id="pieChartDrill"
+                                drilling="#{chartSample.drilling}" drillListener="#{chartSample.drillListener}"
+                                partialTriggers="::drillChoice ::dataItemDrillChoice ::sDrillChoice ::gDrillChoice">
+                    <dvt:pieDataItem label="#{row.series}" value="#{row.value}"
+                                     drilling="#{(row.series == 'Series 1')? chartSample.dataItemDrilling : 'inherit'}"/>
+                    <dvt:chartLegend rendered="false"/>
+                  </dvt:pieChart>
+                  <dvt:funnelChart value="#{chartDataSource.defaultPieData}" var="row" id="funnelChartDrill"
+                                   drilling="#{chartSample.drilling}" drillListener="#{chartSample.drillListener}"
+                                   partialTriggers="::drillChoice ::dataItemDrillChoice ::sDrillChoice ::gDrillChoice">
+                    <dvt:funnelDataItem label="#{row.series}" value="#{row.value}"
+                                        drilling="#{(row.series == 'Series 1')? chartSample.dataItemDrilling : 'inherit'}"/>
+                    <f:facet name="seriesStamp">
+                      <dvt:chartSeriesStyle series="Series 1" drilling="#{chartSample.seriesDrilling}"/>
+                    </f:facet>
+                  </dvt:funnelChart>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout layout="horizontal">
+                  <dvt:areaChart value="#{chartDataSource.yearlyTimeData}" var="row" timeAxisType="enabled"
+                                 id="areaChartDrill" drilling="#{chartSample.drilling}"
+                                 drillListener="#{chartSample.drillListener}"
+                                 partialTriggers="::drillChoice ::dataItemDrillChoice ::sDrillChoice ::gDrillChoice">
+                    <f:facet name="dataStamp">
+                      <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"
+                                         drilling="#{(row.series == 'Series 1')? chartSample.dataItemDrilling : 'inherit'}"/>
+                    </f:facet>
+                    <f:facet name="seriesStamp">
+                      <dvt:chartSeriesStyle series="Series 1" drilling="#{chartSample.seriesDrilling}"/>
+                    </f:facet>
+                  </dvt:areaChart>
+                  <dvt:stockChart value="#{chartDataSource.defaultStockData}" var="row" timeAxisType="enabled"
+                                  id="stockChartDrill" drilling="#{chartSample.drilling}"
+                                  drillListener="#{chartSample.drillListener}"
+                                  partialTriggers="::drillChoice ::dataItemDrillChoice ::sDrillChoice ::gDrillChoice">
+                    <dvt:stockDataItem series="#{row.series}" group="#{row.group}" volume="#{row.volume}"
+                                       high="#{row.high}" low="#{row.low}" close="#{row.close}" open="#{row.open}"
+                                       drilling="#{(row.series == 'ORCL')? chartSample.dataItemDrilling : 'inherit'}"/>
+                    <f:facet name="seriesStamp">
+                      <dvt:chartSeriesStyle series="ORCL" drilling="#{chartSample.seriesDrilling}"/>
+                    </f:facet>
+                  </dvt:stockChart>
+                </af:panelGroupLayout>
+              </af:group>
+              <af:group>
+                <af:selectOneChoice label="Drilling" value="#{chartSample.drilling}" id="drillChoice" autoSubmit="true">
+                  <af:selectItem label="on" id="sel1"/>
+                  <af:selectItem label="seriesOnly" id="sel2"/>
+                  <af:selectItem label="groupsOnly" id="sel3"/>
+                  <af:selectItem label="off" id="sel4"/>
+                </af:selectOneChoice>
+                <af:selectOneChoice label="Series 1 Group A Drilling" value="#{chartSample.dataItemDrilling}"
+                                    id="dataItemDrillChoice" autoSubmit="true">
+                  <af:selectItem label="inherit" id="si1"/>
+                  <af:selectItem label="on" id="si2"/>
+                  <af:selectItem label="off" id="si3"/>
+                </af:selectOneChoice>
+                <af:selectOneChoice label="Series 1 Drilling" value="#{chartSample.seriesDrilling}" id="sDrillChoice"
+                                    autoSubmit="true">
+                  <af:selectItem label="inherit" id="si4"/>
+                  <af:selectItem label="on" id="si5"/>
+                  <af:selectItem label="off" id="si6"/>
+                </af:selectOneChoice>
+                <af:selectOneChoice label="Group A Drilling" value="#{chartSample.groupDrilling}" id="gDrillChoice"
+                                    autoSubmit="true">
+                  <af:selectItem label="inherit" id="si7"/>
+                  <af:selectItem label="on" id="si8"/>
+                  <af:selectItem label="off" id="si9"/>
+                </af:selectOneChoice>
+              </af:group>
+            </af:panelGroupLayout>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

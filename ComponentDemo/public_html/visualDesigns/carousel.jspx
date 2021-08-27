@@ -1,0 +1,330 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Carousel Visual Design Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="css">
+        .MyDropWells {
+          padding: 5px;
+        }
+        .MyDropWell {
+          background-image: url('../images/carousel/drop-well.png');
+          background-repeat: no-repeat;
+          background-position: center center;
+          margin: 5px;
+          width: 150px;
+          height: 150px;
+        }
+        .MyDropImage {
+          margin: 8px;
+          width: 134px;
+          height: 134px;
+        }
+        .MyImage {
+          width: 100%;
+          height: 100%;
+        }
+        .MyOverlayHeader,
+        .MyOverlayFooter {
+          display: none;
+          position: absolute;
+          width: 100%;
+          padding: 7px;
+          background-repeat: repeat-x;
+        }
+        .MyOverlayHeader {
+          top: 0px;
+          background-color: white;
+          background-position: bottom;
+          border-bottom: 1px solid #DDDDDD;
+        }
+        .MyOverlayFooter {
+          bottom: 0px;
+          background-color: white;
+          background-position: top;
+          border-top: 1px solid #DDDDDD;
+        }
+      </af:resource>
+      <af:resource type="javascript">
+        function hideExistingOverlays()
+        {
+          if (window._myHeader != null)
+          {
+            var header = AdfPage.PAGE.findComponent(window._myHeader);
+            if (header != null)
+            {
+              header.setProperty("inlineStyle", "display:none", false, AdfUIComponent.PROPAGATE_LOCALLY);
+            }
+            window._myHeader = null;
+          }
+          if (window._myFooter != null)
+          {
+            var footer = AdfPage.PAGE.findComponent(window._myFooter);
+            if (footer != null)
+            {
+              footer.setProperty("inlineStyle", "display:none", false, AdfUIComponent.PROPAGATE_LOCALLY);
+            }
+            window._myFooter = null;
+          }
+        }
+
+        function handleItemOver(uiInputEvent)
+        {
+          var imageComponent = uiInputEvent.getCurrentTarget();
+          var carousel = null;
+          var componentParent = imageComponent.getParent();
+          while (componentParent != null)
+          {
+            if (componentParent instanceof AdfRichCarousel)
+            {
+              carousel = componentParent;
+            }
+            componentParent = componentParent.getParent();
+          }
+          if (carousel == null)
+          {
+            AdfLogger.LOGGER.severe("Unable to find the carousel component!");
+            return;
+          }
+          var currentItemKeyPattern = ":"+ carousel.getCurrentItemKey() +":";
+
+          var overlayHeaderComponent = imageComponent.findComponent("overHead");
+          var overlyHeaderId = overlayHeaderComponent.getClientId();
+
+          // In IE we get mouseover for other items as well (even though an overly div is on top).
+          if(overlyHeaderId.indexOf(currentItemKeyPattern) == -1)
+            return;
+
+          if (overlyHeaderId != window._myHeader)
+          {
+            // ensure only one set of overlays are visible
+            hideExistingOverlays();
+          }
+          var overlayFooterComponent = imageComponent.findComponent("overFoot");
+
+          window._myHeader = overlayHeaderComponent.getClientId();
+          window._myFooter = overlayFooterComponent.getClientId();
+
+          // do not propagate to the server otherwise all stamps will get this property on next
+          // data fetch
+          overlayHeaderComponent.setProperty("inlineStyle", "display:block", false, AdfUIComponent.PROPAGATE_LOCALLY);
+          overlayFooterComponent.setProperty("inlineStyle", "display:block", false, AdfUIComponent.PROPAGATE_LOCALLY);
+        }
+
+        function handleItemDown(uiInputEvent)
+        {
+          if (uiInputEvent.isLeftButtonPressed())
+          {
+            // Only hide the overlays if the left button was pressed
+            hideExistingOverlays();
+          }
+        }
+
+        function handleCarouselSpin(carouselSpinEvent)
+        {
+          hideExistingOverlays();
+        }
+      </af:resource>
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Carousel Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="auxiliaryGlobalSize" value="250"/>
+        <f:facet name="auxiliaryGlobal">
+          <af:panelStretchLayout id="auxPSL" topHeight="auto" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:outputText value="Carousel - Global Layer" id="ot1"/>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelSplitter id="auxSplit" orientation="vertical" splitterPosition="100"
+                                positionedFromEnd="true" dimensionsFrom="auto">
+                <f:facet name="first">
+                  <af:carousel id="auxCrsl" styleClass="AFStretchWidth"
+                               orientation="vertical"
+                               halign="end"
+                               var="item"
+                               value="#{visualDesignAuxCarouselItem.items}"
+                               contentDelivery="immediate"
+                               carouselSpinListener="#{visualDesignAuxCarouselItem.handleCarouselSpin}">
+                    <f:facet name="nodeStamp">
+                      <af:carouselItem id="auxItem" text="#{item.title}" shortDesc="#{item.title}">
+                        <af:image id="auxImg" source="#{item.url}" shortDesc="#{item.title}">
+                          <af:componentDragSource/>
+                        </af:image>
+                      </af:carouselItem>
+                    </f:facet>
+                  </af:carousel>
+                </f:facet>
+                <f:facet name="second">
+                  <af:panelFormLayout id="auxDetail" partialTriggers="auxCrsl">
+                    <af:inputText id="auxTitle" readOnly="true" label="Tag Name"
+                                  value="#{visualDesignAuxCarouselItem.currentImageInfo.title}"/>
+                    <af:inputText id="auxLink" readOnly="true" label="Tag Demo"
+                                  value="#{visualDesignAuxCarouselItem.currentImageInfo.destination}"/>
+                  </af:panelFormLayout>
+                </f:facet>
+              </af:panelSplitter>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout id="mainPSL" topHeight="auto" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:panelGroupLayout id="mainTop" layout="vertical">
+                <af:panelHeader text="Related Links" id="ph1">
+                  <af:panelList id="pl1">
+                    <af:goLink text="Component - carousel" destination="/components/carousel.jspx"
+                               id="gl1"/>
+                    <af:goLink text="Component - carouselItem" destination="/components/carouselItem.jspx"
+                               id="gl2"/>
+                    <af:goLink text="Component - image" destination="/components/image.jspx"
+                               id="gl3"/>
+                  </af:panelList>
+                </af:panelHeader>
+                <af:spacer height="10px" id="sp"/>
+                <af:outputText value="Carousel - Page Content Region" id="ot2"/>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelSplitter id="mainSplit" orientation="vertical" splitterPosition="190"
+                                positionedFromEnd="true" dimensionsFrom="auto">
+                <f:facet name="first">
+                  <af:carousel id="mainCrsl" styleClass="AFStretchWidth"
+                               var="item"
+                               value="#{visualDesignMainCarouselItem.items}"
+                               contentDelivery="immediate"
+                               carouselSpinListener="#{visualDesignMainCarouselItem.handleCarouselSpin}">
+                    <af:clientListener method="handleCarouselSpin" type="carouselSpin"/>
+                    <f:facet name="nodeStamp">
+                      <af:carouselItem id="mainItem" text="#{item.title}" shortDesc="#{item.title}">
+                        <af:panelGroupLayout id="itemPgl" layout="vertical">
+                          <af:image id="mainImg" source="#{item.url}" shortDesc="#{item.title}"
+                                    styleClass="MyImage">
+                            <af:componentDragSource/>
+                            <af:clientListener method="handleItemOver" type="mouseOver"/>
+                            <af:clientListener method="handleItemDown" type="mouseDown"/>
+                            <af:showPopupBehavior triggerType="contextMenu" popupId="::itemCtx"/>
+                          </af:image>
+                          <af:panelGroupLayout id="overHead" styleClass="MyOverlayHeader"
+                                               layout="vertical" clientComponent="true">
+                            <af:menuBar id="menuBar">
+                              <af:menu id="menu" text="Menu">
+                                <af:commandMenuItem id="menuItem1" text="Menu Item 1"/>
+                                <af:commandMenuItem id="menuItem2" text="Menu Item 2"/>
+                                <af:commandMenuItem id="menuItem3" text="Menu Item 3"/>
+                              </af:menu>
+                            </af:menuBar>
+                          </af:panelGroupLayout>
+                          <af:panelGroupLayout id="overFoot" styleClass="MyOverlayFooter"
+                                               layout="vertical" clientComponent="true"
+                                               halign="center">
+                            <af:panelGroupLayout id="footHorz" layout="horizontal">
+                              <f:facet name="separator">
+                                <af:spacer id="footSp" width="8"/>
+                              </f:facet>
+                              <af:commandImageLink icon="/afr/#{requestContext.rightToLeft ? 'next' : 'previous'}_n.png"
+                                                   hoverIcon="/afr/#{requestContext.rightToLeft ? 'next' : 'previous'}_mo.png"
+                                                   depressedIcon="/afr/#{requestContext.rightToLeft ? 'next' : 'previous'}_md.png"
+                                                   disabledIcon="/afr/#{requestContext.rightToLeft ? 'next' : 'previous'}_dis.png"
+                                                   inlineStyle="width:8px;height:11px"
+                                                   shortDesc="Show the previous page"
+                                                   id="pagePrev" disabled="true"/>
+                              <af:outputText id="pageInfo" value="Page 1 of 1"/>
+                              <af:commandImageLink icon="/afr/#{requestContext.rightToLeft ? 'previous' : 'next'}_n.png"
+                                                   hoverIcon="/afr/#{requestContext.rightToLeft ? 'previous' : 'next'}_mo.png"
+                                                   depressedIcon="/afr/#{requestContext.rightToLeft ? 'previous' : 'next'}_md.png"
+                                                   disabledIcon="/afr/#{requestContext.rightToLeft ? 'previous' : 'next'}_dis.png"
+                                                   inlineStyle="width:8px;height:11px"
+                                                   shortDesc="Show the next page"
+                                                   id="pageNext" disabled="true"/>
+                            </af:panelGroupLayout>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                      </af:carouselItem>
+                    </f:facet>
+                  </af:carousel>
+                </f:facet>
+                <f:facet name="second">
+                  <af:panelStretchLayout endWidth="auto">
+                    <f:facet name="center">
+                      <af:panelGroupLayout id="scroll" layout="scroll">
+                        <af:popup id="itemCtx">
+                          <af:menu id="itemMenu">
+                            <af:commandMenuItem id="mi1" text="Custom Action 1" disabled="true"/>
+                            <af:commandMenuItem id="mi2" text="Custom Action 2" disabled="true"/>
+                            <af:commandMenuItem id="mi3" text="Custom Action 3" disabled="true"/>
+                            <af:group id="mGroup">
+                              <af:commandMenuItem id="mi4" text="Previous Page" disabled="true"/>
+                              <af:commandMenuItem id="mi5" text="Next Page" disabled="true"/>
+                            </af:group>
+                          </af:menu>
+                        </af:popup>
+                        <af:panelFormLayout id="mainDetail" partialTriggers="mainCrsl">
+                          <af:inputText id="mainTitle" readOnly="true" label="Tag Name"
+                                        value="#{visualDesignMainCarouselItem.currentImageInfo.title}"/>
+                          <af:inputText id="mainLink" readOnly="true" label="Tag Demo"
+                                        value="#{visualDesignMainCarouselItem.currentImageInfo.destination}"/>
+                        </af:panelFormLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="end">
+                      <af:panelGroupLayout id="hrzntl" layout="horizontal" styleClass="MyDropWells">
+                        <af:panelGroupLayout id="dropA" layout="vertical" halign="center">
+                          <af:panelGroupLayout id="wellA" layout="vertical" styleClass="MyDropWell">
+                            <af:dropTarget dropListener="#{visualDesignMainCarouselItem.handleDropA}"
+                                           actions="MOVE">
+                              <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                            </af:dropTarget>
+                            <af:image id="iA" source="#{visualDesignMainCarouselItem.sourceA}"
+                                      shortDesc="#{visualDesignMainCarouselItem.dropTitleA}"
+                                      styleClass="MyDropImage"/>
+                          </af:panelGroupLayout>
+                          <af:outputText id="otA"
+                                         value="#{visualDesignMainCarouselItem.dropTitleA}"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="dropB" layout="vertical" halign="center">
+                          <af:panelGroupLayout id="wellB" layout="vertical" styleClass="MyDropWell">
+                            <af:dropTarget dropListener="#{visualDesignMainCarouselItem.handleDropB}"
+                                           actions="MOVE">
+                              <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                            </af:dropTarget>
+                            <af:image id="iB" source="#{visualDesignMainCarouselItem.sourceB}"
+                                      shortDesc="#{visualDesignMainCarouselItem.dropTitleB}"
+                                      styleClass="MyDropImage"/>
+                          </af:panelGroupLayout>
+                          <af:outputText id="otB"
+                                         value="#{visualDesignMainCarouselItem.dropTitleB}"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout id="dropC" layout="vertical" halign="center">
+                          <af:panelGroupLayout id="wellC" layout="vertical" styleClass="MyDropWell">
+                            <af:dropTarget dropListener="#{visualDesignMainCarouselItem.handleDropC}"
+                                           actions="MOVE">
+                              <af:dataFlavor flavorClass="javax.faces.component.UIComponent"/>
+                            </af:dropTarget>
+                            <af:image id="iC" source="#{visualDesignMainCarouselItem.sourceC}"
+                                      shortDesc="#{visualDesignMainCarouselItem.dropTitleC}"
+                                      styleClass="MyDropImage"/>
+                          </af:panelGroupLayout>
+                          <af:outputText id="otC"
+                                         value="#{visualDesignMainCarouselItem.dropTitleC}"/>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+              </af:panelSplitter>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

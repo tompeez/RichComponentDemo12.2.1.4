@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelDrawer Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelDrawer"/>
+        <f:attribute name="visualDesignName" value="tabs"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelStretchLayout dimensionsFrom="parent">
+            <f:facet name="center">
+              <af:decorativeBox theme="#{drawer.theme}" id="box"
+                                partialTriggers="theme1 theme2 theme3 theme4">
+                <f:facet name="center">
+                  <af:panelGroupLayout layout="scroll" id="layout">
+                    <af:panelDrawer alignId="box" height="100%" id="myDrawer" binding="#{editor.component}">
+                      <af:showDetailItem textAndAccessKey="Ta&amp;b 1"
+                                         icon="/images/icon_library_24X24_ena.png"
+                                         hoverIcon="/images/icon_library_24X24_ovr.png"
+                                         depressedIcon="/images/icon_library_24X24_sel.png"
+                                         disabledIcon="/images/icon_library_24X24_dis.png"
+                                         shortDesc="tab 1 short desc" id="sdi1">
+                        <af:outputText value="Tab 1 First Child"/>
+                        <af:outputText value="Tab 1 Second Child"/>
+                        <af:spacer height="150px"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem text="Tab 2"
+                                         icon="/images/icon_chat_24X24_ena.png"
+                                         hoverIcon="/images/icon_chat_24X24_ovr.png"
+                                         depressedIcon="/images/icon_chat_24X24_sel.png"
+                                         disabledIcon="/images/icon_chat_24X24_dis.png"
+                                         shortDesc="tab 2 short desc" id="sdi2">
+                        <af:outputText value="Tab 2 First Child"/>
+                        <af:outputText value="Tab 2 Second Child"/>
+                        <af:spacer height="150px"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem textAndAccessKey="Disabled tab &amp;3"
+                                         disabled="true"
+                                         icon="/images/icon_pie_24X24_ena.png"
+                                         hoverIcon="/images/icon_pie_24X24_ovr.png"
+                                         depressedIcon="/images/icon_pie_24X24_sel.png"
+                                         disabledIcon="/images/icon_pie_24X24_dis.png"
+                                         shortDesc="tab 3 short desc" id="sdi3">
+                        <af:outputText value="Tab 3 Only Child"/>
+                        <af:spacer height="150px"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem disclosed="true" text="Tab 4"
+                                         icon="/images/icon_briefcase_24X24_ena.png"
+                                         hoverIcon="/images/icon_briefcase_24X24Ovr.png"
+                                         depressedIcon="/images/icon_briefcase_24X24_sel.png"
+                                         disabledIcon="/images/icon_briefcase_24X24_dis.png"
+                                         shortDesc="tab 4 short desc" id="sdi4">
+                        <af:outputText value="Tab 4 First Child"/>
+                        <af:outputText value="Tab 4 Second Child"/>
+                        <af:spacer height="180px"/>
+                      </af:showDetailItem>
+                    </af:panelDrawer>
+                    <af:outputText value="Change the theme using the dropdown below to see panelDrawer and tabs in different themes."/>
+                    <af:menuBar id="menuBar">
+                      <af:menu text="Theme" id="ptm1">
+                        <!-- TODO helpTopicId="DEMOHELP_SKIN" -->
+                        <af:commandMenuItem text="light" type="radio"
+                                            actionListener="#{drawer.themeMenuAction}"
+                                            selected="#{drawer.theme=='light'}"
+                                            id="theme1"/>
+                        <af:commandMenuItem text="medium" type="radio"
+                                            actionListener="#{drawer.themeMenuAction}"
+                                            selected="#{drawer.theme=='medium'}"
+                                            id="theme2"/>
+                        <af:commandMenuItem text="dark" type="radio"
+                                            actionListener="#{drawer.themeMenuAction}"
+                                            selected="#{drawer.theme=='dark'}"
+                                            id="theme3"/>
+                        <af:commandMenuItem text="contentBody" type="radio"
+                                            actionListener="#{drawer.themeMenuAction}"
+                                            selected="#{drawer.theme=='contentBody'}"
+                                            id="theme4"/>
+                      </af:menu>
+                    </af:menuBar>
+                    <af:panelTabbed inlineStyle="width:50%">
+                      <af:showDetailItem text="Tab 4"
+                                         icon="/images/icon_subscriptions2_24X24_ena.png"
+                                         hoverIcon="/images/icon_subscriptions2_24X24_ovr.png"
+                                         depressedIcon="/images/icon_subscriptions2_24X24_sel.png"
+                                         disabledIcon="/images/icon_subscriptions2_24X24_dis.png">
+                        <af:outputText value="Tab 4 First Child"/>
+                        <af:outputText value="Tab 4 Second Child"/>
+                        <af:commandButton partialSubmit="true"
+                                          text="Cause Partial Submit"/>
+                        <af:spacer height="280px"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem textAndAccessKey="Disabled tab &amp;3"
+                                         disabled="true"
+                                         icon="/images/icon_stats24X24_ena.png"
+                                         hoverIcon="/images/icon_stats24X24_ovr.png"
+                                         depressedIcon="/images/icon_stats24X24_sel.png"
+                                         disabledIcon="/images/icon_stats24X24_dis.png">
+                        <af:outputText value="Tab 3 Only Child"/>
+                        <af:spacer height="250px"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem textAndAccessKey="Ta&amp;b 1"
+                                         icon="/images/icon_pie_24X24_ena.png"
+                                         hoverIcon="/images/icon_pie_24X24_ovr.png"
+                                         depressedIcon="/images/icon_pie_24X24_sel.png"
+                                         disabledIcon="/images/icon_pie_24X24_dis.png">
+                        <af:outputText value="Tab 1 First Child"/>
+                        <af:outputText value="Tab 1 Second Child"/>
+                        <af:spacer height="300px"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem text="Tab 2" disclosed="true"
+                                         icon="/images/icon_chat_24X24_ena.png"
+                                         hoverIcon="/images/icon_chat_24X24_ovr.png"
+                                         depressedIcon="/images/icon_chat_24X24_sel.png"
+                                         disabledIcon="/images/icon_chat_24X24_dis.png">
+                        <af:outputText value="Tab 2 First Child"/>
+                        <af:outputText value="Tab 2 Second Child"/>
+                        <af:spacer height="100px"/>
+                      </af:showDetailItem>
+                    </af:panelTabbed>
+                    <af:panelTabbed inlineStyle="width:50%" position="start">
+                      <af:showDetailItem text="Tab 4"
+                                         icon="/images/icon_subscriptions2_24X24_ena.png"
+                                         hoverIcon="/images/icon_subscriptions2_24X24_ovr.png"
+                                         depressedIcon="/images/icon_subscriptions2_24X24_sel.png"
+                                         disabledIcon="/images/icon_subscriptions2_24X24_dis.png">
+                        <af:outputText value="Tab 4 First Child"/>
+                        <af:outputText value="Tab 4 Second Child"/>
+                        <af:commandButton partialSubmit="true"
+                                          text="Cause Partial Submit"/>
+                        <af:spacer height="280px"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem textAndAccessKey="Disabled tab &amp;3"
+                                         disabled="true"
+                                         icon="/images/icon_stats24X24_ena.png"
+                                         hoverIcon="/images/icon_stats24X24_ovr.png"
+                                         depressedIcon="/images/icon_stats24X24_sel.png"
+                                         disabledIcon="/images/icon_stats24X24_dis.png">
+                        <af:outputText value="Tab 3 Only Child"/>
+                        <af:spacer height="250px"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem textAndAccessKey="Ta&amp;b 1"
+                                         icon="/images/icon_pie_24X24_ena.png"
+                                         hoverIcon="/images/icon_pie_24X24_ovr.png"
+                                         depressedIcon="/images/icon_pie_24X24_sel.png"
+                                         disabledIcon="/images/icon_pie_24X24_dis.png">
+                        <af:outputText value="Tab 1 First Child"/>
+                        <af:outputText value="Tab 1 Second Child"/>
+                        <af:spacer height="300px"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem text="Tab 2" disclosed="true"
+                                         icon="/images/icon_chat_24X24_ena.png"
+                                         hoverIcon="/images/icon_chat_24X24_ovr.png"
+                                         depressedIcon="/images/icon_chat_24X24_sel.png"
+                                         disabledIcon="/images/icon_chat_24X24_dis.png">
+                        <af:outputText value="Tab 2 First Child"/>
+                        <af:outputText value="Tab 2 Second Child"/>
+                        <af:spacer height="200px"/>
+                      </af:showDetailItem>
+                    </af:panelTabbed>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:decorativeBox>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Gauge Gallery" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Gauge Input Gallery Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Gauge Input Gallery"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:panelAccordion id="pa1" dimensionsFrom="children" styleClass="AFStretchWidth" discloseMany="true">
+              <af:showDetailItem text="Rating Gauge" disclosed="true">
+              <af:spacer height="15"/>
+              <af:panelGroupLayout layout="horizontal">
+              <dvt:ratingGauge inlineStyle="width:200px;height:40px" value="3" readOnly="false"/>
+              <af:spacer width="75"/>
+              <dvt:ratingGauge inlineStyle="width:300px;height:40px" value="8" maximum="10" unselectedShape="dot" readOnly="false">
+                <dvt:gaugeThreshold shortDesc="Poor" maximum="3" color="#d42c08"/>
+                <dvt:gaugeThreshold shortDesc="Average" maximum="7" color="#f6d567"/>
+                <dvt:gaugeThreshold shortDesc="Good" color="#5db677"/>
+              </dvt:ratingGauge>
+              </af:panelGroupLayout>
+              <af:spacer height="15"/>
+              </af:showDetailItem>
+              <af:showDetailItem text="Status Meter Gauge" disclosed="true">
+                <af:panelGroupLayout layout="horizontal">
+                  <af:panelGroupLayout layout="vertical">
+                  <af:spacer width="5"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge value="25" readOnly="false">
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                    </af:panelGroupLayout>
+                    <af:spacer height="25"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge plotArea="on" value="50" readOnly="false">
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                    </af:panelGroupLayout>
+                    <af:spacer height="25"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge value="75" readOnly="false" thresholdDisplay="all" indicatorSize="0.6">
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                    </af:panelGroupLayout>
+                    <af:spacer height="15"/>
+                  </af:panelGroupLayout>
+                  <af:panelGroupLayout layout="vertical">
+                    <af:spacer height="10"/>
+                    <af:panelGroupLayout layout="horizontal">
+                      <dvt:statusMeterGauge inlineStyle="width:400px;height:100px;" readOnly="false" orientation="circular" value="50"
+                                            plotArea="on">
+                        <dvt:gaugeMetricLabel textType="percent"/>
+                        <dvt:gaugeThreshold maximum="33"/>
+                        <dvt:gaugeThreshold maximum="67"/>
+                        <dvt:gaugeThreshold/>
+                      </dvt:statusMeterGauge>
+                      <af:spacer width="5"/>
+                    </af:panelGroupLayout>           
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:showDetailItem>
+              <af:showDetailItem text="Dial Gauge" disclosed="true" id="sdh1">
+              <af:spacer height="15"/>
+                <af:panelGroupLayout layout="horizontal" id="pgl1">
+                  <dvt:dialGauge id="dg1" readOnly="false" value="63"/>
+                  <af:spacer width="15"/>
+                  <dvt:dialGauge id="dg5" readOnly="false" background="domeAntique" value="63"/>
+                  <af:spacer width="15"/>
+                  <dvt:dialGauge id="dg12" readOnly="false" background="rectangleDark" value="63"/>
+                </af:panelGroupLayout>
+                <af:spacer height="15"/>
+              </af:showDetailItem>
+            </af:panelAccordion>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

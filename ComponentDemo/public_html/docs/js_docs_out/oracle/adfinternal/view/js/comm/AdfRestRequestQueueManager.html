@@ -1,0 +1,847 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>AdfRestRequestQueueManager</title>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<script type="text/javascript">
+function handleOnload()
+{
+  if ((""+self.location).indexOf("file://") == 0)
+    return;
+  if (parent.document.documentElement.getAttribute("showprivate")=="true")
+  {
+    document.body.setAttribute("showprivate", "true");
+  }
+  else
+  {
+    document.body.setAttribute("showprivate", "false");
+  }
+  parent.document.title="AdfRestRequestQueueManager";
+}
+function togglePrivate(desiredFlag)
+{
+  var currentFlag = document.body.getAttribute("showprivate")=="true";
+  var newFlag = "" + (!currentFlag);
+  if (desiredFlag != null)
+  {
+    newFlag = desiredFlag;
+  }  document.body.setAttribute("showprivate", newFlag);
+}
+</script>
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body onload="handleOnload()">
+<h1 style="color:#0D4988;font-size:18px;font-weight:bold;font-family:Tahoma, Verdana,Helvetica,sans-serif"><img alt="Oracle" src="../../../../.././doc-files/logo-oracle-red.png" align="top">JavaScript API Reference for Oracle ADF Faces</h1>
+<!-- ====== START OF NAVBAR ====== -->
+<p><a name="navbar_top" id="navbar_top"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a name="navbar_top_firstrow" id="navbar_top_firstrow"><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../oracle/adfinternal/view/js/comm/AdfRestDataService.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../oracle/adf/view/js/datatransfer/AdfRestXhrFactory.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../index.html?oracle/adfinternal/view/js/comm/AdfRestRequestQueueManager.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfRestRequestQueueManager.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<hr>
+<h1><span style="font-size: smaller">oracle.adfinternal.view.js.comm</span><br>
+Class AdfRestRequestQueueManager</h1>
+<div class="InternalClassOrPackageWarning">
+<h2>Warning:</h2>
+<ul>
+<li>This is an unsupported, internal implementation class.</li>
+<li>Use an API class that might provide equivalent functionality instead.</li>
+<li>This class will change without notice.</li>
+<li>It is not recommended that you use anything in this class.</li>
+</ul>
+</div>
+<pre>
+<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">org.ecmascript.object.Object</a>
+   |
+   +--<a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">oracle.adf.view.js.base.AdfObject</a>
+         |
+         +--<strong>oracle.adfinternal.view.js.comm.AdfRestRequestQueueManager</strong>
+</pre>
+<hr>
+<pre>
+public class <strong>AdfRestRequestQueueManager</strong>
+extends <a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>
+</pre>
+<div>Manages two queues based on the priority state. The queue objects function as priority queue holding the incoming request items to make GET calls to a URL. The request items are pulled out of the request queue by AdfXhrPoolManager.</div>
+<p><br></p>
+<hr>
+<p><a name="field_summary" id="field_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_priorityRequestQueue" title="field in this class">_priorityRequestQueue</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_regularRequestQueue" title="field in this class">_regularRequestQueue</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from oracle.adf.view.js.base.<a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../oracle/adf/view/js/base/AdfObject.html#constructor" title="field in oracle.adf.view.js.base.AdfObject">constructor</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#superclass" title="field in oracle.adf.view.js.base.AdfObject">superclass</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_org_ecmascript_object_Object" id="fields_inherited_from_class_org_ecmascript_object_Object"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from org.ecmascript.object.<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../org/ecmascript/object/Object.html#prototype" title="field in org.ecmascript.object.Object">prototype</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="constructor_summary" id="constructor_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%"><code>public</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#AdfRestRequestQueueManager__" title="constructor in this class">AdfRestRequestQueueManager</a></strong>()</code></dt>
+<dd>
+<div>Manages two queues based on the priority state.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="method_summary" id="method_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_cloneSimpleObject_Object_" title="method in this class">_cloneSimpleObject</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> object)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_constructAndQueueRequest_Object__Object__Object_" title="method in this class">_constructAndQueueRequest</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> actionURL, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> options, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> isPrioritized)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_deQueueDeadRequests_Object_" title="method in this class">_deQueueDeadRequests</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> queue)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_findMatchingOutstandingRequest_Object__Object__Object_" title="method in this class">_findMatchingOutstandingRequest</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> queue, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> actionURL, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> requestData)</code></dt>
+<dd>
+<div>Locates and returns the identical request object in the queue, if one exists</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#first__" title="method in this class">first</a></strong>()</code></dt>
+<dd>
+<div>Returns an outstanding request from the priority queue.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getClientIdList_Object_" title="method in this class">getClientIdList</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> dispatchRequest)</code></dt>
+<dd>
+<div>Returns an array of clientId of the components making this REST r</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getMatchingOutstandingRequest_Object__Object_" title="method in this class">_getMatchingOutstandingRequest</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> actionURL, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> requestData)</code></dt>
+<dd>
+<div>Returns the identical request object in the wait queue that is not yet processed, if one exists</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#hasOutstandingPriorityRequests__" title="method in this class">hasOutstandingPriorityRequests</a></strong>()</code></dt>
+<dd>
+<div>Returns true if the priority queue has outstanding requests</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#Init__" title="method in this class">Init</a></strong>()</code></dt>
+<dd>
+<div>Initializes the instance.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#InitClass__" title="method in this class">InitClass</a></strong>()</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#markDead_Object_" title="method in this class">markDead</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> request)</code></dt>
+<dd>
+<div>Marks the passed request item object as dead</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_peekNextOutstandingRequest_Object_" title="method in this class">_peekNextOutstandingRequest</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> queue)</code></dt>
+<dd>
+<div>Locates the first item to be processed from the request queue.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#push_Object__Object_" title="method in this class">push</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> actionURL, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> options)</code></dt>
+<dd>
+<div>Updates either the priority request queue or the regular request queue.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#registerRequestQueuedListener_Object_" title="method in this class">registerRequestQueuedListener</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> callback)</code></dt>
+<dd>
+<div>Registers the listener that is to be invoked when a new item is added to the request queue</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#shift__" title="method in this class">shift</a></strong>()</code></dt>
+<dd>
+<div>Returns an outstanding request from the priority queue.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_shiftNextOutstandingRequest_Object_" title="method in this class">_shiftNextOutstandingRequest</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> queue)</code></dt>
+<dd>
+<div>Locates the next item to be processed from the request queue.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_upgradeRequest_Object_" title="method in this class">_upgradeRequest</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> request)</code></dt>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Methods inherited from oracle.adf.view.js.base.<a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../oracle/adf/view/js/base/AdfObject.html#adopt_Object_" title="method in oracle.adf.view.js.base.AdfObject">adopt</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#clone__" title="method in oracle.adf.view.js.base.AdfObject">clone</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#createCallback_Object_" title="method in oracle.adf.view.js.base.AdfObject">createCallback</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#createInitializedObject__" title="method in oracle.adf.view.js.base.AdfObject">createInitializedObject</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#createSubclass_Function__Function__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">createSubclass</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#ensureClassInitialization_Function_" title="method in oracle.adf.view.js.base.AdfObject">ensureClassInitialization</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#equals_Object_" title="method in oracle.adf.view.js.base.AdfObject">equals</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#exportPrototypeSymbol_string__Object_" title="method in oracle.adf.view.js.base.AdfObject">exportPrototypeSymbol</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#getClass_Object_" title="method in oracle.adf.view.js.base.AdfObject">getClass</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyArrayProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyArrayProperty</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyMapProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyMapProperty</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#getTypeName__" title="method in oracle.adf.view.js.base.AdfObject">getTypeName</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#toDebugString__" title="method in oracle.adf.view.js.base.AdfObject">toDebugString</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#toString__" title="method in oracle.adf.view.js.base.AdfObject">toString</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="field_detail" id="field_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="O_priorityRequestQueue" id="O_priorityRequestQueue"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_priorityRequestQueue</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_priorityRequestQueue</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_regularRequestQueue" id="O_regularRequestQueue"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_regularRequestQueue</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_regularRequestQueue</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="constructor_detail" id="constructor_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="AdfRestRequestQueueManager__" id="AdfRestRequestQueueManager__"><!-- --></a></p>
+<h3 class="DetailHeader">AdfRestRequestQueueManager</h3>
+<dl>
+<dt><code>public <strong>AdfRestRequestQueueManager</strong>()</code></dt>
+<dd><br>
+<div>Manages two queues based on the priority state. The queue objects function as priority queue holding the incoming request items to make GET calls to a URL. The request items are pulled out of the request queue by AdfXhrPoolManager.</div>
+</dd>
+</dl>
+<hr>
+<p><a name="method_detail" id="method_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="O_cloneSimpleObject_Object_" id="O_cloneSimpleObject_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_cloneSimpleObject</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _cloneSimpleObject</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> object)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>object</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_constructAndQueueRequest_Object__Object__Object_" id="O_constructAndQueueRequest_Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_constructAndQueueRequest</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _constructAndQueueRequest</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> actionURL,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> options,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> isPrioritized)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>actionURL</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>options</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>isPrioritized</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_deQueueDeadRequests_Object_" id="O_deQueueDeadRequests_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_deQueueDeadRequests</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _deQueueDeadRequests</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> queue)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>queue</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_findMatchingOutstandingRequest_Object__Object__Object_" id="O_findMatchingOutstandingRequest_Object__Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_findMatchingOutstandingRequest</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _findMatchingOutstandingRequest</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> queue,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> actionURL,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> requestData)</code></dt>
+<dd><br>
+<div>Locates and returns the identical request object in the queue, if one exists</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>queue</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>actionURL</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>requestData</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - The request object</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="first__" id="first__"><!-- --></a></p>
+<h3 class="DetailHeader">first</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> first</strong>()</code></dt>
+<dd><br>
+<div>Returns an outstanding request from the priority queue. If priority queue is empty, an outstanding request from the regular queue is returned. If the regular queue is empty too, the method returns undefined. The outstanding request returned is NOT removed from the queue.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="getClientIdList_Object_" id="getClientIdList_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">getClientIdList</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> getClientIdList</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> dispatchRequest)</code></dt>
+<dd><br>
+<div>Returns an array of clientId of the components making this REST r</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>dispatchRequest</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_getMatchingOutstandingRequest_Object__Object_" id="O_getMatchingOutstandingRequest_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getMatchingOutstandingRequest</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _getMatchingOutstandingRequest</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> actionURL,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> requestData)</code></dt>
+<dd><br>
+<div>Returns the identical request object in the wait queue that is not yet processed, if one exists</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>actionURL</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>requestData</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - The request object</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="hasOutstandingPriorityRequests__" id="hasOutstandingPriorityRequests__"><!-- --></a></p>
+<h3 class="DetailHeader">hasOutstandingPriorityRequests</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> hasOutstandingPriorityRequests</strong>()</code></dt>
+<dd><br>
+<div>Returns true if the priority queue has outstanding requests</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="Init__" id="Init__"><!-- --></a></p>
+<h3 class="DetailHeader">Init</h3>
+<dl>
+<dt><code>protected <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> Init</strong>()</code></dt>
+<dd><br>
+<div>Initializes the instance. Subclasses of AdfObject must call their superclass' Init</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>.<a href="../../../../../oracle/adf/view/js/base/AdfObject.html#Init__" title="method in oracle.adf.view.js.base.AdfObject">Init()</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="InitClass__" id="InitClass__"><!-- --></a></p>
+<h3 class="DetailHeader">InitClass</h3>
+<dl>
+<dt><code>protected static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> InitClass</strong>()</code></dt>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="markDead_Object_" id="markDead_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">markDead</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> markDead</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> request)</code></dt>
+<dd><br>
+<div>Marks the passed request item object as dead</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>request</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_peekNextOutstandingRequest_Object_" id="O_peekNextOutstandingRequest_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_peekNextOutstandingRequest</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _peekNextOutstandingRequest</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> queue)</code></dt>
+<dd><br>
+<div>Locates the first item to be processed from the request queue. The located item is NOT removed from the requeue</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>queue</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - Request object</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="push_Object__Object_" id="push_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader">push</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> push</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> actionURL,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> options)</code></dt>
+<dd><br>
+<div>Updates either the priority request queue or the regular request queue. If a similar request already exists in the queue, the existing request object is updated and it is moved to the priority queue if required. A new request is created otherwise and is pushed to the appropriate queue.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>actionURL</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>options</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="registerRequestQueuedListener_Object_" id="registerRequestQueuedListener_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">registerRequestQueuedListener</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> registerRequestQueuedListener</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> callback)</code></dt>
+<dd><br>
+<div>Registers the listener that is to be invoked when a new item is added to the request queue</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>callback</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="shift__" id="shift__"><!-- --></a></p>
+<h3 class="DetailHeader">shift</h3>
+<dl>
+<dt><code>public <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> shift</strong>()</code></dt>
+<dd><br>
+<div>Returns an outstanding request from the priority queue. If priority queue is empty, an outstanding request from the regular queue is returned. If the regular queue is empty too, the method returns undefined. The outstanding request returned is removed from the queue.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_shiftNextOutstandingRequest_Object_" id="O_shiftNextOutstandingRequest_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_shiftNextOutstandingRequest</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _shiftNextOutstandingRequest</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> queue)</code></dt>
+<dd><br>
+<div>Locates the next item to be processed from the request queue. The located item is removed and queue and returned from this method.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>queue</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code> - Request object</dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_upgradeRequest_Object_" id="O_upgradeRequest_Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_upgradeRequest</h3>
+<dl class="HiddenPrivate">
+<dt><code>private <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _upgradeRequest</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> request)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>request</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<!-- ====== START OF NAVBAR ====== -->
+<hr>
+<p><a name="navbar_bottom" id="navbar_bottom"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../oracle/adfinternal/view/js/comm/AdfRestDataService.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../oracle/adf/view/js/datatransfer/AdfRestXhrFactory.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../index.html?oracle/adfinternal/view/js/comm/AdfRestRequestQueueManager.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfRestRequestQueueManager.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div class="CreationTime">Generated on 2018.06.28 06:41 UTC</div>
+<center>Copyright (c) 1998, 2018, Oracle and/or its affiliates. All rights reserved.</center>
+</body>
+</html>

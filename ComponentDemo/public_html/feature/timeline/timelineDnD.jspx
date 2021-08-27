@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Timeline Drag and Drop Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Timeline Drag and Drop Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Timeline Drag and Drop"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+
+                        <af:panelGroupLayout layout="horizontal">
+                            <dvt:timeline id="tl1" startTime="2010-01-01" endTime="2011-12-31" itemSelection="single"
+                                          inlineStyle="width:800px;height:400px" summary="Timeline DnD Demo">
+                                <f:attribute name="horizontalFetchSizeOverride" value="3000"/>
+                                <dvt:timelineSeries id="ts1" var="evt" value="#{dnd.timelineModel}">
+                                    <dvt:timelineItem id="ti1" value="#{evt.date}" group="#{evt.group}">
+                                        <af:panelGroupLayout id="pg1" layout="horizontal">
+                                            <af:image id="img1" inlineStyle="width:30px;height:30px" source="/resources/images/timeline/employment.png"/>
+                                            <af:spacer width="3"/>
+                                            <af:panelGroupLayout id="pg2" layout="vertical">
+                                                <af:outputText id="ot1" inlineStyle="color:#084B8A" value="#{evt.description}" noWrap="true"/>
+                                                <af:outputText id="ot2" value="#{evt.date}" inlineStyle="color:#6e6e6e" noWrap="true">
+                                                    <af:convertDateTime dateStyle="medium"/>
+                                                </af:outputText>
+                                            </af:panelGroupLayout>
+                                        </af:panelGroupLayout>
+                                    </dvt:timelineItem>
+                                    <af:dragSource actions="COPY" discriminant="model"/>
+                                    <af:dropTarget actions="COPY" dropListener="#{dnd.handleDropOnTimeline}">
+                                        <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet" discriminant="model2"/>
+                                    </af:dropTarget>
+                                </dvt:timelineSeries>
+                                <dvt:timeAxis id="ta1" scale="weeks"/>
+                                <dvt:timelineOverview id="ov1">
+                                    <dvt:timeAxis id="ta2" scale="years"/>
+                                </dvt:timelineOverview>
+                            </dvt:timeline>
+                            <af:table var="row" value="#{dnd.tableModel}" rowSelection="single" inlineStyle="width:370px;height:400px">
+                                <af:column headerText="ID" width="20">
+                                    <af:outputText value="#{row.id}"/>
+                                </af:column>
+                                <af:column headerText="Event" width="340">
+                                    <af:outputText value="#{row.description}"/>
+                                </af:column>
+                                <af:dragSource actions="COPY" discriminant="model2"/>                    
+                                <af:collectionDropTarget actions="COPY" modelName="model" dropListener="#{dnd.handleDropOnTable}"/>
+                            </af:table>
+                        </af:panelGroupLayout>
+
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                        <!-- START SEE ALSO LINKS -->
+                        <!-- END SEE ALSO LINKS -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

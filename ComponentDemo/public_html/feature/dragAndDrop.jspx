@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Drag and Drop demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}" largeIconSource="#{aboutBean.largeIconSource}"
+                 theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Drag and Drop"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout id="pglab9" layout="scroll">
+            <af:panelAccordion id="acc1" discloseMany="true">
+              <af:showDetailItem text="af:clientAttribute, af:dropTarget, af:dataFlavor" id="sdh1" disclosed="true">
+                <af:panelGroupLayout id="pglab1" layout="scroll">
+                  <af:panelSplitter id="psp1" splitterPosition="300">
+                    <f:facet name="first">
+                      <af:panelBox text="Object[] client attributeDragSource" id="pb1" showDisclosure="false">
+                        <af:outputText id="objectArrayDragSource" value="Drag to see drinks"
+                                       inlineStyle="border:1px solid lime">
+                          <af:attributeDragSource attribute="drinks"/>
+                          <af:clientAttribute name="drinks" value="#{demoDropHandler.drinks}"/>
+                        </af:outputText>
+                      </af:panelBox>
+                    </f:facet>
+                    <f:facet name="second">
+                      <af:panelBox text="Drop Target accepting Object[] for custom drop handler" id="pb2"
+                                   showDisclosure="false">
+                        <af:outputText id="stringArrayDropTarget" value="Drop here to see drinks"
+                                       inlineStyle="border:1px solid orange;">
+                          <af:dropTarget actions="COPY" dropListener="#{demoDropHandler.handleFireDrop}">
+                            <af:dataFlavor flavorClass="java.lang.Object[]"/>
+                          </af:dropTarget>
+                        </af:outputText>
+                      </af:panelBox>
+                    </f:facet>
+                  </af:panelSplitter>
+                </af:panelGroupLayout>
+              </af:showDetailItem>
+              <af:showDetailItem text="af:dragSource, af:dropTarget, af:dataFlavor" id="sdh4">
+                <af:panelSplitter id="psp02" splitterPosition="300">
+                  <f:facet name="first">
+                    <af:table var="test1" value="#{tableTestData}" id="table" summary="collection drag source"
+                              autoHeightRows="16" columnStretching="column:c1">
+                      <af:column headerText="Name" id="c1">
+                        <af:panelGroupLayout id="pgl4">
+                          <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                    shortDesc="Sample shortDesc text" id="i1"/>
+                          <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}" id="ot3"/>
+                        </af:panelGroupLayout>
+                      </af:column>
+                      <af:column headerText="Size" id="c2">
+                        <af:outputText value="#{test1.size}" id="ot4"/>
+                      </af:column>
+                      <af:dragSource actions="COPY" discriminant="fileModel"/>
+                    </af:table>
+                  </f:facet>
+                  <f:facet name="second">
+                    <af:panelBox text="Drop Target accepting collection RowKeySets with custom Drop Handler" id="pb3">
+                      <af:outputText id="genericDropTarget" value="Drop a row here!">
+                        <af:dropTarget actions="COPY" dropListener="#{demoDropHandler.handleDrop}">
+                          <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet"
+                                         discriminant="fileModel"/>
+                        </af:dropTarget>
+                      </af:outputText>
+                    </af:panelBox>
+                  </f:facet>
+                </af:panelSplitter>
+              </af:showDetailItem>
+              <af:showDetailItem text="Dragging between two tables" id="sdh2">
+                <af:decorativeBox id="db9">
+                  <f:facet name="center">
+                    <af:outputText value="The demo below shows 2 tables - source table has an af:dragSource
+              that supports actions - COPY, MOVE and LINK so does the target table. Drag a row from
+              the source table onto the target table using the keyboard modifiers CTRL (COPY),
+              SHIFT (MOVE), CTRL+SHIFT (LINK) to decide the action. Not selecting a keyboard
+              modifier will pick the default action of COPY. The action LINK is useful when creating
+              aliases (in a file system) and the LINK action performs a copy and updates the Product
+               to say 'Link to (Product)' Please note that you need to grab the row at the beginning of that row 
+               while the cursor is an arrow." id="ot5"/>
+                  </f:facet>
+                </af:decorativeBox>
+                <af:outputText value="Note: you may have to put the mouse cursor in the very beginning of a row to drag it."/>
+                <af:panelSplitter id="psp03" splitterPosition="300">
+                  <f:facet name="first">
+                    <af:table var="row" value="#{collectionDnD.source3Values}" id="source3"
+                              summary="collection drag source" editingMode="editAll" rowSelection="single"
+                              contentDelivery="immediate" autoHeightRows="5" columnStretching="column:c31">
+                      <af:column headerText="Product" id="c31" rowHeader="true">
+                        <af:inputText value="#{row.product}" id="it31"/>
+                      </af:column>
+                      <af:column headerText="Cost" id="c32">
+                        <af:outputText value="#{row.cost}" id="ot31"/>
+                      </af:column>
+                      <af:dragSource actions="COPY MOVE LINK" discriminant="DnDDemoModel2"
+                                     dragDropEndListener="#{collectionDnD.endListenerMove}"/>
+                    </af:table>
+                  </f:facet>
+                  <f:facet name="second">
+                    <af:table var="row" value="#{collectionDnD.target3Values}" id="dest3"
+                              summary="collection drag source" rowSelection="single" contentDelivery="immediate"
+                              autoHeightRows="5" columnStretching="column:c41">
+                      <af:column headerText="Product" id="c41">
+                        <af:outputText value="#{row.product}" id="ot41"/>
+                      </af:column>
+                      <af:column headerText="Cost" id="c42">
+                        <af:outputText value="#{row.cost}" id="ot42"/>
+                      </af:column>
+                      <af:collectionDropTarget actions="COPY MOVE LINK" modelName="DnDDemoModel2"
+                                               dropListener="#{collectionDnD.handleCopyMove}"/>
+                    </af:table>
+                  </f:facet>
+                </af:panelSplitter>
+              </af:showDetailItem>
+              <af:showDetailItem disclosed="true" text="See also" id="sd3">
+                <af:panelList id="pl1">
+                  <af:goLink text="attributeDragSource" destination="../components/attributeDragSource.jspx" id="gl1"/>
+                  <af:goLink text="attributeDropTarget" destination="../components/attributeDropTarget.jspx" id="gl2"/>
+                  <af:goLink text="collectionDragSource (deprecated)"
+                             destination="../components/collectionDragSource.jspx" id="gl3"/>
+                  <af:goLink text="collectionDropTarget" destination="../components/collectionDropTarget.jspx"
+                             id="gl4"/>
+                  <af:goLink text="componentDragSource" destination="../components/componentDragSource.jspx" id="gl5"/>
+                  <af:goLink text="dataFlavor" destination="../components/dataFlavor.jspx" id="gl6"/>
+                  <af:goLink text="dragSource" destination="../components/dragSource.jspx" id="gl7"/>
+                  <af:goLink text="dropTarget" destination="../components/dropTarget.jspx" id="gl8"/>
+                </af:panelList>
+              </af:showDetailItem>
+            </af:panelAccordion>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

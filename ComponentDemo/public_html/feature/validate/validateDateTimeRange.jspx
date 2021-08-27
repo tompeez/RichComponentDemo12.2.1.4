@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="validateDateTimeRange Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="validateDateTimeRange"/>
+        <f:attribute name="demoKind" value="validator"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:messages id="m1"/>
+            <af:outputText styleClass="AFInstructionText"
+                           value="Example to demonstrate the date/time range validator.  Enter a value and tab out of the field."
+                           id="ot1"/>
+            <af:panelFormLayout id="pfl1">
+              <af:inputText value="#{validate.date}" label="Date range validator"
+                            shortDesc="A valid date must be inside of 2005, 2006, and 2007"
+                            id="it1">
+                <af:validateDateTimeRange minimum="2005-01-01" maximum="2007-12-31"/>
+              </af:inputText>
+              <af:inputText value="#{validate.date2}" label="Date range validator (only minimum)"
+                            shortDesc="example of value that will fail validation: earlier than 2006"
+                            id="it2">
+                <af:validateDateTimeRange minimum="2006-01-01"/>
+              </af:inputText>
+              <af:inputText value="#{validate.date3}" label="Date range validator (only maximum)"
+                            shortDesc="example of value that will fail validation: 2008 and later"
+                            id="it3">
+                <af:validateDateTimeRange maximum="2008-12-31"/>
+              </af:inputText>
+              <af:inputText value="#{validate.date4}"
+                            label="Date range validator with custom message"
+                            shortDesc="A valid date must be inside of 2005, 2006, and 2007"
+                            id="it4">
+                <af:validateDateTimeRange minimum="2005-01-01" maximum="2007-12-31"
+                                          messageDetailNotInRange="Your selected date {1} is not between {2} and {3}"/>
+              </af:inputText>
+              <af:inputText value="#{validate.date5}"
+                            label="Date range validator with custom message (only minimum)"
+                            shortDesc="example of value that will fail validation: earlier than 2006"
+                            id="it5">
+                <af:validateDateTimeRange minimum="2009-01-01"
+                                          messageDetailMinimum="The selected date {1} is not before {2}"/>
+              </af:inputText>
+              <af:inputText value="#{validate.date6}"
+                            label="Date range validator with custom message (only maximum)"
+                            shortDesc="example of value that will fail validation: 2008 and later"
+                            id="it6">
+                <af:validateDateTimeRange maximum="2008-12-31"
+                                          messageDetailMaximum="The selected date {1} is not after {2}"/>
+              </af:inputText>
+              <af:inputText value="#{validate.date7}"
+                            label="Date range validator with custom hint message"
+                            shortDesc="A valid date must be inside of 2005, 2006, and 2007"
+                            id="it7">
+                <af:validateDateTimeRange minimum="2005-01-01" maximum="2007-12-31"
+                                          hintNotInRange="Enter the date between {0} and {1}."/>
+              </af:inputText>
+              <af:inputText value="#{validate.date8}"
+                            label="Date range validator with custom hint message (only minimum)"
+                            shortDesc="example of value that will fail validation: earlier than 2006"
+                            id="it8">
+                <af:validateDateTimeRange minimum="2006-01-01"
+                                          hintMinimum="Date must be after {0}"/>
+              </af:inputText>
+              <af:inputText value="#{validate.date9}"
+                            label="Date range validator with custom hint message (only maximum)"
+                            shortDesc="example of value that will fail validation: 2008 and later"
+                            id="it9">
+                <af:validateDateTimeRange maximum="2008-12-31"
+                                          hintMaximum="Date must be before {0}"/>
+              </af:inputText>
+            </af:panelFormLayout>
+            <af:commandButton text="Submit" id="cb1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

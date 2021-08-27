@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Sunburst Other Node Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Sunburst Other Node Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Sunburst Other Node"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:group>
+                            <f:verbatim>
+                                <p>For large data sets, the "Other" node feature can help to improve the readability of
+                                   the treemap by aggregating the smallest nodes within a parent into a single "Other"
+                                   node.</p>
+                                <p>Note: Small values work best for the otherThreshold. Use the slider to experiment
+                                   with different values.</p>
+                            </f:verbatim>
+                            <dvt:sunburst id="sb1" inlineStyle="width:500px;height:550px;"
+                                          value="#{sunburst.censusData}" var="row" displayLevelsChildren="3"
+                                          sizeLabel="Population" colorLabel="Median Household Income"  legendSource="ag2"
+                                          otherThreshold="#{sunburst.otherThreshold}" otherColor="#{sunburst.otherColor}"
+                                          partialTriggers="::ins10 ::sor" otherThresholdBasis="#{sunburst.otherThresholdBasis}">
+                                <dvt:sunburstNode id="sn1" value="#{row.size}" label="#{row.text}"
+                                                  shortDesc="#{row.income}" drilling="replace" selectable="off">
+                                    <dvt:attributeGroups id="ag2" type="color" value="#{row.income > 50000}"
+                                                         label="#{row.income > 50000 ? 'Low Income' : 'High Income'}">
+                                      <dvt:attributeExceptionRule id="aer1" condition="#{row.income &lt; 50000}"
+                                                                  label="Low Income">
+                                          <f:attribute name="color" value="#ED6647"/>
+                                      </dvt:attributeExceptionRule>    
+                                      <dvt:attributeExceptionRule id="aer2" condition="#{row.income >= 50000}"
+                                                                       label="High Income">
+                                          <f:attribute name="color" value="#68C182"/>
+                                      </dvt:attributeExceptionRule> 
+                                    </dvt:attributeGroups>                    
+                                </dvt:sunburstNode>
+                            </dvt:sunburst>
+                            <af:spacer height="20"/>
+                            <af:inputNumberSlider label="Other Threshold" id="ins10" value="#{sunburst.otherThreshold}"
+                                                  minimum="0" maximum="0.4" majorIncrement="0.08" minorIncrement="0.02"
+                                                  minimumIncrement="0.02"
+                                                  autoSubmit="true"/>
+                            <af:selectOneRadio label="Other Threshold Basis" id="sor" value="#{sunburst.otherThresholdBasis}" autoSubmit="true">
+                                <af:selectItem label="parentPercentage" id="sor1"/>
+                                <af:selectItem label="rootPercentage" id="sor2"/>
+                            </af:selectOneRadio>
+                        </af:group>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

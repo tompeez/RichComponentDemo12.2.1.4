@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="carouselItem Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="carouselItem"/>
+        <f:attribute name="visualDesignName" value="carousel"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelSplitter orientation="vertical" splitterPosition="250" id="split" dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:carousel id="carousel"
+                           var="item"
+                           value="#{demoCarouselItem.items}"
+                           carouselSpinListener="#{demoCarouselItem.handleCarouselSpin}">
+                <f:facet name="nodeStamp">
+                  <af:carouselItem id="crslItem" text="Item Text Here" shortDesc="Short Desc Here"
+                                   binding="#{editor.component}">
+                    <af:image id="img" source="#{item.url}" shortDesc="#{item.title}"/>
+                  </af:carouselItem>
+                </f:facet>
+                <!--
+                  The af:carouselItem that we are binding is stamped, so when the user updates the
+                  editor fields on the side of this page, we need to PPR-replace the af:carousel
+                  instead so that all stamps get updated.  Use the magical "partialTargetParent"
+                  attribute to cause the parent to be used as the partial target.  See
+                  ComponentEditorHandler.update() for more details.
+                -->
+                <f:attribute name="partialTargetParent" value="true"/>
+              </af:carousel>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout id="scroll" layout="scroll">
+                <af:separator id="sepA"/>
+                <af:panelGroupLayout id="detail" layout="vertical" partialTriggers="carousel">
+                  <af:outputText id="desc" value="#{demoCarouselItem.currentImageInfo.title}"/>
+                </af:panelGroupLayout>
+                <af:separator id="sep"/>
+                <af:panelHeader id="head" text="Related Components">
+                  <af:panelList id="list">
+                    <af:goLink id="related1" text="carousel" destination="/components/carousel.jspx"/>
+                    <af:goLink id="related2" text="image" destination="/components/image.jspx"/>
+                    <af:goLink id="related3" text="Carousel item PPR" destination="/components/table/carouselItemPPR.jspx"/>
+                  </af:panelList>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

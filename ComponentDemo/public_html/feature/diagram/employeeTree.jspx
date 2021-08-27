@@ -1,0 +1,238 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram Employee Tree Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram Employee Tree Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Diagram Employee Tree"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout>
+            <f:facet name="top">
+              <af:selectOneChoice id="cdSoc" label="Panel card content delivery" value="#{diagramEmployee.contentDelivery}" autoSubmit="true">
+                <af:selectItem value="lazy" label="lazy"/>
+                <af:selectItem value="immediate" label="immediate"/>
+              </af:selectOneChoice>
+            </f:facet>
+            <f:facet name="center">
+              <dvt:diagram id="d2" layout="tree" contentDelivery="lazy" partialTriggers="cdSoc">
+                <dvt:clientLayout method="DemoTreeLayout.treeLayout" name="tree" featureName="DemoTreeLayout"/>
+                <dvt:diagramNodes value="#{diagramEmployee.nodes}" var="node">
+                  <dvt:diagramNode nodeId="#{node.PersonId}" width="233" height="330" id="n1">
+                    <f:facet name="zoom100">
+                      <af:panelGroupLayout layout="vertical" id="pgl1"
+                                           styleClass="AFStretchWidth AFHVNodePadding">
+                        <af:panelGroupLayout layout="horizontal" id="pgl2">
+                          <af:panelGroupLayout id="pgl3">
+                            <af:image rendered="true" 
+                                      source="/resources/images/hv/#{node.PersonId}.png" 
+                                      styleClass="AFHVNodeImageSize"
+                                      id="i1"/>
+                          </af:panelGroupLayout>
+                          <af:spacer width="5" height="5" id="s1"/>
+                          <af:panelGroupLayout layout="vertical" id="pgl4">
+                            <af:outputText value="#{node.FirstName}"
+                                           styleClass="AFHVNodeTitleTextStyle"
+                                           id="ot17"/>
+                            <af:outputText value="#{node.LastName}"
+                                           styleClass="AFHVNodeSubtitleTextStyle"
+                                           id="ot18"/>
+                            <af:outputText value="#{node.Title}" 
+                                           styleClass="AFHVNodeTextStyle"
+                                           id="ot19"/>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                        <af:spacer height="5" id="s2"/>
+                        <dvt:panelCard id="pc1" effect="slide_horz"
+                                       styleClass="AFHVNodePadding"
+                                       contentDelivery="#{diagramEmployee.contentDelivery}">
+                          <af:showDetailItem text="Contact " 
+                                             id="sdi1">
+                            <af:panelFormLayout styleClass="AFStretchWidth AFHVNodePadding"
+                                                id="pfl1">
+                              <af:panelLabelAndMessage label="Work Phone" 
+                                                       styleClass="AFHVPanelCardLabelStyle"
+                                                       id="plam1">
+                                <af:outputText value="#{node.WorkPhone}" 
+                                               styleClass="AFHVPanelCardTextStyle"
+                                               id="ot4"/>
+                              </af:panelLabelAndMessage>
+                              <af:panelLabelAndMessage label="E-mail" 
+                                                       styleClass="AFHVPanelCardLabelStyle"
+                                                       id="plam2">
+                                <af:link destination="mailto:#{node.Email}" 
+                                           text="#{node.Email}"
+                                           styleClass="AFHVPanelCardTextStyle"
+                                           id="gl1"/>
+                              </af:panelLabelAndMessage>
+                            </af:panelFormLayout>
+                          </af:showDetailItem>
+                          <af:showDetailItem text="Address " id="sdi2">
+                            <af:spacer height="2" id="s3"/>
+                            <af:panelFormLayout styleClass="AFStretchWidth AFHVNodePadding"
+                                                id="pfl2">
+                              <af:panelLabelAndMessage label="Address" 
+                                                       styleClass="AFHVPanelCardLabelStyle"
+                                                       id="plam3">
+                                <af:outputText value="#{node.WorkAddr}" 
+                                               styleClass="AFHVPanelCardTextStyle"
+                                               id="ot5"/>
+                              </af:panelLabelAndMessage>
+                              <af:panelLabelAndMessage label="City/State" 
+                                                       styleClass="AFHVPanelCardLabelStyle"
+                                                       id="plam4">
+                                <af:outputText value="#{node.WorkCity}, #{node.WorkState}"
+                                               styleClass="AFHVPanelCardTextStyle"
+                                               id="ot6"/>
+                              </af:panelLabelAndMessage>
+                            </af:panelFormLayout>
+                          </af:showDetailItem>
+                        </dvt:panelCard>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="zoom75">
+                      <af:panelGroupLayout layout="vertical" id="pgl5"
+                                           styleClass="AFStretchWidth AFHVNodePadding">
+                        <af:panelGroupLayout layout="horizontal" id="pgl6">
+                          <af:panelGroupLayout id="pgl7">
+                            <af:image rendered="true" 
+                                      styleClass="AFHVNodeImageSize75"
+                                      source="/resources/images/hv/#{node.PersonId}.png" 
+                                      id="i3"/>
+                          </af:panelGroupLayout>
+                          <af:spacer width="5" height="5" id="s4"/>
+                          <af:panelGroupLayout layout="vertical" id="pgl8">
+                            <af:outputText value="#{node.FirstName}"
+                                           styleClass="AFHVNodeTitleTextStyle75"
+                                           id="ot7"/>
+                            <af:outputText value="#{node.LastName}" 
+                                           styleClass="AFHVNodeSubtitleTextStyle75"
+                                           id="ot8"/>
+                            <af:outputText value="#{node.Title}" 
+                                           styleClass="AFHVNodeTextStyle75"
+                                           id="ot9"/>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                        <af:spacer height="5" id="s5"/>
+                        <dvt:panelCard id="pc2" effect="slide_horz"
+                                       styleClass="AFHVNodePadding"
+                                       contentDelivery="#{diagramEmployee.contentDelivery}">
+                          <af:showDetailItem text="Contact " 
+                                             id="sdi3">
+                            <af:panelFormLayout styleClass="AFStretchWidth AFHVNodePadding"
+                                                id="pfl3">
+                              <af:panelLabelAndMessage label="Work Phone" 
+                                                       styleClass="AFHVPanelCardLabelStyle75"
+                                                       id="plam5">
+                                <af:outputText value="#{node.WorkPhone}" 
+                                               styleClass="AFHVPanelCardTextStyle75"
+                                               id="ot10"/>
+                              </af:panelLabelAndMessage>
+                              <af:panelLabelAndMessage label="E-mail" 
+                                                       styleClass="AFHVPanelCardLabelStyle75"
+                                                       id="plam6">
+                                <af:link destination="mailto:#{node.Email}" 
+                                           text="#{node.Email}"
+                                           styleClass="AFHVPanelCardTextStyle75"
+                                           id="gl2"/>
+                              </af:panelLabelAndMessage>
+                            </af:panelFormLayout>
+                          </af:showDetailItem>
+                          <af:showDetailItem text="Address " id="sdi4">
+                            <af:spacer height="2" id="s6"/>
+                            <af:panelFormLayout styleClass="AFStretchWidth AFHVNodePadding"
+                                                id="pfl4">
+                              <af:panelLabelAndMessage label="Address" 
+                                                       styleClass="AFHVPanelCardLabelStyle75"
+                                                       id="plam7">
+                                <af:outputText value="#{node.WorkAddr}" 
+                                               styleClass="AFHVPanelCardTextStyle75"
+                                               id="ot11"/>
+                              </af:panelLabelAndMessage>
+                              <af:panelLabelAndMessage label="City/State" 
+                                                       styleClass="AFHVPanelCardLabelStyle75"
+                                                       id="plam8">
+                                <af:outputText value="#{node.WorkCity}, #{node.WorkState}"
+                                               styleClass="AFHVPanelCardTextStyle75"
+                                               id="ot12"/>
+                              </af:panelLabelAndMessage>
+                            </af:panelFormLayout>
+                          </af:showDetailItem>
+                        </dvt:panelCard>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="zoom50">
+                      <af:panelGroupLayout styleClass="AFStretchWidth AFHVNodeStretchHeight AFHVNodePadding"
+                                           layout="horizontal" valign="middle" 
+                                           id="pgl9">
+                        <af:panelGroupLayout layout="vertical" halign="center" id="pgl10" styleClass="AFStretchWidth">
+                          <af:image rendered="true" 
+                                    styleClass="AFHVNodeImageSize50"
+                                    source="/resources/images/hv/#{node.PersonId}.png" 
+                                    id="i5"/>
+                          <af:spacer height="2" id="s7"/>
+                          <af:outputText value="#{node.FirstName}" 
+                                         styleClass="AFHVNodeTitleTextStyle50"
+                                         id="ot13"/>
+                          <af:outputText value="#{node.LastName}" 
+                                         styleClass="AFHVNodeSubtitleTextStyle50"
+                                         id="ot14"/>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="zoom25">
+                      <af:panelGroupLayout styleClass="AFStretchWidth AFHVNodeStretchHeight AFHVNodePaddingSmall"
+                                           layout="horizontal" valign="middle" 
+                                           id="pgl11">
+                        <af:panelGroupLayout layout="vertical" halign="center" id="pgl12" 
+                                             styleClass="AFStretchWidth">
+                          <af:outputText value="#{node.FirstName}" 
+                                         styleClass="AFHVNodeTextStyle25"
+                                         id="ot15"/>
+                          <af:outputText value="#{node.LastName}" 
+                                         styleClass="AFHVNodeTextStyle25"
+                                         id="ot16"/>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="background">
+                      <dvt:marker shape="roundedRectangle" fillColor="#ffffff" borderStyle="solid" width="233"
+                                  height="330"/>
+                    </f:facet>
+                  </dvt:diagramNode>
+                </dvt:diagramNodes>
+                <dvt:diagramLinks value="#{diagramEmployee.links}" var="link">
+                  <dvt:diagramLink startNode="#{link.start}" endNode="#{link.end}" endConnectorType="arrow" linkWidth="4" selectable="false"/>
+                </dvt:diagramLinks>
+              </dvt:diagram>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <!-- START SEE ALSO LINKS -->
+            <!-- END SEE ALSO LINKS -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="link Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="link"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a link is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglA">
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>Use the editor to the right to adjust the attributes for this demo.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="s2"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:link text="Go to Component Guide" immediate="true" action="guide"
+                   icon="/images/uplevel.gif" binding="#{editor.component}"
+                   shortDesc="Link to Component Guide" id="cil1"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:spacer height="5px" id="s3"/>
+            <af:panelHeader text="Other examples" id="ph1">
+              <af:panelFormLayout id="pfl1">
+                <af:spacer height="5px" id="s4"/>
+                <af:panelLabelAndMessage label="Link with trailing icon" >
+                  <af:link text="Go to Component Guide" immediate="true" action="guide"
+                           icon="/images/uplevel.gif" iconPosition="trailing"
+                            />
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Link with top icon" >
+                  <af:link text="Component Guide" immediate="true" action="guide"
+                           icon="/images/happy_computer.gif" iconPosition="top"
+                            />
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Link with bottom icon" >
+                  <af:link text="Component Guide" immediate="true" action="guide"
+                           icon="/images/happy_computer.gif" iconPosition="bottom"
+                            />
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Link with SVG icon" >
+                  <af:link text="SVG Icon" immediate="true"
+                           icon="/images/circle.svg" iconDelivery="inline"/>
+                </af:panelLabelAndMessage>
+                 <af:panelLabelAndMessage label="Cached SVG icon" >
+                  <af:link text="Cached SVG Icon" immediate="true"
+                           icon="/images/circle.svg" iconDelivery="fetchAndInline"/>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Link with no icon" >
+                  <af:link text="Go to Component Guide" immediate="true" action="guide"
+                            />
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Link with no text" >
+                  <af:link immediate="true" action="guide" icon="/images/uplevel.gif" 
+                           shortDesc="Link to Component Guide" />
+                </af:panelLabelAndMessage>
+                 <af:panelLabelAndMessage label="Selected Link" >
+                  <af:link text="Selected Link" immediate="true" selected="true"
+                           />
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="hover and depressed icons" id="plam3">
+                  <af:link text="Folders" shortDesc="Sample shortDesc text" icon="/images/smily-normal.gif" partialSubmit="true"
+                           depressedIcon="/images/bold.gif" hoverIcon="/images/smily-glasses.gif" id="cil3"/>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Disabled link" id="plam1">
+                  <af:link text="back" shortDesc="Sample shortDesc text" disabled="true"
+                           icon="/images/backarrow.gif" disabledIcon="/images/backarrow_gray.gif" id="cil2"/>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="link using showPopupBehavior for inline selector" >
+                  <af:link text="Click me..." clientComponent="true" partialSubmit="true" id="link666">
+                    <af:showPopupBehavior popupId="popup" alignId="link666" align="afterStart"/>
+                  </af:link>
+                  <af:popup id="popup">
+                    <af:menu text="popup" id="m1">
+                      <af:commandMenuItem text="Copy" icon="/images/copy.gif"
+                                          id="cmi1"/>
+                      <af:commandMenuItem text="Delete" icon="/images/delete_ena.png"
+                                          id="cmi2"/>
+                    </af:menu>
+                  </af:popup>
+                </af:panelLabelAndMessage>           
+                <af:panelLabelAndMessage label="action link which has useWindow=true" >
+                  <af:link text="New File" useWindow="true"
+                           action="dialog:createNewFile" icon="/images/file.gif" styleClass="AFLinkIEWorkaround"
+                           partialSubmit="true" id="usewindowImageLink"/>
+                </af:panelLabelAndMessage>           
+
+                <af:panelLabelAndMessage label="action link which has useWindow=true and windowEmbedStyle='inlineDocument'" >
+                  <af:link text="New File" useWindow="true" windowEmbedStyle="inlineDocument" 
+                           action="dialog:createNewFile" icon="/images/file.gif" styleClass="AFLinkIEWorkaround"
+                           partialSubmit="true" id="usewindowImageLink2"/>
+                </af:panelLabelAndMessage>           
+
+                <af:panelLabelAndMessage label="destination link with external URL and targetFrame='_blank'" >
+                  <af:link text="Oracle.com" targetFrame="_blank" destination="http://www.oracle.com" />
+                </af:panelLabelAndMessage>           
+
+                <af:panelLabelAndMessage label="destination link with relative URL and targetFrame='_blank'" >
+                  <af:link text="Button Visual Design" targetFrame="_blank" destination="/visualDesigns/button.jspx" />
+                </af:panelLabelAndMessage>           
+
+                <af:panelLabelAndMessage label="link with both desination and action, destination should win" >
+                  <af:link text="Oracle.com" targetFrame="_blank" destination="http://www.oracle.com" 
+                           action="dialog:createNewFile"/>
+                </af:panelLabelAndMessage>           
+
+                <af:panelLabelAndMessage label="link containing outputText utilizing a currency number converter" >
+                  <af:link>
+                    <af:outputText value="#{validate.currency3}">
+                      <af:convertNumber type="currency"/>
+                    </af:outputText>
+                  </af:link>
+                </af:panelLabelAndMessage>           
+
+                <af:panelLabelAndMessage label="link with context facet"
+                                         id="panelLabelAndMessage2">
+                  <af:link clientComponent="true" text="Link to guide" action="guide" icon="/images/smily-normal.gif">
+                    <f:facet name="context">
+                      <af:contextInfo id="contextInfo5">
+                        <af:showPopupBehavior align="beforeStart" popupId="binky"
+                                              triggerType="contextInfo"/>
+                      </af:contextInfo>
+                    </f:facet>
+                  </af:link>
+                </af:panelLabelAndMessage>
+                <af:popup id="binky">
+                  <af:dialog id="d2" title="Employee Information" modal="false">
+                    <af:panelFormLayout id="pfl2a">
+                      <af:inputText readOnly="true" label="name" value="Jane Doe" id="ot0a"/>
+                      <af:inputText readOnly="true" label="group" value="Human Resources"
+                                    id="ot1a"/>
+                      <af:inputText readOnly="true" label="location" value="Las Vegas, NV"
+                                    id="ot2a"/>
+                      <af:inputText readOnly="true" label="grade" value="Vice President" id="ot3a"/>
+                    </af:panelFormLayout>
+                  </af:dialog>
+                </af:popup>
+              </af:panelFormLayout>
+
+              <af:panelHeader text="Example of a link which does a PPR">
+                <af:spacer height="5px" />
+                <af:link text="Click here to update the text below" immediate="true"
+                         partialSubmit="true" id="refresh" shortDesc="Sample shortDesc text">
+                  <af:setPropertyListener from="#{sessionScope.num == null ? 1:(sessionScope.num+1)}"
+                                          to="#{sessionScope.num}" type="action"/>
+                </af:link>
+                <af:spacer height="5px" id="s5"/>
+                <af:outputText value="You have clicked :#{sessionScope.num == null ? 0 : (sessionScope.num)} times"
+                               partialTriggers="refresh" id="ot1"/>
+              </af:panelHeader>
+
+              <!-- If PPRNavigation is enabled, destination URLs (specified by a hash, '#')
+               don't work. So this section is rendered only when PPRNavigation is off.-->
+              <af:panelGroupLayout layout="vertical" rendered="#{demoInput.PPRNavigationOff}">
+                <af:outputText value="Example of a destination link with an on page '#' destination"/>
+                <af:spacer height="5px" />
+                <af:link text="Jump to Bottom Section"  destination="#dmoTpl:section2"/>
+                <af:panelBox text="Leave some space to see the jump!" inlineStyle="width:300px"
+                             contentStyle="height:1200px; vertical-align: top;"/>
+                <af:panelHeader size="0" text="Bottom Section" id="section2" clientComponent="true">
+                  <af:outputText   value="Bottom section after some space for testing on page destination" />
+                </af:panelHeader>
+              </af:panelGroupLayout>
+
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

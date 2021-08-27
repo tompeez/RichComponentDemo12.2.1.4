@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="TreeTable Unknown Row Count Demo" maximized="true" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="brandingTitle" value="TreeTable Unknown Row Count Demo"/>
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelStretchLayout id="pgl1" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:outputFormatted value="&lt;b>Unknown Row Count Tree Table Demo (tree model returns -1 for getRowCount())&lt;/b>" id="of1"/>
+            </f:facet>
+            <f:facet name="center">
+              <af:treeTable var="node" id="tree" rowSelection="single" styleClass="AFStretchWidth" summary="tree table unknown row count demo"
+                            binding="#{treeTableTestData.component}"
+                            value="#{unknownCountTreeData.treeModel}">
+                <f:facet name="contextMenu">
+                  <af:popup id="myPopup">
+                    <af:menu id="m1">
+                      <af:commandMenuItem id="menu1" text="Action 1" partialSubmit="true" />
+                      <af:commandMenuItem id="menu2" text="Action 2" partialSubmit="true" />
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <f:facet name="pathStamp">
+                  <af:panelGroupLayout id="pgl2">
+                    <af:image source="#{node.icon}" inlineStyle="vertical-align:middle;" id="i1"/>
+                    <af:outputFormatted value="&lt;b> #{node.value} &lt;/b>" id="of11"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="nodeStamp">
+                  <af:column headerText="Node Value" width="200" sortable="true" rowHeader="unstyled"
+                             sortProperty="value" id="c1">
+                    <af:panelGroupLayout id="pgl3">
+                      <af:image source="#{node.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i2"></af:image>
+                      <af:outputText id="valueStamp" value="#{node.value}"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column headerText="Name" id="c2">
+                  <af:outputText id="name" value="#{node.name}" />
+                </af:column>
+                <af:column headerText="Size" id="c3">
+                  <af:outputText id="size" value="#{node.size}" />
+                </af:column>
+              </af:treeTable>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

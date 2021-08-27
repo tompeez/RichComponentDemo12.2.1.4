@@ -1,0 +1,430 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:thematicMap&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:thematicMap&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:thematicMap thematicMap thematic map</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.thematicMap.UIThematicMap<br>
+<b>Component type:</b> oracle.dss.adf.thematicMap.ThematicMap<br></p>
+<p>The thematic map is used for displaying data that is associated with a geographic location. One of the primary uses of this component is to show trends or patterns in data with a spatial element to it. The thematic map does this by using the data to sylize a region (e.g. assigning fill color based on data values), associating a marker with the region, or both.</p>
+<p>The thematic map was designed to portray data cleanly so that inherent spatial patterns and trends can be easily seen. Because of this goal, the thematic map doesn't include geographic or political features such as rivers or roads because those would only add visual clutter. If these features are required, then using the <a href="dvt_map.html">&lt;dvt:map&gt;</a> tag would be better suited to your application.</p>
+<p>The <a href="dvt_thematicMap.html">&lt;dvt:thematicMap&gt;</a> tag and its child tags were designed to mimic what gets displayed on the map. This is discussed further in the <a href="#basemaps">Basemaps</a> section and the section describing the <a href="#layers">difference between the &lt;dvt:areaLayer&gt; tag and the &lt;dvt:areaDataLayer&gt; tag</a> . The thematic map uses the stamp design pattern to stylize the geographic regions.</p>
+<h4>Basemaps<a name="basemaps" id="basemaps"></a></h4>
+<p>The different maps the thematic map displays are called basemaps. The thematic map comes pre-shipped with a number of basemaps, including a USA basemap, a world basemap, as well as basemaps for continents and regions of the world such as EMEA and APAC. Since the basemaps come pre-shipped, the thematic map does not need a map service to serve up maps for it to display. Use the <a href="dvt_thematicMap.html">&lt;dvt:thematicMap&gt;</a> tag's "basemap" attribute to set which basemap is shown.</p>
+<p>Each basemap has multiple layers, with each layer representing a set of regions at different levels in the spatial hierarchy. For example, in the USA basemap, there are three layers. There is a layer that shows the national border, a layer that shows all the states, and a third layer that shows all the counties in the USA. Use the <a href="dvt_areaLayer.html">&lt;dvt:areaLayer&gt;</a> tag to set which basemap layers are shown.</p>
+<p>In addition to layers for different geographic regions, each basemap also has a layer of built-in cities. If you want to use other points that are not included in the set of built-in cities, they can be specified by providing latitude and longitude coordinates (see the <a href="dvt_pointLocation.html">&lt;dvt:pointLocation&gt;</a> tag for more details).</p>
+<h4>areaLayer vs areaDataLayer <a name="layers" id="layers"></a></h4>
+<p>The <a href="dvt_areaLayer.html">&lt;dvt:areaLayer&gt;</a> tag is used to define which layers in a given basemap are shown. To stylize the regions in this layer, insert an <a href="dvt_areaDataLayer.html">&lt;dvt:areaDataLayer&gt;</a> tag as a child tag to the <a href="dvt_areaLayer.html">&lt;dvt:areaLayer&gt;</a> tag. Bind a data control to the <a href="dvt_areaDataLayer.html">&lt;dvt:areaDataLayer&gt;</a> tag's "value" attribute.</p>
+<p>The <a href="dvt_areaDataLayer.html">&lt;dvt:areaDataLayer&gt;</a> tag follows the stamping model to stylize each region in its given layer. Insert the <a href="dvt_areaLocation.html">&lt;dvt:areaLocation&gt;</a> tag as a child to <a href="dvt_areaDataLayer.html">&lt;dvt:areaDataLayer&gt;</a> to specify which column in the data control specifies the name of the spatial region with which the data is associated. Insert a <a href="dvt_area.html">&lt;dvt:area&gt;</a> tag as a child to the <a href="dvt_areaLocation.html">&lt;dvt:areaLocation&gt;</a> tag to sylize a region (e.g. assigning fill color based on data values) and insert a <a href="dvt_marker.html">&lt;dvt:marker&gt;</a> tag to associate a marker with the region. Conceptually, the tag structure would look as follows:</p>
+<pre>
+&lt;thematicMap &gt;
+  &lt;areaLayer &gt;
+    &lt;areaDataLayer &gt;
+      &lt;areaLocation &gt;
+        &lt;area&gt;        
+        &lt;/area&gt;
+      &lt;/areaLocation&gt;
+    &lt;/areaDataLayer&gt;
+  &lt;/areaLayer&gt;
+&lt;/thematicMap&gt;
+        
+</pre>
+<p>See the <a href="#sample">Sample</a> section for a more developed example.</p>
+<h4>Data Model <a name="model" id="model"></a></h4>
+<p>Use the data binding dialogs to bind the <a href="dvt_areaDataLayer.html">&lt;dvt:areaDataLayer&gt;</a> and <a href="dvt_pointDataLayer.html">&lt;dvt:pointDataLayer&gt;</a> tags to data controls. The thematic map uses a Collection Model (see <a href="http://download.oracle.com/docs/cd/E15523_01/web.1111/b31974/bcdcpal.htm">data binding documentation</a> for details).</p>
+<h4>Attribute Groups <a name="attributeGroups" id="attributeGroups"></a></h4>
+<p>The thematic map supports the use of the <a href="dvt_attributeGroups.html">&lt;dvt:attributeGroups&gt;</a> tag for generating stylistic attribute values such as colors or shapes for stamps based on categorical bucketing of the data set. Given the column in the model to group by, the attributeGroups can produce style values for each unique value ("group") in the data. The thematic map currently supports &lt;dvt:attributeGroups&gt; as a child of <a href="dvt_marker.html">&lt;dvt:marker&gt;</a> and <a href="dvt_area.html">&lt;dvt:area&gt;</a>.</p>
+<h4>Legend <a name="legend" id="legend"></a></h4>
+<p>The legend is a component which is used to display multiple sections of marker and label pairs. Define the legend as a child of the thematic map component. For more detail, please refer to the <a href="dvt_legend.html">&lt;dvt:legend&gt;</a> tag doc and examples below.</p>
+<h5>Example 1: Marker</h5>
+<p>To include a marker or area as an item in the legend, point the "source" attribute of a legendSection to the id of the marker or area component. Add &lt;f:attribute&gt; as shown below to annotate the marker with a label to be used in the legend.</p>
+<pre>
+               <!--This creates a US map with states and counties, with data added to the states layer-->
+&lt;dvt:thematicMap id="map" basemap="usa"&gt;        
+    &lt;dvt:legend id="l1" label="Legend Title"&gt;
+        &lt;dvt:legendSection id="ls1" label="Legend Subtitle 1" source="al1:adl1:marker1" /&gt;
+    &lt;/dvt:legend&gt;
+    &lt;dvt:areaLayer id="al1" layer="states"&gt;
+     &lt;dvt:areaDataLayer id="adl1" value=" " var=" " ...&gt;
+        &lt;dvt:areaLocation id="dataLoc" name="#{row.name}"&gt;
+            &lt;dvt:marker id="marker1"&gt;
+                &lt;f:attribute name="legendLabel" value="Important Location" /&gt;
+            &lt;/dvt:marker&gt;
+        &lt;/dvt:areaLocation&gt;
+     &lt;/dvt:areaDataLayer&gt;
+    &lt;/dvt:areaLayer&gt;
+&lt;/dvt:thematicMap&gt;
+             
+</pre>
+<h5>Example 2: Attribute Groups</h5>
+<p>To select a particular set of attribute types (color, shape, etc.) to include in the legend as a separate section, point the "source" attribute of a legendSection to the id of the desired attributeGroups component. Use the "label" attribute on attributeGroups as shown below to annotate this set of attributes with a label to be used in the legend.</p>
+<pre>
+&lt;dvt:thematicMap &gt;        
+    &lt;dvt:legend id="l1" label="Legend Title"&gt;
+        &lt;dvt:showLegendGroup id="slg1" label="Legend Subtitle 2"&gt;
+            &lt;dvt:legendSection id="ls2" source="al1:adl1:attributeGroupColor" /&gt;
+            &lt;dvt:legendSection id="ls3" source="al1:adl1:attributeGroupShape" /&gt;
+        &lt;/dvt:showLegendGroup&gt;
+    &lt;/dvt:legend&gt;
+    &lt;dvt:areaLayer id="al1" layer="states"&gt;
+     &lt;dvt:areaDataLayer id="adl1" value=" " var=" " ...&gt;
+        &lt;dvt:areaLocation id="dataLoc" name="#{row.name}"&gt;
+            &lt;dvt:marker id="marker1"... &gt;
+                &lt;dvt:attributeGroups id="attributeGroupColor" type="color" label="#{row.category1Label}" ... /&gt;
+                &lt;dvt:attributeGroups id="attributeGroupShape" type="shape" label="#{row.category2Label}" ... /&gt;
+            &lt;/dvt:marker&gt;         
+        &lt;/dvt:areaLocation&gt;
+     &lt;/dvt:areaDataLayer&gt;
+    &lt;/dvt:areaLayer&gt;
+&lt;/dvt:thematicMap&gt;
+               
+</pre>
+<h4>Selection <a name="selection" id="selection"></a></h4>
+<p>The thematic map component lets users to select multiple regions/markers across multiple data layers. For details, please refer to the <a href="dvt_areaDataLayer.html">&lt;dvt:areaDataLayer&gt;</a> and <a href="dvt_pointDataLayer.html">&lt;dvt:pointDataLayer&gt;</a> tag docs.</p>
+<h4>Drilling <a name="drilling" id="drilling"></a></h4>
+<p>The thematic map component supports drilling on areas. Drilling is essentially revealing data directly underneath the area being drilled. An area has to be selected before being drilled. This can be achieved by setting the selectionMode property on the areaDataLayer or pointDataLayer. For details, please refer to the <a href="dvt_areaDataLayer.html">&lt;dvt:areaDataLayer&gt;</a> and <a href="dvt_pointDataLayer.html">&lt;dvt:pointDataLayer&gt;</a> tag docs. Below shows an example where the user drills down on Texas:<br></p>
+<div style="width:720px">
+<table class="oac_no_warn" summary="Layout table... probably." style="width:720px" class="bodyTable">
+<tr class="a">
+<th>Before Drill</th>
+<th>After Drill</th>
+</tr>
+<tr class="a">
+<td width="360" height="250"><img src="../images/tmapBeforeDrill.png" width="360" height="250" alt=""></td>
+<td width="360" height="250"><img src="../images/tmapAfterDrill.png" width="360" height="250" alt=""></td>
+</tr>
+</table>
+</div>
+<h4>Drag and Drop <a name="dragdrop" id="dragdrop"></a></h4>
+<p><a href="dvt_area.html">Area</a>and <a href="dvt_marker.html">marker</a> within a thematic map can be used as drag source while an <a href="dvt_areaLayer.html">areaLayer</a> can be used as a drop Target. For detail, please refer to the tag docmentation of the <a href="dvt_area.html">&lt;dvt:area&gt;</a>, <a href="dvt_marker.html">&lt;dvt:marker&gt;</a> and the <a href="dvt_areaLayer.html">&lt;dvt:areaLayer&gt;</a></p>
+<h4>Animation <a name="animation" id="animation"></a></h4>
+<p>The thematic map component supports animation for the following cases: initial rendering, the value of base map changes, the value of an area data layer or point data layer changes and drilling.</p>
+<h4>Geometry Management <a name="stretching" id="stretching"></a></h4>
+<h4>Sample <a name="sample" id="sample"></a></h4>
+<pre>
+&lt;thematicMap id="thematicMap" basemap="usa"&gt;
+  &lt;areaLayer id="areaLayer" layer="states"&gt;
+    &lt;areaDataLayer id="dataLayer" value="#{mydata.collectionModel}" var="row" varStatus="rowStatus"&gt;
+      &lt;areaLocation id="areaLoc" name="O__row_name_"&gt;
+        &lt;area id="area" fillColor="#{row.color}"&gt;        
+        &lt;/area&gt;
+      &lt;/areaLocation&gt;
+    &lt;/areaDataLayer&gt;
+  &lt;/areaLayer&gt;
+&lt;/thematicMap&gt;
+        
+</pre>
+<h4>Supported child tags <a name="childTags" id="childTags"></a></h4>
+<p>The &lt;dvt:thematicMap&gt; tag can have the following children:</p>
+<ul>
+<li><a href="dvt_areaLayer.html">&lt;dvt:areaLayer&gt;</a></li>
+<li><a href="dvt_pointDataLayer.html">&lt;dvt:pointDataLayer&gt;</a></li>
+<li><a href="dvt_customAreaLayer.html">&lt;dvt:customAreaLayer&gt;</a></li>
+<li><a href="dvt_legend.html">&lt;dvt:legend&gt;</a></li>
+</ul>
+<h4>Geometry Management</h4>
+<ul>
+<li>This component can be stretched by a parent layout component that stretches its children, e.g. panelStretchLayout, panelSplitter</li>
+<li>This component does stretch to fill up the browser's viewport when it is the "sole visual root component" in the component tree.</li>
+<li>When NOT stretched, this component will be displayed in its default dimensions which are provided by the skin. This can be modified by applying a dimension using the inlineStyle or styleClass attributes.</li>
+<li>This component does not stretch its children.</li>
+</ul>
+<div class="section">
+<h2><a name="Screen_Shots" id="Screen_Shots">Screen Shot(s)</a></h2>
+<div class="screenshot"><br>
+<img src="./images/thematicMap.png" alt="Thematic Map screenshot"><br></div>
+<br></div>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">animationDuration</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 1000<br>
+<br>
+Specifies the animation duration in milliseconds. The default value is 1000.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnDisplay</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, alphaFade, conveyorFromLeft, conveyorFromRight, cubeToLeft, cubeToRight, flipLeft, flipRight, slideToLeft, slideToRight, transitionToLeft, transitionToRight, zoom<br>
+<strong>Default Value:</strong> zoom<br>
+<br>
+Specifies the type of animation to apply when the component is initially displayed.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnDrill</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, alphaFade<br>
+<strong>Default Value:</strong> alphaFade<br>
+<br>
+Specifies the type of animation to apply for drilling.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnMapChange</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, alphaFade, conveyorFromLeft, conveyorFromRight, cubeToLeft, cubeToRight, flipLeft, flipRight, slideToLeft, slideToRight, transitionToLeft, transitionToRight, zoom<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies the type of animation to apply when the value of the basemap changes.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">basemap</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the basemap shown by the thematic map. Valid values are:
+<ul>
+<li>"usa"</li>
+<li>"world"</li>
+<li>"africa"</li>
+<li>"asia"</li>
+<li>"australia"</li>
+<li>"europe"</li>
+<li>"northAmerica"</li>
+<li>"southAmerica"</li>
+<li>"apac"</li>
+<li>"emea"</li>
+<li>"latinAmerica"</li>
+<li>"usaAndCanada"</li>
+<li>"worldRegions"</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">Binding reference to store the UIThematicMap component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">controlPanelBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> initCollapsed, initExpanded, hidden<br>
+<strong>Default Value:</strong> initCollapsed<br>
+<br>
+<p>Specifies the behavior of the control panel. Valid values are:</p>
+<ul>
+<li>"initCollapsed" - initially collapsed</li>
+<li>"initExpanded" - initially expanded</li>
+<li>"hidden" - hidden from view (Note that the control panel is required for drilling and 'hidden' will be evaluated as 'initCollapsed')</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">drillBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, zoomToFit<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies additional effect for drilling
+<ul>
+<li>"none" - no effect. This is the default.</li>
+<li>"zoomToFit" - zoom to fit the drilled region</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">drilling</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> off, on<br>
+<strong>Default Value:</strong> off<br>
+<br>
+Specifies whether drilling should be on or off for this thematic map. The default value is off</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">featuresOff</td>
+<td align="left" headers="attrType">java.util.Set</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> none<br>
+<br>
+This attribute is deprecated. A list of default features to turn off for the thematicMap. Currently the supported values are "pan", "zoom", "zoomToFit".</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">initialZooming</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, none<br>
+<strong>Default Value:</strong> none<br>
+<br>
+<p>Specifies whether the viewport is zoomed to fit the data on initial display.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The inline style of the thematic map's outer DOM element.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">maintainDrill</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> false<br>
+<br>
+Specifies whether to maintain previously drilled area in the same layer when a new area is drilled. The default value is false</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">mapProvider</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.thematicMap.mapProvider.MapProvider</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The MapProvider for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">markerZoomBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> fixed, zoom<br>
+<strong>Default Value:</strong> fixed<br>
+<br>
+Specifies the marker behavior on zoom. Markers can either maintain their current size or grow and shrink on zoom. Valid values are:
+<ul>
+<li>fixed (default)</li>
+<li>zoom</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">panning</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, none<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+<p>Specifies panning behavior. Valid values are:</p>
+<ul>
+<li>"auto" - panning enabled with device specific gesture (default)</li>
+<li>"none" - panning will be disabled</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered. The default value is true.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">source</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The path to the custom base map xml metadata file.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">summary</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a summary of this thematic map's purpose and structure for user agents rendering to non-visual media (e.g. screen readers).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">tooltipDisplay</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, none, shortDescOnly<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+Specifies the tooltip display behavior of the thematic map. Valid values are:
+<ul>
+<li>"auto" - (default) Show basemap location labels in tooltips. If there is data, concatenate the location labels with the shortDesc coming from the stamps</li>
+<li>"shortDescOnly" - Only show tooltips associated with the shortDesc coming from the stamps, and do not include the location names coming from the basemap.</li>
+<li>"none" - Show no tooltips on the map. This includes tooltips coming from the basemap as well as the data layers.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">zooming</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, none<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+<p>Specifies zooming behavior. Valid values are:</p>
+<ul>
+<li>"auto" - zooming enabled with device specific gesture (default)</li>
+<li>"none" - zooming will be disabled</li>
+</ul>
+</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

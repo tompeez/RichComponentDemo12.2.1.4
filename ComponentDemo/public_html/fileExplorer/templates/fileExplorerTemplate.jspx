@@ -1,0 +1,236 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>This component lays out an entire page.</description>
+        <facet>
+          <description>
+            <![CDATA[Area to put a commandLink to more information about the application.]]>
+          </description>
+          <facet-name>appAbout</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The copyright region of the page.  If present, this area
+                    typically contains an outputText with the copyright information.]]>
+          </description>
+          <facet-name>appCopyright</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The auxiliary content for the exlorer navigators.]]>
+          </description>
+          <facet-name>navigators</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The branding region of the page.  This section typically
+                    contains a horizontal panelGroupLayout for an image of a logo and an
+                    outputText for a title.]]>
+          </description>
+          <facet-name>branding</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[Content for the top of the secondary layer.]]>
+          </description>
+          <facet-name>header</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[This section typically contains global application links or otherwise top level navigation structure links, e.g. "Home", "Preferences", "Help", and "Sign Out".]]>
+          </description>
+          <facet-name>navigationGlobal</facet-name>
+        </facet>
+        <facet>
+          <description>
+            <![CDATA[The center content contains the content views.]]>
+          </description>
+          <facet-name>contentViews</facet-name>
+        </facet>
+        <attribute>
+          <description>Specifies the number of pixels that the navigators content should consume
+                       (this is a width if the orientationis "start" or "end" or a height if the
+                       orientation is "bottom").</description>
+          <attribute-name>navigatorsSize</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>200</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of pixels tall that the global footer content should
+                       consume.</description>
+          <attribute-name>footerGlobalSize</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>0</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the number of pixels tall that the secondary header content should
+                       consume.</description>
+          <attribute-name>headerSize</attribute-name>
+          <attribute-class>int</attribute-class>
+          <default-value>60</default-value>
+        </attribute>
+        <attribute>
+          <description>the id attribute of the command button inside the form whose action should be
+                       invoked by default, when the enter key is pressed with focus inside the form.
+                       Identifiers are relative to the form component, and must account for
+                       NamingContainers. You can use a single colon to start the search from the
+                       root.</description>
+          <attribute-name>defaultCommand</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>whether the form supports file upload.</description>
+          <attribute-name>usesUpload</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the branding logo.</description>
+          <attribute-name>logoImagePath</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>/afr/oracle_logo.png</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the branding logo styling.</description>
+          <attribute-name>logoStyleClass</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>AFBrandingLogo</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the alternate text and tooltip for the branding logo.</description>
+          <attribute-name>logoShortDesc</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>Demo home page</default-value>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:resource type="css" source="/styles/custom.css"/>
+    <af:form defaultCommand="#{attrs.defaultCommand}" usesUpload="#{attrs.usesUpload}" id="ptf1">
+      <af:panelStretchLayout bottomHeight="#{attrs.footerGlobalSize}" id="ptpsl1"
+                             dimensionsFrom="#{mobileSettings.dimensionsFromChildren ? 'children' : 'parent'}">
+        <f:facet name="center">
+          <af:panelSplitter orientation="vertical" splitterPosition="32" id="ptps1" styleClass="AFBrandingSplitter"
+                            firstBorder="none" secondBorder="none" dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelGroupLayout layout="scroll" id="ptpgl1" styleClass="AFBrandingBar" >
+                <af:panelBorderLayout id="ptpbl1">
+                  <f:facet name="start">
+                    <af:panelGroupLayout styleClass="AFBrandingBarItem" id="ptpgl2">
+                      <af:link id="pts1" action="index" shortDesc="#{attrs.logoShortDesc}" icon="#{attrs.logoImagePath}" styleClass="#{attrs.logoStyleClass}"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <f:facet name="innerStart">
+                    <af:panelGroupLayout styleClass="AFBrandingBarItem"
+                                         id="ptpgl3">
+                      <af:panelGroupLayout layout="vertical" styleClass="AFBrandingBarTitle"
+                                           id="ptpgl4">
+                        <af:facetRef facetName="branding"/>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <af:panelBorderLayout id="ptpbl2">
+                    <af:spacer inlineStyle="width: 100%; max-width: 100%;" />
+                    <f:facet name="end">
+                      <af:panelGroupLayout layout="vertical" styleClass="AFBrandingBarItem"
+                                           id="ptpgl5">
+                        <af:facetRef facetName="navigationGlobal"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelBorderLayout>
+                  <f:facet name="innerEnd">
+                    <af:spacer width="4" id="pts2"/>
+                  </f:facet>
+                  <f:facet name="end">
+                    <af:panelGroupLayout layout="horizontal" styleClass="AFBrandingBarItem"
+                                         id="ptpgl6">
+                      <af:statusIndicator id="ptsi1"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                </af:panelBorderLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:decorativeBox id="contentBody" theme="#{demoSkin.theme1}" dimensionsFrom="auto">
+                <f:facet name="center">
+                  <!-- start of secondary header/footer layout -->
+                  <af:panelStretchLayout topHeight="#{attrs.headerSize}" id="ptpsl3"
+                                         dimensionsFrom="auto">
+                    <f:facet name="top">
+                      <af:facetRef facetName="header"/>
+                    </f:facet>
+                    <f:facet name="center">
+                      <!-- start of secondary decoration -->
+                      <af:decorativeBox theme="#{demoSkin.theme2}" id="ptdb1" dimensionsFrom="auto">
+                        <f:facet name="center">
+                          <af:panelSplitter orientation="horizontal" splitterPosition="200"
+                                            id="ptps2" dimensionsFrom="auto">
+                            <f:facet name="first">
+                              <af:panelStretchLayout id="glry"
+                                                     rendered="#{demoFind.galleryEnabled}"
+                                                     dimensionsFrom="auto">
+                                <f:facet name="center">
+                                  <af:declarativeComponent id="accMenu" mode="feature"
+                                                           viewId="/templates/pageTemplateDefs/componentGallerySideBar.jsff"/>
+                                </f:facet>
+                              </af:panelStretchLayout>
+                            </f:facet>
+                            <f:facet name="second">
+                              <af:panelSplitter orientation="horizontal"
+                                                splitterPosition="#{attrs.navigatorsSize}"
+                                                id="ptps3" dimensionsFrom="auto">
+                                <f:facet name="first">
+                                  <af:facetRef facetName="navigators"/>
+                                </f:facet>
+                                <f:facet name="second">
+                                  <!-- start of main decoration -->
+                                  <af:decorativeBox theme="default" id="ptdb2"
+                                                    dimensionsFrom="auto">
+                                    <f:facet name="center">
+                                      <af:facetRef facetName="contentViews"/>
+                                    </f:facet>
+                                  </af:decorativeBox>
+                                  <!-- end of main decoration -->
+                                </f:facet>
+                              </af:panelSplitter>
+                              <!-- end of inner secondary auxiliary splitter -->
+                            </f:facet>
+                          </af:panelSplitter>
+                          <!-- end of outer secondary auxiliary splitter -->
+                        </f:facet>
+                      </af:decorativeBox>
+                      <!-- end of secondary decoration -->
+                    </f:facet>
+                  </af:panelStretchLayout>
+                  <!-- end of secondary header/footer layout -->
+                </f:facet>
+              </af:decorativeBox>
+            </f:facet>
+          </af:panelSplitter>
+          <!-- end of global top splitter -->
+        </f:facet>
+        <f:facet name="bottom">
+          <af:panelGroupLayout layout="vertical" id="footer">
+            <af:panelGroupLayout layout="vertical" id="footPad" inlineStyle="padding:2px 15px 0">
+              <af:panelBorderLayout id="footPbl">
+                <f:facet name="start">
+                  <af:facetRef facetName="appCopyright"/>
+                </f:facet>
+                <af:spacer id="footSp"/>
+                <f:facet name="end">
+                  <af:facetRef facetName="appAbout"/>
+                </f:facet>
+              </af:panelBorderLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelStretchLayout>
+    </af:form>
+  </af:pageTemplateDef>
+</jsp:root>

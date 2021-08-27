@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Dynamic help demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Dynamic Help"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s2"/>
+              </f:facet>
+              <af:outputText value="inputText with dynamic help, and converter/validators:                   see javadoc on ResourceBundleHelpProvider for details on how to access help, also                   see DemoHelpProvider for details on how to implement external URL."
+                             id="ot1"/>
+              <af:inputText value="#{demoInput.date}" binding="#{editor.component}" label="Input:"
+                            helpTopicId="TOPICID_ALL" shortDesc="Short Description Text"
+                            id="it1">
+                <af:convertDateTime/>
+                <af:validateDateTimeRange minimum="2007-01-01"/>
+              </af:inputText>
+              <af:spacer height="10px" id="s3"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s4"/>
+              </f:facet>
+              <af:outputText value="Dynamic help with all combinations of defn, instrs, and url."
+                             id="ot2"/>
+              <af:outputText value="Dynamic help definition and shortDesc:"
+                             id="ot3"/>
+              <af:inputText label="Input:" helpTopicId="MAPHELP_CREDIT_CARD"
+                            shortDesc="Short description text" id="it2"></af:inputText>
+              <af:outputText value="Dynamic help definition, instructions only:"
+                             id="ot4"/>
+              <af:inputText label="Input:" helpTopicId="MAPHELP_SHOPPING"
+                            id="it3"></af:inputText>
+              <af:outputText value="Dynamic help definition, external URL only:"
+                             id="ot5"/>
+              <af:inputText label="Input:" helpTopicId="TOPICID_DEFN_URL"
+                            id="it4"></af:inputText>
+              <af:outputText value="Dynamic help instructions only:" id="ot6"/>
+              <af:inputText label="Input:" helpTopicId="TOPICID_INSTR" id="it5"></af:inputText>
+              <af:outputText value="Dynamic help instructions, external URL only:"
+                             id="ot7"/>
+              <af:inputText label="Input:" helpTopicId="TOPICID_INSTR_URL"
+                            id="it6"></af:inputText>
+              <af:outputText value="Dynamic help external URL only:" id="ot8"/>
+              <af:inputText label="Input:" helpTopicId="TOPICID_URL" id="it7"></af:inputText>
+              <af:spacer height="10px" id="s5"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s6"/>
+              </f:facet>
+              <af:outputText value="inputText with instructions HTML formatting:"
+                             id="ot9"/>
+              <af:inputText label="Input:" helpTopicId="TOPICID_HTML_INSTR"
+                            id="it8"/>
+              <af:spacer height="10px" id="s7"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s8"/>
+              </f:facet>
+              <af:outputText value="Accessing help directly via EL using outputText component:"
+                             id="ot10"/>
+              <af:outputFormatted value="TOPICID_ALL instructions: #{adfFacesContext.helpProvider['TOPICID_ALL'].instructions}"
+                                  id="of1"/>
+              <af:outputFormatted value="TOPICID_ALL definition: #{adfFacesContext.helpProvider['TOPICID_ALL'].definition}"
+                                  id="of2"/>
+              <af:outputFormatted value="TOPICID_ALL externalURL: #{adfFacesContext.helpProvider['TOPICID_ALL'].externalUrl}"
+                                  id="of3"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pg16">
+             <f:facet name="separator">
+                <af:spacer height="10px" id="s9"/>
+              </f:facet>
+              <af:outputText value="Launching help window using the javascript api (via clientListener)"
+                             id="ot11"/>
+              <af:commandButton text="Launch help window" id="btn1">
+                <af:clientAttribute name="helpClientURL" value="#{adfFacesContext.helpProvider['TOPICID_ALL'].externalUrl}"/>
+                <af:clientListener method="launchHelp" type="click"/>
+              </af:commandButton>
+              <af:commandLink text="Launch help window" id="lnk1">
+                <af:clientAttribute name="helpClientURL" value="#{adfFacesContext.helpProvider['TOPICID_ALL'].externalUrl}"/>
+                <af:clientListener method="launchHelp" type="click"/>
+              </af:commandLink>
+              <af:toolbar id="tb1">
+                <af:commandToolbarButton text="Launch help window" id="ctb1"
+                                         icon="/images/happy_computer.gif">
+                  <af:clientAttribute name="helpClientURL" value="#{adfFacesContext.helpProvider['TOPICID_ALL'].externalUrl}"/>
+                  <af:clientListener method="launchHelp" type="click"/>
+                </af:commandToolbarButton>
+              </af:toolbar>
+              <af:resource type="javascript">
+                function launchHelp(event)
+                {
+                  var url = event.getSource().getProperty("helpClientURL");
+                  AdfPage.PAGE.launchHelpWindow(url);
+                }
+              </af:resource>
+            </af:panelGroupLayout>
+            <af:commandButton text="Submit" id="submitCommand"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

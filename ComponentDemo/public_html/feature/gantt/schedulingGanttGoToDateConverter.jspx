@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{ganttFeatureLinks.schedulingGanttGoToDateConverterTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Scheduling Gantt 'Go To Date' Converter"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Scheduling Gantt 'Go To Date' Converter"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+          <!-- START FEATURE DEMO -->
+	  <af:outputText id="ot1" value="This page demonstrates the goToDateConverter attribute. Choose a Date Pattern, and then see
+                                  the pattern used by choosing 'View', then 'Go To Date' from the Gantt's menu bar."/>
+          <af:selectOneChoice label="Choose Date Pattern: " value="#{schedulingGanttGoToDateConverter.currentPattern}"
+                              id="soc1" autoSubmit="true">
+            <af:selectItem label="EEE, d MMM yyyy HH:mm:ss Z" value="EEE, d MMM yyyy HH:mm:ss Z" id="si1"/>
+            <af:selectItem label="EEE, MMM d, ''yy" value="EEE, MMM d, ''yy" id="si2"/>
+            <af:selectItem label="yyyy.MM.dd G 'at' HH:mm:ss z" value="yyyy.MM.dd G 'at' HH:mm:ss z" id="si3"/>
+          </af:selectOneChoice>
+          <dvt:schedulingGantt id="schedulingGanttGoToDateConverter"
+                               inlineStyle="height:400px"
+                               startTime="2006-12-21 01:00" endTime="2006-12-22 23:00"
+                               value="#{schedulingGanttGoToDateConverter.model}" 
+                               var="resourceObj"
+                               partialTriggers="::soc1"
+                               goToDateConverter="#{schedulingGanttGoToDateConverter.goToDateConverter}"
+                               taskbarFormatManager="#{schedulingGanttGoToDateConverter.taskbarFormatManager}"
+                               summary="Scheduling Gantt Go To Date Converter Demo">
+            <f:facet name="major">
+              <dvt:timeAxis scale="days" zoomOrder="threeyears years halfyears quarters months weeks days hours fiveminutes"
+                            id="ta1"/>
+            </f:facet>
+            <f:facet name="minor">
+              <dvt:timeAxis scale="hours" zoomOrder="threeyears years halfyears quarters months weeks days hours fiveminutes"
+                            id="ta2"/>
+            </f:facet>
+            <f:facet name="nodeStamp">
+              <af:column headerText="Employee Name" id="c1">
+                <af:outputText value="#{resourceObj.resourceName}" id="ot2"/>
+              </af:column>
+            </f:facet>
+            <af:column headerText="Department" id="c2">                        
+              <af:outputText value="#{resourceObj.department}" id="ot3"/>
+            </af:column>
+            <dvt:ganttLegend keys="#{schedulingGanttGoToDateConverter.legendKeys}" labels="#{schedulingGanttGoToDateConverter.legendLabels}"
+                             id="gl1"/>
+          </dvt:schedulingGantt>
+          
+          <!-- END FEATURE DEMO -->            
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/gantt/ganttFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

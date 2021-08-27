@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="Number Format Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Number Format"/>
+
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Number Format"/>
+      
+      <f:facet name="center">
+            <af:panelGroupLayout layout="scroll" id="layout0">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <!-- START FEATURE DEMO -->
+    
+              <af:panelGroupLayout layout="horizontal" id="p2">
+                  <af:panelGroupLayout layout="vertical" id="pgl4">
+                      <af:outputText value="Test Number Format. Notice that Series 2 is assigned to Y2 Axis" id="ot3"/>
+                      <af:panelGroupLayout layout="horizontal">               
+                      <dvt:graph id="graph1" graphType="#{graphNumberFormatBean.graphType}" dataSelection="single" shortDesc="Graph" inlineStyle="width:500px;height:300px">
+                         <dvt:markerText>
+                            <dvt:x1Format autoPrecision="#{graphNumberFormatBean.x1Format.autoPrecision}"
+                                          scaling="#{graphNumberFormatBean.x1Format.scaling}">>
+                               <af:convertNumber pattern="#{graphNumberFormatBean.x1Format.pattern}"/>
+                            </dvt:x1Format>
+                            <dvt:y1Format autoPrecision="#{graphNumberFormatBean.y1Format.autoPrecision}"
+                                          scaling="#{graphNumberFormatBean.y1Format.scaling}">>
+                               <af:convertNumber pattern="#{graphNumberFormatBean.y1Format.pattern}"/>
+                            </dvt:y1Format>
+                            <dvt:y2Format autoPrecision="#{graphNumberFormatBean.y2Format.autoPrecision}"
+                                          scaling="#{graphNumberFormatBean.y2Format.scaling}">>
+                               <af:convertNumber pattern="#{graphNumberFormatBean.y2Format.pattern}"/>
+                            </dvt:y2Format>
+                            <dvt:zFormat autoPrecision="#{graphNumberFormatBean.ZFormat.autoPrecision}"
+                                         scaling="#{graphNumberFormatBean.ZFormat.scaling}">>
+                               <af:convertNumber pattern="#{graphNumberFormatBean.ZFormat.pattern}"/>
+                            </dvt:zFormat>
+                            <dvt:stockVolumeFormat autoPrecision="#{graphNumberFormatBean.stockVolumeFormat.autoPrecision}" 
+                                                   scaling="#{graphNumberFormatBean.stockVolumeFormat.scaling}">
+                               <af:convertNumber pattern="#{graphNumberFormatBean.stockVolumeFormat.pattern}"/>
+                            </dvt:stockVolumeFormat>
+                         </dvt:markerText>
+                         <dvt:x1TickLabel autoPrecision="#{graphNumberFormatBean.x1Label.autoPrecision}"
+                                          scaling="#{graphNumberFormatBean.x1Label.scaling}">
+                               <af:convertNumber pattern="#{graphNumberFormatBean.x1Label.pattern}"/>
+                         </dvt:x1TickLabel>
+                         <dvt:y1TickLabel autoPrecision="#{graphNumberFormatBean.y1Label.autoPrecision}"
+                                          scaling="#{graphNumberFormatBean.y1Label.scaling}">
+                               <af:convertNumber pattern="#{graphNumberFormatBean.y1Label.pattern}"/>
+                         </dvt:y1TickLabel>
+                         <dvt:y2TickLabel autoPrecision="#{graphNumberFormatBean.y2Label.autoPrecision}"
+                                          scaling="#{graphNumberFormatBean.y2Label.scaling}">
+                               <af:convertNumber pattern="#{graphNumberFormatBean.y2Label.pattern}"/>
+                         </dvt:y2TickLabel>
+                         <dvt:sliceLabel autoPrecision="#{graphNumberFormatBean.sliceLabel.autoPrecision}"
+                                          scaling="#{graphNumberFormatBean.sliceLabel.scaling}">
+                               <af:convertNumber pattern="#{graphNumberFormatBean.sliceLabel.pattern}"/>
+                         </dvt:sliceLabel>
+                      </dvt:graph>
+                      </af:panelGroupLayout>
+                      
+                      
+                      <af:selectOneChoice id="graphType" label="Graph Type" value="#{graphNumberFormatBean.graphType}" autoSubmit="true">
+                         <af:selectItem label="Bar" value="BAR_VERT_CLUST2Y"/>
+                         <af:selectItem label="Bar (Horizontal)" value="BAR_HORIZ_CLUST_2Y"/>
+                         <af:selectItem label="Area" value="AREA_VERT_ABS_SPLIT2Y"/>
+                         <af:selectItem label="Line" value="LINE_VERT_ABS_2Y"/>
+                         <af:selectItem label="Pareto" value="PARETO"/>
+                         <af:selectItem label="Bubble" value="BUBBLE_2Y"/>
+                         <af:selectItem label="Scatter" value="SCATTER_2Y"/>
+                         <af:selectItem label="Polar" value="POLAR"/>
+                         <af:selectItem label="Radar" value="RADAR_LINE"/>
+                         <af:selectItem label="Funnel" value="FUNNEL"/>
+                         <af:selectItem label="Pie" value="PIE"/>
+                         <af:selectItem label="Ring" value="RING"/>
+                         <af:selectItem label="Stock" value="STOCK_OHLC_CANDLE_VOLUME"/>
+                      </af:selectOneChoice>
+                      
+                      <af:panelGroupLayout layout="horizontal" rendered="#{
+                                                                           graphNumberFormatBean.graphType=='BUBBLE_2Y'||
+                                                                           graphNumberFormatBean.graphType=='SCATTER_2Y'||
+                                                                           graphNumberFormatBean.graphType=='POLAR'
+                                                                           }">
+                          <af:outputLabel value="X1 Label"/>
+                          <af:spacer width="20"/>
+                          <af:selectOneChoice id="socx1lap" label="AutoPrecision" value="#{graphNumberFormatBean.x1Label.autoPrecision}">
+                             <af:selectItem label="on" value="on"/>
+                             <af:selectItem label="off" value="off"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="socx1lsc" label="Scaling" value="#{graphNumberFormatBean.x1Label.scaling}">
+                             <af:selectItem label="auto" value="auto"/>
+                             <af:selectItem label="none" value="none"/>
+                             <af:selectItem label="thousand" value="thousand"/>
+                             <af:selectItem label="million" value="million"/>
+                             <af:selectItem label="billion" value="billion"/>
+                             <af:selectItem label="trillion" value="trillion"/>
+                             <af:selectItem label="quadrillion" value="quadrillion"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="socx1lpat" label="Pattern" value="#{graphNumberFormatBean.x1Label.pattern}"/>
+                      </af:panelGroupLayout>
+                      
+                      <af:panelGroupLayout layout="horizontal" rendered="#{
+                                                                           graphNumberFormatBean.graphType=='BAR_VERT_CLUST2Y'||
+                                                                           graphNumberFormatBean.graphType=='BAR_HORIZ_CLUST_2Y'||
+                                                                           graphNumberFormatBean.graphType=='AREA_VERT_ABS_SPLIT2Y'||
+                                                                           graphNumberFormatBean.graphType=='LINE_VERT_ABS_2Y'||
+                                                                           graphNumberFormatBean.graphType=='PARETO'||
+                                                                           graphNumberFormatBean.graphType=='BUBBLE_2Y'||
+                                                                           graphNumberFormatBean.graphType=='SCATTER_2Y'||
+                                                                           graphNumberFormatBean.graphType=='POLAR'||
+                                                                           graphNumberFormatBean.graphType=='RADAR_LINE'||
+                                                                           graphNumberFormatBean.graphType=='STOCK_OHLC_CANDLE_VOLUME'
+                                                                           }">
+                          <af:outputLabel value="Y1 Label"/>
+                          <af:spacer width="20"/>
+                          <af:selectOneChoice id="socy1lap" label="AutoPrecision" value="#{graphNumberFormatBean.y1Label.autoPrecision}">
+                             <af:selectItem label="on" value="on"/>
+                             <af:selectItem label="off" value="off"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="socy1lsc" label="Scaling" value="#{graphNumberFormatBean.y1Label.scaling}">
+                             <af:selectItem label="auto" value="auto"/>
+                             <af:selectItem label="none" value="none"/>
+                             <af:selectItem label="thousand" value="thousand"/>
+                             <af:selectItem label="million" value="million"/>
+                             <af:selectItem label="billion" value="billion"/>
+                             <af:selectItem label="trillion" value="trillion"/>
+                             <af:selectItem label="quadrillion" value="quadrillion"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="socy1lpat" label="Pattern" value="#{graphNumberFormatBean.y1Label.pattern}" />
+                      </af:panelGroupLayout>
+                      
+                      <af:panelGroupLayout layout="horizontal" rendered="#{
+                                                                           graphNumberFormatBean.graphType=='BAR_VERT_CLUST2Y'||
+                                                                           graphNumberFormatBean.graphType=='BAR_HORIZ_CLUST_2Y'||
+                                                                           graphNumberFormatBean.graphType=='AREA_VERT_ABS_SPLIT2Y'||
+                                                                           graphNumberFormatBean.graphType=='LINE_VERT_ABS_2Y'||
+                                                                           graphNumberFormatBean.graphType=='PARETO'||
+                                                                           graphNumberFormatBean.graphType=='BUBBLE_2Y'||
+                                                                           graphNumberFormatBean.graphType=='SCATTER_2Y' ||
+                                                                           graphNumberFormatBean.graphType=='STOCK_OHLC_CANDLE_VOLUME'
+                                                                           }">                       
+                                                                           
+                          <af:outputLabel value="Y2 Label"/>
+                          <af:spacer width="20"/>
+                          <af:selectOneChoice id="socy2lap" label="AutoPrecision" value="#{graphNumberFormatBean.y2Label.autoPrecision}">
+                             <af:selectItem label="on" value="on"/>
+                             <af:selectItem label="off" value="off"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="socy2lsc" label="Scaling" value="#{graphNumberFormatBean.y2Label.scaling}">
+                             <af:selectItem label="auto" value="auto"/>
+                             <af:selectItem label="none" value="none"/>
+                             <af:selectItem label="thousand" value="thousand"/>
+                             <af:selectItem label="million" value="million"/>
+                             <af:selectItem label="billion" value="billion"/>
+                             <af:selectItem label="trillion" value="trillion"/>
+                             <af:selectItem label="quadrillion" value="quadrillion"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="socy2lpat" label="Pattern" value="#{graphNumberFormatBean.y2Label.pattern}"/>
+                      </af:panelGroupLayout>
+                      
+                      <af:panelGroupLayout layout="horizontal" rendered="#{
+                                                                           graphNumberFormatBean.graphType=='FUNNEL'||
+                                                                           graphNumberFormatBean.graphType=='PIE'||
+                                                                           graphNumberFormatBean.graphType=='RING'
+                                                                           }">
+                          <af:outputLabel value="Slice Label"/>
+                          <af:spacer width="20"/>
+                          <af:selectOneChoice id="socslap" label="AutoPrecision" value="#{graphNumberFormatBean.sliceLabel.autoPrecision}">
+                             <af:selectItem label="on" value="on"/>
+                             <af:selectItem label="off" value="off"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="socslsc" label="Scaling" value="#{graphNumberFormatBean.sliceLabel.scaling}">
+                             <af:selectItem label="auto" value="auto"/>
+                             <af:selectItem label="none" value="none"/>
+                             <af:selectItem label="thousand" value="thousand"/>
+                             <af:selectItem label="million" value="million"/>
+                             <af:selectItem label="billion" value="billion"/>
+                             <af:selectItem label="trillion" value="trillion"/>
+                             <af:selectItem label="quadrillion" value="quadrillion"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="socslpat" label="Pattern" value="#{graphNumberFormatBean.sliceLabel.pattern}"/>
+                      </af:panelGroupLayout>
+                      
+                      
+                      <af:panelGroupLayout layout="horizontal" rendered="#{
+                                                                           graphNumberFormatBean.graphType=='BUBBLE_2Y'||
+                                                                           graphNumberFormatBean.graphType=='SCATTER_2Y'||
+                                                                           graphNumberFormatBean.graphType=='POLAR'
+                                                                           }">
+                          <af:outputLabel value="X1 Format"/>
+                          <af:spacer width="20"/>
+                          <af:selectOneChoice id="socx1fap" label="AutoPrecision" value="#{graphNumberFormatBean.x1Format.autoPrecision}">
+                             <af:selectItem label="on" value="on"/>
+                             <af:selectItem label="off" value="off"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="socx1fsc" label="Scaling" value="#{graphNumberFormatBean.x1Format.scaling}">
+                             <af:selectItem label="auto" value="auto"/>
+                             <af:selectItem label="none" value="none"/>
+                             <af:selectItem label="thousand" value="thousand"/>
+                             <af:selectItem label="million" value="million"/>
+                             <af:selectItem label="billion" value="billion"/>
+                             <af:selectItem label="trillion" value="trillion"/>
+                             <af:selectItem label="quadrillion" value="quadrillion"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="socx1fpat" label="Pattern" value="#{graphNumberFormatBean.x1Format.pattern}"/>
+                      </af:panelGroupLayout>
+                      
+                      <af:panelGroupLayout layout="horizontal" rendered="#{
+                                                                           graphNumberFormatBean.graphType=='BAR_VERT_CLUST2Y'||
+                                                                           graphNumberFormatBean.graphType=='BAR_HORIZ_CLUST_2Y'||
+                                                                           graphNumberFormatBean.graphType=='AREA_VERT_ABS_SPLIT2Y'||
+                                                                           graphNumberFormatBean.graphType=='LINE_VERT_ABS_2Y'||
+                                                                           graphNumberFormatBean.graphType=='PARETO'||
+                                                                           graphNumberFormatBean.graphType=='BUBBLE_2Y'||
+                                                                           graphNumberFormatBean.graphType=='SCATTER_2Y'||
+                                                                           graphNumberFormatBean.graphType=='POLAR'||
+                                                                           graphNumberFormatBean.graphType=='RADAR_LINE'||
+                                                                           graphNumberFormatBean.graphType=='STOCK_OHLC_CANDLE_VOLUME'
+                                                                           }">
+                          <af:outputLabel value="Y1 Format"/>
+                          <af:spacer width="20"/>
+                          <af:selectOneChoice id="socy1fap" label="AutoPrecision" value="#{graphNumberFormatBean.y1Format.autoPrecision}">
+                             <af:selectItem label="on" value="on"/>
+                             <af:selectItem label="off" value="off"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="socy1fsc" label="Scaling" value="#{graphNumberFormatBean.y1Format.scaling}">
+                             <af:selectItem label="auto" value="auto"/>
+                             <af:selectItem label="none" value="none"/>
+                             <af:selectItem label="thousand" value="thousand"/>
+                             <af:selectItem label="million" value="million"/>
+                             <af:selectItem label="billion" value="billion"/>
+                             <af:selectItem label="trillion" value="trillion"/>
+                             <af:selectItem label="quadrillion" value="quadrillion"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="socy1fpat" label="Pattern" value="#{graphNumberFormatBean.y1Format.pattern}"/>
+                      </af:panelGroupLayout>
+                         
+                         
+                      <af:panelGroupLayout layout="horizontal" rendered="#{
+                                                                           graphNumberFormatBean.graphType=='BAR_VERT_CLUST2Y'||
+                                                                           graphNumberFormatBean.graphType=='BAR_HORIZ_CLUST_2Y'||
+                                                                           graphNumberFormatBean.graphType=='AREA_VERT_ABS_SPLIT2Y'||
+                                                                           graphNumberFormatBean.graphType=='LINE_VERT_ABS_2Y'||
+                                                                           graphNumberFormatBean.graphType=='PARETO'||
+                                                                           graphNumberFormatBean.graphType=='BUBBLE_2Y'||
+                                                                           graphNumberFormatBean.graphType=='SCATTER_2Y'
+                                                                           }">
+                          <af:outputLabel value="Y2 Format"/>
+                          <af:spacer width="20"/>
+                          <af:selectOneChoice id="socy2fap" label="AutoPrecision" value="#{graphNumberFormatBean.y2Format.autoPrecision}">
+                             <af:selectItem label="on" value="on"/>
+                             <af:selectItem label="off" value="off"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="socy2fsc" label="Scaling" value="#{graphNumberFormatBean.y2Format.scaling}">
+                             <af:selectItem label="auto" value="auto"/>
+                             <af:selectItem label="none" value="none"/>
+                             <af:selectItem label="thousand" value="thousand"/>
+                             <af:selectItem label="million" value="million"/>
+                             <af:selectItem label="billion" value="billion"/>
+                             <af:selectItem label="trillion" value="trillion"/>
+                             <af:selectItem label="quadrillion" value="quadrillion"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="socy2fpat" label="Pattern" value="#{graphNumberFormatBean.y2Format.pattern}"/>
+                      </af:panelGroupLayout>
+                      
+                      <af:panelGroupLayout layout="horizontal" rendered="#{graphNumberFormatBean.graphType=='BUBBLE_2Y'||
+                                                                           graphNumberFormatBean.graphType=='BUBBLE'}">
+                          <af:outputLabel value="Z Format"/>
+                          <af:spacer width="20"/>
+                          <af:selectOneChoice id="soczfap" label="AutoPrecision" value="#{graphNumberFormatBean.ZFormat.autoPrecision}">
+                             <af:selectItem label="on" value="on"/>
+                             <af:selectItem label="off" value="off"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="soczfsc" label="Scaling" value="#{graphNumberFormatBean.ZFormat.scaling}">
+                             <af:selectItem label="auto" value="auto"/>
+                             <af:selectItem label="none" value="none"/>
+                             <af:selectItem label="thousand" value="thousand"/>
+                             <af:selectItem label="million" value="million"/>
+                             <af:selectItem label="billion" value="billion"/>
+                             <af:selectItem label="trillion" value="trillion"/>
+                             <af:selectItem label="quadrillion" value="quadrillion"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="soczfpat" label="Pattern" value="#{graphNumberFormatBean.ZFormat.pattern}"/>
+                      </af:panelGroupLayout>
+                      
+                      <af:panelGroupLayout layout="horizontal" rendered="#{graphNumberFormatBean.graphType=='STOCK_OHLC_CANDLE_VOLUME'}">
+                          <af:outputLabel value="StockVolume"/>
+                          <af:spacer width="20"/>
+                          <af:selectOneChoice id="socsvfap" label="AutoPrecision" value="#{graphNumberFormatBean.stockVolumeFormat.autoPrecision}">
+                             <af:selectItem label="on" value="on"/>
+                             <af:selectItem label="off" value="off"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="socsvfsc" label="Scaling" value="#{graphNumberFormatBean.stockVolumeFormat.scaling}">
+                             <af:selectItem label="auto" value="auto"/>
+                             <af:selectItem label="none" value="none"/>
+                             <af:selectItem label="thousand" value="thousand"/>
+                             <af:selectItem label="million" value="million"/>
+                             <af:selectItem label="billion" value="billion"/>
+                             <af:selectItem label="trillion" value="trillion"/>
+                             <af:selectItem label="quadrillion" value="quadrillion"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="socsvfpat" label="Pattern" value="#{graphNumberFormatBean.stockVolumeFormat.pattern}"/>
+                          
+                          
+                          
+                      </af:panelGroupLayout>
+                      <af:commandButton text="Submit"/>
+                      
+                      <af:outputLabel value="AutoPrecison: if it is 'on', it automatically determines the number of fraction digits"/>
+                      <af:outputLabel value="Scaling: The number will scale to this value"/>
+                      <af:outputLabel value="Pattern: Number format Pattern"/>
+                  </af:panelGroupLayout>
+                  
+              </af:panelGroupLayout>
+              <!-- END FEATURE DEMO -->
+            </af:panelGroupLayout>
+      </f:facet> 
+      <f:facet name="centerBottomCollapsible">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <!-- START SEE ALSO LINKS -->
+            <af:outputText value="See also:"/>
+            <af:panelList>              
+              <af:goLink text="Graph Number Format Backing Bean" destination="/resources/sourceCode/feature/rich/graph/GraphNumberFormatBean.javasource" id="gl1"/>
+            </af:panelList>
+            <!-- END SEE ALSO LINKS -->
+          </af:panelGroupLayout>
+       </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

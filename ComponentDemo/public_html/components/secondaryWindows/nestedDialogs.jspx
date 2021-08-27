@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+    <f:view>
+      <af:document title="nested Dialog Demo" binding="#{templateBindings.documentComponent}"
+                   smallIconSource="#{aboutBean.smallIconSource}"
+                   largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+          <af:pageTemplate id="dmoTpl"
+                           viewId="#{templates.componentTemplate}">
+               <f:attribute name="tagName" value="dialog"/>
+               <f:attribute name="visualDesignName" value=""/>
+               <f:attribute name="demoKind" value="component"/>
+               <f:attribute name="customEditorPresent" value="true"/>
+               <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                         <af:popup id="popupProfile"
+                                   contentDelivery="lazyUncached">
+                              <af:dialog id="dialog" title="Profile"
+                                         type="okCancel"
+                                         affirmativeTextAndAccessKey="Save"
+                                         dialogListener="#{tabbedDialog.dialogListener}"
+                                         stretchChildren="none" resize="off">
+                                   <af:panelFormLayout id="pfl1">
+                                        <af:inputText id="firstName"
+                                                      label="First"
+                                                      value="#{tabbedDialog.person.firstName}"
+                                                      readOnly="true"/>
+                                        <af:inputText id="middleName"
+                                                      label="Middle"
+                                                      value="#{tabbedDialog.person.middleName}"
+                                                      readOnly="true"/>
+                                        <af:inputText id="lastName" label="Last"
+                                                      value="#{tabbedDialog.person.lastName}"
+                                                      readOnly="true"/>
+                                   </af:panelFormLayout>
+                                   <f:facet name="buttonBar">
+                                        <af:panelGroupLayout id="pgl2">
+                                             <af:button text="Employee Info"
+                                                               id="cb1">
+                                                  <af:showPopupBehavior popupId="popupEmployeeInfo"/>
+                                                  <af:clientAttribute name="readOnly"
+                                                                      value="false"/>
+                                             </af:button>
+                                        </af:panelGroupLayout>
+                                   </f:facet>
+                              </af:dialog>
+                         </af:popup>
+                         <af:popup id="popupAddress"
+                                   contentDelivery="lazyUncached"
+                                   launcherVar="source" eventContext="launcher">
+                              <af:setPropertyListener from="#{source.attributes.readOnly}"
+                                                      to="#{tabbedDialog.readOnly}"
+                                                      type="popupFetch"/>
+                              <af:dialog title="Profile: Address"
+                                         type="okCancel" id="d2" stretchChildren="none" resize="off">
+                                   <af:panelFormLayout id="pfl2">
+                                        <af:inputText id="address1"
+                                                      label="Address 1"
+                                                      value="#{tabbedDialog.person.contactInfo.address.address1}"
+                                                      required="true"
+                                                      readOnly="#{tabbedDialog.readOnly eq 'true'}"/>
+                                        <af:inputText id="address2"
+                                                      label="Address 2"
+                                                      value="#{tabbedDialog.person.contactInfo.address.address2}"
+                                                      readOnly="#{tabbedDialog.readOnly eq 'true'}"/>
+                                        <af:inputText id="city" label="City"
+                                                      required="true"
+                                                      value="#{tabbedDialog.person.contactInfo.address.city}"
+                                                      readOnly="#{tabbedDialog.readOnly eq 'true'}"/>
+                                        <af:selectOneChoice id="state"
+                                                            required="true"
+                                                            label="State"
+                                                            value="#{tabbedDialog.person.contactInfo.address.state}"
+                                                            readOnly="#{tabbedDialog.readOnly eq 'true'}">
+                                             <af:selectItem value="AL"
+                                                            label="Alabama"
+                                                            id="si1"/>
+                                             <af:selectItem value="AK"
+                                                            label="Alaska"
+                                                            id="si2"/>
+                                             <af:selectItem value="AZ"
+                                                            label="Arizona"
+                                                            id="si3"/>
+                                             <af:selectItem value="AR"
+                                                            label="Arkansas"
+                                                            id="si4"/>
+                                             <af:selectItem value="CA"
+                                                            label="California"
+                                                            id="si5"/>
+                                             <af:selectItem value="CO"
+                                                            label="Colorado"
+                                                            id="si6"/>
+                                             <af:selectItem value="IL"
+                                                            label="Illinois"
+                                                            id="si7"/>
+                                        </af:selectOneChoice>
+                                        <af:inputText id="zip" label="Zip"
+                                                      required="true"
+                                                      value="#{tabbedDialog.person.contactInfo.address.zip}"
+                                                      readOnly="#{tabbedDialog.readOnly eq 'true'}"/>
+                                   </af:panelFormLayout>
+                              </af:dialog>
+                         </af:popup>
+                         <af:popup id="popupPhoneEmail"
+                                   contentDelivery="lazyUncached"
+                                   launcherVar="source" eventContext="launcher">
+                              <af:setPropertyListener from="#{source.attributes.readOnly}"
+                                                      to="#{tabbedDialog.readOnly}"
+                                                      type="popupFetch"/>
+                              <af:dialog title="Profile: Phone/Email"
+                                         type="okCancel" id="d3" stretchChildren="none" resize="off">
+                                   <af:panelFormLayout id="pfl3">
+                                        <af:inputText id="homePhone"
+                                                      label="Home Phone"
+                                                      value="#{tabbedDialog.person.contactInfo.phoneEmail.home}"
+                                                      readOnly="#{tabbedDialog.readOnly eq 'true'}"/>
+                                        <af:inputText id="cellPhone"
+                                                      label="Cell Phone"
+                                                      value="#{tabbedDialog.person.contactInfo.phoneEmail.cell}"
+                                                      readOnly="#{tabbedDialog.readOnly eq 'true'}"/>
+                                        <af:inputText id="emailPhone"
+                                                      label="Email"
+                                                      required="true"
+                                                      readOnly="#{tabbedDialog.readOnly eq 'true'}"
+                                                      value="#{tabbedDialog.person.contactInfo.phoneEmail.email}"/>
+                                   </af:panelFormLayout>
+                              </af:dialog>
+                         </af:popup>
+                         <af:popup id="popupEmployeeInfo"
+                                   contentDelivery="lazyUncached"
+                                   launcherVar="source" eventContext="launcher">
+                              <af:setPropertyListener from="#{source.attributes.readOnly}"
+                                                      to="#{tabbedDialog.readOnly}"
+                                                      type="popupFetch"/>
+                              <af:dialog title="Profile: Employee Info"
+                                         type="okCancel" id="d4" stretchChildren="none" resize="off">
+                                   <af:panelFormLayout id="pfl4">
+                                        <af:inputText id="empId" label="ID"
+                                                      value="#{tabbedDialog.person.employeeInfo.empId}"
+                                                      readOnly="#{tabbedDialog.readOnly eq 'true'}"/>
+                                        <af:inputText id="category"
+                                                      label="Category"
+                                                      value="#{tabbedDialog.person.employeeInfo.category}"
+                                                      readOnly="#{tabbedDialog.readOnly eq 'true'}"/>
+                                        <af:inputText id="grade" label="Grade"
+                                                      value="#{tabbedDialog.person.employeeInfo.grade}"
+                                                      readOnly="#{tabbedDialog.readOnly eq 'true'}"/>
+                                   </af:panelFormLayout>
+                                   <f:facet name="buttonBar">
+                                        <af:panelGroupLayout id="pgl3">
+                                             <af:button text="Address"
+                                                               id="cb2">
+                                                  <af:showPopupBehavior popupId="popupAddress"/>
+                                                  <af:clientAttribute name="readOnly"
+                                                                      value="#{tabbedDialog.readOnly}"/>
+                                             </af:button>
+                                             <af:button text="Phone/Email"
+                                                               id="cb3">
+                                                  <af:showPopupBehavior popupId="popupPhoneEmail"/>
+                                                  <af:clientAttribute name="readOnly"
+                                                                      value="#{tabbedDialog.readOnly}"/>
+                                             </af:button>
+                                        </af:panelGroupLayout>
+                                   </f:facet>
+                              </af:dialog>
+                         </af:popup>
+                         <af:popup id="popupNoteWindow"
+                                   contentDelivery="lazyUncached"
+                                   launcherVar="source" eventContext="launcher">
+                              <af:setPropertyListener from="#{source.attributes.rowid}"
+                                                      to="#{tabbedDialog.currentRowid}"
+                                                      type="popupFetch"/>
+                              <af:noteWindow id="nw1">
+                                   <af:panelHeader text="#{tabbedDialog.person.fullName}"
+                                                   id="ph1">
+                                        <af:panelList id="pl1">
+                                             <af:commandLink text="Profile"
+                                                             id="cl1">
+                                                  <af:showPopupBehavior popupId="popupProfile"
+                                                                        triggerType="action"/>
+                                                  <af:clientAttribute name="readOnly"
+                                                                      value="false"/>
+                                             </af:commandLink>
+                                             <af:commandLink text="Employee Info"
+                                                             id="cl2">
+                                                  <af:showPopupBehavior popupId="popupEmployeeInfo"
+                                                                        triggerType="action"/>
+                                                  <af:clientAttribute name="readOnly"
+                                                                      value="true"/>
+                                             </af:commandLink>
+                                             <af:commandLink text="Phone/Email"
+                                                             id="cl3">
+                                                  <af:showPopupBehavior popupId="popupPhoneEmail"
+                                                                        triggerType="action"/>
+                                                  <af:clientAttribute name="readOnly"
+                                                                      value="true"/>
+                                             </af:commandLink>
+                                             <af:commandLink text="Address"
+                                                             id="cl4">
+                                                  <af:showPopupBehavior popupId="popupAddress"
+                                                                        triggerType="action"/>
+                                                  <af:clientAttribute name="readOnly"
+                                                                      value="true"/>
+                                             </af:commandLink>
+                                        </af:panelList>
+                                   </af:panelHeader>
+                              </af:noteWindow>
+                         </af:popup>
+                         <af:table var="person" value="#{tabbedDialog.persons}"
+                                   inlineStyle="width:300px;height:100px"
+                                   id="t1">
+                              <af:column id="name">
+                                   <f:facet name="header">
+                                        <af:outputText value="Name" id="ot1"/>
+                                   </f:facet>
+                                   <af:commandLink text="#{person.fullName}"
+                                                   id="cl5">
+                                        <af:showPopupBehavior popupId="::popupNoteWindow"
+                                                              triggerType="mouseHover"/>
+                                        <af:showPopupBehavior popupId="::popupProfile"
+                                                              triggerType="action"/>
+
+                                        <af:clientAttribute name="rowid"
+                                                            value="#{person.rowId}"/>
+                                   </af:commandLink>
+                              </af:column>
+                              <af:column id="email">
+                                   <f:facet name="header">
+                                        <af:outputText value="Email" id="ot2"/>
+                                   </f:facet>
+                                   <af:outputText value="#{person.contactInfo.phoneEmail.email}"
+                                                  id="ot3"/>
+
+                              </af:column>
+                              <af:column id="address1Column">
+                                   <f:facet name="header">
+                                        <af:outputText value="Address1"
+                                                       id="ot4"/>
+                                   </f:facet>
+                                   <af:outputText value="#{person.contactInfo.address.address1}"
+                                                  id="ot5"/>
+                              </af:column>
+                         </af:table>
+                         <af:panelGroupLayout layout="vertical"
+                                              inlineStyle="margin-top:10px"
+                                              id="pgl4">
+                              <af:outputText value="See also:" id="ot6"/>
+                              <af:goLink text="Dialog With panelTabbed"
+                                         destination="tabbedDialog.jspx"
+                                         id="gl1"/>
+                         </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+               </f:facet>
+          </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

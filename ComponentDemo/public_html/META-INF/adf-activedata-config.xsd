@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+            xmlns:adf="http://xmlns.oracle.com/adf/config"
+            xmlns:ads="http://xmlns.oracle.com/adf/activedata/config"
+            targetNamespace="http://xmlns.oracle.com/adf/activedata/config"
+            elementFormDefault="qualified">
+
+ <import namespace="http://xmlns.oracle.com/adf/config" schemaLocation="config.xsd"></import>
+
+ <complexType name="AdfActiveDataConfig">
+  <all minOccurs="0">
+    <!--
+      Latency threshold (in ms): active data messages with network delays
+      greater than this threshold will be treated as being 'late'
+    -->
+   <element name="latency-threshold" type="int" default="10000"/>
+   
+    <!--
+      Frequency (in ms) for sending keep-alive messages when no events
+      are generated
+    -->
+   <element name="keep-alive-interval" type="int" default="10000"/>
+
+    <!--
+      Flag to indicate whether client should use polling
+    -->
+   <element name="use-polling" type="boolean" default="false"/>
+
+    <!--
+      Frequency (in ms) of the poll request; only used when clients are set
+      to poll (usePolling set to true)
+    -->
+   <element name="polling-interval" type="int" default="5000"/>
+
+    <!--
+      Maximum period of time (in ms) a client will keep attempting to 
+      reconnect to server upon getting disconnected
+    -->
+   <element name="max-reconnect-attempt-time" type="int" default="1800000"/>
+   
+    <!--
+      Time interval (in ms) to wait between reconnect attempts
+    -->
+   <element name="reconnect-wait-time" type="int" default="10000"/>
+    
+  </all>
+ </complexType>
+
+ <element name="adf-activedata-config" type="ads:AdfActiveDataConfig"
+              substitutionGroup="adf:adf-config-child"/>
+ <annotation>
+   <documentation>
+      ADF Active Data Configuration Document schema.
+   </documentation>
+ </annotation>
+</schema>

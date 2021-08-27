@@ -1,0 +1,418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:map&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:map&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:map map map</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.geoMap.UIGeoMap<br>
+<b>Component type:</b> oracle.dss.adf.geoMap.GeoMap<br></p>
+<p>The Map component provides the ablity to display different maps and enables high performance panning, zooming and display of different layers (aka Themes) of data. Unlike other ADF Faces component, the Map component itself doesn't take a data model via the 'value' attribute. Instead, it only needs a configuration that contains a URL to a Map Viewerer service and optionally a Geo-Coder service if address data will have to be converted to longitutde and latitude.</p>
+<p>Each layer/theme on the Map has its own data model which can be set on the theme via the 'value' attribute. The Map provides a very flexible way to show data from different sources on top of the same base map so it's easy to view different data sets on a single Map component.</p>
+<p>The base maps displayed on the Map component include geographic and political features such as rivers and roads. If these features are not required on your maps, then using the <a href="dvt_thematicMap.html">&lt;dvt:thematicMap&gt;</a> tag might be better suited for your application. Note, however, that the <a href="dvt_mapToolbar.html">&lt;dvt:mapToolbar&gt;</a> is only available for use with the &lt;dvt:map&gt; tag.</p>
+<p>You can get started quickly by using the Hosted service provided by Oracle or if you have an existing Map Viewer instance with your own base maps you can use that as well.</p>
+<p>Quick Links: <a href="#hosted">Hosted Services</a> | <a href="#themes">Themes</a> | <a href="#toolbar">Toolbar</a> | <a href="#selections">Selections</a> | <a href="#overview">OverviewMap</a> | <a href="#legend">Legend</a> | <a href="#autoZoom">AutoZoom</a> |</p>
+<h4>Hosted Services<a name="hosted" id="hosted"></a></h4>
+<p>To get started, you can use Oracle's hosted eLocation services when you create a configuration for the Map component if you do not have an existing Map Viewer service available. The URLs for theses services are the following:</p>
+<ul>
+<li>Map Viewer: http://elocation.oracle.com/mapviewer</li>
+<li>Geocoder: http://elocation.oracle.com/geocoder/gcserver</li>
+</ul>
+<p>You should use ELOCATION_MERCATOR.WORLD_MAP for the baseMapName.</p>
+<p>You can also choose to use your own Map Viewer &amp; Geocoder instances if they are available. These instances must use Map Viewer version 11 or higher. You should use the name of the map tile's layer on your mapviewer as the baseMapName, which should be in the form of data-source-name.map-tile-layer-name.</p>
+<h4>Model<a name="model" id="model"></a></h4>
+<p>To show your data on the map, you need to add <a name="themes" id="themes">themes</a>to your map. Your data should be binded to the value attribute of the themes. Your data should be an instance of <code>oracle.adf.view.faces.bi.model.GeoMapDataModel</code>.</p>
+<h4>Themes</h4>
+<p>The map supports display of multiple layers of information called themes, which could be one of the following types:</p>
+<table class="oac_no_warn" summary="Layout table... probably." class="bodyTable">
+<tr class="a">
+<th>Theme Types</th>
+<th>Description and Example</th>
+<th>Sample Image</th>
+</tr>
+<tr class="a">
+<td nowrap="true"><a href="dvt_mapColorTheme.html">Color Theme</a></td>
+<td>The map will color different regions on the map based on the data associated with the region. For example, you can build a US map that color states based on the sales number of each state using the Color Theme</td>
+<td width='147' height='98'><img src="../images/ColorThemeThumbnail.png" width="147" height="98" alt=""></td>
+</tr>
+<tr class="b">
+<td nowrap="true"><a href="dvt_mapBarGraphTheme.html">Bar Graph Theme</a></td>
+<td>The map will draw a bar graph for each of the region in the underlying data. For example, you can build a map that shows a bar chart that shows the sales figure for each state.</td>
+<td width='147' height='98'><img src="../images/BarChartThumbnail.png" width="147" height="98" alt=""></td>
+</tr>
+<tr class="b">
+<td nowrap="true"><a href="dvt_mapPieGraphTheme.html">Pie Graph Theme</a></td>
+<td>The map will draw a pie graph for each of the region in the underlying data.</td>
+<td width='147' height='98'><img src="../images/PieChartThumbnail.png" width="147" height="98" alt=""></td>
+</tr>
+<tr class="b">
+<td nowrap="true"><a href="dvt_mapPointTheme.html">Point Theme</a></td>
+<td>The map will draw an image, or a HTML tag for each point in the underlying data.</td>
+<td width='147' height='98'><img src="../images/PointThemeThumbnail.png" width="147" height="98" alt=""></td>
+</tr>
+<tr class="b">
+<td nowrap="true"><a href="dvt_predefinedTheme.html">Predefined Theme</a></td>
+<td>The map will draw a theme that is defined using the Map Admininstrator tool on top of the map.</td>
+</tr>
+</table>
+<h4>Map Toolbar<a name="toolbar" id="toolbar"></a></h4>
+<p>To use the map toolbar, you need to add the <a href="dvt_mapToolbar.html">&lt;dvt:mapToolbar&gt;</a> to your page, and set the mapId attribute to the id of the map. The mapToolbar tag is not a child tag of the map.<br>
+<br>
+The toolbar lets users pan, zoom, marquee zoom on the map, turn themes off and on, make selections on the map, calculate distance and area, display legend, or show the coordinate of the mouse cursor location of the map.</p>
+<h4>Selections<a name="selections" id="selections"></a></h4>
+<p>The toolbar lets users make rectangle, circle, polygon or point selections on the map. You can control the color of the selected region through the selectionFillColor, selectionStrokeColor and selectionFillOpacity. You can add your listener code through the selectionListener attribute to work on the selected data.</p>
+<h4>Overview Map<a name="overview" id="overview"></a></h4>
+<p>By default, the map has an overview map. You can set the width, height and visibility of the overview map by the <a href="dvt_mapOverview.html">&lt;dvt:mapOverview&gt;</a> tag. The <a href="dvt_mapOverview.html">&lt;dvt:mapOverview&gt;</a> tag is a child tag of the map.</p>
+<h4>Legend<a name="legend" id="legend"></a></h4>
+<p>The map has a legend which can be displayed by default or launched via the toolbar. You can customize the appearance of the legend by the <a href="dvt_mapLegend.html">&lt;dvt:mapLegend&gt;</a> tag.</p>
+<h4>AutoZoom<a name="autoZoom" id="autoZoom"></a></h4>
+<p>The map has an autozoom feature that let the map to focus on the data of a theme. To use this feature, you need to set the autoZoomThemeId to the theme that you want the map to focus on. The map supports two autozoom strategies:</p>
+<ul>
+<li>&lt;MAXZOOM&gt; - The map will zoom down to the maximum level where all objects in autoZoomThemeId is visible. This is the default value.</li>
+<li>&lt;CENTERATZOOMLEVEL&gt; - The map will center on the theme in autoZoomThemeId, and will use the value in the mapZoom attribute as the starting zoom level.</li>
+</ul>
+<h4>Sample</h4>
+<pre>
+   &lt;dvt:mapToolbar mapId="map1"/&gt;<br>   &lt;dvt:map startingY="0.0" startingX="0.0" mapZoom="0"
+            mapServerConfigId="mapConfig1"
+            baseMapName="ELOCATION_MERCATOR.WORLD_MAP"
+            inlineStyle="width:100%; height:600px;" id="map1"
+            autoZoomThemeId="mapColorTheme1"&gt;
+     <br>     &lt;dvt:mapOverview/&gt;
+     <br>     &lt;dvt:mapColorTheme id="mapColorTheme1" themeName="MAP_STATES_NAME" 
+                        value="#{geoMapBacking.colorModel}"
+                        minColor="#33FF33" maxColor="#FF3333" 
+                        bucketCount="5"/&gt;
+     <br>     &lt;dvt:mapPieGraphTheme id="mapPieTheme1" themeName="MAP_STATES_NAME"
+                           pieRadius="10"
+                           locationColumn="POLYGON_NAME"
+                           value="#{geoMapBacking.barPieModel}"/&gt;
+     <br>     &lt;dvt:mapPointTheme id="pointTheme" value="#{geoMapBacking.pointModel}"/&gt;
+ 
+   &lt;/dvt:map&gt;
+       
+</pre>
+<h4>Setting Width and Height</h4>
+<p>The inlineStyle attribute can be used to specify a map's width and height. For example, inlineStyle="width:600px;height:400px" or inlineStyle="width:100%;height:400px".</p>
+<h4>Relationship with other tags</h4>
+<p>The &lt;dvt:map&gt; tag can have the following children:</p>
+<ul>
+<li><a href="dvt_mapLegend.html">&lt;dvt:mapLegend&gt;</a></li>
+<li><a href="dvt_mapOverview.html">&lt;dvt:mapOverview&gt;</a></li>
+<li><a href="dvt_mapColorTheme.html">&lt;dvt:mapColorTheme&gt;</a></li>
+<li><a href="dvt_mapPointTheme.html">&lt;dvt:mapPointTheme&gt;</a></li>
+<li><a href="dvt_mapBarGraphTheme.html">&lt;dvt:mapBarGraphTheme&gt;</a></li>
+<li><a href="dvt_mapPieGraphTheme.html">&lt;dvt:mapPieGraphTheme&gt;</a></li>
+</ul>
+<h4>Geometry Management</h4>
+<ul>
+<li>This component can be stretched by a parent layout component that stretches its children, e.g. panelStretchLayout, panelSplitter</li>
+<li>This component does stretch to fill up the browser's viewport when it is the "sole visual root component" in the component tree.</li>
+<li>When NOT stretched, this component will be displayed in its default dimensions which are provided by the skin. This can be modified by applying a dimension using the inlineStyle or styleClass attributes.</li>
+<li>This component does not stretch its children.</li>
+</ul>
+<div class="section">
+<h2><a name="Screen_Shots" id="Screen_Shots">Screen Shot(s)</a></h2>
+<div class="screenshot"><br>
+<img src="./images/map.png" alt="Map screenshot"><br></div>
+<br></div>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.MapSelectionEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">SelectionEvent will be fired when the user finished defining a selected region on the map, or when the user unselected the region. Users can use the rectangle tool, circle tool, polygon tool, or point tool to select a region, and users can right click on the map to unselect the region</td>
+</tr>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Supported Facets</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="27%" align="left" valign="bottom" id="fcName">Name</th>
+<th width="73%" align="left" valign="bottom" id="fcDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="fcName">popup</td>
+<td align="left" headers="fcDesc">The popup facet for left click. It usually contains a dialog or a panelWindow. This facet supports only a single child component.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">rtPopup</td>
+<td align="left" headers="fcDesc">The popup facet for right click. It usually contains a menu. This facet supports only a single child component.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">autoZoomStrategy</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> MAXZOOM, CENTERATZOOMLEVEL<br>
+<strong>Default Value:</strong> MAXZOOM<br>
+<br>
+This attribute determines how the map will adjust the center and zoom level. Valid values are:
+<ul>
+<li>MAXZOOM - The map will zoom down to the maximum level where all objects in autoZoomThemeId is visible. This is the default value.</li>
+<li>CENTERATZOOMLEVEL - The map will center on the theme in autoZoomThemeId, and will use the value in the mapZoom attribute as the starting zoom level.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">autoZoomThemeId</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the id of the theme where the map will use to set its center and zoom level when the map starts. If the autoZoomStrategy is MAXZOOM, the map will zoom down to the maximum level where all objects in the theme is visible. If the autoZoomStrategy is CENTERATZOOMLEVEL, the map will center on the theme, and will use the value in the mapZoom attribute as the starting zoom level.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">baseMapName</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the name of the baseMap for the map. The name is in the form of data-source-name.cache-instance-name. Cache-instance-name specifes the name of the map cache instance, and data-source-name specifies the name of the MapViewer data source. Refer to mapviewer's documentation for detail.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">Binding reference to store the UIGeoMap component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">copyrightText</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the copyright text of the map.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customizationId</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. The 'id' attribute should be used when applying persistent customizations. This attribute will be removed in the next release.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">hybridBaseMapName</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the name of the baseMap for the hybrid image map. The name is in the same format as baseMapName.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">The identifier for the map component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the inline style of the map's outer DOM element. It can be used to control the size/position, or background color of the map.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">mapServerConfigId</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the name of the configuration file that contains the URLs for remote map server and geocoded server</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">mapZoom</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 0<br>
+<br>
+Specifies the beginning zoom level of the map. The zoom levels are defined in the map cache instance as part of the base map. The default zoom level is 0.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the ids of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">satelliteBaseMapName</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the name of the baseMap for the satellite image map. The name is in the same format as baseMapName.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionFillColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> #49E0F6<br>
+<br>
+Specifies the fill color for the selected region when users make selection on a colorTheme, barGraphTheme and pieGraphTheme, using the rectangle tool, circle tool, polygon tool or point tool on the mapToolbar.. Valid values are RGB hexadecimal. For example, color="#000000" for black. The default value is #49E0F6</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionListener</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.event.MapSelectionListener</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">A method reference to a selection listener Refers to a backing bean method that takes MapSelectionEvent as an argument The MapSelectionEvent contains the information on the selected region.<br>
+<br>
+<pre>
+public void processSelection(MapSelectionEvent mapSelectionEvent) { 
+    Iterator iterator = mapSelectionEvent.getIterator(); 
+    while (iterator.hasNext()) { 
+        DataContent dt = (DataContent)iterator.next(); 
+        String selectedLocation = dt.getLocationName(); 
+        System.out.println (selectedLocation); 
+    } 
+}
+        
+</pre></td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionOpacity</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 40<br>
+<br>
+Specifies the opacity of the fill color for the selected region when users make selection on a colorTheme, barGraphTheme and pieGraphTheme, using the rectangle tool, circle tool, polygon tool or point tool on the mapToolbar. Valid values are 0 to 100. 0 means 100% transparent, and 100 means no transparency. The default value is 40.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionStrokeColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> #000000<br>
+<br>
+Specifies the stroke color for the selected region when users make selection on a colorTheme, barGraphTheme and pieGraphTheme, using the rectangle tool, circle tool, polygon tool or point tool on the mapToolbar. Valid values are RGB hexadecimal. For example, color="#000000" for black. The default value is #000000</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">showInfoArea</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the user can show the information area on the map or not. The default value is true.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">showScaleBar</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> false<br>
+<br>
+Specifies whether to show the scale bar on the map or not. The default value is false.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">srid</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 8307<br>
+<br>
+Specifies the srid (spatial reference id) of all the coordinates of the map, which includes the center of the map - which defined by starting X and startingY - and all the points in the point theme. Refer to Oracle Spatial documentation for all the valid values and their meaning. The default value is 8307. For mercator projection, the value is 54004.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">startingX</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 0.0<br>
+<br>
+Specifies the X coordinate of the center of the map. The srid for the coordinate is specified in the srid attribute. If the srid attribute is not specified, this attribute assumes that its value is the longitude of the center of the map.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">startingY</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 0.0<br>
+<br>
+Specifies the Y coordinate of center of the map. The srid for the coordinate is specified in the srid attribute. If the srid attribute is not specified, this attribute assumes that its value is the latitude of the center of the map.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">summary</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a summary of this geographical map's purpose and structure for user agents rendering to non-visual media (e.g. screen readers).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">unit</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> MILES, METERS<br>
+<strong>Default Value:</strong> MILES<br>
+<br>
+Specifies the unit of measurement in the information area.
+<ul>
+<li>MILES - the information area will show distance in miles, and area in square miles. This is the default value.</li>
+<li>METERS - the information area will show distance in meters, and area in square meters.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">zoomBarPosition</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> EAST, WEST, NONE<br>
+<strong>Default Value:</strong> WEST<br>
+<br>
+Specifies the position of the zoomBar in the map. Valid values are:
+<ul>
+<li>WEST - the zoomBar will be placed on the left side of the map. This is the default value.</li>
+<li>EAST - the zoomBar will be placed on the right side of the map.</li>
+<li>NONE - no zoomBar will be shown.</li>
+</ul>
+</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

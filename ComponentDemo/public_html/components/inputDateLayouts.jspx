@@ -1,0 +1,308 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2019, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root version="1.2" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:jsp="http://java.sun.com/JSP/Page">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="inputDate Demo" binding="#{templateBindings.documentComponent}"
+                 theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputDate"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+
+            <af:panelGroupLayout id="scroll" layout="scroll">
+                <af:panelGridLayout id="grid1" binding="#{editor.component}">
+
+                    <af:gridRow id="row1" height="auto" marginTop="4px" marginBottom="50px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputText value="Desktop Mode" inlineStyle="font-size:1.5em; font-weight: bold;" />
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputText value="Mobile Mode" inlineStyle="font-size:1.5em; font-weight: bold;"/>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputText value="Compatibility Mode" inlineStyle="font-size:1.5em; font-weight: bold;"/>
+                        </af:gridCell>
+                    </af:gridRow>
+
+                    <af:gridRow id="row2" height="auto" marginTop="4px" marginBottom="50px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="a1" value="Basic component"/>
+                            <af:inputDate id="a1" layout="navigator date today compactTime timeZone" disabledDays="#{demoDate}" />
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="a2" value="Basic component"/>
+                            <af:inputDate id="a2" layout="navigator compactDate time today timeZone" disabledDays="#{demoDate}" />
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="a3" value="Basic component"/>
+                            <af:inputDate id="a3" layout="compactNavigator date compactTime timeZone" disabledDays="#{demoDate}" />
+                        </af:gridCell>
+                    </af:gridRow>
+
+
+                    <af:gridRow id="row3" height="auto" marginTop="4px" marginBottom="5px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="b1" value="Three month display"/>
+                            <af:inputDate id="b1" layout="navigator date today compactTime timeZone"  months="3"/>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="b2" value="Three month display"/>
+                            <af:inputDate id="b2" layout="navigator compactDate time today timeZone"  months="3"/>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="b3" value="Three month display"/>
+                            <af:inputDate id="b3" layout="compactNavigator date compactTime timeZone" months="3" />
+                        </af:gridCell>
+                    </af:gridRow>
+                    <af:gridRow id="row3a" height="auto" marginTop="4px" marginBottom="1px">
+                      <af:gridCell width="100%" valign="middle" halign="start" columnSpan="3">
+                        <af:outputText value="(Tip: Notice today button in the panel. Submits today to the input)" />
+                      </af:gridCell>
+                    </af:gridRow>
+                    <af:gridRow id="row3b" height="auto" marginTop="4px" marginBottom="1px">
+                      <af:gridCell width="100%" valign="middle" halign="start" columnSpan="3">
+                        <af:outputText value="(Tip: Notice that in multi mode, the grid does not show dates from the previous and next month.)" />
+                      </af:gridCell>
+                    </af:gridRow>
+                    <af:gridRow id="row3c" height="auto" marginTop="4px" marginBottom="50px">
+                      <af:gridCell width="100%" valign="middle" halign="start" columnSpan="3">
+                        <af:outputText value="(Tip: Resize your browser window to reduce its width and refresh the page to see the months reduce to fit screen width. This is beta and not fine tuned.)" />
+                      </af:gridCell>
+                    </af:gridRow>
+
+
+                    <af:gridRow id="row6" height="auto" marginTop="4px" marginBottom="5px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="e1" value="Date + 12 hour time + time zone"/>
+                            <af:inputDate id="e1" layout="navigator date today compactTime timeZone"  >
+                               <af:convertDateTime pattern="yyyy/MM/dd hh:mm:ss a z" locale="th_TH"/>
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="e2" value="Date + 12 hour time + time zone"/>
+                            <af:inputDate id="e2" layout="navigator compactDate time today timeZone" months="2" >
+                               <af:convertDateTime pattern="yyyy/MM/dd hh:mm:ss a z"  locale="th_TH"/>
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="e3" value="Date + 12 hour time + time zone"/>
+                            <af:inputDate id="e3" layout="compactNavigator date compactTime timeZone"  >
+                               <af:convertDateTime pattern="yyyy/MM/dd hh:mm:ss a z" locale="th_TH" />
+                            </af:inputDate>
+                        </af:gridCell>
+                    </af:gridRow>
+                    <af:gridRow id="row6a" height="auto" marginTop="4px" marginBottom="1px">
+                      <af:gridCell width="100%" valign="middle" halign="start" columnSpan="3">
+                        <af:outputText value="(Tip: Notice the select time footer button in mobile rendition and Now button in the time panel)" />
+                      </af:gridCell>
+                    </af:gridRow>
+                    <af:gridRow id="row6b" height="auto" marginTop="4px" marginBottom="50px">
+                      <af:gridCell width="100%" valign="middle" halign="start" columnSpan="3">
+                        <af:outputText value="(Tip: Notice the spin wheel control for HH:MM:SS in mobile rendition)" />
+                      </af:gridCell>
+                    </af:gridRow>
+
+
+
+                    <af:gridRow id="row7" height="auto" marginTop="4px" marginBottom="50px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="f1" value="Time only picker"/>
+                            <af:inputDate id="f1" layout="compactTime timeZone"  >
+                              <af:convertDateTime pattern="hh:mm:ss a" />
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="f2" value="Time only picker"/>
+                            <af:inputDate id="f2" layout="time today timeZone"   >
+                              <af:convertDateTime pattern="hh:mm:ss a" />
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="f3" value="Time only picker"/>
+                            <af:inputDate id="f3" layout="compactTime timeZone"  >
+                              <af:convertDateTime pattern="hh:mm:ss a" />
+                            </af:inputDate>
+                        </af:gridCell>
+                    </af:gridRow>
+
+
+                    <af:gridRow id="row10" height="auto" marginTop="4px" marginBottom="50px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="i1" value="Date + 24 hour time + time zone"/>
+                            <af:inputDate id="i1" layout="navigator date today compactTime timeZone"  >
+                               <af:convertDateTime pattern="yyyy/MM/dd HH:mm:ss z" />
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="i2" value="Date + 24 hour time + time zone"/>
+                            <af:inputDate id="i2" layout="navigator compactDate time today timeZone"  >
+                               <af:convertDateTime pattern="yyyy/MM/dd HH:mm:ss z" />
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="i3" value="Date + 24 hour time + time zone"/>
+                            <af:inputDate id="i3" layout="compactNavigator date compactTime timeZone"  >
+                               <af:convertDateTime pattern="yyyy/MM/dd HH:mm:ss z" />
+                            </af:inputDate>
+                        </af:gridCell>
+                    </af:gridRow>
+
+
+                    <af:gridRow id="row11" height="auto" marginTop="4px" marginBottom="5px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="j1" value="Date + 12 hour time without seconds"/>
+                            <af:inputDate id="j1" layout="navigator date today compactTime timeZone"  >
+                               <af:convertDateTime pattern="yyyy/MM/dd hh:mm a" />
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="j2" value="Date + 12 hour time without seconds"/>
+                            <af:inputDate id="j2" layout="navigator compactDate time today timeZone"  >
+                               <af:convertDateTime pattern="yyyy/MM/dd hh:mm a" />
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="j3" value="Date + 12 hour time without seconds"/>
+                            <af:inputDate id="j3" layout="compactNavigator date compactTime timeZone"  >
+                               <af:convertDateTime pattern="yyyy/MM/dd hh:mm a" />
+                            </af:inputDate>
+                        </af:gridCell>
+                    </af:gridRow>
+                    <af:gridRow id="row11b" height="auto" marginTop="4px" marginBottom="50px">
+                      <af:gridCell width="100%" valign="middle" halign="start" columnSpan="3">
+                        <af:outputText value="(Tip: For compatibility reasons and to reduce automation risks only mobile version supports dropping seconds from UI)" />
+                      </af:gridCell>
+                    </af:gridRow>
+
+
+
+                    <af:gridRow id="row5" height="auto" marginTop="4px" marginBottom="50px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="d1" value="2 Months display, weekends, holidays and december disabled"/>
+                            <af:inputDate id="d1" layout="navigator date today compactTime timeZone" months="2" disabledMonths="dec" disabledDaysOfWeek="sun sat" disabledDays="#{demoDate}"/>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="d2" value="2 Months display, weekends, holidays and december disabled"/>
+                            <af:inputDate id="d2" layout="navigator date time today timeZone" months="2" disabledMonths="dec" disabledDaysOfWeek="sun sat" disabledDays="#{demoDate}"/>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="d3" value="2 Months display, weekends holidays and december disabled"/>
+                            <af:inputDate id="d3" layout="compactNavigator date compactTime timeZone" months="2" disabledMonths="dec" disabledDaysOfWeek="sun sat" disabledDays="#{demoDate}"/>
+                        </af:gridCell>
+                    </af:gridRow>
+
+
+                    <af:gridRow id="row4" height="auto" marginTop="4px" marginBottom="50px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="c1" value="Component with defaultValue='2018-08-15'"/>
+                            <af:inputDate id="c1" layout="navigator date today compactTime timeZone"  defaultValue="2018-08-15"/>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="c2" value="Component with defaultValue='2018-08-15'"/>
+                            <af:inputDate id="c2" layout="navigator compactDate time today timeZone" defaultValue="2018-08-15" />
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="c3" value="Component with defaultValue='2018-08-15'"/>
+                            <af:inputDate id="c3" layout="compactNavigator date compactTime timeZone" defaultValue="2018-08-15" />
+                        </af:gridCell>
+                    </af:gridRow>
+
+
+
+                    <af:gridRow id="row8" height="auto" marginTop="4px" marginBottom="50px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="g1" value="Fixed month picker allowing only Jan 2018"/>
+                            <af:inputDate id="g1" layout="date" months="1"  defaultValue="2018-01-01" minValue="2018-01-01" maxValue="2018-01-31"/>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="g2" value="Fixed month picker allowing only Jan 2018"/>
+                            <af:inputDate id="g2" layout="date" months="1" defaultValue="2018-01-01" minValue="2018-01-01" maxValue="2018-01-31"/>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="g3" value="Fixed month picker allowing only Jan 2018"/>
+                            <af:inputDate id="g3" layout="date" months="1" defaultValue="2018-01-01" minValue="2018-01-01" maxValue="2018-01-31"/>
+                        </af:gridCell>
+                    </af:gridRow>
+
+
+                    <af:gridRow id="row9" height="auto" marginTop="4px" marginBottom="5px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="h1" value="Time first picker"/>
+                            <af:inputDate id="h1" layout="compactTime navigator date today timeZone"   months="1"  defaultValue="2018-01-01"  >
+                              <af:convertDateTime pattern="yyyy/MM/dd hh:mm:ss a z" />
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="h2" value="Time first picker"/>
+                            <af:inputDate id="h2" layout="time navigator compactDate today timeZone" months="1" defaultValue="2018-01-01"   >
+                              <af:convertDateTime pattern="yyyy/MM/dd hh:mm:ss a z" />
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="h3" value="Time first picker"/>
+                            <af:inputDate id="h3" layout="compactTime compactNavigator date today timeZone" months="1" defaultValue="2018-01-01"  >
+                              <af:convertDateTime pattern="yyyy/MM/dd hh:mm:ss a z" />
+                            </af:inputDate>
+                        </af:gridCell>
+                    </af:gridRow>
+                    <af:gridRow id="row9b" height="auto" marginTop="4px" marginBottom="50px">
+                      <af:gridCell width="100%" valign="middle" halign="start" columnSpan="3">
+                        <af:outputText value="(Tip: Best suited for mobile only since desktop looks wierd)" />
+                      </af:gridCell>
+                    </af:gridRow>
+
+
+
+                    <af:gridRow id="row12" height="auto" marginTop="4px" marginBottom="50px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="l1" value="Drunken monkey"/>
+                            <af:inputDate id="l1"  months="2"  layout="today compactTime date timeZone navigator "  >
+                              <af:convertDateTime pattern="yyyy/MM/dd hh:mm:ss a z" />
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="l2" value="Drunken monkey"/>
+                            <af:inputDate id="l2"  months="2" layout="time today compactDate timeZone navigator "  >
+                              <af:convertDateTime pattern="yyyy/MM/dd hh:mm:ss a z" />
+                            </af:inputDate>
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel for="l3" value="Drunken monkey"/>
+                            <af:inputDate id="l3" months="2" layout="today time date timeZone compactNavigator "  >
+                              <af:convertDateTime pattern="yyyy/MM/dd hh:mm:ss a z" />
+                            </af:inputDate>
+                        </af:gridCell>
+                    </af:gridRow>
+
+
+                    <af:gridRow id="row20" height="auto" marginTop="4px" marginBottom="50px">
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel value="Inline holiday calendar with 1 month display"/>
+                            <af:chooseDate  disabledDays="#{demoDate}" disabledDaysOfWeek="sun sat" />
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel value="Inline holiday calendar with 1 month display"/>
+                            <af:chooseDate  disabledDays="#{demoDate}" disabledDaysOfWeek="sun sat" />
+                        </af:gridCell>
+                        <af:gridCell width="33%" valign="middle" halign="start" >
+                            <af:outputLabel value="Inline holiday calendar with 1 month display"/>
+                            <af:chooseDate  disabledDays="#{demoDate}" disabledDaysOfWeek="sun sat" />
+                        </af:gridCell>
+                    </af:gridRow>
+                </af:panelGridLayout>
+            </af:panelGroupLayout>
+
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

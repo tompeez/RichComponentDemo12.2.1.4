@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:marker&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:marker&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:marker marker marker</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.common.UIMarker<br>
+<b>Component type:</b> oracle.dss.adf.common.Marker<br></p>
+<p>A marker is used to stamp out built-in shapes, custom shapes, or images associated with data. Markers can be customized with different stylistic attributes such as colors and patterns based on their underlying data.</p>
+<h4>Marker Shapes</h4>
+<p>Markers support a predefined set of shapes ("circle", "square", etc) that can be specified with the shape attribute on the marker tag. These built-in marker shapes can be styled by changing border and fill styles.</p>
+<p>A custom shape can also be specified using the shapePath attribute which requires the path of an SVG image file. The SVG image will be drawn in place of a built-in marker shape and have the same selection effects as a built-in shape, but will use the colors and styles from the SVG image. Results look best when using simple SVG images with few or no gradients. The shape attribute will be ignored if shapePath is used.</p>
+<p>Marker shapes can also be specified via skinning. With the skinning approach, predefined marker types can be overwritten, and the paths for custom marker shapes can also be defined without the shapePath attribute. In this case, the "shape" attribute in dvt:marker is used for defining built-in or custom shapes.</p>
+<p>A predefined shape will be overwritten if a global or component-specific selector for that shape is specified:</p>
+<pre>
+       &lt;dvt:marker id="m1" shape="circle"/&gt;
+       
+       af|dvt-thematicMap::shape-circle{
+         -tr-path: url(/resources/newCircle.svg);
+       }
+       
+</pre>
+<p>In order to specify a custom shape in the shape attribute, a "custom" prefix is required. For example if the shape is customFoo then the skin file should have a .AFDVTShapeCustomFoo:alias selector defined or the Thematic Map specific af|dvt-thematicMap::shape-customFoo defined which has the -tr-path property pointing to the svg file.</p>
+<pre>
+       &lt;dvt:marker id="m1" shape="customFoo"/&gt;
+       
+       af|dvt-thematicMap::shape-customFoo{
+         -tr-path: url(/resources/newShape.svg);
+       }
+       
+</pre>
+<h4>Marker Images</h4>
+<p>Markers can also support raster images by using the source attribute which requires the path of an image file. When marker is a child tag of a component that supports selection, use the sourceHover, sourceSelected, and sourceHoverSelected attributes to specify images to display for these selection states. The source attributes can also take SVG images, but rendering is platform depedent and will only display if the rendering platform supports that image format. For example, if rendering in Flash, SVG images will not display. When using the source attributes, the shape and shapePath attributes are ignored.</p>
+<h4>Label Customization</h4>
+<p>Label text and styles can be specified on the marker tag. The value attribute is used to specify the text of the label, and the labelDisplay, lableStyle, and labelPosition attributes can be used to customize the appearance and location of these labels. When labelDisplay="on" then the provided label value and labelStyle will be displayed at the given labelPosition relative to the marker. If a marker is displayed on a region (i.e. you have a marker within an areaDataLayer), and that marker has a label, then the label associated with the basemap region will NOT be shown.</p>
+<h4>Number Formatting</h4>
+<p>The Thematic Map supports formatting of the marker labels specified in the value attribute. This can be done either by adding an &lt;af:convertNumber&gt; as a child of &lt;dvt:marker&gt; or by specifying a converter via EL directly on the &lt;dvt:marker&gt; tag. If the value is numeric, then the properties of the given converter will be used to format the number appropriately. For example:</p>
+<pre>
+       &lt;!--This uses a converter from the backing bean to convert the value--&gt;
+       &lt;dvt:marker id="m1" labelDisplay="on" value="#{mapBean.value}" converter="#{mapBean.myConverter}"/&gt;
+
+       &lt;!--This uses the child convertNumber tag to convert the value--&gt;
+       &lt;dvt:marker id="m2" labelDisplay="on" value="#{mapBean.value}" &gt;
+         &lt;af:convertNumber id="cn1" type="currency"/&gt;
+       &lt;/dvt:marker&gt;
+       
+</pre>
+<p>If both a converter and a child af:convertNumber tag are specified, then the properties of the child tag take precedence.</p>
+<h4>Drag and Drop</h4>
+<p>A marker can be used as a drag source. To make a marker a drag source, the application developer simply needs to add an &lt;af:dragSource&gt; as its child.<br>
+Example:<br></p>
+<pre>
+&lt;dvt:marker fillColor="#{row.color}" scaleX="#{row.size/2}" 
+               scaleY="#{row.size/2}" shape="circle" 
+               id="m1"&gt;       
+  &lt;af:dragSource actions="COPY" discriminant="DnDDemoModel"/&gt;             
+&lt;/dvt:marker&gt;  
+       
+</pre>
+<h4>Attribute Groups</h4>
+<p>The <a href="dvt_attributeGroups.html">&lt;dvt:attributeGroups&gt;</a> tag can be used as a child of dvt:marker. Instead of specifying fillColor, pattern, opacity, shape, scaleX, or scaleY directly on the marker tag, developers can use attributeGroups with type = "color", "pattern", "opacity", "shape", "scaleX", or "scaleY" to get these attributes automatically generated based on categorical bucketing of the data set. If any of these attributes are specified both in the marker tag and within the attributeGroups type, then the style generated by the attributeGroups will take precedence.</p>
+<h4>Relationship with other tags</h4>
+<p>The &lt;dvt:marker&gt; tag can have the following children:</p>
+<ul>
+<li><a href="dvt_attributeGroups.html">&lt;dvt:attributeGroups&gt;</a></li>
+<li><a href="af_convertNumber.html">&lt;af:convertNumber&gt;</a></li>
+</ul>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">action</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">A reference to an action method sent by the component, or the static outcome of an action.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">actionListener</td>
+<td align="left" headers="attrType">javax.faces.el.MethodBinding</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">A method reference to an action listener</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">A method reference to an attribute change listener</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">Binding reference to store the UIMarker component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">borderColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> #000000<br>
+<br>
+Specifies the border color of this marker. Valid values are RGB hexadecimal.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">borderStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, solid, dotted, dashed<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies the border style of this marker. Valid values are:
+<ul>
+<li>"none" - (default) No border will be displayed</li>
+<li>"solid" - A solid border will be displayed</li>
+<li>"dotted" - A dotted border will be displayed</li>
+<li>"dashed" - A dashed border will be displayed</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">borderWidth</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 1<br>
+<br>
+Specifies the border width of this marker.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">converter</td>
+<td align="left" headers="attrType">javax.faces.convert.Converter</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">A converter object</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">destination</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The URI this component references</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">fillColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> #000000<br>
+<br>
+Specifies the fill color of this marker. Valid values are RGB hexadecimal.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">fillPattern</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the built-in pattern used to fill this marker. Valid values are:
+<ul>
+<li>"smallDiagonalLeft"</li>
+<li>"smallChecker"</li>
+<li>"smallDiagonalRight"</li>
+<li>"smallTriangle"</li>
+<li>"smallCrosshatch"</li>
+<li>"smallDiamond"</li>
+<li>"largeDiagonalLeft"</li>
+<li>"largeChecker"</li>
+<li>"largeDiagonalRight"</li>
+<li>"largeTriangle"</li>
+<li>"largeCrosshatch"</li>
+<li>"largeDiamond"</li>
+</ul>
+The pattern is drawn with a white background, and the foreground color is taken from the fillColor attribute.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">gradientEffect</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, none<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+Determines the gradient effect that should be used for this marker. Valid values are:
+<ul>
+<li>"auto" - (default) Sets a gradient on the marker</li>
+<li>"none" - Do not use gradients on the marker. This causes markers to appear flat.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">height</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the height of this marker.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">labelDisplay</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> on, off<br>
+<strong>Default Value:</strong> off<br>
+<br>
+Determines how labels associated with this marker should be displayed. Valid values are:
+<ul>
+<li>"on" - Display the label provided in the value attribute</li>
+<li>"off" - (default) Do not display the label provided in the value attribute</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">labelPosition</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> top, center, bottom<br>
+<strong>Default Value:</strong> center<br>
+<br>
+Determines the position relative to the marker that the specified value label should be displayed. Valid values are:
+<ul>
+<li>"top" - Display the label on top of the marker</li>
+<li>"bottom" - Display the label below the marker</li>
+<li>"center" - (default) Display the label on the center of the marker</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">labelStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The font style for labels associated with this marker. Accepts font-related CSS attributes like font-name, font-weight, font-size, color, etc.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">opacity</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the opacity of the fill color of the marker. Valid values are from 0.0 - 1.0, where 0.0 is transparent and 1.0 is opaque.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered. The default value is true.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rotation</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The marker rotation in clockwise degrees around the center of the image.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">scaleX</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The horizontal scale factor for this marker. This determines how much to scale the marker from its default size.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">scaleY</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The vertical scale factor for this marker. This determines how much to scale the marker from its default size.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shape</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the shape of this marker. The predefined shapes are:
+<ul>
+<li>"circle" (default)</li>
+<li>"square"</li>
+<li>"roundedRectangle" (only supported by Diagram component)</li>
+<li>"plus"</li>
+<li>"diamond"</li>
+<li>"triangleUp"</li>
+<li>"triangleDown"</li>
+<li>"human"</li>
+</ul>
+If the shape starts with "custom" prefix, then the shape will be defined by the svg file specified in the skin file. For example if the shape is customFoo then the skin file should have a .AFDVTShapeCustomFoo:alias selector defined or the Thematic Map specific af|dvt-thematicMap::shape-customFoo defined which has the -tr-path property pointing to the svg file.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shapePath</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This feature is deprecated. The path to the svg file to use as custom shape. If a shapePath is specified, then the value of the shape attribute is ignored.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shortDesc</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The short description of this component. This is used to customize the text that displays in the marker's tooltip.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">source</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The URI specifying the location of the image resource. If a source is specified, then the value of the shape and shapePath attributes are ignored.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">sourceHover</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The URI specifying the location of the image resource on hover. If not defined, the source image will be used.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">sourceHoverSelected</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The URI specifying the location of the selected image resource on hover. If not defined, the sourceSelected image will be used. If sourceSelected is not defined, the source image will be used.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">sourceSelected</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The URI specifying the location of the selected image resource. If not defined, the source image will be used.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The value of the component. When labelDisplay="on", this value will be used as the text label for this marker.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">width</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the width of this marker.</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

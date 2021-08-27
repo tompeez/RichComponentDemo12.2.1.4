@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="progressIndicator Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="progressIndicator"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a progressIndicator component is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesComponent">
+          <af:progressIndicator id="progressIndicator" binding="#{editor.component}"
+                                partialTriggers="updateButton"
+                                value="#{demoProgressIndicator.interactiveModel}"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:spacer id="sp" height="5px"/>
+            <af:panelFormLayout id="pfl1">
+              <af:outputText value="You can update the progressIndicator model values here. Use '-1' in the fields to see indeterminate indicator."
+                             id="ot1"/>
+              <af:outputText value="A negative value in 'Maximum' forces an indeterminate state. A negative value in both fields is a running indeterminate indicator."
+                             id="ot2"/>
+              <af:inputText id="inputValue" label="Value"
+                            value="#{demoProgressIndicator.interactiveModel.value}"/>
+              <af:inputText id="inputMaximum" label="Maximum"
+                            value="#{demoProgressIndicator.interactiveModel.maximum}"/>
+              <af:commandButton text="Update Model Values" id="updateButton"
+                                     partialSubmit="true"/>
+            </af:panelFormLayout>
+            <af:outputText value="ProgressIndicator with an action - when process is finished, it will navigate to Tag Demos index page."
+                           id="ot3"/>
+            <af:panelFormLayout id="pfl2">
+
+              <!--
+                Interval was originally 2000ms, but this results in overly frequent announcements 
+                when used with JAWS. Slowing this down a bit.
+              -->
+              <af:poll interval="5000" id="poll3"/>
+              <af:progressIndicator partialTriggers="poll3 startButton"
+                                    value="#{demoProgressIndicator.startMeModel}" action="guide"
+                                    id="progressIndicator2"/>
+              <af:outputText partialTriggers="poll3"
+                             value="Value: #{demoProgressIndicator.startMeModel.value}"
+                             id="ot4"/>
+              <af:outputText partialTriggers="poll3"
+                             value="Maximum: #{demoProgressIndicator.startMeModel.maximum}"
+                             id="ot5"/>
+              <af:commandButton id="startButton" partialSubmit="true" text="start me"
+                                actionListener="#{demoProgressIndicator.startMeModel.start}"/>
+              <af:commandButton id="cancelButton" partialSubmit="true" text="cancel me"
+                                actionListener="#{demoProgressIndicator.startMeModel.cancelProcess}"/>
+            </af:panelFormLayout>
+            <af:panelFormLayout id="pflDefault">
+              <af:panelLabelAndMessage label="Running indeterminate:" id="defRun">
+                <af:progressIndicator value="#{demoProgressIndicator.alwaysRunningIndeterminateModel}" id="defPiRun"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="Finished indeterminate:" id="defFin">
+                <af:progressIndicator value="#{demoProgressIndicator.finishedRunningIndeterminateModel}" id="defPiFin"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="50% determinate:" id="def50">
+                <af:progressIndicator value="#{demoProgressIndicator.fiftyPercentDeterminateModel}" id="defPi50"/>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+            <af:decorativeBox theme="dark" id="darkDB" inlineStyle="height:150px">
+              <f:facet name="center">
+                <af:panelGroupLayout id="darkPgl" layout="scroll">
+                  <af:panelFormLayout id="pflDark">
+                    <af:panelLabelAndMessage label="Running indeterminate:" id="darkRun">
+                      <af:progressIndicator value="#{demoProgressIndicator.alwaysRunningIndeterminateModel}" id="darkPiRun"/>
+                    </af:panelLabelAndMessage>
+                    <af:panelLabelAndMessage label="Finished indeterminate:" id="darkFin">
+                      <af:progressIndicator value="#{demoProgressIndicator.finishedRunningIndeterminateModel}" id="darkPiFin"/>
+                    </af:panelLabelAndMessage>
+                    <af:panelLabelAndMessage label="50% determinate:" id="dark50">
+                      <af:progressIndicator value="#{demoProgressIndicator.fiftyPercentDeterminateModel}" id="darkPi50"/>
+                    </af:panelLabelAndMessage>
+                  </af:panelFormLayout>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:decorativeBox>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

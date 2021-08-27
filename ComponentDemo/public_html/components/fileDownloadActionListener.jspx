@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="fileDownloadActionListener Demo"
+                 binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="fileDownloadActionListener"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="behavior"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:outputText value="Click any command component to download a file" id="ot1"/>
+            <af:spacer height="10" id="s1"/>
+            <af:menuBar id="mb1">
+              <af:menu text="Menu" id="m1">
+                <af:commandMenuItem text="Click Me" id="cmi1">
+                  <af:fileDownloadActionListener contentType="text/plain" filename="menuItem.txt"
+                                                 method="#{testPostback.sendHelloFile}"/>
+                </af:commandMenuItem>
+              </af:menu>
+            </af:menuBar>
+            <af:toolbar id="t1">
+              <af:commandToolbarButton text="Toolbar button" id="ctb1">
+                <af:fileDownloadActionListener contentType="text/plain" filename="toolbar.txt"
+                                               method="#{testPostback.sendHelloFile}"/>
+              </af:commandToolbarButton>
+            </af:toolbar>
+            <af:commandButton immediate="true" text="Command Button" id="cb1">
+              <af:fileDownloadActionListener contentType="text/plain" filename="button.txt"
+                                             method="#{testPostback.sendHelloFile}"/>
+            </af:commandButton>
+            <af:spacer height="20px" id="s2"/>
+            <af:outputText value="The example below shows the behavior if there is an error while processing on the server"
+                           id="ot2"/>
+            <af:commandButton immediate="true" text="Click for Error" id="cb2">
+              <af:fileDownloadActionListener contentType="text/plain" filename="button.txt"
+                                             method="#{testPostback.errorHelloFile}"/>
+            </af:commandButton>
+            <af:spacer height="20px" id="s3"/>
+            <af:panelGroupLayout layout="horizontal" rendered="#{portletInfo.portlet}" id="pgl2">
+              <af:outputText value="The following are for the portlet use case." id="ot3"/>
+              <af:commandButton immediate="true" text="File Download" id="cb3">
+                <af:fileDownloadActionListener contentType="text/plain" filename="file.txt"
+                                               method="#{testPostback.sendLargeFile}"/>
+              </af:commandButton>
+              <af:commandButton immediate="true" text="File too Large" id="cb4">
+                <af:fileDownloadActionListener contentType="text/plain" filename="file2.txt"
+                                               method="#{testPostback.sendTooLargeFile}"/>
+              </af:commandButton>
+              <af:commandButton immediate="false" text="Clear Session" id="cb5"
+                                action="#{testPostback.clearSession}" partialSubmit="true"/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

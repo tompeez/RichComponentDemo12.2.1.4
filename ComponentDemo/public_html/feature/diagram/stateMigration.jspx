@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2012, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Diagram US State-to-State Migration Demo" binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Diagram US State-to-State Migration Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Diagram US State-to-State Migration"/>
+                <f:facet name="center">
+                    <!-- START FEATURE DEMO -->
+                    <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="275"
+                                      dimensionsFrom="auto">
+                        <f:facet name="first">
+                            <dvt:diagram summary="Diagram" id="diagram1" layout="circle" partialTriggers="sor3"
+                                         selection="#{diagramMigration.selectionMode}" panning="none" zooming="none"
+                                         controlPanelBehavior="hidden">
+                                <dvt:clientLayout name="circle" method="DemoCircleLayout.circleLayout"
+                                                  featureName="DemoCircleLayout">
+                                    <f:attribute name="curvedLinks" value="true"/>
+                                    <f:attribute name="radialLabels" value="true"/>
+                                </dvt:clientLayout>
+                                <dvt:diagramNodes id="diagramNodes1" value="#{diagramMigration.nodes}" var="node"
+                                                  binding="#{diagramMigration.diagramNodes}"
+                                                  selectionListener="#{diagramMigration.selectNode}"
+                                                  highlightBehavior="#{diagramMigration.highlightBehavior}">
+                                    <dvt:diagramNode id="node1" nodeId="#{node.id}" shortDesc="#{node.shortDesc}" showNodeActions="false">
+                                        <f:facet name="zoom100">
+                                            <dvt:marker id="marker1" shape="circle" fillColor="#{node.color}"
+                                                        width="#{node.sqrtPopulation/150}"
+                                                        height="#{node.sqrtPopulation/150}"/>
+                                        </f:facet>
+                                        <f:facet name="label">
+                                            <af:outputText value="#{node.id}"
+                                                           inlineStyle="font-size:#{node.cbrtPopulation/4}pt;color:#{node.color}"/>
+                                        </f:facet>
+                                    </dvt:diagramNode>
+                                </dvt:diagramNodes>
+                                <dvt:diagramLinks id="diagramLinks1" value="#{diagramMigration.links}" var="link"
+                                                  binding="#{diagramMigration.diagramLinks}">
+                                    <dvt:diagramLink id="link1" startNode="#{link.from}" endNode="#{link.to}"
+                                                     linkColor="#{link.color}" linkWidth="#{link.width}"
+                                                     selectable="false" endConnectorType="arrowOpen"/>
+                                </dvt:diagramLinks>
+                            </dvt:diagram>
+                        </f:facet>
+                        <f:facet name="second">
+                            <af:panelFormLayout id="pfl1">
+                                <af:selectOneRadio label="Migration Type" value="#{diagramMigration.linkMode}" id="sor3"
+                                                   autoSubmit="true">
+                                    <af:selectItem label="Net Migration (All States)" id="si6"/>
+                                    <af:selectItem label="Net Migration by State" id="si7"/>
+                                    <af:selectItem label="Incoming Migration by State" id="si8"/>
+                                    <af:selectItem label="Outgoing Migration by State" id="si9"/>
+                                </af:selectOneRadio>
+                            </af:panelFormLayout>
+                        </f:facet>
+                    </af:panelSplitter>
+                    <!-- END FEATURE DEMO -->
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

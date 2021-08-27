@@ -1,0 +1,28 @@
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <af:popup id="about" contentDelivery="lazyUncached">
+    <af:dialog title="About ADF Faces Rich Client Demos" type="ok" id="d1">
+      <af:panelGroupLayout layout="vertical" id="pgl1" inlineStyle="width:650px">
+        <af:panelFormLayout id="pfl" maxColumns="1">
+          <af:iterator id="info" var="row" value="#{aboutBean.versionInformation}">
+            <af:panelLabelAndMessage id="plm" label="#{row.name}"
+                                     labelStyle="white-space: nowrap;">
+              <af:outputText id="ot" value="#{row.value}"/>
+            </af:panelLabelAndMessage>
+          </af:iterator>
+          <af:spacer height="10px"/>
+          <af:panelLabelAndMessage id="uaPLM" label="User-Agent Header"
+                                   labelStyle="vertical-align: top; white-space: nowrap;">
+            <af:outputText id="auOT"
+                           value="#{facesContext.externalContext.requestHeaderMap['user-agent']}"/>
+          </af:panelLabelAndMessage>
+        </af:panelFormLayout>
+      </af:panelGroupLayout>
+    </af:dialog>
+  </af:popup>
+</jsp:root>

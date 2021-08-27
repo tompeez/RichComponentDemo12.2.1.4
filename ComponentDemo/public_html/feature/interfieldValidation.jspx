@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view beforePhase="#{interfieldValidate.phaseValidate}">
+    <af:document title="Interfield Validation Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+            /**
+             * Clears messages for pairs of input components on the page.
+             * If there is a validation error on the range of { Start Date, end Date }
+             * we clear the message when user enters data in either since the
+             * new values may pass validation. If the new values still do not pass
+             * validation, they will be flagged on the server and redisplayed.
+             **/
+            function clearValidationMessage (event)
+            {
+               var srcId = event.getSource().getClientId();
+               var prefixLength = srcId.indexOf ("StartDate");
+               if (prefixLength != -1)
+               {
+                  var startDateId = srcId;
+                  var endDateId = srcId.substring (0, prefixLength) + "EndDate";
+               }
+               else
+               {
+                  prefixLength = srcId.indexOf ("EndDate");
+                  if (prefixLength == -1)
+                  {
+                    // Unable to guess the ids of the startdate, enddate pair
+                    return;
+                  }
+                  var endDateId = srcId;
+                  var startDateId = srcId.substring (0, prefixLength) + "StartDate";
+               }
+              AdfPage.PAGE.clearMessages (startDateId);
+              AdfPage.PAGE.clearMessages (endDateId);
+          }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Interfield Validation"/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelHeader text="Interfield Validation" id="ph1">
+              <af:outputText styleClass="AFInstructionText"
+                             value="A validator only looks at the data of the component to which it is attached. If it tries to look at other values, there is no guarantee that component has run its validation. However, multi-field validation is called for in many cases. JSF 1.2 doesn't have decent support for that, so some workarounds are:"
+                             id="ot1"/>
+              <af:panelList id="pl1">
+                <af:outputText value="Events - Most events are delivered in the INVOKE APPLICATION phase, an eventListener can be attached that runs some logic"
+                               id="ot2"/>
+                <af:outputText value="PhaseListener - a phaseListener that runs some logic can be attached before or after a phase."
+                               id="ot3"/>
+              </af:panelList>
+            </af:panelHeader>
+            <af:panelHeader text="Demos" id="ph2">
+              <af:outputText value="In the following example, the dates are individually constrained to be within February 2008."
+                             id="ot4"/>
+              <af:subform id="s1">
+                <af:panelGroupLayout layout="vertical" id="pgl2">
+                  <af:panelList listStyle="list-style-type:decimal" id="pl2">
+                    <af:panelGroupLayout id="pgl3">
+                      <af:outputText value="Using a ValueChangeListener to validate when either startDate or endDate is changed."
+                                     id="ot5"/>
+                        <af:panelGroupLayout id="pgl4">
+                          <af:panelList id="pl3">
+                            <af:outputText value="startDate has a ValueChangeListener that runs after the PROCESS_VALIDATIONS phase when submitted values have been validated and stored onto the components."
+                                           id="ot6"/>
+                            <af:outputText value="Autosubmit is set to true on the input components."
+                                           id="ot7"/>
+                            <af:outputText value="A client listener is used to clear errors upon input changes (since the user may be fix the data by changing either input) - legitimate errors will be caught upon submission (auto or form submit)"
+                                           id="ot8"/>
+                            <af:outputText value="To test this: Change the start date to be later than the end date, and tab off."
+                                           id="ot9"/>
+                          </af:panelList>
+                           <af:panelFormLayout id="pfl1">
+                            <af:inputDate label="Start Date" value="#{validate.date21}"
+                                          binding="#{interfieldValidate.valueChangeStartDate}"
+                                          minValue="2008-2-1" maxValue="2008-2-28"
+                                          autoSubmit="true"
+                                          valueChangeListener = "#{interfieldValidate.validateOnValueChange}"
+                                          id="valueChangeStartDate">
+                              <af:clientListener type="valueChange"
+                                                 method="clearValidationMessage"/>
+                              <af:convertDateTime dateStyle="long"/>
+                            </af:inputDate>
+                            <af:inputDate label="End Date" value="#{validate.date22}"
+                                          binding="#{interfieldValidate.valueChangeEndDate}"
+                                          minValue="2008-2-1" maxValue="2008-2-28"
+                                          autoSubmit="true"
+                                          valueChangeListener = "#{interfieldValidate.validateOnValueChange}"
+                                          id="valueChangeEndDate">
+                              <af:convertDateTime dateStyle="long"/>
+                              <af:clientListener type="valueChange"
+                                                 method="clearValidationMessage"/>
+                            </af:inputDate>
+                          </af:panelFormLayout>
+                        </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                    <af:panelGroupLayout id="pgl5">
+                      <af:outputText value="Using a PhaseListener to validate when either startDate or endDate is changed."
+                                     id="ot10"/>
+                        <af:panelGroupLayout id="pgl6">
+                        <af:panelList id="pl4">
+                          <af:outputText value="The phaseListener runs before the UPDATE_MODEL_VALUES phase."
+                                         id="ot11"/>
+                          <af:outputText value="A client listener is used to clear errors upon input changes (since the user may be fix the data by changing either input) - legitimate errors will be caught upon submission (auto or form submit)"
+                                         id="ot12"/>
+                          <af:outputText value="To test this : Change the start date to be later than the end date, and press Submit."
+                                         id="ot13"/>
+                          </af:panelList>
+                            <af:panelFormLayout id="pfl2">
+                              <af:inputDate label="Start Date" value="#{validate.date23}"
+                                            binding="#{interfieldValidate.phaseStartDate}"
+                                            minValue="2008-2-1" maxValue="2008-2-28"
+                                            autoSubmit="true"
+                                            id="phaseStartDate">
+                                <af:clientListener type="valueChange"
+                                                   method="clearValidationMessage"/>
+                                <af:convertDateTime dateStyle="long"/>
+                              </af:inputDate>
+                              <af:inputDate label="End Date" value="#{validate.date24}"
+                                            binding="#{interfieldValidate.phaseEndDate}"
+                                            minValue="2008-2-1" maxValue="2008-2-28"
+                                            autoSubmit="true"
+                                            id="phaseEndDate">
+                                <af:convertDateTime dateStyle="long"/>
+                                <af:clientListener type="valueChange"
+                                                   method="clearValidationMessage"/>
+                              </af:inputDate>
+                            </af:panelFormLayout>
+                        </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  </af:panelList>
+                </af:panelGroupLayout>
+              </af:subform>
+            </af:panelHeader>
+            <af:commandButton text="Submit" id="cb1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

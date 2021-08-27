@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2010, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{pivotFilterBarFeatureLinks.modelNamePivotFilterBarTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="pivotFilterBar"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="Pivot Filter Bar With Multiple Pivot Tables"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+          <!-- START TAG DEMO -->
+          <dvt:pivotFilterBar id="pfb1" binding="#{editor.component}" value="#{pivotFilterBar.queryDescriptor}" modelName="model" styleClass="AFStretchWidth"/>   
+          <af:panelGroupLayout layout="horizontal" id="pgl2">
+            <f:facet name="separator" >
+              <af:separator id="s2"/>
+            </f:facet>
+            <af:spacer width="25px" id="s3"/>
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <af:outputLabel value="Pivot Table with filtered data." id="ol1"/>
+              <dvt:pivotTable id="pt1" inlineStyle="width:400px" partialTriggers="::pfb1" value="#{pivotFilterBar.dataModel}" modelName="model"
+                              summary="Pivot Table Summary"/>
+            </af:panelGroupLayout>
+            <af:spacer width="50px" id="s4"/>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputLabel value="Pivot Table with separate data model."
+                              id="ol2"/>
+              <dvt:pivotTable id="pt2" inlineStyle="width:400px" value="#{pivotTableSelection.dataModel}" modelName="model2"
+                              summary="Pivot Table Summary"/>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+          <!-- END TAG DEMO -->                
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">     
+        <f:subview id="links">
+            <jsp:include page="/feature/pivotFilterBar/pivotFilterBarFeatureLinks.jspx" flush="true"/>
+        </f:subview>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Calendar Demo of allDayActivityOrder" binding="#{templateBindings.documentComponent}"
+                 theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="calendar"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" inlineStyle="margin:0 10px 0 10px"
+                                 id="pgl2">
+              <af:spacer height="20px" id="s2"/>
+                <af:outputText value="The demos on this page show how the allDayActivityOrder attribute controls 
+                the order in which all day activities are shown."
+                             id="ot1"/>
+              <af:spacer height="20px" id="s3"/>
+                <af:outputText value="In this demo, the allDayActivityOrder attribute is set to 'holiday absence'."
+                             id="ot2"/>
+             <af:panelList id="pl1">
+              <af:outputText value=" Thus, activities tagged 'holiday' show up at the top, followed by activities 
+              tagged 'absence'. The remaining activities are then packed and displayed such that the rows with the
+              most activities appear first." id="ot3"/>
+            </af:panelList>                             
+              <af:calendar binding="#{editor.component}" id="cal1" 
+                           value="#{calendarBean.calendarModel}"
+                           allDayActivityOrder="holiday absence" 
+                           view="week"/>                           
+              <af:spacer height="20px" id="s4"/>
+                <af:outputText value="In this demo, the calendar has the same CalendarModel as above, but the
+                allDayActivityOrder attribute is not set."
+                             id="ot5"/>
+             <af:panelList id="pl2">
+              <af:outputText value="The activities are packed and displayed such that the rows with the
+              most activities appear first. Activities tagged 'holiday' or 'absence' do not neccessarily display at the top."
+                             id="ot6"/>
+            </af:panelList>                             
+              <af:calendar id="cal2" 
+                           value="#{calendarBean.calendarModel}"
+                           view="week"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputText value="See also:" id="ot11"/>
+              <af:panelList id="pl4">
+                <af:goLink destination="../calendar.jspx" text="calendar"
+                           id="gl2"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

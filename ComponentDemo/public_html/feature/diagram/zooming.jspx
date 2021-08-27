@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram Zooming Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram Zooming Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Diagram Zooming"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="275"
+                            dimensionsFrom="auto">
+            <f:facet name="first">
+              <dvt:diagram summary="Diagram" id="diagram1" layout="grid"
+                           partialTriggers="ins1 ins2 ins3" minZoom="#{diagramZooming.minZoom}" maxZoom="#{diagramZooming.maxZoom}">
+                <dvt:clientLayout name="grid" method="DemoGridLayout.gridLayout" featureName="DemoGridLayout"/>
+                <dvt:diagramNodes id="diagramNodes1" value="#{diagramZooming.nodes}" var="node">
+                  <dvt:diagramNode id="node1" nodeId="#{node.id}" shortDesc="Node #{node.id}" showNodeActions="false">
+                    <f:facet name="zoom100">
+                      <dvt:marker shape="circle" width="160" height="160" fillColor="#{node.color}" borderStyle="solid" borderWidth="1" borderColor="#444444" labelDisplay="on" labelPosition="center" value="zoom100" labelStyle="font-size:20pt"/>
+                    </f:facet>
+                    <f:facet name="zoom75">
+                      <dvt:marker shape="circle" width="120" height="120" fillColor="#{node.color}" borderStyle="solid" borderWidth="1" borderColor="#444444" labelDisplay="on" labelPosition="center" value="zoom75" labelStyle="font-size:15pt"/>
+                    </f:facet>
+                    <f:facet name="zoom50">
+                      <dvt:marker shape="circle" width="80" height="80" fillColor="#{node.color}" borderStyle="solid" borderWidth="1" borderColor="#444444" labelDisplay="on" labelPosition="center" value="zoom50" labelStyle="font-size:10pt"/>
+                    </f:facet>
+                    <f:facet name="zoom25">
+                      <dvt:marker shape="circle" width="40" height="40" fillColor="#{node.color}" borderStyle="solid" borderWidth="1" borderColor="#444444" labelDisplay="on" labelPosition="center" value="zoom25" labelStyle="font-size:5pt"/>
+                    </f:facet>
+                  </dvt:diagramNode>
+                </dvt:diagramNodes>
+              </dvt:diagram>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelFormLayout id="pfl1" partialTriggers="ins1 ins2 ins3">
+                <af:group>
+                    <af:inputNumberSlider label="Size" id="ins1" minimum="0" maximum="200" value="#{diagramZooming.size}"
+                                          autoSubmit="true" majorIncrement="100" minorIncrement="10"/>
+                    <af:inputNumberSlider label="minZoom" id="ins2" minimum="0" maximum="3" value="#{diagramZooming.minZoom}"
+                                          autoSubmit="true" majorIncrement=".5" minorIncrement=".05">
+                      <af:convertNumber maxFractionDigits="2"/>
+                    </af:inputNumberSlider>
+                    <af:inputNumberSlider label="maxZoom" id="ins3" minimum="0" maximum="3" value="#{diagramZooming.maxZoom}"
+                                          autoSubmit="true" majorIncrement=".5" minorIncrement=".05">
+                      <af:convertNumber maxFractionDigits="2"/>
+                    </af:inputNumberSlider>
+                </af:group>
+              </af:panelFormLayout>
+            </f:facet>
+          </af:panelSplitter>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

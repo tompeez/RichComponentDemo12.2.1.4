@@ -1,0 +1,253 @@
+/**ADFFaces_Skin_File / DO NOT REMOVE**/
+@namespace af "http://xmlns.oracle.com/adf/faces/rich";
+@namespace dvt "http://xmlns.oracle.com/dss/adf/faces";
+/*
+ Copyright (c) 2010, 2014, Oracle and/or its affiliates. All rights reserved.
+*/
+
+
+/*  
+   change the default decorative box to
+   1. change the general color
+   2. don't use a gradient at the top of the decorative box
+*/
+
+/* create my own alias for the default decorative box color, this is used in several places below */
+.AFCustomDecorativeBoxBackground:alias {    
+  background-color:#dcdbda;
+}
+af|decorativeBox::top {
+  background-image: url('/skins/extendFusionSimple/gold-custom/dbct.png');
+}
+
+af|decorativeBox::top-start,
+af|decorativeBox::top-end:rtl {
+  background-image: url('/skins/extendFusionSimple/gold-custom/dbcts.png');
+}
+af|decorativeBox::top-end,
+af|decorativeBox::top-start:rtl {
+  background-image: url('/skins/extendFusionSimple/gold-custom/dbcte.png');
+}
+af|decorativeBox::start,
+af|decorativeBox::end:rtl {
+  background-image: none;
+  -tr-rule-ref: selector(".AFCustomDecorativeBoxBackground:alias");
+}
+af|decorativeBox::center {
+  background-image: none;
+  -tr-rule-ref: selector(".AFCustomDecorativeBoxBackground:alias");
+}
+af|decorativeBox::end,
+af|decorativeBox::start:rtl {
+  background-image: none;
+  -tr-rule-ref: selector(".AFCustomDecorativeBoxBackground:alias");
+}
+
+af|decorativeBox::bottom-start,
+af|decorativeBox::bottom-end:rtl {
+  background-image: url('/skins/extendFusionSimple/gold-custom/dbcbs.png');
+}
+af|decorativeBox::bottom-end,
+af|decorativeBox::bottom-start:rtl {
+  background-image: url('/skins/extendFusionSimple/gold-custom/dbcbe.png');
+}
+af|decorativeBox::bottom {
+  background-image: url('/skins/extendFusionSimple/gold-custom/dbcb.png');
+}
+
+/* change the text in the dark decorative box to be white. */
+af|decorativeBox::center[theme="dark"] {
+  color: white;    
+}
+
+/*  
+   change the medium decorative box to just use background colors and not to use images.
+   This is because the medium decorative box fades to white at the top.
+   What we really want is to use our own gradient images that fades to a dark gold,
+   but we're not that talented with image editing tools to create those images, 
+   so for now use background colors and no images. 
+   See Bug 10396436 - more control of gradients at the top of decorative boxes
+*/
+af|decorativeBox::top-start[theme="medium"] {
+  background-image: none;
+  -tr-rule-ref: selector(".AFMediumBackground:alias");
+}
+
+af|decorativeBox::top-end[theme="medium"] {
+  background-image: none;
+  -tr-rule-ref: selector(".AFMediumBackground:alias");
+}
+
+af|decorativeBox::top[theme="medium"] {
+  background-image: none;
+  -tr-rule-ref: selector(".AFMediumBackground:alias");
+}
+af|decorativeBox::bottom-start[theme="medium"] {
+  background-image: none;
+  -tr-rule-ref: selector(".AFMediumBackground:alias");
+}
+
+af|decorativeBox::bottom-end[theme="medium"] {
+  background-image: none;
+  -tr-rule-ref: selector(".AFMediumBackground:alias");
+}
+
+af|decorativeBox::bottom[theme="medium"] {
+  background-image: none;
+  -tr-rule-ref: selector(".AFMediumBackground:alias");
+}
+
+af|decorativeBox::top-start[theme="medium"]:rtl {
+  background-image: none;
+}
+af|decorativeBox::top-end[theme="medium"]:rtl {
+  background-image: none;
+}
+
+af|decorativeBox::center[theme="medium"] {
+  background-image: none;
+  -tr-rule-ref: selector(".AFMediumBackground:alias");
+}
+af|decorativeBox::start[theme="medium"] {
+  background-image: none;
+  -tr-rule-ref: selector(".AFMediumBackground:alias");
+}
+af|decorativeBox::end[theme="medium"] {
+  background-image: none;
+  -tr-rule-ref: selector(".AFMediumBackground:alias");
+}
+
+@agent gecko and (version: 1.9.1), ie {
+
+  af|decorativeBox::top-end[theme="medium"]:flow:ltr{
+  background-image: none;
+  }
+  af|decorativeBox::top-end[theme="medium"]:flow:rtl{
+  background-image: none;
+  }
+
+}
+
+@agent gecko and (version: 1.9.0) {
+
+  af|decorativeBox::top-end[theme="medium"]:flow:ltr{
+  background-image: none;
+  }
+  af|decorativeBox::top-end[theme="medium"]:flow:rtl{
+  background-image: none;
+  }
+}
+
+/* 
+   remove the background image from the expanded content area of panelAccordion.
+   It would be better to have a grey gradient here than no image though.
+*/
+af|panelAccordion::body-content
+{
+  background-image: none;    
+}
+
+/*  
+   we want the accordion headers to look the same whether or not they are disclosed,
+   so inhibit the disclosed images, which lets the undisclosed images show through.
+*/
+.AFPanelAccordionHeaderDisclosedBackground:alias {
+  -tr-inhibit: background-image;
+}
+af|panelAccordion::header:disclosed af|panelAccordion::header-start {
+  -tr-inhibit: background-image;
+}
+af|panelAccordion::header:disclosed af|panelAccordion::header-start:rtl {
+  -tr-inhibit: background-image;
+}
+
+/* change the background image for panelAccordion headers so they are all gold*/
+.AFPanelAccordionHeaderBackground:alias {
+  background-image: url(/skins/extendFusionSimple/gold-custom/pahcm.png);
+}
+af|panelAccordion::header af|panelAccordion::header-start {
+  background-image: url(/skins/extendFusionSimple/gold-custom/pahcs.png);
+}
+af|panelAccordion::header af|panelAccordion::header-start:rtl {
+  background-image: url(/skins/extendFusionSimple/gold-custom/pahcs_rtl.png);
+}
+
+
+/*  
+   The button image was colorized to a bright yellow, so don't colorize the buttons
+   at all, instead override it back to the image we're using in fusionFx-simple-v1.
+   I had to do it this way since I'm extending the skin with all the generated images in it. 
+   In reality we really want the buttons to be a light grey, so we should really 
+   but using a custom image here.
+*/
+.AFButtonBackground:alias,
+.AFButtonBackgroundFocus:alias,
+af|commandToolbarButton,
+af|toolbar af|commandToolbarButton:text-only {
+  background-image: url('/afr/fusion/button_bg_ena.png');
+}
+
+/* 
+   override because the colors for the down image need to be more subdued than 
+   the colors in the generated image 
+*/
+.AFButtonBackgroundActive:alias,
+af|menuBar::model-bar-nav-item:depressed,
+af|commandMenuItem::bar-item:depressed,
+af|goMenuItem::bar-item:depressed,
+af|menu::bar-item:depressed,
+af|commandToolbarButton:depressed,
+af|commandToolbarButton:depressed:hover,
+af|toolbar af|commandToolbarButton:depressed,
+af|toolbar af|commandToolbarButton:depressed:hover,
+af|commandToolbarButton:selected,
+af|commandToolbarButton:selected:hover,
+af|commandToolbarButton:selected:active,
+af|commandToolbarButton:selected:active:hover,
+af|toolbar af|commandToolbarButton:selected,
+af|toolbar af|commandToolbarButton:selected:hover,
+af|toolbar af|commandToolbarButton:selected:active,
+af|toolbar af|commandToolbarButton:selected:active:hover,
+af|commandToolbarButton:text-only:depressed,
+af|commandToolbarButton:text-only:depressed:hover,
+af|commandToolbarButton:text-only:selected,
+af|commandToolbarButton:text-only:selected:hover,
+af|commandToolbarButton:text-only:selected:active,
+af|commandToolbarButton:text-only:selected:active:hover,
+af|toolbar af|commandToolbarButton:text-only:depressed,
+af|toolbar af|commandToolbarButton:text-only:depressed:hover,
+af|toolbar af|commandToolbarButton:text-only:selected,
+af|toolbar af|commandToolbarButton:text-only:selected:hover,
+af|toolbar af|commandToolbarButton:text-only:selected:active,
+af|toolbar af|commandToolbarButton:text-only:selected:active:hover{
+  background-image: url('/skins/extendFusionSimple/gold-custom/button_bg_dwn.png');
+}
+
+/* we want a solid color when hovering over buttons, so remove the background image */
+.AFButtonBackgroundHover:alias,
+af|commandToolbarButton:hover,
+af|commandToolbarButton:text-only:hover,
+af|toolbar af|commandToolbarButton:hover,
+af|toolbar af|commandToolbarButton:text-only:hover,
+af|menuBar::model-bar-nav-item:highlighted,
+af|commandMenuItem::bar-item:highlighted,
+af|goMenuItem::bar-item:highlighted,
+af|menu::bar-item:highlighted {
+  background-image: none;
+}
+
+
+af|menuBar::model-bar-nav-item:highlighted[theme="medium"],
+af|commandMenuItem::bar-item:highlighted[theme="medium"],
+af|goMenuItem::bar-item:highlighted[theme="medium"],
+af|menu::bar-item:highlighted[theme="medium"]{
+  -tr-rule-ref: selector(".AFLightBrightBackground:alias");
+}
+
+/* The top level header should be a brick color*/
+af|panelHeader::title-text0,
+af|showDetailHeader::title-text0,
+af|query::title-text0
+{
+  color: #c13500;
+}

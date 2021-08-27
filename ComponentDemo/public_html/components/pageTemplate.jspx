@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          version="1.2"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:jsp="http://java.sun.com/JSP/Page">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="pageTemplate Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:panelStretchLayout id="pslWrap" topHeight="35em">
+        <f:facet name="top">
+          <af:pageTemplate
+            id="dmoTplt"
+            viewId="#{templates.componentTemplate}">
+            <f:attribute name="tagName" value="pageTemplate"/>
+            <f:attribute name="visualDesignName" value=""/>
+            <f:attribute name="customEditorPresent" value="true"/>
+            <f:attribute name="demoKind" value="component"/>
+            <f:attribute name="rootInlineStyle" value="position: relative; width: 100%; height: 30em;"/>
+            <f:facet name="center">
+              <af:panelGroupLayout layout="scroll" id="pgl1">
+                <f:facet name="separator">
+                  <af:separator id="s1"/>
+                </f:facet>
+                <af:panelList id="pl1">
+                  <af:outputText
+                    value="The pageTemplate component has no binding so no editor is available."
+                                 id="ot1"/>
+                  <af:outputText
+                    value="The 2 stock and 1 weather templates shown below are placed outside of the
+                           component demo normal page chrome because this page chrome is provided by
+                           another template and nesting of templates is not supported."
+                                 id="ot2"/>
+                </af:panelList>
+                <af:panelGroupLayout layout="vertical" id="pgl2">
+                  <af:outputText value="See also:" id="ot3"/>
+                  <af:navigationPane hint="list" id="np1">
+                    <af:commandNavigationItem id="cl1" text="pageTemplate Geometry Management Demo"
+                                              action="guide.pageTemplateGeometry"/>
+                    <af:commandNavigationItem immediate="true" text="Sample Page Templates"
+                      action="templates" id="cni1"/>
+                    <af:commandNavigationItem immediate="true" text="Page Template Model Usage"
+                      destination="pagetemplate/pageTemplateModel.jspx" id="cni2"/>
+                    <af:commandNavigationItem immediate="true"
+                      text="Dynamic Declarative Component (also shows facetRef usage)"
+                      destination="declarativeComponent.jspx" id="cni3"/>
+                  </af:navigationPane>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:pageTemplate>
+        </f:facet>
+        <f:facet name="center">
+          <af:decorativeBox theme="light" styleClass="AFStretchWidth" id="db1">
+            <f:facet name="center">
+              <af:panelGroupLayout layout="scroll" id="pgl3">
+                <f:facet name="separator">
+                  <af:separator id="s2"/>
+                </f:facet>
+
+                <af:group id="g1">
+                  <af:outputText value="Stock template:" id="ot4"/>
+                  <af:pageTemplate id="orcl" viewId="/components/pagefragments/stockBox.jspx">
+                    <f:attribute name="symbol" value="ORCL"/>
+                  </af:pageTemplate>
+                </af:group>
+
+                <af:group id="g2">
+                  <af:outputText value="Stock template:" id="ot5"/>
+                  <af:pageTemplate id="foof" viewId="/components/pagefragments/stockBox.jspx">
+                    <f:attribute name="symbol" value="FOOF"/>
+                    <f:attribute name="description" value="Foo Company"/>
+                    <f:attribute name="quote" value="100"/>
+                  </af:pageTemplate>
+                </af:group>
+
+                <af:group id="g3">
+                  <af:outputText value="Weather template:" id="ot6"/>
+                  <af:pageTemplate id="weather" viewId="/components/pagefragments/weatherBox.jspx">
+                    <f:attribute name="zip" value="94065"/>
+                    <f:attribute name="description" value="Redwood Shores, CA"/>
+                    <f:facet name="forecastSummary">
+                      <af:outputText value="Partly Cloudy" id="ot7"/>
+                    </f:facet>
+                    <f:facet name="forecastDetail">
+                      <af:panelGroupLayout layout="vertical" id="pgl4">
+                        <af:outputText value="72 Degrees F" id="ot8"/>
+                        <af:outputText value="Partly Cloudy" id="ot9"/>
+                        <af:outputText value="Wind: W at 16 mph" id="ot10"/>
+                        <af:outputText value="Humidity: 46%" id="ot11"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:pageTemplate>
+                </af:group>
+
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:decorativeBox>
+        </f:facet>
+      </af:panelStretchLayout>
+    </af:document>
+  </f:view>
+</jsp:root>

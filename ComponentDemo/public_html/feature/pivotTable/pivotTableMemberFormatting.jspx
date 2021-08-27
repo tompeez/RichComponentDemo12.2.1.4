@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{pivotTableFeatureLinks.memberFormattingPivotTableTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Pivot Table Member based Formatting"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="Pivot Table Member based Formatting"/>    
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START TAG DEMO -->
+            <dvt:pivotTable
+                  binding="#{editor.component}"
+                  contentDelivery="immediate"
+                  var="cellData"
+                  varStatus="cellStatus"
+                  value="#{pivotTableMemberFormatting.dataModel}" 
+                  id="pt1" 
+                  summary="pivot table"
+                  headerSortMode="none"
+                  splitMode="enabled"
+                  >
+
+                  <dvt:headerCell>
+                      <af:switcher defaultFacet="Other" facetName="#{cellData.layerName}"
+                                   id="s2">
+                        <f:facet name="Product">
+                            <af:outputText  inlineStyle="color:#{(cellData.dataValue == 'Canoes' ? 'red' : 'blue')};"  value="#{cellData.dataValue}"
+                                           id="ot1"/>
+                        </f:facet>
+                        <f:facet name="Other">
+                            <af:outputText value="#{cellData.dataValue}" id="ot2"/>
+                        </f:facet>
+                      </af:switcher>
+                  </dvt:headerCell>
+
+                  <dvt:dataCell>
+                    <af:outputText inlineStyle="color:#{(cellStatus.members.Product.dataValue == 'Canoes' ? 'red' : 'blue')};" value="#{cellData.dataValue}"
+                                   id="ot3"/>
+                  </dvt:dataCell>
+
+               </dvt:pivotTable>  
+        <!-- END TAG DEMO -->                
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/pivotTable/pivotTableFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>  
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

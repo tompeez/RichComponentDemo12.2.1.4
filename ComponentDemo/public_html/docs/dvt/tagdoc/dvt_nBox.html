@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:nBox&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:nBox&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:nBox nBox n box</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.nBox.UINBox<br>
+<b>Component type:</b> oracle.dss.adf.nBox.NBox<br></p>
+<p><img src="../images/nBox/nBox.png" alt="NBox" height="300"></p>
+<h2>Overview</h2>
+<p>A visualization displaying the distribution of a collection items across two dimensions, represented as a set of discrete rows and columns.<br></p>
+<pre>
+&lt;dvt:nBox value="#{nBoxDataModel}" var="node"&gt;
+  &lt;f:facet name="rows"&gt;
+    &lt;af:group&gt;
+      &lt;dvt:nBoxRow value="row0"/&gt;
+      &lt;dvt:nBoxRow value="row1"/&gt;
+      &lt;dvt:nBoxRow value="row2"/&gt;
+    &lt;/af:group&gt;
+  &lt;/f:facet&gt;
+  &lt;f:facet name="columns"&gt;
+    &lt;af:group&gt;
+      &lt;dvt:nBoxColumn value="column0"/&gt;
+      &lt;dvt:nBoxColumn value="column1"/&gt;
+      &lt;dvt:nBoxColumn value="column2"/&gt;
+    &lt;/af:group&gt;
+  &lt;/f:facet&gt;
+  &lt;dvt:nBoxNode row="#{node.row}" column="#{node.column}" label="#{node.name}"&gt;
+    &lt;f:facet name="icon"&gt;
+      &lt;dvt:marker shape="human"/&gt;
+    &lt;/f:facet&gt;
+  &lt;/dvt:nBoxNode&gt;
+&lt;/dvt:nBox&gt;
+</pre>
+<h3>Related Tags</h3>
+<ul>
+<li><code><a href="dvt_nBoxCell.html">dvt:nBoxCell</a></code></li>
+<li><code><a href="dvt_nBoxColumn.html">dvt:nBoxColumn</a></code></li>
+<li><code><a href="dvt_nBoxNode.html">dvt:nBoxNode</a></code></li>
+<li><code><a href="dvt_nBoxRow.html">dvt:nBoxRow</a></code></li>
+</ul>
+<h2>Customization Options</h2>
+<h3>Animation</h3>
+<p>Animations can be enabled on data change or on initial display by adding <code>af:transition</code> as a child of this component. The following trigger types and transitions are supported:</p>
+<ul>
+<li><code>dataChange</code>: <code>none</code> (default), <code>auto</code></li>
+<li><code>display</code>: <code>none</code> (default), <code>auto</code></li>
+</ul>
+<h3>Cells</h3>
+<p>Individual cells can be customized (e.g. to configure labeling or background color) via the optional <code>cells</code> facet:</p>
+<pre>
+&lt;f:facet name="cells"&gt;
+  &lt;af:group/&gt;
+    &lt;dvt:nBoxCell column="column0" row="row0" background="#FF0000"/&gt;
+    &lt;dvt:nBoxCell column="column1" row="row1" background="#00FF00"/&gt;
+    &lt;dvt:nBoxCell column="column2" row="row2" background="#0000FF"/&gt;
+  &lt;/af:group&gt;
+&lt;/f:facet&gt;
+</pre>
+<p>Note that it is not necessary to specify a <code><a href="dvt_nBoxCell.html">dvt:nBoxCell</a></code>for every cell in the NBox. Any cells without corresponding <code><a href="dvt_nBoxCell.html">dvt:nBoxCell</a></code> tags will render with default values.</p>
+<h3>Dynamic Grid Size</h3>
+<p>The NBox component supports static grids via explicit enumeration of the columns, rows, and cells (as in the code sample above). Additionally, <code>af:iterator</code> can be used to dynamically populate the grid at runtime:</p>
+<pre>
+&lt;f:facet name="columns"&gt;
+  &lt;af:iterator value="#{columnCollectionModel}" var="column"/&gt;
+    &lt;dvt:nBoxColumn value="#{column.value}"/&gt;
+  &lt;/af:iterator&gt;
+&lt;/f:facet&gt;
+&lt;f:facet name="rows"&gt;
+  &lt;af:iterator value="#{rowCollectionModel}" var="row"/&gt;
+    &lt;dvt:nBoxRow value="#{row.value}"/&gt;
+  &lt;/af:iterator&gt;
+&lt;/f:facet&gt;
+&lt;f:facet name="cells"&gt;
+  &lt;af:iterator value="#{cellCollectionModel}" var="cell"/&gt;
+    &lt;dvt:nBoxCell column="#{cell.column}" row="#{cell.row}"/&gt;
+  &lt;/af:iterator&gt;
+&lt;/f:facet&gt;
+</pre>
+<h3>Grouping</h3>
+<p>When <code><a href="dvt_attributeGroups.html">dvt:attributeGroups</a></code> are used inside a <code><a href="dvt_nBoxNode.html">dvt:nBoxNode</a></code> (or one of its facets), the <code>groupBy</code> attribute can be used to group the NBox nodes together based on one of more of these groups. The <code>groupBehavior</code> can be used to control whether nodes are grouped within each cell or across cells. Groups smaller than a certain percentage of the total can be grouped into an "Other" group using the <code>otherThreshold</code> attribute. The color of this group can be customized using the <code>otherColor</code> attribute.</p>
+<h3>Labels</h3>
+<p>The <code>columnsTitle</code> and <code>rowsTitle</code> attributes can be used to specify labels for the column and row axes, respectively. Individual columns and rows can be labeled via the <code>label</code> attributes on <code><a href="dvt_nBoxColumn.html">dvt:nBoxColumn</a></code> and <code><a href="dvt_nBoxRow.html">dvt:nBoxRow</a></code>. Individual cells can be labeled via the <code>label</code> attribute on <code><a href="dvt_nBoxCell.html">dvt:nBoxCell</a></code>. Lastly, node labels can be specified via the <code>label</code> and <code>secondaryLabel</code> attributes on <code><a href="dvt_nBoxNode.html">dvt:nBoxNode</a></code>.</p>
+<h3>Maximize</h3>
+<p>The NBox can be configured to maximize a single column or row by specifying the <code>maximizedColumn</code> or <code>maximizedRow</code> attributes, respectively. Specifying both attributes will maximize the cell at the intersection of the specified row and column.</p>
+<h2>Interactivity Features</h2>
+<h3>Popups and Context Menus</h3>
+<p>Popups and context menus can be displayed using <code>af:showPopupBehavior</code>, which is a supported child of <code><a href="dvt_nBoxNode.html">dvt:nBoxNode</a></code>.</p>
+<h3>Selection</h3>
+<p>Selection of data items can be enabled using the <code>nodeSelection</code> attribute. Selection can be processed using <code>selectionListener</code> on the server..</p>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Supported Facets</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="27%" align="left" valign="bottom" id="fcName">Name</th>
+<th width="73%" align="left" valign="bottom" id="fcDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="fcName">cells</td>
+<td align="left" headers="fcDesc">An unordered list of cells (mapped by row and column value) for this NBox</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">columns</td>
+<td align="left" headers="fcDesc">The ordered list of columns for this NBox (from bottom to top)</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">rows</td>
+<td align="left" headers="fcDesc">The ordered list of rows for this NBox (from start to end)</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.nBox.UINBox</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">
+<p>Specifies a binding reference to store a specific instance of UINBox from a backing bean. Set this attribute only to access code in a backing bean. For example, to reference an NBox component in the sample managed bean, use the following code: <code>binding="#{sample.nbox}"</code></p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">columnsTitle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the title for the NBox columns</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">contentDelivery</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> whenAvailable, lazy, immediate<br>
+<strong>Default Value:</strong> whenAvailable<br>
+<br>
+Specifies whether to fetch content with page load or after page load.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">emptyText</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The text of the component when empty.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">groupBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> withinCell, acrossCells<br>
+<strong>Default Value:</strong> withinCell<br>
+<br>
+Specifies how nodes should be grouped. Note that the maximize interaction can not be used on the NBox when grouping across cells.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">groupBy</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies (by id) the set of <code><a href="dvt_attributeGroups.html">dvt:attributeGroups</a></code> that should be used for grouping.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">highlightedRowKeys</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.RowKeySet</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The set of highlighted rows for this component. Each entry in the set is a rowKey.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Specifies the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Style of the outer element (enclosing div) of the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">legendDisplay</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, off<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+Specifies whether a legend should be displayed. The <code>auto</code> will configure and display a legend when <code><a href="dvt_attributeGroups.html">dvt:attributeGroups</a></code> are used.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">maximizedColumn</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the column that should be maximized.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">maximizedRow</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the row that should be maximized.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">nodeSelection</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, single, multiple<br>
+<strong>Default Value:</strong> multiple<br>
+<br>
+Specifies the selection mode.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">otherColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the color of the group node representing all nodes below the otherThreshold, if one has been specified.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">otherThreshold</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">A value from 0-1 representing a percentage of the NBox collection size. When grouping, any groups with sizes below the otherThreshold will be combined into a single group, indicated by the otherColor.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rowsTitle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the title for the NBox rows</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectedRowKeys</td>
+<td align="left" headers="attrType">org.apache.myfaces.trinidad.model.RowKeySet</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The set of selected rows for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to a selection listener, the method is invoked when the selected nodes are changed.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">Object</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The data model for the NBox - can be an instance of javax.faces.CollectionModel</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">var</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Name of the EL variable used to reference each element of this collection. Once this component has completed rendering, this variable is removed (or reverted back to its previous value).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">varStatus</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Name of the EL variable used to reference the varStatus information. Once this component has completed rendering, this variable is removed (or reverted back to its previous value). The VarStatus provides contextual information about the state of the component to EL expressions. For components that iterate, varStatus also provides loop counter information. Please see the this component's documentation for the specific properties on the varStatus. The common properties on varStatus include:
+<ul>
+<li><code>model</code> - returns the CollectionModel for this component</li>
+<li><code>index</code> - returns the zero based row index</li>
+</ul>
+</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

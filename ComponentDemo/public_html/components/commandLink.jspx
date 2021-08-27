@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="commandLink Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="commandLink"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a commandLink is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglA">
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>Use the editor to the right to adjust the attributes for this demo.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="s2"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:commandLink text="Go to Component Guide" immediate="true" action="guide"
+                          binding="#{editor.component}" id="cl1"/>
+
+<!-- Test commandLink with context facet 
+              <af:commandLink clientComponent="true" text="commandLink" action="guide" binding="#{editor.component}" id="commandLink2">
+                <f:facet name="context">
+                  <af:contextInfo id="contextInfo7">
+                    <af:showPopupBehavior align="beforeStart" popupId="binky" triggerType="contextInfo"/>
+                  </af:contextInfo>
+                </f:facet>
+              </af:commandLink>
+-->
+
+                          
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:spacer height="5px" id="s3"/>
+
+            <af:panelHeader text="Deprecated">
+              <af:spacer height="5px"/>
+              <af:outputText value="Please note that commandLink is deprecated. Please use "/>
+              <af:link text="af:link" destination="/components/link.jspx"/>
+              <af:outputText value=" instead."/>
+            </af:panelHeader>  
+
+            <af:panelHeader text="Example of a commandLink which does a PPR"
+                            id="ph1">
+              <af:spacer height="5px" id="s4"/>
+              <af:commandLink text="Click here to update the text below" immediate="true"
+                              partialSubmit="true" id="refresh" shortDesc="Sample shortDesc text">
+                <af:setPropertyListener from="#{sessionScope.num == null ? 1:(sessionScope.num+1)}"
+                                        to="#{sessionScope.num}" type="action"/>
+              </af:commandLink>
+              <af:spacer height="5px" id="s5"/>
+              <af:outputText value="You have clicked :#{sessionScope.num == null ? 0 : (sessionScope.num)} times"
+                             partialTriggers="refresh" id="ot1"/>
+            </af:panelHeader>
+            <af:panelHeader text="Example of a commandLink which has useWindow=true"
+                            id="ph2">
+              <af:spacer height="5px" id="s6"/>
+              <af:commandLink text="Click here to see the dialog in new window" useWindow="true"
+                              action="dialog:createNewFile" partialSubmit="true" id="usewindowlink"/>
+            </af:panelHeader>
+
+            <af:panelHeader text="Example of a commandLink with context facet">
+              <af:spacer height="5px"/>
+              <af:commandLink clientComponent="true" text="commandLink" action="guide" id="commandLink1">
+                <f:facet name="context">
+                  <af:contextInfo id="contextInfo5">
+                    <af:showPopupBehavior align="beforeStart" popupId="binky" triggerType="contextInfo"/>
+                  </af:contextInfo>
+                </f:facet>
+              </af:commandLink>
+            </af:panelHeader>
+            <af:popup id="binky">
+              <af:dialog id="d2" title="Employee Information" modal="false">
+                <af:panelFormLayout id="pfl2a">
+                  <af:inputText readOnly="true" label="name" value="Jane Doe" id="ot0a"/>
+                  <af:inputText readOnly="true" label="group" value="Human Resources"
+                                id="ot1a"/>
+                  <af:inputText readOnly="true" label="location" value="Las Vegas, NV"
+                                id="ot2a"/>
+                  <af:inputText readOnly="true" label="grade" value="Vice President" id="ot3a"/>
+                </af:panelFormLayout>
+              </af:dialog>
+            </af:popup>
+
+            <af:panelHeader text="Example of panelLabelAndMessage/commandLink inside of panelFormLayout"
+                            id="ph3">
+              <af:panelFormLayout id="pfl1">
+                <af:panelLabelAndMessage label="first form item's label"
+                                         id="plam1">
+                  <af:outputText value="first form item's field" id="ot2"/>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="commandLink label" id="plam2">
+                  <af:commandLink text="Component Guide" immediate="true" action="guide"
+                                  id="cl2"/>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="last form item's label"
+                                         id="plam3">
+                  <af:outputText value="last form item's field" id="ot3"/>
+                </af:panelLabelAndMessage>
+              </af:panelFormLayout>
+            </af:panelHeader>
+            
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s7"/>
+              </f:facet>
+              <af:outputText value="See also:" id="ot4"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem immediate="true" text="with contextInfo in context facet"
+                                          destination="contextInfo.jspx"
+                                          id="cni0"/>
+                <af:commandNavigationItem immediate="true" text="editableTable"
+                                          destination="table/editableTable.jspx"
+                                          id="cni1"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

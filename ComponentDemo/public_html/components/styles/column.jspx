@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="column Style Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="column"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="styles"/>
+        <f:attribute name="editorSize" value="350"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:outputText styleClass="AFInstructionText"
+                           value="This page demos the effect various contentStyle and inlineStyle parameters have on this component."
+                           id="ot1"/>
+            <af:table rowSelection="multiple" columnSelection="multiple" columnStretching="last"
+                      var="row" value="#{periodicTable.tableData}"
+                      inlineStyle="border-left-width: 0px; border-right-width: 0px;" width="100%"
+                      summary="table data" binding="#{styleChanger.parents['table1']}"
+                      id="t1">
+              <af:column headerText="Element Name" sortable="true"
+                          binding="#{styleChanger.components['column1']}"
+                         id="c1">
+                <af:outputText value="#{row.name}" id="ot2"/>
+              </af:column>
+              <af:column id="symbolColumn" binding="#{styleChanger.components['column2']}">
+                <f:facet name="header">
+                  <af:outputText value="Symbol" id="ot3"/>
+                </f:facet>
+                <af:outputText value="#{row.symbol}" id="ot4"/>
+              </af:column>
+              <af:column headerText="Atomic Number" id="c2">
+                <af:outputText value="#{row.number}" id="ot5"/>
+              </af:column>
+              <af:column headerText="Group" id="c3">
+                <af:outputText value="#{row.group}" id="ot6"/>
+              </af:column>
+            </af:table>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

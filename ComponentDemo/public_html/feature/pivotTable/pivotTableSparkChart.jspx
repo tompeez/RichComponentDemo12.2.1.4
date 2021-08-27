@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{pivotTableFeatureLinks.sparkChartStampedPivotTableTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Pivot Table stamped with Spark Charts"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="Pivot Table stamped with Spark Charts"/>    
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START TAG DEMO -->
+            <dvt:pivotTable inlineStyle="height:550px;width:100%;"
+                            binding="#{editor.component}"
+                            contentDelivery="immediate"
+                            var="cellData"
+                            varStatus="cellStatus"
+                            value="#{pivotTableSparkChart.dataModel}" 
+                            id="pt1" 
+                            summary="Pivot Table" 
+                            pivotEnabled="false"
+                            headerSortMode="none"
+                            splitMode="enabled"
+                            >
+
+                  <dvt:dataCell>
+                      <af:switcher id="s2" defaultFacet="false" facetName="#{cellData.dataIsTotal}">
+                        <f:facet name="true">
+                          <dvt:sparkChart highMarkerColor="#008200" lowMarkerColor="#ff0000"
+                                          id="sc1" shortDesc="Spark Chart">
+                            <af:iterator id="i1" var="sparks" value="#{cellData.aggregateCollection}">
+                              <dvt:sparkItem id="si1" value="#{sparks.dataValue}"/>
+                            </af:iterator>
+                          </dvt:sparkChart>
+                        </f:facet>
+                        <f:facet name="false">
+                          <af:outputText id="ot1" value="#{cellData.dataValue}"/>
+                        </f:facet>
+                      </af:switcher>
+                  </dvt:dataCell>
+
+                  <dvt:headerCell>
+                      <af:switcher id="s3" defaultFacet="false" facetName="#{cellData.isTotal}">
+                        <f:facet name="true">
+                          <af:outputText id="ot2" value="Trend"/>
+                        </f:facet>
+                        <f:facet name="false">
+                          <af:outputText id="ot3" value="#{cellData.dataValue}"/>
+                        </f:facet>
+                      </af:switcher>
+                  </dvt:headerCell>
+
+             </dvt:pivotTable>  
+        <!-- END TAG DEMO -->        
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/pivotTable/pivotTableFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>  
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

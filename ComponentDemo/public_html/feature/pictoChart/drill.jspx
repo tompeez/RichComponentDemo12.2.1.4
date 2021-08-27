@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Picto Chart Gallery" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Picto Chart Gallery"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Picto Chart"/>
+                <f:facet name="center">
+                    <!-- START FEATURE DEMO -->
+                    <af:panelGroupLayout layout="vertical">
+                        <af:group>
+                            <af:outputText inlineStyle="font-size:large;" value="Drill Listener"/>
+                            <af:spacer width="50px"/>
+                            <af:outputText partialTriggers="pc1"
+                                           value="#{pictoChartDataSource.drillState}" inlineStyle="font-size:larger;"/>
+                            <af:panelGroupLayout layout="horizontal">
+                                <dvt:pictoChart id="pc1" inlineStyle="width:400px;height:80px;" drilling="#{pictoChartDataSource.drilling}"
+                                                drillListener="#{pictoChartDataSource.drillListener}"
+                                                value="#{pictoChartDataSource.defaultPictoData}" var="items"
+                                                partialTriggers="::drillChoice">
+                                    <dvt:pictoChartItem shape="#{items.shape}" color="#{items.color}"
+                                                        count="#{items.count}" shortDesc="#{items.shortDesc}"/>
+                                </dvt:pictoChart>
+                            </af:panelGroupLayout>
+                        </af:group>
+                        <af:group>
+                            <af:selectOneChoice label="Drilling" value="#{pictoChartDataSource.drilling}"
+                                                id="drillChoice" autoSubmit="true">
+                                <af:selectItem label="on" id="sel1"/>
+                                <af:selectItem label="off" id="sel4"/>
+                            </af:selectOneChoice>
+                        </af:group>
+                        
+                           
+            <af:group>
+              <af:outputText inlineStyle="font-size:large;" value="Selection Listener"/>
+              <af:spacer width="50px"/>
+              <af:outputText partialTriggers="pc2" value="#{pictoChartDataSource.selectionState}" inlineStyle="font-size:larger;"/>
+              <af:panelGroupLayout layout="horizontal">
+                                                <dvt:pictoChart inlineStyle="width:400px;height:80px;" id="pc2" selectionListener="#{pictoChartDataSource.selectionListener}"
+                                                value="#{pictoChartDataSource.defaultPictoData}" var="items"
+                                                                selectionMode="multiple">
+                                    <dvt:pictoChartItem shape="#{items.shape}" color="#{items.color}"
+                                                        count="#{items.count}" shortDesc="#{items.shortDesc}"/>
+                                </dvt:pictoChart>
+              </af:panelGroupLayout>
+            </af:group>
+           
+                    </af:panelGroupLayout>
+                    <!-- END FEATURE DEMO -->
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

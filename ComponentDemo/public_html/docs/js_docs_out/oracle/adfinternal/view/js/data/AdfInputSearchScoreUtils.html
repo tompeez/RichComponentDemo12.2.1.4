@@ -1,0 +1,649 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>AdfInputSearchScoreUtils</title>
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<script type="text/javascript">
+function handleOnload()
+{
+  if ((""+self.location).indexOf("file://") == 0)
+    return;
+  if (parent.document.documentElement.getAttribute("showprivate")=="true")
+  {
+    document.body.setAttribute("showprivate", "true");
+  }
+  else
+  {
+    document.body.setAttribute("showprivate", "false");
+  }
+  parent.document.title="AdfInputSearchScoreUtils";
+}
+function togglePrivate(desiredFlag)
+{
+  var currentFlag = document.body.getAttribute("showprivate")=="true";
+  var newFlag = "" + (!currentFlag);
+  if (desiredFlag != null)
+  {
+    newFlag = desiredFlag;
+  }  document.body.setAttribute("showprivate", newFlag);
+}
+</script>
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body onload="handleOnload()">
+<h1 style="color:#0D4988;font-size:18px;font-weight:bold;font-family:Tahoma, Verdana,Helvetica,sans-serif"><img alt="Oracle" src="../../../../.././doc-files/logo-oracle-red.png" align="top">JavaScript API Reference for Oracle ADF Faces</h1>
+<!-- ====== START OF NAVBAR ====== -->
+<p><a name="navbar_top" id="navbar_top"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a name="navbar_top_firstrow" id="navbar_top_firstrow"><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../oracle/adfinternal/view/js/data/AdfInputSearchMruCache.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../oracle/adfinternal/view/js/laf/dhtml/rich/AdfInputSearchScrollManager.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../index.html?oracle/adfinternal/view/js/data/AdfInputSearchScoreUtils.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfInputSearchScoreUtils.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<hr>
+<h1><span style="font-size: smaller">oracle.adfinternal.view.js.data</span><br>
+Class AdfInputSearchScoreUtils</h1>
+<div class="InternalClassOrPackageWarning">
+<h2>Warning:</h2>
+<ul>
+<li>This is an unsupported, internal implementation class.</li>
+<li>Use an API class that might provide equivalent functionality instead.</li>
+<li>This class will change without notice.</li>
+<li>It is not recommended that you use anything in this class.</li>
+</ul>
+</div>
+<pre>
+<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">org.ecmascript.object.Object</a>
+   |
+   +--<a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">oracle.adf.view.js.base.AdfObject</a>
+         |
+         +--<strong>oracle.adfinternal.view.js.data.AdfInputSearchScoreUtils</strong>
+</pre>
+<hr>
+<pre>
+public class <strong>AdfInputSearchScoreUtils</strong>
+extends <a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a>
+</pre>
+<div>Utils class for score management of af:suggestionsSection backed list. At preset, this provides helper methods to score the suggestions based on frecency. Frecency is frequency + recency, inspired by Firefox url bar's link scoring logic. The logic here identifies the selected suggestion item as a) A new item b) An item that is previously selected in the same user session c) An item selected in previous user session d) An item selected in an earlier user session Based on this identification, its score is updated by a different margin giving preference to its frequency and recency. The decay of score of previously selected suggestion items on selection of a new item is also based on similar logic. See updateScores method for the implementation.</div>
+<p><br></p>
+<hr>
+<p><a name="field_summary" id="field_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_DECAY_SCORE_MAP" title="field in this class">_DECAY_SCORE_MAP</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_MAX_SCORE" title="field in this class">_MAX_SCORE</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_NEW_ITEM_SCORE" title="field in this class">_NEW_ITEM_SCORE</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_SCORE_INCREMENTOR_MAP" title="field in this class">_SCORE_INCREMENTOR_MAP</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_STATE_OLD_SESSION" title="field in this class">_STATE_OLD_SESSION</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_STATE_PREVIOUS_SESSION" title="field in this class">_STATE_PREVIOUS_SESSION</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private&nbsp;static&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_STATE_SAME_SESSION" title="field in this class">_STATE_SAME_SESSION</a></strong></code></dt>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="fields_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from oracle.adf.view.js.base.<a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../oracle/adf/view/js/base/AdfObject.html#constructor" title="field in oracle.adf.view.js.base.AdfObject">constructor</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#superclass" title="field in oracle.adf.view.js.base.AdfObject">superclass</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="fields_inherited_from_class_org_ecmascript_object_Object" id="fields_inherited_from_class_org_ecmascript_object_Object"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Fields inherited from org.ecmascript.object.<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../org/ecmascript/object/Object.html#prototype" title="field in org.ecmascript.object.Object">prototype</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="constructor_summary" id="constructor_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%"><code>public</code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#AdfInputSearchScoreUtils__" title="constructor in this class">AdfInputSearchScoreUtils</a></strong>()</code></dt>
+<dd>
+<div>Utils class for score management of af:suggestionsSection backed list.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="method_summary" id="method_summary"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Summary</h2>
+</th>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_decrementScores_Object__Object_" title="method in this class">_decrementScores</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> scoreMap, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> sessionTimeStamps)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#getMinScoredSuggestionKey_Object_" title="method in this class">getMinScoredSuggestionKey</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> scoreMap)</code></dt>
+<dd>
+<div>Returns the key of the suggestion item with minimum score</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_getSessionState_Object__Object_" title="method in this class">_getSessionState</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> itemTimeStamp, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> sessionTimeStamps)</code></dt>
+<dd>
+<div>Returns if the passed time-stamps is part of current user session, previous user session, or an older previous session.</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_incrementScore_Object__Object_" title="method in this class">_incrementScore</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> currentItemScore, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> sessionTimeStamps)</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>protected static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#InitClass__" title="method in this class">InitClass</a></strong>()</code></dt>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#sortPerScore_Object__Object_" title="method in this class">sortPerScore</a></strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> suggestionsList, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> scoreMap)</code></dt>
+<dd>
+<div>Sorts the suggestions in the suggestionsList array based on the scores present in scoreMap</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td align="right" valign="top" width="1%" nowrap><code>public static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#updateScores_String__Object__Number_String_" title="method in this class">updateScores</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> storageKey, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> preferredSuggestions, <a href="../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a>|<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> currentValue)</code></dt>
+<dd>
+<div>Updates the scores on selection of new item</div>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="TableRowColor HiddenPrivate">
+<td align="right" valign="top" width="1%" nowrap><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></td>
+<td>
+<dl>
+<dt><code><strong><a href="#O_updateSessionState_String__Object_" title="method in this class">_updateSessionState</a></strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> storageKey, <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> preferredSuggestions)</code></dt>
+<dd>
+<div>Popuplates the sessionStorage with a) time-stamp of previous session when the current localStorage item was accessed b) current time and also caches the current time on the localStorage (via preferredSuggestions object) which will be helpful in determining the previous session timestamp in the next user session A combination of these two time-stamps will be helpful to determine if the suggestion item was earlier selected within the same user session, previous user session, or in an earlier user session.</div>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<p><br>
+<a name="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject" id="methods_inherited_from_class_oracle_adf_view_js_base_AdfObject"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="100%">
+<tr class="TableSubHeadingColor">
+<td>
+<h3>Methods inherited from oracle.adf.view.js.base.<a href="../../../../../oracle/adf/view/js/base/AdfObject.html" title="class in oracle.adf.view.js.base">AdfObject</a></h3>
+</td>
+</tr>
+<tr class="TableRowColor">
+<td><code><a href="../../../../../oracle/adf/view/js/base/AdfObject.html#adopt_Object_" title="method in oracle.adf.view.js.base.AdfObject">adopt</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#clone__" title="method in oracle.adf.view.js.base.AdfObject">clone</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#createCallback_Object_" title="method in oracle.adf.view.js.base.AdfObject">createCallback</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#createInitializedObject__" title="method in oracle.adf.view.js.base.AdfObject">createInitializedObject</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#createSubclass_Function__Function__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">createSubclass</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#ensureClassInitialization_Function_" title="method in oracle.adf.view.js.base.AdfObject">ensureClassInitialization</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#equals_Object_" title="method in oracle.adf.view.js.base.AdfObject">equals</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#exportPrototypeSymbol_string__Object_" title="method in oracle.adf.view.js.base.AdfObject">exportPrototypeSymbol</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#getClass_Object_" title="method in oracle.adf.view.js.base.AdfObject">getClass</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyArrayProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyArrayProperty</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#GetLazyMapProperty_Object__Object__Object_" title="method in oracle.adf.view.js.base.AdfObject">GetLazyMapProperty</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#getTypeName__" title="method in oracle.adf.view.js.base.AdfObject">getTypeName</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#Init__" title="method in oracle.adf.view.js.base.AdfObject">Init</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#toDebugString__" title="method in oracle.adf.view.js.base.AdfObject">toDebugString</a>, <a href="../../../../../oracle/adf/view/js/base/AdfObject.html#toString__" title="method in oracle.adf.view.js.base.AdfObject">toString</a></code></td>
+</tr>
+</table>
+<p><br>
+<a name="field_detail" id="field_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Field Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="O_DECAY_SCORE_MAP" id="O_DECAY_SCORE_MAP"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_DECAY_SCORE_MAP</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_DECAY_SCORE_MAP</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_MAX_SCORE" id="O_MAX_SCORE"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_MAX_SCORE</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_MAX_SCORE</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_NEW_ITEM_SCORE" id="O_NEW_ITEM_SCORE"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_NEW_ITEM_SCORE</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_NEW_ITEM_SCORE</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_SCORE_INCREMENTOR_MAP" id="O_SCORE_INCREMENTOR_MAP"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_SCORE_INCREMENTOR_MAP</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_SCORE_INCREMENTOR_MAP</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_STATE_OLD_SESSION" id="O_STATE_OLD_SESSION"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_STATE_OLD_SESSION</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_STATE_OLD_SESSION</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_STATE_PREVIOUS_SESSION" id="O_STATE_PREVIOUS_SESSION"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_STATE_PREVIOUS_SESSION</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_STATE_PREVIOUS_SESSION</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_STATE_SAME_SESSION" id="O_STATE_SAME_SESSION"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_STATE_SAME_SESSION</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> <strong>_STATE_SAME_SESSION</strong></code></dt>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="constructor_detail" id="constructor_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Constructor Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="AdfInputSearchScoreUtils__" id="AdfInputSearchScoreUtils__"><!-- --></a></p>
+<h3 class="DetailHeader">AdfInputSearchScoreUtils</h3>
+<dl>
+<dt><code>public <strong>AdfInputSearchScoreUtils</strong>()</code></dt>
+<dd><br>
+<div>Utils class for score management of af:suggestionsSection backed list. At preset, this provides helper methods to score the suggestions based on frecency. Frecency is frequency + recency, inspired by Firefox url bar's link scoring logic. The logic here identifies the selected suggestion item as a) A new item b) An item that is previously selected in the same user session c) An item selected in previous user session d) An item selected in an earlier user session Based on this identification, its score is updated by a different margin giving preference to its frequency and recency. The decay of score of previously selected suggestion items on selection of a new item is also based on similar logic. See updateScores method for the implementation.</div>
+</dd>
+</dl>
+<hr>
+<p><a name="method_detail" id="method_detail"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" width="100%" cellpadding="3" cellspacing="0">
+<tr class="TableHeadingColor">
+<th align="left" colspan="2">
+<h2>Method Detail</h2>
+</th>
+</tr>
+</table>
+<p><br>
+<a name="O_decrementScores_Object__Object_" id="O_decrementScores_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_decrementScores</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _decrementScores</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> scoreMap,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> sessionTimeStamps)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>scoreMap</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>sessionTimeStamps</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="getMinScoredSuggestionKey_Object_" id="getMinScoredSuggestionKey_Object_"><!-- --></a></p>
+<h3 class="DetailHeader">getMinScoredSuggestionKey</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> getMinScoredSuggestionKey</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> scoreMap)</code></dt>
+<dd><br>
+<div>Returns the key of the suggestion item with minimum score</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>scoreMap</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_getSessionState_Object__Object_" id="O_getSessionState_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_getSessionState</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _getSessionState</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> itemTimeStamp,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> sessionTimeStamps)</code></dt>
+<dd><br>
+<div>Returns if the passed time-stamps is part of current user session, previous user session, or an older previous session.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>itemTimeStamp</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>sessionTimeStamps</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="O_incrementScore_Object__Object_" id="O_incrementScore_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_incrementScore</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _incrementScore</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> currentItemScore,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> sessionTimeStamps)</code></dt>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>currentItemScore</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>sessionTimeStamps</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<p><a name="InitClass__" id="InitClass__"><!-- --></a></p>
+<h3 class="DetailHeader">InitClass</h3>
+<dl>
+<dt><code>protected static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> InitClass</strong>()</code></dt>
+<dd><br>
+<dl>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="sortPerScore_Object__Object_" id="sortPerScore_Object__Object_"><!-- --></a></p>
+<h3 class="DetailHeader">sortPerScore</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> sortPerScore</strong>(<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> suggestionsList,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> scoreMap)</code></dt>
+<dd><br>
+<div>Sorts the suggestions in the suggestionsList array based on the scores present in scoreMap</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>suggestionsList</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td valign="top"><code>scoreMap</code></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="updateScores_String__Object__Number_String_" id="updateScores_String__Object__Number_String_"><!-- --></a></p>
+<h3 class="DetailHeader">updateScores</h3>
+<dl>
+<dt><code>public static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> updateScores</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> storageKey,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> preferredSuggestions,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/primitive/Number.html" title="class in org.ecmascript.primitive">Number</a>|<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> currentValue)</code></dt>
+<dd><br>
+<div>Updates the scores on selection of new item</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>storageKey</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The key of the localStorage item</td>
+</tr>
+<tr>
+<td valign="top"><code>preferredSuggestions</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The parsed preferredSuggestions object associated with storageKey</td>
+</tr>
+<tr>
+<td valign="top"><code>currentValue</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">the newly selected suggestion item's key</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr>
+<p><a name="O_updateSessionState_String__Object_" id="O_updateSessionState_String__Object_"><!-- --></a></p>
+<h3 class="DetailHeader HiddenPrivate">_updateSessionState</h3>
+<dl class="HiddenPrivate">
+<dt><code>private static <strong><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> _updateSessionState</strong>(<a href="../../../../../org/ecmascript/primitive/String.html" title="class in org.ecmascript.primitive">String</a> storageKey,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a> preferredSuggestions)</code></dt>
+<dd><br>
+<div>Popuplates the sessionStorage with a) time-stamp of previous session when the current localStorage item was accessed b) current time and also caches the current time on the localStorage (via preferredSuggestions object) which will be helpful in determining the previous session timestamp in the next user session A combination of these two time-stamps will be helpful to determine if the suggestion item was earlier selected within the same user session, previous user session, or in an earlier user session.</div>
+</dd>
+<dd><br>
+<dl>
+<dt>Parameters:</dt>
+<dd>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="0">
+<tr>
+<td valign="top"><code>storageKey</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The key of sessionStorage</td>
+</tr>
+<tr>
+<td valign="top"><code>preferredSuggestions</code></td>
+<td valign="top">&nbsp;-&nbsp;</td>
+<td valign="top">The parsed preferredSuggestions object. Any changes to this object will be persisted in the localStorage</td>
+</tr>
+</table>
+</dd>
+<dt>Return:</dt>
+<dd><code><a href="../../../../../org/ecmascript/object/Object.html" title="class in org.ecmascript.object">Object</a></code></dd>
+</dl>
+</dd>
+</dl>
+<hr class="HiddenPrivate">
+<div><span style="font-size: smaller">SUMMARY: <a href="#field_summary">FIELD</a> | <a href="#constructor_summary">CONSTR</a> | <a href="#method_summary">METHOD</a>&nbsp;&nbsp;&nbsp;&nbsp;DETAIL: <a href="#field_detail">FIELD</a> | <a href="#constructor_detail">CONSTR</a> | <a href="#method_detail">METHOD</a></span></div>
+<!-- ====== START OF NAVBAR ====== -->
+<hr>
+<p><a name="navbar_bottom" id="navbar_bottom"><!-- --></a></p>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" width="100%" cellpadding="1" cellspacing="0">
+<tr>
+<td colspan="2" valign="top"><a><!-- --></a>
+<table class="oac_no_warn" summary="Layout table... probably." border="0" cellpadding="0" cellspacing="3" class="NavBarTable1">
+<tr align="center" valign="top">
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-summary.html"><span class="NavBarFont1"><strong>Overview</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="package-summary.html"><span class="NavBarFont1"><strong>Package</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1Rev">&nbsp;<span class="NavBarFont1Rev"><strong>Class</strong></span>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../overview-tree.html"><span class="NavBarFont1"><strong>Tree</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../deprecated-list.html"><span class="NavBarFont1"><strong>Deprecated</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../index-all.html"><span class="NavBarFont1"><strong>Index</strong></span></a>&nbsp;</td>
+<td class="NavBarCell1">&nbsp;<a href="../../../../../help-doc.html"><span class="NavBarFont1"><strong>Help</strong></span></a>&nbsp;</td>
+</tr>
+</table>
+</td>
+<td class="NavBarProjectCell" align="right"><em><strong><b>Oracle&reg; Fusion Middleware Javascript API Reference for Oracle ADF Faces<br>
+12c (13.0.0.1.0)<br>
+E80085-01</b></strong></em></td>
+</tr>
+<tr>
+<td class="NavBarCell2"><span style="font-size: smaller">&nbsp;<a href="../../../../../oracle/adfinternal/view/js/data/AdfInputSearchMruCache.html">PREV</a>&nbsp; &nbsp;<a href="../../../../../oracle/adfinternal/view/js/laf/dhtml/rich/AdfInputSearchScrollManager.html">NEXT</a>&nbsp;</span></td>
+<td class="NavBarCell2"><span style="font-size: smaller"><a href="../../../../../index.html?oracle/adfinternal/view/js/data/AdfInputSearchScoreUtils.html" target="_top"><strong>FRAMES</strong></a> &nbsp; &nbsp;<a href="AdfInputSearchScoreUtils.html" target="_top"><strong>NO FRAMES</strong></a> <script type="text/javascript">
+  <!--
+  if(window==top) {
+    document.writeln('&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes<\/strong><\/a>');
+  }
+  //-->
+</script> <noscript>&nbsp;&nbsp;<a href="../../../../../allclasses-noframe.html"><strong>All Classes</strong></a></noscript> &nbsp;&nbsp; <span class="HiddenPrivate PrivatesShownWarning">Warning: private items are visible</span></span></td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<hr>
+<!-- ====== END OF NAVBAR ====== -->
+<div class="CreationTime">Generated on 2018.06.28 06:41 UTC</div>
+<center>Copyright (c) 1998, 2018, Oracle and/or its affiliates. All rights reserved.</center>
+</body>
+</html>

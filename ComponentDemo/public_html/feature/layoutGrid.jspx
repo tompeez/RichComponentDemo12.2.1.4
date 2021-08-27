@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1" maximized="true" partialTriggers="t1pgldf gr1h gc1v gc1h gc1w gr2r gr3r">
+      <af:form id="f1">
+        <af:panelGridLayout dimensionsFrom="#{requestScope.t1pglDimensionsFrom}">
+          <af:gridRow id="gr1" marginTop="10px" marginBottom="10px"
+                      height="#{requestScope.gr1Height == null ? '33%' : requestScope.gr1Height}">
+            <af:gridCell id="gc1" marginStart="10px" marginEnd="10px"
+                         halign="#{requestScope.gc1Halign}" valign="#{requestScope.gc1Valign}"
+                         width="#{requestScope.gc1Width == null ? '50%': requestScope.gc1Width}"
+                         binding="#{editor.component}"
+                         inlineStyle="background-color:#FFEEEE;color:#8C3836">
+              <af:panelGroupLayout layout="scroll">
+                <af:outputText id="ot1" value="Cell 1"/>
+                <af:panelFormLayout>
+                  <af:goMenuItem text="view page source"
+                                 destination="#{facesContext.viewRoot.viewId}.source" id="gmi2"/>
+                  <af:selectOneRadio layout="horizontal" id="t1pgldf"
+                                     label="set panelGridLayout dimensionsFrom attribute"
+                                     autoSubmit="true" value="#{requestScope.t1pglDimensionsFrom}">
+                    <af:selectItem value="auto" label="auto"/>
+                    <af:selectItem value="parent" label="parent"/>
+                    <af:selectItem value="children" label="children"/>
+                  </af:selectOneRadio>
+                  <af:separator/>
+                  <af:inputText label="gridRow height attribute value"
+                                value="#{requestScope.gr1Height}" autoSubmit="true" id="gr1h"
+                                shortDesc="'auto', percent like '22%', em or px like '200px'"/>
+                  <af:selectBooleanCheckbox label="Hide Row 2" value="#{requestScope.gr2Rendered}"
+                                            autoSubmit="true" id="gr2r"/>
+                  <af:selectBooleanCheckbox label="Hide Row 3" value="#{requestScope.gr3Rendered}"
+                                            autoSubmit="true" id="gr3r"/>
+                  <af:separator/>
+                  <af:inputText label="gridCell width attribute value"
+                                value="#{requestScope.gc1Width}" autoSubmit="true" id="gc1w"
+                                shortDesc="'dontCare', 'auto', percent like '22%', em or px like '200px'"/>
+                  <af:selectOneRadio label="gridCell halign" value="#{requestScope.gc1Halign}"
+                                     autoSubmit="true" id="gc1h" layout="horizontal">
+                    <af:selectItem value="start" label="start"/>
+                    <af:selectItem value="end" label="end"/>
+                    <af:selectItem value="center" label="center"/>
+                    <af:selectItem value="stretch" label="stretch"/>
+                  </af:selectOneRadio>
+                  <af:selectOneRadio label="gridCell valign" value="#{requestScope.gc1Valign}"
+                                     autoSubmit="true" id="gc1v" layout="horizontal"
+                                     shortDesc="doc for 'stretch' as of 4-9-12 is: if (1) the cell has a non-auto width, (2) the row has a non-auto height, (3) 'halign' is also set to 'stretch', and (4) if there is only one child component within the gridCell, then the cell will attempt to anchor the child component to all sides of the cell's coordinates. Otherwise, the 'top' behavior will be used instead.">
+                    <af:selectItem value="top" label="top"/>
+                    <af:selectItem value="middle" label="middle"/>
+                    <af:selectItem value="bottom" label="bottom"/>
+                    <af:selectItem value="stretch" label="stretch"/>
+                  </af:selectOneRadio>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+            </af:gridCell>
+            <af:gridCell id="gc2" marginEnd="10px" width="50%" halign="stretch" valign="stretch"
+                         inlineStyle="background-color:#F79646;color:#B66D31">
+              <af:outputText id="ot2" value="Cell 2"/>
+            </af:gridCell>
+          </af:gridRow>
+          <af:gridRow id="gr2" marginBottom="10px" height="33%"
+                      rendered="#{!requestScope.gr2Rendered}">
+            <af:gridCell id="gc3"
+                         width="#{requestScope.gc1Width == null ? '50%': requestScope.gc1Width}"
+                         halign="stretch" valign="stretch"
+                         inlineStyle="background-color:#9BBB59;color:#71893F">
+              <af:outputText id="ot3" value="Cell 3"/>
+            </af:gridCell>
+            <af:gridCell id="gc4" width="50%" halign="stretch" valign="stretch"
+                         inlineStyle="background-color:#4F81BD;color:#3F5D8A">
+              <af:outputText id="ot4" value="Cell 4"/>
+            </af:gridCell>
+          </af:gridRow>
+          <af:gridRow id="gr3" marginBottom="10px" height="33%"
+                      rendered="#{!requestScope.gr3Rendered}">
+            <af:gridCell id="gc5"
+                         width="#{requestScope.gc1Width == null ? '50%': requestScope.gc1Width}"
+                         halign="stretch" valign="stretch"
+                         inlineStyle="background-color:#8064A2;color:#5C4776">
+              <af:outputText id="ot5" value="Cell 5"/>
+            </af:gridCell>
+            <af:gridCell id="gc6" width="50%" halign="stretch" valign="stretch"
+                         inlineStyle="background-color:#EFEFEF;color:#888888">
+              <af:outputText id="ot6" value="Cell 6"/>
+            </af:gridCell>
+          </af:gridRow>
+        </af:panelGridLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view><af:document title="Graph Reference Object Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo"
+                     viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Graph Reference Object Demo"/>
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Graph Reference Objects"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+          <dvt:barGraph shortDesc="Graph" id="bg1">
+            <dvt:referenceObjectSet>
+              <dvt:referenceObject type="RO_AREA" association="Y1AXIS"
+                                   location="RO_BACK" color="#55FFFF00"
+                                   lowValue="10" highValue="30"
+                                   displayedInLegend="true" text="Low">
+                <dvt:specialEffects fillType="FT_GRADIENT"
+                                    gradientDirection="GD_DOWN"
+                                    gradientNumStops="2">
+                  <dvt:gradientStopStyle stopIndex="0" gradientStopPosition="0" 
+                                         gradientStopColor="#FFFF00"/>
+                  <dvt:gradientStopStyle stopIndex="1"
+                                         gradientStopPosition="100"
+                                         gradientStopColor="#FF0000"/>
+                </dvt:specialEffects>
+              </dvt:referenceObject>
+              <dvt:referenceObject type="RO_AREA" association="Y1AXIS"
+                                   location="RO_BACK" color="#99cc66"
+                                   lowValue="50" highValue="100"
+                                   displayedInLegend="true" text="High"/>
+            </dvt:referenceObjectSet>
+          </dvt:barGraph>
+          <af:outputText inlineStyle="font-size:large;"
+                         value="Reference Objects on Hover" id="ot2"/>
+          <af:outputText value="Hover over the X1Axis or the 'Series 2' Legend Item to show Reference Objects."
+                         id="ot1"/>
+          <dvt:scatterGraph shortDesc="Graph" subType="SCATTER" id="g1">
+            <dvt:referenceObjectSet displaySeries="RO_DISPLAY_AUTOMATIC" displayX1="RO_DISPLAY_AUTOMATIC">
+              <dvt:referenceObject type="RO_AREA" association="X1AXIS"
+                                   location="RO_BACK" color="#55FFFF00"
+                                   lowValue="30" highValue="50"/>
+              <dvt:referenceObject type="RO_LINE" association="SERIES"
+                                   series="1" location="RO_BACK"
+                                   color="#55FF0000" lineValue="40"
+                                   lineWidth="3" lineStyle="LS_SOLID"/>
+              <dvt:referenceObject type="RO_LINE" association="SERIES"
+                                   series="1" location="RO_BACK" color="#99cc66"
+                                   lineValue="50" lineWidth="3"
+                                   lineStyle="LS_SOLID"/>
+            </dvt:referenceObjectSet>
+          </dvt:scatterGraph>
+          <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

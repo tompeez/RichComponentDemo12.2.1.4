@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="ClickToEdit Table With Switcher Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}" largeIconSource="#{aboutBean.largeIconSource}"
+                 theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelSplitter positionedFromEnd="true" splitterPosition="150" orientation="vertical" id="ps1" dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelStretchLayout topHeight="auto" id="psl1">
+                <f:facet name="top">
+                  <af:panelGroupLayout layout="vertical" id="pgl1">
+                    <af:outputFormatted value="&lt;b>ClickToEdit Table With Switcher Demo. Uses an af:switcher to switch the contents of the table columns depending on whether the row is read-only or editable.&lt;/b>"
+                                        id="of1"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                  <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+                    <af:table rowSelection="single" columnSelection="single" id="table1" var="row" varStatus="vs"
+                              value="#{tableClickToEditSwitcher.model}" binding="#{tableClickToEditSwitcher.table}"
+                              columnStretching="last" editingMode="clickToEdit" summary="table data">
+                      <af:column headerText="Number" id="c18" rowHeader="true" width="40">
+                        <af:outputText value="#{row.number}" id="ot1"/>
+                      </af:column>
+                      <af:column headerText="Column 1" id="c19" width="300">
+                        <af:switcher facetName="#{tableClickToEditSwitcher.table.rowKey eq tableClickToEditSwitcher.table.activeRowKey ? 'active' : 'inactive'}"
+                              defaultFacet="inactive">
+                          <f:facet name="active">
+                            <af:panelGroupLayout id="pgl2">
+                              <af:image source="#{row.icon}" inlineStyle="width:16px; height:14px;" shortDesc="icon"
+                                        id="i1"/>
+                              <af:commandButton text="#{row.name}" id="cb1" partialTriggers="sl1">
+                              </af:commandButton>
+                            </af:panelGroupLayout>
+                          </f:facet>
+                          <f:facet name="inactive">
+                            <af:outputFormatted value="outputFormatted: &lt;b> #{row.name} &lt;/b" id="cl1"/>
+                          </f:facet>
+                        </af:switcher>
+                      </af:column>
+                      <af:column headerText="Column 2" id="c10">
+                        <af:switcher facetName="#{tableClickToEditSwitcher.table.rowKey eq tableClickToEditSwitcher.table.activeRowKey ? 'active' : 'inactive'}"
+                              defaultFacet="inactive">
+                          <f:facet name="active">
+                            <af:selectOneChoice id="sl1" value="#{row.selectOneValue}" simple="true" autoSubmit="true"
+                                                label="accessories">
+                              <af:selectItem label="Mouse" value="Mouse" shortDesc="shortDesc text" id="si19"/>
+                              <af:selectItem label="Speaker" value="Speaker" rendered="true" id="si20"/>
+                              <af:selectItem label="Head Phone" value="Head Phone" shortDesc="shortDesc text"
+                                             id="si21"/>
+                            </af:selectOneChoice>
+                          </f:facet>
+                          <f:facet name="inactive">
+                            <af:panelGroupLayout id="pgl3">
+                              <af:image source="#{row.guyIcon}" inlineStyle="width:16px; height:14px;" shortDesc="icon"
+                                        id="i2"/>
+                              <af:outputText value="Output text: #{row.selectOneValue}" id="ot2"/>
+                            </af:panelGroupLayout>
+                          </f:facet>
+                        </af:switcher>
+                      </af:column>
+                    </af:table>
+                  </af:panelCollection>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="vertical" id="pgllo3">
+                <af:outputText value="See also:" id="ot3"/>
+                <af:panelList maxColumns="2" rows="8" id="pl1">
+                  <af:goLink text="Editable Table" destination="editableTable.jspx" id="gl1"/>
+                  <af:goLink text="commandButton" destination="/components/commandButton.jspx" id="gl2"/>
+                  <af:goLink text="commandLink" destination="/components/commandLink.jspx" id="gl3"/>
+                  <af:goLink text="inputComboboxListOfValues" destination="/components/inputComboboxListOfValues.jspx"
+                             id="gl4"/>
+                  <af:goLink text="inputDate" destination="/components/inputDate.jspx" id="gl5"/>
+                  <af:goLink text="inputFile" destination="/components/inputFile.jspx" id="gl6"/>
+                  <af:goLink text="inputListOfValues" destination="/components/inputListOfValues.jspx" id="gl7"/>
+                  <af:goLink text="inputNumberSpinbox" destination="/components/inputNumberSpinbox.jspx" id="gl8"/>
+                  <af:goLink text="inputText" destination="/components/inputText.jspx" id="gl9"/>
+                  <af:goLink text="selectBooleanCheckbox" destination="/components/selectBooleanCheckbox.jspx"
+                             id="gl10"/>
+                  <af:goLink text="selectBooleanRadio" destination="/components/selectBooleanRadio.jspx" id="gl11"/>
+                  <af:goLink text="selectManyCheckbox" destination="/components/selectManyCheckbox.jspx" id="gl12"/>
+                  <af:goLink text="selectManyChoice" destination="/components/selectManyChoice.jspx" id="gl13"/>
+                  <af:goLink text="selectManyListbox" destination="/components/selectManyListbox.jspx" id="gl14"/>
+                  <af:goLink text="selectOneChoice" destination="/components/selectOneChoice.jspx" id="gl15"/>
+                  <af:goLink text="selectOneListbox" destination="/components/selectOneListbox.jspx" id="gl16"/>
+                  <af:goLink text="selectOneRadio" destination="/components/selectOneRadio.jspx" id="gl17"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

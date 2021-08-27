@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="AutoSubmit and Validation Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="autoSubmit"/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelHeader text="AutoSubmit and Validation" id="ph1">
+              <af:outputText styleClass="AFInstructionText" value="AutoSubmit is very useful, but 
+                often you don't want it to trigger validation on the other components on the page. 
+                In the past in order to avoid validation with autosubmit you had to:" id="ot1"/>
+              <af:panelList id="pl1">
+                <af:outputText value="set component's immediate attribute to true. Immediate is needed
+                  so that the component's valueChangeEvent will be called before the rest of the 
+                  components are validated." id="ot2"/>
+                <af:panelGroupLayout id="pgl2">
+                  <af:outputText value="add a valueChangeListener and in it:" id="ot3"/>
+                  <af:panelList id="pl2">
+                    <af:outputText value="call context.renderResponse(). The renderResponse call is 
+                      needed because otherwise the lifecycle continues to the validate phase where 
+                      the rest of the components will be validated." id="ot4"/>
+                    <af:outputText value="set values if needed, since renderResponse is called the 
+                      updateModel phase for this component will not be reached." id="ot5"/>
+                  </af:panelList>
+                </af:panelGroupLayout>
+              </af:panelList>
+              <af:outputText styleClass="AFInstructionText" value="With the &lt;af:target&gt; tag you 
+               can now specify exactly the list of targets that you want executed and/or rendered when 
+               a component event is queued. This provides better control over the validation and 
+               rendering lifecycles. See last demo on this section for an example of using this tag." 
+               id="ot11"/>
+            </af:panelHeader>
+            <af:panelHeader text="Demos" id="ph2">
+              <af:panelList listStyle="list-style-type:decimal" id="pl3">
+                <af:subform id="sf1">
+                  <af:panelGroupLayout layout="vertical" id="pgl3">
+                    <af:outputText value="The good news is that in certain cases, including autoSubmit, 
+                      we support an 'optimized lifecycle', which means not all components on the 
+                      page are validated. Notice that in this demo the required field does not get 
+                      validated as you toggle the radio buttons despite the fact that the demo does 
+                      not follow the instructions mentioned in the first section of this page." id="ot6"/>
+                    <af:inputText label="Required Field" required="true" id="it1"/>
+                    <af:selectBooleanRadio id="show" autoSubmit="true" text="Show" group="group"
+                                           value="#{validate.show}"/>
+                    <af:selectBooleanRadio id="hide" autoSubmit="true" text="Hide" group="group"
+                                           value="#{validate.hide}"/>
+                    <af:panelGroupLayout partialTriggers="show hide" id="pgl4">
+                      <af:outputText value="You can see me!" rendered="#{validate.show}" id="ot7"/>
+                      <af:spacer height="10" id="s2"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:subform>
+                <af:subform id="sf2">
+                  <af:panelGroupLayout layout="vertical" id="pgl5">
+                    <af:outputText value="Now let's try running a similar demo to the one above, 
+                      except in this case the required field is in the section of the page that is 
+                      being ppr updated. Notice the required field is validated, and you cannot hide 
+                      the required field as any part of the page that is being ppr updated is 
+                      included in the lifecycle, and hence validated." 
+                      id="ot8"/>
+                    <af:selectBooleanRadio id="show2" autoSubmit="true" text="Show" group="group2"
+                                           value="#{validate.show2}"/>
+                    <af:selectBooleanRadio id="hide2" autoSubmit="true" text="Hide" group="group2"
+                                           value="#{validate.hide2}"/>
+                    <af:panelGroupLayout partialTriggers="show2 hide2" id="pgl6">
+                      <af:inputText label="Required Field" required="true"
+                                    rendered="#{validate.show2}" id="it2"/>
+                      <af:spacer height="10" id="s4"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:subform>
+                <af:subform id="sf3">
+                  <af:panelGroupLayout layout="vertical" id="pgl7">
+                    <af:outputText value="What has to be done to get the example above working? There 
+                    are several approaches. In the past we recommended that you follow the 
+                    instructions from the first section of the page. IOW, set immediate to 'true' 
+                    and add the following code in the valueChangeListener: 
+                    setShow3(Boolean.TRUE.equals(vce.getNewValue())); FacesContext.getCurrentInstance().renderResponse();. "
+                    id="ot9"/>
+                    <af:selectBooleanRadio immediate="true" valueChangeListener="#{validate.toggle}"
+                      id="show3" autoSubmit="true" text="Show" group="group3"
+                      value="#{validate.show3}"/>
+                    <af:selectBooleanRadio id="hide3" autoSubmit="true" text="Hide" group="group3"
+                                           value="#{validate.hide3}"/>
+                    <af:panelGroupLayout partialTriggers="show3 hide3" id="pgl8">
+                      <af:inputText label="Required Field" required="true"
+                                    rendered="#{validate.show3}" id="it3"/>
+                    </af:panelGroupLayout>
+                    
+                    <af:panelGroupLayout layout="horizontal" id="pgl9">
+                      <af:button text="submit" id="cb2"/>
+                      <af:spacer width="5px" id="s7"/>
+                      <af:subform id="sf4">
+                        <af:button action="feature" text="cancel" immediate="true" id="cb1"/>
+                      </af:subform>
+                      <af:spacer width="5px" id="s8"/>
+                      <af:outputText value="Note that we can still create a cancel button that 
+                        navigates away from the page by putting the cancel button in its own subform"
+                        id="ot10"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:subform>
+                <af:subform id="sf5">
+                  <af:panelGroupLayout layout="vertical" id="pgl41">
+                    <af:spacer height="8px" id="s40"/>
+                    <af:outputText value="Though the above approach works the recommended approach is 
+                    to use the new &lt;af:target&gt; tag, which allows you to specify exactly which 
+                    components to run validations on and which ones to render. So the instructions in 
+                    the previous example can be dropped. In addition, the 'partialTriggers' attribute 
+                    needs to be removed from the panelGroupLayout enclosing the required field." 
+                    id="ot41"/>
+                    <af:selectBooleanRadio id="show41" autoSubmit="true" text="Show" group="group4"
+                                           value="#{validate.show4}">
+                      <af:target execute="show41 hide41" render="pgl42"/>
+                    </af:selectBooleanRadio>
+                    <af:selectBooleanRadio id="hide41" autoSubmit="true" text="Hide" group="group4"
+                                           value="#{validate.hide4}">
+                      <af:target execute="hide41 show41" render="pgl42"/>
+                    </af:selectBooleanRadio>
+                    <af:panelGroupLayout id="pgl42">
+                      <af:inputText label="Required Field" required="true"
+                                    rendered="#{validate.show4}" id="it41"/>
+                    </af:panelGroupLayout>
+                    
+                    <af:panelGroupLayout layout="horizontal" id="pg43">
+                      <af:button text="submit" id="cb41"/>
+                      <af:spacer width="5px" id="s41"/>
+                      <af:button action="feature" text="cancel" immediate="true" id="cb42">
+                        <af:target execute="@this"/>
+                      </af:button>
+                      <af:spacer width="5px" id="s42"/>
+                      <af:outputText value="Note that the 'cancel' button navigates away from the 
+                        page without requiring it to be inside its own subform. It uses the 
+                        &lt;af:target&gt; tag to execute itself without triggering validations for 
+                        the form / event root." id="ot42"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:subform>                
+              </af:panelList>
+            </af:panelHeader>
+            <af:spacer height="10px" id="sp2"/>
+            <af:panelHeader text="AutoSubmit and Validation for LOV component" id="ph3">
+              <af:outputText styleClass="AFInstructionText" value="For the inputListOfValues and inputComboBoxListOfValues components, the
+                  procedures described above will not always work. Consider the following example.
+                  Say you have an inputListOfValues component from which a user selects an employee
+                  name, and an inputText component whose required attribute is set to true, and that
+                  is to updated with the employee's ID number once an employee is selected from the
+                  LOV popup. The Empno field is updated because it's a partialTarget of the LOV."
+                             id="ot12"/>
+            </af:panelHeader>
+            <af:panelHeader text="Demos" id="ph4">
+              <af:panelList listStyle="list-style-type:decimal" id="pl7">
+                <af:subform id="sf7">
+                  <af:panelGroupLayout layout="vertical" id="pg21">
+                    <af:outputText value="As expected, you will see the required field validation
+                    error fire on the Empno inputText component when opening the Ename LOV popup. The
+                    inputText component will be validated because the optimized lifecycle runs on
+                    the root (the inputListOfValues component) and the target (inputText component)."
+                                   id="ot20"/>
+                    <af:panelList id="pl8">
+                      <af:outputText value="Without entering a value in the LOV field, click on the
+                        LOV icon." id="ot21"/>
+                    </af:panelList>
+                    <af:inputListOfValues label="Ename" id="lov0" value="#{validateLOV.ename}"
+                                          autoSubmit="true" popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name"
+                                          model="#{validateLOV.listOfValuesModel}"
+                                          validator="#{validateLOV.validate}"/>
+                    <af:inputText label="Empno" value="#{validateLOV.empno}" required="true"
+                                  id="lovDependent0" partialTriggers="lov0"/>
+                    <af:spacer height="10" id="sp5"/>
+                  </af:panelGroupLayout>
+                </af:subform>
+                <af:subform id="sf8">
+                  <af:panelGroupLayout layout="vertical" id="pg22">
+                    <af:outputText value="Now let's try to use the solution recommended in the
+                    previous section of setting the 'immediate' attribute to true and using a
+                    ValueChangeListener on the root (the inputListOfValues component). Notice that
+                    this does not really fix the validation error on the target component. For LOV
+                    components the ValueChangeEvent is queued only when the value of the lov
+                    component changes and setting 'immediate' to true, has no effect when the user
+                    launches the LOV popup (or enters a partial value in the LOV field that triggers
+                    the LOV popup to open). This is because when the user clicks the search icon,
+                    the ADF LaunchPopupEvent is queued for the Invoke Application phase, always,
+                    regardless of the immediate attribute. This means the optimized lifecycle is run
+                    as normal on both the root and target components and therefore the input
+                    component is validated." id="ot22"/>
+                    <af:panelList id="pl9">
+                      <af:outputText value="Without entering a value in the LOV field, click on the
+                        LOV icon. Notice the validation error." id="ot23"/>
+                    </af:panelList>
+                    <af:inputListOfValues label="Ename" id="lov1" value="#{validateLOV.ename}"
+                                          autoSubmit="true" immediate="true"
+                                          popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name"
+                                          model="#{validateLOV.listOfValuesModel}"
+                                          valueChangeListener="#{validateLOV.immediateValueChange}"
+                                          validator="#{validateLOV.validate}"/>
+                    <af:inputText label="Empno" value="#{validateLOV.empno}" required="true"
+                                  id="lovDependent1" partialTriggers="lov1"/>
+                    <af:spacer height="10" id="sp6"/>
+                  </af:panelGroupLayout>
+                </af:subform>
+                <af:subform id="sf9">
+                  <af:panelGroupLayout layout="vertical" id="pg23">
+                    <af:outputText value="Let's try the same solution, but this time enter a valid
+                    value in the LOV field (Adam0 or Blake 315) so that the LOV popup does not launch.
+                    Notice that the validation error on the required field is gone (!) but the
+                    target field (Empno) is still not refreshed as expected (with 0 or 315). This is
+                    because when the value changes, the LOV component queues a ValueChangeEvent for the Apply
+                    Request Values phase (since 'immediate' is set true) and also jumps to the Render
+                    Response phase to avoid validations on the target component (as implemented by
+                    its valueChangeListener). This causes the selected value to never get pushed to
+                    the model, the ReturnPopupListeners to never get called during the Invoke
+                    Application phase the target input component to never get updated with the new
+                    value. This is less than desirable in scenarios where lov is used within query
+                    and it requires both the ValueChangeEvent and ReturnPopupEvent to be queued as
+                    part of the same request). " id="ot24"/>
+                    <af:panelList id="p20">
+                      <af:outputText value="Enter a valid value (Adam0 or Blake 315) in the LOV
+                      field and tab out. Notice there is no validation error but the target inputText
+                      component is not refrehsed with the correct employee number (0 or 315)."
+                                     id="ot45"/>
+                    </af:panelList>
+                    <af:inputListOfValues label="Ename" id="lov2" value="#{validateLOV.ename}"
+                                          autoSubmit="true" immediate="true"
+                                          popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name"
+                                          model="#{validateLOV.listOfValuesModel}"
+                                          valueChangeListener="#{validateLOV.immediateValueChange}"
+                                          validator="#{validateLOV.validate}"/>
+                    <af:inputText label="Empno" value="#{validateLOV.empno}" required="true"
+                                  id="lovDependent2" partialTriggers="lov2"/>
+                    <af:spacer height="10" id="sp7"/>
+                  </af:panelGroupLayout>
+                </af:subform>
+                <af:subform id="sf10">
+                  <af:panelGroupLayout layout="vertical" id="pg24">
+                    <af:outputText value="What has to be done to get the LOV demo working?"
+                                   id="ot25"/>
+                    <af:panelList id="p21">
+                      <af:outputText value="remove the dependent component's partialTriggers attribute.
+                      This is to ensure that the optmized decode is not run on the target fields (of
+                      the LOV)." id="ot26"/>
+                      <af:panelGroupLayout id="pg20">
+                        <af:outputText value="add a returnPopupListener on the LOV component and in
+                          it:" id="ot27"/>
+                        <af:panelList id="p22">
+                          <af:outputText value="call adfFacesContext.addPartialTarget() for every dependent component that needs
+                            to be refreshed. The addPartialTarget call is needed to ensure that dependent fields get refreshed
+                            and show the updated value during rendering. NOTE: Use the binding attribute to store the component
+                            in your backing bean. It may also not be necssary to provide a listener for the LaunchPopupEvent if
+                            there is no reason to refresh the dependent components." id="ot28"/>
+                          <af:outputText value="the value to set on the dependent components' model, can also be done in the
+                            ReturnPopupListener implementation, if it's not already handled."
+                                         id="ot29"/>
+                        </af:panelList>
+                      </af:panelGroupLayout>
+                    </af:panelList>
+                    <af:outputText value="In the demo below notice that neither opening the LOV popup nor selecting a value causes a validation error on the inputText component. Also entering a partial/complete value works as ecpected."
+                                   id="ot30"/>
+                    <af:inputListOfValues label="Ename" id="lov3" value="#{validateLOV.ename}"
+                                          autoSubmit="true"
+                                          returnPopupListener="#{validate.processReturnPopup}"
+                                          popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name"
+                                          model="#{validateLOV.listOfValuesModel}"
+                                          validator="#{validateLOV.validate}"/>
+                    <af:inputText label="Empno" value="#{validateLOV.empno}" required="true"
+                                  id="lovDependent3" binding="#{validate.lovDependent1}"/>
+                  </af:panelGroupLayout>
+                </af:subform>
+                <af:subform id="sf11">
+                  <af:panelGroupLayout layout="vertical" id="pg25">
+                    <af:outputText value="What has to be done to get the LOV demo working?"
+                                   id="ot35"/>
+                    <af:panelList id="p31">
+                      <af:outputText value="Though the above approach works the recommended approach is 
+                    to use the new &lt;af:target&gt; tag, which allows you to specify exactly which 
+                    components to run validations on and which ones to render. So the instructions in 
+                    the previous example can be dropped." id="ot36"/>
+                      <af:panelList id="p32">
+                        <af:outputText value="Add &lt;af:target execute='@this' render='lovDependent4' /&gt;" id="ot37"/>
+                      </af:panelList>
+                    </af:panelList>
+                    <af:outputText value="In the demo below notice that neither opening the LOV popup nor selecting a value causes a validation error on the inputText component. Also entering a partial/complete value works as ecpected."
+                                   id="ot40"/>
+                    <af:inputListOfValues label="Ename" id="lov4" value="#{validateLOV.ename}"
+                                          autoSubmit="true"
+                                          popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name"
+                                          model="#{validateLOV.listOfValuesModel}"
+                                          validator="#{validateLOV.validate}">
+                      <af:target execute="@this" render="lovDependent4"/>
+                    </af:inputListOfValues>
+                    <af:inputText label="Empno" value="#{validateLOV.empno}" required="true"
+                                  id="lovDependent4"/>
+                  </af:panelGroupLayout>
+                </af:subform>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

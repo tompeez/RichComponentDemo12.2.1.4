@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram Stacking Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram Stacking Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Diagram Stacking"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <dvt:diagram summary="Diagram" rolloverBehavior="dim" id="diagram1" layout="circle">
+            <dvt:legend label="Legend">
+              <dvt:showLegendGroup label="Section">
+                <dvt:legendSection source="diagramNodes1:ag0"/>
+              </dvt:showLegendGroup>
+            </dvt:legend>
+            <dvt:clientLayout name="circle" method="DemoCircleLayout.circleLayout" featureName="DemoCircleLayout"/>
+            <dvt:diagramNodes id="diagramNodes1" value="#{diagram.mediumFiveAttrGroupsNodes}" var="node" groupBy="ag0">
+              <dvt:diagramNode id="node1" nodeId="#{node.id}" shortDesc="Node #{node.id}" label="Node #{node.id}">
+                <f:facet name="zoom100">
+                  <dvt:marker id="marker1" shape="circle" borderStyle="solid" borderWidth=".5" borderColor="#444444"
+                              width="30" height="30">
+                    <dvt:attributeGroups id="ag0" type="color" value="#{node.group}" label="#{node.group}"/>
+                  </dvt:marker>
+                </f:facet>
+              </dvt:diagramNode>
+            </dvt:diagramNodes>
+            <dvt:diagramLinks id="diagramLinks1" value="#{diagram.mediumAttrGroupsLinks}" var="link">
+              <dvt:diagramLink id="link1" startNode="#{link.start}" endNode="#{link.end}" shortDesc="Link #{link.id}"/>
+            </dvt:diagramLinks>
+          </dvt:diagram>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

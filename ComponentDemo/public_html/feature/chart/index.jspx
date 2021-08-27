@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html" version="1.2"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Chart" binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}" largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:resource type="css">
+        .MyStrongText {
+          font-weight: bold;
+        }
+
+        .MySpacedLI {
+          margin-bottom: .5em;
+        }
+
+        .MySpacedImage {
+          margin-top: .5em;
+        }
+      </af:resource>
+      <af:pageTemplate id="tmplt" viewId="/templates/pageTemplateDefs/demoIndexTemplate.jspx">
+        <f:attribute name="brandingTitle" value="Chart"/>
+        <f:attribute name="mode" value="feature"/>
+        <f:attribute name="navLevelCount" value="2"/>
+        <f:attribute name="collapsedSettings" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:panelGroupLayout layout="vertical">
+              <af:outputText value="Data Cursor" inlineStyle="font-size:16px;"/>
+              <af:spacer height="10"/>
+              <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row" dataCursor="on"
+                             inlineStyle="height:400px;width:650px" dataCursorBehavior="smooth">
+                <f:facet name="dataStamp">
+                  <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                </f:facet>
+                <dvt:chartLegend rendered="false"/>
+              </dvt:lineChart>
+            </af:panelGroupLayout>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center2">
+          <af:declarativeComponent id="dc1" viewId="/feature/common/demoIndex.jspx"
+                                   demoList="#{featureIndexBean.chartDemoData}"
+                                   categoryList="#{featureIndexBean.chartCategoryData}" compName="Chart"
+                                   samplePath="/components/areaChart.jspx"/>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>                

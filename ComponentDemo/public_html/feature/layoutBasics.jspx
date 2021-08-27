@@ -1,0 +1,592 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Layout Basics" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="css">
+          .MyStrongText {
+            font-weight: bold;
+          }
+      </af:resource>
+      <af:pageTemplate id="tmplt" viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/demoIndexTemplateAlta.jspx' : '/templates/pageTemplateDefs/demoIndexTemplate.jspx'}">
+        <f:attribute name="brandingTitle" value="Layout Basics"/>
+        <f:attribute name="mode" value="feature"/>
+        <f:attribute name="navLevelCount" value="2"/>
+        <f:attribute name="collapsedSettings" value="true"/>
+        <f:facet name="navigation2">
+          <af:navigationPane hint="tabs" id="np1">
+            <af:commandNavigationItem text="Layout Basics"
+                                      destination="/feature/layoutBasics.jspx"
+                                      selected="true" id="cni1"/>
+            <af:commandNavigationItem text="Simple Demos"
+                                      destination="/feature/layoutBasicTest.jspx"
+                                      id="cnsd"/>
+            <af:commandNavigationItem text="Branding Bar"
+                                      destination="/feature/layoutBrandingBar.jspx"
+                                      id="cni2"/>
+            <af:commandNavigationItem text="Form Layout"
+                                      destination="/feature/layoutForm.jspx" id="cni3"/>
+            <af:commandNavigationItem text="Navigation-Master-Detail"
+                                      destination="/feature/layoutNavigationMasterDetail.jspx"
+                                      id="cni4"/>
+            <af:commandNavigationItem text="Stretched Header"
+                                      destination="/feature/layoutStretchedHeader.jspx"
+                                      id="cni5"/>
+            <af:commandNavigationItem text="Tiled Flowing"
+                                      destination="/feature/layoutTiledFlowing.jspx"
+                                      id="cni6"/>
+            <af:commandNavigationItem text="Tiled Stretching"
+                                      destination="/feature/layoutTiledStretching.jspx"
+                                      id="cni7"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="center2">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:panelHeader text="Introduction" styleClass="AFStretchWidth" id="ph1">
+              <f:facet name="toolbar">
+                <af:toolbar id="t1">
+                  <af:commandToolbarButton text="Print Content"
+                                           icon="/images/print.png"
+                                           partialSubmit="true" id="ctb1">
+                  <af:showPrintablePageBehavior/>
+                  </af:commandToolbarButton>
+                </af:toolbar>
+              </f:facet>
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <f:facet name="separator">
+                  <af:spacer height="10" id="s2"/>
+                </f:facet>
+                <af:outputText value="This page discusses basics of page layout and provides guidance
+                                      to avoid common browser pitfalls, a recommended process for
+                                      creating layouts, and shows layout examples."
+                               id="ot1"/>
+                <af:outputText value="By not following the guidance on this page, you are more likely
+                                      to have layouts that display inconsistently in different
+                                      browsers; components may not display at all, get cut off
+                                      unexpectedly, or overlap other components."
+                               id="ot2"/>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="Best Practices" styleClass="AFStretchWidth" id="ph2">
+              <af:outputText value="To save a great deal of development grief and enjoy reduced
+                                    maintenance costs:" id="ot3"/>
+              <af:panelList id="pl1">
+                <af:outputText value="Never try to stretch something vertically when inside of a
+                                      flowing (non-stretched) container. Attempting to do this will
+                                      result in inconsistent behavior across web browsers."
+                               id="ot4"/>
+                <af:outputText value="Never specify a height value with percent units. Instead, define
+                                      such stretching declaratively as by following the process
+                                      outlined below." id="ot5"/>
+                <af:outputText value="Never use the &quot;position&quot; style."
+                               id="ot6"/>
+                <af:group id="gsd">
+                  <af:outputText value="There are some very simple demos that lets you change the 
+                                        values of attributes to the see the affect it has on the 
+                                        layout." id="otsd"/>
+                  <af:panelList id="plsd">
+                    <af:goLink text="Simple Demos" destination="/feature/layoutBasicTest.jspx"
+                               id="glsd"/>
+                  </af:panelList>
+                </af:group>
+                <af:group id="g2">
+                  <af:outputText value="Take advantage of the " id="ot7"/>
+                  <af:outputText value="layout pattern examples" styleClass="MyStrongText"
+                                 id="ot8"/>
+                  <af:outputText value=" for guidance on how best to create a desired layout. Be sure
+                                        to click on the &quot;View Page Source&quot; and the
+                                        &quot;View Template Source&quot; links to see what tags and
+                                        attributes are used as well as what the component structure
+                                        looks like for each specific page."
+                                 id="ot9"/>
+                  <af:panelList id="pl2">
+                    <af:group id="g3">
+                      <af:goLink text="Branding Bar" destination="/feature/layoutBrandingBar.jspx"
+                                 id="gl1"/>
+                      <af:outputText value=" - logo, title, and global navigation links"
+                                     id="ot10"/>
+                    </af:group>
+                    <af:group id="g4">
+                      <af:goLink text="Form Layout" destination="/feature/layoutForm.jspx"
+                                 id="gl2"/>
+                      <af:outputText value=" - organized labels and fields"
+                                     id="ot11"/>
+                    </af:group>
+                    <af:group id="g5">
+                      <af:goLink text="Navigation-Master-Detail"
+                                 destination="/feature/layoutNavigationMasterDetail.jspx"
+                                 id="gl3"/>
+                      <af:outputText value=" - tree on the left, table above, detail below"
+                                     id="ot12"/>
+                    </af:group>
+                    <af:group id="g6">
+                      <af:goLink text="Stretched Header"
+                                 destination="/feature/layoutStretchedHeader.jspx"
+                                 id="gl4"/>
+                      <af:outputText value=" - construct a header with a vertically stretchable
+                                            body" id="ot13"/>
+                    </af:group>
+                    <af:group id="g7">
+                      <af:goLink text="Tiled Flowing" destination="/feature/layoutTiledFlowing.jspx"
+                                 id="gl5"/>
+                      <af:outputText value=" - spaced out tiles that flow vertically"
+                                     id="ot14"/>
+                    </af:group>
+                    <af:group id="g8">
+                      <af:goLink text="Tiled Stretching"
+                                 destination="/feature/layoutTiledStretching.jspx"
+                                 id="gl6"/>
+                      <af:outputText value=" - spaced out tiles that stretch vertically"
+                                     id="ot15"/>
+                    </af:group>
+                  </af:panelList>
+                </af:group>
+              </af:panelList>
+            </af:panelHeader>
+            <af:panelHeader text="Process for Creating Layouts"
+                            styleClass="AFStretchWidth" id="ph3">
+              <af:panelList listStyle="list-style-type: decimal;" id="pl3">
+                <af:panelGroupLayout id="pgl3">
+                  <af:outputText value="Create a stretchable outer frame"
+                                 id="ot16"/>
+                  <af:panelList id="pl4">
+                    <af:outputText value="Build up the outer structure of your page using a structure
+                                          of components that support being stretched and also stretch
+                                          their children." id="ot17"/>
+                    <af:group id="g9">
+                      <af:outputText value="Each layout or panel component's tag documentation will
+                                            identify whether this is supported and how to achieve it
+                                            in its &quot;Geometry Management&quot; documentation.
+                                            Some components have attributes to determine whether
+                                            children will be stretched or not.  For example:"
+                                     id="ot18"/>
+                      <af:panelList id="pl5">
+                        <af:group id="g10">
+                          <af:goLink text="document" destination="/components/document.jspx"
+                                     id="gl7"/>
+                          <af:outputText value=" has its maximized attribute"
+                                         id="ot19"/>
+                        </af:group>
+                        <af:group id="g11">
+                          <af:goLink text="showDetailItem"
+                                     destination="/components/showDetailItem.jspx"
+                                     id="gl8"/>
+                          <af:outputText value=" has its stretchChildren attribute"
+                                         id="ot20"/>
+                        </af:group>
+                      </af:panelList>
+                    </af:group>
+                    <af:group id="g12">
+                      <af:outputText value="Typically you would use various combinations of the "
+                                     id="ot21"/>
+                      <af:goLink text="decorativeBox" destination="/components/decorativeBox.jspx"
+                                 id="gl9"/>
+                      <af:outputText value=", " id="ot22"/>
+                      <af:goLink text="panelSplitter" destination="/components/panelSplitter.jspx"
+                                 id="gl10"/>
+                      <af:outputText value=", and " id="ot23"/>
+                      <af:goLink text="panelStretchLayout"
+                                 destination="/components/panelStretchLayout.jspx"
+                                 id="gl11"/>
+                      <af:outputText value=" components inside of your "
+                                     id="ot24"/>
+                      <af:goLink text="document" destination="/components/document.jspx"
+                                 id="gl12"/>
+                      <af:outputText value=" component to create the stretchable outer frame."
+                                     id="ot25"/>
+                    </af:group>
+                    <af:group id="g13">
+                      <af:outputText value="Also, consider using " id="ot26"/>
+                      <af:goLink text="pageTemplates" destination="/components/pageTemplate.jspx"
+                                 id="gl13"/>
+                      <af:outputText value=", declarative components, and "
+                                     id="ot27"/>
+                      <af:goLink text="regions" destination="/components/region.jspx"
+                                 id="gl14"/>
+                      <af:outputText value=" for reuse and centralized maintenance."
+                                     id="ot28"/>
+                    </af:group>
+                  </af:panelList>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl4">
+                  <af:outputText value="Create flowing islands" id="ot29"/>
+                  <af:panelList id="pl6">
+                    <af:group id="g14">
+                      <af:outputText value="Inside of the stretchable structure created in step 1,
+                                            create islands of flowing (non-stretched) components.  To
+                                            make this transition from stretching to flowing, use "
+                                     id="ot30"/>
+                      <af:goLink text="panelGroupLayout"
+                                 destination="/components/panelGroupLayout.jspx"
+                                 id="gl15"/>
+                      <af:outputText value=" with layout=&quot;scroll&quot; since it supports being
+                                            stretched but will not stretch its children."
+                                     id="ot31"/>
+                    </af:group>
+                    <af:group id="g15">
+                      <af:outputText value="For a reliable page layout:"
+                                     id="ot32"/>
+                      <af:panelList id="pl7">
+                        <af:outputText value="Do not specify heights using percent units."
+                                       id="ot33"/>
+                        <af:outputText value="Do not use the position style."
+                                       id="ot34"/>
+                        <af:outputText value="Do not attempt to stretch anything vertically inside of
+                                              these flowing islands."
+                                       id="ot35"/>
+                      </af:panelList>
+                    </af:group>
+                    <af:group id="g16">
+                      <af:outputText value="Many leaf components do not make sense by themselves.  For
+                                            example, if you have a series of input components, you
+                                            would never want to just place these in a "
+                                     id="ot36"/>
+                      <af:goLink text="panelGroupLayout"
+                                 destination="/components/panelGroupLayout.jspx"
+                                 id="gl16"/>
+                      <af:outputText value=" because it would be much better for usability if you
+                                            placed them in a " id="ot37"/>
+                      <af:goLink text="panelFormLayout"
+                                 destination="/components/panelFormLayout.jspx"
+                                 id="gl17"/>
+                      <af:outputText value=" so the labels and fields would line up."
+                                     id="ot38"/>
+                    </af:group>
+                    <af:group id="g17">
+                      <af:outputText value="A sample list of components that cannot be reliably
+                                            stretched includes:" id="ot39"/>
+                      <af:panelList id="pl8">
+                        <af:outputText value="Most input components" id="ot40"/>
+                        <af:goLink text="panelBorderLayout"
+                                   destination="/components/panelBorderLayout.jspx"
+                                   id="gl18"/>
+                        <af:goLink text="panelFormLayout"
+                                   destination="/components/panelFormLayout.jspx"
+                                   id="gl19"/>
+                        <af:group id="g18">
+                          <af:goLink text="panelGroupLayout"
+                                     destination="/components/panelGroupLayout.jspx"
+                                     id="gl20"/>
+                          <af:outputText value=" with layout=&quot;default&quot;"
+                                         id="ot41"/>
+                        </af:group>
+                        <af:group id="g19">
+                          <af:goLink text="panelGroupLayout"
+                                     destination="/components/panelGroupLayout.jspx"
+                                     id="gl21"/>
+                          <af:outputText value=" with layout=&quot;horizontal&quot;"
+                                         id="ot42"/>
+                        </af:group>
+                        <af:group id="g20">
+                          <af:goLink text="panelHeader"
+                                     destination="/components/panelHeader.jspx"
+                                     id="gl22"/>
+                          <af:outputText value=" with type=&quot;flow&quot; - see the " id="ot43"/>
+                          <af:goLink text="Stretched Header"
+                                     destination="/feature/layoutStretchedHeader.jspx"
+                                     id="gl23"/>
+                          <af:outputText value=" example for an situation where content below a header
+                                                is stretched" id="ot44"/>
+                        </af:group>
+                        <af:goLink text="panelLabelAndMessage"
+                                   destination="/components/panelLabelAndMessage.jspx"
+                                   id="gl24"/>
+                        <af:goLink text="panelList"
+                                   destination="/components/panelList.jspx"
+                                   id="gl25"/>
+                        <af:outputText value="Apache MyFaces Trinidad HTML Component - tableLayout"
+                                       id="ot45"/>
+                        <af:outputText value="JSF HTML Component - panelGrid"
+                                       id="ot46"/>
+                      </af:panelList>
+                    </af:group>
+                  </af:panelList>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl5">
+                  <af:outputText value="Customize the appearance of components"
+                                 id="ot47"/>
+                  <af:panelList id="pl9">
+                    <af:group id="g21">
+                      <af:outputText value="Appearance may be customized using the following
+                                            mechanisms:" id="ot48"/>
+                      <af:panelList id="pl10">
+                        <af:group id="g22">
+                          <af:outputText value="Use themed " id="ot49"/>
+                          <af:goLink text="decorativeBox"
+                                     destination="/components/decorativeBox.jspx"
+                                     id="gl26"/>
+                          <af:outputText value=" components to organize your
+                                                page layers with visual distinction and decorative
+                                                borders as seen in some of the sample skins. Note that
+                                                not all skins have alternative themes so you may not
+                                                see any distinction.  If your "
+                                         id="ot50"/>
+                          <af:goLink text="decorativeBox"
+                                     destination="/components/decorativeBox.jspx"
+                                     id="gl27"/>
+                          <af:outputText value=" components are not showing up with different colored
+                                                backgrounds and you know that you are using a skin
+                                                that has definitions for alternate themes, you might
+                                                be missing a web.xml context-param setting for
+                                                &quot;oracle.adf.view.rich.tonalstyles.ENABLED&quot;
+                                                being set to false. Your "
+                                         id="ot51"/>
+                          <af:goLink text="document" destination="/components/document.jspx"
+                                     id="gl28"/>
+                          <af:outputText value=" component also has a theme attribute so you can use
+                                                it to change the main background styling of your
+                                                page." id="ot52"/>
+                        </af:group>
+                        <af:outputText value="Use a custom skin for consistently modified appearances
+                                              if the existing skin doesn't provide all that you
+                                              need." id="ot53"/>
+                        <af:group id="g23">
+                          <af:outputText value="For instance-specific alternative styling, use the
+                                                styleClass attribute. Keep the corresponding style
+                                                definitions in an easy-to-maintain location such as in
+                                                a custom skin, in the metaContainer facet of the "
+                                         id="ot54"/>
+                          <af:goLink text="document" destination="/components/document.jspx"
+                                     id="gl29"/>
+                          <af:outputText value=" component, or in a style provided by the "
+                                         id="ot55"/>
+                          <af:goLink text="resource" destination="/components/resource.jspx"
+                                     id="gl29b"/>
+                          <af:outputText value=" tag."
+                                         id="ot55b"/>
+                        </af:group>
+                        <af:group id="g24">
+                          <af:outputText value="As a last resort, use component attributes such as
+                                                inlineStyle, contentStyle, and labelStyle.  These are
+                                                less declarative, harder to maintain, contribute more
+                                                to the page's raw HTML size, and may not even be
+                                                needed if one or more of the above mechanisms are
+                                                used." id="ot56"/>
+                          <af:panelList id="pl11">
+                            <af:group id="g25">
+                              <af:outputText value="Styles are directly processed by the web browser
+                                                    which gives you a great deal of power but at the
+                                                    cost of being less declarative and error-prone.
+                                                     The browsers do not support all styles on all
+                                                    elements and certain combinations of styles
+                                                    produce non-obvious results.  Here is some
+                                                    guidance on style configurations to avoid:"
+                                             id="ot57"/>
+                              <trh:tableLayout borderWidth="1" cellPadding="5"
+                                               id="tl1">
+                                <trh:rowLayout id="rl1">
+                                  <trh:cellFormat header="true" id="cf1">Component</trh:cellFormat>
+                                  <trh:cellFormat header="true" id="cf2">Situation to Avoid</trh:cellFormat>
+                                </trh:rowLayout>
+                                <trh:rowLayout id="rl2">
+                                  <trh:cellFormat id="cf3">*</trh:cellFormat>
+                                  <trh:cellFormat id="cf4">
+                                    An inlineStyle with a "height" value with "%" units
+                                  </trh:cellFormat>
+                                </trh:rowLayout>
+                                <trh:rowLayout id="rl2b">
+                                  <trh:cellFormat id="cf3b">*</trh:cellFormat>
+                                  <trh:cellFormat id="cf4b">
+                                    An inlineStyle with a "width" value between "90%" and "100%"
+                                    (use styleClass="AFStretchWidth" or
+                                    styleClass="AFAuxiliaryStretchWidth" instead)
+                                  </trh:cellFormat>
+                                </trh:rowLayout>
+                                <trh:rowLayout id="rl3">
+                                  <trh:cellFormat id="cf5">*</trh:cellFormat>
+                                  <trh:cellFormat id="cf6">
+                                    An inlineStyle with "height", "top", and "bottom" values
+                                  </trh:cellFormat>
+                                </trh:rowLayout>
+                                <trh:rowLayout id="rl4">
+                                  <trh:cellFormat id="cf7">*</trh:cellFormat>
+                                  <trh:cellFormat id="cf8">
+                                    An inlineStyle with "width", "left", and "right" values
+                                  </trh:cellFormat>
+                                </trh:rowLayout>
+                                <trh:rowLayout id="rl5">
+                                  <trh:cellFormat id="cf9">*</trh:cellFormat>
+                                  <trh:cellFormat id="cf10">
+                                    An inlineStyle with a "position" value
+                                  </trh:cellFormat>
+                                </trh:rowLayout>
+                                <trh:rowLayout id="rl6">
+                                  <trh:cellFormat id="cf11">
+                                    Child being stretched by a parent component
+                                  </trh:cellFormat>
+                                  <trh:cellFormat id="cf12">
+                                    An inlineStyle with "width" or "height" values
+                                  </trh:cellFormat>
+                                </trh:rowLayout>
+                              </trh:tableLayout>
+                            </af:group>
+                          </af:panelList>
+                        </af:group>
+                      </af:panelList>
+                    </af:group>
+                    <af:group id="g26">
+                      <af:outputText value="Scrolling:" id="ot58"/>
+                      <af:panelList id="pl12">
+                        <af:group id="g27">
+                          <af:outputText value="You should only have scrollbars around flowing island
+                                                content. The recommended transition component for
+                                                switching from a stretching outer frame into a flowing
+                                                island is the " id="ot59"/>
+                          <af:goLink text="panelGroupLayout"
+                                     destination="/components/panelGroupLayout.jspx"
+                                     id="gl30"/>
+                          <af:outputText value=" with layout=&quot;scroll&quot;. If the contents of
+                                               this " id="ot60"/>
+                          <af:goLink text="panelGroupLayout"
+                                     destination="/components/panelGroupLayout.jspx"
+                                     id="gl31"/>
+                          <af:outputText value=" cannot fit in the space allocated, the browser will
+                                                determine whether scrollbars are needed and will add
+                                                them automatically." id="ot61"/>
+                        </af:group>
+                        <af:group id="g28">
+                          <af:outputText value="It is not recommended that you nest scrolling "
+                                         id="ot62"/>
+                          <af:goLink text="panelGroupLayout"
+                                     destination="/components/panelGroupLayout.jspx"
+                                     id="gl32"/>
+                          <af:outputText value=" components because this will make the user see
+                                                multiple scrollbars.  Also, this should only be used
+                                                at transitions from stretching to flowing areas and
+                                                since you should not have stretching areas inside of
+                                                flowing areas, you would generally never end up with
+                                                nested scrollbars.  It is best to minimize the number
+                                                of areas that a user must scroll in order to see what
+                                                he or she is looking for. Take time to consider what
+                                                scrolling the user will need. In cases where undesired
+                                                scrollbars exist, you may want to simply change the
+                                                layout attribute of that "
+                                         id="ot63"/>
+                          <af:goLink text="panelGroupLayout"
+                                     destination="/components/panelGroupLayout.jspx"
+                                     id="gl33"/>
+                          <af:outputText value=" to &quot;vertical&quot;."
+                                         id="ot64"/>
+                        </af:group>
+                        <af:group id="g28b">
+                          <af:outputText value="There is a known scrolling issue that has been filed
+                                                against Internet Explorer 7.0.5730.11.  The issue is
+                                                only resolved in Internet Explorer 8 when running in
+                                                pure IE8 rendering mode.  If a scrolling box has
+                                                contents that are set to be as wide as the
+                                                containing box and if the contents are large enough
+                                                to warrant the need for a vertical scrollbar, an
+                                                unnecessarily-needed horizontal scrollbar will be
+                                                added. The browser is failing to adjust the width of
+                                                the contents for the presence of the vertical
+                                                scrollbar and thus a horizontal scrollbar appears.
+                                                This horizontal scrollbar lets you scroll the small
+                                                amount of space equal to the width of the vertical
+                                                scrollbar. With this issue, it is not recommended to
+                                                specify a width anywhere between 90% and 100%.
+                                                Smaller widths will generally not encounter the bug.
+                                                Workarounds (as seen in this page) involve setting
+                                                the widths of the contents to be smaller than full
+                                                width so that the browser has enough space for a
+                                                vertical scrollbar to fit.  For your convenience, a
+                                                styleClass named &quot;AFStretchWidth&quot; is built
+                                                into the skin to specify that a component with this
+                                                styleClass will get a reduced width in Internet
+                                                Explorer 7 or full width in other browsers.
+                                                If you need a smaller size for an thin auxiliary
+                                                column, you can alternatively use
+                                                &quot;AFAuxiliaryStretchWidth&quot; or you may
+                                                create a similar skin definition in your own
+                                                skin like this:"
+                                         id="ot65"/>
+                          <af:panelGroupLayout id="pgl65" layout="vertical"
+                                               inlineStyle="padding-top:1em;font-family:monospace">
+                            <af:outputFormatted value="@agent ie and (version: 7.0) {" id="ot65b"/>
+                            <af:outputFormatted value="&#160;&#160;.AFIEOverflowWorkaround75 {" id="ot65c"/>
+                            <af:outputFormatted value="&#160;&#160;&#160;width: 75%;" id="ot65d"/>
+                            <af:outputFormatted value="&#160;&#160;}" id="ot65e"/>
+                            <af:outputFormatted value="}" id="ot65f"/>
+                          </af:panelGroupLayout>
+                        </af:group>
+                      </af:panelList>
+                    </af:group>
+                    <af:group id="g29">
+                      <af:outputText value="Margins, borders, padding:"
+                                     id="ot66"/>
+                      <af:panelList id="pl13">
+                        <af:group id="g30">
+                          <af:outputText value="Thanks to the browser's &quot;CSS Box Model
+                                                rules&quot;, it is much harder to define margins,
+                                                borders, and padding on your components than what you
+                                                might expect.  Refer to the "
+                                         id="ot67"/>
+                          <af:goLink text="Navigation-Master-Detail"
+                                     destination="/feature/layoutNavigationMasterDetail.jspx"
+                                     id="gl34"/>
+                          <af:outputText value=", " id="ot68"/>
+                          <af:goLink text="Tiled Flowing" destination="/feature/layoutTiledFlowing.jspx"
+                                     id="gl35"/>
+                          <af:outputText value=", and " id="ot69"/>
+                          <af:goLink text="Tiled Stretching"
+                                     destination="/feature/layoutTiledStretching.jspx"
+                                     id="gl36"/>
+                          <af:outputText value=" layout pattern examples for various mechanisms to
+                                                apply padding." id="ot70"/>
+                        </af:group>
+                        <af:outputText value="In many cases, to apply these kinds of styles, you need
+                                              to use multiple components together.  In a scrolling
+                                              area, adding an extra panelGroupLayout with
+                                              layout=&quot;vertical&quot; with the padding defined on
+                                              it inside of the outer layout=&quot;scroll&quot;
+                                              panelGroupLayout will be required.  In a stretching
+                                              area, you may need to wrap a component inside of a
+                                              panelStretchLayout with spacers in its top, start, end,
+                                              and bottom facets for the padding."
+                                       id="ot71"/>
+                      </af:panelList>
+                    </af:group>
+                  </af:panelList>
+                </af:panelGroupLayout>
+              </af:panelList>
+            </af:panelHeader>
+            <af:panelHeader text="Further Help" styleClass="AFStretchWidth" id="ph4">
+              <af:panelList id="pl14">
+                <af:group id="g31">
+                  <af:outputText value="Read the details in each component's &quot;Geometry
+                                        Management&quot; section from its tag documentation. Links to
+                                        the tag documentation are provided at the top of every "
+                                 id="ot72"/>
+                  <af:goLink text="component demo page" destination="/components/index.jspx"
+                             id="gl37"/>
+                  <af:outputText value="." id="ot73"/>
+                </af:group>
+                <af:group id="g32">
+                  <af:outputText value="If you do not want a stretch-to-fit layout, be sure to use
+                                        components that do not stretch their children. If you want no
+                                        stretching at all on your page, also change the "
+                                 id="ot74"/>
+                  <af:goLink text="document" destination="/components/document.jspx"
+                             id="gl38"/>
+                  <af:outputText value=" component's maximized attribute to &quot;false&quot;."
+                                 id="ot75"/>
+                </af:group>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

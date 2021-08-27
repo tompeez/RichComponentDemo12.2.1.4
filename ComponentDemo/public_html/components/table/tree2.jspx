@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="tree Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="tree"/>
+        <f:attribute name="visualDesignName" value="tree"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputFormatted value="&lt;b>Basic Tree without images&lt;/b>"
+                                id="of1"/>
+            <af:tree id="folderTree" value="#{fs.treeModel}" rowDisclosureListener="#{fs.toggle}"
+                     rowSelection="multiple"
+                     focusListener="#{fs.onTreeFocus}"
+                     disclosedRowKeys="#{fs.treeDisclosedRowKeys}"
+                     focusRowKey="#{fs.defaultFocusRowKey}" binding="#{editor.component}" var="node"
+                     summary="tree data">
+              <f:facet name="pathStamp">
+                <af:panelGroupLayout id="pgl2">
+                  <af:outputText value="#{node.name}" id="ot1"/>
+                </af:panelGroupLayout>
+              </f:facet>
+              <f:facet name="nodeStamp">
+                <af:panelGroupLayout id="pgl3">
+                  <af:outputText id="directoryStamp" value="#{node.name}"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:tree>
+            <af:toolbar id="t1">
+              <af:commandToolbarButton text="Export All Rows to Excel" immediate="true" id="export">
+                <af:exportCollectionActionListener type="excelHTML" exportedId="folderTree"
+                                                   filename="export-tree.xls" title="ADF Faces Export - All"/>
+              </af:commandToolbarButton>
+              <af:commandToolbarButton text="Export Selected Rows to Excel" immediate="true" id="exportSelected">
+                <af:exportCollectionActionListener type="excelHTML" exportedId="folderTree"
+                                                   filename="export-tree.xls" exportedRows="selected"
+                                                   title="ADF Faces Export - Selected Rows"/>
+              </af:commandToolbarButton>
+            </af:toolbar>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputText value="See also:" id="ot2"/>
+              <af:panelGroupLayout layout="vertical" id="pgl5">
+                <af:panelList id="pl1">
+                  <af:goLink text="panelCollection with Tree"
+                             destination="panelCollectionTree.jspx" id="gl1"/>
+                  <af:goLink text="Default Tree"
+                             destination="../tree.jspx" id="gl2"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

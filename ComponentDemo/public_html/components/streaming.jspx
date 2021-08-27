@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Streaming Prototype Demo" binding="#{templateBindings.documentComponent}"
+                 theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:resource type="css">
+.streamings {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: stretch;
+  flex-direction: row;
+ }
+ .streaming {
+  flex: 1;
+  min-width: 150px;
+  min-height: 100px;
+  border: 1px solid #ccc;
+  margin: 2px;
+}
+.streamingTable {
+  display: table;
+}
+.streamingRow {
+  display: table-row;
+}
+.streamingRow:nth-child(odd) .streamingCell,
+.singleRow:nth-child(odd) {
+  background-color: #eee;
+}
+.streamingRow:nth-child(odd) .streamingCell:first-child {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.streamingRow:nth-child(odd) .streamingCell:last-child {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.streamingCell {
+  display: table-cell;
+  padding: 2px 4px;
+}
+.streamingCell.end {
+  text-align: end;
+}
+.singleRow {
+  display: block;
+  padding: 2px;
+  border-radius: 4px;
+}
+      </af:resource>
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="streaming"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerSplitPositionedFromEnd" value="false"/>
+        <f:facet name="center">
+          <af:panelGroupLayout id="pgl1" layout="scroll" partialTriggers="reset">
+            <af:panelGroupLayout id="pgl2" styleClass="streamings AFStretchWidth">
+              <?audit suppress oracle.jdeveloper.jsp.validate-children?>
+              <af:iterator id="i1" var="index" varStatus="vs" value="#{streamingBean.indexes}">
+                <af:panelGroupLayout id="streaming_pgl" styleClass="streaming">
+                  <af:streaming value="#{streamingBean.streamingModels[index]}"
+                                binding="#{editor.component}" id="s1">
+                    <?audit suppress oracle.ide.xml.validation-error?>
+                    <f:facet name="placeholder">
+                      <?audit suppress oracle.jdeveloper.jsp.check-valid-parent?>
+                      <af:image id="placeholder" source="/images/streaming-load.gif"
+                                shortDesc="Please wait..." inlineStyle="margin: 4px;"/>
+                    </f:facet>
+                    <af:declarativeComponent id="idc" viewId="streaming.jsff">
+                      <f:attribute name="streamingData"
+                                   value="#{streamingBean.streamingData[index]}"/>
+                    </af:declarativeComponent>
+                  </af:streaming>
+                </af:panelGroupLayout>
+              </af:iterator>
+            </af:panelGroupLayout>
+            <af:spacer height="25" id="s2"/>
+            <af:separator id="s1"/>
+            <af:commandButton text="Reset state" id="reset"
+                              actionListener="#{streamingBean.handleReset}"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>dvt_mapPointTheme</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<div>
+<table class="oac_no_warn" summary="Layout table... probably." width="100%" border="0">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:mapPointTheme&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none">mapPointTheme map point theme</p>
+<br>
+<p>The mapPointTheme tag is used within the <a href="dvt_map.html">&lt;dvt:map&gt;</a> tag to render a set of points. The rendering of each point can be specified via custom images, built-in images or by specifying html tags. The Point Theme ensures that each point is displayed at the appropriate location and stylized correctly based on the specified attributes.</p>
+<p>The location and data associated with each point is specified in the data model. The Point Theme together with the Point Style Item tags specifies the display of the points.</p>
+<h4>Model</h4>
+<p>An instance of <code>oracle.adf.view.faces.bi.model.GeoMapDataModel</code> must be used to specify the data model for the Point Theme.</p>
+<p>The GeoMapDataModel is a collection of GeoRowObject instances and contains location information for each point which is stored in a GeoObject instance. Location for a point can be specified in the GeoObject instance in 2 ways:</p>
+<ol>
+<li>Via latitude &amp; longitude</li>
+<li>Via an address that will be geocoded by the Point Theme. A geocoderURL must be specified in your map configuration.</li>
+</ol>
+<p>Refer to the java doc for more information on how to create a data model.</p>
+<h4>Rendering Points</h4>
+<p>The Point Theme along with the Point Style Item tag provides various options for specifying the rendering of the points that are in the model.</p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="75%" class="bodyTable">
+<tr class="a">
+<th>Type</th>
+<th>Description &amp; Example</th>
+</tr>
+<tr class="a">
+<td>
+<p>Built-In Images</p>
+</td>
+<td>
+<p>The Point Theme provides a collection of built-in images including the normal, selected and hover states. Consider the following:</p>
+<ol>
+<li>Same image for all data points -- simply set the builtInImage attribute on the Point Theme tag.</li>
+<li>Different image based on data value -- add one or more Point Style Item tags and specify the builtInImage attribute on each tag.</li>
+</ol>
+<p>In the example below, all the points are shown using the built-in large orange pin rather than the default orange ball.<br></p>
+<pre>
+                    &lt;dvt:map ...map attributes...&gt;
+                      &lt;dvt:mapPointTheme id="theme1" value="#{backingBean.geoMapModel}"
+                         builtInImage="OrangePinLarge"/&gt; &lt;-- Changes default rendering of all points --&gt;
+                    &lt;/dvt:map&gt;
+                    
+</pre></td>
+</tr>
+<tr class="b">
+<td>
+<p>Custom Images</p>
+</td>
+<td>
+<p>To specify custom images for all the points in the data model or to display different images based on a data value associated with a point add one or more <a href="dvt_mapPointStyleItem.html">Point Style Items</a> tags to the Point Theme and specify the appropriate attributes.</p>
+</td>
+</tr>
+<tr class="a">
+<td>
+<p>HTML</p>
+</td>
+<td>
+<p>By specifying a value for the customPointCallback attribute HTML representing the point can be returned to the Point Theme for each point in the data model. The Point Theme will render the HTML at the location of the point.</p>
+<p>The attribute takes a method expression that taeks a <code>oracle.adf.view.faces.bi.component.geoMap.DataContent</code> object as the argument and returns an instance of <code>oracle.adf.view.faces.bi.component.geoMap.PointContent</code></p>
+<p>In the example below, the mapPointTheme is bound to a method expression, "backingBean.processPointInfo"<br></p>
+<pre>
+                    &lt;dvt:map ...map attributes...&gt;
+                      &lt;dvt:mapPointTheme id="theme1" value="#{backingBean.geoMapModel}"
+                         customPointCallback="#{backingBean.processPointInfo}" /&gt;
+                    &lt;/dvt:map&gt;
+                    
+</pre>
+<p>The method for generating the custom HTML content:</p>
+<pre>
+                    public PointContent processPointInfo(DataContent dataContent) {
+                        String pointHTML = "&lt;div&gt;" + dataContent.getValues()[0] + "&lt;/div&gt;";
+                        String selectHTML = "&lt;div&gt;&lt;b&gt;You are selected&lt;/b&gt;&lt;/div&gt;";
+                        String hoverHTML = "&lt;div&gt;&lt;b&gt;Mouse over&lt;/b&gt;&lt;/div&gt;";
+                        PointContent pContent = new PointContent(pointHTML, selectHTML, hoverHTML);
+                        return pContent;
+                    }
+                    
+</pre></td>
+</tr>
+</table>
+<h4>Interactivity</h4>
+<p>The Point Theme provides the ability to specify different behaviors when the end user clicks on or hovers over a point on the map.</p>
+<table class="oac_no_warn" summary="Layout table... probably." border="1" cellpadding="3" cellspacing="0" width="75%" class="bodyTable">
+<tr class="a">
+<th>Action Type</th>
+<th>Description &amp; Example</th>
+</tr>
+<tr class="a">
+<td>
+<p>Left Click</p>
+</td>
+<td>
+<p>The <code>leftClickBehavior</code> attribute defines the behavior when the end user left clicks on a point. In the example below, when the user left clicks on a point, a popup dialog will be shown. The popup dialog is defined in the "popup" facet.</p>
+<pre>
+                    &lt;dvt:map ...map attributes...&gt;
+                      &lt;f:facet name="popup"&gt;
+                        &lt;af:dialog title="TestPopup" modal="true"&gt;
+                          &lt;af:panelGroupLayout layout="vertical"&gt;
+                            &lt;af:image id="photoImage" source="#{popupBean.imageSrc}"/&gt;
+                          &lt;/af:panelGroupLayout&gt;
+                        &lt;/af:dialog&gt;
+                      &lt;/f:facet&gt;
+                      &lt;dvt:mapPointTheme id="theme1" value="#{backingBean.geoMapModel}"
+                         clickListener="#{popupBean.processClickAction}" 
+                         leftClickBehavior="Popup"/&gt;
+                    &lt;/dvt:map&gt;
+                    
+</pre></td>
+</tr>
+<tr class="b">
+<td>
+<p>Right Click</p>
+</td>
+<td>
+<p>The <code>rightClickBehavior</code> attribute defines the behavior when the end user right clicks on a point. In the example below, when the user right clicks on a point, a context menu will be shown. The menu is defined in the "rtPopup" facet.</p>
+<pre>
+                    &lt;dvt:map ...map attributes...&gt;
+                      &lt;f:facet name="rtPopup"&gt;
+                        &lt;af:menu&gt;
+                          &lt;af:commandMenuItem text="menu1"/&gt;
+                          &lt;af:commandMenuItem text="menu2"/&gt;
+                          &lt;af:commandMenuItem text="menu3"/&gt;
+                        &lt;/af:menu&gt;
+                      &lt;/f:facet&gt;
+                      &lt;dvt:mapPointTheme 
+                         clickListener="#{popupBean.processClickAction}"
+                         rightClickBehavior="Popup"/&gt;
+                    &lt;/dvt:map&gt;
+                    
+</pre></td>
+</tr>
+<tr class="a">
+<td>
+<p>Hover</p>
+</td>
+<td>
+<p>The <code>hoverBehavior</code> attribute defines the behavior when the end user hovers over a point with the mouse. In the example below, when the user mouses over a point, the info window will be shown.</p>
+<pre>
+                    &lt;dvt:map ...map attributes...&gt;
+                      &lt;dvt:mapPointTheme 
+                         hoverBehavior="InfoWindow" /&gt;
+                    &lt;/dvt:map&gt;
+                    
+</pre></td>
+</tr>
+</table>
+<h4>Legend Customization</h4>
+<p>By default, the ID of the mapPointTheme is used as the label when that theme is displayed in the legend or in the Theme Selection dialog. However, each mapPointTheme tag has the following attributes that serve as optional labels for the theme:</p>
+<ul>
+<li>shortLabel: Specifies a label for the theme when displayed in the map legend</li>
+<li>menuLabel: Specifies a label for the theme in the Theme Selection dialog</li>
+</ul>
+The labels for each point in the legend are determined by the labels that were used to create the GeoMapDataModel for this theme.
+<h4>Relationship with other tags</h4>
+<p>The &lt;dvt:mapPointTheme&gt; tag is a child of the <a href="dvt_map.html">&lt;dvt:map&gt;</a> tag</p>
+<p>The &lt;dvt:mapPointTheme&gt; tag can have the following children:</p>
+<ul>
+<li>&lt;af:convertNumber&gt;</li>
+<li><a href="dvt_mapPointStyleItem.html">&lt;dvt:mapPointStyleItem&gt;</a></li>
+</ul>
+<p>Deprecated children:</p>
+<ul>
+<li><a href="numberFormat.html">&lt;dvt:numberFormat&gt;</a></li>
+</ul>
+<h2>Events</h2>
+<table class="oac_no_warn" class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.MapSelectionEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">MapSelectionEvent is fired when the user finishes selecting a region on the map, or when the user unselects the region. The rectangle tool, circle tool, polygon tool, or point tool can be used to select a region, and right clicking on the map will unselect it</td>
+</tr>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.MapClickActionEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">MapClickActionEvent is fired when the user left clicks or right clicks on an element of the theme.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="tblId_1_1">Name</th>
+<th align="left" valign="bottom" id="tblId_1_2">Type</th>
+<th align="left" valign="bottom" id="tblId_1_3">Supports EL?</th>
+<th align="left" valign="bottom" id="tblId_1_4">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="tblId_1_1">id</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">The identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">rendered</td>
+<td align="left" headers="tblId_1_2">boolean</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies whether the theme is rendered or not</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">value</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the data model for theme - have to be an instance of oracle.adf.view.faces.bi.model.GeoMapDataModel</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">shortLabel</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the label of this theme on the legend. If the attribute is not specified, the id of the theme will be used as the label on the legend.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">menuLabel</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the label of this theme on the ThemeSelectionDialog and SelectMenuItem. If the attribute is not specified, the id of the theme will be used.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">builtInImage</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">
+<p>Specifies the built-in images for this point style item. Each built in image has a set of normal images, selected images and hovered images</p>
+<p>Built-in image can take the value of <i>shape_color</i> where <i>shape</i> is one of the following:</p>
+<ul>
+<li>SquareBubble</li>
+<li>PointerBubble</li>
+<li>DiagonalSquare</li>
+<li>Bubble</li>
+<li>Flag</li>
+<li>Hexagon</li>
+<li>SignOne</li>
+<li>PushPin</li>
+<li>SignTwo</li>
+<li>TrafficSignDiagonal</li>
+<li>TrafficSign</li>
+<li>3DCube</li>
+</ul>
+<p>whereas <i>color</i> is one of the following:</p>
+<ul>
+<li>Orange</li>
+<li>Blue</li>
+<li>Green</li>
+<li>Red</li>
+<li>Purple</li>
+</ul>
+<p>For example, it can be Bubble_Orange or SignTwo_Blue. Other than those, built-in image can also be one of the following:</p>
+<ul>
+<li>OrangePinLarge</li>
+<li>OrangePinMedium</li>
+<li>OrangePinSmall</li>
+<li>Ball_Orange</li>
+<li>Pin_Large_Orange</li>
+<li>Pin_Medium_Orange</li>
+<li>Pin_Small_Orange</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">overlayText</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies what text will appear over the displayed points. Valid values are: None (Default), RowIndex</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">overlayStyle</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Attribute for defining the inlineStyle of the overlayText</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">overlayClass</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the style class for the overlayText</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">defaultItemLabel</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the label of a point style on the legend. If no pointStyleItem is specified, the point theme will show the default point images for all the points in the theme. This attribute let the developers to customize the label of the the points on the legend when no pointStyleItem is specified</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">animationEffect</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">the animationEffect to use for ADS.<br>
+Valid values are - Blink (Default), Fade, Blink_And_Fade.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">minZoom</td>
+<td align="left" headers="tblId_1_2">int</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the minimum zoom scale where this theme will still be visible.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">maxZoom</td>
+<td align="left" headers="tblId_1_2">int</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the maximum zoom scale where this theme will still be visible.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">selectionListener</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">a method reference to a selection listener Refers to a backing bean method that takes MapSelectionEvent as an argument. The MapSelectionEvent contains the information on the selected region. Sample code:
+<pre>
+public void processSelection(MapSelectionEvent mapSelectionEvent) {
+    Iterator iterator = mapSelectionEvent.getIterator();
+        
+    while (iterator.hasNext())
+    {
+        DataContent dt = (DataContent)iterator.next();    
+        String selectedLocation = dt.getLocationName();
+        System.out.println (selectedLocation);
+    }                        
+}                
+        
+</pre></td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">clickAction</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">Refers to a backing bean method that performs navigation processing for the map and returns an outcome String. Or a static outcome String can be specified. The JSF NavigationHandler selects the page to display next by matching the outcome String against the navigation rules in the application configuration resource file. The application writes the Navigation rules.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">clickListener</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">a method reference to a click listener Refers to a backing bean method that takes MapClickActionEvent as an argument. The MapClickActionEvent contains the information on the clicked point. Sample code:
+<pre>
+        public void processMouseClick(MapClickActionEvent mapClickActionEvent) {
+            if (mapClickActionEvent.getDataContent() != null)
+            {
+                DataContent dt = mapClickActionEvent.getDataContent();
+                System.out.println ("Location Name: " + dt.getLocationName());
+            }
+        
+            System.out.println("MouseX " + mapClickActionEvent.getMouseX()); 
+            System.out.println("MouseY " + mapClickActionEvent.getMouseY());         
+       }
+</pre>
+Refers to a backing bean method that takes ClickEvent as argument.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">leftClickBehavior</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the behavior when user left clicks on an element of a theme. Valid value of theme are:
+<ul>
+<li>"Action" - An action event will be fired.</li>
+<li>"Popup" - A popup will be shown. The content of the popup is defined in the popup facet of the map</li>
+<li>"InfoWindow" (Default) - An InfoWindow will be shown. The user can further customize the content of the infoWindow through the infoWindowCallback</li>
+<li>"None" - Nothing will be done.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">rightClickBehavior</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the behavior when user right clicks on an element of a theme. Valid value of theme are:
+<ul>
+<li>"Popup" - A popup will be shown. The content of the popup is defined in the rtPopup facet of the map</li>
+<li>"None" (Default) - Nothing will be done.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">useWindow</td>
+<td align="left" headers="tblId_1_2">boolean</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies whether processes launched by this command should be launched in a secondary dialog window. 'useWindow' works only in the case of dialogs i.e, if the "action" starts with a "dialog:". Set useWindow to 'false' for the dialog to be opened in the existing window. It is false by default.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">windowWidth</td>
+<td align="left" headers="tblId_1_2">int</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the width of the window if useWindow is true. It is -1 by default.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">windowHeight</td>
+<td align="left" headers="tblId_1_2">int</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the height of the window if useWindow is true. It is -1 by default.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">infoWindowCallback</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">Specifies a callback for overriding the default text in the info Window.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">customPointCallback</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">Specifies a callback for overriding the point. The value of this attribute should be a method expression that returns a <code>oracle.adf.view.faces.bi.component.geoMap.PointContent</code> and will take a <code>oracle.adf.view.faces.bi.component.geoMap.DataContent</code> as its parameter.<br>
+This callback lets developer show custom HTML for each point. The DataContent object contains all the necessary information for developers to determine what to show for a point.<br>
+This attribute has a higher priority than the mapPointStyleItem. If this attribute is set, all the mapPointStyleItem tag will be ignored.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">customLegendCallback</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies a callback for displaying the legend if developers use customPointCallback for the pointTheme.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">hoverBehavior</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the behavior when user hovers over a point on the pointTheme Valid value of theme are:
+<ul>
+<li>"None" - Nothing will happen</li>
+<li>"Tooltip" - A tooltip will be shown</li>
+<li>"InfoWindow" - An info window will be shown</li>
+</ul>
+The default value is None.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">scaling</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Scaling factor for numbers that are displayed Valid values are:
+<ul>
+<li>none - (Default) The number will not be scaled</li>
+<li>thousand - Scales the number to thousands.</li>
+<li>million - Scales the number to millions.</li>
+<li>billion - Scale the number to billions.</li>
+<li>trillion - Scale the number to trillions.</li>
+<li>quadrillion - Scale the number to quadrillions.</li>
+</ul>
+</td>
+</tr>
+</table>
+</div>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+<tr>
+<td align="left" width="86%">Generated: Jul 15 2015</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

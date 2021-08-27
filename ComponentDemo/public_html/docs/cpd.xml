@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+<duplication lines="54" tokens="172">
+<file line="853" path="/scratch/dferry/adf-faces/trunk/adf-richclient-api/src/main/java/oracle/adf/view/rich/remote/RemoteApplicationRequest.java"/>
+<file line="153" path="/scratch/dferry/adf-faces/trunk/adf-richclient-api/src/main/java/oracle/adf/view/rich/util/StreamUtils.java"/>
+<codefragment>
+<![CDATA[
+    PartitionedInputStream(InputStream in, int length)
+    {
+      super(in);
+      assert (this.in != null);
+      _length = length;
+    }
+  
+    @Override
+    public int available()
+      throws IOException
+    {
+      long left = _leftInPartition();
+      int avail = super.available();
+      if (avail > left)
+      {
+        avail = (int)left;
+      }
+  
+      return avail;
+    }
+
+    @Override
+    public void close()
+      throws IOException
+    {
+      //When the stream is closed, we don't actually close the real stream.  Instead, we just
+      //read through the remaining bytes on the origional stream.
+      skip(_leftInPartition());
+    }
+  
+    @Override
+    public int read()
+      throws IOException{
+      if(_leftInPartition() > 0)
+      {
+        _read++;
+        return super.read();
+      }
+  
+      return -1;
+    }
+  
+    @Override
+    public int read(byte[] b)
+      throws IOException
+    {
+      return read(b, 0, b.length);
+    }
+  
+    @Override
+    public int read(byte[] b, int i, int i2)
+      throws IOException
+    {
+      if(i < 0 || i2 < 0 || i2 > (b.length - i2))
+]]>
+</codefragment>
+</duplication>
+<duplication lines="57" tokens="166">
+<file line="228" path="/scratch/dferry/adf-faces/trunk/adf-richclient-api/src/main/java/oracle/adf/view/rich/event/Target.java"/>
+<file line="187" path="/scratch/dferry/adf-faces/trunk/adf-richclient-api/src/main/java/oracle/adf/view/rich/util/TargetUtils.java"/>
+<codefragment>
+<![CDATA[
+  static private final List<String> _parseNameTokensAsList (Object o)
+  {
+    if (o == null)
+      return Collections.emptyList();
+
+    String stringValue = o.toString();
+    ArrayList<String> list = new ArrayList<String>(5);
+
+    int     length = stringValue.length();
+    boolean inSpace = true;
+    int     start = 0;
+    for (int i = 0; i < length; i++)
+    {
+      char ch = stringValue.charAt(i);
+
+      // code copied from UIXComponentELTag
+      // We're in whitespace;  if we've just departed
+      // a run of non-whitespace, append a string.
+      // Now, why do we use the supposedly deprecated "Character.isSpace()"
+      // function instead of "isWhitespace"?  We're following XML rules
+      // here for the meaning of whitespace, which specifically
+      // EXCLUDES general Unicode spaces.
+      if (Character.isWhitespace(ch))
+      {
+        if (!inSpace)
+        {
+          list.add(stringValue.substring(start, i));
+          inSpace = true;
+        }
+      }
+      // We're out of whitespace;  if we've just departed
+      // a run of whitespace, start keeping track of this string
+      else
+      {
+        if (inSpace)
+        {
+          start = i;
+          inSpace = false;
+        }
+      }
+    }
+
+    if (!inSpace)
+      list.add(stringValue.substring(start));
+
+    if (list.isEmpty())
+      return Collections.emptyList();
+
+    return list;
+  }
+
+  /**
+   * @param eventName the name of the event for which the set of executeIds is being determined
+   * @param component an instance of UIComponent that is in the right context.
+   * @return the Set&lt;String&gt; execute clientIds.
+   */
+  public static Set<String> getExecuteIdsForEvent(
+]]>
+</codefragment>
+</duplication>
+<duplication lines="37" tokens="117">
+<file line="1833" path="/scratch/dferry/adf-faces/trunk/adf-richclient-api/src/main/java/oracle/adf/view/rich/render/RichRenderer.java"/>
+<file line="2020" path="/scratch/dferry/adf-faces/trunk/adf-richclient-api/src/main/java/oracle/adf/view/rich/render/RichRenderer.java"/>
+<codefragment>
+<![CDATA[
+          }
+        }
+      }
+
+      // if we don't have a clientId and we need one, either because:
+      // 1) We aren't skipping this client component
+      // 2) We're forcing client components,
+      // and we are allowed to generate a client component sometimes, get one
+      if ((clientId == null) &&
+          (componentType != ClientComponent.Type.SKIP_ALWAYS) &&
+          ((componentType != ClientComponent.Type.SKIP) || rrc.getClientComponentsForced()))
+      {
+        clientId = getClientId(context, component);
+      }
+
+      // Add that client component
+      ClientComponent client = rrc.addClientComponent(
+        componentType,
+        metadata,
+        constructor,
+        clientId);
+
+      boolean isNull  = client.isNull();
+
+      // No need to worry about client listeners or visible if our
+      // client component is a big no-op
+      if (!isNull)
+      {
+        // Push any explicitly requested client attributes across
+        if (clientAttributes != null)
+        {
+          for (String attrName : clientAttributes)
+          {
+            PropertyKey key = PropertyKey.createPropertyKey(attrName);
+            client.addProperty(key, bean.getProperty(key));
+          }
+        }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="29" tokens="111">
+<file line="1805" path="/scratch/dferry/adf-faces/trunk/adf-richclient-api/src/main/java/oracle/adf/view/rich/render/RichRenderer.java"/>
+<file line="1982" path="/scratch/dferry/adf-faces/trunk/adf-richclient-api/src/main/java/oracle/adf/view/rich/render/RichRenderer.java"/>
+<codefragment>
+<![CDATA[
+      ClientMetadata metadata = getEncodeClientMetadata(context, rc, bean);
+
+      if (!componentType.skipClientComponent())
+      {
+        // When attributes or listeners are present, force the creation
+        // of the client component - unless it's being forcibly skipped
+        clientAttributes = getClientAttributes(bean);
+        listeners = getClientListeners(bean);
+        if ((clientAttributes != null) || (listeners != null))
+        {
+          componentType = ClientComponent.Type.CREATE_WITH_ALL_ATTRS;
+        }
+        else if (componentType == ClientComponent.Type.SKIP_UNLESS_REQUIRED_ATTRS)
+        {
+          //If messages are present, force the creation of the client component
+          //=-= SMO TODO: we probably want to remove the dependency of messages on
+          //              components rather then doing this in the future.
+          boolean hasMessages = false;
+          if (supportsMessages())
+          {
+            if (clientId == null)
+              clientId = getClientId(context, component);
+            hasMessages = context.getMessages(clientId).hasNext();
+          }
+
+          if (hasMessages)
+          {
+            componentType = ClientComponent.Type.CREATE_WITH_REQUIRED_ATTRS;
+          }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="18" tokens="101">
+<file line="92" path="/scratch/dferry/adf-faces/trunk/adf-richclient-api/src/main/java/oracle/adf/view/rich/event/QueryEvent.java"/>
+<file line="283" path="/scratch/dferry/adf-faces/trunk/adf-richclient-api/src/main/java/oracle/adf/view/rich/event/QueryOperationEvent.java"/>
+<codefragment>
+<![CDATA[
+              this._descriptor == that._descriptor &&
+              this.getComponent().equals(that.getComponent()) &&
+              this.getPhaseId().equals(that.getPhaseId()));
+    }
+
+    return false;
+  }
+
+  @Override
+  public String toString()
+  {
+    StringBuffer sb = new StringBuffer();
+    sb.append(getClass().getName());
+    sb.append("[phaseId=");
+    sb.append(getPhaseId());
+    sb.append(",component=");
+    sb.append(getComponent());
+    sb.append(",operation=");
+]]>
+</codefragment>
+</duplication>
+</pmd-cpd>

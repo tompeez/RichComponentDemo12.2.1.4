@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram Database Schema Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram Database Schema Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Database Schema Layout"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout>
+            <f:facet name="center">
+              <dvt:diagram id="d2" layout="dbSchemaLayout" summary="Database Schema Diagram Demo">
+                <dvt:clientLayout name="dbSchemaLayout" method="DemoDbSchemaLayout.dbSchemaLayout"
+                                  featureName="DemoDbSchemaLayout"/>
+                <dvt:diagramNodes value="#{diagramDbSchema.nodes}" var="node"
+                                  disclosedRowKeys="#{diagramDbSchema.disclosedNodes}" id="dn1">
+                  <dvt:diagramNode id="n1" nodeId="#{node.id}" containerId="#{node.container}"
+                                   shortDesc="#{node.label}">
+                    <f:facet name="containerTop">
+                      <af:panelGroupLayout layout="vertical" halign="center"
+                                           inlineStyle="background-color:#{node.color};padding-left:15px;padding-right:15px;padding-top:4px;padding-bottom:4px;">
+                        <af:outputText value="#{node.label}" inlineStyle="color:#FFFFFF;"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="zoom100">
+                      <af:panelGroupLayout inlineStyle="background-color:#{node.color};padding-left:15px;padding-right:15px;padding-top:4px;padding-bottom:4px;"
+                                           id="pgl1">
+                        <af:outputText value="#{node.label}" id="ot2" inlineStyle="color:#FFFFFF"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </dvt:diagramNode>
+                </dvt:diagramNodes>
+                <dvt:diagramLinks value="#{diagramDbSchema.links}" var="link" id="dl1">
+                  <dvt:diagramLink startNode="#{link.start}" endNode="#{link.end}" linkColor="#{link.color}"
+                                   shortDesc="Reference #{link.description}" endConnectorType="arrowOpen" id="l1"/>
+                </dvt:diagramLinks>
+                <dvt:overviewWindow id="ow1"/>
+              </dvt:diagram>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

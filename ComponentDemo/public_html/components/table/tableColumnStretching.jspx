@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Table Column Stretching Demo" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelStretchLayout id="pgl1" topHeight="auto" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:panelHeader text="Settings that can affect column stretching (try all combinations)"
+                            id="ph1">
+              <af:panelFormLayout id="pfl1">
+                <af:selectBooleanCheckbox
+                  id="emptyTextPresent"
+                  autoSubmit="true"
+                  label="Empty text present"
+                  selected="#{tableColumnStretching.emptyTextPresent}"/>
+                <af:selectBooleanCheckbox
+                  id="columnHeaderPresent"
+                  autoSubmit="true"
+                  label="Column header present"
+                  selected="#{tableColumnStretching.columnHeaderPresent}"/>
+                <af:selectBooleanCheckbox
+                  id="nestedColumnHeaderPresent"
+                  autoSubmit="true"
+                  label="Nested column header present"
+                  selected="#{tableColumnStretching.nestedColumnHeaderPresent}"/>
+                <af:selectBooleanCheckbox
+                  id="columnFooterPresent"
+                  autoSubmit="true"
+                  label="Column footer present"
+                  selected="#{tableColumnStretching.columnFooterPresent}"/>
+                <af:selectBooleanCheckbox
+                  id="rowHeaderPresent"
+                  autoSubmit="true"
+                  label="Row header present"
+                  selected="#{tableColumnStretching.rowHeaderPresent}"/>
+                <af:selectBooleanCheckbox
+                  id="detailStampPresent"
+                  autoSubmit="true"
+                  label="Detail stamp present"
+                  selected="#{tableColumnStretching.detailStampPresent}"
+                  valueChangeListener="#{tableColumnStretching.detailStampChanged}"/>
+                <af:selectOneChoice
+                  id="dataPresent"
+                  autoSubmit="true"
+                  label="Data present"
+                  value="#{tableColumnStretching.dataPresent}">
+                  <f:selectItem itemLabel="lots" itemValue="lots" id="si1"/>
+                  <f:selectItem itemLabel="some" itemValue="some" id="si2"/>
+                  <f:selectItem itemLabel="none" itemValue="none" id="si3"/>
+                </af:selectOneChoice>
+                <af:selectOneChoice
+                  id="contentDelivery"
+                  autoSubmit="true"
+                  label="contentDelivery"
+                  value="#{tableColumnStretching.contentDelivery}">
+                  <f:selectItem itemLabel="lazy" itemValue="lazy" id="si4"/>
+                  <f:selectItem itemLabel="immediate" itemValue="immediate"
+                                id="si5"/>
+                </af:selectOneChoice>
+                <af:panelLabelAndMessage
+                  label="columnStretching" id="plam1">
+                  <af:panelGroupLayout layout="horizontal" valign="top" id="pgl3">
+                    <f:facet name="separator">
+                      <af:spacer width="10" id="s2"/>
+                    </f:facet>
+                    <af:selectOneChoice
+                      id="columnStretching"
+                      autoSubmit="true"
+                      simple="true"
+                      value="#{tableColumnStretching.columnStretching}">
+                      <f:selectItem itemLabel="none" itemValue="none" id="si6"/>
+                      <f:selectItem itemLabel="last" itemValue="last" id="si7"/>
+                      <f:selectItem itemLabel="blank" itemValue="blank" id="si8"/>
+                      <f:selectItem itemLabel="column:iconAndName" itemValue="column:iconAndName"
+                                    id="si9"/>
+                    </af:selectOneChoice>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+                <af:selectOneChoice
+                  id="frozenColumn"
+                  autoSubmit="true"
+                  label="Frozen column"
+                  value="#{tableColumnStretching.frozenColumn}">
+                  <f:selectItem itemLabel="&quot;none&quot;" itemValue="none"
+                                id="si10"/>
+                  <f:selectItem itemLabel="&quot;first&quot;" itemValue="first"
+                                id="si11"/>
+                  <f:selectItem itemLabel="&quot;second&quot;" itemValue="second"
+                                id="si12"/>
+                  <f:selectItem itemLabel="&quot;last&quot;" itemValue="last"
+                                id="si13"/>
+                </af:selectOneChoice>
+                <af:panelLabelAndMessage label="Table width" id="plam2">
+                  Resize the browser width such that the table has:
+                  <af:panelList id="pl1">
+                    <af:outputText value="no horizontal scrollbar (space to stretch columns)"
+                                   id="ot1"/>
+                    <af:outputText value="a horizontal scrollbar (no space to stretch columns)"
+                                   id="ot2"/>
+                  </af:panelList>
+                </af:panelLabelAndMessage>
+              </af:panelFormLayout>
+            </af:panelHeader>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelCollection
+                partialTriggers="::dataPresent ::emptyTextPresent ::columnHeaderPresent ::columnFooterPresent ::nestedColumnHeaderPresent ::rowHeaderPresent ::detailStampPresent ::contentDelivery ::columnStretching ::frozenColumn"
+                                  id="pc1" styleClass="AFStretchWidth">
+                <af:table summary="table column stretching demo"
+                  binding="#{tableColumnStretching.table}"
+                  var="row"
+                  value="#{tableColumnStretching.tableData}"
+                  contentDelivery="#{tableColumnStretching.contentDelivery}"
+                  columnSelection="multiple"
+                  columnStretching="#{tableColumnStretching.columnStretching}"
+                  emptyText="#{tableColumnStretching.emptyText}" id="t1">
+                  <af:column
+                    id="rowNumberPossibleRowHeader"
+                    width="#{tableColumnStretching.columnWidthRowHeader}"
+                    minimumWidth="30"
+                    align="center" headerText="#{tableColumnStretching.columnHeaderTextNumber}"
+                    rowHeader="#{tableColumnStretching.rowHeaderPresent}">
+                    <af:outputText value="#{row.no}" id="ot3"/>
+                  </af:column>
+                  <af:column
+                    id="rowNumberPlain"
+                    width="#{tableColumnStretching.columnWidthRowNumberPlain}"
+                    minimumWidth="30"
+                    displayIndex="3"
+                    headerText="#{tableColumnStretching.columnHeaderTextNumber}"
+                    sortable="true">
+                    <af:outputText value="#{row.no}" id="ot4"/>
+                  </af:column>
+                  <af:column
+                    id="iconAndName"
+                    displayIndex="1"
+                    headerText="#{tableColumnStretching.columnHeaderTextName}"
+                    sortProperty="name"
+                    sortable="true"
+                    frozen="#{tableColumnStretching.frozenColumn=='first'}"
+                    width="#{tableColumnStretching.columnWidthName}"
+                    minimumWidth="110">
+                    <af:panelGroupLayout id="pgl4">
+                      <af:image source="#{row.icon}" inlineStyle="width:15px; height:15px;"
+                                id="i1"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{row.name}"
+                                     id="ot5"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column
+                    id="size"
+                    headerText="#{tableColumnStretching.columnHeaderTextSize}"
+                    displayIndex="2"
+                    frozen="#{tableColumnStretching.frozenColumn=='second'}"
+                    width="#{tableColumnStretching.columnWidthSize}"
+                    minimumWidth="55">
+                    <af:outputText value="#{row.size}" id="ot6"/>
+                  </af:column>
+                  <af:column
+                    id="dateModified"
+                    align="center"
+                    headerText="#{tableColumnStretching.columnHeaderTextDateModified}"
+                    width="#{tableColumnStretching.columnWidthDateModified}"
+                    minimumWidth="80">
+                    <af:outputText value="#{row.date}" id="ot7"/>
+                  </af:column>
+                  <af:column
+                    id="surrounding5And6"
+                    headerText="#{tableColumnStretching.columnHeaderText5And6}"
+                    rendered="#{tableColumnStretching.nestedColumnHeaderPresent}">
+                    <af:column
+                      id="nested5"
+                      headerText="#{tableColumnStretching.columnHeaderText5}"
+                      width="#{tableColumnStretching.columnWidth5}"
+                      minimumWidth="90">
+                      <af:outputText value="#{row.col5}" id="ot8"/>
+                    </af:column>
+                    <af:column
+                      id="nested6"
+                      headerText="#{tableColumnStretching.columnHeaderText6}"
+                      width="#{tableColumnStretching.columnWidth6}"
+                      minimumWidth="65">
+                      <af:outputText value="#{row.col6}" id="ot9"/>
+                    </af:column>
+                  </af:column>
+                  <af:column
+                    id="nonNested5"
+                    headerText="#{tableColumnStretching.columnHeaderText5}"
+                    rendered="#{!tableColumnStretching.nestedColumnHeaderPresent}"
+                    width="#{tableColumnStretching.columnWidth5}"
+                    minimumWidth="90">
+                    <af:outputText value="#{row.col5}" id="ot10"/>
+                  </af:column>
+                  <af:column
+                    id="nonNested6"
+                    headerText="#{tableColumnStretching.columnHeaderText6}"
+                    rendered="#{!tableColumnStretching.nestedColumnHeaderPresent}"
+                    width="#{tableColumnStretching.columnWidth6}"
+                    minimumWidth="65">
+                    <af:outputText value="#{row.col6}" id="ot11"/>
+                  </af:column>
+                  <af:column
+                    id="col7"
+                    headerText="#{tableColumnStretching.columnHeaderText7}"
+                    width="#{tableColumnStretching.columnWidth7}"
+                    minimumWidth="55">
+                    <af:outputText value="#{row.col7}" id="ot12"/>
+                  </af:column>
+                  <af:column
+                    id="col8"
+                    headerText="#{tableColumnStretching.columnHeaderText8}"
+                    width="#{tableColumnStretching.columnWidth8}"
+                    minimumWidth="30">
+                    <af:outputText value="#{row.col8}" id="ot13"/>
+                  </af:column>
+                  <af:column
+                    id="surrounding9And10"
+                    headerText="#{tableColumnStretching.columnHeaderText9And10}"
+                    frozen="#{tableColumnStretching.frozenColumn=='last'}"
+                    rendered="#{tableColumnStretching.nestedColumnHeaderPresent}">
+                    <af:column
+                      id="nested9"
+                      headerText="#{tableColumnStretching.columnHeaderText9}"
+                      width="#{tableColumnStretching.columnWidth9}"
+                      minimumWidth="90">
+                      <af:outputText value="#{row.col9}" id="ot14"/>
+                    <f:facet name="footer">
+                      <af:outputText value="#{tableColumnStretching.columnHeaderText9} footer" rendered="#{tableColumnStretching.columnFooterPresent}"
+                                     id="ot15"/>
+                    </f:facet>
+                    </af:column>
+                    <af:column
+                      id="nested10"
+                      headerText="#{tableColumnStretching.columnHeaderText10}"
+                      width="#{tableColumnStretching.columnWidth10}"
+                      minimumWidth="65">
+                      <af:outputText value="#{row.col10}" id="ot16"/>
+                    <f:facet name="footer">
+                      <af:outputText value="#{tableColumnStretching.columnHeaderText10} footer" rendered="#{tableColumnStretching.columnFooterPresent}"
+                                     id="ot17"/>
+                    </f:facet>
+                    </af:column>
+                  </af:column>
+                  <af:column
+                    id="nonNested9"
+                    headerText="#{tableColumnStretching.columnHeaderText9}"
+                    rendered="#{!tableColumnStretching.nestedColumnHeaderPresent}"
+                    width="#{tableColumnStretching.columnWidth9}"
+                    minimumWidth="90">
+                    <af:outputText value="#{row.col9}" id="ot18"/>
+                  </af:column>
+                  <af:column
+                    id="nonNested10"
+                    headerText="#{tableColumnStretching.columnHeaderText10}"
+                    frozen="#{tableColumnStretching.frozenColumn=='last'}"
+                    rendered="#{!tableColumnStretching.nestedColumnHeaderPresent}"
+                    width="#{tableColumnStretching.columnWidth10}"
+                    minimumWidth="65">
+                    <af:outputText value="#{row.col10}" id="ot19"/>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>
+

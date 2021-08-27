@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1" maximized="#{requestScope.docMaximized}"
+                 partialTriggers="dm psldf ptdf t1psldf t1sdisc">
+      <af:form id="f1">
+        <af:panelStretchLayout id="psl1" inlineStyle="border:blue 2px dashed"
+                               dimensionsFrom="#{requestScope.stretchLayoutDimensionsFrom}"
+                               topHeight="150">
+          <f:facet name="top">
+            <af:panelGroupLayout layout="scroll">
+              <af:goMenuItem text="view page source"
+                             destination="#{facesContext.viewRoot.viewId}.source" id="gmi2"/>
+              <af:outputText value="This demo is to help understand how various attributes affect stretching. It is intentionally very simple in order to make it easier to understand the source (hit 'view page source' link above to see the source). If you are trying to fully stretch everything on the page try selecting 'maximized', 'first', and 'parent' on this page"/>
+              <af:spacer height="5px"/>
+              <af:panelFormLayout>
+                <af:selectBooleanCheckbox label="set document maximized attribute" id="dm"
+                                          autoSubmit="true" value="#{requestScope.docMaximized}"/>
+                <af:selectOneRadio layout="horizontal" id="psldf"
+                                   label="set panelStretchLayout (with blue border) dimensionsFrom attribute"
+                                   autoSubmit="true"
+                                   value="#{requestScope.stretchLayoutDimensionsFrom}">
+                  <af:selectItem value="auto" label="auto"/>
+                  <af:selectItem value="parent" label="parent"/>
+                  <af:selectItem value="children" label="children"/>
+                </af:selectOneRadio>
+                <af:selectOneRadio layout="horizontal" id="ptdf"
+                                   label="set panelTabbed (tabs seen below) dimensionsFrom attribute"
+                                   autoSubmit="true" value="#{requestScope.tabbedDimensionsFrom}">
+                  <af:selectItem value="auto" label="auto"/>
+                  <af:selectItem value="parent" label="parent"/>
+                  <af:selectItem value="disclosedChild" label="disclosedChild"/>
+                </af:selectOneRadio>
+              </af:panelFormLayout>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="center">
+            <af:panelTabbed dimensionsFrom="#{requestScope.tabbedDimensionsFrom}">
+              <af:showDetailItem disclosed="true" text="Tab 1"
+                                 stretchChildren="#{requestScope.t1sdiStretchChildren}">
+                <af:panelStretchLayout inlineStyle="border:red 2px dashed"
+                                       dimensionsFrom="#{requestScope.t1pslDimensionsFrom}">
+                  <f:facet name="center">
+                    <af:panelFormLayout>
+                      <af:selectOneRadio layout="horizontal" id="t1sdisc"
+                                         label="set showDetailItem ('Tab 1') stretchChildren attribute"
+                                         autoSubmit="true"
+                                         value="#{requestScope.t1sdiStretchChildren}">
+                        <af:selectItem value="none" label="none"/>
+                        <af:selectItem value="first" label="first"/>
+                      </af:selectOneRadio>
+                      <af:selectOneRadio layout="horizontal" id="t1psldf"
+                                         label="set panelStretchLayout (with red border) dimensionsFrom attribute"
+                                         autoSubmit="true"
+                                         value="#{requestScope.t1pslDimensionsFrom}">
+                        <af:selectItem value="auto" label="auto"/>
+                        <af:selectItem value="parent" label="parent"/>
+                        <af:selectItem value="children" label="children"/>
+                      </af:selectOneRadio>
+                    </af:panelFormLayout>
+                  </f:facet>
+                </af:panelStretchLayout>
+              </af:showDetailItem>
+              <af:showDetailItem text="Tab 2">
+                <af:outputText value="Tab 2 First Child" id="tot3"/>              
+              </af:showDetailItem>
+              <af:showDetailItem text="Tab 3">
+                <af:outputText value="Tab 3 Only Child" id="tot5"/>
+              </af:showDetailItem>
+            </af:panelTabbed>
+          </f:facet>
+        </af:panelStretchLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

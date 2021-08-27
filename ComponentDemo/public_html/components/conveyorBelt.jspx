@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="conveyorBelt Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="conveyorBelt"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:attribute name="centerBottomCollapsed" value="false"/>
+        <f:attribute name="centerBottomCollapsibleHeight" value="300"/>
+        <f:facet name="center">
+          <af:conveyorBelt binding="#{editor.component}" id="cb1">
+            <af:iterator var="row" first="0" rows="10" varStatus="stat"
+                         value="#{periodicTable.tableData}" id="it1">
+              <af:panelGroupLayout id="pgl1" layout="vertical"
+                                   inlineStyle="padding:1px;display:inline-block;">
+                <af:link id="l1" partialSubmit="true" 
+                         inlineStyle="display:inline-block;cursor:default;">
+                  <af:panelBox id="pb1" text="#{row.symbol}" background="dark" showDisclosure="false"
+                               inlineStyle="width:90px;display:inline-block;">
+                    <af:outputText id="ot1" value="#{row.name}"/>
+                  </af:panelBox>
+                </af:link>
+              </af:panelGroupLayout>
+            </af:iterator>
+          </af:conveyorBelt>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+          <af:spacer width="1px" height="1px"/>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

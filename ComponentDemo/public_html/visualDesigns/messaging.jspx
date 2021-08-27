@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Messaging Visual Design Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="css">
+      .MessageDialogViewport {
+        width: 340px;
+        height: 125px;
+      }
+      </af:resource>
+      <af:resource type="javascript">
+      /**
+       * Shows the message dialog
+       * @param clickEvent a button click event
+       */
+      function showMessageDialog(clickEvent)
+      {
+        clickEvent.cancel();
+        var source = clickEvent.getSource();
+        var buttonTypes = source.getProperty("buttonTypes");
+        var popup;
+        if (buttonTypes == "yes/no")
+        {
+          popup = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:yesNoDialogPopup");
+        }
+        else if (buttonTypes == "ok/cancel")
+        {
+          popup = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:okCancelDialogPopup");
+        }
+        else // "ok" type
+        {
+          popup = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:okDialogPopup");
+        }
+        popup.show();
+      }
+      function handleDialog(dialogEvent)
+      {
+        var outcome = dialogEvent.getOutcome();
+        var dialog = dialogEvent.getSource();
+        var keepHiddenBoxId = dialog.getClientId() + "_keepHiddenBox";
+        var keepHiddenBox = AdfPage.PAGE.findComponentByAbsoluteId(keepHiddenBoxId);
+
+        switch (outcome)
+        {
+          case AdfDialogEvent.OUTCOME_OK:
+            okButtonHandler(dialogEvent, keepHiddenBox);
+            break;
+          case AdfDialogEvent.OUTCOME_YES:
+            yesButtonHandler(dialogEvent, keepHiddenBox);
+            break;
+          case AdfDialogEvent.OUTCOME_NO:
+            noButtonHandler(dialogEvent, keepHiddenBox);
+            break;
+          case AdfDialogEvent.OUTCOME_CANCEL:
+            cancelButtonHandler(dialogEvent, keepHiddenBox);
+            break;
+        }
+      }
+      function yesButtonHandler(dialogEvent, keepHiddenBox)
+      {
+        _showWhatHappened("Yes", keepHiddenBox);
+      }
+      function noButtonHandler(dialogEvent, keepHiddenBox)
+      {
+        _showWhatHappened("No", keepHiddenBox);
+      }
+      function okButtonHandler(dialogEvent, keepHiddenBox)
+      {
+        _showWhatHappened("OK", keepHiddenBox);
+      }
+      function cancelButtonHandler(dialogEvent, keepHiddenBox)
+      {
+        _showWhatHappened("Cancel", keepHiddenBox);
+      }
+      function _showWhatHappened(buttonClicked, keepHiddenBox)
+      {
+        if (keepHiddenBox == null)
+        {
+          alert("You clicked " + buttonClicked + ".");
+        }
+        else
+        {
+          var doNotShowAgain = keepHiddenBox.getSubmittedValue();
+          alert("You clicked " + buttonClicked + " and set do not show again to " + doNotShowAgain);
+        }
+      }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Messaging Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelHeader text="Related Links" id="ph1">
+              <af:panelList id="pl1">
+                <af:goLink text="Component - dialog" destination="/components/dialog.jspx"
+                           id="gl1"/>
+                <af:goLink text="Component - document" destination="/components/document.jspx"
+                           id="gl2"/>
+                <af:goLink text="Component - pageTemplate"
+                           destination="/components/pageTemplate.jspx"
+                           id="gl3"/>
+                <af:panelGroupLayout id="pgl2">
+                  <af:goLink text="Component - message" destination="/components/message.jspx"
+                             id="gl4"/>
+                  <af:outputText value=" - useful for giving non-ADF input components messaging capabilities and for providing an alternative to the message pop up which may conflict with other pop ups in your input component (such as the pop up for selecting a color or a date)"
+                                 id="ot1"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl3">
+                  <af:goLink text="Component - messages" destination="/components/messages.jspx"
+                             id="gl5"/>
+                  <af:outputText value=" - useful for customizing the combined page- and component-level messages list"
+                                 id="ot2"/>
+                </af:panelGroupLayout>
+              </af:panelList>
+              <af:popup id="yesNoDialogPopup">
+                <af:dialog
+                  id="yesNoDialog"
+                  type="yesNo"
+                  closeIconVisible="false"
+                  modal="true"
+                  title="Yes/No Dialog Title"
+                  titleIconSource="/images/error.png">
+                  <af:clientListener type="dialog" method="handleDialog"/>
+                  <af:panelStretchLayout styleClass="MessageDialogViewport" bottomHeight="20"
+                                         id="psl1">
+                    <f:facet name="center">
+                      <af:panelGroupLayout layout="scroll" id="pgl4">
+                        <af:panelGroupLayout layout="vertical" inlineStyle="padding: 5px;"
+                                             id="pgl5">
+                          <af:panelGroupLayout layout="vertical" id="pgl6">
+                            <af:outputText value="Some concise message" inlineStyle="font-weight: bold;"
+                                           id="ot3"/>
+                            <af:outputFormatted value='This is an example &lt;b>yes/no&lt;/b> dialog.  You can hook up special &lt;span style="color: blue;">handler functions&lt;/span> to perform special operations.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.'
+                                                id="of1"/>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="bottom">
+                      <af:panelGroupLayout id="pgl17a" layout="vertical">
+                        <af:panelGroupLayout
+                          inlineStyle="border-top: 1px solid gray; padding-top: 2px;"
+                          id="pgl7" layout="vertical">
+                          <af:selectBooleanCheckbox
+                            id="yesNoDialog_keepHiddenBox"
+                            clientComponent="true"
+                            simple="true"
+                            text="Do not show this message again"/>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </af:dialog>
+              </af:popup>
+
+              <af:popup id="okCancelDialogPopup">
+                <af:dialog
+                  id="okCancelDialog"
+                  type="okCancel"
+                  closeIconVisible="false"
+                  modal="true"
+                  title="OK/Cancel Dialog Title"
+                  titleIconSource="/images/confirmation.png">
+                  <af:clientListener type="dialog" method="handleDialog"/>
+                  <af:panelStretchLayout styleClass="MessageDialogViewport" bottomHeight="20"
+                                         id="psl2">
+                    <f:facet name="center">
+                      <af:panelGroupLayout layout="scroll" id="pgl8">
+                        <af:panelGroupLayout layout="vertical" inlineStyle="padding: 5px;"
+                                             id="pgl9">
+                          <af:panelGroupLayout layout="vertical" id="pgl10">
+                            <af:outputText value="Some concise message" inlineStyle="font-weight: bold;"
+                                           id="ot4"/>
+                            <af:outputFormatted value='This is an example &lt;b>yes/no&lt;/b> dialog.  You can hook up special &lt;span style="color: blue;">handler functions&lt;/span> to perform special operations.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.'
+                                                id="of2"/>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="bottom">
+                      <af:panelGroupLayout id="pgl11a" layout="vertical">
+                      <af:panelGroupLayout
+                        inlineStyle="border-top: 1px solid gray; padding-top: 2px;"
+                        rendered="false" id="pgl11" layout="vertical">
+                        <af:selectBooleanCheckbox
+                          id="okCancelDialog_keepHiddenBox"
+                          clientComponent="true"
+                          simple="true"
+                          text="Do not show this message again"/>
+                      </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </af:dialog>
+              </af:popup>
+
+              <af:popup id="okDialogPopup">
+                <af:dialog
+                  id="okDialog"
+                  type="ok"
+                  closeIconVisible="true"
+                  modal="false"
+                  title="OK Dialog Title"
+                  titleIconSource="/images/warning.png">
+                  <af:clientListener type="dialog" method="handleDialog"/>
+                  <af:panelStretchLayout styleClass="MessageDialogViewport" bottomHeight="20"
+                                         id="psl3">
+                    <f:facet name="center">
+                      <af:panelGroupLayout layout="scroll" id="pgl12">
+                        <af:panelGroupLayout layout="vertical" inlineStyle="padding: 5px;"
+                                             id="pgl13">
+                          <af:panelGroupLayout layout="vertical" id="pgl14">
+                            <af:outputText value="Some concise message" inlineStyle="font-weight: bold;"
+                                           id="ot5"/>
+                            <af:outputFormatted value='This is an example &lt;b>yes/no&lt;/b> dialog.  You can hook up special &lt;span style="color: blue;">handler functions&lt;/span> to perform special operations.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.  Description of message text goes here.'
+                                                id="of3"/>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="bottom">
+                      <af:panelGroupLayout
+                        inlineStyle="border-top: 1px solid gray;"
+                        rendered="false" id="pgl15" layout="vertical">
+                        <af:selectBooleanCheckbox
+                          id="okDialog_keepHiddenBox"
+                          clientComponent="true"
+                          simple="true"
+                          text="Do not show this message again"/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </af:dialog>
+              </af:popup>
+            </af:panelHeader>
+            <af:panelHeader text="Message Dialogs" id="ph2">
+              <af:outputText value="This section demonstrates message dialogs created with ADF Faces components."
+                             id="ot6"/>
+              <af:panelGroupLayout layout="vertical" id="pgl16">
+                <af:commandButton partialSubmit="true" text="Show Yes/No Message Dialog"
+                                  id="cb1">
+                  <af:clientAttribute name="buttonTypes" value="yes/no"/>
+                  <af:clientListener type="action" method="showMessageDialog"/>
+                </af:commandButton>
+                <af:commandButton partialSubmit="true" text="Show OK/Cancel Message Dialog"
+                                  id="cb2">
+                  <af:clientAttribute name="buttonTypes" value="ok/cancel"/>
+                  <af:clientListener type="action" method="showMessageDialog"/>
+                </af:commandButton>
+                <af:commandButton partialSubmit="true" text="Show OK Message Dialog"
+                                  id="cb3">
+                  <af:clientAttribute name="buttonTypes" value="ok"/>
+                  <af:clientListener type="action" method="showMessageDialog"/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="Message List Dialogs" id="ph3">
+              <af:outputText value="This section demonstrates JSF FacesMessage support in ADF Faces."
+                             id="ot7"/>
+              <af:panelGroupLayout layout="vertical" id="pgl17">
+                <af:panelFormLayout maxColumns="1" id="pfl1">
+                  <af:inputText id="clientId1" label="Field Name 1"/>
+                  <af:inputText id="clientId2" label="Field Name 2"/>
+                  <af:inputText id="clientId3" label="Field Name 3"/>
+                </af:panelFormLayout>
+                <af:commandButton action="#{messaging.showMessageListDialog}" partialSubmit="true"
+                                  text="Show Message List Dialog" id="cb4"/>
+                <af:commandButton action="#{messaging.showMessageListDialogWithGlobalMessages}"
+                                  partialSubmit="true"
+                                  text="Show Message List Dialog with Global Messages"
+                                  id="cb5"/>
+                <af:commandButton action="#{messaging.showErrorMessagesListDialog}"
+                                  partialSubmit="true"
+                                  text="Show Message List Dialog with Max Level of Error"
+                                  id="cb6"/>
+                <af:commandButton action="#{messaging.showWarningMessagesListDialog}"
+                                  partialSubmit="true"
+                                  text="Show Message List Dialog with Max Level of Warning"
+                                  id="cb7"/>
+                <af:commandButton action="#{messaging.showInfoMessagesListDialog}"
+                                  partialSubmit="true"
+                                  text="Show Message List Dialog with Max Level of Info"
+                                  id="cb8"/>
+                <af:commandButton action="#{messaging.showOneComponentLevelMessage}"
+                                  partialSubmit="true"
+                                  text="Show Only 1 Component-Level Message"
+                                  id="cb9"/>
+                <af:commandButton action="#{messaging.showTwoPageLevelMessages}"
+                                  partialSubmit="true" text="Show Only 2 Page-Level Messages"
+                                  id="cb10"/>
+                <af:commandButton action="#{messaging.showOneComponentAndOnePageLevelMessage}"
+                                  partialSubmit="true"
+                                  text="Show Only 1 Compoent-Level and 1 Page-Level Message"
+                                  id="cb11"/>
+                <af:commandButton partialSubmit="true" text="Clear the Messages"
+                                  id="cb12"/>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

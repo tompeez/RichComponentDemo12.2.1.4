@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+    <jsp:directive.page contentType="text/html;charset=utf-8"/>
+    <f:view>
+        <af:document title="updateable Table Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     smallIconSource="#{aboutBean.smallIconSource}" largeIconSource="#{aboutBean.largeIconSource}"
+                     id="d1">
+            <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+                <f:attribute name="tagName" value="table"/>
+                <f:attribute name="visualDesignName" value="table"/>
+                <f:attribute name="demoKind" value="component"/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:facet name="center">
+                  <af:panelStretchLayout id="psl1" topHeight="auto" bottomHeight="auto"  dimensionsFrom="auto">
+                      <f:facet name="top">
+                          <af:panelGroupLayout layout="vertical" id="pgl1">
+                              <af:outputFormatted value="&lt;b>Table with optimized row insert/update/delete support - Select a row and perform insert/update/delete operations &lt;/b>"
+                                                  id="of1"/>
+                          </af:panelGroupLayout>
+                      </f:facet>
+                      <f:facet name="center">
+                          <af:panelCollection id="pc1" styleClass="AFStretchWidth">
+                              <f:facet name="menus">
+                                  <af:menu id="m1" text="Actions">
+                                      <af:group id="g1">
+                                          <af:commandMenuItem id="cmic" text="Create"
+                                                              actionListener="#{updateableTableBean.appendRow}"/>
+                                      </af:group>
+                                      <af:group id="g2">
+                                          <af:commandMenuItem id="cmiif" text="Insert First"
+                                                              actionListener="#{updateableTableBean.insertStart}"/>
+                                          <af:commandMenuItem id="cmiib" text="Insert Before"
+                                                              actionListener="#{updateableTableBean.insertBefore}"/>
+                                          <af:commandMenuItem id="cmiia" text="Insert After"
+                                                              actionListener="#{updateableTableBean.insertAfter}"/>
+                                          <af:commandMenuItem id="cmiil" text="Insert Last"
+                                                              actionListener="#{updateableTableBean.insertEnd}"/>
+                                      </af:group>
+                                      <af:group id="g3">
+                                          <af:commandMenuItem id="cmidel" text="Delete"
+                                                              actionListener="#{updateableTableBean.deleteRow}"/>
+                                          <af:commandMenuItem id="cmi7"
+                                                              text="Multiple row deletes multiple events"
+                                                              actionListener="#{updateableTableBean.multipleRowDeleteMultipleEvents}"/>
+                                          <af:commandMenuItem id="cmi8" text="Multiple row deletes one event"
+                                                              actionListener="#{updateableTableBean.multipleRowDeleteOneEvent}"/>
+                                      </af:group>
+                                  </af:menu>
+                              </f:facet>
+                              <f:facet name="toolbar">
+                                  <af:toolbar id="t1">
+                                      <af:group id="gtb3">
+                                          <af:commandToolbarButton id="ctbc" shortDesc="Create"
+                                                                   icon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_ena.png' : '/images/new_ena.png'}"
+                                                                   depressedIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_dwn.png' : '/images/new_dwn.png'}"
+                                                                   disabledIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_dis.png' : '/images/new_dis.png'}"
+                                                                   hoverIcon="#{adfFacesContext.rightToLeft ? '/images/new_rtl_ovr.png' : '/images/new_ovr.png'}"
+                                                                   actionListener="#{updateableTableBean.appendRow}"/>
+                                          <af:commandToolbarButton shortDesc="Update"
+                                                                   icon="/images/edit_ena.png"
+                                                                   depressedIcon="/images/edit_dwn.png"
+                                                                   disabledIcon="/images/edit_dis.png"
+                                                                   hoverIcon="/images/edit_ovr.png" id="ctb6"
+                                                                   actionListener="#{updateableTableBean.updateRow}"/>
+                                          <af:commandToolbarButton id="ctbdel" shortDesc="Delete"
+                                                                   icon="/images/delete_ena.png"
+                                                                   depressedIcon="/images/delete_dwn.png"
+                                                                   disabledIcon="/images/delete_dis.png"
+                                                                   hoverIcon="/images/delete_ovr.png"
+                                                                   actionListener="#{updateableTableBean.deleteRow}"/>
+                                          <af:commandToolbarButton shortDesc="Multiple row deletes multiple events"
+                                                                   icon="/images/delete_ena.png"
+                                                                   depressedIcon="/images/delete_dwn.png"
+                                                                   disabledIcon="/images/delete_dis.png"
+                                                                   hoverIcon="/images/delete_ovr.png"
+                                                                   id="ctb7"
+                                                                   actionListener="#{updateableTableBean.multipleRowDeleteMultipleEvents}"/>
+                                          <af:commandToolbarButton shortDesc="Multiple row deletes one event"
+                                                                   icon="/images/delete_ena.png"
+                                                                   depressedIcon="/images/delete_dwn.png"
+                                                                   disabledIcon="/images/delete_dis.png"
+                                                                   hoverIcon="/images/delete_ovr.png"
+                                                                   id="ctb71"
+                                                                   actionListener="#{updateableTableBean.multipleRowDeleteOneEvent}"/>
+                                      </af:group>
+                                      <af:group id="gtb5">
+                                          <af:commandToolbarButton id="ctbif" shortDesc="Insert First"
+                                                                   icon="/images/insertabove.png"
+                                                                   actionListener="#{updateableTableBean.insertStart}"/>
+                                          <af:commandToolbarButton id="ctbib" shortDesc="Insert Before"
+                                                                   icon="/images/insertbefore_ena.png"
+                                                                   depressedIcon="/images/insertbefore_dwn.png"
+                                                                   disabledIcon="/images/insertbefore_dis.png"
+                                                                   hoverIcon="/images/insertbefore_ovr.png"
+                                                                   actionListener="#{updateableTableBean.insertBefore}"/>
+                                          <af:commandToolbarButton id="ctbia" shortDesc="Insert After"
+                                                                   icon="/images/insertafter_ena.png"
+                                                                   depressedIcon="/images/insertafter_dwn.png"
+                                                                   disabledIcon="/images/insertafter_dis.png"
+                                                                   hoverIcon="/images/insertafter_ovr.png"
+                                                                   actionListener="#{updateableTableBean.insertAfter}"/>
+                                          <af:commandToolbarButton id="ctbie" shortDesc="Insert Last"
+                                                                   icon="/images/insertbelow.png"
+                                                                   actionListener="#{updateableTableBean.insertEnd}"/>
+                                      </af:group>
+                                  </af:toolbar>
+                              </f:facet>
+                              <af:table rowSelection="multiple" id="table1" var="row" rowBandingInterval="0"
+                                        value="#{updateableTableBean.model}" columnSelection="single"
+                                        columnStretching="last" binding="#{updateableTableBean.component}">
+                                  <af:column width="20" rowHeader="true" headerText="" id="c1"/>
+                                  <af:column headerText="Number" id="c2">
+                                      <af:outputText id="ot2" value="#{row.no}"/>
+                                  </af:column>
+                                  <af:column headerText="Name" id="c3">
+                                      <af:inputText value="#{row.name}" id="it3"/>
+                                  </af:column>
+                                  <af:column headerText="Size of the file in Kilo Bytes" headerNoWrap="true"
+                                             id="c4">
+                                      <af:inputText value="#{row.size}" id="it4"/>
+                                  </af:column>
+                                  <af:column align="center" headerText="Date Modified" id="c5">
+                                      <af:outputText value="#{row.date}" id="ot5"/>
+                                  </af:column>
+                              </af:table>
+                          </af:panelCollection>
+                      </f:facet>
+                      <f:facet name="bottom">
+                          <af:panelGroupLayout layout="vertical" id="pgl3">
+                              <af:toolbar id="tb1">
+                                  <af:commandToolbarButton text="Export All Rows to Excel" immediate="true"
+                                                           id="exportAll">
+                                      <af:exportCollectionActionListener type="excelHTML"
+                                                                         exportedId="pc1:table1"
+                                                                         filename="export.xls"
+                                                                         title="ADF Faces Export - All"
+                                                                         exportedRows="all"/>
+                                  </af:commandToolbarButton>
+                                  <af:commandToolbarButton text="Export Selected Rows to Excel"
+                                                           immediate="true" id="exportSelected">
+                                      <af:exportCollectionActionListener type="excelHTML"
+                                                                         exportedId="pc1:table1"
+                                                                         filename="export.xls"
+                                                                         title="ADF Faces Export - Selected Rows"
+                                                                         exportedRows="selected"/>
+                                  </af:commandToolbarButton>
+                                  <af:commandToolbarButton text="Print Splitter Content" id="ctb">
+                                      <af:showPrintablePageBehavior/>
+                                  </af:commandToolbarButton>
+                              </af:toolbar>
+                          </af:panelGroupLayout>
+                      </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>
+

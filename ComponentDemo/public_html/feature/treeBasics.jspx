@@ -1,0 +1,489 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Tree Basics"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:resource type="css">.MyStrongText { font-weight: bold; }
+                                  .MySpacedLI { margin-bottom: .5em; }
+                                  .MySpacedImage { margin-top: .5em; }</af:resource>
+      <af:pageTemplate id="tmplt"
+                        viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/demoIndexTemplateAlta.jspx':'/templates/pageTemplateDefs/demoIndexTemplate.jspx'}">
+        <f:attribute name="brandingTitle" value="Tree Basics"/>
+        <f:attribute name="mode" value="feature"/>
+        <f:attribute name="navLevelCount" value="2"/>
+        <f:attribute name="collapsedSettings" value="true"/>
+        <f:facet name="center2">
+          <af:panelStretchLayout id="psl1" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:panelHeader text="Introduction" styleClass="AFStretchWidth" id="ph1">
+                <f:facet name="toolbar">
+                  <af:toolbar id="t1">
+                    <af:commandToolbarButton text="Print Content"
+                                             icon="/images/print.png"
+                                             partialSubmit="true" id="ctb1">
+                      <af:showPrintablePageBehavior/>
+                    </af:commandToolbarButton>
+                  </af:toolbar>
+                </f:facet>
+                <af:panelGroupLayout layout="vertical" id="pgl2">
+                  <af:outputText escape="false"
+                                 value="This page lists various UI features in the tree/TreeTable components.
+                TIt also provides an overview of the component and model architecture. TreeTable
+                inherits most of the Table functionality, so this page references the table demos for shared functionality.
+                &lt;B>TIP : Use Ctrl+Click on the links below to open them in a separate tab and stay on this page.&lt;/B>"
+                                 id="ot1"/>
+                </af:panelGroupLayout>
+              </af:panelHeader>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelTabbed id="pt1" dimensionsFrom="auto">
+                <af:showDetailItem id="sdi1" text="UI Features">
+                  <af:panelGroupLayout layout="scroll" id="mdl1">
+                    <af:spacer height="2" id="sp1"/>
+                    <af:panelHeader text="Overview" size="2" id="phoverw">
+                      <af:outputText value="A good place to start with is the tree/treeTable samples without the model layer (Adfm) integration. The sample are at the following locations:"
+                                     id="ot2"/>
+                      <af:panelList id="p12" rows="4">
+                        <af:goLink text="treeTable samples" id="tablesmpl"
+                                   destination="/components/treeTable.jspx"/>
+                        <af:goLink text="treeTable visual design demos"
+                                   id="tablevdst"
+                                   destination="/components/table/treeTableVisualDemos.jspx"/>
+                        <af:goLink text="tree samples" id="treesmpl"
+                                   destination="/components/tree.jspx"/>
+                        <af:goLink text="tree visual design demos" id="treevdst"
+                                   destination="/components/table/treeVisualDemos.jspx"/>
+                      </af:panelList>
+                    </af:panelHeader>
+                    <af:panelHeader text="feature List" size="2" id="phfl">
+                      <af:panelList id="p1fl"
+                                    listStyle="list-style-type:circle">
+                        <af:panelGroupLayout layout="vertical" id="g3"
+                                             styleClass="MySpacedLI">
+                          <af:outputText id="otxt1" styleClass="MyStrongText"
+                                         value="TreeTable inherits the following features from Table"/>
+                          <af:panelList id="p11"
+                                        listStyle="list-style-type:circle">
+                            <af:panelGroupLayout layout="vertical" id="g4"
+                                                 styleClass="MySpacedLI">
+                              <af:outputText styleClass="MyStrongText"
+                                             value="Column Footer support"
+                                             id="ftr"/>
+                              <af:goLink destination="/components/table/tableColumnFooter.jspx"
+                                         id="tableftrs" text="Footer Demo"/>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout layout="vertical" id="g6"
+                                                 styleClass="MySpacedLI">
+                              <af:outputText styleClass="MyStrongText"
+                                             value="Column Grouping" id="grps"/>
+                              <af:panelGroupLayout layout="horizontal"
+                                                   id="grh2">
+                                <af:goLink destination="/components/table/columnGroupTable.jspx"
+                                           id="tablegrps" text="column group"/>
+                                <af:outputText value="    "/>
+                                <af:goLink destination="/components/table/panelCollectionColumnGroup.jspx"
+                                           id="tablegrps2"
+                                           text="PanelCollection with Column Group"/>
+                              </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout layout="vertical" id="g7"
+                                                 styleClass="MySpacedLI">
+                              <af:outputText styleClass="MyStrongText"
+                                             value="Column Wrapping" id="wrap"/>
+                              <af:goLink destination="/components/table/columnWrapTable.jspx"
+                                         id="colwrap" text="Column Wrap Demo"/>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout layout="vertical" id="g14"
+                                                 styleClass="MySpacedLI">
+                              <af:outputText styleClass="MyStrongText"
+                                             value="Empty text Formatting"
+                                             id="emptxt"/>
+                              <af:outputText id="ot16"
+                                             value="This demo (first table in the page) displays an empty table with custom formatted text. "/>
+                              <af:goLink destination="/components/table/tableVisualDemos.jspx"
+                                         id="emptL"
+                                         text="Table with empty text Formatting"/>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout layout="vertical" id="g16"
+                                                 styleClass="MySpacedLI">
+                              <af:outputText styleClass="MyStrongText"
+                                             value="Column Stretching/Freezing"
+                                             id="strt"/>
+                              <af:outputText id="ot17"
+                                             value="This demo highlights the column stretching and freezing features. "/>
+                              <af:goLink destination="/components/table/tableColumnStretching.jspx"
+                                         id="strtL"
+                                         text="Table Column Stretching/Freezing"/>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout layout="vertical" id="g20"
+                                                 styleClass="MySpacedLI">
+                              <af:outputText styleClass="MyStrongText"
+                                             value="Streaming" id="strm"/>
+                              <af:outputText id="ot21"
+                                             value="If more than one tree/TreeTable components are present on the page with contentDelivery='lazy' (default)  attribute,
+                              a single asynchronous request is used to fetch the content of all the components."/>
+                              <af:goLink destination="/components/table/tableStreaming.jspx"
+                                         id="strmL" text="Streaming"/>
+                            </af:panelGroupLayout>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="pgl1"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Headers: Column, Row" id="hdr"/>
+                          <af:outputText id="ot3"
+                                         value="TreeTable Component demo shows both column headers as well as row headers. Please note that multiple columns can be marked as row headers."/>
+                          <af:goLink destination="/components/table/panelCollectionTreeTable.jspx"
+                                     id="tableheadrs" text="TreeTable Demo"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g5"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Selection: Column, Row"
+                                         id="sel"/>
+                          <af:outputText id="ot4"
+                                         value='TreeTable Component demo shows both row and column selection. Please use the property inspector on the right to change the row selection to either " single, multiple, multipleNoSelectAll or none".'/>
+                          <af:goLink destination="/components/table/panelCollectionTreeTable.jspx"
+                                     id="tablesels" text="TreeTable Demo"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g8"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Column Reordering and Resizing"
+                                         id="reord"/>
+                          <af:outputText id="ot7"
+                                         value="This demo shows column reordering/resizing. Select a column and then drag for reordering. Mouse down near the column right(left for RTL) edge and drag for resizing."/>
+                          <af:goLink destination="/components/table/panelCollectionTreeTable.jspx"
+                                     id="colreord"
+                                     text="Column Reordering/Resizing"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g9"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Column Required Field Display"
+                                         id="req"/>
+                          <af:outputText id="ot9"
+                                         value="This demo shows a column with required field display. Note that nodes cannot be collapsed if a required field has missing values."/>
+                          <af:goLink destination="/components/table/clickToEditTreeTable.jspx"
+                                     id="colreq"
+                                     text="Column Required Field Display"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g11"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Sorting" id="sort"/>
+                          <af:outputText id="ot11"
+                                         value="This demo shows a TreeTable with column sorting enabled. Unlike the Table, the TreeTable does not support automatic sorting when a Java List or Array is used as the underlying model. The TreeModel implementation must support sorting by implementing it's sorting logic in the setSortCriteria(List criteria) method of the TreeModel (for example, see the TreeModel used in the panelCollectionTreeTable.jspx). The ADFm TreeModel supports sorting by default.  In the ADFm implementation, the sort criteria is lazily applied to all levels of the tree."/>
+                          <af:goLink destination="/components/table/panelCollectionTreeTable.jspx"
+                                     id="colsort" text="TreeTable Sort Demo"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g15"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Editing" id="edit"/>
+                          <af:outputText id="ot15"
+                                         value='There are 2 modes of editing data in the TreeTable. Attribute editingMode="editAll|clickToEdit" controls this feature'/>
+                          <af:panelGroupLayout layout="horizontal" id="grh3">
+                            <af:goLink destination="/components/table/editableTreeTable.jspx"
+                                       id="editAll" text="editAll TreeTable"/>
+                            <af:outputText value="    "/>
+                            <af:goLink destination="/components/table/clickToEditTreeTable.jspx"
+                                       id="clickToEdit"
+                                       text="clickToEdit TreeTable"/>
+                            <af:outputText value="    "/>
+                            <af:goLink destination="/components/table/clickToEditTree.jspx"
+                                       id="clickToEditTree"
+                                       text="clickToEdit Tree"/>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g13"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Context Menus " id="ctxm"/>
+                          <af:panelList id="p111"
+                                        listStyle="list-style-type:circle">
+                            <af:panelGroupLayout layout="vertical" id="g114">
+                              <af:outputText id="ot113"
+                                             value="Tree and TreeTable provide a default context menu with menu items for common operations like: 'Expand'/'Collapse', 'Expand/Collapse All', 'Show as Top'. User context menu items are merged with the default menu items."/>
+                              <af:panelGroupLayout layout="horizontal"
+                                                   id="g1141">
+                                <af:goLink destination="/components/treeTable.jspx"
+                                           id="ctxmL"
+                                           text="TreeTable context menu"/>
+                                <af:outputText value="    "/>
+                                <af:goLink destination="/components/tree.jspx"
+                                           id="ctxmL11"
+                                           text="Tree context menu"/>
+                              </af:panelGroupLayout>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout layout="vertical" id="g113">
+                              <af:outputText id="ot13"
+                                             value="This demo show a TreeTable with dynamic context menu that changes per row."/>
+                              <af:goLink destination="/components/table/treeTableDynamicContextMenu.jspx"
+                                         id="ctxmL1"
+                                         text="TreeTable with dynamic context menu"/>
+                            </af:panelGroupLayout>
+                            <af:panelGroupLayout layout="vertical" id="g1113"
+                                                 styleClass="MySpacedLI">
+                              <af:outputText id="ot14"
+                                             value="Also see the TreeTable body context menu."/>
+                              <af:goLink destination="/components/table/treeTableVisualDemos.jspx"
+                                         id="ctxmL2"
+                                         text="TreeTable with body context menu in an empty TreeTable"/>
+                            </af:panelGroupLayout>
+                          </af:panelList>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g17"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Virtualized Data Fetch"
+                                         id="dataf"/>
+                          <af:outputText id="ot18"
+                                         value='contentDelivery="immediate|lazy" attribute controls if the data is sent with the initial page or on a subsequent request.
+                                    fetchSize attribute controls the size of the initial data sent to the client. Subsequent scrolling fetches more data on user scroll.
+                                    In the table component demo these 2 attributes can be changed using the property inspector on the right'/>
+                          <af:panelGroupLayout layout="horizontal">
+                            <af:goLink destination="/components/treeTable.jspx"
+                                       id="virtL"
+                                       text="TreeTable Component Demo"/>
+                            <af:outputText value="    "/>
+                            <af:goLink destination="/components/tree.jspx"
+                                       id="virtL1" text="Tree Component Demo"/>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="gs18"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Scroll Location" id="scrll"/>
+                          <af:outputText id="otsc"
+                                         value="Tree/TreeTable components remember the position of the scrollbars as part of the component state.
+                              This means that the scrollbar positions are restored after it is PPRed.
+                              In the component demo, scroll the TreeTable to a particular location and click on update button to PPR the TreeTable. Note that the
+                              TreeTable scroll location is restored to the previous values before the PPR."/>
+                          <af:goLink destination="/components/treeTable.jspx"
+                                     id="scrlL"
+                                     text="TreeTable Component Demo"/>
+                          <af:goLink destination="/components/tree.jspx"
+                                     id="scrlL1"
+                                     text="Tree Component Demo"/>
+                          <af:spacer height="3" id="sp1scrll"/>
+                          <af:outputText id="otdisr" escape="false"
+                                         value='Developers can also override the default scroll location using &lt;i>displayRow="first|last|selected"&lt;/i> and &lt;i>displayRowKey="[rowKey]"&lt;/i> attributes.'/>
+                          <af:goLink destination="/components/table/treeTableDisplayRow.jspx"
+                                     id="scrdispRL" text="Display Row"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g19"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Drag and Drop" id="dnd"/>
+                          <af:outputText id="ot20"
+                                         value="The following ADFm demo shows drag and drop functionality for the tree component.
+                              The demo shows the use of the 'af:dragSource' and 'af:collectionDropTarget' tags"/>
+                          <af:goLink destination="dragAndDrop.jspx" id="dndL1"
+                                     disabled="true"
+                                     text="ADFm Tree drag and drop (pending)"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g21"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Banding and Gridding" id="bnd"/>
+                          <af:outputText id="ot22"
+                                         value="Attributes 'columnBandingInterval' and 'rowBandingInterval' control banding in the TreeTable. Whereas attributes 'horizontalGridVisible' and 'verticalGridVisible' control gridding in the TreeTable."/>
+                          <af:goLink text="TreeTable demo" id="tablebndL"
+                                     destination="/components/treeTable.jspx"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g22"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Active Data" id="ad"/>
+                          <af:outputText id="ot23"
+                                         value="Active Data is implemented in the TreeTable using ActiveDataModel as its dataModel. Sample can be found at:"/>
+                          <af:goLink text="TreeTable active data" id="adL"
+                                     destination="/visualDesigns/activeData.jspx"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g18" styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText" value="Auto Height" id="autoh"/>
+                            <af:outputText id="ot19"
+                                value="Tree and TreeTable can be autosized to display a specific number of rows through 'autoHeightRows' attribute.
+                                The panelCollection hosting a tree/treeTable also autosizes if it contains a tree/treeTable with 'autoHeightRows' attribute."/>
+                            <af:goLink destination="/components/table/treeTableHeightAutosize.jspx" id="autoL"
+                                text="TreeTable with autoHeightRows"/>
+                            <af:goLink destination="/components/table/treeHeightAutosize.jspx" id="autoL1"
+                                text="Tree with autoHeightRows"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g23"
+                                             styleClass="MySpacedLI">
+                          <af:outputText styleClass="MyStrongText"
+                                         value="Hierarchical Selector" id="hs"/>
+                          <af:outputText id="ot24"
+                                         value="When a 'pathStamp' facet is specified for the tree/treeTable, the 'Go to Top'/'Go Up'/'Show as Top' menu/toolbar items are enabled. Selecting a node and clicking on 'Show As Top' causes that node (the 'Focused' node) to be displayed as the root node in the tree with a 'Selector Icon' rendererd next to it. Clicking on the 'Selector Icon' causes the 'Hierarchical Selector' popup to be displayed. The 'Hierarchical Selector' popup shows the path (Focus Path) from the true root node of the tree to the currently focused node.  The contents of the 'pathStamp' facet define what is rendered inside the 'Hierarchical Selector' popup. To see this in the following demo right click on a node and select 'Show as Top'"/>
+                          <af:goLink text="TreeTable Hierarchical Selector"
+                                     id="hsL"
+                                     destination="/components/table/panelCollectionTreeTable.jspx"/>
+                          <af:goLink text="Tree Hierarchical Selector"
+                                     id="hsL1"
+                                     destination="/components/table/panelCollectionTree.jspx"/>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="vertical" id="g24" styleClass="MySpacedLI">
+                        <af:outputText styleClass="MyStrongText" value="Unknown RowCount Tree Model " id="rc"/>
+                          <af:outputText id="ot1rc1"
+                              value="This demo show a tree that is bound to a model with unknown row count (tree model returns -1 for getRowCount())."/>
+                          <af:goLink destination="/components/table/treeUnknownCount.jspx" id="rcL1"
+                              text="Unknown Row Count Tree"/>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout layout="vertical" id="g25" styleClass="MySpacedLI">
+                        <af:outputText styleClass="MyStrongText" value="PPR" id="ppr"/>
+                          <af:outputText id="otppr1"
+                              value="This demo show how to ppr a component inside a single cell."/>
+                          <af:goLink destination="/components/table/tableCellPPR.jspx" id="pprL1"
+                              text="PPR Tree Table Cell"/>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout layout="vertical" id="g26" styleClass="MySpacedLI">
+                        <af:outputText styleClass="MyStrongText" value="Updateable TreeTable" id="ut"/>
+                          <af:outputText id="ot241"
+                              value="An example implementation of a treeTable which supports insert/update/delete operations. The sample uses a RowKeyPropertyTreeModel which wraps a Java List and supports insert/update/delete operations in the underlying Java List (and child Lists)."/>
+                          <af:goLink text="treeTable insert/update/delete" id="utL2" destination="/components/table/treeTableInsertUpdateDelete.jspx"/>
+                      </af:panelGroupLayout>
+                      <af:panelGroupLayout layout="vertical" id="g27" styleClass="MySpacedLI">
+                        <af:outputText styleClass="MyStrongText" value="Auto-PPR Tree" id="pprt"/>
+                          <af:outputText id="ot242"
+                              value="An example implementation of a tree/treeTable which supports Auto-PPR insert/update/delete operations. The sample uses an UpdateableTreeModel which wraps a Java List and supports insert/update/delete operations in the underlying Java List (and child Lists). The model fires ActiveData Auto-PPR events in response to insert/update/delete operations"/>
+                          <af:goLink text="treeTable Auto-PPR insert/update/delete" id="utL3" destination="/components/table/updateableTreeTable.jspx"/>
+                          <af:goLink text="tree Auto-PPR insert/update/delete" id="utL31" destination="/components/table/updateableTree.jspx"/>
+                      </af:panelGroupLayout>
+                      </af:panelList>
+                    </af:panelHeader>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+                <af:showDetailItem id="sdi5" text="Architecture">
+                  <af:panelGroupLayout layout="scroll" id="mdl2">
+                    <af:panelHeader text="Component Class Diagram" size="2"
+                                    id="phCCD">
+                      <af:image source="/images/treeComponentClassDiagram.png"
+                                styleClass="MySpacedImage"
+                                shortDesc="Component Class Diagram" id="i1"/>
+                      <af:panelList id="mdlpl1">
+                        <af:group id="mdlg1">
+                          <af:goLink inlineStyle="font-weight:bold;"
+                                     text="RichTree" id="mdl3"
+                                     destination="http://adfui.us.oracle.com/projects/adf.faces/multiproject/adf-richclient-api/apidocs/oracle/adf/view/rich/component/rich/data/RichTree.html"/>
+                          <af:spacer height="2" id="mdlsp1"/>
+                          <af:outputText id="mdl4"
+                                         value="RichTree is the JSF component class that provides the functionality for the tree component."/>
+                        </af:group>
+                        <af:group id="mdlg11">
+                          <af:goLink inlineStyle="font-weight:bold;"
+                                     text="RichTreeTable" id="mdl13"
+                                     destination="http://adfui.us.oracle.com/projects/adf.faces/multiproject/adf-richclient-api/apidocs/oracle/adf/view/rich/component/rich/data/RichTreeTable.html"/>
+                          <af:spacer height="2" id="mdlsp11"/>
+                          <af:outputText id="mdl41"
+                                         value="RichTreeTable is the JSF component class that provides the functionality for the TreeTable component."/>
+                        </af:group>
+                        <af:group id="mdlg3">
+                          <af:goLink inlineStyle="font-weight:bold;"
+                                     text="UIXTree in Trinidad"
+                                     destination="http://myfaces.apache.org/trinidad/trinidad-api/apidocs/org/apache/myfaces/trinidad/component/UIXTree.html"
+                                     id="gll7"/>
+                          <af:spacer height="2" id="mdlsp3"/>
+                          <af:outputText id="mdl8"
+                                         value="UIXTree is the component class in trinidad that provides most of the base functionality and behavior for RCF tree"/>
+                        </af:group>
+                        <af:group id="mdlg31">
+                          <af:goLink inlineStyle="font-weight:bold;"
+                                     text="UIXTreeTable in Trinidad"
+                                     destination="http://myfaces.apache.org/trinidad/trinidad-api/apidocs/org/apache/myfaces/trinidad/component/UIXTreeTable.html"
+                                     id="gll71"/>
+                          <af:spacer height="2" id="mdlsp31"/>
+                          <af:outputText id="mdl81"
+                                         value="UIXTreeTable is the component class in trinidad that provides most of the base functionality and behavior for RCF TreeTable"/>
+                        </af:group>
+                        <af:group id="mdlg4">
+                          <af:goLink inlineStyle="font-weight:bold;"
+                                     text="UIXHierarchy"
+                                     destination="http://myfaces.apache.org/trinidad/trinidad-api/apidocs/org/apache/myfaces/trinidad/component/UIXHierarchy.html"
+                                     id="gll8"/>
+                          <af:spacer height="2" id="mdlsp4"/>
+                          <af:outputText id="mdl9"
+                                         value="UIXHierarchy is the Trinidad base class for components that take a TreeModel, which is a hierarchical model."/>
+                        </af:group>
+                        <af:group id="mdlg5">
+                          <af:goLink inlineStyle="font-weight:bold;"
+                                     text="UIXCollection"
+                                     destination="http://myfaces.apache.org/trinidad/trinidad-api/apidocs/org/apache/myfaces/trinidad/component/UIXCollection.html"
+                                     id="gll9"/>
+                          <af:spacer height="2" id="mdlsp5"/>
+                          <af:outputText id="mdl10"
+                                         value="Base class for components that do stamping. This class set the EL 'var' variable correctly when the rowData changes.
+                                       And it wraps events that are queued, so that the correct rowData can be restored on this component when the event is broadcast."/>
+                        </af:group>
+                      </af:panelList>
+                    </af:panelHeader>
+                    <af:panelHeader text="Model Class Diagram" size="2"
+                                    id="phMCD">
+                      <af:image source="/images/treeModelClassDiagram.png"
+                                styleClass="MySpacedImage"
+                                shortDesc="Model Class Diagram" id="i2"/>
+                      <af:panelList id="mdlpl2">
+                        <af:group id="mdlg7">
+                          <af:goLink inlineStyle="font-weight:bold;"
+                                     text="TreeModel"
+                                     destination="http://myfaces.apache.org/trinidad/trinidad-api/apidocs/org/apache/myfaces/trinidad/model/TreeModel.html"
+                                     id="gll21"/>
+                          <af:spacer height="2" id="mdlsp7"/>
+                          <af:outputText id="mdl11"
+                                         value="DataModel used by the RichTree and RichTreeTable. Developers who wish to have custom data model implementations can derive their class from this one."/>
+                        </af:group>
+                        <af:group id="mdlg71">
+                          <af:goLink inlineStyle="font-weight:bold;"
+                                     text="ChildPropertyTreeModel"
+                                     destination="http://myfaces.apache.org/trinidad/trinidad-api/apidocs/org/apache/myfaces/trinidad/model/ChildPropertyTreeModel.html"
+                                     id="gll211"/>
+                          <af:spacer height="2" id="mdlsp71"/>
+                          <af:outputText id="mdl111"
+                                         value="An implementaion of a TreeModel which wraps Java Lists or Arrays. The model is made up of a root List of Java beans (or maps). Each item in the List can have child Lists."/>
+                        </af:group>
+                        <af:group id="mdlg6">
+                          <af:goLink inlineStyle="font-weight:bold;"
+                                     text="SortableModel"
+                                     destination="http://myfaces.apache.org/trinidad/trinidad-api/apidocs/org/apache/myfaces/trinidad/model/SortableModel.html"
+                                     id="gl20"/>
+                          <af:spacer height="2" id="mdlsp6"/>
+                          <af:outputText id="md20" value="ChildPropertyTreeModel wraps 'java.util.Array' or 'java.util.List' instances (at root and child levels in the tree) with a SortableModel. Here are some key things that should be
+                                    noted with this implementation:"/>
+                          <af:panelList id="mdlpl3">
+                            <af:outputText id="md21"
+                                           value="Sortable Model does not support mutation, i.e rows cannot be inserted, deleted in the underlying data structure"/>
+                            <af:outputText id="md23"
+                                           value="Sortable Model supports sorting by only one property (a column in the table). Properties that implement java.lang.Comparable are deemed sortable"/>
+                          </af:panelList>
+                        </af:group>
+                        <af:group id="mdlg711">
+                          <af:goLink inlineStyle="font-weight:bold;"
+                                     text="CollectionModel"
+                                     destination="http://myfaces.apache.org/trinidad/trinidad-api/apidocs/org/apache/myfaces/trinidad/model/CollectionModel.html"
+                                     id="gll2111"/>
+                          <af:spacer height="2" id="mdlsp711"/>
+                          <af:outputText id="mdl1111"
+                                         value="Base DataModel used by the RichTable, RichTree, and RichTreeTable."/>
+                        </af:group>
+                      </af:panelList>
+                    </af:panelHeader>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+              </af:panelTabbed>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

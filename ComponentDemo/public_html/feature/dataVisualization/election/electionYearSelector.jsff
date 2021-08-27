@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <af:inputNumberSlider id="ins1" value="#{electionMashup.currentYear}" minimum="1980" maximum="2012" majorIncrement="4"
+                        minimumIncrement="4" contentStyle="width:400px;" autoSubmit="true" label="year"/>
+  <af:spacer height="10"/>
+  <af:outputText inlineStyle="font-size:large; font-weight: bold;"
+                 value="#{electionMashup.currentYear} United States Presidential Election" clientComponent="true"
+                 partialTriggers="ins1"/>
+  <af:spacer height="10"/>
+  <af:image inlineStyle="height:160px;" clientComponent="true" partialTriggers="ins1"
+            source="#{electionMashup.currentModel.winnerPortrait}" rendered="false"/>
+  <af:panelGroupLayout layout="horizontal" clientComponent="true" partialTriggers="ins1">
+    <af:switcher facetName="#{electionMashup.currentModel.electoralWinner}">
+      <f:facet name="Democrat">
+        <af:group>
+          <af:outputText inlineStyle="font-size:28px;color:#{electionMashup.colorDemocrat};"
+                         value="#{electionMashup.currentModel.candidateDemocrat}"/>
+          <af:outputText inlineStyle="font-size:24px;color:#{electionMashup.colorDemocrat};" value=" (D)"/>
+          <af:outputText inlineStyle="font-size:18px;color:#333333;" value=" defeats "/>
+          <af:outputText inlineStyle="font-size:22px;color:#{electionMashup.colorRepublican};"
+                         value="#{electionMashup.currentModel.candidateRepublican}"/>
+          <af:outputText inlineStyle="font-size:18px;color:#{electionMashup.colorRepublican};" value=" (R)"/>
+        </af:group>
+      </f:facet>
+      <f:facet name="Republican">
+        <af:group>
+          <af:outputText inlineStyle="font-size:28px;color:#{electionMashup.colorRepublican};"
+                         value="#{electionMashup.currentModel.candidateRepublican}"/>
+          <af:outputText inlineStyle="font-size:24px;color:#{electionMashup.colorRepublican};" value=" (R)"/>
+          <af:outputText inlineStyle="font-size:18px;color:#333333;" value=" defeats "/>
+          <af:outputText inlineStyle="font-size:22px;color:#{electionMashup.colorDemocrat};"
+                         value="#{electionMashup.currentModel.candidateDemocrat}"/>
+          <af:outputText inlineStyle="font-size:18px;color:#{electionMashup.colorDemocrat};" value=" (D)"/>
+        </af:group>
+      </f:facet>
+    </af:switcher>
+  </af:panelGroupLayout>
+  <af:spacer height="10"/>
+  <af:panelGridLayout dimensionsFrom="children">
+    <af:gridRow>
+      <af:gridCell valign="middle" halign="center">
+        <af:panelGroupLayout layout="vertical">
+          <af:outputLabel inlineStyle="font-size:12px;" value="Electoral Vote"/>
+          <af:outputLabel inlineStyle="font-size:11px;" value="(270 to win)"/>
+        </af:panelGroupLayout>
+      </af:gridCell>
+      <af:gridCell valign="middle">
+        <dvt:treemap value="#{electionMashup.currentModel.candidateResults}" var="row" layout="sliceAndDiceHorizontal"
+                     sorting="on" nodeSelection="none" summary="Electoral Voting Results" animationOnDataChange="auto"
+                     partialTriggers="::ins1" inlineStyle="border:none;height:30px;width:650px;">
+          <dvt:treemapNode value="#{row.electoralVotes}" label="#{row.name}: #{row.electoralVotes}" labelHalign="start"
+                           shortDesc="#{row.name}: #{row.electoralVotes} Electoral Votes" labelStyle="font-size:16px;">
+            <dvt:attributeGroups type="color" value="#{row.party}">
+              <dvt:attributeMatchRule group="Democrat">
+                <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+              </dvt:attributeMatchRule>
+              <dvt:attributeMatchRule group="Republican">
+                <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+              </dvt:attributeMatchRule>
+            </dvt:attributeGroups>
+          </dvt:treemapNode>
+        </dvt:treemap>
+      </af:gridCell>
+    </af:gridRow>
+    <af:gridRow>
+      <af:gridCell valign="middle" halign="center">
+        <af:outputLabel inlineStyle="font-size:12px;" value="Popular Vote"/>
+      </af:gridCell>
+      <af:gridCell>
+        <dvt:treemap value="#{electionMashup.currentModel.candidateResults}" var="row" layout="sliceAndDiceHorizontal"
+                     sorting="on" nodeSelection="none" summary="Popular Voting Results" animationOnDataChange="auto"
+                     partialTriggers="::ins1" inlineStyle="border:none;height:22px;width:650px;">
+          <dvt:treemapNode value="#{row.popularVotes}" labelHalign="start"
+                           label="#{row.name}: #{row.popularPercentageLabel} (#{row.popularVoteLabel})"
+                           shortDesc="#{row.name}: #{row.popularPercentageLabel} (#{row.popularVoteLabel} Votes)">
+            <dvt:attributeGroups type="color" value="#{row.party}">
+              <dvt:attributeMatchRule group="Democrat">
+                <f:attribute name="color" value="#{electionMashup.colorDemocrat}"/>
+              </dvt:attributeMatchRule>
+              <dvt:attributeMatchRule group="Republican">
+                <f:attribute name="color" value="#{electionMashup.colorRepublican}"/>
+              </dvt:attributeMatchRule>
+              <dvt:attributeMatchRule group="Other">
+                <f:attribute name="color" value="#{electionMashup.colorOther}"/>
+              </dvt:attributeMatchRule>
+            </dvt:attributeGroups>
+          </dvt:treemapNode>
+        </dvt:treemap>
+      </af:gridCell>
+    </af:gridRow>
+  </af:panelGridLayout>
+</jsp:root>

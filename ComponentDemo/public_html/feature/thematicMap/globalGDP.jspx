@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map Global GDP" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Thematic Map Global GDP"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Thematic Map Global GDP"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout styleClass="AFStretchWidth" topHeight="auto">
+            <f:facet name="bottom"/>
+            <f:facet name="center">
+              <af:panelStretchLayout styleClass="AFStretchWidth" topHeight="auto">
+                <f:facet name="bottom"/>
+                <f:facet name="center">
+                  <dvt:thematicMap id="thematicMap" basemap="world" initialZooming="auto"
+                                   markerZoomBehavior="zoom" summary="invisible area layers">
+                    <af:transition transition="auto" triggerType="display"/>
+                    <dvt:areaLayer id="al1" labelDisplay="off" layer="countries" labelType="long"
+                                   areaStyle="background-color:transparent;border-color:transparent;">
+                      <dvt:areaDataLayer id="adl1" contentDelivery="lazy" value="#{globalGDP.globalGDP}" var="row"
+                                         varStatus="rowStatus" selectionMode="single">
+                        <dvt:areaLocation id="loc1" name="#{row.id}">
+                          <dvt:marker id="m1" scaleX="#{(5 + row.categories[0]/25)}" value="#{row.categories[2]}"
+                                      labelStyle="font-size:#{row.categories[0]/25 + 30}px;" opacity="0.75"
+                                      labelDisplay="#{row.categories[0]/25 le 20 ? 'off' : 'on'}" gradientEffect="none"
+                                      scaleY="#{(5 + row.categories[0]/25)}" shortDesc="\$#{row.categories[1]} Million">
+                            <dvt:attributeGroups id="ag1" type="color" value="#{row.id}"/>
+                          </dvt:marker>
+                        </dvt:areaLocation>
+                      </dvt:areaDataLayer>
+                    </dvt:areaLayer>
+                  </dvt:thematicMap>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="start"/>
+            <f:facet name="end"></f:facet>
+            <f:facet name="top">
+              <af:panelGroupLayout>
+                <f:verbatim>                              
+                  <b>This demo shows the 2012 global GDP by country in millions of US Dollars.  Here's how we made it:</b>
+                  <ul>
+                    <li>To focus on the data, we set the area layer invisible by setting areaStyle="background-color:transparent;border-color:transparent;" on the dvt:areaLayer tag.</li>
+                    <li>With no country borders, we decided to scale markers on zoom by setting markerZoomBehavior="zoom" on the dvt:thematicMap tag.</li>
+                    <li>We scaled marker size and font size by the country's GDP and set a minimum GDP value to not show labels on smaller markers.</li>
+                  </ul>
+                </f:verbatim>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <!-- END FEATURE DEMO -->
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

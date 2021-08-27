@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Changed indicator demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Demo of changed indicator"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <af:resource type="javascript">
+           function changed(event) {
+               var inputComponent = event.getSource();
+               inputComponent.setChanged(true);
+           }
+        </af:resource>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout id="pgl2" layout="vertical">
+              <af:outputFormatted id="of1" value="Change the form values and notice that the changed indicator shows.  A client value change listener fires a JS method to set the changed property."/>
+              <af:outputFormatted id="of3" value="&lt;p/>Press submit and you will see that the changed indicator clears.  The action listener clears the changed property on all the components."/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout id="pgl3" layout="vertical">
+              <af:inputText id="it1" binding="#{editor.component}" label="inputText"
+                            changedDesc="Changed desc" value="Input value">
+                <af:clientListener method="changed" type="valueChange"/>
+              </af:inputText>
+              <af:selectBooleanCheckbox id="sbc1" label="Verified">
+                <af:clientListener method="changed" type="valueChange"/>
+              </af:selectBooleanCheckbox>
+              <af:spacer height="10px" id="s3"/>
+              <af:commandButton text="Submit" id="submitCommand"
+                                actionListener="#{changedIndicator.submitted}"/>
+            </af:panelGroupLayout>
+            <af:separator id="s4"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

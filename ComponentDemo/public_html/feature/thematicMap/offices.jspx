@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Thematic Map Office Locator" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- MOD TAG TEMPLATE -->
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Thematic Map Office Locator"/>
+                <!-- Tag Name -->
+                <f:attribute name="tagName" value="Thematic Map Office Locator"/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:facet name="center">
+                    <af:panelStretchLayout id="psl1" topHeight="auto" styleClass="AFStretchWidth">
+                        <f:facet name="top">
+                            <af:panelGroupLayout>
+                                <f:verbatim>                                                         <b>This demo shows
+                                                                                                        the office
+                                                                                                        availabilities
+                                                                                                        for each floor
+                                                                                                        in an office
+                                                                                                        building. Here's
+                                                                                                        how we made it:</b>                           <ul>
+                                        <li>We specify a custom basemap by pointing the source attribute on
+                                            dvt:thematicMap to an xml file containing custom basemap information
+                                            including the area layer image and named points representing office
+                                            locations.</li>
+                                        <li>See the Custom Basemap XML tab for the xml used in this demo.</li>
+                                        <li>The named points act like built-in cities for a basemap and can be refrenced
+                                            by an id instead of x/y coordinates.</li>
+                                        <li>Each named point location can also have an associated long label field in
+                                            the xml file that is displayed in the data object datatip along with the
+                                            value from the dvt:marker shortDesc attribute similar to what we do for
+                                            built-in cities.</li>
+                                        <li>To only show the dvt:marker shortDesc value in the datatip instead of the
+                                            default, set tooltipDisplay="shortDescOnly" on the dvt:thematicMap tag.</li>
+                                    </ul>                         </f:verbatim>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelGroupLayout layout="scroll">
+                                <af:panelTabbed id="pt1">
+                                    <af:showDetailItem text="Thematic Map" id="sdi1" stretchChildren="first"
+                                                       clientComponent="true">
+                                        <af:panelGroupLayout layout="horizontal">
+                                            <af:spacer width="10"/>
+                                            <af:panelGroupLayout layout="vertical">
+                                                <af:spacer height="10"/>
+                                                <af:outputText value="Offices Available at 10 Van de Graaff Dr., Burlington, MA"
+                                                               inlineStyle="font-size:20px;font-weight:bold;"/>
+                                                <af:separator/>
+                                                <af:panelGridLayout>
+                                                    <af:gridRow>
+                                                        <af:gridCell halign="center" valign="bottom">
+                                                            <af:outputText value="Select a floor to view its floorplan"
+                                                                           inlineStyle="font-size:14px;"/>
+                                                        </af:gridCell>
+                                                        <af:gridCell halign="center" valign="bottom">
+                                                            <af:outputText value="#{officesBean.currentFloor.floor}#{officesBean.currentFloor.floor==1 ? 'st' : (officesBean.currentFloor.floor==2 ? 'nd' : (officesBean.currentFloor.floor==3 ? 'rd' : 'th'))} Floor Office Floorplan"
+                                                                           inlineStyle="font-size:18px;font-weight:bold;"
+                                                                           partialTriggers="t1"/>
+                                                        </af:gridCell>
+                                                    </af:gridRow>
+                                                    <af:gridRow>
+                                                        <af:gridCell halign="start" valign="top">
+                                                            <af:table value="#{officesBean.floors}" var="row" id="t1"
+                                                                      rowBandingInterval="0"
+                                                                      selectedRowKeys="#{officesBean.selected}"
+                                                                      autoHeightRows="0" width="210px"
+                                                                      verticalGridVisible="false" rowSelection="single"
+                                                                      selectionListener="#{officesBean.processSelection}">
+                                                                <af:column sortable="false" align="center"
+                                                                           inlineStyle="font-size:14px;">
+                                                                    <f:facet name="header">
+                                                                        <af:outputText value="Floor"
+                                                                                       inlineStyle="color:#666666;font-size:16px;"/>
+                                                                    </f:facet>
+                                                                    <af:outputText value="#{row.floor}"/>
+                                                                </af:column>
+                                                                <af:column sortable="false" align="center"
+                                                                           inlineStyle="font-size:14px;">
+                                                                    <f:facet name="header">
+                                                                        <af:outputText value="Open Offices"
+                                                                                       inlineStyle="color:#666666;font-size:16px;"/>
+                                                                    </f:facet>
+                                                                    <af:outputText value="#{row.openOffices}"/>
+                                                                </af:column>
+                                                            </af:table>
+                                                        </af:gridCell>
+                                                        <af:gridCell halign="start" valign="top">
+                                                            <dvt:thematicMap id="tm1" summary="Custom Base Map"
+                                                                             basemap="floorplan"
+                                                                             source="/resources/images/thematicMap/offices.xml"
+                                                                             inlineStyle="background-color:transparent;height:540px;width:810px;"
+                                                                             controlPanelBehavior="hidden"
+                                                                             panning="none" zooming="none">
+                                                                <af:transition transition="auto" triggerType="display"/>
+                                                                <dvt:areaLayer layer="floor1" id="al1">
+                                                                    <dvt:pointDataLayer id="pdl1" selectionMode="single"
+                                                                                        partialTriggers="::::t1"
+                                                                                        value="#{officesBean.currentFloor.offices}"
+                                                                                        var="row" varStatus="rowStatus">
+                                                                        <af:transition transition="auto"
+                                                                                       triggerType="dataChange"/>
+                                                                        <dvt:pointLocation id="pl1"
+                                                                                           pointName="#{row.id}"
+                                                                                           type="pointName">
+                                                                            <dvt:marker id="m1" shape="human"
+                                                                                        opacity="1"
+                                                                                        gradientEffect="none"
+                                                                                        fillColor="#{row.color}"
+                                                                                        scaleX="3" scaleY="3"
+                                                                                        shortDesc="#{row.categories[0]}"/>
+                                                                        </dvt:pointLocation>
+                                                                    </dvt:pointDataLayer>
+                                                                </dvt:areaLayer>
+                                                            </dvt:thematicMap>
+                                                        </af:gridCell>
+                                                    </af:gridRow>
+                                                </af:panelGridLayout>
+                                            </af:panelGroupLayout>
+                                        </af:panelGroupLayout>
+                                    </af:showDetailItem>
+                                    <af:showDetailItem text="Custom Basemap XML" id="sdi2" stretchChildren="first">
+                                        <af:outputText value="&lt;?xml version='1.0' encoding='US-ASCII' ?>"/>
+                                        <af:outputText value="&lt;basemap id='floorplan'>"/>
+                                        <af:panelGroupLayout layout="horizontal">
+                                            <af:spacer width="20px"/>
+                                            <af:panelGroupLayout layout="vertical">
+                                                <af:outputText value="&lt;layer id='floor1'>"/>
+                                                <af:panelGroupLayout layout="horizontal">
+                                                    <af:spacer width="20px"/>
+                                                    <af:outputText value="&lt;image height='813' width='1300' source='/resources/images/thematicMap/floorplan.jpg'/>"/>
+                                                </af:panelGroupLayout>
+                                                <af:outputText value="&lt;/layer>"/>
+                                                <af:outputText value="&lt;points>"/>
+                                                <af:panelGroupLayout layout="horizontal">
+                                                    <af:spacer width="20px"/>
+                                                    <af:panelGroupLayout layout="vertical">
+                                                        <af:outputText value="&lt;point x='140' y='170' name='100' longLabel='Office 100'/>"/>
+                                                        <af:outputText value="&lt;point x='523' y='130' name='101' longLabel='Office 101'/>"/>
+                                                        <af:outputText value="&lt;point x='298' y='300' name='102' longLabel='Office 102'/>"/>
+                                                        <af:outputText value="&lt;point x='368' y='300' name='103' longLabel='Office 103'/>"/>
+                                                        <af:outputText value="&lt;point x='298' y='380' name='104' longLabel='Office 104'/>"/>
+                                                        <af:outputText value="&lt;point x='368' y='380' name='105' longLabel='Office 105'/>"/>
+                                                        <af:outputText value="&lt;point x='120' y='460' name='106' longLabel='Office 106'/>"/>
+                                                        <af:outputText value="&lt;point x='190' y='460' name='107' longLabel='Office 107'/>"/>
+                                                        <af:outputText value="&lt;point x='120' y='540' name='108' longLabel='Office 108'/>"/>
+                                                        <af:outputText value="&lt;point x='190' y='540' name='109' longLabel='Office 109'/>"/>
+                                                        <af:outputText value="&lt;point x='298' y='460' name='110' longLabel='Office 110'/>"/>
+                                                        <af:outputText value="&lt;point x='368' y='460' name='111' longLabel='Office 111'/>"/>
+                                                        <af:outputText value="&lt;point x='298' y='540' name='112' longLabel='Office 112'/>"/>
+                                                        <af:outputText value="&lt;point x='368' y='540' name='113' longLabel='Office 113'/>"/>
+                                                        <af:outputText value="&lt;point x='455' y='460' name='114' longLabel='Office 114'/>"/>
+                                                        <af:outputText value="&lt;point x='525' y='460' name='115' longLabel='Office 115'/>"/>
+                                                        <af:outputText value="&lt;point x='455' y='540' name='116' longLabel='Office 116'/>"/>
+                                                        <af:outputText value="&lt;point x='525' y='540' name='117' longLabel='Office 117'/>"/>
+                                                        <af:outputText value="&lt;point x='298' y='620' name='118' longLabel='Office 118'/>"/>
+                                                        <af:outputText value="&lt;point x='368' y='620' name='119' longLabel='Office 119'/>"/>
+                                                        <af:outputText value="&lt;point x='298' y='700' name='120' longLabel='Office 120'/>"/>
+                                                        <af:outputText value="&lt;point x='368' y='700' name='121' longLabel='Office 121'/>"/>
+                                                        <af:outputText value="&lt;point x='455' y='620' name='122' longLabel='Office 122'/>"/>
+                                                        <af:outputText value="&lt;point x='525' y='620' name='123' longLabel='Office 123'/>"/>
+                                                        <af:outputText value="&lt;point x='455' y='700' name='124' longLabel='Office 124'/>"/>
+                                                        <af:outputText value="&lt;point x='525' y='700' name='125' longLabel='Office 125'/>"/>
+                                                        <af:outputText value="&lt;point x='617' y='715' name='126' longLabel='Office 126'/>"/>
+                                                        <af:outputText value="&lt;point x='752' y='715' name='127' longLabel='Office 127'/>"/>
+                                                        <af:outputText value="&lt;point x='870' y='715' name='128' longLabel='Office 128'/>"/>
+                                                        <af:outputText value="&lt;point x='940' y='715' name='129' longLabel='Office 129'/>"/>
+                                                        <af:outputText value="&lt;point x='1018' y='715' name='130' longLabel='Office 130'/>"/>
+                                                    </af:panelGroupLayout>
+                                                </af:panelGroupLayout>
+                                                <af:outputText value="&lt;/points>"/>
+                                            </af:panelGroupLayout>
+                                        </af:panelGroupLayout>
+                                        <af:outputText value="&lt;/basemap>"/>
+                                    </af:showDetailItem>
+                                </af:panelTabbed>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                    <!-- END TAG DEMO -->
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

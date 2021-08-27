@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="PanelSpringboard in PanelSplitter"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelSpringboard"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelStretchLayout>
+            <f:facet name="top">
+              <af:outputText value="In this example we're stretching the content the panelSpringboard inside a panelSplitter.
+              To view in grid mode, use the Attribute Editor. You may need to clear your cookies since the display mode
+              gets stored in the Change Manager."/>
+            </f:facet>
+            <f:facet name="center">
+                    <af:panelSplitter id="innerVerticalSplitter">
+	                              
+	              <f:facet name="first">
+	                <af:panelGroupLayout id="pgLayoutIdTwo">
+	                  <af:outputText value="News!"/>
+	                </af:panelGroupLayout>
+	              </f:facet>
+	              <f:facet name="second">
+	                <!-- panelSpringboard does not put a style on its content. If the user wants a style, 
+	                they need to use the styleClass or inlineStyle or ADF Faces skinning selectors to do so.
+	                In this example, we put a background of white on all the showDetailItems except for the 
+            one with the vertical tabs. The background of the vertical tab's content is used in that case. -->
+            <af:panelSpringboard id="panelSpringboardId" binding="#{editor.component}" >
+                  <af:showDetailItem id="item1" text="Home" shortDesc="Home"  badge="3"
+                                     icon="/images/home48_ena.png" 
+                                     hoverIcon="/images/home48_dwn.png"
+                                     depressedIcon="/images/home48_dwn.png"
+                                     inlineStyle="background-color: white" >
+                    <af:outputText value="Item 1 First Child. Zippety Doo Dah, Zippety Yay. My Oh My what a wonderful day! Plenty of sunshine coming my way."
+                                   id="ot1Item1"/>
+                    <af:outputText value="Tab 1 Second Child" id="ot2Item1"/>
+                    <af:spacer height="200px"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="item2" text="Dashboard"
+                                     icon="/images/dashboard48_ena.png"
+                                     hoverIcon="/images/dashboard48_dwn.png"
+                                     shortDesc="Dashboard" inlineStyle="background-color: white"
+                                     disclosureListener="#{springboardBean.wait}">
+                    <af:outputText value="Item 2 First Child. Mister Bluebird's on my shoulder. It's the truth!"
+                                   id="ot1Item2"/>
+                    <af:outputText value="Item 2 Second Child" id="ot2Item2"/>
+                    <af:commandButton id="cbTab2" partialSubmit="true" 
+                                      text="Cause Partial Submit"/>
+                    <af:spacer height="180px"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="item3"
+                                     textAndAccessKey="&amp;Tasks"
+                                     shortDesc="Tasks"
+                                     icon="/images/tasks48_ena.png"
+                                     hoverIcon="/images/tasks48_dwn.png"
+                                     inlineStyle="background-color: white">
+                    <af:outputText value="Item 3 Only Child. It's actual. Everything is satisfactual."
+                                   id="ot1Item3"/>
+                    <af:spacer height="150px"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="item4" text="Wiki"
+                                     shortDesc="Wiki" 
+                                     icon="/images/wiki48_ena.png"
+                                     hoverIcon="/images/wiki48_dwn.png"
+                                     depressedIcon="/images/wiki48_dwn.png"
+                                     inlineStyle="background-color: white">
+                    <af:outputText value="Item 4 First Child. Zippety Doo Dah, Zippety Yay. Wonderful feeling, wonderful day"
+                                   id="ot1Item4"/>
+                    <af:outputText value="Item 4 Second Child" id="ot2Item4"/>
+                    <af:commandButton id="cbItem4" partialSubmit="true"
+                                      text="Cause Partial Submit"/>
+                    <af:spacer height="180px"/>
+                  </af:showDetailItem>
+                   <af:showDetailItem id="item5"
+                                     textAndAccessKey="&amp;Item 5"
+                                     shortDesc="Item5"
+                                     icon="/images/tasks48_ena.png"
+                                     hoverIcon="/images/tasks48_dwn.png"
+                                     inlineStyle="background-color: white">
+                      <af:outputText value="Item 5 Only Child. It's actual. Everything is satisfactual."
+                                   id="ot1Itemsb5"/>
+                    <af:spacer height="150px"/>
+                  </af:showDetailItem>  
+                  <af:showDetailItem id="item6"
+                                     textAndAccessKey="&amp;Item 6"
+                                     shortDesc="Item6"
+                                     icon="/images/tasks48_ena.png"
+                                     hoverIcon="/images/tasks48_dwn.png"
+                                     inlineStyle="background-color: white">
+                      <af:outputText value="Item 5 Only Child. It's actual. Everything is satisfactual."
+                                   id="ot1Itemsb6"/>
+                    <af:spacer height="150px"/>
+                  </af:showDetailItem> 
+                  <af:showDetailItem id="item7"
+                                     textAndAccessKey="&amp;Item 7"
+                                     shortDesc="Item7"
+                                     icon="/images/tasks48_ena.png"
+                                     hoverIcon="/images/tasks48_dwn.png"
+                                     inlineStyle="background-color: white">
+                      <af:outputText value="Item 7 Only Child. It's actual. Everything is satisfactual."
+                                   id="ot1Itemsb7"/>
+                    <af:spacer height="150px"/>
+                  </af:showDetailItem> 
+                <af:showDetailItem id="item8"
+                                     textAndAccessKey="&amp;Item 8"
+                                     shortDesc="Item8"
+                                     icon="/images/tasks48_ena.png"
+                                     hoverIcon="/images/tasks48_dwn.png"
+                                     inlineStyle="background-color: white">
+                      <af:outputText value="Item 5 Only Child. It's actual. Everything is satisfactual."
+                                   id="ot1Itemsb8"/>
+                    <af:spacer height="150px"/>
+                  </af:showDetailItem> 
+                  <af:showDetailItem id="item9"
+                                     textAndAccessKey="&amp;Item 9"
+                                     shortDesc="Item9"
+                                     icon="/images/tasks48_ena.png"
+                                     hoverIcon="/images/tasks48_dwn.png"
+                                     inlineStyle="background-color: white">
+                      <af:outputText value="Item 9 Only Child. It's actual. Everything is satisfactual."
+                                   id="ot1Itemsb9"/>
+                    <af:spacer height="150px"/>
+                  </af:showDetailItem> 
+                  <af:showDetailItem id="item10"
+                                     textAndAccessKey="&amp;Item 10"
+                                     shortDesc="Item10"
+                                     icon="/images/tasks48_ena.png"
+                                     hoverIcon="/images/tasks48_dwn.png"
+                                     inlineStyle="background-color: white">
+                      <af:outputText value="Item 10 Only Child. It's actual. Everything is satisfactual."
+                                   id="ot1Itemsp10"/>
+                    <af:spacer height="150px"/>
+                  </af:showDetailItem> 
+            </af:panelSpringboard>     
+                      </f:facet>
+        </af:panelSplitter>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!--/af:panelGroupLayout-->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

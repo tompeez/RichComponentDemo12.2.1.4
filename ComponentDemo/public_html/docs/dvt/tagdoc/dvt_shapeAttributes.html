@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>dvt_shapeAttributes</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<div>
+<table class="oac_no_warn" summary="Layout table... probably." width="100%" border="0">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:shapeAttributes&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none">shapeAttributes shape attributes</p>
+<br>
+<p>Specifies interactivity properties on subcomponents of a graph and gauge component. This function provides a connection between a specific subcomponent, and an HTML attribute or a javascript event. One common example is that users may use a bar of a graph or the indicator of a gauge to trigger a hyper-link action. Each shape attribute tag must contain a subcomponent and at least one attribute in order to be functional. Example: <code>dvt:shapeAttributes component="component_A" onClick="#{backing_bean_B}"</code></p>
+<p>In general, there are two types of attributes - behavior attributes and common attributes. All "behavior" attributes consist of a Javascript handler, and all of them have prefix "on" in their names. All other attributes are called "common" attributes.</p>
+<p>Behavior Attributes - A behavior attribute, such as onClick, onMouseMove, onKeyDown etc, takes a string that contains javascript code or a reference to a backing bean method that returns javascript code, as its value. The browser will run the javascript code when a specific action occurs depending on which attribute. If the value is a backing bean method, the method takes the subcomponent handle as its input parameter, see the example code below:</p>
+<ul>
+<li>javascript code assigned to onDblClick attribute will be triggered when the specific subcomponent is double clicked.</li>
+<li>javascript code assigned to onMouseMove attribute will be triggered when the user moves a mouse over a specific subcomponent.</li>
+</ul>
+<p>Common Attributes - Some common attributes take a string or a backing bean method that returns a string as their values, namely alt, herf, noherf, target, title and tabindex. Examples:</p>
+<ul>
+<li>A backing bean method returns the string - "Testing Tooltip". If this method is assigned to the "alt" attribute, the tool-tip of the specific subcomponent will display "Testing Tooltip".</li>
+<li>A backing bean method assigned to "href" attribute returns a URL if the component is clicked, and the browser redirects to that URL.</li>
+</ul>
+<p>Other common attributes control the basic settings of the interactivity. User can specify a subcomponent for the shape attribute by component attribute, the identifier of the subcomponent by id attribute, and the controls over the click events by clickable, clickAction and clickListener attributes.</p>
+<h2>Relationship with other tags</h2>
+<p>The shapeAttributes tag is a child of the shapeAttributesSet tag.</p>
+<p>The shapeAttributes tag has no child tags.</p>
+<h2>Example 1</h2>
+<p>The following example shows XML for shapeAttributes tags associated with the gauge indicator and the gauge metric label.</p>
+<ul>
+<li>In both attributes, the components have tooltips assigned with their handle name.</li>
+<li>The first shape attribute specifies that, when the indicator is clicked, the title of the browser window will change to "onClick".</li>
+<li>The second shape attribute specifies that, when a mouse pointer moves over the metric label, the title of the browser window will change to "onMouseMove".</li>
+</ul>
+<pre>
+   &lt;dvt:gauge &gt; 
+      &lt;dvt:shapeAttributesSet&gt;
+         &lt;dvt:shapeAttributes component="GAUGE_INDICATOR" alt="#{sampleGauge.alt}" onClick="#{sampleGauge.onClick}"/&gt;
+          &lt;dvt:shapeAttributes component="GAUGE_METRICLABEL" alt="#{sampleGauge.alt}" onMouseMove="#{sampleGauge.onMouseMove}"/&gt;
+      &lt;/dvt:shapeAttributesSet&gt; 
+   &lt;/dvt:gauge&gt;
+            
+</pre>
+<p>In the backing bean (sampleGauge):</p>
+<pre>
+<code>public String alt(oracle.dss.dataView.ComponentHandle handle) { 
+                      return handle.getName(); } 
+                   public String onClick(oracle.dss.dataView.ComponentHandle handle) { 
+                      return ("document.title=\"onClick\";"); } 
+                   public String onMouseMove(oracle.dss.dataView.ComponentHandle handle) {
+                      return ("document.title=\"onMouseMove\";"); }</code>
+</pre>
+<p>Alternatively, user may use a string as the value for the attributes (without using backing bean methods)</p>
+<pre>
+   &lt;dvt:gauge &gt; 
+      &lt;dvt:shapeAttributesSet&gt;
+         &lt;dvt:shapeAttributes component="GAUGE_INDICATOR" alt="Indicator" onClick="document.title="onClick";"/&gt;
+         &lt;dvt:shapeAttributes component="GAUGE_METRICLABEL" alt="MetricLabel" onMouseMove="document.title="onMouseMove";"/&gt; 
+      &lt;/dvt:shapeAttributesSet&gt; 
+   &lt;/dvt:gauge&gt;
+   
+</pre>
+<h2>Example 2</h2>
+<p>The following example shows how to use a clickListener. Example code in a JSPX page:</p>
+<pre>
+   &lt;dvt:areaGraph &gt; 
+      &lt;dvt:shapeAttributesSet&gt;
+         &lt;dvt:shapeAttributes component="GRAPH_AREAMARKER" clickable="true" clickListener="#{sampleGraph.clickListener}"/&gt;
+      &lt;/dvt:shapeAttributesSet&gt; 
+   &lt;/dvt:gauge&gt;
+   
+</pre>
+<p>Example code in the backing bean (sampleGraph):</p>
+<pre>
+<code>   public void clickListener(ClickEvent ce) {
+      System.out.println(ce.getComponentHandle().getComponentInfo().toString()); 
+   }
+      </code>
+</pre>
+<p>When the area marker is clicked, the debug window will print the component info, which is "series = XXX".</p>
+<h2>Example 3</h2>
+<p>Another example for clickListener. The ClickEvent contains the information about the data point. Sample code:</p>
+<pre>
+<code>    public void processClick(ClickEvent event) { 
+       ComponentHandle handle = event.getComponentHandle(); 
+       if(handle instanceof DataComponentHandle) { 
+          DataComponentHandle dhandle = (DataComponentHandle)handle; System.out.println("value " + dhandle.getValue(DataComponentHandle.UNFORMATTED_VALUE));
+          System.out.println("row key " + dhandle.getValue(DataComponentHandle.ROW_KEY));
+          System.out.println("key path " + dhandle.getValue(DataComponentHandle.KEY_PATH)); 
+          Attributes[] seriesInfo = dhandle.getSeriesAttributes(); 
+          if(seriesInfo != null) { 
+             for(Attributes attrs: seriesInfo) { 
+                System.out.println("Series attribute value " + attrs.getValue(Attributes.LABEL_VALUE));
+                System.out.println("Series attribute name " + attrs.getValue(Attributes.LABEL_ATTRIBUTE));
+                System.out.println("Series attribute value id " + attrs.getValue(Attributes.ID_VALUE));
+                System.out.println("Series attribute name id " + attrs.getValue(Attributes.ID_ATTRIBUTE)); } } 
+                Attributes [] groupInfo = dhandle.getGroupAttributes(); 
+                if(groupInfo != null) { 
+                   for(Attributes attrs: groupInfo) { 
+                      System.out.println("Group attribute value " + attrs.getValue(Attributes.LABEL_VALUE));
+                      System.out.println("Group attribute name " + attrs.getValue(Attributes.LABEL_ATTRIBUTE)); } } } 
+                      //handle could be an instance of ScatterDataComponentHandle for scatter graphs, 
+                      //BubbleDataComponentHandle for bubble graphs and StockDataComponentHandle 
+                      //for stock graphs to fetch additional information 
+                      //handle could be an index of GroupComponentHandle if clicked on 
+                      //group component such as o1TickLabel 
+                      //handle could be an index of SeriesComponentHandle if clicked on 
+                      //series component such as legendText, legendTitle 
+                      }
+                   }
+               }
+           }
+       }
+        </code>
+</pre>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="tblId_1_1">Name</th>
+<th align="left" valign="bottom" id="tblId_1_2">Type</th>
+<th align="left" valign="bottom" id="tblId_1_3">Supports EL?</th>
+<th align="left" valign="bottom" id="tblId_1_4">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="tblId_1_1">id</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">Specifies the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">component</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">The subcomponents of an ADF component that can be designated as capable of interactivity. Valid values for graphs are:
+<ul>
+<li>GRAPH_ANNOTATION - text area added onto the graph plot area</li>
+<li>GRAPH_AREAMARKER - the colored area representing data of area graph</li>
+<li>GRAPH_DATALINE - the lines representing data in line, and radar graph</li>
+<li>GRAPH_DATAMARKER - the point or shape representing data in scatter, polar, and bubble graph</li>
+<li>GRAPH_DRILLMARKER - the drill marker is the icon showing the hide and show drill label</li>
+<li>GRAPH_DRILLTEXT - the text of the drill labels</li>
+<li>GRAPH_LEGENDMARKER - the colored icons in the legend area</li>
+<li>GRAPH_LEGENDTEXT - the labels of the text in the legend area</li>
+<li>GRAPH_MARKERTEXT - the text showing the value represented by the data marker</li>
+<li>GRAPH_O1DRILLLABEL - the drill label in the ordinary / category axis</li>
+<li>GRAPH_O1TICKLABEL - the labels of the item in the ordinary / category axis</li>
+<li>GRAPH_O1TITLE - the title of the ordinary / category axis</li>
+<li>GRAPH_PARETOLINE - the lines representing data in pareto graph</li>
+<li>GRAPH_PARETOMARKER - the points on the lines that representing data in pareto graph</li>
+<li>GRAPH_PIELABEL - the label below a pie graph</li>
+<li>GRAPH_SLICE - a slice on a pie graph</li>
+<li>GRAPH_SLICELABEL - the label of a slice in a pie graph</li>
+<li>GRAPH_STOCKMARKER - the data lines of a stock graph</li>
+<li>GRAPH_GRAPH_THREEDMARKER - the 3D bars representing data of 3D graphs</li>
+<li>GRAPH_TWODMARKER - the 2D bars representing data of a bar graph, pareto graph or the 2D bar next to a pie bar graph</li>
+<li>GRAPH_VOLUMEMARKER - the volume bar of a stock graph</li>
+<li>GRAPH_X1TICKLABEL - the labels showing values of x1 data axis</li>
+<li>GRAPH_X1TITLE - the title of x1 data axis</li>
+<li>GRAPH_Y1TICKLABEL - the labels showing values of y1 data axis</li>
+<li>GRAPH_Y2TICKLABEL - the labels showing values of y2 data axis</li>
+<li>GRAPH_Y1TITLE - the title of y1 data axis</li>
+<li>GRAPH_Y2TITLE - the title of y2 data axis</li>
+<li>GRAPH_ZDRILLLABEL - the drill label of z data axis, only relevant to 3D graphs</li>
+<li>GRAPH_ZTICKLABEL - the labels showing values of z data axis, only relevant to 3D graphs</li>
+<li>GRAPH_ZTITLE - the title of z data axis, only relevant to 3D graphs</li>
+</ul>
+<p>Valid values for gauges are:</p>
+<ul>
+<li>GAUGE_BOTTOMLABEL - the label below the gauge</li>
+<li>GAUGE_INDICATOR - the indicator in the gauge</li>
+<li>GAUGE_LEGENDAREA - the legend area of the gauge</li>
+<li>GAUGE_LEGENDTEXT - the text label of the legend area</li>
+<li>GAUGE_METRICLABEL - the label showing the metric value</li>
+<li>GAUGE_TOPLABEL - the label above the gauge</li>
+<li>GAUGE_PLOTAREA - the area inside the gauge</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">clickListener</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">Refers to a backing bean method that takes a ClickEvent as an argument. The method will be process when the subcomponent is clicked. Only works in FLASH image formatted graph or gauge.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">clickAction</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">A reference to backing bean action method that will be called when the subcomponent is clicked, or the static outcome of the action. Only works in FLASH image formatted graph or gauge.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">clickable</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">A reference to a backing bean method that takes oracle.dss.dataView.ComponentHandle and returns a boolean value indicating whether a ClickEvent should be fired when this subcomponent is clicked. This can also be a static value "true" or "false". Only works in FLASH image formatted graph or gauge.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">formatType</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">Specifies whether a text component appears as a hyperlink or normal. Valid values are:
+<ul>
+<li>LINKED_TEXT - Appears as a hyperlink</li>
+<li>NONE - (Default) Appears as normal</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">alt</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">
+<h4>Common Attributes</h4>
+<p>In the following section, (includes alt, href, tabindex, nohref, target, title) each attribute takes either a value or a reference to a backing bean method that takes oracle.dss.dataView.ComponentHandle, which returns a value. The value can be a string, or a boolean depending on the attribute. The following attributes have the usage of the value listed.</p>
+<p>A reference to a backing bean method that takes oracle.dss.dataView.ComponentHandle and returns String. This String is set as the alt text of the component, and will be displayed as a tooltip when a user hovers over the component.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">href</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">A reference to a backing bean method that takes oracle.dss.dataView.ComponentHandle and returns value of HREF HTML attribute. This creates a link to the href value on the component.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">tabindex</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">The value is a string, which is the tabindex value. It represents the order of the focus on the component when tabbing through keyboard.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">nohref</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">The value is a boolean, which indicates whether if NOHREF should be rendered for this component. If NOHREF is assigned true to this component, HREF will be disabled, otherwise HREF will be enabled.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">target</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">The value is a string, which represents the TARGET HTML attribute. Target attribute specifies the where the web browser to open a hyperlink. Four pre-defined targets are _blank, _self, _parent, and _top. User can also specify a descriptive name with an underscore.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">title</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">The value is a string, which represents the TITLE HTML attribute. The value of the title attribute annotates the component.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onClick</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">
+<h4>Behavior Attributes</h4>
+<p>In the following section, all attributes are behavior attributes. Each attribute takes either a string or a reference to a backing bean method that takes oracle.dss.dataView.ComponentHandle as its input argument, which returns a string. Either way, the string that returns is a piece of javascript code that get executed when the attribute is triggered. The following attributes have trigger conditions as listed.</p>
+<p>When the subcomponent gets clicked.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onDblClick</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When the subcomponent gets double clicked.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onFocus</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When the subcomponent gets the focus. Only works in PNG image formatted graph or gauge.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onBlur</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When the subcomponent loses the focus. Only works in PNG image formatted graph or gauge.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onKeyPress</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When the subcomponent has the focus and a keyboard key is pressed down and released. Only works in PNG image formatted graph or gauge.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onKeyDown</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When the subcomponent has the focus and a keyboard key is pressed down. Only works in PNG image formatted graph or gauge.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onKeyUp</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When the subcomponent has the focus and a keyboard key is released. Only works in PNG image formatted graph or gauge.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onMouseMove</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When the mouse pointer gets over the subcomponent.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onMouseOver</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When the mouse pointer moves away from the subcomponent.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onMouseOut</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When the mouse pointer is moved inside the subcomponent.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onMouseDown</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When a mouse button is pressed down inside the subcomponent.</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">onMouseUp</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">When a mouse button is released inside the subcomponent.</td>
+</tr>
+</table>
+</div>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+<tr>
+<td align="left" width="86%">Generated: Jul 15 2015</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

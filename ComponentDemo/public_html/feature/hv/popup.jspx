@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Hierarchy Viewer - Popup Demo"
+                     binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo"
+                             viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- MOD TAG TEMPLATE -->
+                <!-- Document Title -->
+                <f:attribute name="documentTitle"
+                             value="Hierarchy Viewer - Popup Demo"/>
+                <!-- Tag Name -->
+                <f:attribute name="tagName" value="Hierarchy Viewer - Popup"/>
+
+                <f:facet name="center">
+                    <af:panelStretchLayout topHeight="auto" bottomHeight="auto" id="psl1">
+                        <f:facet name="top">
+                            <!-- START TAG DEMO -->
+                            <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:popup contentDelivery="lazyUncached" id="hvContextMenu" launcherVar="source" eventContext="launcher" clientComponent="true">
+                  <af:setPropertyListener from="#{source.currentRowData.firstName}" to="#{hvPopup.selectedMenuItem}" type="popupFetch"/>
+                  <af:menu id="m1">
+                    <af:commandMenuItem text="View Details of Hierarchy Viewer"
+                                        actionListener="#{hvPopup.menuItemListener}" id="cmi1"/>
+                    <af:group id="g1">
+                      <af:commandMenuItem text="Add Task for HV" actionListener="#{hvPopup.menuItemListener}"
+                                          id="cmi2"/>
+                      <af:commandMenuItem text="Add Notes for HV" actionListener="#{hvPopup.menuItemListener}"
+                                          id="cmi3"/>
+                    </af:group>
+                  </af:menu>
+                </af:popup>
+                <af:popup contentDelivery="lazyUncached" id="nodeContextMenu" launcherVar="source" eventContext="launcher" clientComponent="true">
+                  <af:setPropertyListener from="#{source.currentRowData.firstName}" to="#{hvPopup.selectedMenuItem}" type="popupFetch"/>
+                  <af:menu id="m2" rendered="#{!hvPopup.multipleSelection}">
+                    <af:commandMenuItem text="View Details of '#{hvPopup.selectedMenuItem}'"
+                                        actionListener="#{hvPopup.menuItemListener}" id="cmi4"/>
+                    <af:group id="g2">
+                      <af:commandMenuItem text="Add Task for '#{hvPopup.selectedMenuItem}'" actionListener="#{hvPopup.menuItemListener}"
+                                          id="cmi5"/>
+                      <af:commandMenuItem text="Add Notes for '#{hvPopup.selectedMenuItem}'" actionListener="#{hvPopup.menuItemListener}"
+                                          id="cmi6"/>
+                    </af:group>
+                  </af:menu>
+                  <af:menu id="m3" rendered="#{hvPopup.multipleSelection}">
+                    <af:commandMenuItem text="View Details of '#{hvPopup.selectedMenuItem}'"
+                                        actionListener="#{hvPopup.menuItemListener}" id="cmi7"/>
+                      <af:commandMenuItem text="Add Notes for '#{hvPopup.selectedMenuItem}'" actionListener="#{hvPopup.menuItemListener}"
+                                          id="cmi8"/>
+                  </af:menu>
+                </af:popup>
+                <af:popup id="modalPopup" contentDelivery="lazyUncached"
+                          eventContext="launcher" launcherVar="source">
+                    <!-- You MUST save away the context supplied which is only accurate during the launch of the popup.
+               Do NOT reference {source.currentRowData} at other places in the Popup UI. Use your own variable instead -->
+                    <af:setPropertyListener from="#{hvPopup.hvModel.rowData}"
+                                            to="#{hvPopup.source}"
+                                            type="popupFetch"/>
+                    <af:noteWindow id="nw11">
+                      <af:outputText value="This is the click popup for #{hvPopup.source.firstName} #{hvPopup.source.lastName}"/>
+                    </af:noteWindow>
+                </af:popup>
+                <af:popup id="nonModalPopup" contentDelivery="lazyUncached"
+                          eventContext="launcher" launcherVar="source">
+                    <!-- You MUST save away the context supplied which is only accurate during the launch of the popup.
+               Do NOT reference {source.currentRowData} at other places in the Popup UI. Use your own variable instead -->
+                    <af:setPropertyListener from="#{hvPopup.hvModel.rowData}"
+                                            to="#{hvPopup.source}"
+                                            type="popupFetch"/>
+                    <af:noteWindow id="nw12">
+                      <af:outputText value="This is the hover popup for #{hvPopup.source.firstName} #{hvPopup.source.lastName}"/>
+                    </af:noteWindow>
+                </af:popup>
+                <af:spacer height="5px" id="s1"/>
+                <f:verbatim>
+                  <b>Demonstrates Popup Features</b>
+                    <ul>
+                      <li>Click on the 'Click for popup' buttons</li>                     
+                      <li>Hover over the 'Hover for popup' text</li>
+                      <li>Right Click on background or Employee to bring up Context Menus</li>
+                    </ul>
+                 </f:verbatim>
+                <af:spacer height="5px" id="s2"/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <dvt:hierarchyViewer binding="#{hvPopup.hvComponent}"
+                                                 styleClass="AFStretchWidth"
+                                                 id="hv1"
+                                                 controlPanelBehavior="initExpanded"
+                                                 var="node" detailWindow="none"
+                                                 value="#{hvPopup.hvModel}"
+                                                 contentDelivery="immediate"
+                                                 levelFetchSize="5"
+                                                 nodeSelection="multiple">
+                                <af:showPopupBehavior popupId="::hvContextMenu" 
+                                          triggerType="contextMenu"/>                                        
+                                <dvt:link id="l1"/>
+                                <dvt:node width="275" height="130"
+                                          showNavigateUp="#{node.parent != null}"
+                                          showExpandChildren="#{node.hasChildren}"
+                                          shortDesc="#{node.firstName}"
+                                          inlineStyle="padding:5px;"
+                                          id="n1">
+                                    <af:showPopupBehavior popupId="::nodeContextMenu"
+                                        triggerType="contextMenu"/>
+                                        
+                                    <f:facet name="zoom100">
+                                      <af:panelGroupLayout layout="horizontal"
+                                                                 id="pgl3">
+                                        <af:panelGroupLayout id="pg1">
+                                          <af:image rendered="true"
+                                                inlineStyle="width:108px;height:120px;"
+                                                source="/resources/images/hv/#{node.personId}.png"
+                                                shortDesc="Picture of #{node.firstName}"
+                                                id="i1"/>
+                                        </af:panelGroupLayout>
+                                        <af:spacer width="5"
+                                                           height="5" id="s3"/>
+                                        <af:panelGroupLayout layout="vertical"
+                                                                     id="pgl4">
+                                          <af:outputText value="#{node.firstName} #{node.lastName}"
+                                                                    styleClass="AFHVNodeTitleTextStyle"
+                                                                    id="ot10"/>
+                                          <af:outputText value="#{node.title}"
+                                                                     styleClass="AFHVNodeSubtitleTextStyle"
+                                                                     id="ot12"/>
+                                          <af:button text="Click for popup"
+                                                                          id="cb1">
+                                            <af:showPopupBehavior popupId="::modalPopup"
+                                                                                  triggerType="action"
+                                                                                  align="endAfter"
+                                                                                  alignId="cb1"/>
+                                          </af:button>
+                                          <af:spacer height="5"
+                                                                   id="s6"/>
+                                          <af:link text="Hover for popup"
+                                                                        id="cl1">
+                                            <af:showPopupBehavior popupId="::nonModalPopup"
+                                                                                  triggerType="mouseHover"
+                                                                                  align="endAfter"
+                                                                                  alignId="cl1"/>
+                                            </af:link>                                                     
+                                        </af:panelGroupLayout>
+                                      </af:panelGroupLayout>
+                                    </f:facet>
+                                </dvt:node>
+                            </dvt:hierarchyViewer>
+                            <!-- END TAG DEMO -->
+                        </f:facet>
+                        <f:facet name="bottom">
+                            <af:outputFormatted binding="#{hvPopup.outputFormatted}" value="#{hvPopup.status}"
+                                  id="of2" clientComponent="true"/>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

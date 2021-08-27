@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram Context Menu Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram Context Menu Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Diagram Context Menus"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout topHeight="auto" bottomHeight="auto">
+            <f:facet name="top">
+              <af:outputText value="Right click to display context menu." inlineStyle="font-size:medium;"/>
+            </f:facet>
+            <f:facet name="center">
+              <dvt:diagram summary="Diagram" id="diagram1" layout="circle">
+                <dvt:clientLayout name="circle" method="DemoCircleLayout.circleLayout" featureName="DemoCircleLayout"/>
+                <dvt:diagramNodes id="diagramNodes1" value="#{diagram.mediumCircleNodes}"
+                                  binding="#{diagramContextMenu.diagramNodes}" var="node">
+                  <dvt:diagramNode id="node1" nodeId="#{node.id}" shortDesc="Node #{node.id}" showNodeActions="false">
+                    <f:facet name="zoom100">
+                      <dvt:marker id="marker1" shape="circle" fillColor="#{node.color}" borderStyle="solid" borderWidth=".5" borderColor="#444444"/>
+                    </f:facet>
+                  </dvt:diagramNode>
+                </dvt:diagramNodes>
+                <dvt:diagramLinks id="diagramLinks1" value="#{diagram.mediumCircleLinks}"
+                                  binding="#{diagramContextMenu.diagramLinks}" var="link">
+                  <dvt:diagramLink id="link1" startNode="#{link.start}" endNode="#{link.end}" linkColor="#{link.color}"
+                            shortDesc="Link #{link.id}"/>
+                </dvt:diagramLinks>
+                <f:facet name="contextMenu">
+                  <af:popup contentDelivery="lazyUncached" id="nodeMenu">
+                    <af:menu id="m1">
+                      <af:commandMenuItem text="View Details for Node #{diagramContextMenu.nodeSelectionState}"
+                                          actionListener="#{diagramContextMenu.menuItemListener}" id="cmi1"/>
+                      <af:group id="g1">
+                        <af:commandMenuItem text="Add Task" actionListener="#{diagramContextMenu.menuItemListener}"
+                                            id="cmi2"/>
+                        <af:commandMenuItem text="Add Notes" actionListener="#{diagramContextMenu.menuItemListener}"
+                                            id="cmi3"/>
+                      </af:group>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <f:facet name="linkContextMenu">
+                  <af:popup contentDelivery="lazyUncached" id="linkMenu">
+                    <af:menu id="m2">
+                      <af:commandMenuItem text="View Details for Link #{diagramContextMenu.linkSelectionState}"
+                                          actionListener="#{diagramContextMenu.menuItemListener}" id="cmi4"/>
+                      <af:group id="g2">
+                        <af:commandMenuItem text="Add Task" actionListener="#{diagramContextMenu.menuItemListener}"
+                                            id="cmi5"/>
+                        <af:commandMenuItem text="Add Notes" actionListener="#{diagramContextMenu.menuItemListener}"
+                                            id="cmi6"/>
+                      </af:group>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <f:facet name="bodyContextMenu">
+                  <af:popup id="bodyMenu">
+                    <af:menu id="m3">
+                      <af:goMenuItem text="www.oracle.com" destination="http://www.oracle.com" id="gmi1"/>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+                <f:facet name="multiSelectContextMenu">
+                  <af:popup contentDelivery="lazyUncached" id="multiMenu">
+                    <af:menu id="m4">
+                      <af:commandMenuItem text="View Selection Details for Objects #{diagramContextMenu.selectionState}"
+                                          actionListener="#{diagramContextMenu.menuItemListener}" id="cmi7"/>
+                      <af:commandMenuItem text="Ask Task for Selected Objects #{diagramContextMenu.selectionState}"
+                                          actionListener="#{diagramContextMenu.menuItemListener}" id="cmi8"/>
+                    </af:menu>
+                  </af:popup>
+                </f:facet>
+              </dvt:diagram>
+            </f:facet>
+            <f:facet name="bottom">
+              <af:outputFormatted binding="#{diagramContextMenu.outputFormatted}" value="#{diagramContextMenu.status}"
+                                  id="of1" clientComponent="true"/>
+            </f:facet>
+          </af:panelStretchLayout>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

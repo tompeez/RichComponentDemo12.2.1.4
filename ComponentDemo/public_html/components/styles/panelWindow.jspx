@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelWindow Style Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelWindow"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="styles"/>
+        <f:attribute name="editorSize" value="350"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:outputText styleClass="AFInstructionText"
+                           value="This page demos the effect various contentStyle and inlineStyle parameters have on this component."
+                           id="ot1"/>
+            <af:popup id="popupWindow">
+              <af:panelWindow titleIconSource="/images/designmode_ena.png" modal="true"
+                              title="Window With panelFormLayout" binding="#{styleChanger.components['panelWindow1']}"
+                              id="pw1">
+                <af:panelFormLayout rows="5" labelWidth="33%"
+                                    fieldWidth="67%" id="pfl1">
+                  <af:inputText columns="5" label="label 1" id="it1"/>
+                  <af:group id="g1">
+                    <af:inputText columns="5" label="grouped 1" id="it2"/>
+                    <af:inputText columns="5" label="grouped 2" id="it3"/>
+                    <af:inputText columns="5" label="grouped 3" id="it4"/>
+                  </af:group>
+                  <af:commandButton text="Show Another Window" id="cb1">
+                    <af:showPopupBehavior popupId="popupWindow2"/>
+                  </af:commandButton>
+                  <af:panelLabelAndMessage rendered="true" label="label 3"
+                                           id="plam1">
+                    <af:commandButton text="Submit" id="cb2"/>
+                  </af:panelLabelAndMessage>
+                  <af:selectOneListbox id="sol" label="label 4" shortDesc="Select One Option">
+                    <af:selectItem label="option 1" id="si1"/>
+                    <af:selectItem label="option 2" id="si2"/>
+                    <af:selectItem label="option 3" id="si3"/>
+                    <af:selectItem label="option 4" id="si4"/>
+                  </af:selectOneListbox>
+                  <af:popup id="popupWindow2">
+                    <af:panelWindow modal="false" title="Another Window" binding="#{styleChanger.components['panelWindow2']}"
+                                    id="pw2">
+                      <af:panelGroupLayout id="pgl2">
+                        <af:selectManyListbox value="#{demoInput.manyListValue1}" label="drinks"
+                                              simple="true" id="sml1">
+                          <af:selectItem label="coffee" value="bean" shortDesc="Coffee from Kona"
+                                         id="si5"/>
+                          <f:selectItem itemLabel="tea" itemValue="leaf"
+                                        itemDescription="Tea from China"
+                                        id="si6"/>
+                          <af:selectItem disabled="true" label="orange juice" value="orange"
+                                         id="si7"/>
+                          <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                                        id="si8"/>
+                          <af:selectItem label="milk" value="moo" id="si9"/>
+                          <f:selectItems value="#{demoInput.selectItems}"
+                                         id="si10"/>
+                        </af:selectManyListbox>
+                      </af:panelGroupLayout>
+                    </af:panelWindow>
+                  </af:popup>
+                </af:panelFormLayout>
+              </af:panelWindow>
+            </af:popup>
+            <af:commandButton text="Show Window" id="cb3">
+              <af:showPopupBehavior popupId="popupWindow"/>
+            </af:commandButton>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

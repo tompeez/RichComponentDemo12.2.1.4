@@ -1,0 +1,56 @@
+/** Copyright (c) 2006, 2009 Oracle and/or its affiliates. All rights reserved */
+package oracle.adfdemo.view.components.rich;
+
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
+
+/**
+ * Get the skin-family to use. This returns the demoComponents when
+ * the skin component demos  are run.
+ */
+public class DemoComponentSkin
+{
+  public String getSkinFamily()
+  {
+    // If we're in the skin component tests, return the skinComponentTest skin.
+    FacesContext context = FacesContext.getCurrentInstance();
+    UIViewRoot viewRoot = context.getViewRoot();
+    if ((viewRoot != null) &&
+        (viewRoot.getViewId().indexOf(_SKIN_TEST_DIRECTORY) >= 0))
+    {
+      String viewId = viewRoot.getViewId();
+      
+      if (viewId != null && viewId.indexOf(_SKIN_TEST_DIRECTORY) >= 0)
+      {
+        if ((viewId.indexOf(_SKIN_TEST_DIRECTORY_INPUT) >=0) || 
+            (viewId.indexOf(_SKIN_TEST_DIRECTORY_SELECT) >=0))
+          return _TEST_SKIN_INPUT_SELECT;
+        else
+          return _TEST_SKIN_INPUT_OTHER;
+
+      }
+
+    }
+    
+    return _skinFamily;
+
+  }
+  
+  public void setSkinFamily(String family)
+  {
+    _skinFamily = family;
+  }
+  
+  private String _skinFamily = _ALTA_DEMO_SKIN;
+
+  static private final String _SKIN_TEST_DIRECTORY_INPUT = "/skinningKeys/input";
+  static private final String _SKIN_TEST_DIRECTORY_SELECT = "/skinningKeys/select";
+  static private final String _SKIN_TEST_DIRECTORY = "/skinningKeys";
+  static private final String _TEST_SKIN_INPUT_SELECT = "demoComponentsInputSelect";
+  static private final String _TEST_SKIN_INPUT_OTHER = "demoComponentsOther";
+  static private final String _RICH_DEMO_SKIN = "richDemo";
+  static private final String _FUSION_DEMO_SKIN = "fusion";
+  static private final String _SKYROS_DEMO_SKIN = "skyros";
+  static private final String _ALTA_DEMO_SKIN = "alta";
+
+}

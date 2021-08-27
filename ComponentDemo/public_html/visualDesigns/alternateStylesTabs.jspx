@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2017, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Alternate Styles Tabs Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}"  id="doc1">
+                 
+      <af:pageTemplate id="dmoTpl1" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Alternate tabs visual design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        
+        <f:facet name="center">
+          <af:panelHeader text="Alta v1.1 Tabs and Alternate Styles">
+            <af:panelGroupLayout layout="scroll">
+              <af:outputText value="Set current skin to 'AltaDemo'."/>
+
+              <af:spacer height="20"/>
+              <af:showDetailHeader text="New look for tabs in Alta v1.1" disclosed="false">
+                <af:panelGroupLayout>
+
+                  <af:outputText value="Decorative Box with Navigation Pane tabs in top facet"/>
+                  <af:decorativeBox topHeight="#{demoBranding.navigationTabBarHeight}" >
+                    <f:facet name="top">
+                      <af:navigationPane hint="tabs"  >
+                        <af:commandNavigationItem text="Page 1" partialSubmit="true"
+                                                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                                  itemListener="#{navigationPaneRemoveFeature.staticNavPaneTabItemListener}"
+                                                  shortDesc="Please click me" icon="/images/guy.gif"/>
+                        <af:commandNavigationItem text="Page 2" partialSubmit="true"
+                                                  selected="true"
+                                                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                                  itemListener="#{navigationPaneRemoveFeature.staticNavPaneTabItemListener}"/>
+                        <af:commandNavigationItem text="Page 3" partialSubmit="true"
+                                                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                                  itemListener="#{navigationPaneRemoveFeature.staticNavPaneTabItemListener}"/>
+                        <af:commandNavigationItem text="Page 4 (Disabled)" partialSubmit="true"
+                                                  disabled="true"
+                                                  actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                                  itemListener="#{navigationPaneRemoveFeature.staticNavPaneTabItemListener}"
+                                                  shortDesc="Nothing to click here"/>
+                      </af:navigationPane>
+                    </f:facet>
+                    <f:facet name="center">
+                      <af:panelGroupLayout layout="scroll">
+                        <af:outputText value="Text in decorative box center facet."/>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:decorativeBox>
+
+                  <af:spacer height="15"/>
+
+                  <af:outputText value="PanelTabbed"/>
+
+                  <af:panelGroupLayout layout="horizontal">
+                    <f:facet name="separator">
+                      <af:spacer width="10"/>
+                    </f:facet>  
+                    <af:panelTabbed childCreation="lazy" position="both" dimensionsFrom="disclosedChild" tabRemoval="all" inlineStyle="height:118px">
+                      <af:showDetailItem textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                         itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}" >
+                        <af:outputText value="Tab 1 First Child"/>
+                        <af:outputText value="Tab 1 Second Child"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem text="Tab 2" disclosed="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                        <af:outputText value="Tab 2 First Child"/>
+                        <af:outputText value="Tab 2 Second Child"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem textAndAccessKey="Disabled tab &amp;3" disabled="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      </af:showDetailItem>
+                      <af:showDetailItem text="Tab 4" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                        <af:outputText value="Tab 4 First Child"/>
+                        <af:outputText value="Tab 4 Second Child"/>
+                      </af:showDetailItem>
+                    </af:panelTabbed>  
+                    <af:panelTabbed childCreation="lazy" position="above" dimensionsFrom="disclosedChild" tabRemoval="all" inlineStyle="height:118px">
+                      <af:showDetailItem textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                         itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}" >
+                        <af:outputText value="Tab 1 First Child"/>
+                        <af:outputText value="Tab 1 Second Child"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem text="Tab 2" disclosed="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                        <af:outputText value="Tab 2 First Child"/>
+                        <af:outputText value="Tab 2 Second Child"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem textAndAccessKey="Disabled tab &amp;3" disabled="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      </af:showDetailItem>
+                    </af:panelTabbed>  
+                    <af:panelTabbed childCreation="lazy" position="below" dimensionsFrom="disclosedChild" tabRemoval="all" inlineStyle="height:118px">
+                      <af:showDetailItem textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                         itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}" >
+                        <af:outputText value="Tab 1 First Child"/>
+                        <af:outputText value="Tab 1 Second Child"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem text="Tab 2" disclosed="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                        <af:outputText value="Tab 2 First Child"/>
+                        <af:outputText value="Tab 2 Second Child"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem textAndAccessKey="Disabled tab &amp;3" disabled="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      </af:showDetailItem>
+                    </af:panelTabbed>  
+                  </af:panelGroupLayout>  
+                </af:panelGroupLayout>  
+              </af:showDetailHeader>
+
+              <af:spacer height="20"/>
+
+              <af:showDetailHeader text="Alternate styleclass to remove content border, except border between tabs/content" disclosed="false">
+                <af:panelGroupLayout layout="horizontal">
+                  <f:facet name="separator">
+                    <af:spacer width="10"/>
+                  </f:facet>  
+                  <af:panelTabbed childCreation="lazy" position="both" dimensionsFrom="disclosedChild" styleClass="AFTabSelectedUnderline AFTabContentBorderTabSideOnly"  inlineStyle="height:118px">
+                    <af:showDetailItem textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                       itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}" >
+                      <af:outputText value="Tab 1 First Child"/>
+                      <af:outputText value="Tab 1 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 2" disclosed="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      <af:outputText value="Tab 2 First Child"/>
+                      <af:outputText value="Tab 2 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="Disabled tab &amp;3" disabled="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 4" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      <af:outputText value="Tab 4 First Child"/>
+                      <af:outputText value="Tab 4 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 5" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}"/>
+                  </af:panelTabbed>
+                  <af:panelTabbed childCreation="lazy" position="above" dimensionsFrom="disclosedChild" styleClass="AFTabSelectedUnderline AFTabContentBorderTabSideOnly"  inlineStyle="height:118px">
+                    <af:showDetailItem textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                       itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}" >
+                      <af:outputText value="Tab 1 First Child"/>
+                      <af:outputText value="Tab 1 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 2" disclosed="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      <af:outputText value="Tab 2 First Child"/>
+                      <af:outputText value="Tab 2 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="Disabled tab &amp;3" disabled="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 5" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}"/>
+                  </af:panelTabbed>
+                  <af:panelTabbed childCreation="lazy" position="below" dimensionsFrom="disclosedChild" styleClass="AFTabSelectedUnderline AFTabContentBorderTabSideOnly"  inlineStyle="height:118px">
+                    <af:showDetailItem textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                       itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}" >
+                      <af:outputText value="Tab 1 First Child"/>
+                      <af:outputText value="Tab 1 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 2" disclosed="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      <af:outputText value="Tab 2 First Child"/>
+                      <af:outputText value="Tab 2 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="Disabled tab &amp;3" disabled="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 5" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}"/>
+                  </af:panelTabbed>
+                </af:panelGroupLayout>
+
+                <af:spacer height="15"/>
+
+                <af:showDetail  disclosedText="Achieved with styleclass: AFTabContentBorderTabSideOnly" inlineStyle="font-weight:bold">
+                  <f:verbatim>
+<pre>
+.AFTabContentBorderTabSideOnly.af_panelTabbed.p_AFTopTabs af|panelTabbed::body {
+  border-top: 1px solid -tr-property-ref(".AFBackgroundBorderColor:alias","color");
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0px;
+}
+
+.AFTabContentBorderTabSideOnly.af_panelTabbed.p_AFBottomTabs af|panelTabbed::body {
+  border-top: none;
+  border-bottom: 1px solid -tr-property-ref(".AFBackgroundBorderColor:alias","color");
+  border-left: none;
+  border-right: none;
+  border-radius: 0px;
+}
+
+.AFTabContentBorderTabSideOnly.af_panelTabbed.p_AFTopTabs.p_AFBottomTabs af|panelTabbed::body {
+  border-top: 1px solid -tr-property-ref(".AFBackgroundBorderColor:alias","color");
+  border-bottom: 1px solid -tr-property-ref(".AFBackgroundBorderColor:alias","color");
+  border-left: none;
+  border-right: none;
+  border-radius: 0px;
+}
+</pre>
+                  </f:verbatim>
+                </af:showDetail>
+
+              </af:showDetailHeader>  
+          
+              <af:spacer height="20"/>
+              <af:showDetailHeader text="Alternate styleclass to remove all content borders" disclosed="false">
+                <af:panelGroupLayout layout="horizontal">
+                  <f:facet name="separator">
+                    <af:spacer width="10"/>
+                  </f:facet>  
+                  <af:panelTabbed childCreation="lazy" position="both" dimensionsFrom="disclosedChild" styleClass="AFTabSelectedUnderline AFTabContentNoBorder"  inlineStyle="height:118px">
+                    <af:showDetailItem textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                       itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}" >
+                      <af:outputText value="Tab 1 First Child"/>
+                      <af:outputText value="Tab 1 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 2" disclosed="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      <af:outputText value="Tab 2 First Child"/>
+                      <af:outputText value="Tab 2 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="Disabled tab &amp;3" disabled="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 4" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      <af:outputText value="Tab 4 First Child"/>
+                      <af:outputText value="Tab 4 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 5" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}"/>
+                  </af:panelTabbed>  
+                  <af:panelTabbed childCreation="lazy" position="above" dimensionsFrom="disclosedChild" styleClass="AFTabSelectedUnderline AFTabContentNoBorder"  inlineStyle="height:118px">
+                    <af:showDetailItem textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                       itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}" >
+                      <af:outputText value="Tab 1 First Child"/>
+                      <af:outputText value="Tab 1 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 2" disclosed="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      <af:outputText value="Tab 2 First Child"/>
+                      <af:outputText value="Tab 2 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="Disabled tab &amp;3" disabled="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    </af:showDetailItem>
+                  </af:panelTabbed>  
+                  <af:panelTabbed childCreation="lazy" position="below" dimensionsFrom="disclosedChild" styleClass="AFTabSelectedUnderline AFTabContentNoBorder"  inlineStyle="height:118px">
+                    <af:showDetailItem textAndAccessKey="Ta&amp;b 1" icon="/images/info_status.png"
+                                       itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}" >
+                      <af:outputText value="Tab 1 First Child"/>
+                      <af:outputText value="Tab 1 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem text="Tab 2" disclosed="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                      <af:outputText value="Tab 2 First Child"/>
+                      <af:outputText value="Tab 2 Second Child"/>
+                    </af:showDetailItem>
+                    <af:showDetailItem textAndAccessKey="Disabled tab &amp;3" disabled="true" itemListener="#{panelTabbedRemoveFeature.staticPanelTabItemListener}">
+                    </af:showDetailItem>
+                  </af:panelTabbed>  
+                </af:panelGroupLayout>
+                
+                <af:spacer height="15"/>
+
+                <af:showDetail  disclosedText="Achieved with styleclass: AFTabContentNoBorder" inlineStyle="font-weight:bold">
+                  <f:verbatim>
+<pre>
+.AFTabContentNoBorder af|panelTabbed::body {
+  border: none;
+}
+</pre>
+                  </f:verbatim>
+                </af:showDetail>
+                
+              </af:showDetailHeader>
+              
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+      </af:pageTemplate>
+                 
+    </af:document>
+  </f:view>
+</jsp:root>

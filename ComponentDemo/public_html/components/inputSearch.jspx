@@ -1,0 +1,266 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2016, 2019, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="inputSearch Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        function hide(event)
+        {
+          event.cancel();
+          event.getSource().getParent().getParent().hide();
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputSearch"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="10px" id="s2"/>
+              </f:facet>
+              <af:messages id="m1"/>
+              <af:commandButton immediate="true" text="Update Data" id="cb1"
+                                inlineStyle="float: right; margin-right: 10px;">
+                <af:showPopupBehavior popupId="popupDialog"/>
+              </af:commandButton>
+              <af:popup id="popupDialog">
+                <af:dialog id="dialog" title="Update the model data on server" okVisible="false"
+                           cancelVisible="false">
+                  <af:panelGroupLayout layout="vertical" id="pgl99">
+                    <f:facet name="separator">
+                      <af:spacer height="10px" id="s49"/>
+                    </f:facet>
+                    <af:outputFormatted styleUsage="instruction" id="of29"
+                                      value="&lt;b>The inputSearch components in the page use REST
+                                      Service supporting ETags for cache validation.&lt;/b>" />
+                  <af:outputFormatted styleUsage="instruction" id="of39"
+                                       value="&lt;b>Modify the data from the table below, and
+                                       relaunch the suggestions popup to observe the updated
+                                       data &lt;/b>"/>
+                    <af:panelStretchLayout id="stretchExample" dimensionsFrom="auto"
+                                           inlineStyle="width: auto">
+                      <f:facet name="center">
+                        <af:table rowSelection="single" id="table1" var="row" varStatus="vs"
+                                  value="#{inputSearchDemo.allEmployees}" editingMode="clickToEdit"
+                                  summary="table data" columnStretching="last"
+                                  styleClass="AFStretchWidth">
+                          <af:column headerText="Id" id="c6" width="30">
+                            <af:outputText value="#{row.id}" id="it39"/>
+                          </af:column>
+                          <af:column headerText="First Name" id="c2">
+                            <af:inputText value="#{row.firstName}" simple="true" label="First Name"
+                                          autoSubmit="true" id="it97"/>
+                          </af:column>
+                          <af:column headerText="Last Name" id="c1">
+                            <af:inputText value="#{row.lastName}" simple="true" label="Last Name"
+                                          autoSubmit="true" id="it96"/>
+                          </af:column>
+                          <af:column headerText="Job Title" id="c7">
+                            <af:inputText value="#{row.jobTitle}" simple="true" label="Job Title"
+                                          autoSubmit="true" id="it94"/>
+                          </af:column>
+                          <af:column headerText="Email" id="c4" width="200">
+                            <af:inputText value="#{row.email}" label="Email" simple="true"
+                                          autoSubmit="true" id="it91"/>
+                          </af:column>
+                          <af:column headerText="Tags" id="c5" width="300">
+                            <af:inputText value="#{row.tags}" simple="true" label="Tags"
+                                          autoSubmit="true" id="it92"/>
+                          </af:column>
+                        </af:table>
+                      </f:facet>
+                    </af:panelStretchLayout>
+                  </af:panelGroupLayout>
+                  <f:facet name="buttonBar">
+                    <af:commandButton partialSubmit="true" text="Update data" id="cb9">
+                      <af:clientListener type="action" method="hide"/>
+                    </af:commandButton>
+                  </f:facet>
+                </af:dialog>
+              </af:popup>
+              <af:outputFormatted styleUsage="instruction"
+                                  value="&lt;b>This is a test case for rich inputSearch component.
+                        Use the editor to the right to adjust the attributes for this demo.&lt;/b>"
+                                  id="of1"/>
+              <af:inputSearch binding="#{editor.component}"
+                            id="iSearch"
+                            label="Select a person from the list: "
+                            valueAttribute="id"
+                            displayAttributes="fName lName id"
+                            value="#{inputSearchDemo.employeesSet}"
+                            selectionConverter="#{inputSearchDemo.selectionConverter}"
+                            partialTriggers="richCommand">
+                <af:searchSection type="default"
+                                  dataUrl="/rest/employees?cache=etag&amp;limit=5000" />
+                <!-- af:clientConverter getAsString="return '+' + value.substr(0,2) + ' ' + value.substr(2,4) + ' ' + value.substr(6,6);"/ -->
+              </af:inputSearch>
+              <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+              <af:commandButton text="full postback" id="commandButton1"/>
+
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The submitted value was: " id="ot1"/>
+                <af:outputText partialTriggers="richCommand iSearch" id="result"
+                                value="#{inputSearchDemo.employeesSet}"/>
+              </af:panelGroupLayout>
+              <af:spacer height="25px" id="s0"/>
+            </af:panelGroupLayout>
+
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer height="25px" id="s3"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction" value="&lt;b>Additional Demos&lt;/b>"
+                                  id="of2"/>
+              <af:panelGroupLayout layout="vertical" id="pgl5">
+                  <af:outputFormatted value="This demo shows inputSearch with suggestions in
+                                            &lt;b>tabular&lt;/b> format:" id="ot2"/>
+                  <af:inputSearch id="iSearch1"
+                                label="Select a person from the list (Filter by name): "
+                                valueAttribute="id"
+                                displayAttributes="fName lName"
+                                filterAttributes="fName lName jobTitle tags"
+                                selectionConverter="#{inputSearchDemo.selectionConverter}"
+                                autoSubmit="true"
+                                contentMode="table">
+                    <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                    <af:searchSection type="default"
+                      dataUrl="/#{request.contextPath}/rest/employees?cache=etag&amp;limit=5000" />
+                    <f:facet name="contentStamp">
+                      <af:sanitized >
+                        <td>{{fName}} {{lName}}</td> <td>{{jobTitle}}</td> <td>{{email}}</td> <td><span style="font-style: italic;">{{tags}}</span></td>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:inputSearch>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl6">
+                  <af:outputFormatted value="This demo shows inputSearch with suggestions in
+                  &lt;b>tabular&lt;/b> format along with &lt;b>content headers&lt;/b>:" id="ot3"/>
+                  <af:inputSearch id="iSearch2"
+                                label="Select a person from the list (Filter by name): "
+                                valueAttribute="id"
+                                displayAttributes="fName lName"
+                                filterAttributes="fName lName jobTitle tags"
+                                selectionConverter="#{inputSearchDemo.selectionConverter}"
+                                autoSubmit="true"
+                                contentMode="table">
+                    <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                    <af:searchSection type="default"
+                                      dataUrl="/rest/employees?cache=etag&amp;limit=5000" />
+                    <f:facet name="contentHeader">
+                      <af:sanitized>
+                        <th>Name</th> <th>Title</th> <th>Contact Email</th> <th><span style="font-style: italic;">Specializations</span></th>
+                      </af:sanitized>
+                    </f:facet>
+                    <f:facet name="contentStamp">
+                      <af:sanitized >
+                        <th scope="row">{{fName}} {{lName}}</th> <td>{{jobTitle}}</td> <td>{{email}}</td> <td><span style="font-style: italic;">{{tags}}</span></td>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:inputSearch>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl7">
+                  <af:outputFormatted value="This demo shows inputSearch with suggestions in
+                                            &lt;b>list&lt;/b> format, &lt;b>filtering on
+                                            specializations&lt;/b> in addition to name:" id="ot4"/>
+                  <af:inputSearch id="iSearch3"
+                        label="Select a person from the list (Filter by name and specialization): "
+                        valueAttribute="id"
+                        displayAttributes="fName lName"
+                        filterAttributes="fName lName jobTitle tags"
+                        selectionConverter="#{inputSearchDemo.selectionConverter}"
+                        autoSubmit="true"
+                        contentMode="list">
+                    <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                    <af:searchSection type="default"
+                                      dataUrl="/rest/employees?cache=etag&amp;limit=5000" />
+                    <f:facet name="contentStamp">
+                      <af:sanitized >
+                        <span style="font-size:1.2em">{{fName}} {{lName}}</span>&amp;nbsp;<span style="font-size:0.9em; padding-left: 8px">{{jobTitle}}</span> <br/> <b>Tags: </b><span style="font-style: italic;">{{tags}}</span>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:inputSearch>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl8">
+                  <af:outputFormatted value="This demo shows inputSearch with suggestions in
+                                            &lt;b>list&lt;/b> format with &lt;b>advanced
+                                            customization of suggestion display&lt;/b>:" id="ot5"/>
+                  <af:inputSearch id="iSearch4"
+                            label="Select a person from the list (Filter by name and job title): "
+                            valueAttribute="id"
+                            displayAttributes="fName lName"
+                            filterAttributes="fName lName jobTitle"
+                            selectionConverter="#{inputSearchDemo.selectionConverter}"
+                            autoSubmit="true"
+                            contentMode="list">
+                    <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                    <af:searchSection type="default"
+                                      dataUrl="/rest/employees?cache=etag&amp;limit=5000" />
+                    <f:facet name="contentStamp">
+                      <af:sanitized>
+                        <div style="height: 68px; line-height: 18px; white-space: nowrap">
+                          <div style="padding: 0px; margin: 0px; width: 64px; display: inline-block;">
+                            <img src="../../images/people/{{profileKey}}" height="56" width="56" style="vertical-align: bottom; border: 2px solid #B8AE07; padding: 2px; border-radius: 10px;"/>
+                          </div>
+                          <div style="padding-left: 10px; display: inline-block;">
+                            <div style="color: #4646D0;font-size: medium;">{{fName}} {{lName}}</div>
+                            <div style="color: #4F4F4F;">{{jobTitle}}</div>
+                            <div style="color: #4F4F4F; font-size: smaller;font-style: italic;">{{email}}</div>
+                          </div>
+                        </div>
+                      </af:sanitized>
+                    </f:facet>
+                  </af:inputSearch>
+              </af:panelGroupLayout>
+
+              <af:panelGroupLayout layout="vertical" id="pgl16">
+                <af:separator id="s6"/>
+                <af:outputFormatted styleUsage="instruction"
+                                    value="&lt;b>Links To other inputSearch picker Demos&lt;/b>"
+                                    id="of5"/>
+                <af:panelList id="pl1">
+                  <af:goLink text="Dependent Lists"
+                             destination="/faces/components/inputSearch/dependentLov.jspx"
+                             id="gl0"/>
+                  <af:goLink text="Preferred Suggestions (af:suggestionsSection)"
+                            destination="/faces/components/suggestionsSection.jspx"
+                            id="gl1"/>
+                  <af:goLink text="Toolbar Facet"
+                             destination="/faces/components/inputSearch/toolbarFacet.jspx"
+                             id="gl2"/>
+                  <af:goLink text="Templates"
+                             destination="/faces/components/inputSearch/templates.jspx"
+                             id="gl3"/>
+                  <af:goLink text="Starts With Filter Criteria"
+                             destination="/faces/components/inputSearch/startsWithFiltering.jspx"
+                             id="gl4"/>
+                  <af:goLink text="Server Filtering with demos of dependent lists and Preferred suggestions"
+                             destination="/faces/components/inputSearch/serverFiltering.jspx"
+                             id="gl5"/>
+                  <af:goLink text="Inline Create Feature Demo"
+                             destination="/faces/components/inputSearch/inlineCreate.jspx"
+                             id="gl6"/>
+                  <af:goLink text="Multiple Search Sections"
+                             destination="/faces/components/inputSearch/searchSections.jspx"
+                             id="gl7"/>
+                  <af:goLink text="Multiple Selection Demo"
+                             destination="/faces/components/inputSearch/multiSelection.jspx"
+                             id="gl8"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

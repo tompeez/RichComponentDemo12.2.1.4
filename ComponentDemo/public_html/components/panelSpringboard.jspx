@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelSpringboard Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+<af:resource type="javascript">
+function backToGrid(actionEvent)
+{
+  actionEvent.cancel();
+  var eventSource = actionEvent.getSource();
+  var object_navigator = eventSource.findComponent("panelSpringboardId");
+  object_navigator.setProperty(AdfRichPanelSpringboard.DISPLAY_MODE, "grid", true);
+}
+</af:resource>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelSpringboard"/>
+        <f:attribute name="visualDesignName" value="springboard"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelSplitter positionedFromEnd="true" splitterPosition="240" orientation="vertical"
+                            id="ps1" dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelGroupLayout layout="scroll" id="scrl"
+                                   inlineStyle="padding:10px;">
+                        <af:goLink id="logo" text="Back to Grid">
+                          <af:clientListener type="click"
+                                             method="backToGrid"/>
+                        </af:goLink>
+                <af:panelSpringboard id="panelSpringboardId" displayMode="strip" childCreation="lazy" 
+                                     binding="#{editor.component}">                          
+                  <af:showDetailItem id="item1" text="Home" shortDesc="Home"  badge="3"
+                                     icon="/images/alta_v1/buildapplications_48.png" >
+                    <af:outputText value="Item 1 First Child. Zippety Doo Dah, Zippety Yay. My Oh My what a wonderful day! Plenty of sunshine coming my way."
+                                   id="ot1Item1"/>
+                    <af:outputText value="Tab 1 Second Child" id="ot2Item1"/>
+                    <af:spacer height="200px"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="svgIcon" text="SVG Icon"
+                       shortDesc="SVG Icon" 
+                       iconDelivery="inline"
+                       icon="/images/eclipse.svg">
+                      <af:outputText value="This icon is rendered as inline svg element. The hover state of this icon is changed through CSS styles." 
+                                     id="ot106"/> 
+                     <af:spacer height="180px"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="cachedSvgIcon" text="Cached SVG Icon"
+                       shortDesc="SVG Icon" 
+                       iconDelivery="fetchAndInline"
+                       icon="/images/eclipse.svg">
+                      <af:outputText value="This icon is cached in browser and is rendered as inline svg element. The hover state of this icon is changed through CSS styles." 
+                                     id="ot107"/> 
+                     <af:spacer height="180px"/>
+                  </af:showDetailItem>  
+                  <af:showDetailItem id="item2" disclosed="true" 
+                                     disclosureListener="#{springboardBean.wait}"
+                                     icon="/images/alta_v1/hranalytics_48.png"
+                                     shortDesc="icon only item">
+                    <af:outputText value="Item 2 First Child. Mister Bluebird is on my shoulder. It's the truth!"
+                                   id="ot1Item2"/>
+                    <af:outputText value="Item 2 Second Child" id="ot2Item2"/>
+                    <af:commandButton id="cbTab2" partialSubmit="true" 
+                                      text="Cause Partial Submit"/>
+                    <af:spacer height="180px"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="item3"
+                                     textAndAccessKey="&amp;Tasks"
+                                     shortDesc="Tasks"
+                                     icon="/images/alta_v1/intergration_48.png">
+                    <af:outputText value="Item 3 First Child. " id="ot1Item2aaa"/>
+                    <af:inputColor label="Color:" id="ic1"/>
+                    <af:inputComboboxListOfValues label="LOV:"
+                        popupTitle="Search and Result Dialog" id="iclov1"/>
+                    <af:inputDate label="Date:" id="id1"/>
+                    <af:inputFile label="File:" id="if1"/>
+                    <af:inputListOfValues label="LOV:"
+                        popupTitle="Search and Result Dialog" id="ilov1"/>
+                    <af:inputNumberSlider label="Slider:" id="ins1"/>
+                    <af:inputNumberSpinbox label="Spinbox:" id="ins2"/>
+                    <af:inputRangeSlider label="Range Slider:" id="irs1"/>
+                    <af:inputText label="Input Text:" id="it1"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="item4" text="Wiki"
+                                     shortDesc="Wiki" 
+                                     icon="/images/alta_v1/qual_actionlink_48.png">
+                    <af:outputText value="Item 4 First Child. Zippety Doo Dah, Zippety Yay. Wonderful feeling, wonderful day"
+                                   id="ot1Item4"/>
+                    <af:outputText value="Item 4 Second Child" id="ot2Item4"/>
+                    <af:commandButton id="cbItem4" partialSubmit="true"
+                                      text="Cause Partial Submit"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="item5" text="Source"
+                                     shortDesc="Social"
+                                     icon="/images/alta_v1/qual_adfskinfile_48.png">
+                    <af:decorativeBox theme="default" topHeight="2em"
+                                      inlineStyle="width: 175px; height: 90px;" id="db4">
+                        <f:facet name="top">
+                          <af:panelGroupLayout layout="scroll" id="pgl11">
+                            <af:outputText value="Default theme (top facet)"
+                                           id="ot9"/>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                          <af:panelGroupLayout layout="scroll" id="pgl12">
+                            <af:outputText value="Default theme contents"
+                                           id="ot10"/>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </af:decorativeBox>
+                      <af:spacer height="180px"/>
+                  </af:showDetailItem>
+      
+                  <af:showDetailItem id="item6" text="Team" 
+                       shortDesc="Team" 
+                       icon="/images/alta_v1/qual_attach_48.png" >                     
+                       <af:outputText value="Team contents"
+                                           id="ot101"/>
+                     <af:spacer height="180px"/>
+                  </af:showDetailItem>
+                  <af:showDetailItem id="item7" text="Deployments"
+                       shortDesc="Deployments"  
+                       icon="/images/alta_v1/qual_bpel_48.png">
+                    <af:spacer height="180px"/>
+                  </af:showDetailItem> 
+                  <af:showDetailItem id="item8" text="List"
+                       shortDesc="List" 
+                       icon="/images/alta_v1/qual_catalog_48.png">
+                      <af:outputText value="List contents"
+                                           id="ot103"/>
+                      <af:spacer height="180px"/>
+                  </af:showDetailItem> 
+                  <af:showDetailItem id="item9" text="Very Complicated Network"
+                       shortDesc="Network" 
+                       icon="/images/alta_v1/qual_database_48.png">
+                      <af:outputText value="Network contents"
+                                           id="ot104"/>
+                    <af:spacer height="180px"/>
+                  </af:showDetailItem>  
+                  <af:showDetailItem id="item10" text="Personal" badge="5" disabled="true"
+                       shortDesc="Personal" 
+                       icon="/images/alta_v1/webapplication_48.png">
+                      <af:outputText value="Personal contents" id="ot105"/> 
+                     <af:spacer height="180px"/>
+                  </af:showDetailItem>  
+             
+             
+                </af:panelSpringboard>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="scroll" id="pgl4">
+                <af:outputText value="See also:" id="ot14"/>
+                <af:panelList id="pl1">
+                  <af:goLink text="PanelSpringboard App" destination="/feature/panelSpringboardApp.jspx" id="gltf"/>
+                  <af:goLink text="PanelSpringboard in PanelSplitter" destination="/components/panelSpringboard/panelSpringboardInPanelSplitter.jspx" id="gltf2"/>
+               </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

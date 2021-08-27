@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  version="2.1"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:componentDef
+    var="attrs"
+    componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Test page for the dynamic declarative component.</description>
+        <facet>
+          <description>
+            <![CDATA[Content to be rendered as meta data inside the
+            "head" section.]]>
+          </description>
+          <facet-name>testFacet</facet-name>
+        </facet>
+        <attribute>
+          <description>Text to display</description>
+          <attribute-name>text</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Example array to iterate over</description>
+          <attribute-name>items</attribute-name>
+          <!--
+            Note that the odd Array syntax is due to the Java Class.forName method syntax for
+            specifying an array of reference objects. The rich client may be enhanced at a later
+            date to allow the more friendly syntax of "java.lang.String[]"
+          -->
+          <attribute-class>[[Ljava.lang.String;</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+
+    <af:outputText value="Start of dynamic declarative component example"
+                   id="dcot1"/>
+
+    <!--
+      Example of using attributes of the declarative component.
+
+        Note: Partial triggers on the component are for storage, they have to be applied to
+              child components in the declarative component to have an effect. The partial trigger
+              will update these components, but not the full declarative component. Therefore,
+              if it is desired to change the view ID of the <af:declarativeComponent /> tag, the
+              parent component must be the target of a partial update.
+    -->
+
+    <af:inputText
+      id="lwdcInputText"
+      value="#{attrs.text}"
+      label="Text attribute passed in: "
+      readOnly="true"
+      partialTriggers="#{attrs.partialTriggers}" />
+
+    <!--
+      Example to show that iterators work inside the dynamic declarative component.
+      The including page uses an <af:panelFormLayout/> and the iterated components will still
+      correctly align
+    -->
+    <af:outputText value="Before iterating over the array" id="dcot2"/>
+    <af:iterator
+      var="_item"
+      value="#{attrs.items}"
+      varStatus="_vs" id="dci1">
+      <af:inputText
+        id="itemsText"
+        readOnly="true"
+        label="Item ##{_vs.index + 1} in the array:"
+        value="#{_item}" />
+    </af:iterator>
+    <af:outputText value="After iterating over the array" id="dcot3"/>
+
+    <!--
+      To insert a facet defined on the main page, simply use <af:facetRef /> with the name
+      of the facet. A facet may only be referenced once in the declarative component.
+    -->
+    <af:outputText value="Before the contents of the facet" id="dcot4"/>
+    <af:facetRef facetName="testFacet" />
+    <af:outputText value="After the contents of the facet" id="dcot5"/>
+
+    <af:outputText value="End of dynamic declarative component example"
+                   id="dcot6"/>
+  </af:componentDef>
+</jsp:root>

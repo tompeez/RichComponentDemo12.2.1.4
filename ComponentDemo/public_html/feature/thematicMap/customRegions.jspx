@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map Custom Regions Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle"
+                     value="Thematic Map Custom Regions Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Thematic Map Custom Regions"/>
+        <f:facet name="start">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <af:outputFormatted value="Demonstrates the use of custom region data in a Thematic Map"
+                                id="of1" inlineStyle="font-weight:bold;"/>
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <dvt:thematicMap id="thematicMap" basemap="usa" drilling="on" maintainDrill="true"
+                           controlPanelBehavior="initExpanded" summary="United States custom regions on thematic map">               
+            <af:transition transition="auto" triggerType="display"/>     
+            <af:transition transition="auto" triggerType="drill"/>
+            <dvt:customAreaLayer id="crl1" value="#{tmapBean.subRegionModel}" var="row" varStatus="rowStatus"
+                                 extendsLayer="states">
+              <dvt:customArea areaId="#{row.name}" label="#{row.name}" areaList="#{row.subRegions}" id="ca1"/>
+            </dvt:customAreaLayer>
+            <dvt:areaLayer id="custom" layer="crl1">
+              <dvt:areaDataLayer contentDelivery="immediate" value="#{tmapBean.subRegionModel}" selectionMode="single"
+                                 var="row" varStatus="rowStatus" id="adl1">
+                <dvt:areaLocation name="#{row.name}" id="al1">
+                  <dvt:area fillColor="#{row.color}" shortDesc="#{row.subRegions}" id="a1" value="#{row.name}"/>
+                </dvt:areaLocation>
+              </dvt:areaDataLayer>
+            </dvt:areaLayer>
+            <dvt:areaLayer id="areaLayerS" layer="states">
+              <dvt:areaDataLayer id="dataLayerS" selectionMode="multiple" contentDelivery="immediate"
+                                 value="#{tmapBean.colorModel}" var="row" varStatus="rowStatus">
+                <dvt:areaLocation id="areaLocS" name="#{row.name}">
+                  <dvt:area id="area1S" fillColor="#{row.color}"></dvt:area>
+                </dvt:areaLocation>
+              </dvt:areaDataLayer>
+            </dvt:areaLayer>
+            <dvt:areaLayer id="areaLayer" layer="counties">
+              <dvt:areaDataLayer id="dataLayer" selectionMode="single" contentDelivery="immediate"
+                                 value="#{tmapBean.countyModel}" var="row" varStatus="rowStatus">
+                <dvt:areaLocation id="areaLoc" name="#{row.name}">
+                  <dvt:area id="area1" fillColor="#{row.color}" value="#{row.category}"></dvt:area>
+                </dvt:areaLocation>
+              </dvt:areaDataLayer>
+            </dvt:areaLayer>
+            <dvt:legend label="Sales Regions" id="l1">
+              <dvt:legendSection source="custom:adl1:a1" id="ls1"/>
+              <dvt:legendSection label="Counties" source="areaLayer:dataLayer:areaLoc" id="ls3"/>
+            </dvt:legend>
+          </dvt:thematicMap>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

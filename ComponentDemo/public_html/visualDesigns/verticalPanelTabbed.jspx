@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2017, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Vertical PanelTabbed Design Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+
+      <af:resource type="javascript">
+
+function toggleTabText(event)
+{
+  event.cancel();
+  var source = event.getSource();
+  var id = source.getProperty("victim");
+  var comp = AdfPage.PAGE.findComponent(id);
+  var mode = comp.getProperty("verticalTabMode");
+  if (mode == "iconOnly")
+    comp.setProperty("verticalTabMode", "iconAndText");
+  else 
+    comp.setProperty("verticalTabMode", "iconOnly");
+}
+
+      </af:resource>                  
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Vertical PanelTabbed Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelTabbed dimensionsFrom="#{sessionScope.panelTabbedDimensionsFrom}"
+                          position="end"
+                          id="binky" binding="#{verticalPanelTabbedBean.panelTabbedBinding}">
+            <af:showDetailItem textAndAccessKey="Ta&amp;b 1" 
+                         icon="/images/icon_pie_24X24_ena.png"
+                         hoverIcon="/images/icon_pie_24X24_ovr.png"
+                         depressedIcon="/images/icon_pie_24X24_sel.png" 
+                         disabledIcon="/images/icon_pie_24X24_dis.png" >
+              <af:outputText value="Tab 1 First Child"/>
+              <af:outputText value="Tab 1 Second Child"/>
+              <af:spacer height="300px"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tab 2" disclosed="true"
+                         icon="/images/icon_chat_24X24_ena.png"
+                         hoverIcon="/images/icon_chat_24X24_ovr.png"
+                         depressedIcon="/images/icon_chat_24X24_sel.png" 
+                         disabledIcon="/images/icon_chat_24X24_dis.png" 
+                        stretchChildren="#{requestScope.showDetailItemStretchChildren}">
+                <af:outputText value="Wide text 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 "/>
+
+                <af:panelGroupLayout id="pgl1" layout="horizontal">
+                  <af:button text="Toggle Tab Text" partialSubmit="true" id="toggleButton">
+                    <af:clientListener type="action" method="toggleTabText"/>
+                    <af:clientAttribute name="victim" value="dmoTpl:binky"/>
+                  </af:button>
+                  <af:button text="Display Toggle Icon" partialSubmit="true" id="displayToggleIcon" actionListener="#{verticalPanelTabbedBean.displayToggleIcon}">
+                  </af:button>
+                  <af:button text="Hide Toggle Icon" partialSubmit="true" id="hideToggleIcon" actionListener="#{verticalPanelTabbedBean.hideToggleIcon}">
+                  </af:button>  
+                </af:panelGroupLayout>
+          
+                <af:outputText value="Wide text 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 "/>
+                <af:commandButton partialSubmit="true"
+                                  text="Cause Partial Submit"/>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="Disabled tab &amp;3"
+                               disabled="true" 
+                         icon="/images/icon_stats24X24_ena.png"
+                         hoverIcon="/images/icon_stats24X24_ovr.png"
+                         depressedIcon="/images/icon_stats24X24_sel.png" 
+                         disabledIcon="/images/icon_stats24X24_dis.png" >
+              <af:outputText value="Tab 3 Only Child"/>
+              <af:spacer height="250px"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tab 4" 
+                         icon="/images/icon_subscriptions2_24X24_ena.png"
+                         hoverIcon="/images/icon_subscriptions2_24X24_ovr.png"
+                         depressedIcon="/images/icon_subscriptions2_24X24_sel.png" 
+                         disabledIcon="/images/icon_subscriptions2_24X24_dis.png" >
+              <af:outputText value="Tab 4 First Child"/>
+              <af:outputText value="Tab 4 Second Child"/>
+              <af:commandButton partialSubmit="true"
+                                text="Cause Partial Submit"/>
+              <af:spacer height="280px"/>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="Ta&amp;b 5" 
+                               icon="/images/icon_library_24X24_ena.png"
+                               hoverIcon="/images/icon_library_24X24_ovr.png"
+                               depressedIcon="/images/icon_library_24X24_sel.png" 
+                               disabledIcon="/images/icon_library_24X24_dis.png" 
+                               shortDesc="tab 5 short desc" >
+              <af:outputText value="Tab 5 First Child"/>
+              <af:outputText value="Tab 5 Second Child"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tab 6" 
+                               icon="/images/icon_chat_24X24_ena.png"
+                               hoverIcon="/images/icon_chat_24X24_ovr.png"
+                               depressedIcon="/images/icon_chat_24X24_sel.png" 
+                               disabledIcon="/images/icon_chat_24X24_dis.png" 
+                               shortDesc="tab 6 short desc">
+              <af:outputText value="Tab 6 First Child"/>
+              <af:outputText value="Tab 6 Second Child"/>
+            </af:showDetailItem>
+            <af:showDetailItem textAndAccessKey="tab &amp;7" 
+                               icon="/images/icon_pie_24X24_ena.png"
+                               hoverIcon="/images/icon_pie_24X24_ovr.png"
+                               depressedIcon="/images/icon_pie_24X24_sel.png" 
+                               disabledIcon="/images/icon_pie_24X24_dis.png" 
+                               shortDesc="tab 7 short desc">
+              <af:outputText value="Tab 7 Only Child"/>
+            </af:showDetailItem>
+            <af:showDetailItem text="Tab 8" 
+                               icon="/images/icon_briefcase_24X24_ena.png"
+                               hoverIcon="/images/icon_briefcase_24X24Ovr.png"
+                               depressedIcon="/images/icon_briefcase_24X24_sel.png" 
+                               disabledIcon="/images/icon_briefcase_24X24_dis.png" 
+                               shortDesc="tab 8 short desc">
+              <af:outputText value="Tab 8 First Child"/>
+              <af:outputText value="Tab 8 Second Child"/>
+              <af:spacer height="180px"/>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+        <af:panelGroupLayout />
+        </f:facet>
+        
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>
+
+

@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='utf-8'?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="2.1">
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Dynamic declarative component for the demo finder.</description>
+      </component>
+    </af:xmlContent>
+    <af:panelGroupLayout layout="horizontal" id="findPgl" theme="#{demoSkin.theme4}">
+      <af:panelLabelAndMessage id="findPlm" for="findIt" label="Find">
+        <af:inputText id="findIt" label="Find" value="#{demoFind.searchText}"
+                      shortDesc="Search for a demo page" simple="true"
+                      contentStyle="#{mobileSettings.simplifiedPresentation ? 'width:6em' : ''}">
+          <af:autoSuggestBehavior suggestedItems="#{demoFind.suggestedComponents}"/>
+        </af:inputText>
+        <f:facet name="end">
+          <af:panelGroupLayout id="findEnd" layout="horizontal">
+            <af:commandImageLink id="doFind" shortDesc="Go" action="#{demoFind.execute}"
+                                 partialSubmit="true" icon="/images/go-e.png"
+                                 hoverIcon="/images/go-h.png" depressedIcon="/images/go-p.png"
+                                 rendered="#{!adfFacesContext.rightToLeft}"/>
+            <af:commandImageLink id="doFindR" shortDesc="Go" action="#{demoFind.execute}"
+                                 partialSubmit="true" icon="/images/go-er.png"
+                                 hoverIcon="/images/go-hr.png" depressedIcon="/images/go-pr.png"
+                                 rendered="#{adfFacesContext.rightToLeft}"/>
+            <af:spacer width="6" id="findSpE" rendered="#{!demoSkin.altaBased}"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelLabelAndMessage>
+    </af:panelGroupLayout>
+  </af:componentDef>
+</jsp:root>

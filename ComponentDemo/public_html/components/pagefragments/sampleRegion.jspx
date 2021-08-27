@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:panelGroupLayout id="pgl1" layout="scroll">
+    <af:panelHeader text="This is region 1 1 1:#{demo.viewId}" id="ph1">
+      <af:inputText readOnly="true" label="This region was called from"
+                    value="#{demo.regionParentViewId}" id="it1"/>
+      <af:commandButton text="switch to region 2" id="cb1">
+        <af:setPropertyListener from="#{'/components/pagefragments/sample2Region.jspx'}"
+                                to="#{sessionScope['regionModel.viewId']}" type="action"/>
+      </af:commandButton>
+      <af:commandButton text="Fire recursive invocation"
+                        actionListener="#{regionModel.invokeRecursively}" id="cb2"/>
+      <af:commandButton text="Next Region" action="NEXT" id="cb3"/>
+    </af:panelHeader>
+    <af:separator id="s1"/>
+    <af:outputText value="Modify value to test uncommitted data warning." id="ot3"/>
+    <af:inputText label="Test Input" value="Modify me" id="it5"/>
+    <af:button text="Check uncommitted data from inside of a region" immediate="true"
+               partialSubmit="true" actionListener="#{demoPanelLabelAndMessage.createFacesMessage}"
+               id="b1">
+      <af:checkRegionUncommittedDataBehavior message="Displaying a custom message"/>
+    </af:button>
+  </af:panelGroupLayout>
+</jsp:root>
+

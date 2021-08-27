@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Toolbar Visual Design Demo" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.visualDesignTemplate}">
+        <f:attribute name="headerGlobalSize" value="175"/>
+        <f:attribute name="header1Size" value="175"/>
+        <f:attribute name="header2Size" value="175"/>
+        <f:attribute name="footer2Size" value="0"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:attribute name="auxiliaryGlobalSize" value="200"/>
+        <f:attribute name="auxiliaryGlobalCollapsed" value="false"/>
+
+        <f:facet name="branding">
+          <af:outputText value="Toolbar Visual Design Demo" id="ot1"/>
+        </f:facet>
+
+        <f:facet name="navigationGlobal">
+          <af:navigationPane hint="buttons" id="np1">
+            <af:commandNavigationItem destination="index.jspx" text="Visual Designs" id="vds"/>
+          </af:navigationPane>
+        </f:facet>
+
+        <f:facet name="navigation1">
+          <af:panelStretchLayout endWidth="40px" id="psl1">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation1" hint="tabs" id="np2">
+                <af:commandNavigationItem partialSubmit="true" text="Primary/Medium Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni4"></af:commandNavigationItem>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:panelStretchLayout endWidth="40px" id="psl2">
+            <f:facet name="center">
+              <af:navigationPane shortDesc="navigation2" hint="tabs" id="np3">
+                <af:commandNavigationItem partialSubmit="true" text="Secondary/Light Theme"
+                                          selected="true"
+                                          actionListener="#{demoCommandNavigationItem.navigationItemAction}"
+                                          id="cni9"/>
+              </af:navigationPane>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+
+        <f:facet name="auxiliaryGlobal">
+              <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+                  <af:spacer height="10px" id="s21"/>
+                  <af:panelHeader text="Related Links" id="ph1">
+                    <af:panelGroupLayout layout="vertical">
+                      <af:goLink text="Visual Design - button"
+                                 destination="/visualDesigns/button.jspx"/>
+                      <af:goLink text="Component - commandToolbarButton"
+                                 destination="/components/commandToolbarButton.jspx" id="gl1"/>
+                      <af:goLink text="Component - toolbox" destination="/components/toolbox.jspx"
+                                 id="gl2"/>
+                      <af:goLink text="Component - toolbar" destination="/components/toolbar.jspx"
+                                 id="gl3"/>
+                    </af:panelGroupLayout>
+                  </af:panelHeader>
+                <af:spacer height="15px"/>
+                <af:outputText value="Move splitter to cause overflow!"/>
+              </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/panelPageTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc">
+                <af:commandNavigationItem
+                  destination="index.jspx"
+                  text="Visual Designs" id="cni2"/>
+                <af:commandNavigationItem
+                  text="Toolbar Visual Design Demo" id="cni3"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="contextGlobal">
+          <af:panelSplitter orientation="horizontal" splitterPosition="100"
+                            positionedFromEnd="true" inlineStyle="height: 130px;" styleClass="AFStretchWidth">
+            <f:facet name="first" >
+              <af:panelGroupLayout layout="scroll">
+                <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+
+                  <af:spacer height="5px" id="s1"/>
+                  <af:outputText value="Toolbars (Global/Dark) - Two row toolbox example, containing menuBar, menu, toolbar, commandToolbarButton, commandButton, and quickQuery"/>
+                  <af:spacer height="5px" id="s2"/>
+                  <af:toolbox id="t1">
+                    <af:group id="g2">
+                      <af:menuBar id="mb1">
+                        <af:menu text="Objects" id="m1">
+                          <af:commandMenuItem text="Item 1" id="cmi1"/>
+                          <af:commandMenuItem text="Item 2" id="cmi2"/>
+                          <af:commandMenuItem text="Item 3" id="cmi3"/>
+                        </af:menu>
+                        <af:menu text="View" id="m2">
+                          <af:commandMenuItem text="Item 1" id="cmi4"/>
+                          <af:commandMenuItem text="Item 2" id="cmi5"/>
+                          <af:commandMenuItem text="Item 3" id="cmi6"/>
+                        </af:menu>
+                        <af:menu text="Format" id="m3">
+                          <af:commandMenuItem text="Item 1" id="cmi7"/>
+                          <af:commandMenuItem text="Item 2" id="cmi8"/>
+                          <af:commandMenuItem text="Item 3" id="cmi9"/>
+                        </af:menu>
+                        <af:menu text="Empty" shortDesc="Empty appears disabled" id="m4"/>
+                      </af:menuBar>
+                      <af:toolbar flex="1" id="t2">
+                        <af:group id="g3">
+                          <!-- icon, no text -->
+                          <af:commandToolbarButton icon="/images/new_ena.png" shortDesc="Create"
+                                                   id="ctb1"/>
+                          <af:commandToolbarButton icon="/images/update_ena.png" shortDesc="Update"
+                                                   id="ctb2"/>
+                          <af:commandToolbarButton icon="/images/delete_ena.png" shortDesc="Delete"
+                                                   id="ctb3"/>
+                          <af:commandToolbarButton icon="/images/backarrow.gif"
+                                                   disabledIcon="/images/backarrow_gray.gif"
+                                                   shortDesc="back (disabled)" disabled="true" id="ctb4"/>
+                          <af:commandToolbarButton icon="/images/bold16.png" shortDesc="bold (selected)"
+                                                   type="check" selected="true" id="bold11"/>
+                        </af:group>
+                        <af:group id="g4">
+                          <!-- icon and text -->
+                          <af:commandToolbarButton icon="/images/unfreeze_ena.png" text="Unfreeze"
+                                                   shortDesc="Unfreeze" id="ctb5"/>
+                          <af:commandToolbarButton icon="/images/maximize_ena.png" text="Maximize"
+                                                   shortDesc="Maximize" id="ctb6"/>
+                          <af:commandToolbarButton icon="/images/backarrow.gif"
+                                                   disabledIcon="/images/backarrow_gray.gif" text="back"
+                                                   shortDesc="back (disabled)" disabled="true" id="ctb7"/>
+                          <af:commandToolbarButton icon="/images/bold16.png" text="bold"
+                                                   shortDesc="bold (selected)" type="check"
+                                                   selected="true" id="bold12"/>
+                        </af:group>
+                        <af:group id="g5">
+                          <!-- no icon, text -->
+                          <af:commandToolbarButton text="Refresh" shortDesc="Refresh" id="ctb8"/>
+                          <af:commandToolbarButton text="back" shortDesc="back (disabled)" disabled="true"
+                                                   id="ctb9"/>
+                          <af:commandToolbarButton text="bold" shortDesc="bold (selected)" type="check"
+                                                   selected="true" id="bold13"/>
+                        </af:group>
+                        <af:group id="g6">
+                          <af:commandToolbarButton icon="/images/email.png" shortDesc="E-Mail"
+                                                   id="ctb10"/>
+                          <af:commandToolbarButton icon="/images/snapshot.png" shortDesc="Snapshot"
+                                                   id="ctb11"/>
+                          <af:commandButton text="Text Button"
+                                            shortDesc="regular button (not a commandToolbarButton)"
+                                            id="cb1"/>
+                        </af:group>
+                      </af:toolbar>
+                    </af:group>
+                    <af:toolbar flex="1" id="t3">
+                      <af:quickQuery label="Search" searchDesc="search"
+                                     value="#{demoQuickQuery.queryDescriptor}"
+                                     queryListener="#{demoQuickQuery.processQuery}" id="qq1"/>
+                    </af:toolbar>
+                  </af:toolbox>
+                  <af:spacer height="5px" id="s3"/>
+                  <af:outputText value="Example showing commandToolbarButtons not on a toolbar" id="ot3"/>
+                  <af:spacer height="5px" id="s4"/>
+                  <af:panelGroupLayout layout="horizontal" id="pgl2">
+                    <f:facet name="separator">
+                      <af:spacer width="2px" id="s5"/>
+                    </f:facet>
+                    <!-- icon, no text -->
+                    <af:commandToolbarButton icon="/images/new_ena.png" shortDesc="Create" id="ctb12"/>
+                    <af:commandToolbarButton icon="/images/update_ena.png" shortDesc="Update" id="ctb13"/>
+                    <af:commandToolbarButton icon="/images/delete_ena.png" shortDesc="Delete" id="ctb14"/>
+                    <af:commandToolbarButton icon="/images/backarrow.gif"
+                                             disabledIcon="/images/backarrow_gray.gif"
+                                             shortDesc="back (disabled)" disabled="true" id="ctb15"/>
+                    <af:commandToolbarButton icon="/images/bold16.png" shortDesc="bold (selected)"
+                                             type="check" selected="true" id="bold61"/>
+                    <!-- icon and text -->
+                    <af:commandToolbarButton icon="/images/unfreeze_ena.png" text="Unfreeze"
+                                             shortDesc="Unfreeze" id="ctb16"/>
+                    <af:commandToolbarButton icon="/images/maximize_ena.png" text="Maximize"
+                                             shortDesc="Maximize" id="ctb17"/>
+                    <af:commandToolbarButton icon="/images/backarrow.gif"
+                                             disabledIcon="/images/backarrow_gray.gif" text="back"
+                                             shortDesc="back (disabled)" disabled="true" id="ctb18"/>
+                    <af:commandToolbarButton icon="/images/bold16.png" text="bold"
+                                             shortDesc="bold (selected)" type="check" selected="true"
+                                             id="bold62"/>
+                    <!-- no icon, text -->
+                    <af:commandToolbarButton text="Refresh" shortDesc="Refresh" id="ctb19"/>
+                    <af:commandToolbarButton text="back" shortDesc="back (disabled)" disabled="true"
+                                             id="ctb20"/>
+                    <af:commandToolbarButton text="bold" shortDesc="bold (selected)" type="check"
+                                             selected="true" id="bold63"/>
+                    <af:commandToolbarButton icon="/images/email.png" shortDesc="E-Mail" id="ctb21"/>
+                    <af:commandToolbarButton icon="/images/snapshot.png" shortDesc="Snapshot" id="ctb22"/>
+                  </af:panelGroupLayout>
+
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+                <af:outputText value="Move splitter to cause overflow!"/>
+              </af:panelGroupLayout>
+            </f:facet>
+
+          </af:panelSplitter>
+
+        </f:facet>
+
+        <f:facet name="toolbar1">
+              <af:panelGroupLayout layout="scroll">
+                <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+
+                  <af:spacer height="5px" id="s6"/>
+                  <af:outputText value="Toolbars (Primary/Medium) - Two row toolbox example, containing menuBar, menu, toolbar, commandToolbarButton, commandButton, and quickQuery"
+                                 id="ot4"/>
+                  <af:spacer height="5px" id="s7"/>
+                  <af:toolbox id="t4">
+                    <af:group id="g7">
+                      <af:menuBar id="mb2">
+                        <af:menu text="Objects" id="m5">
+                          <af:commandMenuItem text="Item 1" id="cmi10"/>
+                          <af:commandMenuItem text="Item 2" id="cmi11"/>
+                          <af:commandMenuItem text="Item 3" id="cmi12"/>
+                        </af:menu>
+                        <af:menu text="View" id="m6">
+                          <af:commandMenuItem text="Item 1" id="cmi13"/>
+                          <af:commandMenuItem text="Item 2" id="cmi14"/>
+                          <af:commandMenuItem text="Item 3" id="cmi15"/>
+                        </af:menu>
+                        <af:menu text="Format" id="m7">
+                          <af:commandMenuItem text="Item 1" id="cmi16"/>
+                          <af:commandMenuItem text="Item 2" id="cmi17"/>
+                          <af:commandMenuItem text="Item 3" id="cmi18"/>
+                        </af:menu>
+                        <af:menu text="Empty" shortDesc="Empty appears disabled" id="m8"/>
+                      </af:menuBar>
+                      <af:toolbar flex="1" id="t5">
+                        <af:group id="g8">
+                          <!-- icon, no text -->
+                          <af:commandToolbarButton icon="/images/new_ena.png" shortDesc="Create"
+                                                   id="ctb23"/>
+                          <af:commandToolbarButton icon="/images/update_ena.png" shortDesc="Update"
+                                                   id="ctb24"/>
+                          <af:commandToolbarButton icon="/images/delete_ena.png" shortDesc="Delete"
+                                                   id="ctb25"/>
+                          <af:commandToolbarButton icon="/images/backarrow.gif"
+                                                   disabledIcon="/images/backarrow_gray.gif"
+                                                   shortDesc="back (disabled)" disabled="true"
+                                                   id="ctb26"/>
+                          <af:commandToolbarButton icon="/images/bold16.png" shortDesc="bold (selected)"
+                                                   type="check" selected="true" id="bold21"/>
+                        </af:group>
+                        <af:group id="g9">
+                          <!-- icon and text -->
+                          <af:commandToolbarButton icon="/images/unfreeze_ena.png" text="Unfreeze"
+                                                   shortDesc="Unfreeze" id="ctb27"/>
+                          <af:commandToolbarButton icon="/images/maximize_ena.png" text="Maximize"
+                                                   shortDesc="Maximize" id="ctb28"/>
+                          <af:commandToolbarButton icon="/images/backarrow.gif"
+                                                   disabledIcon="/images/backarrow_gray.gif" text="back"
+                                                   shortDesc="back (disabled)" disabled="true"
+                                                   id="ctb29"/>
+                          <af:commandToolbarButton icon="/images/bold16.png" text="bold"
+                                                   shortDesc="bold (selected)" type="check"
+                                                   selected="true" id="bold22"/>
+                        </af:group>
+                        <af:group id="g10">
+                          <!-- no icon, text -->
+                          <af:commandToolbarButton text="Refresh" shortDesc="Refresh" id="ctb30"/>
+                          <af:commandToolbarButton text="back" shortDesc="back (disabled)" disabled="true"
+                                                   id="ctb31"/>
+                          <af:commandToolbarButton text="bold" shortDesc="bold (selected)" type="check"
+                                                   selected="true" id="bold23"/>
+                        </af:group>
+                        <af:group id="g11">
+                          <af:commandToolbarButton icon="/images/email.png" shortDesc="E-Mail"
+                                                   id="ctb32"/>
+                          <af:commandToolbarButton icon="/images/snapshot.png" shortDesc="Snapshot"
+                                                   id="ctb33"/>
+                          <af:commandButton text="Text Button"
+                                            shortDesc="regular button (not a commandToolbarButton)"
+                                            id="cb2"/>
+                        </af:group>
+                      </af:toolbar>
+                    </af:group>
+                    <af:toolbar flex="1" id="t6">
+                      <af:quickQuery label="Search" searchDesc="search"
+                                     value="#{demoQuickQuery.queryDescriptor}"
+                                     queryListener="#{demoQuickQuery.processQuery}" id="qq2"/>
+                    </af:toolbar>
+                  </af:toolbox>
+                  <af:spacer height="5px" id="s8"/>
+                  <af:outputText value="Example showing commandToolbarButtons not on a toolbar" id="ot5"/>
+                  <af:spacer height="5px" id="s9"/>
+                  <af:panelGroupLayout layout="horizontal" id="pgl4">
+                    <f:facet name="separator">
+                      <af:spacer width="2px" id="s10"/>
+                    </f:facet>
+                    <!-- icon, no text -->
+                    <af:commandToolbarButton icon="/images/new_ena.png" shortDesc="Create" id="ctb34"/>
+                    <af:commandToolbarButton icon="/images/update_ena.png" shortDesc="Update" id="ctb35"/>
+                    <af:commandToolbarButton icon="/images/delete_ena.png" shortDesc="Delete" id="ctb36"/>
+                    <af:commandToolbarButton icon="/images/backarrow.gif"
+                                             disabledIcon="/images/backarrow_gray.gif"
+                                             shortDesc="back (disabled)" disabled="true" id="ctb37"/>
+                    <af:commandToolbarButton icon="/images/bold16.png" shortDesc="bold (selected)"
+                                             type="check" selected="true" id="bold71"/>
+                    <!-- icon and text -->
+                    <af:commandToolbarButton icon="/images/unfreeze_ena.png" text="Unfreeze"
+                                             shortDesc="Unfreeze" id="ctb38"/>
+                    <af:commandToolbarButton icon="/images/maximize_ena.png" text="Maximize"
+                                             shortDesc="Maximize" id="ctb39"/>
+                    <af:commandToolbarButton icon="/images/backarrow.gif"
+                                             disabledIcon="/images/backarrow_gray.gif" text="back"
+                                             shortDesc="back (disabled)" disabled="true" id="ctb40"/>
+                    <af:commandToolbarButton icon="/images/bold16.png" text="bold"
+                                             shortDesc="bold (selected)" type="check" selected="true"
+                                             id="bold72"/>
+                    <!-- no icon, text -->
+                    <af:commandToolbarButton text="Refresh" shortDesc="Refresh" id="ctb41"/>
+                    <af:commandToolbarButton text="back" shortDesc="back (disabled)" disabled="true"
+                                             id="ctb42"/>
+                    <af:commandToolbarButton text="bold" shortDesc="bold (selected)" type="check"
+                                             selected="true" id="bold73"/>
+                    <af:commandToolbarButton icon="/images/email.png" shortDesc="E-Mail" id="ctb43"/>
+                    <af:commandToolbarButton icon="/images/snapshot.png" shortDesc="Snapshot" id="ctb44"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="toolbar2">
+              <af:panelGroupLayout layout="scroll">
+                <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+
+                  <af:spacer height="5px" id="s11"/>
+                  <af:outputText value="Toolbars (Secondary/Light) - Two row toolbox example, containing menuBar, menu, toolbar, commandToolbarButton, commandButton, and quickQuery"/>
+                  <af:spacer height="5px"/>
+                  <af:toolbox id="t7">
+                    <af:group id="g12">
+                      <af:menuBar id="mb3">
+                        <af:menu text="Objects" id="m9">
+                          <af:commandMenuItem text="Item 1" id="cmi19"/>
+                          <af:commandMenuItem text="Item 2" id="cmi20"/>
+                          <af:commandMenuItem text="Item 3" id="cmi21"/>
+                        </af:menu>
+                        <af:menu text="View" id="m10">
+                          <af:commandMenuItem text="Item 1" id="cmi22"/>
+                          <af:commandMenuItem text="Item 2" id="cmi23"/>
+                          <af:commandMenuItem text="Item 3" id="cmi24"/>
+                        </af:menu>
+                        <af:menu text="Format" id="m11">
+                          <af:commandMenuItem text="Item 1" id="cmi25"/>
+                          <af:commandMenuItem text="Item 2" id="cmi26"/>
+                          <af:commandMenuItem text="Item 3" id="cmi27"/>
+                        </af:menu>
+                        <af:menu text="Empty" shortDesc="Empty appears disabled" id="m12"/>
+                      </af:menuBar>
+                      <af:toolbar flex="1" id="t8">
+                        <af:group id="g13">
+                          <!-- icon, no text -->
+                          <af:commandToolbarButton icon="/images/new_ena.png" shortDesc="Create"
+                                                   id="ctb45"/>
+                          <af:commandToolbarButton icon="/images/update_ena.png" shortDesc="Update"
+                                                   id="ctb46"/>
+                          <af:commandToolbarButton icon="/images/delete_ena.png" shortDesc="Delete"
+                                                   id="ctb47"/>
+                          <af:commandToolbarButton icon="/images/backarrow.gif"
+                                                   disabledIcon="/images/backarrow_gray.gif"
+                                                   shortDesc="back (disabled)" disabled="true"
+                                                   id="ctb48"/>
+                          <af:commandToolbarButton icon="/images/bold16.png" shortDesc="bold (selected)"
+                                                   type="check" selected="true" id="bold31"/>
+                        </af:group>
+                        <af:group id="g14">
+                          <!-- icon and text -->
+                          <af:commandToolbarButton icon="/images/unfreeze_ena.png" text="Unfreeze"
+                                                   shortDesc="Unfreeze" id="ctb49"/>
+                          <af:commandToolbarButton icon="/images/maximize_ena.png" text="Maximize"
+                                                   shortDesc="Maximize" id="ctb50"/>
+                          <af:commandToolbarButton icon="/images/backarrow.gif"
+                                                   disabledIcon="/images/backarrow_gray.gif" text="back"
+                                                   shortDesc="back (disabled)" disabled="true"
+                                                   id="ctb51"/>
+                          <af:commandToolbarButton icon="/images/bold16.png" text="bold"
+                                                   shortDesc="bold (selected)" type="check"
+                                                   selected="true" id="bold32"/>
+                        </af:group>
+                        <af:group id="g15">
+                          <!-- no icon, text -->
+                          <af:commandToolbarButton text="Refresh" shortDesc="Refresh" id="ctb52"/>
+                          <af:commandToolbarButton text="back" shortDesc="back (disabled)" disabled="true"
+                                                   id="ctb53"/>
+                          <af:commandToolbarButton text="bold" shortDesc="bold (selected)" type="check"
+                                                   selected="true" id="bold33"/>
+                        </af:group>
+                        <af:group id="g16">
+                          <af:commandToolbarButton icon="/images/email.png" shortDesc="E-Mail"
+                                                   id="ctb54"/>
+                          <af:commandToolbarButton icon="/images/snapshot.png" shortDesc="Snapshot"
+                                                   id="ctb55"/>
+                          <af:commandButton text="Text Button"
+                                            shortDesc="regular button (not a commandToolbarButton)"
+                                            id="cb3"/>
+                        </af:group>
+                      </af:toolbar>
+                    </af:group>
+                    <af:toolbar flex="1" id="t9">
+                      <af:quickQuery label="Search" searchDesc="search"
+                                     value="#{demoQuickQuery.queryDescriptor}"
+                                     queryListener="#{demoQuickQuery.processQuery}" id="qq3"/>
+                    </af:toolbar>
+                  </af:toolbox>
+                  <af:spacer height="5px"/>
+                  <af:outputText value="Example showing commandToolbarButtons not on a toolbar" id="ot7"/>
+                  <af:spacer height="5px"/>
+                  <af:panelGroupLayout layout="horizontal" id="pgl6">
+                    <f:facet name="separator">
+                      <af:spacer width="2px" id="s15"/>
+                    </f:facet>
+                    <!-- icon, no text -->
+                    <af:commandToolbarButton icon="/images/new_ena.png" shortDesc="Create" id="ctb56"/>
+                    <af:commandToolbarButton icon="/images/update_ena.png" shortDesc="Update" id="ctb57"/>
+                    <af:commandToolbarButton icon="/images/delete_ena.png" shortDesc="Delete" id="ctb58"/>
+                    <af:commandToolbarButton icon="/images/backarrow.gif"
+                                             disabledIcon="/images/backarrow_gray.gif"
+                                             shortDesc="back (disabled)" disabled="true" id="ctb59"/>
+                    <af:commandToolbarButton icon="/images/bold16.png" shortDesc="bold (selected)"
+                                             type="check" selected="true" id="bold81"/>
+                    <!-- icon and text -->
+                    <af:commandToolbarButton icon="/images/unfreeze_ena.png" text="Unfreeze"
+                                             shortDesc="Unfreeze" id="ctb60"/>
+                    <af:commandToolbarButton icon="/images/maximize_ena.png" text="Maximize"
+                                             shortDesc="Maximize" id="ctb61"/>
+                    <af:commandToolbarButton icon="/images/backarrow.gif"
+                                             disabledIcon="/images/backarrow_gray.gif" text="back"
+                                             shortDesc="back (disabled)" disabled="true" id="ctb62"/>
+                    <af:commandToolbarButton icon="/images/bold16.png" text="bold"
+                                             shortDesc="bold (selected)" type="check" selected="true"
+                                             id="bold82"/>
+                    <!-- no icon, text -->
+                    <af:commandToolbarButton text="Refresh" shortDesc="Refresh" id="ctb63"/>
+                    <af:commandToolbarButton text="back" shortDesc="back (disabled)" disabled="true"
+                                             id="ctb64"/>
+                    <af:commandToolbarButton text="bold" shortDesc="bold (selected)" type="check"
+                                             selected="true" id="bold83"/>
+                    <af:commandToolbarButton icon="/images/email.png" shortDesc="E-Mail" id="ctb65"/>
+                    <af:commandToolbarButton icon="/images/snapshot.png" shortDesc="Snapshot" id="ctb66"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+        </f:facet>
+
+        <f:facet name="center">
+            <af:panelHeader text="Default Theme">
+              <af:panelGroupLayout layout="scroll" id="pgl7">
+                <af:panelGroupLayout inlineStyle="padding : 5px" layout="vertical">
+                  <af:spacer height="5px" id="s16"/>
+                  <af:outputText value="Toolbars (Default Theme) - Two row toolbox example, containing menuBar, menu, toolbar, commandToolbarButton, commandButton, and quickQuery"
+                                 id="ot8"/>
+                  <af:spacer height="5px" id="s17"/>
+                  <af:toolbox id="t10">
+                    <af:group id="g17">
+                      <af:menuBar id="mb4">
+                        <af:menu text="Objects" id="m13">
+                          <af:commandMenuItem text="Item 1" id="cmi28"/>
+                          <af:commandMenuItem text="Item 2" id="cmi29"/>
+                          <af:commandMenuItem text="Item 3" id="cmi30"/>
+                        </af:menu>
+                        <af:menu text="View" id="m14">
+                          <af:commandMenuItem text="Item 1" id="cmi31"/>
+                          <af:commandMenuItem text="Item 2" id="cmi32"/>
+                          <af:commandMenuItem text="Item 3" id="cmi33"/>
+                        </af:menu>
+                        <af:menu text="Format" id="m15">
+                          <af:commandMenuItem text="Item 1" id="cmi34"/>
+                          <af:commandMenuItem text="Item 2" id="cmi35"/>
+                          <af:commandMenuItem text="Item 3" id="cmi36"/>
+                        </af:menu>
+                        <af:menu text="Empty" shortDesc="Empty appears disabled" id="m16"/>
+                      </af:menuBar>
+                      <af:toolbar flex="1" id="t11">
+                        <af:group id="g18">
+                          <!-- icon, no text -->
+                          <af:commandToolbarButton icon="/images/new_ena.png" shortDesc="Create"
+                                                   id="ctb67"/>
+                          <af:commandToolbarButton icon="/images/update_ena.png" shortDesc="Update"
+                                                   id="ctb68"/>
+                          <af:commandToolbarButton icon="/images/delete_ena.png" shortDesc="Delete"
+                                                   id="ctb69"/>
+                          <af:commandToolbarButton icon="/images/backarrow.gif"
+                                                   disabledIcon="/images/backarrow_gray.gif"
+                                                   shortDesc="back (disabled)" disabled="true"
+                                                   id="ctb70"/>
+                          <af:commandToolbarButton icon="/images/bold16.png"
+                                                   shortDesc="bold (selected)" type="check"
+                                                   selected="true" id="bold41"/>
+                        </af:group>
+                        <af:group id="g19">
+                          <!-- icon and text -->
+                          <af:commandToolbarButton icon="/images/unfreeze_ena.png" text="Unfreeze"
+                                                   shortDesc="Unfreeze" id="ctb71"/>
+                          <af:commandToolbarButton icon="/images/maximize_ena.png" text="Maximize"
+                                                   shortDesc="Maximize" id="ctb72"/>
+                          <af:commandToolbarButton icon="/images/backarrow.gif"
+                                                   disabledIcon="/images/backarrow_gray.gif"
+                                                   text="back" shortDesc="back (disabled)"
+                                                   disabled="true" id="ctb73"/>
+                          <af:commandToolbarButton icon="/images/bold16.png" text="bold"
+                                                   shortDesc="bold (selected)" type="check"
+                                                   selected="true" id="bold42"/>
+                        </af:group>
+                        <af:group id="g20">
+                          <!-- no icon, text -->
+                          <af:commandToolbarButton text="Refresh" shortDesc="Refresh" id="ctb74"/>
+                          <af:commandToolbarButton text="back" shortDesc="back (disabled)"
+                                                   disabled="true" id="ctb75"/>
+                          <af:commandToolbarButton text="bold" shortDesc="bold (selected)"
+                                                   type="check" selected="true" id="bold43"/>
+                        </af:group>
+                        <af:group id="g21">
+                          <af:commandToolbarButton icon="/images/email.png" shortDesc="E-Mail"
+                                                   id="ctb76"/>
+                          <af:commandToolbarButton icon="/images/snapshot.png" shortDesc="Snapshot"
+                                                   id="ctb77"/>
+                          <af:commandButton text="Text Button"
+                                            shortDesc="regular button (not a commandToolbarButton)"
+                                            id="cb4"/>
+                        </af:group>
+                      </af:toolbar>
+                    </af:group>
+                    <af:toolbar flex="1" id="t12">
+                      <af:quickQuery label="Search" searchDesc="search"
+                                     value="#{demoQuickQuery.queryDescriptor}"
+                                     queryListener="#{demoQuickQuery.processQuery}" id="qq4"/>
+                    </af:toolbar>
+                  </af:toolbox>
+                  <af:spacer height="5px" id="s18"/>
+                  <af:outputText value="Example showing commandToolbarButtons not on a toolbar"
+                                 id="ot9"/>
+                  <af:spacer height="5px" id="s19"/>
+                  <af:panelGroupLayout layout="horizontal" id="pgl8">
+                    <f:facet name="separator">
+                      <af:spacer width="2px" id="s20"/>
+                    </f:facet>
+                    <!-- icon, no text -->
+                    <af:commandToolbarButton icon="/images/new_ena.png" shortDesc="Create"
+                                             id="ctb78"/>
+                    <af:commandToolbarButton icon="/images/update_ena.png" shortDesc="Update"
+                                             id="ctb79"/>
+                    <af:commandToolbarButton icon="/images/delete_ena.png" shortDesc="Delete"
+                                             id="ctb80"/>
+                    <af:commandToolbarButton icon="/images/backarrow.gif"
+                                             disabledIcon="/images/backarrow_gray.gif"
+                                             shortDesc="back (disabled)" disabled="true"
+                                             id="ctb81"/>
+                    <af:commandToolbarButton icon="/images/bold16.png" shortDesc="bold (selected)"
+                                             type="check" selected="true" id="bold51"/>
+                    <!-- icon and text -->
+                    <af:commandToolbarButton icon="/images/unfreeze_ena.png" text="Unfreeze"
+                                             shortDesc="Unfreeze" id="ctb82"/>
+                    <af:commandToolbarButton icon="/images/maximize_ena.png" text="Maximize"
+                                             shortDesc="Maximize" id="ctb83"/>
+                    <af:commandToolbarButton icon="/images/backarrow.gif"
+                                             disabledIcon="/images/backarrow_gray.gif" text="back"
+                                             shortDesc="back (disabled)" disabled="true"
+                                             id="ctb84"/>
+                    <af:commandToolbarButton icon="/images/bold16.png" text="bold"
+                                             shortDesc="bold (selected)" type="check"
+                                             selected="true" id="bold52"/>
+                    <!-- no icon, text -->
+                    <af:commandToolbarButton text="Refresh" shortDesc="Refresh" id="ctb85"/>
+                    <af:commandToolbarButton text="back" shortDesc="back (disabled)" disabled="true"
+                                             id="ctb86"/>
+                    <af:commandToolbarButton text="bold" shortDesc="bold (selected)" type="check"
+                                             selected="true" id="bold53"/>
+                    <af:commandToolbarButton icon="/images/email.png" shortDesc="E-Mail"
+                                             id="ctb87"/>
+                    <af:commandToolbarButton icon="/images/snapshot.png" shortDesc="Snapshot"
+                                             id="ctb88"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="validateDateRestriction Demos" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="validateDateRestriction"/>
+        <f:attribute name="demoKind" value="validator"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:messages id="m1"/>
+            <af:outputText styleClass="AFInstructionText"
+                           value="Examples to demonstrate the date restriction validator."
+                           id="ot1"/>
+            <af:panelFormLayout id="pfl1">
+              <af:inputDate id="days" value="#{dateRestrictionValidator.testInvalidHolidays}"
+                            label="Select a date in 2007, but not a holiday"
+                            maxValue="2007-12-31" minValue="2007-01-01"
+                            shortDesc="Ensures, that #{dateRestrictionValidator.country} holidays for 2007 are not selectable">
+                <af:convertDateTime pattern="yyyy-MM-dd"/>
+                <af:validateDateRestriction invalidDays="#{dateRestrictionValidator.nationalHolidays}"/>
+              </af:inputDate>
+              <af:inputDate id="month" value="#{dateRestrictionValidator.testInvalidMonth}"
+                            label="Select a date, but not within November or December"
+                            shortDesc="November/December dates are not allowed here!">
+                <af:convertDateTime pattern="yyyy-MM-dd"/>
+                <af:validateDateRestriction invalidMonths="Nov Dec"/>
+              </af:inputDate>
+              <af:inputDate id="daysOfWeek"
+                            value="#{dateRestrictionValidator.testInvalidDaysOfWeek}"
+                            label="Select a date, but not a Monday"
+                            shortDesc="Please no Mondays...!">
+                <af:convertDateTime pattern="yyyy-MM-dd"/>
+                <af:validateDateRestriction invalidDaysOfWeek="Mon"/>
+              </af:inputDate>
+              <af:inputDate id="days2" value="#{dateRestrictionValidator.testInvalidDays}"
+                            label="Select a date in 2007, but not a holiday (custom message)"
+                            maxValue="2007-12-31" minValue="2007-01-01"
+                            shortDesc="Ensures, that #{dateRestrictionValidator.country} holidays for 2007 are not selectable">
+                <af:convertDateTime pattern="yyyy-MM-dd"/>
+                <af:validateDateRestriction messageDetailInvalidDays="You entered {1}, which is invalid"
+                                            invalidDays="#{dateRestrictionValidator.nationalHolidays}"/>
+              </af:inputDate>
+              <af:inputDate id="month2" value="#{dateRestrictionValidator.testInvalidMonth}"
+                            label="Select a date, but not within November or December (custom message)"
+                            shortDesc="November/December dates are not allowed here!">
+                <af:convertDateTime pattern="yyyy-MM-dd"/>
+                <af:validateDateRestriction messageDetailInvalidMonths="You entered {1}, which is in a {2}"
+                                            invalidMonths="Nov Dec"/>
+              </af:inputDate>
+              <af:inputDate id="daysOfWeek2"
+                            value="#{dateRestrictionValidator.testInvalidDaysOfWeek}"
+                            label="Select a date, but not a Monday (custom message)"
+                            shortDesc="Please no Mondays...!">
+                <af:convertDateTime pattern="yyyy-MM-dd"/>
+                <af:validateDateRestriction messageDetailInvalidDaysOfWeek="You entered {1}, which is on a {2}"
+                                            invalidDaysOfWeek="Mon"/>
+              </af:inputDate>
+              <af:inputDate id="month3" value="#{dateRestrictionValidator.testInvalidMonth}"
+                            label="Select a date, but not within November or December (custom hint message)"
+                            shortDesc="November/December dates are not allowed here!">
+                <af:convertDateTime pattern="yyyy-MM-dd"/>
+                <af:validateDateRestriction hintInvalidMonths="Invalid months: {0}."
+                                            invalidMonths="Nov Dec"/>
+              </af:inputDate>
+              <af:inputDate id="daysOfWeek3"
+                            value="#{dateRestrictionValidator.testInvalidDaysOfWeek}"
+                            label="Select a date, but not a Monday (custom hint message)"
+                            shortDesc="Please no Mondays...!">
+                <af:convertDateTime pattern="yyyy-MM-dd"/>
+                <af:validateDateRestriction hintInvalidDaysOfWeek="Invalid weekdays: {0}"
+                                            invalidDaysOfWeek="Mon"/>
+              </af:inputDate>
+            </af:panelFormLayout>
+            <af:commandButton text="Submit" id="cb1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

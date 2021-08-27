@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="listView Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="css">
+      .ProjectHeader
+      {
+        font-weight: bold;
+        font-size: 14px;
+      }
+      .taskName
+      {
+        font-size: 14px;
+      }
+      .taskCreated
+      {
+        opacity: .75;
+        filter: alpha(opacity:.75);
+      }
+      </af:resource>
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="listView"/>
+        <f:attribute name="visualDesignName" value="listView"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:listView id="listView" partialTriggers="pprLV" fetchSize="25" shortDesc="Tasks"
+                       var="item" varStatus="vs" groupDisclosurePolicy="initiallyExpanded" binding="#{editor.component}"
+                       value="#{demolistView.projectTreeModel}">
+              <af:listItem id="listItem1" shortDesc="#{item.taskName}">
+                <af:panelGroupLayout id="panelGroupLayout1" layout="horizontal" styleClass="AFStretchWidth">
+                <af:panelGroupLayout id="panelGroupLayout2" layout="horizontal" inlineStyle="margin-left:20px; width:45px"
+                                      halign="center" valign="middle">
+                    <af:image rendered="#{vs.index %6 ==1}" source="/images/error.png" id="i1"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="pgl5" layout="horizontal" inlineStyle="width:100%">
+                  <af:panelGroupLayout id="panelGroupLayout3" layout="vertical" inlineStyle="min-width:300px">
+                      <af:outputText id="outputText1" value="#{item.taskName}"
+                                     styleClass="taskName"/>
+                      <af:outputText id="outputText2" value="#{item.projectDesc}" styleClass="projectDesc"/>
+                      <af:outputText id="outputText3" value="#{item.created}"  styleClass="taskCreated"/>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout id="panelGroupLayout4" layout="horizontal"
+                                      halign="end" valign="middle" inlineStyle="margin-right:20px">
+                    <af:commandButton id="cb1" text="Action">
+                      <af:showPopupBehavior popupId="::popupDialog" alignId="cb1"
+                                        align="afterStart"/>
+                    </af:commandButton>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              </af:listItem>
+              <f:facet name="groupHeaderStamp">
+                <af:listItem id="listItem2" styleClass="ProjectHeader">
+                  <af:outputText id="ot1" value="#{item.projectName}"/>
+                </af:listItem>
+              </f:facet>
+          </af:listView>
+        </f:facet>
+        <f:facet name="centerSplitBottom">
+          <af:panelGroupLayout id="scroll" layout="scroll">
+            <af:panelFormLayout rows="2" maxColumns="4" id="mdlattrs">
+              <af:inputNumberSpinbox id="mdlGroupRows" label="Group Row Count" minimum="5" maximum="20" value="#{demolistView.projectTreeGroupCount}"/>
+              <af:inputNumberSpinbox id="mdlChildRows" label="Child Row Count" minimum="10" maximum="100" value="#{demolistView.projectTreeChildCount}"/>
+              <af:selectBooleanCheckbox id="mdlgrpunknwn" label="Group Unknown Count" value="#{demolistView.projectTreeGroupUnknown}"/>
+              <af:selectBooleanCheckbox id="mdlchldunknwn" label="Child Unknown Count" value="#{demolistView.projectTreeChildUnknown}"/>
+            </af:panelFormLayout>
+            <af:commandButton id="pprLV" text="PPR ListView" action="#{demolistView.refreshProjectTreeModel}"/>
+            <af:popup id="popupDialog" contentDelivery="lazyUncached" eventContext="launcher">
+              <af:setPropertyListener from="#{vs.current}"
+                                      to="#{pageFlowScope.currentRow}"
+                                      type="popupFetch"/>
+              <af:dialog title="Text" id="d2">
+                <af:outputLabel id="ol"  for="ot1" value="You clicked on Action Item for: "/>
+                <af:outputText value="#{pageFlowScope.currentRow.taskName}" id="ot1"/>
+              </af:dialog>
+            </af:popup>
+            <af:panelHeader id="head" text="Related Demos">
+              <af:panelList id="list">
+                <af:goLink id="related1" text="ListView Component with Groups" destination="/components/listView/listViewWithGroups.jspx"/>
+                <af:goLink id="related2" text="ListView Component with Groups And Disclosure " destination="/components/listView/listViewWithGroupsAndDisclosure.jspx"/>
+              </af:panelList>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

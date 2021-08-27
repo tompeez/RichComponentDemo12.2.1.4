@@ -1,0 +1,708 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Number Format Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Number Format"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Number Format"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:outputText inlineStyle="font-size:large; display:block;" value="Chart Number Format" id="ot1"/>
+                        <af:panelGroupLayout layout="vertical" id="pgl2">
+                            <af:selectOneChoice label="Select a Chart:" id="soc1" value="#{chartSample.chartType}"
+                                                autoSubmit="true">
+                                <af:selectItem label="barChart" value="barChart"/>
+                                <af:selectItem label="bubbleChart" value="bubbleChart"/>
+                                <af:selectItem label="funnelChart" value="funnelChart"/>
+                                <af:selectItem label="lineChart" value="lineChart"/>
+                                <af:selectItem label="pieChart" value="pieChart"/>
+                            </af:selectOneChoice>
+                            <af:panelGroupLayout layout="vertical" id="pgl3" partialTriggers="soc1 button">
+                                <af:outputText value="Series 2 is assigned to Y2 Axis for bar and line charts. Note that the type has to be set to 'currency' for the currency symbol or code to be displayed."
+                                               id="ot3"/>
+                                <af:switcher facetName="#{chartSample.chartType}" defaultFacet="barChart">
+                                    <f:facet name="barChart">
+                                        <dvt:barChart id="c1" value="#{chartDataSource.defaultBarData}" var="row">
+                                            <f:facet name="dataStamp">
+                                                <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                                   value="#{row.series == 'Series 2'? row.value *10000 : row.value}"/>
+                                            </f:facet>
+                                            <dvt:chartLegend rendered="false"/>
+                                            <f:facet name="seriesStamp">
+                                                <af:group>
+                                                    <dvt:chartSeriesStyle assignedToY2="true" series="Series 2"/>
+                                                </af:group>
+                                            </f:facet>
+                                            <dvt:chartValueFormat type="y" scaling="#{chartSample.yFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.yFormat.type}"
+                                                                  groupingUsed="#{chartSample.yFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.yFormat.pattern}"
+                                                                  currencyCode="#{chartSample.yFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.yFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartValueFormat type="y2" scaling="#{chartSample.y2Format.scaling}">
+                                                <af:convertNumber type="#{chartSample.y2Format.type}"
+                                                                  groupingUsed="#{chartSample.y2Format.groupingUsed}"
+                                                                  pattern="#{chartSample.y2Format.pattern}"
+                                                                  currencyCode="#{chartSample.y2Format.currencyCode}"
+                                                                  currencySymbol="#{chartSample.y2Format.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartYAxis>
+                                                <dvt:chartTickLabel scaling="#{chartSample.yLabelFormat.scaling}">
+                                                    <af:convertNumber type="#{chartSample.yLabelFormat.type}"
+                                                                      groupingUsed="#{chartSample.yLabelFormat.groupingUsed}"
+                                                                      pattern="#{chartSample.yLabelFormat.pattern}"
+                                                                      currencyCode="#{chartSample.yLabelFormat.currencyCode}"
+                                                                      currencySymbol="#{chartSample.yLabelFormat.currencySymbol}"/>
+                                                </dvt:chartTickLabel>
+                                            </dvt:chartYAxis>
+                                            <dvt:chartY2Axis>
+                                                <dvt:chartTickLabel scaling="#{chartSample.y2LabelFormat.scaling}">
+                                                    <af:convertNumber type="#{chartSample.y2LabelFormat.type}"
+                                                                      groupingUsed="#{chartSample.y2LabelFormat.groupingUsed}"
+                                                                      pattern="#{chartSample.y2LabelFormat.pattern}"
+                                                                      currencyCode="#{chartSample.y2LabelFormat.currencyCode}"
+                                                                      currencySymbol="#{chartSample.y2LabelFormat.currencySymbol}"/>
+                                                </dvt:chartTickLabel>
+                                            </dvt:chartY2Axis>
+                                        </dvt:barChart>
+                                    </f:facet>
+                                    <f:facet name="bubbleChart">
+                                        <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row">
+                                            <f:facet name="dataStamp">
+                                                <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                                   x="#{row.x}" y="#{row.y}" z="#{row.z}"
+                                                                   label="#{row.z}"/>
+                                            </f:facet>
+                                            <dvt:chartLegend rendered="false"/>
+                                            <dvt:chartValueFormat type="label"
+                                                                  scaling="#{chartSample.labelFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.labelFormat.type}"
+                                                                  groupingUsed="#{chartSample.labelFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.labelFormat.pattern}"
+                                                                  currencyCode="#{chartSample.labelFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.labelFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartValueFormat type="x" scaling="#{chartSample.xFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.xFormat.type}"
+                                                                  groupingUsed="#{chartSample.xFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.xFormat.pattern}"
+                                                                  currencyCode="#{chartSample.xFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.xFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartValueFormat type="y" scaling="#{chartSample.yFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.yFormat.type}"
+                                                                  groupingUsed="#{chartSample.yFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.yFormat.pattern}"
+                                                                  currencyCode="#{chartSample.yFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.yFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartValueFormat type="z" scaling="#{chartSample.zFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.zFormat.type}"
+                                                                  groupingUsed="#{chartSample.zFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.zFormat.pattern}"
+                                                                  currencyCode="#{chartSample.zFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.zFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartXAxis>
+                                                <dvt:chartTickLabel scaling="#{chartSample.xLabelFormat.scaling}">
+                                                    <af:convertNumber type="#{chartSample.xLabelFormat.type}"
+                                                                      groupingUsed="#{chartSample.xLabelFormat.groupingUsed}"
+                                                                      pattern="#{chartSample.xLabelFormat.pattern}"
+                                                                      currencyCode="#{chartSample.xLabelFormat.currencyCode}"
+                                                                      currencySymbol="#{chartSample.xLabelFormat.currencySymbol}"/>
+                                                </dvt:chartTickLabel>
+                                            </dvt:chartXAxis>
+                                            <dvt:chartYAxis>
+                                                <dvt:chartTickLabel scaling="#{chartSample.yLabelFormat.scaling}">
+                                                    <af:convertNumber type="#{chartSample.yLabelFormat.type}"
+                                                                      groupingUsed="#{chartSample.yLabelFormat.groupingUsed}"
+                                                                      pattern="#{chartSample.yLabelFormat.pattern}"
+                                                                      currencyCode="#{chartSample.yLabelFormat.currencyCode}"
+                                                                      currencySymbol="#{chartSample.yLabelFormat.currencySymbol}"/>
+                                                </dvt:chartTickLabel>
+                                            </dvt:chartYAxis>
+                                        </dvt:bubbleChart>
+                                    </f:facet>
+                                    <f:facet name="lineChart">
+                                        <dvt:lineChart value="#{chartDataSource.yearlyTimeData}" var="row"
+                                                       timeAxisType="enabled">
+                                            <f:facet name="dataStamp">
+                                                <dvt:chartDataItem series="#{row.series}" group="#{row.group}"
+                                                                   value="#{row.series == 'Series 2'? row.value *10000 : row.value}"/>
+                                            </f:facet>
+                                            <f:facet name="seriesStamp">
+                                                <af:group>
+                                                    <dvt:chartSeriesStyle assignedToY2="true" series="Series 2"/>
+                                                </af:group>
+                                            </f:facet>
+                                            <dvt:chartLegend rendered="false"/>
+                                            <dvt:chartValueFormat type="x" scaling="#{chartSample.xFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.xFormat.type}"
+                                                                  groupingUsed="#{chartSample.xFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.xFormat.pattern}"
+                                                                  currencyCode="#{chartSample.xFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.xFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartValueFormat type="y" scaling="#{chartSample.yFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.yFormat.type}"
+                                                                  groupingUsed="#{chartSample.yFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.yFormat.pattern}"
+                                                                  currencyCode="#{chartSample.yFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.yFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartValueFormat type="y2" scaling="#{chartSample.y2Format.scaling}">
+                                                <af:convertNumber type="#{chartSample.y2Format.type}"
+                                                                  groupingUsed="#{chartSample.y2Format.groupingUsed}"
+                                                                  pattern="#{chartSample.y2Format.pattern}"
+                                                                  currencyCode="#{chartSample.y2Format.currencyCode}"
+                                                                  currencySymbol="#{chartSample.y2Format.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartXAxis>
+                                                <dvt:chartTickLabel scaling="#{chartSample.xLabelFormat.scaling}">
+                                                    <af:convertNumber type="#{chartSample.xLabelFormat.type}"
+                                                                      groupingUsed="#{chartSample.xLabelFormat.groupingUsed}"
+                                                                      pattern="#{chartSample.xLabelFormat.pattern}"
+                                                                      currencyCode="#{chartSample.xLabelFormat.currencyCode}"
+                                                                      currencySymbol="#{chartSample.xLabelFormat.currencySymbol}"/>
+                                                </dvt:chartTickLabel>
+                                            </dvt:chartXAxis>
+                                            <dvt:chartYAxis>
+                                                <dvt:chartTickLabel scaling="#{chartSample.yLabelFormat.scaling}">
+                                                    <af:convertNumber type="#{chartSample.yLabelFormat.type}"
+                                                                      groupingUsed="#{chartSample.yLabelFormat.groupingUsed}"
+                                                                      pattern="#{chartSample.yLabelFormat.pattern}"
+                                                                      currencyCode="#{chartSample.yLabelFormat.currencyCode}"
+                                                                      currencySymbol="#{chartSample.yLabelFormat.currencySymbol}"/>
+                                                </dvt:chartTickLabel>
+                                            </dvt:chartYAxis>
+                                            <dvt:chartY2Axis>
+                                                <dvt:chartTickLabel scaling="#{chartSample.y2LabelFormat.scaling}">
+                                                    <af:convertNumber type="#{chartSample.y2LabelFormat.type}"
+                                                                      groupingUsed="#{chartSample.y2LabelFormat.groupingUsed}"
+                                                                      pattern="#{chartSample.y2LabelFormat.pattern}"
+                                                                      currencyCode="#{chartSample.y2LabelFormat.currencyCode}"
+                                                                      currencySymbol="#{chartSample.y2LabelFormat.currencySymbol}"/>
+                                                </dvt:chartTickLabel>
+                                            </dvt:chartY2Axis>
+                                        </dvt:lineChart>
+                                    </f:facet>
+                                    <f:facet name="pieChart">
+                                        <dvt:pieChart value="#{chartDataSource.defaultPieData}" var="row">
+                                            <dvt:pieDataItem label="#{row.series}" value="#{row.value}" sliceLabel="#{row.value}"/>
+                                            <dvt:chartLegend rendered="false"/>
+                                            <dvt:chartValueFormat type="label"
+                                                                  scaling="#{chartSample.labelFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.labelFormat.type}"
+                                                                  groupingUsed="#{chartSample.labelFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.labelFormat.pattern}"
+                                                                  currencyCode="#{chartSample.labelFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.labelFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartValueFormat type="value"
+                                                                  scaling="#{chartSample.valueLabelFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.valueLabelFormat.type}"
+                                                                  groupingUsed="#{chartSample.valueLabelFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.valueLabelFormat.pattern}"
+                                                                  currencyCode="#{chartSample.valueLabelFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.valueLabelFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                        </dvt:pieChart>
+                                    </f:facet>
+                                    <f:facet name="funnelChart">
+                                        <dvt:funnelChart value="#{chartDataSource.defaultPieData}"
+                                                         orientation="horizontal" sliceGaps="1" var="row">
+                                            <dvt:funnelDataItem label="#{row.series}" value="#{row.value}"
+                                                                targetValue="100"/>
+                                            <dvt:chartValueFormat type="value"
+                                                                  scaling="#{chartSample.valueLabelFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.valueLabelFormat.type}"
+                                                                  groupingUsed="#{chartSample.valueLabelFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.valueLabelFormat.pattern}"
+                                                                  currencyCode="#{chartSample.valueLabelFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.valueLabelFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                            <dvt:chartValueFormat type="targetValue"
+                                                                  scaling="#{chartSample.targetValueFormat.scaling}">
+                                                <af:convertNumber type="#{chartSample.targetValueFormat.type}"
+                                                                  groupingUsed="#{chartSample.targetValueFormat.groupingUsed}"
+                                                                  pattern="#{chartSample.targetValueFormat.pattern}"
+                                                                  currencyCode="#{chartSample.targetValueFormat.currencyCode}"
+                                                                  currencySymbol="#{chartSample.targetValueFormat.currencySymbol}"/>
+                                            </dvt:chartValueFormat>
+                                        </dvt:funnelChart>
+                                    </f:facet>
+                                </af:switcher>
+                            </af:panelGroupLayout>
+                            <af:panelGridLayout id="pgl1" partialTriggers="soc1" dimensionsFrom="children">
+                                <af:gridRow height="100%" id="gr1"
+                                            rendered="#{chartSample.chartType=='bubbleChart'|| chartSample.chartType=='lineChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="X Tick Label"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socxlt" label="Type"
+                                                            value="#{chartSample.xLabelFormat.type}">
+                                            <af:selectItem label="currency" value="currency"/>
+                                            <af:selectItem label="number" value="number"/>
+                                            <af:selectItem label="percent" value="percent"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socxlsc" label="Scaling"
+                                                            value="#{chartSample.xLabelFormat.scaling}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="none" value="none"/>
+                                            <af:selectItem label="thousand" value="thousand"/>
+                                            <af:selectItem label="million" value="million"/>
+                                            <af:selectItem label="billion" value="billion"/>
+                                            <af:selectItem label="trillion" value="trillion"/>
+                                            <af:selectItem label="quadrillion" value="quadrillion"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socxlgu" label="Grouping Used"
+                                                            value="#{chartSample.xLabelFormat.groupingUsed}">
+                                            <af:selectItem label="true" value="true"/>
+                                            <af:selectItem label="false" value="false"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socxlcs" label="Currency Symbol"
+                                                      value="#{chartSample.xLabelFormat.currencySymbol}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socxlcc" label="Currency Code"
+                                                      value="#{chartSample.xLabelFormat.currencyCode}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socxlpat" label="Pattern"
+                                                      value="#{chartSample.xLabelFormat.pattern}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='barChart'|| chartSample.chartType=='lineChart'|| chartSample.chartType=='bubbleChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Y Tick Label"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socylt" label="Type"
+                                                            value="#{chartSample.yLabelFormat.type}">
+                                            <af:selectItem label="currency" value="currency"/>
+                                            <af:selectItem label="number" value="number"/>
+                                            <af:selectItem label="percent" value="percent"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socylsc" label="Scaling"
+                                                            value="#{chartSample.yLabelFormat.scaling}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="none" value="none"/>
+                                            <af:selectItem label="thousand" value="thousand"/>
+                                            <af:selectItem label="million" value="million"/>
+                                            <af:selectItem label="billion" value="billion"/>
+                                            <af:selectItem label="trillion" value="trillion"/>
+                                            <af:selectItem label="quadrillion" value="quadrillion"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socylgu" label="Grouping Used"
+                                                            value="#{chartSample.yLabelFormat.groupingUsed}">
+                                            <af:selectItem label="true" value="true"/>
+                                            <af:selectItem label="false" value="false"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socylcs" label="Currency Symbol"
+                                                      value="#{chartSample.yLabelFormat.currencySymbol}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socylcc" label="Currency Code"
+                                                      value="#{chartSample.yLabelFormat.currencyCode}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socylpat" label="Pattern"
+                                                      value="#{chartSample.yLabelFormat.pattern}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='barChart'|| chartSample.chartType=='lineChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Y2 Tick Label"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socy2lt" label="Type"
+                                                            value="#{chartSample.y2LabelFormat.type}">
+                                            <af:selectItem label="currency" value="currency"/>
+                                            <af:selectItem label="number" value="number"/>
+                                            <af:selectItem label="percent" value="percent"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socy2lsc" label="Scaling"
+                                                            value="#{chartSample.y2LabelFormat.scaling}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="none" value="none"/>
+                                            <af:selectItem label="thousand" value="thousand"/>
+                                            <af:selectItem label="million" value="million"/>
+                                            <af:selectItem label="billion" value="billion"/>
+                                            <af:selectItem label="trillion" value="trillion"/>
+                                            <af:selectItem label="quadrillion" value="quadrillion"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socy2lgu" label="Grouping Used"
+                                                            value="#{chartSample.y2LabelFormat.groupingUsed}">
+                                            <af:selectItem label="true" value="true"/>
+                                            <af:selectItem label="false" value="false"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socy2lcs" label="Currency Symbol"
+                                                      value="#{chartSample.y2LabelFormat.currencySymbol}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socy2lcc" label="Currency Code"
+                                                      value="#{chartSample.y2LabelFormat.currencyCode}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socy2lpat" label="Pattern"
+                                                      value="#{chartSample.y2LabelFormat.pattern}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='bubbleChart' || chartSample.chartType=='lineChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="X Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socxft" label="Type"
+                                                            value="#{chartSample.xFormat.type}">
+                                            <af:selectItem label="currency" value="currency"/>
+                                            <af:selectItem label="number" value="number"/>
+                                            <af:selectItem label="percent" value="percent"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socxfsc" label="Scaling"
+                                                            value="#{chartSample.xFormat.scaling}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="none" value="none"/>
+                                            <af:selectItem label="thousand" value="thousand"/>
+                                            <af:selectItem label="million" value="million"/>
+                                            <af:selectItem label="billion" value="billion"/>
+                                            <af:selectItem label="trillion" value="trillion"/>
+                                            <af:selectItem label="quadrillion" value="quadrillion"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socxfgu" label="Grouping Used"
+                                                            value="#{chartSample.xFormat.groupingUsed}">
+                                            <af:selectItem label="true" value="true"/>
+                                            <af:selectItem label="false" value="false"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socxfcs" label="Currency Symbol"
+                                                      value="#{chartSample.xFormat.currencySymbol}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socxfcc" label="Currency Code"
+                                                      value="#{chartSample.xFormat.currencyCode}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socxfpat" label="Pattern"
+                                                      value="#{chartSample.xFormat.pattern}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='barChart'|| chartSample.chartType=='lineChart'|| chartSample.chartType=='bubbleChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Y Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socyft" label="Type"
+                                                            value="#{chartSample.yFormat.type}">
+                                            <af:selectItem label="currency" value="currency"/>
+                                            <af:selectItem label="number" value="number"/>
+                                            <af:selectItem label="percent" value="percent"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socyfsc" label="Scaling"
+                                                            value="#{chartSample.yFormat.scaling}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="none" value="none"/>
+                                            <af:selectItem label="thousand" value="thousand"/>
+                                            <af:selectItem label="million" value="million"/>
+                                            <af:selectItem label="billion" value="billion"/>
+                                            <af:selectItem label="trillion" value="trillion"/>
+                                            <af:selectItem label="quadrillion" value="quadrillion"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socyfgu" label="Grouping Used"
+                                                            value="#{chartSample.yFormat.groupingUsed}">
+                                            <af:selectItem label="true" value="true"/>
+                                            <af:selectItem label="false" value="false"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socyfcs" label="Currency Symbol"
+                                                      value="#{chartSample.yFormat.currencySymbol}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socyfcc" label="Currency Code"
+                                                      value="#{chartSample.yFormat.currencyCode}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socyfpat" label="Pattern"
+                                                      value="#{chartSample.yFormat.pattern}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='barChart'|| chartSample.chartType=='lineChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Y2 Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socy2ft" label="Type"
+                                                            value="#{chartSample.y2Format.type}">
+                                            <af:selectItem label="currency" value="currency"/>
+                                            <af:selectItem label="number" value="number"/>
+                                            <af:selectItem label="percent" value="percent"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socy2fsc" label="Scaling"
+                                                            value="#{chartSample.y2Format.scaling}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="none" value="none"/>
+                                            <af:selectItem label="thousand" value="thousand"/>
+                                            <af:selectItem label="million" value="million"/>
+                                            <af:selectItem label="billion" value="billion"/>
+                                            <af:selectItem label="trillion" value="trillion"/>
+                                            <af:selectItem label="quadrillion" value="quadrillion"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socy2fgu" label="Grouping Used"
+                                                            value="#{chartSample.y2Format.groupingUsed}">
+                                            <af:selectItem label="true" value="true"/>
+                                            <af:selectItem label="false" value="false"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socy2fcs" label="Currency Symbol"
+                                                      value="#{chartSample.y2Format.currencySymbol}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socy2fcc" label="Currency Code"
+                                                      value="#{chartSample.y2Format.currencyCode}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socy2fpat" label="Pattern"
+                                                      value="#{chartSample.y2Format.pattern}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='bubbleChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Z Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soczft" label="Type"
+                                                            value="#{chartSample.zFormat.type}">
+                                            <af:selectItem label="currency" value="currency"/>
+                                            <af:selectItem label="number" value="number"/>
+                                            <af:selectItem label="percent" value="percent"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soczfsc" label="Scaling"
+                                                            value="#{chartSample.zFormat.scaling}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="none" value="none"/>
+                                            <af:selectItem label="thousand" value="thousand"/>
+                                            <af:selectItem label="million" value="million"/>
+                                            <af:selectItem label="billion" value="billion"/>
+                                            <af:selectItem label="trillion" value="trillion"/>
+                                            <af:selectItem label="quadrillion" value="quadrillion"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soczfgu" label="Grouping Used"
+                                                            value="#{chartSample.zFormat.groupingUsed}">
+                                            <af:selectItem label="true" value="true"/>
+                                            <af:selectItem label="false" value="false"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soczfcs" label="Currency Symbol"
+                                                      value="#{chartSample.zFormat.currencySymbol}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soczfcc" label="Currency Code"
+                                                      value="#{chartSample.yFormat.currencyCode}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soczfpat" label="Pattern"
+                                                      value="#{chartSample.zFormat.pattern}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='funnelChart'|| chartSample.chartType=='pieChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Value Label Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socvft" label="Type"
+                                                            value="#{chartSample.valueLabelFormat.type}">
+                                            <af:selectItem label="currency" value="currency"/>
+                                            <af:selectItem label="number" value="number"/>
+                                            <af:selectItem label="percent" value="percent"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socvfsc" label="Scaling"
+                                                            value="#{chartSample.valueLabelFormat.scaling}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="none" value="none"/>
+                                            <af:selectItem label="thousand" value="thousand"/>
+                                            <af:selectItem label="million" value="million"/>
+                                            <af:selectItem label="billion" value="billion"/>
+                                            <af:selectItem label="trillion" value="trillion"/>
+                                            <af:selectItem label="quadrillion" value="quadrillion"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="socvfgu" label="Grouping Used"
+                                                            value="#{chartSample.valueLabelFormat.groupingUsed}">
+                                            <af:selectItem label="true" value="true"/>
+                                            <af:selectItem label="false" value="false"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socvfcs" label="Currency Symbol"
+                                                      value="#{chartSample.valueLabelFormat.currencySymbol}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socvfcc" label="Currency Code"
+                                                      value="#{chartSample.valueLabelFormat.currencyCode}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="socvfpat" label="Pattern"
+                                                      value="#{chartSample.valueLabelFormat.pattern}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='funnelChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Target Value Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soctft" label="Type"
+                                                            value="#{chartSample.targetValueFormat.type}">
+                                            <af:selectItem label="currency" value="currency"/>
+                                            <af:selectItem label="number" value="number"/>
+                                            <af:selectItem label="percent" value="percent"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soctfsc" label="Scaling"
+                                                            value="#{chartSample.targetValueFormat.scaling}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="none" value="none"/>
+                                            <af:selectItem label="thousand" value="thousand"/>
+                                            <af:selectItem label="million" value="million"/>
+                                            <af:selectItem label="billion" value="billion"/>
+                                            <af:selectItem label="trillion" value="trillion"/>
+                                            <af:selectItem label="quadrillion" value="quadrillion"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soctfgu" label="Grouping Used"
+                                                            value="#{chartSample.targetValueFormat.groupingUsed}">
+                                            <af:selectItem label="true" value="true"/>
+                                            <af:selectItem label="false" value="false"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soctfcs" label="Currency Symbol"
+                                                      value="#{chartSample.targetValueFormat.currencySymbol}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soctfcc" label="Currency Code"
+                                                      value="#{chartSample.targetValueFormat.currencyCode}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soctfpat" label="Pattern"
+                                                      value="#{chartSample.targetValueFormat.pattern}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                                <af:gridRow rendered="#{chartSample.chartType=='bubbleChart'|| chartSample.chartType=='pieChart'}">
+                                    <af:gridCell marginEnd="6px">
+                                        <af:outputLabel value="Label Format"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soclft" label="Type"
+                                                            value="#{chartSample.labelFormat.type}">
+                                            <af:selectItem label="currency" value="currency"/>
+                                            <af:selectItem label="number" value="number"/>
+                                            <af:selectItem label="percent" value="percent"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soclfsc" label="Scaling"
+                                                            value="#{chartSample.labelFormat.scaling}">
+                                            <af:selectItem label="auto" value="auto"/>
+                                            <af:selectItem label="none" value="none"/>
+                                            <af:selectItem label="thousand" value="thousand"/>
+                                            <af:selectItem label="million" value="million"/>
+                                            <af:selectItem label="billion" value="billion"/>
+                                            <af:selectItem label="trillion" value="trillion"/>
+                                            <af:selectItem label="quadrillion" value="quadrillion"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:selectOneChoice id="soclfgu" label="Grouping Used"
+                                                            value="#{chartSample.labelFormat.groupingUsed}">
+                                            <af:selectItem label="true" value="true"/>
+                                            <af:selectItem label="false" value="false"/>
+                                        </af:selectOneChoice>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soclfcs" label="Currency Symbol"
+                                                      value="#{chartSample.labelFormat.currencySymbol}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soclfcc" label="Currency Code"
+                                                      value="#{chartSample.labelFormat.currencyCode}"/>
+                                    </af:gridCell>
+                                    <af:gridCell marginEnd="6px">
+                                        <af:inputText id="soclfpat" label="Pattern"
+                                                      value="#{chartSample.labelFormat.pattern}"/>
+                                    </af:gridCell>
+                                </af:gridRow>
+                            </af:panelGridLayout>
+                            <af:commandButton text="Submit" id="button"/>
+                        </af:panelGroupLayout>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

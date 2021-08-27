@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:h="http://java.sun.com/jsf/html"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="selectBooleanCheckbox Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="selectBooleanCheckbox"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a selectBooleanCheckbox is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputText value="This is a demo for the selectBooleanCheckbox component.
+                                  Pressing the postback buttons should not change what you selected. You can
+                                  update the properties of the first selectBooleanCheckbox from the table at the right"
+                           id="ot1"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:selectBooleanCheckbox binding="#{editor.component}" id="idSBC1"
+                                    label="Non Smoking room"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <af:panelGroupLayout layout="vertical" id="pgl1V">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:spacer height="5px" id="s5"/>
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <f:facet name="separator">
+                  <af:spacer height="10px" id="s2"/>
+                </f:facet>
+                <af:panelFormLayout id="pfl1">
+                  <af:selectBooleanCheckbox id="idSBC2" label="Extra Keys" text="Extra keys required"
+                                            autoSubmit="true" value="#{demoInput.boolean}"/>
+                  <af:panelFormLayout id="pfl2">
+                    <af:inputNumberSpinbox disabled="#{!demoInput.boolean}" label="Number of extras"
+                                           value="#{requestScope.keys}" partialTriggers="idSBC2"
+                                           id="ins1"/>
+                  </af:panelFormLayout>
+                  <af:selectBooleanCheckbox id="idSBC3" label="Extra Pillows"
+                                            value="#{demoInput.boolean2}" autoSubmit="true"
+                                            text="Extra pillows required"/>
+                  <af:panelFormLayout id="pfl3">
+                    <af:inputNumberSpinbox disabled="#{!demoInput.boolean2}" label="Number of extras"
+                                           value="#{requestScope.pillows}" partialTriggers="idSBC3"
+                                           id="ins2"/>
+                  </af:panelFormLayout>
+                  <af:selectBooleanCheckbox id="idSBC4" label="Crib"/>
+                </af:panelFormLayout>
+                <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+                <af:commandButton text="full postback" id="fullCommand"/>
+                <af:outputText partialTriggers="richCommand" id="result" visible="#{demoInput.boolean}"
+                               value="You have asked for #{requestScope.keys} extra keys"/>
+                <af:outputText partialTriggers="richCommand" id="result2"
+                               visible="#{demoInput.boolean2}"
+                               value="You have asked for #{requestScope.pillows} extra pillows"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <f:facet name="separator">
+                  <af:spacer height="10px" id="s3"/>
+                </f:facet>
+                <af:outputFormatted styleUsage="instruction" value="&lt;b>Additional Demos&lt;/b>"
+                                    id="of1"/>
+                <af:outputText value="This is a demo for showing checkboxes in a grid with PPR"
+                               id="ot2"/>
+                <h:panelGrid columns="4" summary="" id="pg1">
+                  <af:selectBooleanCheckbox text="coffee" value="#{gridLayoutBean2.coffee}"
+                                            id="selectBooleanCheckbox10"/>
+                  <af:selectBooleanCheckbox text="tea" value="#{gridLayoutBean2.tea}"
+                                            id="selectBooleanCheckbox11"/>
+                  <af:selectBooleanCheckbox text="orange juice" value="#{gridLayoutBean2.orangeJuice}"
+                                            id="selectBooleanCheckbox12"/>
+                  <af:selectBooleanCheckbox text="wine" value="#{gridLayoutBean2.wine}"
+                                            id="selectBooleanCheckbox13"/>
+                  <af:selectBooleanCheckbox text="milk" value="#{gridLayoutBean2.milk}"
+                                            id="selectBooleanCheckbox14"/>
+                  <af:selectBooleanCheckbox text="fizz" value="#{gridLayoutBean2.fizz}"
+                                            id="selectBooleanCheckbox15"/>
+                  <af:selectBooleanCheckbox text="beer" value="#{gridLayoutBean2.beer}"
+                                            id="selectBooleanCheckbox16"/>
+                  <af:selectBooleanCheckbox text="lemonade" value="#{gridLayoutBean2.lemonade}"
+                                            id="selectBooleanCheckbox17"/>
+                </h:panelGrid>
+                <af:commandButton partialSubmit="true" id="richCommand2" text="partial postback"
+                                  actionListener="#{gridLayoutBean2.wireGridBooleansAction}"/>
+                <af:outputText partialTriggers="richCommand2" id="result3"
+                               value="The submitted value was:#{gridLayoutBean2.checkValue}"/>
+                <af:outputText value="This is a demo for showing checkboxes in a grid with autoSubmit"
+                               id="ot3"/>
+                <h:panelGrid columns="4" summary="" id="pg2">
+                  <af:selectBooleanCheckbox text="coffee" id="check" autoSubmit="true"
+                                            value="#{gridLayoutBean.coffee}"
+                                            valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"/>
+                  <af:selectBooleanCheckbox text="tea" id="check2" autoSubmit="true"
+                                            valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                            value="#{gridLayoutBean.tea}"/>
+                  <af:selectBooleanCheckbox text="orangeJuice" id="check3" autoSubmit="true"
+                                            valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                            value="#{gridLayoutBean.orangeJuice}"/>
+                  <af:selectBooleanCheckbox text="wine" id="check4" autoSubmit="true"
+                                            valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                            value="#{gridLayoutBean.wine}"/>
+                  <af:selectBooleanCheckbox text="milk" id="check5" autoSubmit="true"
+                                            valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                            value="#{gridLayoutBean.milk}"/>
+                  <af:selectBooleanCheckbox text="fizz" id="check6" autoSubmit="true"
+                                            valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                            value="#{gridLayoutBean.fizz}"/>
+                  <af:selectBooleanCheckbox text="beer" id="check7" autoSubmit="true"
+                                            valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                            value="#{gridLayoutBean.beer}"/>
+                  <af:selectBooleanCheckbox text="lemonade" id="check8" autoSubmit="true"
+                                            valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                            value="#{gridLayoutBean.lemonade}"/>
+                </h:panelGrid>
+                <af:outputText partialTriggers="check check2 check3 check4 check5 check6 check7 check8"
+                               id="result4"
+                               value="The submitted value was:#{gridLayoutBean.checkValue}"/>
+                <af:outputText id="tri_ot" value="This is an example of the tri-state checkbox. It is initially set to mixed mode. The user can't set it to mixed mode by clicking on the checkbox."/>
+                <af:selectBooleanCheckbox id="trip1" label="tri-state checkbox" text="click me" value="#{demoInput.triState}" nullValueMeans="mixed"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl4">
+                <af:outputText value="By selecting a radio button other then 'none', a faces message of the appropriate type will automatically be appended to the selected element."
+                               id="ot4"/>
+                <af:selectBooleanCheckbox text="none" autoSubmit="true"
+                                          id="selectBooleanCheckbox1"/>
+                <af:selectBooleanCheckbox text="fatal" validator="#{messageTest.validateBooleanValue}"
+                                          autoSubmit="true" id="selectBooleanCheckbox2"/>
+                <af:selectBooleanCheckbox text="error" validator="#{messageTest.validateBooleanValue}"
+                                          autoSubmit="true" id="selectBooleanCheckbox3"/>
+                <af:selectBooleanCheckbox text="warning" validator="#{messageTest.validateBooleanValue}"
+                                          autoSubmit="true" id="selectBooleanCheckbox4"/>
+                <af:selectBooleanCheckbox text="confirmation"
+                                          validator="#{messageTest.validateBooleanValue}"
+                                          autoSubmit="true" id="selectBooleanCheckbox5"/>
+                <af:selectBooleanCheckbox text="info" validator="#{messageTest.validateBooleanValue}"
+                                          autoSubmit="true" id="selectBooleanCheckbox6"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="horizontal" id="pgl5">
+                <af:popup id="popupDialog">
+                  <af:dialog title="What do you like to drink?" id="d2">
+                    <h:panelGrid columns="4" id="pg3">
+                      <af:selectBooleanCheckbox text="coffee" id="pop1" value="#{gridLayoutBean.coffee}"
+                                                valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"/>
+                      <af:selectBooleanCheckbox text="tea" id="pop2"
+                                                valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                                value="#{gridLayoutBean.tea}"/>
+                      <af:selectBooleanCheckbox text="orangeJuice" id="pop3"
+                                                valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                                value="#{gridLayoutBean.orangeJuice}"/>
+                      <af:selectBooleanCheckbox text="wine" id="pop4"
+                                                valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                                value="#{gridLayoutBean.wine}"/>
+                      <af:selectBooleanCheckbox text="milk" id="pop5"
+                                                valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                                value="#{gridLayoutBean.milk}"/>
+                      <af:selectBooleanCheckbox text="fizz" id="pop6"
+                                                valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                                value="#{gridLayoutBean.fizz}"/>
+                      <af:selectBooleanCheckbox text="beer" id="pop7"
+                                                valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                                value="#{gridLayoutBean.beer}"/>
+                      <af:selectBooleanCheckbox text="lemonade" id="pop8"
+                                                valueChangeListener="#{gridLayoutBean.wireGridBooleansValue}"
+                                                value="#{gridLayoutBean.lemonade}"/>
+                    </h:panelGrid>
+                  </af:dialog>
+                </af:popup>
+                <af:outputText value="This demo shows the selectBooleanCheckbox inside of a popup."
+                               id="ot5"/>
+                <af:spacer width="5" id="s4"/>
+                <af:commandButton immediate="true" text="Show SelectBooleanCheckbox"
+                                  clientComponent="true" id="popupButton">
+                  <af:showPopupBehavior popupId="popupDialog" alignId="popupButton" align="afterStart"/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+              <af:group id="gAlign">
+                <af:button id="bAlign" text="Field Alignment" immediate="true">
+                  <af:showPopupBehavior popupId="pAlign"/>
+                </af:button>
+                <af:popup id="pAlign">
+                  <af:panelWindow id="pwAlign" title="Field Alignment">
+                    <af:panelGroupLayout id="pglAlignV" layout="vertical"
+                      inlineStyle="min-width:250px;min-height:320px;"
+                      partialTriggers="changedSetting disabledSetting helpSetting readOnlySetting requiredSetting selectedSetting">
+                      <af:panelFormLayout id="pflAlign1" maxColumns="2" rows="1">
+                        <af:selectBooleanCheckbox id="changedSetting" label="Changed" text="Changed indicator"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.changed}"/>
+                        <af:selectBooleanCheckbox id="disabledSetting" label="Disabled" text="Disabled"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.disabled}"/>
+                        <af:selectBooleanCheckbox id="helpSetting" label="Has help" text="Help"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.hasHelp}"/>
+                        <af:selectBooleanCheckbox id="readOnlySetting" label="Read-only" text="Read-only"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.readOnly}"/>
+                        <af:selectBooleanCheckbox id="requiredSetting" label="Required" text="Required"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.required}"/>
+                        <af:selectBooleanCheckbox id="selectedSetting" label="Selected" text="Selected"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.selected}"/>
+                      </af:panelFormLayout>
+                      <af:separator id="sepAlign"/>
+                      <af:spacer id="spAlign1" height="14"/>
+                      <af:outputText id="otAlign1" value="Simple:"/>
+                      <af:selectBooleanCheckbox id="alignEx1" label="Example" value="item1" text="Text" simple="true"
+                                                changed="#{pageFlowScope.changed}"
+                                                disabled="#{pageFlowScope.disabled}"
+                                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                readOnly="#{pageFlowScope.readOnly}"
+                                                selected="#{pageFlowScope.selected}"
+                                                showRequired="#{pageFlowScope.required}"/>
+                      <af:spacer id="spAlign2" height="14"/>
+                      <af:outputText id="otAlign2" value="Labelled:"/>
+                      <af:selectBooleanCheckbox id="alignEx2" label="Example" value="item1" text="Text"
+                                                changed="#{pageFlowScope.changed}"
+                                                disabled="#{pageFlowScope.disabled}"
+                                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                readOnly="#{pageFlowScope.readOnly}"
+                                                selected="#{pageFlowScope.selected}"
+                                                showRequired="#{pageFlowScope.required}"/>
+                      <af:spacer id="spAlign3" height="14"/>
+                      <af:panelGroupLayout id="formWrap" layout="default">
+                        <af:outputText id="otAlign3" value="Form (labelled and panelLabelAndMessage):"/>
+                        <af:spacer id="formSp1" width="8"/>
+                        <af:selectBooleanCheckbox id="labelAlignSetting" label="Top Labels" text="Top Labels"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.topLabels}"/>
+                      </af:panelGroupLayout>
+                      <af:panelFormLayout id="pflAlign2" maxColumns="1" partialTriggers="labelAlignSetting"
+                                          labelAlignment="#{pageFlowScope.topLabels ? 'top' : 'start'}">
+                        <af:selectBooleanCheckbox id="alignEx3" label="Example" value="item1" text="Text"
+                                                  changed="#{pageFlowScope.changed}"
+                                                  disabled="#{pageFlowScope.disabled}"
+                                                  helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                  readOnly="#{pageFlowScope.readOnly}"
+                                                  selected="#{pageFlowScope.selected}"
+                                                  showRequired="#{pageFlowScope.required}"/>
+                        <af:panelLabelAndMessage id="plmAlign" label="Example"
+                                                 changed="#{pageFlowScope.changed}"
+                                                 helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                 showRequired="#{pageFlowScope.required and (pageFlowScope.disabled != true) and (pageFlowScope.readOnly != true)}"
+                                                 shortDesc="This is a panelLabelAndMessage surrounding a simple field">
+                          <af:selectBooleanCheckbox id="alignEx4" label="Example" value="item1" text="Text" simple="true"
+                                                    changed="#{pageFlowScope.changed}"
+                                                    disabled="#{pageFlowScope.disabled}"
+                                                    helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                    readOnly="#{pageFlowScope.readOnly}"
+                                                    selected="#{pageFlowScope.selected}"
+                                                    showRequired="#{pageFlowScope.required}"/>
+                        </af:panelLabelAndMessage>
+                      </af:panelFormLayout>
+                    </af:panelGroupLayout>
+                  </af:panelWindow>
+                </af:popup>
+              </af:group>
+              <af:panelGroupLayout layout="vertical" id="pgl6">
+                <af:outputText value="See also:" id="ot6"/>
+                <af:navigationPane hint="list" id="np1">
+                  <af:commandNavigationItem immediate="true" text="editableTable"
+                                            destination="table/editableTable.jspx"
+                                            id="cni1"/>
+                </af:navigationPane>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>
+

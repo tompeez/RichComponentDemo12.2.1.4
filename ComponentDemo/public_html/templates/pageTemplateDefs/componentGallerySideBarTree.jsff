@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='utf-8'?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="2.1">
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Dynamic declarative component for each tree in the gallery side bar.</description>
+        <attribute>
+          <description>The tree's summary attribute</description>
+          <attribute-name>summary</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>The tree's ViewIdPropertyMenuModel that has disclosedRowKeys and
+                       selectRowKeys properties.</description>
+          <attribute-name>menuModel</attribute-name>
+          <attribute-class>org.apache.myfaces.trinidad.model.ViewIdPropertyMenuModel</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <!-- In regular (rich) mode, the autoHeightRows value of a tree inside a panelAccordion is 
+         ignored, and the tree is strecthed due to the showDetailItem stretchChildren="first" setting. 
+         But panelAccordion does not stretch children in screen reader mode due to overflow. To make
+         the tree still have a nicer stretched look while in screen reader mode, we set autoHeightRows="0",
+         which stretches the tree horizontally (screen reader mode only). -->
+    <af:tree id="tree" value="#{attrs.menuModel}" var="stamp" rowSelection="single" fetchSize="200"
+             summary="#{attrs.summary}" disclosedRowKeys="#{attrs.menuModel.foldersTreeState}" autoHeightRows="0"
+             selectedRowKeys="#{attrs.menuModel.selectionState}" displayRow="selected" 
+             contentDelivery="immediate" emptyText="There are no demos for this category"
+             styleClass="AFStretchWidth">
+      <f:facet name="nodeStamp">
+        <af:panelGroupLayout id="nodePgl">
+          <!-- No shortDesc needed. These tree node images are decorative, link purpose is conveyed via the link text. -->
+          <af:image source="#{stamp.ico}" styleClass="GalleryIcon" shortDesc=""
+                    id="nodeImg" inlineStyle="width:16px;height:16px"/>
+          <af:switcher facetName="#{stamp.children==null?'leaf':'notLeaf'}" id="nodeSw">
+            <f:facet name="leaf">
+              <af:link id="leafLink" text="#{stamp.label}" 
+                       shortDesc="#{stamp.label}#{stamp.deprecated eq 'true' ? ' (deprecated)' : ''}"
+                       action="#{stamp.actionOutcome}" 
+                       inlineStyle="#{stamp.deprecated eq 'true' ? 'font-style:italic;color:gray' : ''}" >
+                <af:target execute="@this"/>
+              </af:link>
+            </f:facet>
+            <f:facet name="notLeaf">
+              <af:outputText id="notLeafText" value="#{stamp.label}" shortDesc="#{stamp.label}"/>
+            </f:facet>
+          </af:switcher>
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:tree>
+  </af:componentDef>
+</jsp:root>

@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+     <jsp:directive.page contentType="text/html;charset=utf-8"/>
+     <f:view>
+    <af:document title="shared Popup Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+          <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+               <f:attribute name="tagName" value="popup"/>
+               <f:attribute name="visualDesignName" value=""/>
+               <f:attribute name="demoKind" value="component"/>
+               <f:attribute name="customEditorPresent" value="true"/>
+               <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                         <af:popup id="iteratorfeedback" contentDelivery="lazyUncached"
+                                   eventContext="launcher">
+                              <af:dialog id="d2">
+                                   <af:panelFormLayout id="pfl1">
+                                        <af:inputText label="Enter some feedback about this employee"
+                                                      rows="3"
+                                                      valueChangeListener="#{sharedPopup.handleFeedbackStamped}"
+                                                      id="it1"/>
+                                   </af:panelFormLayout>
+                              </af:dialog>
+                         </af:popup>
+                         <af:popup id="iteratorpop" contentDelivery="lazyUncached"
+                                   eventContext="launcher">
+                              <af:setPropertyListener from="#{sharedPopup.myCollectionModel.rowData}"
+                                                      to="#{sharedPopup.currEmp}"
+                                                      type="popupFetch"/>
+                              <af:noteWindow id="nw1">
+                              <af:panelFormLayout id="pfl2">
+                                   <af:panelLabelAndMessage label="group"
+                                                            id="plam1">
+                                        <af:outputText value="#{sharedPopup.currEmp.category}"
+                                                       id="ot1"/>
+                                   </af:panelLabelAndMessage>
+                                   <af:panelLabelAndMessage label="location"
+                                                            id="plam2">
+                                        <af:outputText value="#{sharedPopup.currEmp.location}"
+                                                       id="ot2"/>
+                                   </af:panelLabelAndMessage>
+                                   <af:panelLabelAndMessage label="grade"
+                                                            id="plam3">
+                                        <af:outputText value="#{sharedPopup.currEmp.grade}"
+                                                       id="ot3"/>
+                                   </af:panelLabelAndMessage>
+                                   <af:panelLabelAndMessage label="latest peer feedback"
+                                                            id="plam4">
+                                        <af:outputText value="#{sharedPopup.currEmp.peerFeedback}"
+                                                       id="ot4"/>
+                                   </af:panelLabelAndMessage>
+                              </af:panelFormLayout>
+                              </af:noteWindow>
+                         </af:popup>
+                         <af:panelBox text="Server Side Data Transfer to Shared Popup using Iterator"
+                                      id="pb1">
+                              <af:outputText value="Shows stamped components transferring data to shared popup. As you hover over each name below you should see a popup with employee information."
+                                             id="ot5"/>
+                              <af:panelFormLayout id="pfl3">
+                                   <af:iterator value="#{sharedPopup.myCollectionModel}"
+                                                var="propertyRow" id="i1">
+                                        <af:panelLabelAndMessage id="plam5">
+                                             <af:outputText clientComponent="true"
+                                                            value="#{propertyRow.name}"
+                                                            id="ot6">
+                                                  <af:showPopupBehavior popupId="::iteratorpop"
+                                                                        triggerType="mouseHover"/>
+                                             </af:outputText>
+                                             <af:spacer width="5px" id="s1"/>
+                                             <af:commandLink text="(add feedback)"
+                                                             partialSubmit="true"
+                                                             id="cl1">
+                                                  <af:showPopupBehavior popupId="::iteratorfeedback"
+                                                                        triggerType="click"/>
+                                             </af:commandLink>
+                                        </af:panelLabelAndMessage>
+                                   </af:iterator>
+                              </af:panelFormLayout>
+                         </af:panelBox>
+                         <af:popup id="foreachFeedback" eventContext="launcher"
+                                   contentDelivery="lazyUncached" launcherVar="launcher">
+                              <af:dialog id="d3">
+                                   <af:panelFormLayout id="pfl4">
+                                        <af:inputText label="Enter some feedback about this employee"
+                                                      rows="3"
+                                                      valueChangeListener="#{sharedPopup.handleFeedback}"
+                                                      id="it2"/>
+                                   </af:panelFormLayout>
+                              </af:dialog>
+                         </af:popup>
+                         <af:popup id="serverpopup2" contentDelivery="lazyUncached"
+                                   eventContext="launcher" launcherVar="launchComp">
+                              <af:setPropertyListener from="#{launchComp.attributes.empId}"
+                                                      to="#{sharedPopup.currId}" type="popupFetch"/>
+                            <af:noteWindow id="nw2">
+                              <af:panelFormLayout id="pfl5">
+                                   <af:panelLabelAndMessage label="group"
+                                                            id="plam6">
+                                        <af:outputText value="#{sharedPopup.currEmp.category}"
+                                                       id="ot7"/>
+                                   </af:panelLabelAndMessage>
+                                   <af:panelLabelAndMessage label="location"
+                                                            id="plam7">
+                                        <af:outputText value="#{sharedPopup.currEmp.location}"
+                                                       id="ot8"/>
+                                   </af:panelLabelAndMessage>
+                                   <af:panelLabelAndMessage label="grade"
+                                                            id="plam8">
+                                        <af:outputText value="#{sharedPopup.currEmp.grade}"
+                                                       id="ot9"/>
+                                   </af:panelLabelAndMessage>
+                                   <af:panelLabelAndMessage label="latest peer feedback"
+                                                            id="plam9">
+                                        <af:outputText value="#{sharedPopup.currEmp.peerFeedback}"
+                                                       id="ot10"/>
+                                   </af:panelLabelAndMessage>
+                              </af:panelFormLayout>
+                            </af:noteWindow>
+                         </af:popup>
+                         <af:panelBox text="Server Side Data Transfer to Shared Popup Using ForEach"
+                                      id="pb2">
+                              <af:outputText value="Shows foreach components transferring data to shared popup. As you hover over each name below you should see a popup with employee information."
+                                             id="ot11"/>
+                              <af:panelFormLayout id="pfl6">
+                                   <af:forEach var="propertyRow" items="#{sharedPopup.myList}">
+                                        <af:panelLabelAndMessage id="plam10">
+                                             <af:outputText clientComponent="true"
+                                                            value="#{propertyRow.name}"
+                                                            id="ot12">
+                                                  <f:attribute name="empId"
+                                                               value="#{propertyRow.id}"/>
+                                                  <af:showPopupBehavior popupId="serverpopup2"
+                                                                        triggerType="mouseHover"/>
+                                             </af:outputText>
+                                             <af:spacer width="5px" id="s2"/>
+                                             <af:commandLink text="(add feedback)"
+                                                             partialSubmit="true"
+                                                             id="cl2">
+                                                  <f:attribute name="empId"
+                                                               value="#{propertyRow.id}"/>
+                                                  <af:showPopupBehavior popupId="foreachFeedback"
+                                                                        triggerType="click"/>
+                                             </af:commandLink>
+                                        </af:panelLabelAndMessage>
+                                   </af:forEach>
+                              </af:panelFormLayout>
+                         </af:panelBox>
+                    </af:panelGroupLayout>
+               </f:facet>
+          </af:pageTemplate>
+    </af:document>
+     </f:view>
+</jsp:root>

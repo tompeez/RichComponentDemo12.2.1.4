@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Iterator and ForEach Comparison" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}" largeIconSource="#{aboutBean.largeIconSource}"
+                 theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="brandingTitle" value="Iterator and ForEach Comparison"/>
+        <f:attribute name="demoKind" value="confusedComponents"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout id="pgl2">
+              <af:outputFormatted value="&lt;b>af:forEach&lt;/b>" id="of1"/>
+              <af:panelList id="pl1">
+                <af:outputText value="Represents a tag, not a component." id="ot2"/>
+                <af:outputText value="Does not support arbitrary java.util.Collections; it can only iterate over java.util.Lists or arrays." id="ot3"/>
+                <af:outputText value="Not used in JSF for iteration, but instead for generating multiple components corresponding to items contained in the underlying list." id="ot4"/>
+                <af:outputText value="Should be used with caution, since removal of items from underlying list can create problems." id="ot5"/>
+                <f:verbatim>
+                <![CDATA[
+                      Since each loop of the for each creates a component, that means that each loop would need to produce a different binding. 
+                      So if using component binding in a for each, one would need to bind to a list or map.<br> 
+                      Example:<br><br>
+                      <code>
+                        &lt;af:forEach var="item".../><br>
+                          &nbsp;&nbsp;&lt;af:outputText binding="#{someBean.someMap[item.key]}" .../><br>
+                        &lt;/af:forEach><br>
+                      </code>
+                      <br>The following code is illegal:<br><br>
+                      <code>
+                        &lt;af:forEach var="item";.../><br>
+                          &nbsp;&nbsp;&lt;af:outputText binding="#{someBean.someComponent}" .../><br>
+                        &lt;/af:forEach>
+                      </code>
+                      <br><br>The latter code would only create one component and would confuse the for each loop and produce an invalid component tree.                       
+                ]]>
+                </f:verbatim>
+                <f:verbatim>
+                <![CDATA[
+                      Since a component ID must be unique the following code creates multiple components with generated ids: <br><br>
+                      <code>
+                        &lt;af:forEach var="item".../> <br>
+                          &nbsp;&nbsp;&lt;af:outputText id="ot1" .../><br>
+                        &lt;/af:forEach>
+                      </code>
+                      <br><br>Only the first output text will have ID ot1. The second would be ot1_j_id_1 or something like it. 
+                      This is because the forEach would try to <strong>help</strong> the user by <strong>fixing</strong> their error. 
+                      The problem is that this breaks component references (partialTriggers, findComponent, for attribute on an output label, etc.).
+                ]]>
+                </f:verbatim>
+              </af:panelList>
+              <af:spacer height="10" id="s2"/>
+              <af:outputText value="af:forEach example" id="ot61" inlineStyle="font-weight:bold;"/>
+              <af:spacer height="1" id="s21"/>
+              <af:forEach var="attr" items="#{periodicTable.tableData}" begin="0" end="10" step="2">
+                <af:outputText value="#{attr.name}" id="ot6" inlineStyle="border-bottom:1px dashed gray; margin-left:30px;"/>
+                <af:spacer height="1" id="s4"/>
+              </af:forEach>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout id="pgl3">
+              <af:outputFormatted value="&lt;b>af:iterator&lt;/b>" id="of2"/>
+              <af:panelList id="pl2">
+                <af:outputText value="Similar to table component, but has no chrome." id="ot7"/>
+                <af:outputText value="Represents a component." id="ot8"/>
+                <af:outputText value="Supports oracle.adf.view.rich.model.CollectionModel." id="ot9"/>
+                <af:outputText value="Each child is repeatedly stamped for each item in the underlying Collection." id="ot10"/>
+              </af:panelList>
+              <af:spacer height="10" id="s3"/>
+              <af:outputText value="af:iterator example" id="ot62" inlineStyle="font-weight:bold;"/>
+              <af:spacer height="1" id="s22"/>
+              <af:panelFormLayout rows="3" fieldWidth="100%" id="panelFormLayout1">
+                <af:iterator var="row" first="0" rows="8" varStatus="stat" binding="#{editor.component}"
+                             value="#{periodicTable.tableData}" id="it">
+                  <af:group id="g1">
+                    <af:outputText value="#{stat.count}. #{row.name}, Atomic Number: #{row.number}, Symbol:  #{row.symbol}" id="ot110" inlineStyle="margin-left:30px;"/>
+                  </af:group>
+                </af:iterator>
+              </af:panelFormLayout>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputText value="See also:" id="ot120"/>
+              <af:panelList id="pl3">
+                <af:goLink text="af:forEach" destination="../components/forEach.jspx" id="gl1"/>
+                <af:goLink text="af:iterator" destination="../components/iterator.jspx" id="gl2"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

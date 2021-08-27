@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Treemap and Sunburst Popups Demo" binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Treemap and Sunburst Popups Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Treemap and Sunburst Popups"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:group>
+                            <af:outputText value="Hover on a treemap node or click on a sunburst node to show a popup."
+                                           inlineStyle="font-size:medium;"/>
+                            <af:panelGroupLayout layout="horizontal">
+                                <dvt:treemap id="treemap" value="#{treemap.uniformData}" var="row"
+                                             inlineStyle="width:450px; height:350px;">
+                                    <dvt:treemapNode id="tn1" value="#{row.size}" fillColor="#{row.color}"
+                                                     label="#{row.text}">
+                                        <af:showPopupBehavior popupId="::noteWindowPopup" triggerType="mouseHover" align="endAfter"/>
+                                    </dvt:treemapNode>
+                                </dvt:treemap>
+                                <dvt:sunburst id="sunburst" value="#{treemap.uniformData}" var="row"
+                                              inlineStyle="width:400px; height:350px;">
+                                    <dvt:sunburstNode id="sn1" value="#{row.size}" fillColor="#{row.color}"
+                                                      label="#{row.text}">
+                                        <af:showPopupBehavior popupId="::noteWindowPopup" triggerType="click" align="endAfter"/>
+                                    </dvt:sunburstNode>
+                                </dvt:sunburst>
+                            </af:panelGroupLayout>
+                            <af:popup id="noteWindowPopup" launcherVar="source" eventContext="launcher"
+                                      clientComponent="true" contentDelivery="lazyUncached">
+                                <af:setPropertyListener from="#{source.currentRowData.text}"
+                                                        to="#{treemap.noteWindowMessage}" type="popupFetch"/>
+                                <af:noteWindow id="nw1">
+                                    <af:outputFormatted value="Hello from #{treemap.noteWindowMessage}" id="of8"/>
+                                </af:noteWindow>
+                            </af:popup>
+                        </af:group>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

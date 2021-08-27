@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="#{pivotFilterBarFeatureLinks.pivotFilterBarTitle}"
+                     binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="component"/>
+                <f:attribute name="tagDocPrefix" value="dvt"/>
+                <f:attribute name="gmChrome" value="shown"/>
+                <f:attribute name="gmStretchChildren" value="none"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="pivotFilterBar"/>
+                <!-- Tag Name -->
+                <f:attribute name="tagName" value="pivotFilterBar"/>
+                <f:facet name="top">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout1">
+                        <!-- START TAG DEMO -->
+                        <dvt:pivotFilterBar id="pfb1" binding="#{extEditor.component}" modelName="model1"
+                                            value="#{pivotFilterBar.queryDescriptor}"/>
+                        <dvt:pivotTable id="pt1" dataFormat="#{pivotFilterBar.getDataFormat}"
+                                        value="#{pivotFilterBar.dataModel}" modelName="model1"
+                                        partialTriggers="::pfb1"/>
+                        <!-- END TAG DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="centerBottomCollapsible">
+                    <af:panelGroupLayout layout="scroll" id="pgl1">
+                        <!-- START SEE ALSO LINKS -->
+                        <af:outputText value="See also:" id="ot1"/>
+                        <af:panelList id="pl1">
+                            <af:goLink text="Pivot Filter Bar Index" destination="/feature/pivotFilterBar/index.jspx" id="gl1"/>
+                        </af:panelList>
+                        <!-- END SEE ALSO LINKS -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

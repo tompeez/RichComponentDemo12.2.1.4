@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Filterable PanelCollection Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:outputFormatted value="&lt;b>Filterable PanelCollection Demo&lt;/b>"
+                                  id="of1"/>
+              <af:outputText value="On this demo page, the filter will not execute as the page is
+              not hooked up to the model. However, the SQL statement appears below."
+                             id="ot1"/>
+              <af:outputFormatted value="&lt;b>Filter SQL:&lt;/b> " id="of2"/>
+              <af:outputText partialTriggers="panelCollection:table" id="resultTextId"
+                             value="#{tableFilter.sqlString}"/>
+            </af:panelGroupLayout>
+            <af:panelCollection id="panelCollection" styleClass="AFStretchWidth">
+              <f:facet name="menus">
+                <af:menu text="Actions" id="m1">
+                  <af:commandMenuItem text="Add..." id="cmi1"/>
+                  <af:commandMenuItem text="Create.." id="cmi2"/>
+                  <af:commandMenuItem text="Update..." disabled="true"
+                                      id="cmi3"/>
+                  <af:commandMenuItem text="Copy" id="cmi4"/>
+                  <!-- todo: add af:group -->
+                  <af:commandMenuItem text="Delete" id="cmi5"/>
+                  <af:commandMenuItem text="Remove" accelerator="control A"
+                                      id="cmi6"/>
+                  <af:commandMenuItem text="Preferences" id="cmi7"/>
+                </af:menu>
+              </f:facet>
+              <f:facet name="toolbar">
+                <af:toolbar id="t1">
+                  <af:commandToolbarButton shortDesc="Create" icon="/images/new_ena.png"
+                                           id="ctb1"/>
+                  <af:commandToolbarButton shortDesc="Edit" icon="/images/update_ena.png"
+                                           id="ctb2"/>
+                  <af:commandToolbarButton shortDesc="Delete" icon="/images/delete_ena.png"
+                                           id="ctb3"/>
+                </af:toolbar>
+              </f:facet>
+              <f:facet name="secondaryToolbar">
+                <af:menuBar>
+                  <af:commandMenuItem immediate="true" text="TagGuide" action="guide"/>
+                  <af:goMenuItem text="Tag Documentation" destination="/docs/tagdoc/af_panelCollection.html"/>
+                  <af:goMenuItem text="view page source" destination="#{facesContext.viewRoot.viewId}.source"/>
+                </af:menuBar>
+              </f:facet>
+              <f:facet name="statusbar">
+                <af:toolbar id="t3">
+                  <af:outputText id="statusText" inlineStyle="margin-left:5px; white-space:nowrap"
+                                 value="Custom Statusbar Message"/>
+                </af:toolbar>
+              </f:facet>
+              <af:table rowSelection="multiple"
+                        columnSelection="multiple" queryListener="#{tableFilter.processTableFilter}"
+                        filterModel="#{tableFilter.queryDescriptor}" filterVisible="true"
+                        varStatus="vs" var="test1" value="#{tableFilter.data}" id="table"
+                        summary="table data">
+                <af:column width="20" rowHeader="true" headerText=" " id="c1"/>
+                <af:column displayIndex="3" headerText="Employee Number" filterable="true"
+                           sortProperty="empno" id="c2">
+                  <af:outputText value="#{test1.empno}" id="ot2"/>
+                </af:column>
+                <af:column displayIndex="1" headerText="Emp Name" filterable="true" rowHeader="unstyled"
+                           sortProperty="ename" sortable="true" id="c3">
+                  <af:outputText inlineStyle="margin-left:8px" value="#{test1.ename}"
+                                 id="ot3"/>
+                </af:column>
+                <af:column filterable="true" sortProperty="Salary" headerText="Salary"
+                           displayIndex="2" align="end" id="c4">
+                  <af:outputText value="#{test1.salary}" id="ot4"/>
+                </af:column>
+                <af:column headerText="Hire Date" align="center" filterable="true" id="c5">
+                  <f:facet name="filter">
+                    <af:inputDate value="#{vs.filterCriteria.Hiredate}" label="Filter: Hire Date" simple="true"
+                                  id="id1"/>
+                  </f:facet>
+                  <af:outputText value="#{test1.hireDate}" id="ot5"/>
+                </af:column>
+                <af:column filterable="true" sortProperty="Manager" headerText="Manager"
+                           id="c6">
+                  <af:outputText value="#{test1.manager}" id="ot6"/>
+                </af:column>
+                <af:column sortProperty="Deptno" filterable="true" headerText="Dept Number"
+                           align="center" id="c7">
+                  <af:outputText value="#{test1.deptno}" id="ot7"/>
+                </af:column>
+              </af:table>
+            </af:panelCollection>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

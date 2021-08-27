@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Hierarchy Viewer - PanelCard Transition Effects Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- MOD TAG TEMPLATE -->
+        <!-- Document Title -->
+        <f:attribute name="documentTitle"
+                     value="Hierarchy Viewer - Panel Card Transition Effects Demo"/>
+        <!-- Tag Name -->
+        <f:attribute name="tagName" value="Hierarchy Viewer - Panel Card Transition Effects"/>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="auto" id="psl1">
+            <f:facet name="top">
+              <!-- START TAG DEMO -->
+              <af:panelGroupLayout layout="horizontal" id="pgl13">
+                <af:spacer width="10px" id="s8"/>
+                <af:panelGroupLayout id="pgl14">
+                  <f:verbatim>
+                    <b>Demonstrates panel card transition effects</b>
+                    <ul>
+                      <li>Change the settings of the panel card from the dropdown menu's on the right.</li>
+                    </ul>
+                  </f:verbatim>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelSplitter  orientation="horizontal" dimensionsFrom="auto"
+                                    splitterPosition="300" positionedFromEnd="true"
+                                    styleClass="AFStretchWidth" id="ps1">
+                <f:facet name="first">
+                  <dvt:hierarchyViewer id="hv1" styleClass="AFStretchWidth"
+                                       var="node" detailWindow="none"
+                                       value="#{hvPanelCard.hvModel}"
+                                       contentDelivery="immediate"
+                                       partialTriggers="effect delivery">
+                    <dvt:link id="l1"/>
+                    <dvt:node width="233" height="330"
+                              showExpandChildren="#{node.hasChildren}"
+                              shortDesc="#{node.firstName}"
+                              id="n1">
+                    <f:facet name="zoom100">
+                      <af:panelGroupLayout styleClass="AFStretchWidth AFHVNodePadding"
+                                           layout="vertical" id="pgl1">
+                        <af:panelGroupLayout layout="horizontal" id="pgl2">
+                          <af:panelGroupLayout id="pgl3">
+                            <af:image rendered="true"
+                                      styleClass="AFHVNodeImageSize"
+                                      source="/resources/images/hv/#{node.personId}.png"
+                                      shortDesc="Picture of #{node.firstName}"
+                                      id="i1"/>
+                          </af:panelGroupLayout>
+                          <af:spacer width="5" height="5" id="s1"/>
+                          <af:panelGroupLayout layout="vertical" id="pgl4">
+                            <af:outputText value="#{node.firstName} #{node.lastName}"
+                                           styleClass="AFHVNodeTitleTextStyle"
+                                           id="ot10"/>
+                            <af:outputText value="#{node.title}"
+                                           styleClass="AFHVNodeSubtitleTextStyle"
+                                           id="ot12"/>
+                          </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                        <af:spacer height="5" id="s2"/>
+                        <dvt:panelCard id="pc1" effect="#{hvPanelCard.panelCardEffect}"
+                                       styleClass="AFHVNodePadding"
+                                       contentDelivery="#{hvPanelCard.contentDelivery}">
+                          <af:showDetailItem text="Contact "
+                                             id="sdi1">
+                            <af:panelFormLayout styleClass="AFStretchWidth AFHVNodePadding"
+                                                id="pfl1">
+                              <af:panelLabelAndMessage label="Work Phone"
+                                                       styleClass="AFHVPanelCardLabelStyle"
+                                                       id="plam1">
+                                <af:outputText value="#{node.workPhone}"
+                                               styleClass="AFHVPanelCardTextStyle"
+                                               id="ot4"/>
+                              </af:panelLabelAndMessage>
+                              <af:panelLabelAndMessage label="E-mail"
+                                                       styleClass="AFHVPanelCardLabelStyle"
+                                                       id="plam2">
+                                <af:link destination="mailto:#{node.email}"
+                                           text="#{node.email}"
+                                           styleClass="AFHVPanelCardTextStyle"
+                                           id="gl1"/>
+                              </af:panelLabelAndMessage>
+                            </af:panelFormLayout>
+                          </af:showDetailItem>
+                          <af:showDetailItem text="Address " id="sdi2">
+                            <af:spacer height="2" id="s3"/>
+                            <af:panelFormLayout styleClass="AFStretchWidth AFHVNodePadding"
+                                                id="pfl2">
+                              <af:panelLabelAndMessage label="Address"
+                                                       styleClass="AFHVPanelCardLabelStyle"
+                                                       id="plam3">
+                                <af:outputText value="#{node.workAddr1}"
+                                               styleClass="AFHVPanelCardTextStyle"
+                                               id="ot5"/>
+                              </af:panelLabelAndMessage>
+                              <af:panelLabelAndMessage label="City/State"
+                                                       styleClass="AFHVPanelCardLabelStyle"
+                                                       id="plam4">
+                                <af:outputText value="#{node.workCity}, #{node.workState}"
+                                               styleClass="AFHVPanelCardTextStyle"
+                                               id="ot6"/>
+                              </af:panelLabelAndMessage>
+                            </af:panelFormLayout>
+                          </af:showDetailItem>
+                        </dvt:panelCard>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    </dvt:node>
+                  </dvt:hierarchyViewer>
+                </f:facet>
+                <f:facet name="second">
+                  <af:panelFormLayout inlineStyle="border-style:solid; border-width:1px; border-color:rgb(148,148,148); padding:5px; background-color:White; "
+                                      id="pflw1">
+                    <af:selectOneChoice label="PanelCard effect" id="effect"
+                                        value="#{hvPanelCard.panelCardEffect}"
+                                        autoSubmit="true">
+                      <af:selectItem label="immediate" value="immediate"
+                                     id="si1"/>
+                      <af:selectItem label="slideHorz" value="slideHorz"
+                                     id="si2"/>
+                      <af:selectItem label="flipHorz" value="flipHorz"
+                                     id="si3"/>
+                      <af:selectItem label="nodeFlipHorz" value="nodeFlipHorz"
+                                     id="si4"/>
+                      <af:selectItem label="cubeRotateHorz" value="cubeRotateHorz"
+                                     id="si5"/>
+                      <af:selectItem label="nodeCubeRotateHorz" value="nodeCubeRotateHorz"
+                                     id="si6"/>
+                    </af:selectOneChoice>
+                    <af:selectOneChoice id="delivery" label="Panel card content delivery" 
+                                        value="#{hvPanelCard.contentDelivery}" 
+                                        autoSubmit="true">
+                      <af:selectItem value="lazy" label="lazy"
+                                      id="si7"/>
+                      <af:selectItem value="immediate" label="immediate"
+                                      id="si8"/>
+                    </af:selectOneChoice>
+                    </af:panelFormLayout>
+                </f:facet>
+              </af:panelSplitter>
+              <!-- END TAG DEMO -->
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

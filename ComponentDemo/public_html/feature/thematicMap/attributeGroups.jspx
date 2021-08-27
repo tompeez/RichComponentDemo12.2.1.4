@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2010, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Thematic Map Attribute Groups Demo"
+                     binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle"
+                             value="Thematic Map Attribute Groups Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Thematic Map Attribute Groups"/>
+                <f:facet name="center">
+                    <af:panelStretchLayout topHeight="auto" id="psl1">
+                        <f:facet name="top">
+                            <!-- START TAG DEMO -->
+                            <af:panelGroupLayout layout="vertical" id="pgl5">
+                                <f:verbatim>
+                                    <b>Demonstrates simple examples of using Attribute Groups with the Thematic Map</b>
+                                    <ul>
+                                      <li>Attribute Groups - Colors: Grouping colors by category</li>
+                                      <li>Attribute Groups - Shapes and Colors: Grouping shape and color by category</li>
+                                      <li>Multiple Attribute Groups: Separate attributeGroups for grouping shape by data value and color by category</li>
+                                      <li>Attribute Match Rule: Using attributeMatchRule to assign the human marker shape to certain groups </li>
+                                      <li>Attribute Exception Rule: Using attributeExceptionRule to assign a different color to Texas</li>
+                                    </ul>
+                                </f:verbatim>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <!-- START FEATURE DEMO -->
+                            <af:panelTabbed id="pt1">
+                                <af:showDetailItem text="Attribute Groups - Colors" id="sdi1" disclosed="false"
+                                                   stretchChildren="first">
+
+                                            <dvt:thematicMap basemap="usa"
+                                                             id="tm1">
+                                                <af:transition transition="auto" triggerType="display"/>
+                                                <dvt:areaLayer layer="states"
+                                                               id="al1" labelDisplay="off">
+                                                    <dvt:areaDataLayer id="dl1"
+                                                                       var="row"
+                                                                       value="#{stateData.colorModel}">
+                                                        <dvt:areaLocation id="al2"
+                                                                          name="#{row.name}">
+                                                            <dvt:marker id="m1"
+                                                                        scaleX="4.0"
+                                                                        scaleY="4.0"
+                                                                        shape="circle">
+                                                              <dvt:attributeGroups id="ag1" type="color" value="#{row.category}"
+                                                                                   label="#{row.category}"/>
+                                                            </dvt:marker>
+                                                        </dvt:areaLocation>
+                                                    </dvt:areaDataLayer>
+                                                </dvt:areaLayer>
+                                        <dvt:legend id="l1">
+                                            <f:facet name="separator"/>
+                                                <dvt:legendSection id="ls1" label="Category" source="al1:dl1:ag1"/>
+                                        </dvt:legend>
+                                    </dvt:thematicMap>
+
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Attribute Groups - Shapes and Colors"
+                                                   id="sdi2" stretchChildren="first">
+                                        <dvt:thematicMap basemap="usa"
+                                                         id="tm2">
+                                            <dvt:areaLayer layer="states"
+                                                           id="al3" labelDisplay="off">
+                                                <dvt:areaDataLayer id="adl1"
+                                                                   var="row"
+                                                                   value="#{stateData.colorModel}">
+                                                    <dvt:areaLocation id="al4"
+                                                                      name="#{row.name}">
+                                                        <dvt:marker id="m2"
+                                                                    scaleX="4.0"
+                                                                    scaleY="4.0">
+                                                            <dvt:attributeGroups id="ag2"
+                                                                                 type="color shape"
+                                                                                 value="#{row.category}"
+                                                                                 label="#{row.category}"/>
+                                                        </dvt:marker>
+                                                    </dvt:areaLocation>
+                                                </dvt:areaDataLayer>
+                                            </dvt:areaLayer>
+                                        <dvt:legend id="l2">
+                                            <f:facet name="separator"/>
+                                            <dvt:legendSection id="ls2" source="al3:adl1:ag2" label="Category"/>
+                                        </dvt:legend>
+                                    </dvt:thematicMap>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Multiple Attribute Groups"
+                                                   id="sdi3" stretchChildren="first">
+                                        <dvt:thematicMap basemap="usa"
+                                                         id="tm3">
+                                            <dvt:areaLayer layer="states"
+                                                           id="al5" labelDisplay="off">
+                                                <dvt:areaDataLayer id="adl2"
+                                                                   var="row"
+                                                                   value="#{stateData.colorModel}">
+                                                    <dvt:areaLocation id="al6"
+                                                                      name="#{row.name}">
+                                                        <dvt:marker id="m3"
+                                                                    scaleX="4.0"
+                                                                    scaleY="4.0">
+                                                            <dvt:attributeGroups id="ag3"
+                                                                                 type="color"
+                                                                                 value="#{row.category}"
+                                                                                 label="#{row.category}"/>
+                                                            <dvt:attributeGroups id="ag4"
+                                                                                 type="shape"
+                                                                                 value="#{row.data > 5}"
+                                                                                 label="#{row.data > 5}"/>
+                                                        </dvt:marker>
+                                                    </dvt:areaLocation>
+                                                </dvt:areaDataLayer>
+                                            </dvt:areaLayer>
+                                        <dvt:legend id="l3" label="Legend">
+                                            <dvt:legendSection id="ls3" source="al5:adl2:ag3" label="Category"/>
+                                            <dvt:legendSection id="ls4" source="al5:adl2:ag4" label="Data Value > 5"/>
+                                        </dvt:legend>
+                                    </dvt:thematicMap>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Attribute Match Rule"
+                                                   id="sdi4" stretchChildren="first">
+                                        <dvt:thematicMap basemap="usa"
+                                                         id="tm4">
+                                            <dvt:areaLayer layer="states"
+                                                           id="al7" labelDisplay="off">
+                                                <dvt:areaDataLayer id="adl3"
+                                                                   var="row"
+                                                                   value="#{stateData.colorModel}">
+                                                    <dvt:areaLocation id="al8"
+                                                                      name="#{row.name}">
+                                                        <dvt:marker id="m4"
+                                                                    scaleX="4.0"
+                                                                    scaleY="4.0">
+                                                            <dvt:attributeGroups id="ag5"
+                                                                                 type="shape color"
+                                                                                 value="#{row.category}"
+                                                                                 label="#{row.category}">
+                                                                <dvt:attributeMatchRule id="amr1"
+                                                                                        group="Category 1">
+                                                                  <f:attribute name="shape" value="human"/>
+                                                                </dvt:attributeMatchRule>
+                                                            </dvt:attributeGroups>
+                                                        </dvt:marker>
+                                                    </dvt:areaLocation>
+                                                </dvt:areaDataLayer>
+                                            </dvt:areaLayer>
+                                        <dvt:legend id="l4">
+                                            <f:facet name="separator"/>
+                                            <dvt:legendSection id="ls5" source="al7:adl3:ag5" label="Category"/>
+                                        </dvt:legend>
+                                    </dvt:thematicMap>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Attribute Exception Rule"
+                                                   id="sdi5" stretchChildren="first">
+                                        <dvt:thematicMap basemap="usa"
+                                                         id="tm5">
+                                            <dvt:areaLayer layer="states"
+                                                           id="al9" labelDisplay="off">
+                                                <dvt:areaDataLayer id="adl4"
+                                                                   var="row"
+                                                                   value="#{stateData.colorModel}">
+                                                    <dvt:areaLocation id="al10"
+                                                                      name="#{row.name}">
+                                                        <dvt:marker id="m5"
+                                                                    scaleX="4.0"
+                                                                    scaleY="4.0">
+                                                            <dvt:attributeGroups id="ag6"
+                                                                                 type="shape color"
+                                                                                 value="#{row.category}"
+                                                                                 label="#{row.category}">
+                                                               <dvt:attributeExceptionRule id="aer1" condition="#{row.name=='TX'}"
+                                                                                           label="Texas">
+                                                                   <f:attribute name="color" value="#ff00ff"/>
+                                                               </dvt:attributeExceptionRule>
+                                                            </dvt:attributeGroups>
+                                                        </dvt:marker>
+                                                    </dvt:areaLocation>
+                                                </dvt:areaDataLayer>
+                                            </dvt:areaLayer>
+                                        <dvt:legend id="l5">
+                                            <f:facet name="separator"/>
+                                            <dvt:legendSection id="ls6" source="al9:adl4:ag6" label="Category"/>
+                                        </dvt:legend>
+                                    </dvt:thematicMap>
+                                </af:showDetailItem>
+                            </af:panelTabbed>
+                            <!-- END FEATURE DEMO -->
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

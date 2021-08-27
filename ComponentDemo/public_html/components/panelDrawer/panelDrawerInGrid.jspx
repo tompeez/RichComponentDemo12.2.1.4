@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="PanelDrawer In Grid"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelDrawer"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGridLayout dimensionsFrom="parent">
+            <af:gridRow>
+              <af:gridCell width="100%" halign="stretch">
+                <af:outputText value="In this example we're using panelGridLayout instead of panelStretchLayout. 
+                                    We are stretching the content the drawer is opening over. 
+                                    We're also binding the width of the drawer depending on which drawer item is open. 
+                                    When the first tab is opened we set  the width of the drawer to null, therefore
+                                    the width of the first drawer is determined by the content in the drawer.
+                                    When the second tab is opened we set the width of the drawer to 75%. 
+                                    That way the content of the second drawer can stretch."/>
+              </af:gridCell>
+            </af:gridRow>
+            <af:gridRow height="100%">
+              <af:gridCell width="100%" halign="stretch" valign="stretch">
+                <af:panelGridLayout id="psl"
+                                    inlineStyle="border:black 1px solid"
+                                    dimensionsFrom="parent">
+                  <af:gridRow height="100%">
+                    <af:gridCell width="100%" halign="stretch" valign="stretch">
+                      <af:calendar id="cal2"
+                                   value="#{calendarBean.calendarModel}"/>
+                    </af:gridCell>
+                    <af:gridCell width="auto">
+                      <af:panelDrawer binding="#{editor.component}"
+                                      height="100%" width="#{drawer.width}"
+                                      id="drawer" alignId="psl">
+                        <af:showDetailItem textAndAccessKey="tab &amp;3"
+                                           icon="/images/icon_pie_24X24_ena.png"
+                                           hoverIcon="/images/icon_pie_24X24_ovr.png"
+                                           depressedIcon="/images/icon_pie_24X24_sel.png"
+                                           disabledIcon="/images/icon_pie_24X24_dis.png"
+                                           shortDesc="tab short desc" id="sdi3"
+                                           disclosureListener="#{drawer.widthListener}">
+                          <af:outputText value="Tab Child Text"/>
+                          <af:spacer height="150px"/>
+                        </af:showDetailItem>
+                        <af:showDetailItem textAndAccessKey="Calendar"
+                                           stretchChildren="first"
+                                           icon="/images/icon_library_24X24_ena.png"
+                                           hoverIcon="/images/icon_library_24X24_ovr.png"
+                                           depressedIcon="/images/icon_library_24X24_sel.png"
+                                           disabledIcon="/images/icon_library_24X24_dis.png"
+                                           shortDesc="Calendar short desc"
+                                           id="sdi1"
+                                           disclosureListener="#{drawer.widthListener}">
+                          <af:panelGridLayout dimensionsFrom="parent">
+                            <af:gridRow height="100%">
+                              <af:gridCell width="100%" halign="stretch"
+                                           valign="stretch">
+                                <af:calendar id="cal" value="#{calendarBean.calendarModel}"
+                                             timeZone="#{calendarBean.timeZone}"
+                                             activityStyles="#{calendarBean.activityStyles}"
+                                             calendarDisplayChangeListener="#{calendarBean.displayChangeListener}"
+                                             calendarActivityListener="#{calendarBean.activityListener}"
+                                             calendarActivityDurationChangeListener="#{calendarBean.activityDurationChangeListener}"
+                                             calendarListener="#{calendarBean.calendarListener}">
+                                  <f:facet name="activityContextMenu">
+                                    <af:popup id="p1">
+                                      <af:menu id="m1">
+                                        <af:commandMenuItem text="edit"
+                                                            id="cmi1">
+                                          <af:showPopupBehavior popupId="edit"
+                                                                triggerType="action"/>
+                                        </af:commandMenuItem>
+                                        <af:commandMenuItem text="delete"
+                                                            id="cmi2">
+                                          <af:showPopupBehavior popupId="delete"
+                                                                triggerType="action"/>
+                                        </af:commandMenuItem>
+                                      </af:menu>
+                                    </af:popup>
+                                  </f:facet>
+                                  <f:facet name="contextMenu">
+                                    <af:popup id="p2">
+                                      <af:menu id="m2">
+                                        <af:commandMenuItem text="create"
+                                                            id="cmi3">
+                                          <af:showPopupBehavior popupId="create"
+                                                                triggerType="action"/>
+                                        </af:commandMenuItem>
+                                        <af:commandMenuItem text="nothing for now"
+                                                            id="cmi4"></af:commandMenuItem>
+                                      </af:menu>
+                                    </af:popup>
+                                  </f:facet>
+                                  <f:facet name="activityDelete">
+                                    <af:popup id="delete"
+                                              contentDelivery="lazyUncached">
+                                      <!-- don't render if the activity is null -->
+                                      <af:dialog dialogListener="#{calendarBean.deleteListener}"
+                                                 title="#{calendarBean.currActivity.title}"
+                                                 affirmativeTextAndAccessKey="Yes"
+                                                 cancelTextAndAccessKey="No"
+                                                 rendered="#{calendarBean.currActivity != null}"
+                                                 id="d2">
+                                        <af:outputText value="NOTE: This popup is for demo purposes only, it is not part of the built in functionality of the calendar."
+                                                       id="ot4"/>
+                                        <af:spacer height="20" id="s4"/>
+                                        <af:outputText value="Are you sure you want to delete this activity?"
+                                                       id="ot5"/>
+                                        <af:panelFormLayout id="pfl1">
+                                          <af:inputText label="Title"
+                                                        value="#{calendarBean.currActivity.title}"
+                                                        readOnly="true"
+                                                        id="it1"/>
+                                          <af:inputDate label="From"
+                                                        value="#{calendarBean.currActivity.from}"
+                                                        readOnly="true"
+                                                        id="id1">
+                                            <af:convertDateTime type="#{calendarBean.currActivity.allDay == true ? 'date' : 'both'}"
+                                                                timeZone="#{calendarBean.timeZone}"/>
+                                          </af:inputDate>
+                                          <af:inputDate label="To"
+                                                        value="#{calendarBean.currActivity.to}"
+                                                        readOnly="true"
+                                                        id="id2">
+                                            <af:convertDateTime type="#{calendarBean.currActivity.allDay == true ? 'date' : 'both'}"
+                                                                timeZone="#{calendarBean.timeZone}"/>
+                                          </af:inputDate>
+                                          <af:inputText label="Location"
+                                                        readOnly="true"
+                                                        rendered="#{calendarBean.currActivity.location != null}"
+                                                        value="#{calendarBean.currActivity.location}"
+                                                        id="it2"/>
+                                        </af:panelFormLayout>
+                                      </af:dialog>
+                                    </af:popup>
+                                  </f:facet>
+                                  <f:facet name="activityHover">
+                                    <af:popup contentDelivery="lazyUncached"
+                                              id="p3">
+                                      <!-- don't render if the activity is null -->
+                                      <af:noteWindow inlineStyle="width:300px"
+                                                     rendered="#{calendarBean.currActivity != null}"
+                                                     id="nw1">
+                                        <af:outputText value="NOTE: This popup is for demo purposes only; it is not part of the built in functionality of the calendar."
+                                                       id="ot6"/>
+                                        <af:spacer height="20" id="s5"/>
+                                        <af:panelFormLayout id="pfl2">
+                                          <af:inputText label="Title"
+                                                        value="#{calendarBean.currActivity.title}"
+                                                        readOnly="true"
+                                                        id="it3"/>
+                                          <af:inputDate label="From"
+                                                        value="#{calendarBean.currActivity.from}"
+                                                        readOnly="true"
+                                                        id="id3">
+                                            <af:convertDateTime type="#{calendarBean.currActivity.allDay == true ? 'date' : 'both'}"
+                                                                timeZone="#{calendarBean.timeZone}"/>
+                                          </af:inputDate>
+                                          <af:inputDate label="To"
+                                                        value="#{calendarBean.currActivity.to}"
+                                                        readOnly="true"
+                                                        id="id4">
+                                            <af:convertDateTime type="#{calendarBean.currActivity.allDay == true ? 'date' : 'both'}"
+                                                                timeZone="#{calendarBean.timeZone}"/>
+                                          </af:inputDate>
+                                          <af:inputText label="Location"
+                                                        readOnly="true"
+                                                        rendered="#{calendarBean.currActivity.location != null}"
+                                                        value="#{calendarBean.currActivity.location}"
+                                                        id="it4"/>
+                                        </af:panelFormLayout>
+                                      </af:noteWindow>
+                                    </af:popup>
+                                  </f:facet>
+                                  <f:facet name="activityDetail">
+                                    <af:popup id="edit"
+                                              contentDelivery="lazyUncached">
+                                      <af:dialog rendered="#{calendarBean.currActivity == null}"
+                                                 id="d3"
+                                                 title="No activity available">
+                                        <af:outputText value="The activity has been deleted and is no longer available."
+                                                       id="ot7"/>
+                                      </af:dialog>
+                                      <!-- don't render if the activity is null -->
+                                      <af:dialog title="#{calendarBean.currActivity.title}"
+                                                 type="okCancel"
+                                                 dialogListener="#{calendarBean.editDialogListener}"
+                                                 rendered="#{calendarBean.currActivity != null}"
+                                                 id="d4">
+                                        <af:outputText value="NOTE: This popup is for demo purposes only, it is not part of the built in functionality of the calendar."
+                                                       id="ot8"/>
+                                        <af:spacer height="20" id="s6"/>
+                                        <af:panelFormLayout id="pfl3">
+                                          <af:inputText label="Owner"
+                                                        value="#{calendarBean.currActivity.providerId}"
+                                                        readOnly="true"
+                                                        id="it5"/>
+                                          <af:inputText label="Title"
+                                                        value="#{calendarBean.currActivity.title}"
+                                                        id="it6"/>
+                                          <af:inputText label="Location"
+                                                        value="#{calendarBean.currActivity.location}"
+                                                        id="it7"/>
+                                          <af:separator id="s7"/>
+                                          <af:selectBooleanCheckbox id="allDayFlagId"
+                                                                    text="All-Day"
+                                                                    value="#{calendarBean.currActivity.allDay}"
+                                                                    autoSubmit="true"/>
+                                          <af:inputDate label="From"
+                                                        value="#{calendarBean.currActivity.from}"
+                                                        partialTriggers="allDayFlagId"
+                                                        id="id5">
+                                            <af:convertDateTime type="#{calendarBean.currActivity.allDay == true ? 'date' : 'both'}"
+                                                                timeZone="#{calendarBean.timeZone}"/>
+                                          </af:inputDate>
+                                          <af:inputDate label="To"
+                                                        value="#{calendarBean.currActivity.to}"
+                                                        partialTriggers="allDayFlagId"
+                                                        id="id6">
+                                            <af:convertDateTime type="#{calendarBean.currActivity.allDay == true ? 'date' : 'both'}"
+                                                                timeZone="#{calendarBean.timeZone}"/>
+                                          </af:inputDate>
+                                          <af:selectBooleanCheckbox text="Recurring"
+                                                                    value="#{calendarBean.currActivity.recurring}"
+                                                                    id="sbc2"/>
+                                          <af:selectBooleanCheckbox text="Reminder"
+                                                                    value="#{calendarBean.currActivity.reminder}"
+                                                                    id="sbc3"/>
+                                          <af:separator id="s8"/>
+                                          <af:selectOneChoice label="Priority"
+                                                              value="#{calendarBean.currActivity.customAttributes['priority']}"
+                                                              id="soc1">
+                                            <f:selectItems value="#{calendarBean.prioritySelectItems}"
+                                                           id="si6"/>
+                                          </af:selectOneChoice>
+                                          <af:selectOneChoice label="Status"
+                                                              value="#{calendarBean.currActivity.customAttributes['status']}"
+                                                              id="soc2">
+                                            <f:selectItems value="#{calendarBean.statusSelectItems}"
+                                                           id="si7"/>
+                                          </af:selectOneChoice>
+                                          <af:selectOneChoice label="Access"
+                                                              value="#{calendarBean.currActivity.customAttributes['access']}"
+                                                              id="soc3">
+                                            <f:selectItems value="#{calendarBean.accessSelectItems}"
+                                                           id="si8"/>
+                                          </af:selectOneChoice>
+                                        </af:panelFormLayout>
+                                      </af:dialog>
+                                    </af:popup>
+                                  </f:facet>
+                                  <f:facet name="create">
+                                    <af:popup id="create"
+                                              contentDelivery="lazyUncached"
+                                              popupFetchListener="#{calendarBean.createPopupListener}">
+                                      <af:dialog title="Create New Activity"
+                                                 type="okCancel"
+                                                 rendered="#{calendarBean.newActivity != null}"
+                                                 dialogListener="#{calendarBean.createDialogListener}"
+                                                 id="d5">
+                                        <af:outputText value="NOTE: This popup is for demo purposes only, it is not part of the built in functionality of the calendar."
+                                                       id="ot9"/>
+                                        <af:spacer height="20" id="s9"/>
+                                        <af:outputText value="Create a new activity."
+                                                       id="ot10"/>
+                                        <af:panelFormLayout id="pfl4">
+                                          <af:inputText label="Owner"
+                                                        value="#{calendarBean.newActivity.providerId}"
+                                                        readOnly="true"
+                                                        id="it8"/>
+                                          <af:inputText label="Title"
+                                                        value="#{calendarBean.newActivity.title}"
+                                                        id="it9"/>
+                                          <af:inputText label="Location"
+                                                        value="#{calendarBean.newActivity.location}"
+                                                        id="it10"/>
+                                          <af:separator id="s10"/>
+                                          <af:selectBooleanCheckbox id="allDayNewFlagId"
+                                                                    text="All-Day"
+                                                                    value="#{calendarBean.newActivity.allDay}"
+                                                                    autoSubmit="true"/>
+                                          <af:inputDate label="From"
+                                                        value="#{calendarBean.newActivity.from}"
+                                                        partialTriggers="allDayNewFlagId"
+                                                        id="id7">
+                                            <af:convertDateTime type="#{calendarBean.newActivity.allDay == true ? 'date' : 'both'}"
+                                                                timeZone="#{calendarBean.timeZone}"/>
+                                          </af:inputDate>
+                                          <af:inputDate label="To"
+                                                        value="#{calendarBean.newActivity.to}"
+                                                        partialTriggers="allDayNewFlagId"
+                                                        id="id8">
+                                            <af:convertDateTime type="#{calendarBean.newActivity.allDay == true ? 'date' : 'both'}"
+                                                                timeZone="#{calendarBean.timeZone}"/>
+                                          </af:inputDate>
+                                          <af:selectBooleanCheckbox text="Recurring"
+                                                                    value="#{calendarBean.newActivity.recurring}"
+                                                                    id="sbc4"/>
+                                          <af:selectBooleanCheckbox text="Reminder"
+                                                                    value="#{calendarBean.newActivity.reminder}"
+                                                                    id="sbc5"/>
+                                          <af:separator id="s11"/>
+                                          <af:selectOneChoice label="Priority"
+                                                              value="#{calendarBean.newActivity.customAttributes['priority']}"
+                                                              id="soc4">
+                                            <f:selectItems value="#{calendarBean.prioritySelectItems}"
+                                                           id="si9"/>
+                                          </af:selectOneChoice>
+                                          <af:selectOneChoice label="Status"
+                                                              value="#{calendarBean.newActivity.customAttributes['status']}"
+                                                              id="soc5">
+                                            <f:selectItems value="#{calendarBean.statusSelectItems}"
+                                                           id="si10"/>
+                                          </af:selectOneChoice>
+                                          <af:selectOneChoice label="Access"
+                                                              value="#{calendarBean.newActivity.customAttributes['access']}"
+                                                              id="soc6">
+                                            <f:selectItems value="#{calendarBean.accessSelectItems}"
+                                                           id="si11"/>
+                                          </af:selectOneChoice>
+                                        </af:panelFormLayout>
+                                      </af:dialog>
+                                    </af:popup>
+                                  </f:facet>
+                                </af:calendar>
+                              </af:gridCell>
+                            </af:gridRow>
+                          </af:panelGridLayout>
+                        </af:showDetailItem>
+                        <af:showDetailItem textAndAccessKey="toolbox"
+                                           stretchChildren="first"
+                                           icon="/images/icon_briefcase_24X24_ena.png"
+                                           hoverIcon="/images/icon_briefcase_24X24Ovr.png"
+                                           depressedIcon="/images/icon_briefcase_24X24_sel.png"
+                                           disabledIcon="/images/icon_briefcase_24X24_dis.png"
+                                           id="sditb"
+                                           disclosureListener="#{drawer.widthListener}">
+                          <af:toolbox id="toolbox">
+                            <af:group id="g1">
+                              <af:menuBar id="mb1">
+                                <af:menu text="file" id="m1">
+                                  <af:commandMenuItem text="open" id="cmi1"/>
+                                </af:menu>
+                                <af:menu text="edit" id="m2">
+                                  <af:commandMenuItem text="undo" id="cmi2"/>
+                                </af:menu>
+                              </af:menuBar>
+                              <af:toolbar id="t1">
+                                <af:commandToolbarButton text="Forward"
+                                                         icon="/images/fwdarrow_gray.gif"
+                                                         id="ctb1"/>
+                                <af:inputText label="Address" id="it1"/>
+                                <af:commandToolbarButton text="Search"
+                                                         icon="/images/search.gif"
+                                                         id="ctb2"/>
+                              </af:toolbar>
+                              <af:toolbar stretchId="stretch2" id="t2">
+                                <af:commandToolbarButton text="Forward"
+                                                         icon="/images/fwdarrow_gray.gif"
+                                                         id="ctb3"/>
+                                <af:outputLabel value="Address 2" for="stretch2"
+                                                inlineStyle="white-space: nowrap;"
+                                                id="ol1"/>
+                                <af:inputText id="stretch2" simple="true"
+                                              clientComponent="true"
+                                              label="Address2"
+                                              styleClass="AFStretchWidth"
+                                              inlineStyle="display: block; min-width: 5em; padding-right: 8px;"/>
+                                <af:commandToolbarButton text="Search"
+                                                         icon="/images/search.gif"
+                                                         id="ctb4"/>
+                              </af:toolbar>
+                            </af:group>
+                            <af:toolbar id="t3">
+                              <af:commandToolbarButton text="Forward"
+                                                       icon="/images/fwdarrow_gray.gif"
+                                                       id="ctb5"/>
+                              <af:commandToolbarButton icon="/images/uplevel.gif"
+                                                       shortDesc="uplevel"
+                                                       id="ctb6"/>
+                            </af:toolbar>
+                            <af:toolbar flex="1" stretchId="stretch1" id="t4">
+                              <af:group id="g2">
+                                <af:commandToolbarButton text="Forward"
+                                                         icon="/images/fwdarrow_gray.gif"
+                                                         disabled="true"
+                                                         id="ctb7"/>
+                                <af:commandToolbarButton icon="/images/uplevel.gif"
+                                                         shortDesc="uplevel"
+                                                         id="ctb8"/>
+                              </af:group>
+                              <af:commandToolbarButton id="search" text="Search"
+                                                       icon="/images/search.gif"/>
+                              <af:commandToolbarButton text="Folders"
+                                                       icon="/images/folders.gif"
+                                                       id="ctb9"/>
+                              <!-- Insert a stretched spacer to push subsequent buttons to the right -->
+                              <af:spacer id="stretch1" clientComponent="true"/>
+                              <af:commandToolbarButton text="Reports"
+                                                       id="ctb10"/>
+                              <af:commandToolbarButton id="toggleRefresh"
+                                                       text="Refresh:OFF"/>
+                              <af:group id="g3">
+                                <af:commandToolbarButton icon="/images/arrange.gif"
+                                                         shortDesc="arrange"
+                                                         id="ctb11">
+                                  <f:facet name="popup">
+                                    <af:menu id="m3">
+                                      <af:commandMenuItem text="Thumbnails"
+                                                          id="cmi3"/>
+                                      <af:commandMenuItem text="Tiles"
+                                                          id="cmi4"/>
+                                      <af:commandMenuItem text="Icons"
+                                                          id="cmi5"/>
+                                      <af:commandMenuItem text="List"
+                                                          id="cmi6"/>
+                                      <af:commandMenuItem text="Details"
+                                                          type="radio"
+                                                          selected="true"
+                                                          id="cmi7"/>
+                                    </af:menu>
+                                  </f:facet>
+                                </af:commandToolbarButton>
+                              </af:group>
+                            </af:toolbar>
+                            <af:group id="g4">
+                              <af:toolbar stretchId="stretchA" flex="1" id="t5">
+                                <af:commandToolbarButton text="Button 1"
+                                                         id="button1"/>
+                                <af:spacer id="stretchA" clientComponent="true"
+                                           width="1"/>
+                                <af:commandToolbarButton text="Button 2"
+                                                         id="button2"/>
+                              </af:toolbar>
+                              <af:toolbar stretchId="stretchB" flex="2" id="t6">
+                                <af:commandToolbarButton text="Button 3"
+                                                         id="button3"/>
+                                <af:spacer id="stretchB" clientComponent="true"
+                                           width="1"/>
+                                <af:commandToolbarButton text="Button 4"
+                                                         id="button4"/>
+                              </af:toolbar>
+                            </af:group>
+                            <af:group id="g5">
+                              <af:toolbar stretchId="stretchC" flex="2" id="t7">
+                                <af:commandToolbarButton text="Button 5"
+                                                         id="button5"/>
+                                <af:spacer id="stretchC" clientComponent="true"
+                                           width="1"/>
+                                <af:commandToolbarButton text="Button 6"
+                                                         id="button6"/>
+                              </af:toolbar>
+                              <af:toolbar stretchId="stretchD" flex="1" id="t8">
+                                <af:commandToolbarButton text="Button 7"
+                                                         id="button7"/>
+                                <af:spacer id="stretchD" clientComponent="true"
+                                           width="1"/>
+                                <af:commandToolbarButton text="Button 8"
+                                                         id="button8"/>
+                              </af:toolbar>
+                            </af:group>
+                          </af:toolbox>
+                        </af:showDetailItem>
+                        <af:showDetailItem textAndAccessKey="panelGroupLayout layout=scroll"
+                                           id="sdipgl" stretchChildren="first"
+                                           disclosureListener="#{drawer.widthListener}"
+                                           icon="/images/icon_chat_24X24_ena.png"
+                                           hoverIcon="/images/icon_chat_24X24_ovr.png"
+                                           depressedIcon="/images/icon_chat_24X24_sel.png"
+                                           disabledIcon="/images/icon_chat_24X24_dis.png">
+                          <af:panelGroupLayout layout="scroll">
+                            <af:spacer height="1000" width="200"
+                                       inlineStyle="border:1px solid red"/>
+                          </af:panelGroupLayout>
+                        </af:showDetailItem>
+                        <af:showDetailItem textAndAccessKey="query" id="sdiq"
+                                           disclosureListener="#{drawer.widthListener}"
+                                           stretchChildren="first"
+                                           icon="/images/icon_subscriptions2_24X24_ena.png"
+                                           hoverIcon="/images/icon_subscriptions2_24X24_ovr.png"
+                                           depressedIcon="/images/icon_subscriptions2_24X24_sel.png"
+                                           disabledIcon="/images/icon_subscriptions2_24X24_dis.png">
+                          <af:query id="highSalariedClerksQueryId" rows="3"
+                                    maxColumns="2" headerText="Search"
+                                    disclosed="true"
+                                    resultComponentId="::resultTextId"
+                                    value="#{demoQuery.queryDescriptor}"
+                                    model="#{demoQuery.queryModel}"
+                                    queryListener="#{demoQuery.processQuery}"/>
+                          <af:outputText id="resultTextId"
+                                         partialTriggers="highSalariedClerksQueryId"
+                                         value="Query statement is as follows: #{demoQuery.sqlString}"/>
+                        </af:showDetailItem>
+                      </af:panelDrawer>
+                    </af:gridCell>
+                  </af:gridRow>
+                </af:panelGridLayout>
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

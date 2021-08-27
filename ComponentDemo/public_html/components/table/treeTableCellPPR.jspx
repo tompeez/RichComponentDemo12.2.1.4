@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2"
+          xmlns:h="http://java.sun.com/jsf/html">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="TreeTable Cell PPR Demo" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="table"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelStretchLayout id="pgl1" dimensionsFrom="auto">
+            <f:facet name="top">
+               <af:panelGroupLayout layout="vertical" id="pg1">
+                <af:outputFormatted value="&lt;b>Choose the column, specify the rowKey, cellValue and then click on the 'PPR Cell' button.&lt;/b>"
+                                    id="of1"/>
+                <af:panelGroupLayout layout="horizontal" id="pgl2">
+                  <af:commandButton partialSubmit="true" actionListener="#{treeTableTestData.PPRCell}"
+                                    text="PPR Cell" id="cb1"/>
+                  <af:selectOneRadio id="columnName" layout="horizontal" value="value"
+                                     label="&#160;&#160;Select A Column">
+                    <af:selectItem label="Node Value" value="value" shortDesc="Node Value"
+                                   id="si1"/>
+                    <af:selectItem label="Select One Choice" value="selectOneChoiceValue"
+                                   shortDesc="Select One Choice" id="si2"/>
+                    <af:selectItem label="Check Box" value="checked" shortDesc="Check Box"
+                                   id="si3"/>
+                    <af:selectItem label="Spin Box" value="size" shortDesc="Spin Box"
+                                   id="si4"/>
+                    <af:selectItem label="Date Picker" value="inputDate" shortDesc="Date Picker"
+                                   id="si5"/>
+                  </af:selectOneRadio>
+                  <af:inputText label="rowKey" value="2,1" inlineStyle="margin-left:20px"
+                                contentStyle="width:50px" id="rowKeyValue"/>
+                  <af:inputText label="cellVaue" value="594" inlineStyle="margin-left:20px"
+                                contentStyle="width:60px" id="cellValue"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:treeTable var="node" summary="treeTable cell ppr demo"
+                            id="tableCellPPR" varStatus="vs" rowSelection="single"
+                            disclosedRowKeys="#{treeTableTestData.disclosedRowKeys}"
+                            value="#{treeTableTestData.treeModel}">
+                <af:column width="80" rowHeader="true" headerText="RowKey" id="c1">
+                  <af:outputText value="#{vs.model.rowKey}" id="ot1"/>
+                </af:column>
+                <f:facet name="nodeStamp">
+                  <af:column align="start" headerText="Node Value" width="120"
+                             id="c2">
+                    <af:panelGroupLayout id="pgl3">
+                      <af:image source="#{node.icon}"
+                                inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                id="i1"></af:image>
+                      <af:inputText id="value" columns="5" value="#{node.value}"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                </f:facet>
+                <af:column align="start" headerText="Choice List" id="c3">
+                  <af:selectOneChoice id="selectOneChoiceValue" value="#{node.selectOneChoiceValue}"
+                                      simple="true" autoSubmit="true">
+                    <af:selectItem label="Mouse" value="Mouse" shortDesc="mouse from China"
+                                   id="si6"/>
+                    <af:selectItem label="Speaker" value="Speaker" shortDesc="Speaker from Taiwan"
+                                   id="si7"/>
+                    <af:selectItem label="Head Phone" value="Head Phone"
+                                   shortDesc="Head Phone from China" id="si8"/>
+                  </af:selectOneChoice>
+                </af:column>
+                <af:column align="start" headerText="Check Box" width="40" id="c4">
+                  <af:selectBooleanCheckbox simple="true" autoSubmit="true" value="#{node.checked}"
+                                            id="checked"/>
+                </af:column>
+                <af:column align="start" headerText="Spin Box" width="70" id="c5">
+                  <af:inputNumberSpinbox id="size" value="#{node.size}" autoSubmit="true" simple="true"
+                                         minimum="0"></af:inputNumberSpinbox>
+                </af:column>
+                <af:column align="start" headerText="Date Picker" width="100"
+                           id="c6">
+                  <af:inputDate columns="10" value="#{node.inputDate}" autoSubmit="true" id="inputDate"
+                                contentStyle="width:70px"></af:inputDate>
+                </af:column>
+              </af:treeTable>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+  version="2.1">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Dynamic Declarative Component Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="declarativeComponent"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelSplitter orientation="vertical" splitterPosition="55" positionedFromEnd="true"
+                            id="ps1" dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelGroupLayout layout="scroll" id="pgl1">
+                <af:panelFormLayout
+                  labelAlignment="start"
+                  partialTriggers="nameTypeChoice" id="pfl1">
+                  <af:inputText
+                    label="Text attribute: "
+                    value="#{ddcBean.parameter}"
+                    shortDesc="Attribute to pass into the declarative component. This is to illustrate the usage of the passing of variable attributes as well as support for partialTriggers."
+                    id="it1"/>
+                  <af:selectOneChoice
+                    id="nameTypeChoice"
+                    label="Choose name style for items"
+                    value="#{ddcBean.nameType}">
+                    <f:selectItems value="#{ddcBean.selectItems}" id="si1"/>
+                  </af:selectOneChoice>
+                  <af:commandButton
+                    id="attributeUpdateButton"
+                    text="Update"
+                    partialSubmit="true"
+                    shortDesc="Click here to update the declarative component attributes."
+                    actionListener="#{ddcBean.updateItemNames}" />
+                  <af:declarativeComponent
+                    id="lwdc"
+                    binding="#{editor.component}"
+                    partialTriggers="::attributeUpdateButton"
+                    viewId="pagefragments/dynamicDeclarativeComponentExample.jsff"
+                    text="#{ddcBean.parameter}"
+                    items="#{ddcBean.items}">
+                    <f:facet name="testFacet">
+                      <af:inputText
+                        id="facetInputText"
+                        value="#{ddcBean.parameter}"
+                        label="Test: "
+                        shortDesc="This is in a facet to show usage of passing a facet to the declarative component" />
+                    </f:facet>
+                  </af:declarativeComponent>
+                </af:panelFormLayout>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelGroupLayout layout="scroll" id="pgl2">
+                <af:outputText value="See also:" id="ot1"/>
+                <af:panelList id="pl1">
+                  <af:commandLink id="cl1" text="Declarative Component Geometry Management Demo"
+                                  action="guide.declarativeComponentGeometry"/>
+                  <af:commandLink text="pageTemplate (also shows facetRef usage)"
+                                  action="guide.pageTemplate" id="cl2"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

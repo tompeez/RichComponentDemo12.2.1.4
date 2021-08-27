@@ -1,0 +1,221 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Page Hierarchy Demo" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate
+        viewId="/templates/pageTemplateDefs/fileExplorerTemplate.jspx" id="pt1">
+        <f:attribute name="auxiliary2Size" value="1"/>
+        <f:facet name="branding">
+          <af:outputText value="Page Hierarchy Demo" id="ot1"/>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/fileExplorerTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc1">
+                <af:commandNavigationItem id="bcCni1" text="Tag Guide" action="guide"/>
+                <af:commandNavigationItem id="bcCni2" text="Page Hierarchy Demo"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:messages id="m1"/><!-- Using rich renderkit, this generates no UI -->
+            <!-- Structure:
+                                                        Root
+                                    /                                \                \        \
+                                   a1                                 a2               a3       a4
+                /                   \                 \             /    \
+              a1b1                  a1b2              a1b3        a2b1  a2b2
+            /    \            /      \     \         /    \
+        a1b1c1  a1b1c2       a1b2c1 a1b2c2 a1b2c3   a1b3c1  a1b3c2
+          |       |
+      a1b1c1d1   a1b1c2d1
+            -->
+            <trh:tableLayout cellSpacing="10" id="tl1">
+              <trh:rowLayout id="rl1">
+                <trh:cellFormat halign="center" columnSpan="11" id="cf1">
+                  <af:commandLink text="Root" action="guide.menuModel_root"
+                                  id="cl1"/>
+                </trh:cellFormat>
+              </trh:rowLayout>
+              <trh:rowLayout id="rl2">
+                <trh:cellFormat halign="center" columnSpan="7" id="cf2">
+                  <af:panelGroupLayout layout="vertical" id="pgl2">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiForwardSlash}"
+                                   id="ot2"/>
+                    <af:commandLink text="a1" action="guide.menuModel_a1"
+                                    id="cl2"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" columnSpan="2" id="cf3">
+                  <af:panelGroupLayout layout="vertical" id="pgl3">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiBackSlash}"
+                                   id="ot3"/>
+                    <af:commandLink text="a2" action="guide.menuModel_a2"
+                                    id="cl3"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf4">
+                  <af:panelGroupLayout layout="vertical" id="pgl4">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiBackSlash}"
+                                   id="ot4"/>
+                    <af:commandLink text="a3" action="guide.menuModel_a3"
+                                    id="cl4"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf5">
+                  <af:panelGroupLayout layout="vertical" id="pgl5">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiBackSlash}"
+                                   id="ot5"/>
+                    <af:commandLink text="a4" action="guide.menuModel_a4"
+                                    id="cl5"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+              </trh:rowLayout>
+              <trh:rowLayout id="rl3">
+                <trh:cellFormat halign="center" columnSpan="2" id="cf6">
+                  <af:panelGroupLayout layout="vertical" id="pgl6">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiForwardSlash}"
+                                   id="ot6"/>
+                    <af:commandLink text="a1b1" action="guide.menuModel_a1b1"
+                                    id="cl6"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" columnSpan="3" id="cf7">
+                  <af:panelGroupLayout layout="vertical" id="pgl7">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiBackSlash}"
+                                   id="ot7"/>
+                    <af:commandLink text="a1b2" action="guide.menuModel_a1b2"
+                                    id="cl7"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" columnSpan="2" id="cf8">
+                  <af:panelGroupLayout layout="vertical" id="pgl8">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiBackSlash}"
+                                   id="ot8"/>
+                    <af:commandLink text="a1b3" action="guide.menuModel_a1b3"
+                                    id="cl8"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf9">
+                  <af:panelGroupLayout layout="vertical" id="pgl9">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiForwardSlash}"
+                                   id="ot9"/>
+                    <af:commandLink text="a2b1" action="guide.menuModel_a2b1"
+                                    id="cl9"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf10">
+                  <af:panelGroupLayout layout="vertical" id="pgl10">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiBackSlash}"
+                                   id="ot10"/>
+                    <af:commandLink text="a2b2" action="guide.menuModel_a2b2"
+                                    id="cl10"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" columnSpan="2" id="cf11">
+                  <af:outputText value=" " id="ot11"/>
+                </trh:cellFormat>
+              </trh:rowLayout>
+              <trh:rowLayout id="rl4">
+                <trh:cellFormat halign="center" id="cf12">
+                  <af:panelGroupLayout layout="vertical" id="pgl11">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiForwardSlash}"
+                                   id="ot12"/>
+                    <af:commandLink text="a1b1c1" action="guide.menuModel_a1b1c1"
+                                    id="cl11"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf13">
+                  <af:panelGroupLayout layout="vertical" id="pgl12">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiBackSlash}"
+                                   id="ot13"/>
+                    <af:commandLink text="a1b1c2" action="guide.menuModel_a1b1c2"
+                                    id="cl12"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf14">
+                  <af:panelGroupLayout layout="vertical" id="pgl13">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiForwardSlash}"
+                                   id="ot14"/>
+                    <af:commandLink text="a1b2c1" action="guide.menuModel_a1b2c1"
+                                    id="cl13"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf15">
+                  <af:panelGroupLayout layout="vertical" id="pgl14">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiBackSlash}"
+                                   id="ot15"/>
+                    <af:commandLink text="a1b2c2" action="guide.menuModel_a1b2c2"
+                                    id="cl14"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf16">
+                  <af:panelGroupLayout layout="vertical" id="pgl15">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiBackSlash}"
+                                   id="ot16"/>
+                    <af:commandLink text="a1b2c3" action="guide.menuModel_a1b2c3"
+                                    id="cl15"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf17">
+                  <af:panelGroupLayout layout="vertical" id="pgl16">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiForwardSlash}"
+                                   id="ot17"/>
+                    <af:commandLink text="a1b3c1" action="guide.menuModel_a1b3c1"
+                                    id="cl16"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf18">
+                  <af:panelGroupLayout layout="vertical" id="pgl17">
+                    <af:outputText value="#{demoCommandNavigationItem.bidiBackSlash}"
+                                   id="ot18"/>
+                    <af:commandLink text="a1b3c2" action="guide.menuModel_a1b3c2"
+                                    id="cl17"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" columnSpan="4" id="cf19">
+                  <af:outputText value=" " id="ot19"/>
+                </trh:cellFormat>
+              </trh:rowLayout>
+              <trh:rowLayout id="rl5">
+                <trh:cellFormat halign="center" id="cf20">
+                  <af:panelGroupLayout layout="vertical" id="pgl18">
+                    <af:outputText value="|" id="ot20"/>
+                    <af:commandLink text="a1b1c1d1" action="guide.menuModel_a1b1c1d1"
+                                    id="cl18"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" id="cf21">
+                  <af:panelGroupLayout layout="vertical" id="pgl19">
+                    <af:outputText value="|" id="ot21"/>
+                    <af:commandLink text="a1b1c2d1" action="guide.menuModel_a1b1c2d1"
+                                    id="cl19"/>
+                  </af:panelGroupLayout>
+                </trh:cellFormat>
+                <trh:cellFormat halign="center" columnSpan="9" id="cf22">
+                  <af:outputText value=" " id="ot22"/>
+                </trh:cellFormat>
+              </trh:rowLayout>
+            </trh:tableLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

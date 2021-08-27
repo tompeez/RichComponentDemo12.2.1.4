@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="poll Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+function tickTock(event)
+{
+  event.cancel();
+  var tickTock = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:tickTock");
+  if (tickTock.getValue() == "Tick")
+    tickTock.setProperty("value", "Tock");
+  else
+    tickTock.setProperty("value", "Tick");
+}
+
+function startAndStopPoll(event)
+{
+  event.cancel();
+  var poll = AdfPage.PAGE.findComponentByAbsoluteId("dmoTpl:poll");
+  if (0 > poll.getInterval())
+    poll.setInterval(1000);
+  else
+    poll.setInterval(-1);
+}
+      </af:resource>
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="poll"/>
+        <f:attribute name="visualDesignName" value="deck"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:poll id="poll" interval="1000" binding="#{editor.component}">
+              <af:clientListener type="poll" method="tickTock"/>
+            </af:poll>
+            <af:outputText value="Tick" id="tickTock" clientComponent="true"/>
+            <af:commandButton text="Start and Stop Poll" id="button">
+              <af:clientListener type="action" method="startAndStopPoll"/>
+            </af:commandButton>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

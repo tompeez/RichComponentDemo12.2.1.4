@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2016, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Demo of a inputSearch working with a secured service" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="InputSearch: Secured REST Service Demo"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="This demo shows an inputSearch working with a REST service end point URL
+            that requires certain header parameters to be present on each request."  id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:inputSearch label="Ename" id="inputSearch"
+                                            binding="#{editor.component}"
+                                            valueAttribute="id"
+                                            displayAttributes="fName lName"
+                                            filterAttributes="fName lName jobTitle tags"
+                                            selectionConverter="#{inputSearchDemo.selectionConverter}"
+                                            autoSubmit="true">
+                <af:searchSection type="default" dataUrl="/rest/employees?cache=expiry&amp;auth=true" />
+                <af:clientAttribute name="jwtToken" value="#{inputSearchDemo.jwtToken}" />
+                <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                <f:facet name="contentStamp">
+                  <af:sanitized value="test">
+                    <span style="font-weight: bold; font-size: 15px">{{fName}} {{lName}}</span> <br/> {{jobTitle}} (<b>Email:</b> <span style="font-style: italic;"> {{email}} </span>)<br /> <b>Tags: </b> <span>{{tags}}</span>
+                  </af:sanitized>
+                </f:facet>
+              </af:inputSearch>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

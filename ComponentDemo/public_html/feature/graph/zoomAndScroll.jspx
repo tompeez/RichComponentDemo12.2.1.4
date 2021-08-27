@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html">
+    <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Graph Zoom and Scroll Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Graph Zoom and Scroll Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Graph Zoom and Scroll"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <trh:script id="s2">
+                          function setNewDefaultMode() {
+                              AdfPage.PAGE.findComponent('demo:lineGraph1').setMode(AdfDvtGraph.MODE_DEFAULT);
+                          }
+
+                          function setNewZoomMode() {
+                              AdfPage.PAGE.findComponent('demo:lineGraph1').setMode(AdfDvtGraph.MODE_ZOOM);
+                          }
+                        </trh:script>
+                        <af:outputText inlineStyle="font-size:large;" value="Scrollbar Zoom" id="ot5"/>
+                        <af:panelGroupLayout layout="horizontal" id="pgl2">
+                            <f:attribute name="hello" value="world"/>
+                            <dvt:scatterGraph id="scatterGraph1" shortDesc="Scatter Graph with Zoom">
+                                <dvt:x1Axis scrolling="on"/>
+                                <dvt:y1Axis scrolling="on" majorIncrement="1.0"/>
+                            </dvt:scatterGraph>
+                            <dvt:lineGraph id="timeGraph1" subType="LINE_VERT_ABS" shortDesc="Bar Graph with Zoom"
+                                           value="#{timeSelector.timeAxisGraphDataModel}" timeAxisType="TAT_DEFAULT">
+                                <dvt:y1Axis scrolling="on"/>
+                                <dvt:o1Axis scrolling="on"/>
+                            </dvt:lineGraph>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="horizontal" id="pgl3">
+                            <dvt:horizontalBarGraph shortDesc="Graph" id="barGraph1" subType="BAR_HORIZ_CLUST"
+                                                    value="#{timeSelector.timeAxisGraphDataModel}">
+                                <dvt:y1Axis scrolling="on"/>
+                                <dvt:o1Axis scrolling="on"/>
+                            </dvt:horizontalBarGraph>
+                            <dvt:barGraph shortDesc="Graph" id="barGraph2" subType="BAR_VERT_CLUST2Y">
+                                <dvt:y1Axis scrolling="on"/>
+                                <dvt:y2Axis scrolling="on"/>
+                                <dvt:o1Axis scrolling="on"/>
+                            </dvt:barGraph>
+                        </af:panelGroupLayout>
+                        <af:outputText inlineStyle="font-size:large;" value="Large Datasets" id="ot4"/>
+                        <af:panelGroupLayout layout="horizontal" id="pg32">
+                            <dvt:scatterGraph id="scatterGraphLDS" shortDesc="Scatter Graph with Zoom"
+                                              value="#{graphData.rows[3].cols[100].seed[123456789].correlatedPairs}">
+                                <dvt:x1Axis scrolling="on"/>
+                                <dvt:y1Axis scrolling="on"/>
+                            </dvt:scatterGraph>
+                            <dvt:lineGraph id="lineGraphLDS" subType="LINE_VERT_ABS" shortDesc="Line Graph with Zoom"
+                                           value="#{graphData.rows[5].cols[100].rowLabels['Custom Label %d'].time}"
+                                           timeAxisType="TAT_MIXED_FREQUENCY">
+                                <dvt:y1Axis scrolling="on"/>
+                                <dvt:o1Axis scrolling="on"/>
+                            </dvt:lineGraph>
+                        </af:panelGroupLayout>
+                        <af:panelGroupLayout layout="horizontal" id="pg25">
+                            <dvt:bubbleGraph id="bubbleGraphLDS" shortDesc="Bubble Graph with Zoom"
+                                             value="#{graphData.rows[2].cols[12].correlatedTriples}">
+                                <dvt:x1Axis scrolling="on"/>
+                                <dvt:y1Axis scrolling="on"/>
+                                <dvt:seriesSet defaultMarkerShape="MS_HUMAN"/>
+                            </dvt:bubbleGraph>
+                            <dvt:barGraph id="barGraphLDS" subType="BAR_VERT_CLUST" shortDesc="Bar Graph with Zoom"
+                                          value="#{graphData.rows[5].cols[12].random}">
+                                <dvt:y1Axis scrolling="on"/>
+                                <dvt:o1Axis scrolling="on"/>
+                            </dvt:barGraph>
+                        </af:panelGroupLayout>
+                        <af:outputText inlineStyle="font-size:large;" value="Time Axis" id="ot3"/>
+                        <af:panelGroupLayout layout="horizontal" id="pg26">
+                            <dvt:lineGraph id="lineGraphLDSTime1" subType="LINE_VERT_ABS"
+                                           shortDesc="Line Graph with Zoom"
+                                           value="#{graphData.rows[5].cols[100].colLabels[time].continuous}">
+                                <dvt:y1Axis scrolling="on"/>
+                                <dvt:o1Axis scrolling="on"/>
+                            </dvt:lineGraph>
+                            <dvt:lineGraph id="lineGraphLDSTime2" subType="LINE_VERT_ABS"
+                                           shortDesc="Line Graph with Zoom"
+                                           value="#{graphData.rows[5].cols[100].colLabels[time.start['2009-07-23T15:37:44'].hourly[7]].continuous}">
+                                <dvt:y1Axis scrolling="on"/>
+                                <dvt:o1Axis scrolling="on"/>
+                            </dvt:lineGraph>
+                        </af:panelGroupLayout>
+                        <af:outputText inlineStyle="font-size:large;" value="Marquee Zoom" id="ot2"/>
+                        <af:outputText value="Click 'Zoom mode' to enable Marquee Zoom" id="ot1"/>
+                        <dvt:lineGraph id="lineGraph1" subType="LINE_VERT_ABS" shortDesc="Line Graph with Zoom">
+                            <dvt:y1Axis scrolling="asNeeded"/>
+                            <dvt:o1Axis scrolling="asNeeded"/>
+                        </dvt:lineGraph>
+                        <af:panelGroupLayout layout="horizontal" id="pgl4">
+                            <af:commandButton text="Default mode" partialSubmit="true" id="cb1">
+                                <af:clientListener type="action" method="setNewDefaultMode"/>
+                            </af:commandButton>
+                            <af:commandButton text="Zoom mode" partialSubmit="true" id="cb2">
+                                <af:clientListener type="action" method="setNewZoomMode"/>
+                            </af:commandButton>
+                        </af:panelGroupLayout>
+                        <!-- END FEATURE DEMO -->
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

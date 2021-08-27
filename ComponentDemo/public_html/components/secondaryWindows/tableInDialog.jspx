@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="dialog Demo with Table" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="dialog"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:popup id="popupDialog">
+              <af:dialog title="Test Dialog" id="d2" stretchChildren="first" resize="on"
+                        contentWidth="300" contentHeight="300">
+                <af:table rowSelection="multiple"
+                          columnSelection="multiple" columnBandingInterval="1"
+                          var="test1" value="#{tableTestData}"
+                          id="table" summary="table data">
+                    <f:facet name="contextMenu">
+                      <af:popup id="myPopup">
+                          <af:menu id="m1">
+                              <af:commandMenuItem text="Context Menu Item 1"
+                                                  id="cmi1"/>
+                              <af:commandMenuItem text="Context Menu Item 2"
+                                                  id="cmi2"/>
+                              <af:commandMenuItem text="Context Menu Item 3"
+                                                  id="cmi3"/>
+                          </af:menu>
+                      </af:popup>
+                    </f:facet>
+                    <af:column width="40" align="center" rowHeader="true" headerText="Row Number"
+                               id="c1">
+                    <af:outputText value="#{test1.no}" id="ot1"/>
+                  </af:column>
+                  <af:column displayIndex="3" headerText="Number" sortable="true"
+                             id="c2">
+                    <af:outputText value="#{test1.no}" id="ot2"/>
+                  </af:column>
+                  <af:column displayIndex="1" headerText="Name" sortProperty="name" sortable="true"
+                             id="c3">
+                    <af:panelGroupLayout id="pgl2">
+                      <af:image source="#{test1.icon}" inlineStyle="width:16px; height:14px;"
+                                shortDesc="icon" id="i1"/>
+                      <af:outputText inlineStyle="margin-left:8px" value="#{test1.name}"
+                                     id="ot3"/>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column headerText="Size" displayIndex="2" id="c4">
+                    <af:outputText value="#{test1.size}" id="ot4"/>
+                  </af:column>
+                  <af:column align="center" headerText="Date Modified" id="c5">
+                    <af:outputText value="#{test1.date}" id="ot5"/>
+                  </af:column>
+                  <af:column headerText="Col5" id="c6">
+                    <af:outputText value="#{test1.col5}" id="ot6"/>
+                  </af:column>
+                  <af:column headerText="Col6" id="c7">
+                    <af:outputText value="#{test1.col6}" id="ot7"/>
+                  </af:column>
+                  <af:column headerText="Col7" id="c8">
+                    <af:outputText value="#{test1.col7}" id="ot8"/>
+                  </af:column>
+                  <af:column headerText="Col8" id="c9">
+                    <af:outputText value="#{test1.col8}" id="ot9"/>
+                  </af:column>
+                  <af:column headerText="Col9" id="c10">
+                    <af:outputText value="#{test1.col9}" id="ot10"/>
+                  </af:column>
+                  <af:column headerText="Col10" id="c11">
+                    <af:outputText value="#{test1.col10}" id="ot11"/>
+                  </af:column>
+                </af:table>
+              </af:dialog>
+            </af:popup>
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:commandButton immediate="true" text="Show Dialog w Table"
+                                id="cb1">
+                <af:showPopupBehavior popupId="popupDialog"/>
+              </af:commandButton>
+              <af:panelGroupLayout layout="vertical" id="pgl4">
+                <af:outputText value="See also:" id="ot12"/>
+                <af:goLink text="Dialog With Custom Buttons"
+                           destination="dialogCustomButtons.jspx" id="gl1"/>
+                <af:goLink text="Dialog With Custom And Standard Buttons"
+                           destination="dialogCustomAndStandardButtons.jspx"
+                           id="gl2"/>
+                <af:goLink text="Dialog" destination="../dialog.jspx" id="gl3"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 1508, 2013, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Chart Layout Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Chart Layout Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Layout"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <af:panelHeader text="Client Resize">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <!-- START FEATURE DEMO -->
+              <af:outputText value="Use the panel splitters below to resize the charts." id="ot1"/>
+              <af:panelSplitter orientation="vertical" id="ps1" inlineStyle="width:650px;height:400px;">
+                <f:facet name="first">
+                  <af:panelSplitter id="ps2">
+                    <f:facet name="first">
+                      <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row"
+                                    seriesEffect="#{chartSample.seriesEffectType}">
+                        <f:facet name="dataStamp">
+                          <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                        </f:facet>
+                        <dvt:chartLegend rendered="true"/>
+                      </dvt:barChart>
+                    </f:facet>
+                    <f:facet name="second">
+                      <dvt:pieChart value="#{chartDataSource.defaultPieData}" var="row"
+                                    seriesEffect="#{chartSample.seriesEffectType}">
+                        <dvt:pieDataItem label="#{row.series}" value="#{row.value}"/>
+                        <dvt:chartLegend rendered="true"/>
+                      </dvt:pieChart>
+                    </f:facet>
+                  </af:panelSplitter>
+                </f:facet>
+                <f:facet name="second">
+                  <af:panelSplitter id="ps3">
+                    <f:facet name="first">
+                      <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row"
+                                     seriesEffect="#{chartSample.seriesEffectType}">
+                        <f:facet name="dataStamp">
+                          <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                        </f:facet>
+                        <dvt:chartLegend rendered="true"/>
+                      </dvt:areaChart>
+                    </f:facet>
+                    <f:facet name="second">
+                      <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row"
+                                     seriesEffect="#{chartSample.seriesEffectType}">
+                        <f:facet name="dataStamp">
+                          <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                        </f:facet>
+                        <dvt:chartLegend rendered="true"/>
+                      </dvt:lineChart>
+                    </f:facet>
+                  </af:panelSplitter>
+                </f:facet>
+              </af:panelSplitter>
+            </af:panelHeader>
+            <af:panelHeader text="Small Form Factor">
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row"
+                               inlineStyle="width:150px;height:150px;">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:areaChart>
+                <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row"
+                              inlineStyle="width:150px;height:150px;">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:barChart>
+                <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row"
+                                 inlineStyle="width:150px;height:150px;">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"
+                                       z="#{row.z}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:bubbleChart>
+                <dvt:comboChart value="#{chartDataSource.defaultComboData}" var="row"
+                                inlineStyle="width:150px;height:150px;">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:comboChart>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="horizontal">    
+                <dvt:horizontalBarChart value="#{chartDataSource.defaultBarData}" var="row"
+                                        inlineStyle="width:150px;height:150px;">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:horizontalBarChart>
+                <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row"
+                               inlineStyle="width:150px;height:150px;">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:lineChart>
+                <dvt:pieChart value="#{chartDataSource.defaultPieData}" var="row"
+                              inlineStyle="width:150px;height:150px;">
+                  <dvt:pieDataItem label="#{row.series}" value="#{row.value}"/>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:pieChart>
+                <dvt:scatterChart value="#{chartDataSource.defaultScatterData}" var="row"
+                                  inlineStyle="width:150px;height:150px;">
+                  <f:facet name="dataStamp">
+                    <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"/>
+                  </f:facet>
+                  <dvt:chartLegend rendered="false"/>
+                </dvt:scatterChart>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map Marker Animations" binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>    
+      <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Thematic Map Marker Animations"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Thematic Map Marker Animations"/>    
+  
+    
+    
+        <f:facet name="center">
+          <af:panelGridLayout id="pgl1">
+            <af:gridRow height="40px" id="gr2">
+              <af:gridCell width="100%" halign="stretch" valign="stretch" id="gc2">
+                <af:button id="b1" text="Increase Size" inlineStyle="margin:4px" actionListener="#{markerAnimationBean.increaseSize}"/>
+                <af:button id="b2" text="Decrease Size" inlineStyle="margin:4px" actionListener="#{markerAnimationBean.decreaseSize}"/>
+                <af:button id="b3" text="Move" inlineStyle="margin:4px" actionListener="#{markerAnimationBean.move}"/>
+                <af:button id="b4" text="Rotate" inlineStyle="margin:4px" actionListener="#{markerAnimationBean.rotate}"/>
+                <af:button id="b5" text="Change Color" inlineStyle="margin:4px" actionListener="#{markerAnimationBean.changeColor}"/>
+                <af:button id="b6" text="Reset" inlineStyle="margin:4px" actionListener="#{markerAnimationBean.reset}"/>
+              </af:gridCell>
+            </af:gridRow>
+            <af:gridRow height="100%" id="gr1">
+              <af:gridCell width="100%" halign="stretch" valign="stretch" id="gc1">
+                <dvt:thematicMap id="thematicMap" basemap="usa" tooltipDisplay="auto" summary="Marker Animations">
+                  <af:transition transition="auto" triggerType="display"/>
+                  <dvt:areaLayer id="al1" layer="states">
+                    <dvt:pointDataLayer id="pdl1" contentDelivery="immediate" value="#{markerAnimationBean.points}"
+                                        var="row" varStatus="rowStatus" selectionMode="multiple" partialTriggers="::::b1 ::::b2 ::::b3 ::::b4 ::::b5 ::::b6">                          
+                      <af:transition transition="auto" triggerType="dataChange"/>
+                      <dvt:pointLocation id="pl1" type="pointXY" pointX="#{row.x}"
+                                         pointY="#{row.y}">
+                        <dvt:marker id="m1" labelPosition="bottom" labelDisplay="on" scaleX="#{markerAnimationBean.scaleX}" scaleY="#{markerAnimationBean.scaleY}"
+                                    shape="triangleUp" value="test label"
+                                    fillColor="#{markerAnimationBean.color}"
+                                    rotation="#{markerAnimationBean.rotation}"/>
+                      </dvt:pointLocation>
+                    </dvt:pointDataLayer>
+                  </dvt:areaLayer>
+                </dvt:thematicMap>
+              </af:gridCell>
+            </af:gridRow>
+          </af:panelGridLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

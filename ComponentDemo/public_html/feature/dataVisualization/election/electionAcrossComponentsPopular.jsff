@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <af:panelGroupLayout layout="vertical" halign="center">
+    <af:panelStretchLayout inlineStyle="max-width:980px;width:98%" startWidth="auto" endWidth="auto"
+                           dimensionsFrom="children">
+      <f:facet name="start">
+        <af:panelGroupLayout layout="horizontal" inlineStyle="font-size:medium;" clientComponent="true"
+                             partialTriggers=":::yearSelector:ins1">
+          <af:declarativeComponent viewId="legendItem.jsff" color="#{electionMashup.colorDemocratSmall}"
+                                   shortDesc="Small Margin of Victory" size="12"/>
+          <af:declarativeComponent viewId="legendItem.jsff" color="#{electionMashup.colorDemocratMedium}"
+                                   shortDesc="Medium Margin of Victory" size="12"/>
+          <af:declarativeComponent viewId="legendItem.jsff" color="#{electionMashup.colorDemocratLarge}"
+                                   shortDesc="Large Margin of Victory" size="12"
+                                   label="#{electionMashup.currentModel.candidateDemocrat}"/>
+          <af:spacer width="10"/>
+          <af:declarativeComponent viewId="legendItem.jsff" color="#{electionMashup.colorRepublicanSmall}"
+                                   shortDesc="Small Margin of Victory" size="12"/>
+          <af:declarativeComponent viewId="legendItem.jsff" color="#{electionMashup.colorRepublicanMedium}"
+                                   shortDesc="Medium Margin of Victory" size="12"/>
+          <af:declarativeComponent viewId="legendItem.jsff" color="#{electionMashup.colorRepublicanLarge}"
+                                   shortDesc="Large Margin of Victory" size="12"
+                                   label="#{electionMashup.currentModel.candidateRepublican}"/>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="end">
+        <af:panelGroupLayout layout="horizontal">
+          <af:inputText id="stateFilter" label="View" value="#{electionMashup.stateFilter}" autoSubmit="true"
+                        clientComponent="true" placeholder="All States">
+            <f:facet name="context">
+              <af:contextInfo>
+                <af:showPopupBehavior triggerType="contextInfo" popupId="stateFilterPopup" alignId="stateFilter"/>
+              </af:contextInfo>
+            </f:facet>
+          </af:inputText>
+          <af:popup id="stateFilterPopup">
+            <af:noteWindow>
+              <af:outputText value="Enter the name or abbreviations of the desired states in a space delimited list.  Use 'All States' to prevent filtering."/>
+            </af:noteWindow>
+          </af:popup>
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:panelStretchLayout>
+    <af:panelDashboard columns="3" rowHeight="33%" styleClass="AFStretchWidth" partialTriggers="stateFilter" dimensionsFrom="parent"
+                       inlineStyle="max-width:1000px;height:750px;">
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <af:table value="#{electionMashup.currentModel.unfilteredStateResults}" var="row" columnStretching="last"
+                    inlineStyle="border:none;" fetchSize="100" partialTriggers=":::yearSelector:ins1">
+            <af:column headerText="State">
+              <af:outputText value="#{row.stateLabel}"/>
+            </af:column>
+            <af:column headerText="Winner">
+              <af:declarativeComponent viewId="legendItem.jsff" color="#{row.popularColor}"
+                                       label="#{row.popularWinner}"/>
+            </af:column>
+            <af:column headerText="Win Margin">
+              <af:outputText value="#{row.popularWinPercentage}">
+                <af:convertNumber type="percent"/>
+              </af:outputText>
+            </af:column>
+          </af:table>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff" id="dc1">
+        <f:facet name="content">
+          <dvt:thematicMap basemap="usa" id="tm1" inlineStyle="border:none;" zooming="none" panning="none"
+                           controlPanelBehavior="hidden" tooltipDisplay="shortDescOnly" animationOnDisplay="none">
+            <dvt:areaLayer layer="states" id="al1" labelDisplay="off">
+              <dvt:areaDataLayer value="#{electionMashup.currentModel.unfilteredStateResults}" var="row" id="adl1" partialTriggers=":::::yearSelector:ins1">
+                <dvt:areaLocation name="#{row.state}" id="al2">
+                  <dvt:area id="a1" fillColor="#{row.popularColor}" shortDesc="#{row.popularTooltip}"/>
+                </dvt:areaLocation>
+              </dvt:areaDataLayer>
+            </dvt:areaLayer>
+          </dvt:thematicMap>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:thematicMap basemap="usa" id="tm2" inlineStyle="border:none;" zooming="none" panning="none"
+                           controlPanelBehavior="hidden" partialTriggers=":::yearSelector:ins1" animationOnDisplay="none"
+                           tooltipDisplay="shortDescOnly">
+            <dvt:areaLayer layer="states" areaStyle="background-color:transparent;" labelDisplay="off">
+              <dvt:areaDataLayer value="#{electionMashup.currentModel.unfilteredStateResults}" var="row"
+                                partialTriggers=":yearSelector:ins1">
+                <dvt:areaLocation name="#{row.state}">
+                  <dvt:marker width="#{row.popularTotal/200000}" height="#{row.popularTotal/200000}"
+                              value="#{row.state}" fillColor="#{row.popularColor}"
+                              labelStyle="color: #{row.popularWinner eq 'Democrat' ? '#FFFFFF' : '#000000'};"
+                              labelDisplay="#{row.popularTotal/200000 ge 20 ? 'on' : 'off'}"
+                              shortDesc="#{row.popularTooltip}"/>
+                </dvt:areaLocation>
+              </dvt:areaDataLayer>
+            </dvt:areaLayer>
+          </dvt:thematicMap>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff" id="dc2">
+        <f:facet name="content">
+          <dvt:treemap value="#{electionMashup.currentModel.unfilteredStateResults}" var="row" inlineStyle="border:none;" nodeSelection="none"
+                       sizeLabel="Total Votes" colorLabel="Winner and Margin" id="t1" partialTriggers=":::yearSelector:ins1">
+            <dvt:treemapNode value="#{row.popularTotal}" label="#{row.stateLabel}" fillColor="#{row.popularColor}"
+                             shortDesc="#{row.popularTooltip}" id="tn1"/>
+          </dvt:treemap>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:diagram layout="clump" selection="none" panning="none" zooming="none" controlPanelBehavior="hidden" partialTriggers=":::yearSelector:ins1">
+            <dvt:clientLayout featureName="DemoClumpLayout" method="DemoClumpLayout.clumpLayout" name="clump">
+              <dvt:nodeAttributes node="stateNode">
+                <f:attribute name="group" value="electoralWinner"/>
+              </dvt:nodeAttributes>
+            </dvt:clientLayout>
+            <dvt:diagramNodes value="#{electionMashup.currentModel.unfilteredStateResults}" var="node">
+              <dvt:diagramNode id="stateNode" nodeId="#{node.state}" shortDesc="#{node.popularTooltip}">
+                <f:facet name="zoom100">
+                  <dvt:marker width="#{node.popularTotal/200000}" height="#{node.popularTotal/200000}"
+                              value="#{node.state}" fillColor="#{node.popularColor}"
+                              labelStyle="color: #{node.popularWinner eq 'Democrat' ? '#FFFFFF' : '#000000'};"
+                              labelDisplay="#{node.popularTotal/200000 ge 20 ? 'on' : 'off'}"/>
+                </f:facet>
+              </dvt:diagramNode>
+            </dvt:diagramNodes>
+          </dvt:diagram>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:barChart value="#{electionMashup.currentModel.unfilteredStateResults}" var="row" barGapRatio="0.25"
+                        partialTriggers=":::yearSelector:ins1" animationIndicators="none">
+            <f:facet name="dataStamp">
+              <dvt:chartDataItem group="#{row.stateLabel}" value="#{row.popularWinPercentage}"
+                                 shortDesc="#{row.popularTooltip}" color="#{row.popularColor}"/>
+            </f:facet>
+            <dvt:chartLegend rendered="false"/>
+            <dvt:chartYAxis title="Win Margin"/>
+          </dvt:barChart>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:horizontalBarChart value="#{electionMashup.currentModel.unfilteredStateResults}" var="row" barGapRatio="0.25"
+                                  animationIndicators="none" partialTriggers=":::yearSelector:ins1">
+            <f:facet name="dataStamp">
+              <dvt:chartDataItem group="#{row.stateLabel}" value="#{row.popularWinPercentage}"
+                                 color="#{row.popularColor}"/>
+            </f:facet>
+            <dvt:chartLegend rendered="false"/>
+            <dvt:chartYAxis title="Win Margin"/>
+          </dvt:horizontalBarChart>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:pieChart value="#{electionMashup.currentModel.unfilteredStateResults}" var="row" sorting="on"
+                        partialTriggers=":::yearSelector:ins1">
+            <dvt:pieDataItem label="#{row.stateLabel}" value="#{row.popularTotal}" sliceLabel="#{row.stateLabel}"
+                             color="#{row.popularColor}" shortDesc="#{row.popularTooltip}"/>
+            <dvt:chartLegend rendered="false"/>
+          </dvt:pieChart>
+        </f:facet>
+      </af:declarativeComponent>
+      <af:declarativeComponent viewId="electionItem.jsff">
+        <f:facet name="content">
+          <dvt:sunburst value="#{electionMashup.currentModel.unfilteredStateResults}" var="row" sorting="on" nodeSelection="none"
+                        sizeLabel="Total Votes" colorLabel="Winner and Margin" partialTriggers=":::yearSelector:ins1">
+            <dvt:sunburstNode value="#{row.popularTotal}" label="#{row.stateLabel}" fillColor="#{row.popularColor}"
+                              shortDesc="#{row.popularTooltip}"/>
+          </dvt:sunburst>
+        </f:facet>
+      </af:declarativeComponent>
+    </af:panelDashboard>
+  </af:panelGroupLayout>
+</jsp:root>

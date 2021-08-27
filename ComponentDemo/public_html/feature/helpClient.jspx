@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Help client example" id="d1">
+      <af:resource type="javascript">
+/**
+ * This is an example of what a help client would need to do to play well in the rcf
+ * help framework.
+ *
+ * A cookie is kept that has the name of the help client.  Then when the help icon is pressed
+ * it can reuse the help window if it exists, so there aren't a buch of help windows every
+ * time the help icon is pressed.
+ * 
+ */
+function updateWindowName(actionEvent)
+{
+  // Cancel this event so it doesn't get sent to the server.
+  actionEvent.cancel();
+  
+  // In an application that used ADFc the window name would be set by ADFc.  In our case it
+  // isn't, so we artificially set it to something.
+  var helpWindowName = "helpClientDemo";
+  window.name = helpWindowName;
+  
+  // Save our window name so a subsequent launch of help will use us.
+  AdfPage.PAGE.setHelpWindowName(window.name);
+}
+      </af:resource>
+
+      <af:clientListener type="load" method="updateWindowName"/>
+
+      <af:form id="f1">
+        <af:outputText value="Example help client called from a helpTopicId externalURL."
+                       inlineStyle="color:grey;font-size:18pt" id="ot1"/>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

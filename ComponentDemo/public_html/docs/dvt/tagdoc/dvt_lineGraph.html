@@ -1,0 +1,1003 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:lineGraph&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:lineGraph&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:lineGraph lineGraph line graph</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.graph.UIGraph<br>
+<b>Component type:</b> oracle.dss.adf.graph.Graph (lineGraph)<br></p>
+<h4>Overview</h4>
+<p>The lineGraph tag is deprecated. Use the lineChart tag instead.<br></p>
+<p>Use the <a href="dvt_lineGraph.html">&lt;dvt:lineGraph&gt;</a> tag to create an ADF data visualization line graph. A line graph is one in which data is represented as lines. There are many types of Line graphs. Here is a list of subtypes that a <a href="dvt_lineGraph.html">&lt;dvt:lineGraph&gt;</a> tag supports -</p>
+<ul>
+<li>LINE_VERT_ABS - Absolute line graph</li>
+<li>LINE_VERT_ABS_2Y - Absolute line graph with dual-Y axis</li>
+<li>LINE_VERT_ABS_SPLIT2Y - Absolute line graph with split dual-Y axis</li>
+<li>LINE_VERT_PERCENT - Percent line graph</li>
+<li>LINE_VERT_STACK - Stacked line graph</li>
+<li>LINE_VERT_STACK_2Y - Stacked line graph with dual-Y axis</li>
+<li>LINE_VERT_STACK_SPLIT2Y - Stacked line graph with split dual-Y axis</li>
+</ul>
+<p>The <a href="dvt_lineGraph.html">&lt;dvt:lineGraph&gt;</a> tag provides a complete set of attributes and child tags required to create any line graph. Use the Line graph's "subType" attribute to specify the graph type. One of the most commonly useful child tags is the <a href="dvt_series.html">&lt;dvt:series&gt;</a> tag. Use a set of <a href="dvt_series.html">&lt;dvt:series&gt;</a> tags, within a <a href="dvt_seriesSet.html">&lt;dvt:seriesSet&gt;</a> tag, to change line colors, for instance.</p>
+<p>The Graph's layout is dominated by five major components: <a href="dvt_graphTitle.html">title</a>, <a href="dvt_graphSubtitle.html">subtitle</a>, <a href="dvt_graphFootnote.html">footnote</a>, <a href="dvt_legendArea.html">legendArea</a>, and <a href="dvt_graphPlotArea.html">plotArea</a>. The <a href="dvt_graphPlotArea.html">plotArea</a> plots the data and is always rendered, but the other four components are optional, and can be placed in different locations within the graph. Within the area allocated to the whole graph, space is first allocated to the titles, if present. The <a href="dvt_graphTitle.html">title</a> and the <a href="dvt_graphSubtitle.html">subtitle</a> are displayed side by side at the top of the graph by default, and the <a href="dvt_graphFootnote.html">footnote</a> is displayed at the bottom of the graph. Space is next allocated for the <a href="dvt_legendArea.html">legendArea</a>, which displays the marker color and label associated with each <a href="dvt_series.html">series</a>. It can be positioned in one of four locations: left, right, top and bottom. The <a href="dvt_legendArea.html">legend</a> can use as much as 40% of the graph space. The <a href="dvt_graphPlotArea.html">plotArea</a> and its labels occupy the remaining space.</p>
+<h4>Data Model</h4>
+<p>Use the data binding dialogs to bind the simple graph tags to a data control, which is typically based on a rowset (see <a href="http://download.oracle.com/docs/cd/E15523_01/web.1111/b31974/bcdcpal.htm">data binding documentation</a> for details). Another common way to provide data for the graph is to use the "tabularData" attribute to create a grid. This requires use of a backing or managed bean.</p>
+<p>The graph requires a simple grid of numeric data points to plot a graph. The grid's row and column labels are used to identify components within the graph. By default, the rows appear as the series and the columns appear as the groups. A <a href="dvt_lineGraph.html">line graph</a> requires one or more series with at least two groups of data because a line segment requires at least two points to define it. In a stacked line graph, the values of each data series are added to the previous one, thus the size of the stack represents a cumulative total of all series. A Percent line graph is a stacked graph that displays the percentage of a given series relative to the cumulative total of all series. This graph cannot have negative values.</p>
+<h4>Series</h4>
+<p>The rows in the grid usually appear as the <a href="dvt_series.html">series</a> in a line graph. The graph <a href="dvt_legendArea.html">legend</a> identifies each <a href="dvt_series.html">series</a> in the graph, with a labeled symbol that shows color and other appropriate attributes. Use a set of <a href="dvt_series.html">&lt;dvt:series&gt;</a> tags, within a <a href="dvt_seriesSet.html">&lt;dvt:seriesSet&gt;</a> tag, to change line or marker colors. The <a href="dvt_seriesSet.html">&lt;dvt:seriesSet&gt;</a> tag contains attributes that change the default attributes for all series. The <a href="dvt_seriesSet.html">&lt;dvt:seriesSet&gt;</a> tag also contains the <a href="dvt_series.html">&lt;dvt:series&gt;</a> tags that override attributes for individual series. Some commonly used <a href="dvt_series.html">series</a> attributes are - color, markerColor, lineWidth, lineStyle, assignedToY2 (change axis assignment on a Dual-Y graph).</p>
+<p>Here is an example of a <a href="dvt_lineGraph.html">Line graph</a> with a <a href="dvt_seriesSet.html">&lt;dvt:seriesSet&gt;</a> tag that defines a line width and a marker shape for all series. The <a href="dvt_series.html">&lt;dvt:series&gt;</a> child tag overrides both lineWidth and markerShape for the first series in the graph. -<br></p>
+<pre>
+<code>                &lt;dvt:lineGraph id="lineGraph1" subType="LINE_VERT_ABS" markerDisplayed="true"&gt;
+                  &lt;dvt:seriesSet defaultLineWidth="3" defaultMarkerShape="MS_CIRCLE"&gt;
+                    &lt;dvt:series index="0" lineWidth="1" markerShape="MS_SQUARE"/&gt;
+                  &lt;/dvt:seriesSet&gt;
+                &lt;/dvt:lineGraph&gt;
+        </code>
+</pre>
+<h4>SeriesEffect</h4>
+<p>Use the graph's "seriesEffect" attribute to add predefined gradient effects on 3D lines.</p>
+<h4>Series highlighting</h4>
+<p>Use the graph's "seriesRolloverBehavior" attribute to turn on highlighting behavior when the cursor moves over a series marker or a series-specific <a href="dvt_legendMarker.html">legend</a> component.</p>
+<h4>MarkerText</h4>
+<p>The <a href="dvt_markerText.html">markerText</a> tag defines if and where the marker text should appear in relation to dataline. Use the attribute "markerTextPlace" to specify the location of the text.</p>
+<h4>Titles</h4>
+<p>The <a href="dvt_graphTitle.html">title</a> and the <a href="dvt_graphSubtitle.html">subtitle</a>, if present, are displayed side by side at the top of the graph by default. Use the graph's "customLayout" attribute to change this default setting. The <a href="dvt_graphFootnote.html">footnote</a>, if present, is displayed at the bottom of the graph.</p>
+<h4>Legend</h4>
+<p>The <a href="dvt_legendArea.html">legend</a> displays the marker and associated color of each series. It also displays the <a href="dvt_legendTitle.html">legend title</a> and lists any <a href="dvt_referenceObject.html">reference objects</a> that are present. The <a href="dvt_legendArea.html">legend</a> can be positioned in one of four different locations: left, right, top and bottom. Use the attribute "alongGraphEdge" to attach it to the edge of the graph. The <a href="dvt_legendArea.html">legend</a> can be removed with the "rendered" attribute.</p>
+<h4>PlotArea and Axes</h4>
+<p>Area graphs plot the data within the <a href="dvt_graphPlotArea.html">plotArea</a>. The <a href="dvt_graphPlotArea.html">plotArea</a> integrates the axes and the data markers. Generally the horizontal axis is an ordinal/category axis (<a href="dvt_o1Axis.html">o1Axis</a>), which shows categories like cities or products. This axis can be a time axis if a Line graph is displaying dates (instance of java.util.Date). The primary vertical axis is a data axis (<a href="dvt_y1Axis.html">y1Axis</a>). Dual-Y graphs typically also display the <a href="dvt_y2Axis.html">y2Axis</a>. Each axis, whether ordinal or data, has tick labels and an axis title associated with it. The <a href="dvt_yAxis.html">y1Axis</a> is associated with <a href="dvt_y1TickLabel.html">y1TickLabel</a> and <a href="dvt_y1Title.html">y1Title</a>, for instance. See related component tags for detail.</p>
+<h4>Number Formatting</h4>
+<p>DVT line graph supports number formatting on its Y1 and Y2 axis tick labels as well as for marker text that appear on the data markers. Users can customize the number formatting by adding &lt;af:convertNumber&gt; to the &lt;dvt:y1TickLabel&gt;, &lt;dvt:y2TickLabel&gt;,&lt;dvt:y1Format&gt;, and &lt;dvt:y2Format&gt; tags. The following is an example of how to configure these tags:</p>
+<pre>
+<code>            &lt;dvt:lineGraph value="#{binding.dataModel}"&gt;
+               &lt;dvt:markerText&gt;
+                 &lt;dvt:y1Format&gt;
+                     &lt;af:convertNumber pattern="#{appPrefs.markerTextPattern}" /&gt;
+                 &lt;/dvt:y1Format&gt;
+                &lt;/dvt:markerText&gt;
+                &lt;dvt:y1TickLabel&gt;
+                     &lt;af:convertNumber pattern="#{appPrefs.tickLabelPattern}" /&gt;
+                &lt;/dvt:y1TickLabel&gt;
+             &lt;/dvt:lineGraph&gt;
+            </code>
+</pre>
+<p><b>Automatic Scaling and Precision</b></p>
+<p>Graph automatically determines the scale ( e.g. 4K ) and precision ( e.g. show 2 decimal points - 0.25 ) based on the values that are being displayed. This automatic formatting still occurs when &lt;af:convertNumber&gt; is specified. The graph tags that support &lt;af:convertNumber&gt; child tags ( e.g. &lt;dvt:y1TickLabel&gt;, &lt;dvt:y1Format&gt;, ...) also have scaling and autoPrecision attributes that can be used to control graph's automatic number formatting. By default, scaling="auto" means graph will auto-calculate the scale. For example, 40,000 will be formatted as "40K". By default, autoPrecision="on" means that graph will auto-calculate the precision of the number. For example, 0.230546 will be displayed as "0.23". If the autoPrecision is 'on' then all of the &lt;af:convertNumber&gt; fraction digit settings ( e.g. min/maxFractionDigits or pattern) are ignored.</p>
+<p><b>Formatting Percent Graphs</b></p>
+<p>Percent line graphs require special formatting, since internally the graph calculates percent values, which can be displayed as numbers (e.g. 0.25) or percent (e.g. 25%):</p>
+<ul>
+<li>Formatting Percent Axis - when &lt;af:convertNumber&gt; is added to the &lt;dvt:y1TickLabel&gt;, the values will be displayed based on what format is specified. For example, if the convertNumber type is number then the values are formatted as numbers (e.g. 0, 0.1, 0.2, etc.). However, if the convertNumber type is percent then the values are formatted as percent (e.g. 0%, 10%, 20%, etc.). Please note that if &lt;af:convertNumber&gt; is not added to the &lt;dvt:y1TickLabel&gt; then the graph will format the values as percent. To achieve the same format using &lt;af:convertNumber&gt;, &lt;af:convertNumber type="percent"&gt; must be used.</li>
+<li>Formatting Marker Text / Marker Tooltips - On percent graphs, marker text is always displayed in a percent format and optionally, marker tooltips can either display values as percent or numbers. When displaying percents in marker text or when the markerText tooltip type is set to percent (valid value are MTT_PERCENT_VAL, MTT_PERCENT_VAL_TEXT, MTT_PERCENT_VAL_VALUES and MTT_PERCENT_VAL_VALUES_TEXT), the formatting engine will use the markerText format and will automatically force the convertNumber type to percent. When &lt;af:convertNumber&gt; is forced to percent, graph clears &lt;af:convertNumber&gt; pattern, since the pattern will prevent type=percent if specified. This means that patterns are ignored when graph forces percent formatting.</li>
+</ul>
+<h4>Categorical attributes formatting</h4>
+<p>Graph typically uses categorical attributes ( e.g. product, geography, year, etc. ) on an ordinal axis and for the marker tooltips. To specify how categorical attributes should be formatted, an application needs to specify &lt;dvt:attributeFormat&gt; tag for each categorical attribute to be formatted. The &lt;dvt:attributeFormat&gt; tag needs to identify the categorical attribute that is being formatted by name as well as specify a converter to use when formatting the attribute. For example,</p>
+<pre>
+<code>            &lt;dvt:lineGraph value="#{bindings.EmpView1.graphModel}" subType="LINE_VERT_ABS"&gt;
+                      &lt;dvt:attributeFormat id="af1" name="Hiredate"&gt;
+                          &lt;af:convertDateTime pattern = "yyyy-MM-dd hh:mm:ss a"  timeZone="US/Pacific"/&gt;
+                      &lt;/dvt:attributeFormat&gt;
+             &lt;/dvt:lineGraph&gt;
+            </code>
+</pre>
+<p>The name of the categorical attribute is the name of the attribute/layer that was added to the Graph DataModel. The Graph model can be set declaratively by updating the pagedef. Here is the associated view pagedef for the above graph:</p>
+<pre>
+<code>             &lt;graph IterBinding="EmpView1Iterator" id="EmpView1"
+                       xmlns="http://xmlns.oracle.com/adfm/dvt" type="LINE_VERT_ABS"&gt;
+                &lt;graphDataMap leafOnly="true"&gt;
+                    &lt;series&gt;
+                      &lt;data&gt;
+                         &lt;item value="Bonus"/&gt;
+                      &lt;/data&gt;
+                    &lt;/series&gt;
+                    &lt;groups&gt;
+                       &lt;item value="Hiredate"/&gt;
+                    &lt;/groups&gt;
+                &lt;/graphDataMap&gt;
+             &lt;/graph&gt;
+            </code>
+</pre>
+<p><b>Configuring Date Formatting</b></p>
+<p>If there is a single categorical Date attribute being displayed on the O1Axis, then Graph displays a TimeAxis instead of the typical O1 / Ordinal Axis. The TimeAxis will show dates in a hierarchical format as opposed to as a single label on an O1 Axis ( e.g. June 27, 2001 ). To show a single label on the O1 Axis, the TimeAxis should be turned off ( e.g. timeAxisType="TAT_OFF" ) and a &lt;dvt:attributeFormat&gt; should be used to specify the date format.</p>
+<h4>Time Axis</h4>
+<p>The Line graph displays a time axis when dates (object type java.util.Date) are specified for the column labels. Several timeXXX attributes are defined on the <a href="dvt_graph.html">graph</a> tag to customize the time axis. The child tag <a href="dvt_timeAxisDateFormat.html">timeAxisDateFormat</a> controls the format in which the time axis labels are displayed.</p>
+<h4>Time Selector</h4>
+<p>Use the <a href="dvt_timeSelector.html">&lt;dvt:timeSelector&gt;</a> tag to activate the graph's TimeSelector feature, which allows an end user to select a time range on a time axis. This is typically used in master-detail graphs where the selected time range in the master graph drives the content of a detail graph, table, or other component. A backing or managed bean is required to use this feature.</p>
+<h4>Graph Size</h4>
+<p>The default graph size is 300 pixels tall by 400 pixels wide. Change this using the "inlineStyle" attribute. Set inlineStyle="width:500px; height:350px;", for instance, to change the graph size to 350 pixels tall by 500 pixels wide. The width and the height can also be specified in percent. Use percent for height only when the graph is added to an explicitly sized container or one that manages layout, otherwise graph will behave differently for different browsers. Use the "dynamicResize" attribute to resize the graph based on its container size.</p>
+<h4>Animation</h4>
+<p>Several graph types support animation. Animate the graph during initial rendering using the attribute "animationOnDisplay". The graph can also be animated when the data changes using the attribute "animationOnDataChange". Use the attribute "animationDuration" to specify the animation duration. The indicator colors for increase and decrease in the data value are specified by attributes "animationUpColor" and "animationDownColor", respectively.</p>
+<h4>Alerts</h4>
+<p>Use a <a href="dvt_alert.html">&lt;dvt:alert&gt;</a> tag for the graph to define an additional data point that needs to be highlighted with a separate symbol, such as for an error or warning. Wrap all <a href="dvt_alert.html">&lt;dvt:alert&gt;</a> tags in a <a href="dvt_alertSet.html">&lt;dvt:alertSet&gt;</a> tag.</p>
+<h4>Annotations</h4>
+<p>Use a <a href="dvt_annotation.html">&lt;dvt:annotation&gt;</a> tag to provide an annotation for a specific data point. Multiple annotations can be defined for a single data point. Wrap all <a href="dvt_annotation.html">&lt;dvt:annotation&gt;</a> tags in a <a href="dvt_annotationSet.html">&lt;dvt:annotationSet&gt;</a> tag.</p>
+<h4>ReferenceObject</h4>
+<p>Use the <a href="dvt_referenceObject.html">&lt;dvt:referenceObject&gt;</a> tag to create either a reference line or a reference area. The <a href="dvt_referenceObject.html">reference object</a> can be associated with any data axis or series. Multiple reference objects can be associated with a single series or an axis. Use the attribute "location" to specify whether the <a href="dvt_referenceObject.html">referenceObject</a> should displayed in the front or the back of the data markers. Use graph's "referenceObjectDisplay" attributes to specify when the <a href="dvt_referenceObject.html">referenceObject</a> would be displayed: the value "RO_AUTOMATIC" displays it only when the mouse hovers over the component with which the <a href="dvt_referenceObject.html">referenceObject</a> is defined. Wrap all <a href="dvt_referenceObject.html">&lt;dvt:referenceObject&gt;</a> tags in a <a href="dvt_referenceObjectSet.html">&lt;dvt:referenceObjectSet&gt;</a> tag.</p>
+<h4>Popups</h4>
+<p>The af:showPopupBehavior tag can be used within the <a href="dvt_seriesSet.html">&lt;dvt:seriesSet&gt;</a> to display popups for data objects within the graph. Only the "click" and "mouseHover" trigger types are supported. When using hover popups, it is recommended that tooltips be disabled, since having multiple types of hover feedback can be confusing to the user.</p>
+<h4>Context Menus</h4>
+<p>Context menus can be defined by using any of the context menu facets that are defined on the graph. The "bodyContextMenu" facet specifies a context menu that is displayed on any non-selectable object within the component. The "contextMenu" facet specifies a context menu that is displayed on any selectable object within the graph. The "multiSelectContextMenu" facet specifies a context menu that is displayed when multiple objects are selected. Each facet supports only a single child component. Selection must be enabled and supported for the specific graph type in order for an object to be considered selectable. Context Menus are currently only supported in Flash.</p>
+<p>Due to technical limitations when using the Flash rendering format, the context menu contents are currently displayed using the Flash Player's context menu. This imposes several limitations defined by the Flash Player:</p>
+<ul>
+<li>Flash does not allow for submenus in its context menu.</li>
+<li>Flash only allows a maximum of 15 custom menu items. The component's built in menu items, such as the ones for interactiveSliceBehavior, also count towards this limit.</li>
+<li>Flash only allows for text-only menu items. Icons or other controls possible in ADF Faces menus are not possible in Flash.</li>
+<li>Each caption must contain at least one visible character.</li>
+<li>Control characters, newlines, and other white space characters are ignored.</li>
+<li>No caption can be more than 100 characters long.</li>
+<li>Captions that are identical to another custom item are ignored, whether the matching item is visible or not. Menu captions are compared to built-in captions or existing custom captions without regard to case, punctuation, or white space.</li>
+<li>The following captions are not allowed, but the words may be used in conjunction with other words to form a custom caption: "Save","Zoom In", "Zoom Out", "100%", "Show All", "Quality", "Play", "Loop", "Rewind", "Forward", "Back", "Movie not loaded", "About", "Print", "Show Redraw Regions", "Debugger", "Undo", "Cut", "Copy", "Paste", "Delete", "Select All", "Open", "Open in new window", "Copy link"</li>
+<li>None of the following words can appear in a custom caption on their own or in conjunction with other words: "Adobe", "Macromedia", "Flash Player", "Settings"</li>
+</ul>
+<p>Additionally, since Flash's request for context menu items is a synchronous call, so a server request to evaluate EL is not possible when the context menu is invoked. To provide context menus that vary by selected object, the menus will be pre-fetched if the context menu popup uses contentDelivery="lazyUncached". For context menus that may vary by state, this means that any EL expressions within the menu definition will be called repeatedly at render time, with different selection and currency states. When using these context menus that are pre-fetched, the application must be aware of the following:</p>
+<ul>
+<li>Long running or slow code should not be executed in any EL that may be used to determine how the context menu is displayed. This does not apply to af:commandMenuItem attributes that are called after a menu item is selected, such as "actionListener".</li>
+<li>In the future, if the Flash limitations are solved, the ADF context menu may be displayed in place of the Flash context menu. To ensure upgrade compatibility, applications developers should code such that their EL will function both in cases where the menu is pre-fetched, and also if the EL is evaluated when the menu is invoked. It is highly recommended that the only component state that applications rely on are selection and currency.</li>
+</ul>
+<h4>Interactivity</h4>
+<p>Use the <a href="dvt_shapeAttributes.html">shapeAttributes</a> tag to specify interactivity on an individual graph component. A backing or managed bean is required to use this feature.</p>
+<p>Here is an example of a dataline in a line graph using a clickListener to display series information:</p>
+<pre>
+<code>                &lt;dvt:lineGraph id="lineGraph1" subType="LINE_VERT_ABS&gt;
+                 &lt;dvt:shapeAttributesSet&gt;
+                  &lt;dvt:shapeAttributes component="GRAPH_DATALINE" clickable="true" clickListener="#{clickListener.processClick}"/&gt;
+                 &lt;/dvt:shapeAttributesSet&gt;
+                &lt;/dvt:lineGraph&gt;
+        </code>
+</pre>
+<p>The "processClick" method in the backing bean will look like:</p>
+<pre>
+<code>        public void processClick(ClickEvent event) {   
+                ComponentHandle handle = event.getComponentHandle();
+                if (handle instanceof SeriesComponentHandle) {
+                        // Get the series attributes
+                        Attributes [] seriesInfo = ((SeriesComponentHandle)handle).getSeriesAttributes();
+                        String data = "";
+                        if(seriesInfo != null) {
+                                for(Attributes attrs: seriesInfo) {
+                                        data += "Series value: " + attrs.getValue(Attributes.LABEL_VALUE);
+                                        data += " Series name: " + attrs.getValue(Attributes.LABEL_ATTRIBUTE);
+                                        data += " Series value id: " + attrs.getValue(Attributes.ID_VALUE);
+                                        data += " Series name id: " + attrs.getValue(Attributes.ID_ATTRIBUTE);
+                                }
+                                System.out.println(data);
+                        }
+                }
+        }
+        </code>
+</pre>
+<p>Wrap all <a href="dvt_shapeAttributes.html">&lt;dvt:shapeAttributes&gt;</a> tags in a <a href="dvt_shapeAttributesSet.html">&lt;dvt:shapeAttributesSet&gt;</a> tag.</p>
+<h4>Tooltips</h4>
+<p>Tooltips are useful to display identification and or detail information for data markers. They can be very useful in smaller graphs without enough space to display markerText. Use attributes "markerTooltipType", "seriesTooltipLabelType", and "groupTooltipLabelType" to customize tooltip content. The graph automatically displays tooltips for components like <a href="dvt_graphTitle.html">title</a>, <a href="dvt_graphSubtitle.html">subtitle</a>, <a href="dvt_graphFootnote.html">footnote</a>, <a href="dvt_legendText.html">legendText</a>, and <a href="dvt_annotation.html">annotations</a> when their text is truncated. There is no option to change this behavior.</p>
+<h4>Zoom and Scroll</h4>
+<p>Give end users the ability to zoom in on and scroll through a data set that may be too large or complex to fit comfortably within the area allocated to the graph using the "zoomDirection" attribute. Zoom and scroll may be enabled for horizontal and or vertical axes. The "scrollbarPresenceGroups" attribute provides control over when a scroll bar appears for the group axis: the horizontal axis in <a href="dvt_lineGraph.html">Line graphs</a>, for instance. The "scrollbarPresenceX1", "scrollbarPresenceY1", and "scrollbarPresenceY2" attributes control the appearance of scroll bars for the various data axes.</p>
+<h4>Font</h4>
+<p>The <a href="dvt_graphFont.html">&lt;dvt:graphFont&gt;</a> tag is used for font formatting. Text color, style, size, and font name can be specified using this tag. This tag is used as a child tag for any of the graph's text component tags. All text component tags have other formatting attributes like horizontal and vertical alignment, text string, and whether or not the text should be rendered.</p>
+<h4>SpecialEffects</h4>
+<p>Use the <a href="dvt_specialEffects.html">&lt;dvt:specialEffects&gt;</a> tag to specify gradient effects on many graph subcomponents. This tag must be defined as a child tag of the component tag and is not available for any text components. Note that the "seriesEffect" attribute setting always overrides the special effects settings.</p>
+<h4>Relationship with other tags</h4>
+<p>The <a href="dvt_lineGraph.html">&lt;dvt:lineGraph&gt;</a> tag can have the following child tags:</p>
+<p>af:dropTarget, <a href="dvt_alertSet.html">&lt;alertSet&gt;</a>, <a href="dvt_annotationSet.html">&lt;annotationSet&gt;</a>, <a href="dvt_attributeFormat.html">&lt;attributeFormat&gt;</a>, <a href="dvt_background.html">&lt;background&gt;</a>, <a href="dvt_graphFootnote.html">&lt;graphFootnote&gt;</a>, <a href="dvt_graphPlotArea.html">&lt;graphPlotArea&gt;</a>, <a href="dvt_graphSubtitle.html">&lt;graphSubtitle&gt;</a>, <a href="dvt_graphTitle.html">&lt;graphTitle&gt;</a>, <a href="dvt_legendArea.html">&lt;legendArea&gt;</a>, <a href="dvt_legendText.html">&lt;legendText&gt;</a>, <a href="dvt_legendTitle.html">&lt;legendTitle&gt;</a>, <a href="dvt_markerText.html">&lt;markerText&gt;</a>, <a href="dvt_o1Axis.html">&lt;o1Axis&gt;</a>, <a href="dvt_o1MajorTick.html">&lt;o1MajorTick&gt;</a>, <a href="dvt_o1TickLabel.html">&lt;o1TickLabel&gt;</a>, <a href="dvt_o1Title.html">&lt;o1Title&gt;</a>, <a href="dvt_referenceObjectSet.html">&lt;referenceObjectSet&gt;</a>, <a href="dvt_seriesSet.html">&lt;seriesSet &gt;</a>, <a href="dvt_shapeAttributesSet.html">&lt;shapeAttributesSet&gt;</a>, <a href="dvt_timeAxisDateFormat.html">&lt;timeAxisDateFormat&gt;</a>, <a href="dvt_timeSelector.html">&lt;timeSelector&gt;</a>, <a href="dvt_x1Axis.html">&lt;x1Axis&gt;</a>, <a href="dvt_x1MajorTick.html">&lt;x1MajorTick&gt;</a>, <a href="dvt_x1TickLabel.html">&lt;x1TickLabel&gt;</a>, <a href="dvt_x1Title.html">&lt;x1Title&gt;</a>,<a href="dvt_y1Axis.html">&lt;y1Axis&gt;</a>, <a href="dvt_y1BaseLine.html">&lt;y1BaseLine&gt;</a>, <a href="dvt_y1MajorTick.html">&lt;y1MajorTick&gt;</a>, <a href="dvt_y1Title.html">&lt;y1Title&gt;</a>, <a href="dvt_y1TickLabel.html">&lt;y1TickLabel&gt;</a>, <a href="dvt_y2Axis.html">&lt;y2Axis&gt;</a>, <a href="dvt_y2BaseLine.html">&lt;y2BaseLine&gt;</a>, <a href="dvt_y2MajorTick.html">&lt;y2MajorTick&gt;</a>, <a href="dvt_y2TickLabel.html">&lt;y2TickLabel&gt;</a>, <a href="dvt_y2Title.html">&lt;y2Title&gt;</a></p>
+<h4>Geometry Management</h4>
+<ul>
+<li>This component can be stretched by a parent layout component that stretches its children, e.g. panelStretchLayout, panelSplitter, if dynamicResize="DYNAMIC_SIZE" is set.</li>
+<li>This component does stretch to fill up the browser's viewport when it is the "sole visual root component" in the component tree, if dynamicResize="DYNAMIC_SIZE" is set.</li>
+<li>When NOT stretched, this component will be displayed in its default dimensions which are provided by the skin. This can be modified by applying a dimension using the inlineStyle or styleClass attributes.</li>
+<li>This component does not stretch its children.</li>
+</ul>
+<h4>Attachment Mode</h4>
+<p>In attachment mode, the graph will be displayed in HTML5 or PNG, depending on the browser being used. Limited client interactivity, such as tooltips, is available. The following features are not supported in attachment mode:</p>
+<ul>
+<li>clickListener</li>
+<li>drilling</li>
+<li>dynamicResize</li>
+<li>hideAndShowBehavior="withRescale"</li>
+<li>selectionListener</li>
+<li>timeSelector</li>
+<li>zoom functionality</li>
+</ul>
+<div class="section">
+<h2><a name="Screen_Shots" id="Screen_Shots">Screen Shot(s)</a></h2>
+<div class="screenshot"><br>
+<img src="./images/lineGraph.png" alt="LineGraph screenshot"><br></div>
+<br></div>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">oracle.adf.view.faces.bi.event.ClickEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Apply Request Values</td>
+<td align="left" headers="evDesc">The ClickEvent is delivered when the component is clicked.</td>
+</tr>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Supported Facets</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="27%" align="left" valign="bottom" id="fcName">Name</th>
+<th width="73%" align="left" valign="bottom" id="fcDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="fcName">bodyContextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click on any non-selectable object within the component. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">contextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click of any selectable data object within the component. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+<tr>
+<td align="left" headers="fcName">multiSelectContextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click when multiple data objects are selected. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">advancedPropertiesXML</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>This attribute is deprecated. The UIComponent APIs should be used instead. Specifies path to an XML file that contains settings for graph properties that are not exposed in the areaGraph tag.<br>
+For example, /myfiles/graph.xml<br>
+Path from web application root must be provided.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationDownColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the color used to indicate that a data value has decreased. Enter values in RGB hexadecimal. The default color is red (#FF3300).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationDuration</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 1000<br>
+<br>
+Specifies the animation duration in milliseconds. The default value is 1000.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationIndicators</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> NONE, ALL<br>
+<strong>Default Value:</strong> ALL<br>
+<br>
+Specifies the type of data change indicators to show. Valid values are:
+<ul>
+<li>NONE - Show no data change indicators</li>
+<li>ALL - (Default) Show all data change indicators</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnDataChange</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, activeData, auto, alphaFade, conveyorFromLeft, conveyorFromRight, cubeToLeft, cubeToRight, flipLeft, flipRight, slideToLeft, slideToRight, transitionToLeft, transitionToRight, zoom<br>
+<strong>Default Value:</strong> activeData<br>
+<br>
+Specifies the type of animation to apply on data change. Valid values for animating data objects, such as bars and lines, are:
+<ul>
+<li>none - Does not apply data change animation effects</li>
+<li>activeData - (Default) Applies animation for Active Data Service (ADS) data change events.</li>
+<li>auto - Applies animation for Partial Page Refresh and ADS events.</li>
+</ul>
+Animation can also be performed on the entire component, allowing for effects such as slideshow transitions. These animations will be performed on any Partial Page Refresh event, and valid values are:
+<ul>
+<li>alphaFade</li>
+<li>conveyorFromLeft</li>
+<li>conveyorFromRight</li>
+<li>cubeToLeft</li>
+<li>cubeToRight</li>
+<li>flipLeft</li>
+<li>flipRight</li>
+<li>slideToLeft</li>
+<li>slideToRight</li>
+<li>transitionToLeft</li>
+<li>transitionToRight</li>
+<li>zoom</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnDisplay</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, auto, alphaFade, conveyorFromLeft, conveyorFromRight, cubeToLeft, cubeToRight, flipLeft, flipRight, slideToLeft, slideToRight, transitionToLeft, transitionToRight, zoom<br>
+<strong>Default Value:</strong> none<br>
+<br>
+Specifies the type of animation to apply when the component is initially displayed. Valid values are:
+<ul>
+<li>none - (Default) Does not apply any initial rendering effect</li>
+<li>auto - Applies an initial rendering effect automatically chosen based on the graph type</li>
+<li>alphaFade</li>
+<li>conveyorFromLeft</li>
+<li>conveyorFromRight</li>
+<li>cubeToLeft</li>
+<li>cubeToRight</li>
+<li>flipLeft</li>
+<li>flipRight</li>
+<li>slideToLeft</li>
+<li>slideToRight</li>
+<li>transitionToLeft</li>
+<li>transitionToRight</li>
+<li>zoom</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationUpColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the color used to indicate that a data value has increased. Enter values in RGB hexadecimal. The default color is cyan (#0099FF).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">
+<p>Specifies a binding reference to store a specific instance of UIGraph from a backing bean. Set this attribute only to access code in a backing bean. For example, to reference a graph component in the SampleGraph class, use the following code: <code>binding="#{sampleGraph.graph}"</code></p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">clickAction</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Refers to a backing bean method that performs navigation processing for the graph and returns an outcome String. Or a static outcome String can be specified. The JSF NavigationHandler selects the page to display next by matching the outcome String against the navigation rules in the application configuration resource file. The application writes the Navigation rules.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">clickListener</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The listener interface for receiving click events on the graph components. Here is an example of clickListener implementation that displays a component name on a click action -
+<pre>
+<code>    public void clickListener (ClickEvent event){
+        ComponentHandle handle = event.getComponentHandle();
+        System.out.println(handle.getName()+" is clicked.");
+    }
+        </code>
+</pre></td>
+</tr>
+<tr>
+<td align="left" headers="attrName">contentDelivery</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> whenAvailable, lazy, immediate<br>
+<strong>Default Value:</strong> whenAvailable<br>
+<br>
+Specifies whether to fetch content with page load or after page load. Valid values are lazy (default) and immediate.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customLayout</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>Specifies custom layout information when the graph automatically places and sizes its components. Valid values are:</p>
+<ul>
+<li>CL_NONE - Do not use any of the other custom layout attribute values</li>
+<li>CL_TITLES_SIDEBYSIDE - Display Title and subtitle side by side instead of the subtitle below the title</li>
+<li>CL_TITLE_SEPARATOR - Display title separator under the titles</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customizationId</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. The 'id' attribute should be used when applying persistent customizations. This attribute will be removed in the next release.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataCursor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, on, off<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+Specifies the display for the data cursor:
+<ul>
+<li>on - The data cursor is enabled.</li>
+<li>off - The data cursor is disabled.</li>
+<li>auto - (Default) The data cursor is automatically displayed based on graph type and client environment.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataCursorBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> auto, on, off<br>
+<strong>Default Value:</strong> auto<br>
+<br>
+Specifies the display behavior for the data cursor:
+<ul>
+<li>on - The data cursor line snaps to display over the data point closest to the current mouse position.</li>
+<li>off - The data cursor line follows the current mouse position.</li>
+<li>auto - (Default) The data cursor behavior is automatically determined based on graph type.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataErrorTextCallback</td>
+<td align="left" headers="attrType">oracle.dss.graph.DataErrorTextCallback</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies callback for overriding the error message that the Graph displays when it is not provided with enough data to draw a graph. Only EL is supported.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataSelection</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, single, multiple<br>
+<strong>Default Value:</strong> none<br>
+<br>
+<p>Determines the data selection mode for the graph. Valid values are:</p>
+<ul>
+<li>none: no selection</li>
+<li>single: single selection</li>
+<li>multiple: multiple selection</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">drillingEnabled</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> false<br>
+<br>
+Indicates whether drilling is enabled.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dynamicResize</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> FIXED_SIZE, DYNAMIC_SIZE<br>
+<strong>Default Value:</strong> FIXED_SIZE<br>
+<br>
+Specifies whether to resize the component based on its container size. Valid values are FIXED_SIZE (default) and DYNAMIC_RESIZE.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">emptyText</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies error text to display when graph has no data.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">flashDefaultFontLoading</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> FLASH_DEFAULT_FONT_LOADING_ALL<br>
+<br>
+Specifies whether default fonts are loaded in FLASH from the middle tier. Valid values are FLASH_DEFAULT_FONT_LOADING_ALL or FLASH_DEFAULT_FONT_LOADING_NONE. The default value is FLASH_DEFAULT_FONT_LOADING_ALL.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">groupTooltipLabelType</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> TLT_MEMBER, TLT_DIM_MEMBER, TLT_NONE<br>
+<strong>Default Value:</strong> TLT_MEMBER<br>
+<br>
+Specifies whether group information for a graph appears in tooltips and, if so, identifies the kind of group information that appears in tooltips. Valid values are:
+<ul>
+<li>TLT_NONE - No group information appears in tooltips.</li>
+<li>TLT_MEMBER - (Default) Only the dimension member for a group appears in tooltips.</li>
+<li>TLT_DIM_MEMBER - Both dimension name and dimension member for a group are displayed in tooltips.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">hideAndShowBehavior</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, withRescale, withoutRescale<br>
+<strong>Default Value:</strong> none<br>
+<br>
+<p>Specifies the hide and show behavior in the graph. If the behavior is not "none", clicking on the legendText or legendMarker will hide the corresponding series. Note that the last series will not be hidden. Valid values are:</p>
+<ul>
+<li>none (Default) - no hide and show behavior used</li>
+<li>withRescale - rescales the graph after hiding a series</li>
+<li>withoutRescale - does not rescale the graph after hiding a series</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Specifies the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">imageFormat</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> HTML5, FLASH, PNG, PNG_STAMPED, AUTO<br>
+<br>
+This attribute is deprecated. Use the oracle.adf.view.rich.dvt.DEFAULT_IMAGE_FORMAT context parameter instead. The component will use the specified default if possible, falling back to alternate output formats as needed based on the client browser.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">imageHeight</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 300<br>
+<br>
+This attribute is deprecated. Use inlineStyle attribute to specify the image width and height instead. For examples: inlineStyle = "width:500px; height:350px;".
+<p>The default height is 300 pixels.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">imageWidth</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 400<br>
+<br>
+This attribute is deprecated. Use inlineStyle attribute to specify the image width and height instead. For examples: inlineStyle = "width:500px; height:350px;".
+<p>The default width is 400 pixels.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Style of the outer element(enclosing div) of the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">markerTooltipTemplate</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Provides a declarative way to customize the tooltips that appear on the graph. By setting the markerTooltipTemplate attribute to a tokenized string, an application can quickly format all the marker tooltips. This feature is a more performant alternative to the customTooltipCallback, since tokens can be sent to the client instead of preconstructed tooltip strings. This reduces the graph payload significantly, especially for large datasets.
+<p>The markerTooltipTemplate attribute accepts a String that may contain any number of a set of predefined tokens. When the tooltips are generated, the tokens are replaced with the information corresponding to each marker. Valid tokens are:</p>
+<ul>
+<li>NEW_LINE - inserts a new line</li>
+<li>SERIES_LABEL - the series label for the series of this marker</li>
+<li>GROUP_LABEL - the group label for the group of this marker</li>
+<li>X_VALUE - the X value of a scatter or bubble marker</li>
+<li>Y_VALUE - the Y value of this marker (if this marker has a y value)</li>
+<li>Z_VALUE - the Z value (bubble size) of a bubble marker</li>
+<li>PIE_VALUE - the value of a pie slice</li>
+<li>PIE_PERCENT - pie slice percentage value</li>
+<li>ACTUAL_VALUE - the actual value for a funnel slice</li>
+<li>TARGET_VALUE - the target value for a funnel slice</li>
+<li>HIGH_VALUE - the high value for a stock marker</li>
+<li>LOW_VALUE - the low value for a stock marker</li>
+<li>CLOSE_VALUE - the close value for a stock marker</li>
+<li>OPEN_VALUE - the open value for a stock marker</li>
+<li>VOLUME_VALUE - the volume value for a stock volume marker</li>
+<li>CUM_VALUE - the cumulative stacked value for a stacked graph</li>
+<li>CUM_PERCENT - the cumulative percentage value for a stacked percent graph, pareto graph</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">markerTooltipType</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> MTT_NONE, MTT_VALUES, MTT_CUM_VAL, MTT_PERCENT_VAL, MTT_TEXT, MTT_PERCENT_VAL_VALUES, MTT_PERCENT_VAL_TEXT, MTT_PERCENT_VAL_VALUES_TEXT, MTT_VALUES_TEXT<br>
+<strong>Default Value:</strong> MTT_VALUES<br>
+<br>
+Specifies whether tooltips are displayed for markers and, if so, identifies the kind of information that appears in the tooltips. Valid values for marker tooltips are:
+<ul>
+<li>MTT_NONE - Displays no tooltips for markers.</li>
+<li>MTT_CUM_VAL - Displays the cumulative data value (stacked graphs only).</li>
+<li>MTT_PERCENT_VAL - Displays the percentage data value (pie slice only).</li>
+<li>MTT_PERCENT_VAL_TEXT - Displays the percentage data value (pie slice only) and text identification such as "January, Shoes".</li>
+<li>MTT_PERCENT_VAL_VALUES - Displays the percentage data value (pie slice only) and data value or values.</li>
+<li>MTT_PERCENT_VAL_VALUES_TEXT - Displays the percentage data value (pie slice only), data value or values, and text identification information such as "January, Shoes".</li>
+<li>MTT_TEXT - Displays text identification such as "January, Shoes".</li>
+<li>MTT_VALUES - (Default) Displays data value or values.</li>
+<li>MTT_VALUES_TEXT - Displays data value or values and text identification such as "January, Shoes".</li>
+</ul>
+<strong>Note:</strong> To display series tooltip labels for a graph, you must set markerTooltipType to a value that includes text.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">o1AxisTitle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. Use the child tag o1Title and its text attribute instead. Use to specify the text of the o1 axis title.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialSubmit</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Deprecated. It is not useful anymore.
+<p>Indicates whether an action can be performed through a partial page submit. Valid values are:</p>
+<ul>
+<li>"true" - (Default) Partial page submit is allowed.</li>
+<li>"false" - No partial page submit.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">the IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">renderImagemap</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Indicates whether an image map should be rendered for a PNG image. The default value is true.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">scrollListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">The listener interface for receiving scroll events on the graph. The event triggers when an axis of a graph is scrolled. Here is an example of scrollListener implementation that displays the range of the Y1 Axis and the O1 Axis -
+<pre>
+<code>    public void scrollListener (ScrollEvent event){
+        double zoomMin = event.getAxisMin(ScrollEvent.Y1AXIS);
+        double zoomMax = event.getAxisMax(ScrollEvent.Y1AXIS);
+        int groupStart = event.getAxisStartGroup(ScrollEvent.O1AXIS);
+        int groupCount = event.getAxisGroupCount(ScrollEvent.O1AXIS); 
+        System.out.println("Y1 Axis has a range from "+Double.toString(zoomMin)+" to "+Double.toString(zoomMax));
+        System.out.println("O1 Axis has starting group index of "+Integer.toString(groupStart)+", and a group count of "+Integer.toString(groupCount));
+    }
+        </code>
+</pre></td>
+</tr>
+<tr>
+<td align="left" headers="attrName">selectionListener</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The listener interface for receiving selection events on the graph.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">seriesEffect</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> SE_NONE, SE_GRADIENT, SE_AUTO_GRADIENT<br>
+<strong>Default Value:</strong> SE_AUTO_GRADIENT<br>
+<br>
+<p>Determines the series effect that is used for a graph. Valid values are:</p>
+<ul>
+<li>SE_NONE - No series effect is used for the graph. This value causes markers to appear flat and sets the graphicAntialiasing attribute to "false".</li>
+<li>SE_GRADIENT - Sets a special gradient on data markers to make them look more polished and sets graphicAntialiasing to "true".</li>
+<li>SE_AUTO_GRADIENT - (Default) Works similar to SE_GRADIENT except in the case of a large dataset. If the graph displays a large dataset, then the gradient is not displayed in data markers so that performance is improved.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">seriesRolloverBehavior</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> RB_NONE, RB_DIM, RB_HIGHLIGHT<br>
+<strong>Default Value:</strong> RB_NONE<br>
+<br>
+<p>Specifies the behavior when the mouse rolls over one bar in a series. Valid values are:</p>
+<ul>
+<li>RB_NONE - (Default) No series rollover behavior is enabled.</li>
+<li>RB_HIGHLIGHT - Highlights all bars in the series when rollover occurs.</li>
+<li>RB_DIM - Dims all bars in the series when rollover occurs</li>
+<li>RB_HIGHLIGHT | RB_DIM - Produces both highlighting and dimming of all bars in the series when rollover occurs.</li>
+</ul>
+Note: this attribute is not supported for funnel graphs.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">seriesTooltipLabelType</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> TLT_MEMBER, TLT_DIM_MEMBER, TLT_NONE<br>
+<strong>Default Value:</strong> TLT_MEMBER<br>
+<br>
+Specifies series information in a tooltip. Valid values are as follows:
+<ul>
+<li>TLT_NONE - Displays no series information</li>
+<li>TLT_MEMBER - (Default) Displays the member label of the series in a tooltip</li>
+<li>TLT_DIM_MEMBER - Displays the dimension member label of a series in a tooltip</li>
+</ul>
+<strong>Note:</strong> The graph displays series tooltip labels only if markerTooltipType is set to a value that includes text.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shortDesc</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the short description of the graph. This is particularly useful in the screen reader mode.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">style</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>This attribute is deprecated. Skinning should be used instead. Applies a style to the graph based on the specified XML file. Valid values are the name of a standard graph style or the path of a custom XML file that you want to set as a style for this graph.</p>
+<p>Predefined graph styles are:</p>
+<ul>
+<li>April</li>
+<li>Autumn</li>
+<li>Black and White</li>
+<li>Comet</li>
+<li>Confetti</li>
+<li>Default</li>
+<li>Earth</li>
+<li>Executive</li>
+<li>Financial</li>
+<li>Glass</li>
+<li>Nautical</li>
+<li>Projection</li>
+<li>Regatta</li>
+<li>Southwest</li>
+<li>Transparent</li>
+</ul>
+<p>To specify a custom style, enter the entire path to the xml file. For example: /text/myStyle.xml.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component. Note that width and height should be set using the inlineStyle property.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleRuleBundle</td>
+<td align="left" headers="attrType">java.util.Vector</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies a vector of <code>oracle.dss.rules.RuleBundle</code> objects that specify different colors based on data values or characteristics. For example, a styleRuleBundle might contain a stoplight rule that sets the following colors:
+<ul>
+<li>Green when the data value is less than 1000.</li>
+<li>Yellow when the data value is less than 40.</li>
+<li>Red when the data value is less than 20.</li>
+</ul>
+<p>The following example refers to a style rule bundle called myRuleBundle that is stored in the backing bean SampleGraph: <code>styleRuleBundle="#{sampleGraph.myRuleBundle}"</code></p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">subType</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>Specifies the type of graph. Valid values are:</p>
+<ul>
+<li>LINE_VERT_ABS - Absolute line graph</li>
+<li>LINE_VERT_ABS_2Y - Absolute, dual-Y line graph</li>
+<li>LINE_VERT_ABS_SPLIT2Y - Absolute, split dual-Y line graph</li>
+<li>LINE_VERT_PERCENT - Percent line graph</li>
+<li>LINE_VERT_STACK - Stacked line graph</li>
+<li>LINE_VERT_STACK_2Y - Stacked, dual-Y line graph</li>
+<li>LINE_VERT_STACK_SPLIT2Y - Stacked, split dual-Y line graph</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">tabularData</td>
+<td align="left" headers="attrType">java.util.List</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>Specifies a list of data that the graph uses to create a grid and populate itself. The List consists of a three-member Object array for each data value to be passed to the graph. The members of each array must be organized as follows:</p>
+<ul>
+<li>The first member (index 0) is the column label, in the grid, of the data value. This is generally a <code>String</code>. If the graph has a time axis, then this should be a Java <code>Date</code>. Column labels typically identify groups in the graph.</li>
+<li>The second member (index 1) is the row label, in the grid, of the data value. This is generally a <code>String</code>. Row labels appear as series labels in the graph (usually in the legend).</li>
+<li>The third member (index 2) is the data value, which is usually a <code>Double</code>.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">threeDEffect</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> false<br>
+<br>
+<p>Indicates whether a graph appears to have depth. Valid values are "true" and "false" (Default).</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">timeAxisInterval</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> CTAI_AUTOMATIC, CTAI_YEAR, CTAI_MONTH, CTAI_DAY, CTAI_HOUR, CTAI_MINUTE, CTAI_SECOND<br>
+<strong>Default Value:</strong> CTAI_AUTOMATIC<br>
+<br>
+Specifies the interval along a continuous time axis only if you want to override the value that the graph calculates automatically. Valid values are as follows:
+<ul>
+<li>CTAI_AUTOMATIC - (Default) Graph calculates the interval automatically.</li>
+<li>CTAI_YEAR - Sets the interval to years.</li>
+<li>CTAI_MONTH - Sets the interval to months.</li>
+<li>CTAI_DAY - Sets the interval to days.</li>
+<li>CTAI_HOUR - Sets the interval to hours.</li>
+<li>CTAI_MINUTE - Sets the interval to minutes.</li>
+<li>CTAI_SECOND - Sets the interval to seconds.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">timeAxisType</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> TAT_DEFAULT, TAT_IRREGULAR, TAT_MIXED_FREQUENCY, TAT_DEFAULT_STRICT, TAT_IRREGULAR_STRICT, TAT_MIXED_FREQUENCY_STRICT, TAT_OFF<br>
+<strong>Default Value:</strong> TAT_DEFAULT<br>
+<br>
+Indicates the type of time axis data and the expected behavior if requirements for a specific type are not met.
+<p>The following types of time axis data are supported:</p>
+<ul>
+<li>Discrete - Observations are usually spaced at regular intervals.</li>
+<li>Continuous - Observations occur at any instant of time. There are two types of continuous time axis data:
+<ul>
+<li>Irregular - Multiple series of data have observations at the same instants of time.</li>
+<li>Mixed frequency - Each series has observations at different instants of time.</li>
+</ul>
+</li>
+</ul>
+<p>The constants that specify time axis type also indicate the expected behavior when the requirements for a particular time axis type are not met. The following kinds of behavior are possible:</p>
+<ul>
+<li>Fallback position - For these constants, if the requirements for a time axis type are not met, then the graph degrades gracefully.</li>
+<li>Strict position - For these constants (which are indicated by the suffix "_STRICT"), if the requirements for a particular time axis type are not met, then an error message is displayed and no fallback position is provided. To provide custom text for the error message, register <code>oracle.dss.graph.DataErrorTextCallback</code> with the UIGraph.</li>
+</ul>
+<p>Valid values are as follows:</p>
+<ul>
+<li>
+<p><strong>TAT_DEFAULT</strong> - (Default) Provides a discrete time axis for bar, line, area, combination, or stock graphs and for all their subtypes, if the following requirements are met: (1) Dates must be on the group edge and (2) dates must occur at regular intervals. The discrete time axis is plotted on the ordinal axis, which is also known as the O1-axis. This constant provides the following fallback position if requirements are not met: Time axis is disabled and all labels are converted to strings.</p>
+</li>
+<li>
+<p><strong>TAT_IRREGULAR</strong> - Provides a continuous time axis on the X-axis for bar, line, area, or combination graphs (only for subtypes dual-Y and split). Stacked graphs are not supported. Additional requirements are: (1) Dates must be on the group edge, (2) dates must occur at regular intervals (sorted or unsorted), and (3) Only one dimension (layer) can exist on the group edge, if the data is provided through DataAccess interface. This constant provides the following fallback position if requirements are not met: Dates (if present) are converted to strings, the time axis is disabled, and an AlertEvent is fired to all AlertListeners that are registered with the graph.</p>
+</li>
+<li>
+<p><strong>TAT_MIXED_FREQUENCY</strong> - Provides a continuous time axis on the X-axis for bar, line, area, combination, or scatter graphs for subtypes dual-Y and split. Stacked graphs are not allowed. Additional requirements are: (1) Data cells should contain dates, (2) the data to be plotted along the X-axis should be of type Date, and (3) the data to be plotted along the Y-axis must be a number.</p>
+</li>
+<li>
+<p><strong>TAT_DEFAULT_STRICT</strong> - Provides discrete time axis as described in TAT_DEFAULT except that no fallback position is available. If requirements are not met, then an error message is displayed.</p>
+</li>
+<li>
+<p><strong>TAT_IRREGULAR_STRICT</strong> - Provides continuous time axis as described in TAT_IRREGULAR except that no fallback position is available. If requirements are not met, then an error message is displayed.</p>
+</li>
+<li>
+<p><strong>TAT_MIXED_FREQUENCY_STRICT</strong> - Provides continuous time axis as described in TAT_MIXED_FREQUENCY except that no fallback position is available. If requirements are not met, then an error message is displayed.</p>
+</li>
+<li>
+<p><strong>TAT_OFF</strong> - Turns off the time axis.</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">timeRangeEnd</td>
+<td align="left" headers="attrType">java.util.Date</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies explicit time range end date for the time axis. TimeRangeMode property must be set to TRM_EXPLICIT. Only EL is supported.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">timeRangeMode</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> TRM_OFF, TRM_RELATIVE_LAST, TRM_RELATIVE_FIRST, TRM_EXPLICIT<br>
+<strong>Default Value:</strong> TRM_OFF<br>
+<br>
+Time range mode on a time axis. Valid values are:
+<ul>
+<li>TRM_OFF - (Default) Show all the data on the time axis.</li>
+<li>TRM_RELATIVE_LAST - Using relative time range from the last data point. The range can be set using the relativeTimeRange attribute. Suppose the time axis is showing Jan 2 - Jan 14 and we need only the LAST 7 days, then the following properties must be set: relativeTimeRange = (7 days in milliseconds).</li>
+<li>TRM_RELATIVE_FIRST - The usage is similar to TRM_RELATIVE_LAST. Using relative time range from the first data point. The range can be set using the relativeTimeRange attribute. Suppose the time axis is showing Jan 2 - Jan 14 and we need only the FIRST 7 days, then the following properties must be set: relativeTimeRange = (7 days in milliseconds).</li>
+<li>TRM_EXPLICIT - Used for setting explicit time range. On a time axis, you can specify an explicit time range to show up on the time axis using the following attributes: timeRangeStart and timeRangeEnd.</li>
+</ul>
+<p>Also see the following related properties: relativeTimeRange, timeRangeStart, and timeRangeEnd.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">timeRangeStart</td>
+<td align="left" headers="attrType">java.util.Date</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies explicit time range start date for the time axis. TimeRangeMode property must be set to TRM_EXPLICIT. Only EL is supported.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">timeRelativeRange</td>
+<td align="left" headers="attrType">long</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies relative time range(in milliseconds) from the last data point or from the first data point on the time axis. timeRangeMode must be set to TRM_RELATIVE_LAST or TRM_RELATIVE_FIRST. Only EL is supported.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">timeZone</td>
+<td align="left" headers="attrType">java.util.TimeZone</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies a method reference that returns an instance of <code>java.util.TimeZone</code>. The graph uses this time zone when it formats dates. The following example refers to the method myTimeZone in the SampleGraph backing bean: timeZone="#{sampleGraph.myTimeZone}"</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">title</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. Use the child tag graphTitle and its text attribute instead. Specifies the text of the title.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the graph's data model. This must be an instance of oracle.adf.view.faces.bi.model.DataModel or oracle.adf.view.faces.bi.model.GraphDataModel</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">visualEffects</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> NONE, AUTO<br>
+<strong>Default Value:</strong> AUTO<br>
+<br>
+<p>Specifies the type or types of visualEffect to apply. Valid values are:</p>
+<ul>
+<li>NONE - Apply no visual effects</li>
+<li>AUTO (Default) - Apply visual effects automatically based on graph or gauge type.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">y1AxisTitle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. Use the child tag y1Title and its text attribute instead. Use to specify the text of the y1 axis title.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">zoomListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">The listener interface for receiving zoom events on the graph. The event triggers when an axis of a graph is zoomed. Here is an example of zoomListener implementation that displays the range of the Y1 Axis and the O1 Axis -
+<pre>
+<code>    public void zoomListener (ZoomEvent event){
+        double zoomMin = event.getAxisMin(ZoomEvent.Y1AXIS);
+        double zoomMax = event.getAxisMax(ZoomEvent.Y1AXIS);
+        int groupStart = event.getAxisStartGroup(ZoomEvent.O1AXIS);
+        int groupCount = event.getAxisGroupCount(ZoomEvent.O1AXIS); 
+        System.out.println("Y1 Axis has a range from "+Double.toString(zoomMin)+" to "+Double.toString(zoomMax));
+        System.out.println("O1 Axis has starting group index of "+Integer.toString(groupStart)+", and a group count of "+Integer.toString(groupCount));
+    }
+        </code>
+</pre></td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

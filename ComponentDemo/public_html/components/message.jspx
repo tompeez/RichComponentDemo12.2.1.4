@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="message Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="message"/>
+        <f:attribute name="visualDesignName" value="messaging"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a message component is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:attribute name="fakeStretchedStyle" value="height:100px"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This is a demo for the message component.
+                                Use the editor to the right to adjust the attributes for this demo.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:message binding="#{editor.component}" for="fooOne" id="message1"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:selectManyCheckbox label="level" id="fooOne" autoSubmit="true"
+                                     validator="#{messageTest.validateMultipleValues}">
+                <af:selectItem label="fatal" value="fatal" id="si1"/>
+                <af:selectItem label="error" value="error" id="si2"/>
+                <af:selectItem label="warning" value="warning" id="si3"/>
+                <af:selectItem label="confirmation" value="confirmation"
+                               id="si4"/>
+                <af:selectItem label="info" value="info" id="si5"/>
+              </af:selectManyCheckbox>
+              <af:commandButton partialSubmit="true" text="Partial Postback" id="commandButton1"/>
+              <af:commandButton text="Full Postback" id="commandButton2"/>
+              <af:commandButton text="Partial Postback Plus Sample Global FacesMessage"
+                                partialSubmit="true"
+                                actionListener="#{demoPanelLabelAndMessage.createFacesMessage}"
+                                id="commandButton3"/>
+              <af:commandButton text="Full Postback Plus Sample Global FacesMessage"
+                                actionListener="#{demoPanelLabelAndMessage.createFacesMessage}"
+                                id="commandButton4"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <af:outputText value="See also:" id="ot1"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem immediate="true" text="Messages"
+                                          destination="messages.jspx"
+                                          id="cni1"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

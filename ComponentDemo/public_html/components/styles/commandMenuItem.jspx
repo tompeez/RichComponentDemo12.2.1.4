@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="commandMenuItem Style Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="commandMenuItem"/>
+        <f:attribute name="visualDesignName" value="menu"/>
+        <f:attribute name="demoKind" value="styles"/>
+        <f:attribute name="editorSize" value="350"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:outputText styleClass="AFInstructionText"
+                           value="This page demos the effect various contentStyle and inlineStyle parameters have on this component."
+                           id="ot1"/>
+            <af:outputText value="commandMenuItems on a menuBar" id="ot2"/>
+            <af:menuBar id="mb1">
+              <af:commandMenuItem textAndAccessKey="&amp;MenuBar Item" icon="/images/copy.gif"
+                                  accelerator="ctrl M"
+                                  binding="#{styleChanger.components['commandMenuItem1']}"
+                                  id="cmi1"/>
+              <af:commandMenuItem textAndAccessKey="Disabled MenuBar &amp;Item" disabled="true"
+                                  binding="#{styleChanger.components['commandMenuItem2']}"
+                                  id="cmi2"/>
+            </af:menuBar>
+            <af:outputText value="commandMenuItems in menus" id="ot3"/>
+            <af:menuBar id="mb2">
+              <af:menu text="Menu Items" id="m1">
+                <af:commandMenuItem textAndAccessKey="submenuItem &amp;A" accelerator="ctrl A"
+                                    binding="#{styleChanger.components['commandMenuItem3']}"
+                                    id="cmi3"/>
+                <af:commandMenuItem textAndAccessKey="submenuItem &amp;B" disabled="true"
+                                    accelerator="control B"
+                                    binding="#{styleChanger.components['commandMenuItem4']}"
+                                    id="cmi4"/>
+                <af:commandMenuItem textAndAccessKey="submenuItem C" accelerator="ctrl C"
+                                    binding="#{styleChanger.components['commandMenuItem5']}"
+                                    id="cmi5"/>
+                <af:commandMenuItem text="submenuItem D" accelerator="ctrl D"
+                                    binding="#{styleChanger.components['commandMenuItem6']}"
+                                    id="cmi6"/>
+                <af:commandMenuItem text="submenuItem E" icon="/images/copy.gif"
+                                    binding="#{styleChanger.components['commandMenuItem7']}"
+                                    id="cmi7"/>
+                <af:commandMenuItem text="Component Guide" action="guide"
+                                    binding="#{styleChanger.components['commandMenuItem8']}"
+                                    id="cmi8"/>
+              </af:menu>
+              <af:menu text="Check Menu Items" id="m2">
+                <af:group id="g1">
+                  <af:commandMenuItem id="checkA" type="check" text="check item A" selected="false"
+                                      binding="#{styleChanger.components['commandMenuItem9']}"/>
+                  <af:commandMenuItem id="checkB" type="check" text="check item B" selected="true"
+                                      binding="#{styleChanger.components['commandMenuItem10']}"/>
+                </af:group>
+              </af:menu>
+              <af:menu text="Antonym Menu Items" id="m3">
+                <af:group id="g2">
+                  <af:commandMenuItem id="antonymA" type="antonym" text="antonym item A default"
+                                      selectedText="antonym item A selected" selected="false"
+                                      binding="#{styleChanger.components['commandMenuItem11']}"/>
+                  <af:commandMenuItem id="antonymB" type="antonym" text="antonym item B default"
+                                      selectedText="antonym item B selected" selected="false"
+                                      binding="#{styleChanger.components['commandMenuItem12']}"/>
+                </af:group>
+              </af:menu>
+              <af:menu text="Radio Menu Items" id="m4">
+                <af:group id="g3">
+                  <af:commandMenuItem id="radioA" type="radio" text="radio item A" selected="true"
+                                      binding="#{styleChanger.components['commandMenuItem13']}"/>
+                  <af:commandMenuItem id="radioB" type="radio" text="radio item B" selected="false"
+                                      binding="#{styleChanger.components['commandMenuItem14']}"/>
+                  <af:commandMenuItem id="radioC" type="radio" text="radio item C" selected="false"
+                                      binding="#{styleChanger.components['commandMenuItem15']}"/>
+                </af:group>
+              </af:menu>
+            </af:menuBar>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:legendSection&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:legendSection&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:legendSection legendSection legend section</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.legend.UILegendSection<br>
+<b>Component type:</b> oracle.dss.adf.legend.LegendSection<br></p>
+<p>The legendSection is a component which is used to display a list of marker and label pairs. It is displayed when within a <a href='dvt_legend.html'>&lt;dvt:legend&gt;</a> tag. Use the source attribute to specify the id of a supported stamped component to include its items in that section of the legend. Supported stamps include:</p>
+<ul>
+<li><a href='dvt_marker.html'>&lt;dvt:marker&gt;</a></li>
+<li><a href='dvt_area.html'>&lt;dvt:area&gt;</a></li>
+<li><a href='dvt_attributeGroups.html'>&lt;dvt:attributeGroups&gt;</a></li>
+</ul>
+<p>A label for the generated legend item is specified within the stamp. For the case of attributeGroups, use the label property on &lt;dvt:attributeGroups&gt; to specify the text that should appear in the legend. For markers and areas, use &lt;f:attribute&gt; as a child of the stamp to specify the label, as in Example 1 below. Pointing to a &lt;dvt:attributeGroups&gt; stamp will include the unique items in the legend for that particular attribute type or set of types. This allows for different labels to be assigned to different attribute types, as seen in Example 2 below. The legend supports color, shape, scaleX, scaleY, pattern, and opacity. These usages are best explained through examples as seen below.</p>
+<h5>Example 1: Marker</h5>
+<p>To include a marker or area as an item in the legend, point the "source" attribute of a legendSection to the id of the marker or area component. Add &lt;f:attribute&gt; as shown below to annotate the marker with a label to be used in the legend.</p>
+<pre>
+               <!--This creates a US map with states and counties, with data added to the states layer-->
+&lt;dvt:thematicMap id="map" basemap="usa"&gt;        
+    &lt;dvt:legend id="l1" label="Legend Title"&gt;
+        &lt;dvt:legendSection id="ls1" label="Legend Subtitle 1" source="al1:adl1:marker1" /&gt;
+    &lt;/dvt:legend&gt;
+    &lt;dvt:areaLayer id="al1" layer="states"&gt;
+     &lt;dvt:areaDataLayer id="adl1" value=" " var=" " ...&gt;
+        &lt;dvt:areaLocation id="dataLoc" name="#{row.name}"&gt;
+            &lt;dvt:marker id="marker1"&gt;
+                &lt;f:attribute name="legendLabel" value="Important Location" /&gt;
+            &lt;/dvt:marker&gt;
+        &lt;/dvt:areaLocation&gt;
+     &lt;/dvt:areaDataLayer&gt;
+    &lt;/dvt:areaLayer&gt;
+&lt;/dvt:thematicMap&gt;
+             
+</pre>
+<h5>Example 2: Attribute Groups</h5>
+<p>To select a particular set of attribute types (color, shape, etc.) to include in the legend as a separate section, point the "source" attribute of a legendSection to the id of the desired attributeGroups component. Use the "label" attribute on attributeGroups as shown below to annotate this set of attributes with a label to be used in the legend.</p>
+<pre>
+&lt;dvt:thematicMap &gt;        
+    &lt;dvt:legend id="l1" label="Legend Title"&gt;
+        &lt;dvt:showLegendGroup id="slg1" label="Legend Subtitle 2"&gt;
+            &lt;dvt:legendSection id="ls2" source="al1:adl1:attributeGroupColor" /&gt;
+            &lt;dvt:legendSection id="ls3" source="al1:adl1:attributeGroupShape" /&gt;
+        &lt;/dvt:showLegendGroup&gt;
+    &lt;/dvt:legend&gt;
+    &lt;dvt:areaLayer id="al1" layer="states"&gt;
+     &lt;dvt:areaDataLayer id="adl1" value=" " var=" " ...&gt;
+        &lt;dvt:areaLocation id="dataLoc" name="#{row.name}"&gt;
+            &lt;dvt:marker id="marker1"... &gt;
+                &lt;dvt:attributeGroups id="attributeGroupColor" type="color" label="#{row.category1Label}" ... /&gt;
+                &lt;dvt:attributeGroups id="attributeGroupShape" type="shape" label="#{row.category2Label}" ... /&gt;
+            &lt;/dvt:marker&gt;         
+        &lt;/dvt:areaLocation&gt;
+     &lt;/dvt:areaDataLayer&gt;
+    &lt;/dvt:areaLayer&gt;
+&lt;/dvt:thematicMap&gt;
+               
+</pre>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">Binding reference to store the UILegendSection component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Specifies the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">label</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The optional title text of this legend section</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered. The default value is true.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">source</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The component id of the stamped item which will expand to a list of marker-label pairs within this section.</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

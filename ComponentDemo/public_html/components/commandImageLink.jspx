@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="commandImageLink Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        function doForceFullSubmit(event)
+        {
+          event.forceFullSubmit();
+          event.noResponseExpected();
+        }
+      </af:resource>                 
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="commandImageLink"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a commandImageLink is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglA">
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>Use the editor to the right to adjust the attributes for this demo.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="s2"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:commandImageLink text="Go to Component Guide" immediate="true" action="guide"
+                          icon="/images/uplevel.gif" binding="#{editor.component}"
+                          shortDesc="Go to Component Guide" id="cil1"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:spacer height="5px" id="s3"/>
+            
+            <af:panelHeader text="Deprecated">
+              <af:spacer height="5px"/>
+              <af:outputText value="Please note that commandImageLink is deprecated. Please use "/>
+              <af:link text="af:link" destination="/components/link.jspx"/>
+              <af:outputText value=" instead."/>
+            </af:panelHeader>  
+            
+            <af:panelHeader text="Example of a commandImageLink which has useWindow=true"
+                            id="ph1">
+              <af:spacer height="5px" id="s4"/>
+              <af:commandImageLink text="Click here to see the dialog in new window" useWindow="true"
+                                   action="dialog:createNewFile" icon="/images/file.gif" styleClass="AFLinkIEWorkaround"
+                                   partialSubmit="true" id="usewindowImageLink"/>
+            </af:panelHeader>
+            <af:panelHeader text="Other types of commandImageLinks" id="ph2">
+              <af:panelFormLayout id="pfl1">
+                <af:panelLabelAndMessage label="Disabled commandImageLink"
+                                         id="plam1">
+                  <af:commandImageLink text="back" shortDesc="Sample shortDesc text"
+                                   disabled="true"
+                                   icon="/images/backarrow.gif"
+                                   disabledIcon="/images/backarrow_gray.gif"
+                                       id="cil2"/>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="commandImageLink with action"
+                                         id="plam2">
+                  <af:commandImageLink id="search" text="Search" shortDesc="Sample shortDesc text"
+                                   accessKey="r"
+                                   icon="/images/search.gif"
+                                   action="#{testPostback.doDownload}">
+                    <af:clientListener method="doForceFullSubmit" type="action"/>
+                  </af:commandImageLink>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="hover and depressed icons"
+                                         id="plam3">
+                  <af:commandImageLink text="Folders"
+                                   shortDesc="Sample shortDesc text"
+                                   icon="/images/smily-normal.gif"
+                                   depressedIcon="/images/bold.gif"
+                                   hoverIcon="/images/smily-glasses.gif"
+                                       id="cil3"/>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="svg icon"
+                                         id="plam4">
+                  <af:commandImageLink text="SVG"
+                                   disabled="false"
+                                   icon="/images/circle.svg"
+                                   iconDelivery="inline"
+                                   id="cil4"/>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="Cached SVG" id="plam5">
+                  <af:commandImageLink partialTriggers="cb1" text="Cached SVG Icon" disabled="false" icon="images/circle.svg"
+                                       iconDelivery="fetchAndInline" id="cil5"/>
+                </af:panelLabelAndMessage>
+                
+                <af:panelGroupLayout layout="vertical">
+                   <af:spacer height="5px" id="s5"/>
+                   <af:commandButton id="cb1" text= "Partial submit" immediate="true" partialSubmit="true"/>
+                   <af:spacer height="5px" id="s6"/>
+                </af:panelGroupLayout>
+              </af:panelFormLayout>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

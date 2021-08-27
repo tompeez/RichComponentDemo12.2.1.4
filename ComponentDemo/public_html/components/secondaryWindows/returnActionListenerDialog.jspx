@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="returnActionListener Dialog." id="d1">
+      <af:form id="f1">
+        
+        <af:panelGroupLayout layout="vertical" id="pgl1">
+          <af:outputText value="The dialog is dismissed when either the Submit or the Cancel
+          button is pressed because the buttons have a returnActionListener tag as a child.
+          The returnActionListener's value is automatically set in the ReturnEvent."
+                         id="ot1"/>
+          <af:outputText value="*Do not run this page directly because it is meant to be a dialog launched from the resetActionListener demo."
+                         id="ot2"/>
+          <af:panelHeader text="Add two numbers" id="ph1">
+            <af:panelFormLayout id="pfl1">
+              <af:inputText label="Number 1:" value="#{launchRALDialog.value1}"
+                            required="true" id="it1">
+                <af:convertNumber integerOnly="true"
+                                  messageDetailConvertNumber="Not a valid integer"/>
+              </af:inputText>
+              <af:inputText label="Number 2:" value="#{launchRALDialog.value2}"
+                            required="true" id="it2">
+                <af:convertNumber integerOnly="true"
+                                  messageDetailConvertNumber="Not a valid integer"/>
+              </af:inputText>
+            </af:panelFormLayout>
+          </af:panelHeader>
+          <af:panelGroupLayout layout="horizontal" id="pgl2">
+            <af:commandButton text="Submit" id="cb1">
+              <!-- returnActionListener puts its value into ReturnEvent's getReturnValue.
+              The launching button has a returnListener that gets this value out of 
+              the ReturnEvent and sets it on the launching page's inputText.
+               -->
+              <af:returnActionListener value="#{launchRALDialog.value1 + launchRALDialog.value2}"/>
+             </af:commandButton>
+            <af:commandButton text="Cancel" immediate="true" id="cb2">
+              <af:returnActionListener/>
+            </af:commandButton>
+          </af:panelGroupLayout>
+          <af:separator id="s1"/>
+          <af:inputText label="InputText value from main page is: " value="#{pageFlowScope.value}"
+                        id="it3"/>        
+        </af:panelGroupLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

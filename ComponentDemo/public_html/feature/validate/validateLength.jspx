@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="validateLength Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="validateLength"/>
+        <f:attribute name="demoKind" value="validator"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:messages id="m1"/>
+            <af:outputText styleClass="AFInstructionText"
+                           value="Example to demonstrate the length validator.  Enter a value and tab out of the field."
+                           id="ot1"/>
+            <af:spacer height="15" id="s1"/>
+            <af:panelFormLayout id="pfl1">
+              <af:inputText value="#{validate.lengthValue}" label="Maximum length validator"
+                            shortDesc="values longer than 4 will fail, for example: '44444444' or 'Seven'"
+                            id="it1">
+                <af:validateLength maximum="4"/>
+              </af:inputText>
+              <af:inputText value="#{validate.lengthValue2}" label="Minimum length validator "
+                            shortDesc="values shorter than 4 will fail, for example: '444' or 'Joe'"
+                            id="it2">
+                <af:validateLength minimum="4"/>
+              </af:inputText>
+              <af:inputText value="#{validate.lengthValue9}"
+                            label="Range validator"
+                            shortDesc="values not in the range 4 to 8 in length will fail, for example: '333' or '999999999'"
+                            id="it3">
+                <af:validateLength minimum="4" maximum="8"/>
+              </af:inputText>
+              <af:inputText value="#{validate.lengthValue10}"
+                            label="Exact length validator"
+                            shortDesc="values not exactly of the length 4 will fail, for example: '333' or '55555'"
+                            id="it4">
+                <af:validateLength minimum="4" maximum="4"/>
+              </af:inputText>
+              <af:inputText value="#{validate.lengthValue3}"
+                            label="Maximum length validator with custom message"
+                            shortDesc="values longer than 4 will fail, for example: '44444444' or 'Seven'"
+                            id="it5">
+                <af:validateLength maximum="4"
+                                   messageDetailMaximum=" The value '{1}' is longer than '{2}' "/>
+              </af:inputText>
+              <af:inputText value="#{validate.lengthValue4}"
+                            label="Minimum length validator with custom message"
+                            shortDesc="values shorter than 4 will fail, for example: '444' or 'Joe'"
+                            id="it6">
+                <af:validateLength minimum="4"
+                                   messageDetailMinimum=" The value '{1}' is shorter than '{2}' "/>
+              </af:inputText>
+              <af:inputText value="#{validate.lengthValue8}"
+                            label="Range validator with custom message"
+                            shortDesc="values shorter than 4 and longer than 8 will fail, for example: '333' or '999999999'"
+                            id="it7">
+                <af:validateLength minimum="4" maximum="8"
+                                   messageDetailNotInRange="The value is not between '{2}' and '{3}' "/>
+              </af:inputText>
+              <af:inputText value="#{validate.lengthValue6}"
+                            label="Minimum length validator with custom hint message"
+                            shortDesc="values shorter than 4 will fail, for example: '444' or 'Joe'"
+                            id="it8">
+                <af:validateLength minimum="4" hintMinimum=" The minimum is: {0}"/>
+              </af:inputText>
+              <af:inputText value="#{validate.lengthValue7}"
+                            label="Maximum length validator with custom hint message"
+                            shortDesc="values longer than 4 will fail, for example: '44444444' or 'Seven'"
+                            id="it9">
+                <af:validateLength maximum="4" hintMaximum=" The maximum is: {0}"/>
+              </af:inputText>
+              <af:inputText value="#{validate.lengthValue5}"
+                            label="Range validator with custom hint message"
+                            shortDesc="values not in the range 4 to 8 in length will fail, for example: '333' or '999999999'"
+                            id="it10">
+                <af:validateLength minimum="4" maximum="8"
+                                   hintNotInRange="A value between '{0}' and '{1}' "/>
+              </af:inputText>
+            </af:panelFormLayout>
+            <af:commandButton text="Submit" id="cb1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

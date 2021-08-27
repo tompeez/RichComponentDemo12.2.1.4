@@ -1,0 +1,384 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="Navigation-Master-Detail Layout Pattern Example" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:resource type="css">
+      .MyTreeStatusIconStyles {
+        margin-right: 3px;
+        vertical-align: middle;
+        height: 12px;
+        width: 12px;
+      }
+      .MyTreeNodeIconStyles {
+        margin-right: 3px;
+        vertical-align: middle;
+        height: 16px;
+        width: 16px;
+      }
+      .MyTableIcon {
+        width: 16px;
+        height: 16px;
+      }
+      .MyObjectDetailPadding {
+        padding: 10px;
+      }
+      </af:resource>
+      <af:pageTemplate id="tmplt" viewId="#{templates.visualDesignTemplate}">
+        <f:attribute name="headerGlobalSize" value="45"/>
+        <f:attribute name="auxiliary1StartSize" value="260"/>
+        <f:attribute name="header1Size" value="0"/>
+        <f:attribute name="header2Size" value="0"/>
+        <f:attribute name="footer2Size" value="0"/>
+        <f:attribute name="footerGlobalSize" value="0"/>
+        <f:facet name="branding">
+          <af:outputText value="Navigation-Master-Detail" id="ot1"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:navigationPane hint="bar" id="np1">
+            <af:commandNavigationItem text="Back to Layout Basics"
+                                      destination="/feature/layoutBasics.jspx"
+                                      id="cni1"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="navigation1">
+          <af:navigationPane hint="tabs" id="np2">
+            <af:commandNavigationItem text="Layout Basics"
+                                      destination="/feature/layoutBasics.jspx"
+                                      id="cni4"/>
+            <af:commandNavigationItem text="Simple Demos"
+                                      destination="/feature/layoutBasicTest.jspx"
+                                      id="cnsd"/>
+            <af:commandNavigationItem text="Branding Bar"
+                                      destination="/feature/layoutBrandingBar.jspx"
+                                      id="cni5"/>
+            <af:commandNavigationItem text="Form Layout"
+                                      destination="/feature/layoutForm.jspx" id="cni6"/>
+            <af:commandNavigationItem text="Navigation-Master-Detail"
+                                      destination="/feature/layoutNavigationMasterDetail.jspx"
+                                      selected="true" id="cni7"/>
+            <af:commandNavigationItem text="Stretched Header"
+                                      destination="/feature/layoutStretchedHeader.jspx"
+                                      id="cni8"/>
+            <af:commandNavigationItem text="Tiled Flowing"
+                                      destination="/feature/layoutTiledFlowing.jspx"
+                                      id="cni9"/>
+            <af:commandNavigationItem text="Tiled Stretching"
+                                      destination="/feature/layoutTiledStretching.jspx"
+                                      id="cni10"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="auxiliary1Start">
+          <af:panelAccordion discloseMany="true" id="pa1" dimensionsFrom="auto">
+            <af:showDetailItem text="Search"
+                               disclosed="true"
+                               stretchChildren="first"
+                               inflexibleHeight="75" id="sdi1">
+              <af:panelGroupLayout layout="scroll" theme="default" id="pgl1">
+                <af:panelFormLayout maxColumns="1" id="pfl1">
+                  <af:inputText label="Name" id="it1"/>
+                  <af:inputText label="Size" id="it2"/>
+                  <af:commandButton partialSubmit="true" text="Search" id="cb1">
+                    <af:showPopupBehavior popupId="nonFunctionalNotice"/>
+                  </af:commandButton>
+                </af:panelFormLayout>
+                <af:popup id="nonFunctionalNotice">
+                  <af:noteWindow id="nw1">
+                    <af:panelGroupLayout layout="vertical" id="pgl2">
+                      <af:outputText value="This button is not functional."
+                                     id="ot2"/>
+                    </af:panelGroupLayout>
+                  </af:noteWindow>
+                </af:popup>
+              </af:panelGroupLayout>
+            </af:showDetailItem>
+            <af:showDetailItem text="Browse" disclosed="true" stretchChildren="first"
+                               id="sdi2">
+              <af:panelStretchLayout theme="default" id="psl1" dimensionsFrom="auto">
+                <f:facet name="center">
+                  <af:panelCollection id="pc1">
+                    <af:tree id="tree"
+                             value="#{fs.treeModel}"
+                             rowDisclosureListener="#{fs.toggle}"
+                             rowSelection="multiple"
+                             focusRowKey="#{fs.defaultFocusRowKey}"
+                             initiallyExpanded="true"
+                             var="node"
+                             summary="tree data" autoHeightRows="0">
+                      <f:facet name="pathStamp">
+                        <af:panelGroupLayout id="pgl3">
+                          <af:image source="#{node.icon}" shortDesc="Icon"
+                                    id="i1"/>
+                          <af:outputText value="#{node.name}" id="ot3"/>
+                        </af:panelGroupLayout>
+                      </f:facet>
+                      <f:facet name="nodeStamp">
+                        <af:group id="g2">
+                          <af:image source="#{node.statusIcon}"
+                                    shortDesc="#{node.name} status"
+                                    styleClass="MyTreeStatusIconStyles"
+                                    id="i2"/>
+                          <af:image source="#{node.icon}"
+                                    shortDesc="#{node.name}"
+                                    styleClass="MyTreeNodeIconStyles" id="i3"/>
+                          <af:commandLink text="#{node.name}"
+                                          partialSubmit="true"
+                                          actionListener="#{demoDynamicTabs.handleNavTreeLink}"
+                                          id="cl1">
+                            <af:setPropertyListener type="action" from="#{node.path}" to="#{pageFlowScope.path}"/>
+                          </af:commandLink>
+                        </af:group>
+                      </f:facet>
+                    </af:tree>
+                  </af:panelCollection>
+                </f:facet>
+              </af:panelStretchLayout>
+            </af:showDetailItem>
+          </af:panelAccordion>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/panelPageTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs inlineStyle="margin:0 6px;display:block" id="bc1">
+                <af:commandNavigationItem text="Feature Demos" destination="/feature/index.jspx"
+                                          id="cni11"/>
+                <af:commandNavigationItem text="Layout Basics" destination="/feature/layoutBasics.jspx"
+                                          id="cni12"/>
+                <af:commandNavigationItem text="Navigation-Master-Detail" id="cni13"/>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:navigationPane itemRemoval="allExceptLast" value="#{demoDynamicTabs.tabsMenuModel}"
+                             binding="#{demoDynamicTabs.tabBarPanel}"
+              var="tab" varStatus="stat">
+            <f:facet name="nodeStamp">
+              <af:commandNavigationItem text="#{tab.name}"
+                                   shortDesc="#{tab.displayPath}" id="stampedItem"
+                                   selected="#{tab.selected}"
+                                   icon="#{tab.directory?'/images/folder.png':'/images/file.png'}"
+                                   itemListener="#{demoDynamicTabs.handleNavPaneTabItemRemove}"
+                                   actionListener="#{demoDynamicTabs.handleNavPaneTabSelection}"
+                                   >
+                   <af:setPropertyListener from="#{tab.path}" to="#{pageFlowScope.path}"
+                                           type="action"/>
+                   <f:attribute name="index" value="#{stat.index}"/>
+              </af:commandNavigationItem>
+            </f:facet>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelStretchLayout topHeight="4em" binding="#{demoDynamicTabs.tabBodyPanel}"
+                                 id="psl3" dimensionsFrom="auto">
+            <f:facet name="top">
+              <af:panelGroupLayout layout="scroll" id="pgl5">
+                <af:panelHeader text="#{demoDynamicTabs.selectedTabData.name}"
+                                icon="#{demoDynamicTabs.selectedTabData.directory?'/images/folder.png':'/images/file.png'}"
+                                contentStyle="padding: 0px;" id="ph1">
+                  <f:facet name="toolbar">
+                    <af:toolbar id="t1">
+                      <af:commandToolbarButton text="Apply" partialSubmit="true"
+                                               id="ctb1">
+                        <af:showPopupBehavior popupId="nonFunctionalNotice"/>
+                      </af:commandToolbarButton>
+                      <af:commandToolbarButton text="Revert" partialSubmit="true"
+                                               id="ctb2">
+                        <af:showPopupBehavior popupId="nonFunctionalNotice"/>
+                      </af:commandToolbarButton>
+                    </af:toolbar>
+                  </f:facet>
+                  <af:panelLabelAndMessage label="Location" id="plam1">
+                    <af:outputText value="#{demoDynamicTabs.selectedTabData.displayPath}"
+                                   id="ot4"/>
+                  </af:panelLabelAndMessage>
+                </af:panelHeader>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="center">
+              <af:panelTabbed id="pt1" dimensionsFrom="auto">
+                <af:showDetailItem text="Summary"
+                                   disclosed="false"
+                                   stretchChildren="first" id="sdi3">
+                  <af:panelGroupLayout layout="scroll" id="pgl6">
+                    <af:panelFormLayout maxColumns="2" id="pfl2">
+                      <af:inputText label="Name"
+                                    value="#{demoDynamicTabs.selectedTabData.name}"
+                                    readOnly="true" id="it3"/>
+                      <af:inputText label="Location"
+                                    value="#{demoDynamicTabs.selectedTabData.displayPath}"
+                                    readOnly="true" id="it4"/>
+                      <af:inputText label="Size"
+                                    value="#{demoDynamicTabs.selectedTabData.size} bytes"
+                                    readOnly="true" id="it5"/>
+                      <af:inputText label="Last Modified"
+                                    value="#{demoDynamicTabs.selectedTabData.lastModified}"
+                                    readOnly="true" id="it6"/>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                </af:showDetailItem>
+                <af:showDetailItem text="Data"
+                                   disclosed="true"
+                                   stretchChildren="first" id="sdi4">
+                  <af:panelSplitter positionedFromEnd="true"
+                                    splitterPosition="150"
+                                    orientation="vertical" id="ps1" dimensionsFrom="auto">
+                    <f:facet name="first">
+                      <af:panelStretchLayout topHeight="10"
+                                             startWidth="10"
+                                             endWidth="10"
+                                             bottomHeight="10" id="psl4" dimensionsFrom="auto">
+                        <f:facet name="top">
+                          <af:spacer id="s1"/>
+                        </f:facet>
+                        <f:facet name="start">
+                          <af:spacer id="s2"/>
+                        </f:facet>
+                        <f:facet name="end">
+                          <af:spacer id="s3"/>
+                        </f:facet>
+                        <f:facet name="bottom">
+                          <af:spacer id="s4"/>
+                        </f:facet>
+                        <f:facet name="center">
+                          <af:panelStretchLayout topHeight="2em" id="psl5" dimensionsFrom="auto">
+                            <f:facet name="top">
+                              <af:panelGroupLayout layout="vertical" id="pgl7">
+                                <af:panelHeader text="Contents" id="ph2"/>
+                              </af:panelGroupLayout>
+                            </f:facet>
+                            <f:facet name="center">
+                              <af:panelCollection id="pc2" styleClass="AFStretchWidth">
+                                <af:table id="table"
+                                          binding="#{demoDynamicTabs.selectedTabContentsTable}"
+                                          rowSelection="single"
+                                          columnSelection="none"
+                                          columnStretching="column:name"
+                                          var="row"
+                                          value="#{demoDynamicTabs.selectedTabContents}"
+                                          selectionListener="#{demoDynamicTabs.handleTableRowSelection}"
+                                          summary="Contents of the selected tab" autoHeightRows="0">
+                                  <af:column width="20" rowHeader="true"
+                                             id="c1"/>
+                                  <af:column id="name"
+                                             headerText="Name"
+                                             sortable="true"
+                                             sortProperty="name"
+                                             width="200px">
+                                    <af:panelGroupLayout id="pgl8">
+                                      <f:facet name="separator">
+                                        <af:spacer width="3" id="s5"/>
+                                      </f:facet>
+                                      <af:image source="#{row.directory?'/images/folder.png':'/images/file.png'}"
+                                                shortDesc="#{row.directory?'Folder':'File'}"
+                                                styleClass="MyTableIcon"
+                                                id="i4"/>
+                                      <af:outputText value="#{row.name}"
+                                                     id="ot5"/>
+                                    </af:panelGroupLayout>
+                                  </af:column>
+                                  <af:column headerText="Size"
+                                             sortable="true"
+                                             sortProperty="sizeSortable"
+                                             width="100px"
+                                             align="end" id="c2">
+                                    <af:outputText value="#{row.size} bytes"
+                                                   id="ot6"/>
+                                  </af:column>
+                                  <af:column align="right"
+                                             headerText="Date Modified"
+                                             sortable="true"
+                                             sortProperty="lastModifiedSortable"
+                                             width="250px" id="c3">
+                                    <af:outputText value="#{row.lastModified}"
+                                                   id="ot7"/>
+                                  </af:column>
+                                </af:table>
+                              </af:panelCollection>
+                            </f:facet>
+                          </af:panelStretchLayout>
+                        </f:facet>
+                      </af:panelStretchLayout>
+                    </f:facet>
+                    <f:facet name="second">
+                      <af:panelStretchLayout topHeight="auto"
+                                             binding="#{demoDynamicTabs.rowDetailPanel}"
+                                             id="psl6" dimensionsFrom="auto">
+                        <f:facet name="top">
+                          <af:toolbox id="t2">
+                            <af:group id="g3">
+                              <af:toolbar flex="1" id="t3">
+                                <af:commandToolbarButton icon="/images/update_ena.png"
+                                                         text="Edit Table Row"
+                                                         id="ctb3">
+                                  <af:showPopupBehavior popupId="nonFunctionalNotice"/>
+                                </af:commandToolbarButton>
+                              </af:toolbar>
+                              <af:toolbar flex="0" id="t4">
+                                <af:commandToolbarButton text="Save" id="ctb4">
+                                  <af:showPopupBehavior popupId="nonFunctionalNotice"/>
+                                </af:commandToolbarButton>
+                                <af:commandToolbarButton text="Cancel"
+                                                         id="ctb5">
+                                  <af:showPopupBehavior popupId="nonFunctionalNotice"/>
+                                </af:commandToolbarButton>
+                              </af:toolbar>
+                            </af:group>
+                          </af:toolbox>
+                        </f:facet>
+                        <f:facet name="center">
+                          <af:panelGroupLayout layout="scroll" id="pgl9">
+                            <af:panelGroupLayout layout="vertical" styleClass="MyObjectDetailPadding"
+                                                 id="pgl10">
+                              <af:switcher facetName="#{demoDynamicTabs.selectedTableRowData==null ? 'unselected' : 'rowSelected'}"
+                                           id="s6">
+                                <f:facet name="unselected">
+                                  <af:outputText value="No file is selected."
+                                                 id="ot8"/>
+                                </f:facet>
+                                <f:facet name="rowSelected">
+                                  <af:panelHeader text="#{demoDynamicTabs.selectedTableRowData.name}"
+                                                  icon="#{demoDynamicTabs.selectedTableRowData.directory?'/images/folder.png':'/images/file.png'}"
+                                                  id="ph3">
+                                    <af:panelFormLayout maxColumns="2"
+                                                        id="pfl3">
+                                      <af:inputText label="Location"
+                                                    value="#{demoDynamicTabs.selectedTableRowData.displayPath}"
+                                                    readOnly="true" id="it7"/>
+                                      <af:inputText label="Size"
+                                                    value="#{demoDynamicTabs.selectedTableRowData.size} bytes"
+                                                    readOnly="true" id="it8"/>
+                                      <af:inputText label="Last Modified"
+                                                    value="#{demoDynamicTabs.selectedTableRowData.lastModified}"
+                                                    readOnly="true" id="it9"/>
+                                    </af:panelFormLayout>
+                                  </af:panelHeader>
+                                </f:facet>
+                              </af:switcher>
+                            </af:panelGroupLayout>
+                          </af:panelGroupLayout>
+                        </f:facet>
+                      </af:panelStretchLayout>
+                    </f:facet>
+                  </af:panelSplitter>
+                </af:showDetailItem>
+              </af:panelTabbed>
+            </f:facet>
+          </af:panelStretchLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

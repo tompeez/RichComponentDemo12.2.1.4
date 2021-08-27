@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Thematic Map Territories" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demoTemplate" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Thematic Map Territories"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Thematic Map Territories"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelStretchLayout id="psl1" styleClass="AFStretchWidth" topHeight="auto">
+            <f:facet name="bottom"/>
+            <f:facet name="center">
+                <af:panelTabbed id="pt">
+                  <af:showDetailItem text="Thematic Map" id="sdi1" stretchChildren="first">
+                    <dvt:thematicMap id="thematicMap" basemap="usa" drilling="on" drillBehavior="none"
+                                     controlPanelBehavior="initExpanded"
+                                     summary="Thematic map drilling demo.  Select a state from the table then click he drill down button above the table to drill to that state.">
+                      <af:transition transition="auto" triggerType="display"/>
+                      <af:transition transition="auto" triggerType="drill"/>
+                      <dvt:legend id='leg1' rendered="#{tmapFeatures.legendDisplay != 'none'}"
+                                  display="#{tmapFeatures.legendDisplay}" noWrap="true">
+                        <dvt:legendSection id='ls1' label="Territory Owners" source="al1:adl1:a1"/>
+                      </dvt:legend>
+                      <dvt:areaLayer id="al1" layer="states">
+                        <dvt:areaDataLayer id="adl1" disclosedRowKeys="#{territoriesBean.disclosedSet}" contentDelivery="lazy"
+                                           value="#{territoriesBean.states}" var="row" varStatus="rowStatus" selectionMode="single">
+                          <dvt:areaLocation id="loc1" name="#{row.id}">
+                            <dvt:area id="a1" fillColor="#{row.color}" shortDesc="#{row.categories[0]}">
+                              <f:attribute name="legendLabel" value="#{row.categories[1] == null ? 'Multiple Owners' : row.categories[1]}"/>
+                            </dvt:area>
+                          </dvt:areaLocation>
+                        </dvt:areaDataLayer>
+                      </dvt:areaLayer>
+                      <dvt:areaLayer id="al2" layer="counties">
+                        <dvt:areaDataLayer id="adl2" value="#{territoriesBean.counties}" var="row" contentDelivery="lazy"
+                                           varStatus="rowStatus">
+                          <dvt:areaLocation id="loc2" name="#{row.id}">
+                            <dvt:area id="a2" fillColor="#{row.color}" shortDesc="#{row.categories[0]}" />
+                          </dvt:areaLocation>
+                        </dvt:areaDataLayer>
+                      </dvt:areaLayer>
+                    </dvt:thematicMap>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Territories by State" id="sdi2" stretchChildren="first">
+                    <af:table value="#{territoriesBean.states}" var="row" rowBandingInterval="0" id="t3">
+                      <af:column headerText="Id" align="start">
+                        <af:outputText value="#{row.id}"/>
+                      </af:column>
+                      <af:column headerText="Territory" align="start">
+                        <af:outputText value="#{row.categories[0] == null ? 'N/A' : row.categories[0]}"/>
+                      </af:column>
+                      <af:column sortable="false" headerText="Owner" align="start">
+                        <af:outputText value="#{row.categories[1] == null ? 'Multiple Owners' : row.categories[1]}"/>
+                      </af:column>
+                    </af:table>
+                  </af:showDetailItem>
+                  <af:showDetailItem text="Territories by County" id="sdi3" stretchChildren="first">
+                    <af:table value="#{territoriesBean.counties}" var="row" rowBandingInterval="0" id="t4"
+                              inlineStyle="height:600px;width:800px;">
+                      <af:column headerText="Id" align="start">
+                        <af:outputText value="#{row.id}"/>
+                      </af:column>
+                      <af:column headerText="Territory" align="start">
+                        <af:outputText value="#{row.categories[0]}"/>
+                      </af:column>
+                      <af:column sortable="false" headerText="Owner" align="start">
+                        <af:outputText value="#{row.categories[1]}"/>
+                      </af:column>
+                    </af:table>
+                  </af:showDetailItem>
+                </af:panelTabbed>
+            </f:facet>
+            <f:facet name="start"/>
+            <f:facet name="end"></f:facet>
+            <f:facet name="top"/>
+          </af:panelStretchLayout>
+        </f:facet>
+        <!-- END FEATURE DEMO -->
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

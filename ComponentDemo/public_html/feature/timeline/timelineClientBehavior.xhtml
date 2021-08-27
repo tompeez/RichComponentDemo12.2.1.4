@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2010, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<ui:composition
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces"
+  xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test">
+  <af:document
+    id="d1"
+    title="Timeline Client Behavior Demo"
+    binding="#{templateBindings.documentComponent}"
+    theme="dark">
+    <f:facet name="metaContainer">
+      <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+      <f:subview id="meta">
+        <ui:include src="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+      </f:subview>
+    </f:facet>
+    <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+      <f:attribute name="tagName" value="Timeline Client Behavior Support"/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+            <dvt:timeline id="tl1" startTime="2010-01-01" endTime="2011-12-31" inlineStyle="width:1000px;height:500px"
+                          itemSelection="single" summary="Timeline Client Behavior Demo">
+                <dvt:timelineSeries id="ts1" var="evt" value="#{cb.model}">
+                    <dvt:timelineItem id="ti1" value="#{evt.date}">
+                        <af:panelGroupLayout id="pg1" layout="horizontal">
+                            <af:image id="img1" inlineStyle="width:30px;height:30px" source="/resources/images/timeline/employment.png"/>
+                            <af:spacer width="3"/>
+                            <af:panelGroupLayout id="pg2" layout="vertical">
+                                <af:outputText id="ot1" inlineStyle="color:#084B8A" value="#{evt.description}" noWrap="true"/>
+                                <af:outputText id="ot2" value="#{evt.date}" inlineStyle="color:#6e6e6e" noWrap="true">
+                                    <af:convertDateTime dateStyle="medium"/>
+                                </af:outputText>
+                            </af:panelGroupLayout>
+                        </af:panelGroupLayout>
+                    </dvt:timelineItem>
+                </dvt:timelineSeries>
+                <dvt:timeAxis id="ta1" scale="weeks"/>
+                <dvt:timelineOverview id="ov1">
+                    <dvt:timeAxis id="ta2" scale="years"/>
+                </dvt:timelineOverview>
+                <f:ajax event="keyUp" execute="@this" listener="#{cb.handleKey}"/>
+            </dvt:timeline>
+
+        </af:panelGroupLayout>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document>
+</ui:composition>

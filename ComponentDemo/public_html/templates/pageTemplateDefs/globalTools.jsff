@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='utf-8'?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="2.1">
+    <af:componentDef var="attrs" componentVar="comp">
+        <af:xmlContent>
+            <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+                <description>Dynamic declarative component for the global tools, global menu bar, breadcrumbs, and demo finder.</description>
+                <facet>
+                    <description>
+                        <![CDATA[Additional menu to add to the global tools menu bar.]]>
+                    </description>
+                    <facet-name>customMenu</facet-name>
+                </facet>
+                <facet>
+                    <description>
+                        <![CDATA[Location information about the current user.]]>
+                    </description>
+                    <facet-name>infoUser</facet-name>
+                </facet>
+                <facet>
+                    <description>
+                        <![CDATA[Location information, e.g. breadCrumbs.]]>
+                    </description>
+                    <facet-name>location</facet-name>
+                </facet>
+                <facet>
+                    <description>
+                        <![CDATA[Search field that will be rendered if in gallery mode.]]>
+                    </description>
+                    <facet-name>search</facet-name>
+                </facet>
+                <attribute>
+                    <description>the destination for the template source if applicable</description>
+                    <attribute-name>templateSource</attribute-name>
+                    <attribute-class>java.lang.String</attribute-class>
+                </attribute>
+                <attribute>
+                    <description>whether to show the "link views" source menu items in the view source menu</description>
+                    <attribute-name>showLinkViewsSource</attribute-name>
+                    <attribute-class>boolean</attribute-class>
+                    <default-value>false</default-value>
+                </attribute>
+                <attribute>
+                    <description>whether to show the "component gallery" source menu items in the view source menu</description>
+                    <attribute-name>showGallerySource</attribute-name>
+                    <attribute-class>boolean</attribute-class>
+                    <default-value>false</default-value>
+                </attribute>
+                <attribute>
+                    <description>the destination for the tag documentation</description>
+                    <attribute-name>tagDocDestination</attribute-name>
+                    <attribute-class>java.lang.String</attribute-class>
+                </attribute>
+                <attribute>
+                    <description>whether the tag documentation should be shown</description>
+                    <attribute-name>tagDocShown</attribute-name>
+                    <attribute-class>boolean</attribute-class>
+                    <default-value>false</default-value>
+                </attribute>
+                <attribute>
+                    <description>the destination for the skinning documentation</description>
+                    <attribute-name>skinDocDestination</attribute-name>
+                    <attribute-class>java.lang.String</attribute-class>
+                </attribute>
+                <attribute>
+                    <description>whether the skin documentation should be shown</description>
+                    <attribute-name>skinDocShown</attribute-name>
+                    <attribute-class>boolean</attribute-class>
+                    <default-value>false</default-value>
+                </attribute>
+                <attribute>
+                    <description>whether the skin demo should be shown</description>
+                    <attribute-name>skinDemoShown</attribute-name>
+                    <attribute-class>boolean</attribute-class>
+                    <default-value>false</default-value>
+                </attribute>
+                <attribute>
+                    <description>the destination for the tag demo</description>
+                    <attribute-name>tagDemoDestination</attribute-name>
+                    <attribute-class>java.lang.String</attribute-class>
+                </attribute>
+                <attribute>
+                    <description>whether the tag demo should be shown</description>
+                    <attribute-name>tagDemoShown</attribute-name>
+                    <attribute-class>boolean</attribute-class>
+                    <default-value>false</default-value>
+                </attribute>
+                <attribute>
+                    <description>the destination for the visual design demo</description>
+                    <attribute-name>visualDesignDemoDestination</attribute-name>
+                    <attribute-class>java.lang.String</attribute-class>
+                </attribute>
+                <attribute>
+                    <description>whether the visual design demo should be shown</description>
+                    <attribute-name>visualDesignDemoShown</attribute-name>
+                    <attribute-class>boolean</attribute-class>
+                    <default-value>false</default-value>
+                </attribute>
+                <attribute>
+                    <description>whether the visual design demo should be disabled</description>
+                    <attribute-name>visualDesignDemoDisabled</attribute-name>
+                    <attribute-class>boolean</attribute-class>
+                    <default-value>false</default-value>
+                </attribute>
+            </component>
+        </af:xmlContent>
+        <af:panelStretchLayout id="gTools" endWidth="auto" dimensionsFrom="auto">
+            <f:facet name="center">
+                <af:panelGroupLayout id="pglV" layout="vertical">
+                    <af:popup id="glryPopup" contentDelivery="lazy"
+                              rendered="#{demoFind.galleryEnabled and mobileSettings.simplifiedPresentation}">
+                      <af:noteWindow id="glryNoteWindow">
+                        <af:panelStretchLayout id="glry" dimensionsFrom="auto" inlineStyle="width:250px">
+                          <f:facet name="center">
+                            <af:declarativeComponent id="accMenu" viewId="componentGallerySideBar.jsff"
+                                                     mode="#{attrs.mode}" allowAllUndisclosed="true"/>
+                          </f:facet>
+                        </af:panelStretchLayout>
+                      </af:noteWindow>
+                    </af:popup>
+                    <af:toolbox id="tbx">
+                        <af:menuBar id="menuBar" styleClass="AFHideSidePadding">
+                            <af:commandMenuItem id="glryMenu" shortDesc="Gallery" icon="/images/gallery.png"
+                                                rendered="#{demoFind.galleryEnabled and mobileSettings.simplifiedPresentation}">
+                              <af:showPopupBehavior popupId="glryPopup" align="afterStart"/>
+                            </af:commandMenuItem>
+                            <af:facetRef facetName="customMenu"/>
+                            <af:menu text="Documentation" id="docMenu"
+                                     rendered="#{attrs.tagDocShown || attrs.skinDocShown}">
+                                <af:group id="tag-specific-doc">
+                                    <af:goMenuItem text="Tag Doc..." targetFrame="_blank"
+                                                   shortDesc="Documentation of the tag, its attributes, events, and facets"
+                                                   destination="#{attrs.tagDocDestination}" id="tagDocItem"
+                                                   rendered="#{attrs.tagDocShown}"/>
+                                    <af:goMenuItem text="Skinning..." targetFrame="_blank"
+                                                   shortDesc="Documentation of relevant skinning keys"
+                                                   destination="#{attrs.skinDocDestination}" id="skinDocItem"
+                                                   rendered="#{attrs.skinDocShown}"/>
+                                </af:group>
+                                <af:group id="generic-doc">
+                                    <af:goMenuItem text="Release Information..." targetFrame="_blank"
+                                                   shortDesc="Oracle ADF Faces - Release Information"
+                                                   destination="/docs/skin-selectors.html" id="releaseInfoItem"/>
+                                    <af:goMenuItem text="JavaDoc..." targetFrame="_blank"
+                                                   shortDesc="Oracle ADF Faces - JavaDoc"
+                                                   destination="/docs/apidocs/index.html" id="javaDocItem"/>
+                                    <af:goMenuItem text="JS Doc..." targetFrame="_blank"
+                                                   shortDesc="Oracle ADF Faces - JavaScript Documentation"
+                                                   destination="/docs/js_docs_out/index.html" id="jsDocItem"/>
+                                    <af:goMenuItem text="Component Sub-ID Documentation..." targetFrame="_blank"
+                                                   shortDesc="Oracle ADF Faces - Component Sub-ID Documentation"
+                                                   destination="/docs/docs/js-subids.html" id="jsSubIdsItem"/>
+                                </af:group>
+                            </af:menu>
+                            <af:menu text="Related Demos" id="demoMenu"
+                                     rendered="#{attrs.skinDemoShown || attrs.tagDemoShown || attrs.visualDesignDemoShown}">
+                                <af:goMenuItem text="Tag Demo" shortDesc="Demonstration of using this component's tag"
+                                               destination="#{attrs.tagDemoDestination}" id="tagDemo"
+                                               rendered="#{attrs.tagDemoShown}"/>
+                                <af:goMenuItem text="Visual Design Demo" shortDesc="Demonstrations of the visual design"
+                                               destination="#{attrs.visualDesignDemoDestination}" id="visualDesignDemo"
+                                               rendered="#{attrs.visualDesignDemoShown}"
+                                               disabled="#{attrs.visualDesignDemoDisabled}"/>
+                            </af:menu>
+                            <af:menu text="View Source" id="srcMenu">
+                                <af:goMenuItem text="Page..." targetFrame="_blank"
+                                               shortDesc="View the server-side tags used to build this page"
+                                               destination="#{facesContext.viewRoot.viewId}.source" id="pgSrc"/>
+                                <af:goMenuItem text="Page Template..." targetFrame="_blank"
+                                               shortDesc="View the server-side tags used to build the template used by this page"
+                                               destination="#{attrs.templateSource}" id="tmplSrc"
+                                               rendered="#{attrs.templateSource != null}"/>
+                                <af:goMenuItem text="Global Tools Fragment..." targetFrame="_blank" id="gToolsSrc"
+                                               shortDesc="View the server-side tags used to build the global tools page fragment used by this page"
+                                               destination="/templates/pageTemplateDefs/globalTools.jsff.source"/>
+                                <af:goMenuItem text="Link Views Fragment..." targetFrame="_blank" id="linkViewsSrc"
+                                               shortDesc="View the server-side tags used to build the link views page fragment used by this page"
+                                               destination="/templates/pageTemplateDefs/linkViews.jsff.source"
+                                               rendered="#{attrs.showLinkViewsSource}"/>
+                                <af:goMenuItem text="Alphabetical and Grouped Views Fragment..." targetFrame="_blank" id="abcAndGroupViewSrc"
+                                               shortDesc="View the server-side tags used to build the alphabetical and grouped view page fragments used by this page"
+                                               destination="/templates/pageTemplateDefs/demoIndexMultiColumnSections.jsff.source"
+                                               rendered="#{attrs.showLinkViewsSource}"/>
+                                <af:goMenuItem text="Hierarchical View Fragment..." targetFrame="_blank" id="treeViewSrc"
+                                               shortDesc="View the server-side tags used to build the tree view page fragment used by this page"
+                                               destination="/templates/pageTemplateDefs/componentGallerySideBarTree.jsff.source"
+                                               rendered="#{attrs.showLinkViewsSource or attrs.showGallerySource}"/>
+                                <af:goMenuItem text="Gallery Fragment..." targetFrame="_blank" id="gallerySrc"
+                                               shortDesc="View the server-side tags used to build the component gallery page fragment used by this page"
+                                               destination="/templates/pageTemplateDefs/componentGallerySideBar.jsff.source"
+                                               rendered="#{attrs.showGallerySource}"/>
+                            </af:menu>
+                          
+                          
+                          
+                          
+                          
+                            <af:declarativeComponent id="skins"
+                                                     viewId="/templates/pageTemplateDefs/skinMenu.jsff"></af:declarativeComponent>
+
+                            <af:menu text="Javascript Optimization" id="jsOpt">
+                              <af:group id="jsOptGroup">
+                                <af:commandMenuItem id="jsOptNone" text="None (Debug)" type="radio"
+                                                          shortDesc="Select for using non-optimized Javascript libraries"
+                                                          selected="#{jsOptimization.current=='none'}"
+                                                          actionListener="#{jsOptimization.setNone}"/>
+                                <af:commandMenuItem id="jsOptSimple" text="Simple" type="radio" disabled="#{!jsOptimization.simpleEnabled}"
+                                                        shortDesc="Select for using Javascript libraries with simple optimizations"
+                                                        selected="#{jsOptimization.current=='simple'}"
+                                                        actionListener="#{jsOptimization.setSimple}"/>
+                                <af:commandMenuItem id="jsOptAdv" text="Advanced" type="radio" disabled="#{!jsOptimization.advancedEnabled}"
+                                                        shortDesc="Select for using Javascript libraries with advanced optimizations"
+                                                        selected="#{jsOptimization.current=='advanced'}"
+                                                        actionListener="#{jsOptimization.setAdvanced}"/>
+                                <af:commandMenuItem id="jsOptAdvDebug" text="AdvancedDebug" type="radio" disabled="#{!jsOptimization.advancedDebugEnabled}" 
+                                                        shortDesc="Select for using Javascript libraries with advanced debug optimizations"
+                                                        selected="#{jsOptimization.current=='advanced-debug'}"
+                                                        actionListener="#{jsOptimization.setAdvancedDebug}"/>
+                                          
+                              </af:group>                          
+                            </af:menu>
+                            <af:menu text="Settings" id="config">
+                                <af:group id="animOptPpr">
+                                    <!-- TODO helpTopicId="DEMOHELP_ANIMATION" -->
+                                    <af:commandMenuItem id="animate" text="Enable animations" type="check"
+                                                        selected="#{animation.animationEnabled=='true'}"
+                                                        actionListener="#{animation.animationMenuAction}"/>
+                                    <!-- TODO helpTopicId="DEMOHELP_OPTIMIZED_PPR" -->
+                                    <af:commandMenuItem id="pprOpt" text="Optimize partial page rendering" type="check"
+                                                        selected="#{pprOptimization.pprOptimizationEnabled=='true'}"
+                                                        actionListener="#{pprOptimization.pprOptimizationMenuAction}"/>
+                                    <!-- TODO helpTopicId="DEMOHELP_STRICT_DTD" -->
+                                    <af:commandMenuItem id="strictDTD" text="Use strict DTD" type="check"
+                                                        selected="#{strictDTD.strictDTD=='true'}"
+                                                        actionListener="#{strictDTD.toggleStrictDTDMenuAction}"/>
+                                </af:group>
+                                <af:commandMenuItem id="gallery" text="#{demoFind.text}" icon="#{demoFind.icon}"
+                                                    selected="#{demoFind.galleryEnabled}"
+                                                    actionListener="#{demoFind.toggle}" partialSubmit="false"
+                                                    shortDesc="#{demoFind.shortDesc}"/>
+                                <af:menu text="Formatting hints">
+                                  <af:group id="hintGroup">
+                                    <af:commandMenuItem id="showHint" text="Show" type="radio" immediate="true"
+                                                  shortDesc="Select to turn on hints on input components"
+                                                  selected="#{demoSkin.showTips==true}"
+                                                  actionListener="#{demoSkin.setHintAuto}"/>
+                                    <af:commandMenuItem id="hideHint" text="Hide" type="radio" immediate="true"
+                                                shortDesc="Select to turn on hints on input components"
+                                                selected="#{demoSkin.showTips==false}"
+                                                actionListener="#{demoSkin.setHintNone}"/>                                                        
+                                  </af:group>
+                                </af:menu>
+                                <af:group id="mobile">
+                                  <af:commandMenuItem id="dimFromParent"
+                                                      selected="#{mobileSettings.dimensionsFromChildren}"
+                                                      text="Change to dimensions from children" type="antonym" immediate="true"
+                                                      selectedText="Change to dimensions from parent">
+                                    <f:setPropertyActionListener target="#{mobileSettings.dimensionsFromChildren}"
+                                                                 value="#{not mobileSettings.dimensionsFromChildren}"/>
+                                  </af:commandMenuItem>
+                                  <af:commandMenuItem id="useDeviceWidth"
+                                                      rendered="#{mobileSettings.mobilePlatform}"
+                                                      text="Use device width" type="check"
+                                                      immediate="true"
+                                                      selected="#{mobileSettings.useDeviceWidth}">
+                                      <f:setPropertyActionListener target="#{mobileSettings.useDeviceWidth}"
+                                                                   value="#{not mobileSettings.useDeviceWidth}"/>
+                                  </af:commandMenuItem>
+                                </af:group>
+                            </af:menu>
+                        </af:menuBar>
+                    </af:toolbox>
+                    <af:facetRef facetName="location"/>
+                </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="end">
+                <af:panelGroupLayout id="lnkH" layout="horizontal">
+                    <af:spacer id="midSp" width="10"/>
+                    <af:panelGroupLayout id="end" layout="vertical">
+                        <f:facet name="separator">
+                            <af:spacer id="vSp" height="4"/>
+                        </f:facet>
+                        <af:facetRef facetName="infoUser"/>
+                        <af:panelGroupLayout id="lnkH2" layout="horizontal">
+                            <af:goImageLink id="lnkBook" destination="/faces#{facesContext.viewRoot.viewId}"
+                                            text="#{mobileSettings.simplifiedPresentation ? null : 'Bookmarkable Link'}"
+                                            shortDesc="Bookmarkable Link" icon="/images/link-e.png"
+                                            hoverIcon="/images/link-h.png" depressedIcon="/images/link-p.png"/>
+                            <af:spacer id="findSp" width="10" rendered="#{demoFind.galleryEnabled}"/>
+                            <af:group id="findGrp" rendered="#{demoFind.galleryEnabled}">
+                                <af:facetRef facetName="search"/>
+                            </af:group>
+                        </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                </af:panelGroupLayout>
+            </f:facet>
+        </af:panelStretchLayout>
+    </af:componentDef>
+</jsp:root>

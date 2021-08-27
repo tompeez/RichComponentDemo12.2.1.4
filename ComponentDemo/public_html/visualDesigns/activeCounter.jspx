@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Active Data Visual Design Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+function firstListener(event)
+{
+  AdfLogger.LOGGER.severe("ONE: " + event);
+}
+
+function secondListener(event)
+{
+  AdfLogger.LOGGER.severe("TWO: " + event.getNewValue());
+}
+      </af:resource>
+
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Active Data Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+          <af:outputFormatted value="&lt;span style='color:red'&gt;NOTE:&lt;/span&gt; If ActiveDataService does not work, check that you do not have ad block software preventing any javascript from running on the page.If you get a JavaScript error about not being able to find the parent window, please close the JavaScript error window, then refresh your browser to see active data.  This error is caused by ADF Controller not being used in this demo."/>
+	  <af:panelGroupLayout layout="scroll">
+            <af:activeOutputText value="#{counterBean.state}" inlineStyle="color:brown;font-size:100px;font-weight:bold;text-align:center;">
+              <af:clientListener type="propertyChange" method="firstListener"/>
+              <af:clientListener type="propertyChange" method="secondListener"/>
+            </af:activeOutputText>
+          </af:panelGroupLayout>
+          <af:outputFormatted value="Above is an activeOutputText component that is bound to the &lt;span style='color:red'&gt;counterBean&lt;/span&gt; which generates new counts based on a Java Timer"/>
+        </af:panelGroupLayout>
+       </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

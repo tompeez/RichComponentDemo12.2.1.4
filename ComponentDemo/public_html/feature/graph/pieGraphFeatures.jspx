@@ -1,0 +1,446 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2011, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Pie Graph Features Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Pie Graph Features"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Pie Graph Features"/>
+                <f:facet name="center">
+                    <af:panelSplitter orientation="vertical" id="ps1" splitterPosition="350">
+                        <f:facet name="first">
+                            <af:panelSplitter id="ps2" orientation="horizontal" splitterPosition="400">
+                                <f:facet name="first">
+                                    <af:panelGroupLayout id="pgl1">
+                                        <af:selectOneChoice label="Image Format"
+                                                            value="#{pieGraphFeatures.leftImageFormat}"
+                                                            autoSubmit="true" id="soc19">
+                                            <af:selectItem label="Flash" value="FLASH" id="si92"/>
+                                            <af:selectItem label="PNG" value="PNG" id="si93"/>
+                                            <af:selectItem label="HTML5" value="HTML5" id="si94"/>
+                                        </af:selectOneChoice>
+                                        <dvt:pieGraph dataSelection="#{pieGraphFeatures.selection}"
+                                                      interactiveSliceBehavior="#{pieGraphFeatures.explodeBehavior}"
+                                                      shortDesc="Flash Pie Graph Features Demo" id="graph1"
+                                                      subType="PIE" value="#{pieGraphFeatures.pieModel}"
+                                                      imageFormat="#{pieGraphFeatures.leftImageFormat}"
+                                                      threeDEffect="#{pieGraphFeatures.threeD}"
+                                                      drillingEnabled="#{pieGraphFeatures.drilling}"
+                                                      seriesEffect="#{pieGraphFeatures.seriesEffect}"
+                                                      animationOnDataChange="#{pieGraphFeatures.animOnDataChange}"
+                                                      animationOnDisplay="#{pieGraphFeatures.animOnDisplay}"
+                                                      markerTooltipType="#{pieGraphFeatures.markerTT}"
+                                                      hideAndShowBehavior="#{pieGraphFeatures.hideAndShowBehavior}"
+                                                      seriesTooltipLabelType="#{pieGraphFeatures.seriesTT}"
+                                                      groupTooltipLabelType="#{pieGraphFeatures.groupTT}"
+                                                      visualEffects="#{pieGraphFeatures.visualEffects}"
+                                                      seriesRolloverBehavior="#{pieGraphFeatures.seriesRollover}"
+                                                      styleClass="#{pieGraphFeatures.styleClass}"
+                                                      partialTriggers="::it8 ::it9 ::soc1 ::it1 ::soc19 ::ins1 ::sbc1 ::it2 ::sbc2 ::soc13 ::soc2 ::soc3 ::soc4 ::soc5 ::sbc5 ::sbc6 ::sbc7 ::ins5 ::it6 ::it7 ::soc12 ::ins6 ::soc14 ::ins2 ::it3 ::it4 ::it5 ::sbc4 ::soc8 ::soc9 ::soc10 ::sor1 ::ins3 ::ins4 ::soc17 ::soc18 ::soc6 ::soc7 ::soc21 ::ins7"
+                                                      binding="#{pieGraphLeft.graph}">
+                                            <dvt:seriesSet>
+                                                <dvt:series color="#{pieGraphFeatures.color}"
+                                                            borderColor="#{pieGraphFeatures.borderColor}"
+                                                            borderTransparent="#{pieGraphFeatures.borderTransparent}"
+                                                            pieSliceExplode="#{pieGraphFeatures.explodePercentage}">
+                                                    <dvt:specialEffects fillType="#{pieGraphFeatures.fillType}"
+                                                                        gradientDirection="#{pieGraphFeatures.gradientDir}"
+                                                                        gradientNumStops="#{pieGraphFeatures.gradientNumStops}"/>
+                                                </dvt:series>
+                                            </dvt:seriesSet>
+                                            <dvt:shapeAttributesSet>
+                                                <dvt:shapeAttributes component="GRAPH_SLICE" clickable="true"
+                                                                     clickListener="#{pieGraphFeatures.clickListener}"/>
+                                            </dvt:shapeAttributesSet>
+                                            <dvt:pieFeeler lineColor="#{pieGraphFeatures.feelerColor}"/>
+                                            <dvt:legendArea rendered="#{pieGraphFeatures.showLegend}"/>
+                                            <dvt:legendTitle text="Legend"/>
+                                            <dvt:slice labelPosition="#{pieGraphFeatures.labelPos}"/>
+                                            <dvt:sliceLabel autoPrecision="#{pieGraphFeatures.autoPrec}"
+                                                            textType="#{pieGraphFeatures.labelTextType}">
+                                                <dvt:graphFont bold="#{pieGraphFeatures.fontBold}"
+                                                               color="#{pieGraphFeatures.fontColor}"
+                                                               italic="#{pieGraphFeatures.fontItalic}"
+                                                               name="#{pieGraphFeatures.fontName}"
+                                                               size="#{pieGraphFeatures.fontSize}"
+                                                               underline="#{pieGraphFeatures.fontUnderline}"/>
+                                                <af:convertNumber type="#{pieGraphFeatures.sliceType}"
+                                                                  maxIntegerDigits="#{pieGraphFeatures.maxIntDigits}"
+                                                                  maxFractionDigits="#{pieGraphFeatures.maxFracDigits}"/>
+                                            </dvt:sliceLabel>
+                                            <dvt:pieLabel rendered="true"/>
+                                            <dvt:graphSubtitle text="#{pieGraphFeatures.leftImageFormat}"/>
+                                            <dvt:graphTitle text="Pie Graph Features Demo"/>
+                                        </dvt:pieGraph>
+                                        <af:outputText value="Clicked Slice: #{pieGraphFeatures.listenerText}" id="ot2"
+                                                       partialTriggers="graph1"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                                <f:facet name="second">
+                                    <af:panelGroupLayout id="pgl2">
+                                        <af:selectOneChoice label="Image Format"
+                                                            value="#{pieGraphFeatures.rightImageFormat}"
+                                                            autoSubmit="true" id="soc20">
+                                            <af:selectItem label="Flash" value="FLASH" id="si95"/>
+                                            <af:selectItem label="PNG" value="PNG" id="si96"/>
+                                            <af:selectItem label="HTML5" value="HTML5" id="si97"/>
+                                        </af:selectOneChoice>
+                                        <dvt:pieGraph dataSelection="#{pieGraphFeatures.selection}"
+                                                      interactiveSliceBehavior="#{pieGraphFeatures.explodeBehavior}"
+                                                      shortDesc="Flash Pie Graph Features Demo" id="graph2"
+                                                      subType="PIE" value="#{pieGraphFeatures.pieModel}"
+                                                      imageFormat="#{pieGraphFeatures.rightImageFormat}"
+                                                      threeDEffect="#{pieGraphFeatures.threeD}"
+                                                      drillingEnabled="#{pieGraphFeatures.drilling}"
+                                                      seriesEffect="#{pieGraphFeatures.seriesEffect}"
+                                                      animationOnDataChange="#{pieGraphFeatures.animOnDataChange}"
+                                                      animationOnDisplay="#{pieGraphFeatures.animOnDisplay}"
+                                                      markerTooltipType="#{pieGraphFeatures.markerTT}"
+                                                      hideAndShowBehavior="#{pieGraphFeatures.hideAndShowBehavior}"
+                                                      seriesTooltipLabelType="#{pieGraphFeatures.seriesTT}"
+                                                      groupTooltipLabelType="#{pieGraphFeatures.groupTT}"
+                                                      visualEffects="#{pieGraphFeatures.visualEffects}"
+                                                      seriesRolloverBehavior="#{pieGraphFeatures.seriesRollover}"
+                                                      styleClass="#{pieGraphFeatures.styleClass}"
+                                                      partialTriggers="::it8 ::it9 ::soc1 ::it1 ::ins1 ::sbc1 ::it2 ::sbc2 ::soc13 ::soc2 ::soc3 ::soc4 ::soc5 ::sbc5 ::sbc6 ::sbc7 ::ins5 ::it6 ::it7 ::soc12 ::ins6 ::soc14 ::ins2 ::it3 ::it4 ::it5 ::sbc4 ::soc8 ::soc9 ::soc10 ::sor1 ::ins3 ::ins4 ::soc17 ::soc18 ::soc6 ::soc7 ::soc20 ::soc21 ::ins7"
+                                                      binding="#{pieGraphRight.graph}">
+                                            <dvt:seriesSet>
+                                                <dvt:series color="#{pieGraphFeatures.color}"
+                                                            borderColor="#{pieGraphFeatures.borderColor}"
+                                                            borderTransparent="#{pieGraphFeatures.borderTransparent}"
+                                                            pieSliceExplode="#{pieGraphFeatures.explodePercentage}">
+                                                    <dvt:specialEffects fillType="#{pieGraphFeatures.fillType}"
+                                                                        gradientDirection="#{pieGraphFeatures.gradientDir}"
+                                                                        gradientNumStops="#{pieGraphFeatures.gradientNumStops}"/>
+                                                </dvt:series>
+                                            </dvt:seriesSet>
+                                            <dvt:shapeAttributesSet>
+                                                <dvt:shapeAttributes component="GRAPH_SLICE" clickable="true"
+                                                                     clickListener="#{pieGraphFeatures.clickListener}"/>
+                                            </dvt:shapeAttributesSet>
+                                            <dvt:pieFeeler lineColor="#{pieGraphFeatures.feelerColor}"/>
+                                            <dvt:legendArea rendered="#{pieGraphFeatures.showLegend}"/>
+                                            <dvt:legendTitle text="Legend"/>
+                                            <dvt:slice labelPosition="#{pieGraphFeatures.labelPos}"/>
+                                            <dvt:sliceLabel autoPrecision="#{pieGraphFeatures.autoPrec}"
+                                                            textType="#{pieGraphFeatures.labelTextType}">
+                                                <dvt:graphFont bold="#{pieGraphFeatures.fontBold}"
+                                                               color="#{pieGraphFeatures.fontColor}"
+                                                               italic="#{pieGraphFeatures.fontItalic}"
+                                                               name="#{pieGraphFeatures.fontName}"
+                                                               size="#{pieGraphFeatures.fontSize}"
+                                                               underline="#{pieGraphFeatures.fontUnderline}"/>
+                                                <af:convertNumber type="#{pieGraphFeatures.sliceType}"
+                                                                  maxIntegerDigits="#{pieGraphFeatures.maxIntDigits}"
+                                                                  maxFractionDigits="#{pieGraphFeatures.maxFracDigits}"/>
+                                            </dvt:sliceLabel>
+                                            <dvt:pieLabel rendered="true"/>
+                                            <dvt:graphSubtitle text="#{pieGraphFeatures.rightImageFormat}"/>
+                                            <dvt:graphTitle text="Pie Graph Features Demo"/>
+                                        </dvt:pieGraph>
+                                        <af:outputText value="Clicked Slice: #{pieGraphFeatures.listenerText}" id="ot3"
+                                                       partialTriggers="graph2"/>
+                                    </af:panelGroupLayout>
+                                </f:facet>
+                            </af:panelSplitter>
+                        </f:facet>
+                        <f:facet name="second">
+                            <af:panelTabbed  id="pt2">
+                                <af:showDetailItem text="Data Set" id="sdi1">
+                                    <af:panelGroupLayout layout="scroll"  id="pfl1">
+                                        <af:selectOneChoice value="#{pieGraphFeatures.dataModel}" label="Data Model"
+                                                            id="soc1" autoSubmit="true">
+                                            <af:selectItem label="Uniform" value="Uniform" id="si1"/>
+                                            <af:selectItem label="Random" value="Random" id="si2"/>
+                                        </af:selectOneChoice>
+                                        <af:inputNumberSlider label="Number of Slices"
+                                                              value="#{pieGraphFeatures.numSlices}" id="ins1"
+                                                              minimum="0" maximum="50" autoSubmit="true"
+                                                              majorIncrement="10" minorIncrement="1"/>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Rendering" id="sdi2">
+                                    <af:panelGroupLayout layout="scroll" id="pfl3">
+                                        <af:selectBooleanCheckbox autoSubmit="true" text="On"
+                                                                  value="#{pieGraphFeatures.threeD}" label="3D Effect"
+                                                                  id="sbc1"/>
+                                        <af:selectBooleanCheckbox autoSubmit="true" text="Show"
+                                                                  value="#{pieGraphFeatures.showLegend}" label="Legend"
+                                                                  id="sbc2"/>
+                                        <af:selectOneChoice label="Visual Effects"
+                                                            value="#{pieGraphFeatures.visualEffects}" autoSubmit="true"
+                                                            id="soc13">
+                                            <af:selectItem label="Auto" value="AUTO" id="si46"/>
+                                            <af:selectItem label="None" value="NONE" id="si47"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{pieGraphFeatures.seriesEffect}"
+                                                            label="Series Effect" id="soc4" autoSubmit="true">
+                                            <af:selectItem label="None" value="SE_NONE" id="si10"/>
+                                            <af:selectItem label="Gradient" value="SE_GRADIENT" id="si11"/>
+                                            <af:selectItem label="Auto Gradient" value="SE_AUTO_GRADIENT" id="si12"/>
+                                            <af:selectItem label="Pattern" value="SE_PATTERN" id="si13"/>
+                                        </af:selectOneChoice>
+                                        <af:inputText label="CSS File" value="#{pieGraphFeatures.styleClass}"
+                                                      autoSubmit="true" id="it9"/>
+                                        <af:inputText label="Pie Feeler Color" id="it5"
+                                                      value="#{pieGraphFeatures.stringFeelerColor}" autoSubmit="true"/>
+                                        <af:inputNumberSlider label="Pie rotation (degrees)"
+                                                              autoSubmit="true" id="ins7" maximum="359"
+                                                              majorIncrement="90"
+                                                              value="#{pieGraphFeatures.pieRotation}"
+                                                              minimumIncrement="5"/>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Labels" id="sd7">
+                                    <af:panelGroupLayout layout="scroll" id="pfl8">
+                                        <af:inputText label="Group Label" id="it2"
+                                                      value="#{pieGraphFeatures.groupLabel}" autoSubmit="true"/>
+                                        <af:inputText label="Slice Label Prefix"
+                                                      value="#{pieGraphFeatures.pieLabelPrefix}" id="it1"
+                                                      autoSubmit="true"/>
+                                        <af:selectOneChoice value="#{pieGraphFeatures.labelPos}" label="Label Position"
+                                                            id="soc2" autoSubmit="true">
+                                            <af:selectItem label="No Labels" value="LP_NO_LABELS" id="si3"/>
+                                            <af:selectItem label="Inside" value="LP_INSIDE" id="si4"/>
+                                            <af:selectItem label="Outside with feelers" value="LP_OUTSIDE_WITH_FEELER"
+                                                           id="si5"/>
+                                            <af:selectItem label="Outside without feelers"
+                                                           value="LP_OUTSIDE_WITHOUT_FEELER" id="si6"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{pieGraphFeatures.sliceType}"
+                                                            label="Slice Label Type" id="soc3" autoSubmit="true">
+                                            <af:selectItem label="Currency" value="currency" id="si7"/>
+                                            <af:selectItem label="Number" value="number" id="si8"/>
+                                            <af:selectItem label="Percent" value="percent" id="si9"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{pieGraphFeatures.labelTextType}"
+                                                            label="Slice Label" id="soc5" autoSubmit="true">
+                                            <af:selectItem label="Slice" value="LD_TEXT" id="si14"/>
+                                            <af:selectItem label="Value" value="LD_VALUE" id="si15"/>
+                                            <af:selectItem label="Percent" value="LD_PERCENT" id="si16"/>
+                                            <af:selectItem label="Slice, Percent" value="LD_TEXT_PERCENT" id="si17"/>
+                                            <af:selectItem label="Slice, Value" value="LD_TEXT_VALUE" id="si18"/>
+                                        </af:selectOneChoice>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Series Customization" id="sdi3">
+                                    <af:panelGroupLayout layout="scroll" id="pfl4">
+                                        <af:outputText value="See series 1" id="ot1"/>
+                                        <af:selectOneChoice label="Fill Type" autoSubmit="true"
+                                                            value="#{pieGraphFeatures.fillType}" id="soc12">
+                                            <af:selectItem label="Color" value="FT_COLOR" id="si28"/>
+                                            <af:selectItem label="Gradient" value="FT_GRADIENT" id="si45"/>
+                                        </af:selectOneChoice>
+                                        <af:inputNumberSlider label="Number of Gradient Stops"
+                                                              value="#{pieGraphFeatures.gradientNumStops}"
+                                                              autoSubmit="true" id="ins6" maximum="10"/>
+                                        <af:selectOneChoice label="Gradient Direction"
+                                                            value="#{pieGraphFeatures.gradientDir}" autoSubmit="true"
+                                                            id="soc14">
+                                            <af:selectItem label="Right" value="GD_RIGHT" id="si48"/>
+                                            <af:selectItem label="Down" value="GD_DOWN" id="si49"/>
+                                            <af:selectItem label="Diagonal 45" value="GD_DIAGONAL_45" id="si50"/>
+                                            <af:selectItem label="Diagonal 135" value="GD_DIAGONAL_135" id="si51"/>
+                                            <af:selectItem label="Radial" value="GD_RADIAL" id="si52"/>
+                                            <af:selectItem label="Radial Top Left" value="GD_RADIAL_TOP_LEFT"
+                                                           id="si53"/>
+                                            <af:selectItem label="Radial Top Right" value="GD_RADIAL_TOP_RIGHT"
+                                                           id="si54"/>
+                                            <af:selectItem label="Radial Bottom Left" value="GD_RADIAL_BOTTOM_LEFT"
+                                                           id="si55"/>
+                                            <af:selectItem label="Radial Bottom Right" value="GD_RADIAL_BOTTOM_RIGHT"
+                                                           id="si56"/>
+                                            <af:selectItem label="Radial Off Center" value="GD_RADIAL_OFF_CENTER"
+                                                           id="si57"/>
+                                        </af:selectOneChoice>
+                                        <af:inputNumberSlider label="Explosion %"
+                                                              value="#{pieGraphFeatures.explodePercentage}"
+                                                              autoSubmit="true" id="ins2" maximum="100"
+                                                              majorIncrement="20"/>
+                                        <af:inputText label="Border Color" id="it3"
+                                                      value="#{pieGraphFeatures.stringBorderColor}" autoSubmit="true"/>
+                                        <af:inputText label="Series Color" id="it4"
+                                                      value="#{pieGraphFeatures.stringColor}" autoSubmit="true"/>
+                                        <af:selectBooleanCheckbox autoSubmit="true" text="On"
+                                                                  value="#{pieGraphFeatures.borderTransparent}"
+                                                                  label="Border Transparency" id="sbc4"/>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Number Formatting" id="sdi4">
+                                    <af:panelFormLayout id="pfl5">
+                                        <af:selectOneRadio label="Slice Label Auto Precision"
+                                                           value="#{pieGraphFeatures.autoPrec}" layout="horizontal"
+                                                           id="sor1" autoSubmit="true">
+                                            <af:selectItem label="On" value="on" id="si19"/>
+                                            <af:selectItem label="Off" value="off" id="si20"/>
+                                        </af:selectOneRadio>
+                                        <af:inputNumberSlider label="Max Integer Digits"
+                                                              value="#{pieGraphFeatures.maxIntDigits}" autoSubmit="true"
+                                                              maximum="5" id="ins3"/>
+                                        <af:inputNumberSlider label="Max Fraction Digits"
+                                                              value="#{pieGraphFeatures.maxFracDigits}"
+                                                              autoSubmit="true" maximum="5" id="ins4"/>
+                                    </af:panelFormLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Font Formatting" id="sdi5">
+                                    <af:panelGroupLayout layout="scroll" id="pfl6">
+                                        <af:selectBooleanCheckbox text="Bold" label="On" id="sbc5"
+                                                                  value="#{pieGraphFeatures.fontBold}"
+                                                                  autoSubmit="true"/>
+                                        <af:selectBooleanCheckbox text="Italic" label="On" id="sbc6"
+                                                                  value="#{pieGraphFeatures.fontItalic}"
+                                                                  autoSubmit="true"/>
+                                        <af:selectBooleanCheckbox text="Underlined" label="On" id="sbc7"
+                                                                  value="#{pieGraphFeatures.fontUnderline}"
+                                                                  autoSubmit="true"/>
+                                        <af:inputNumberSlider label="Font Size" value="#{pieGraphFeatures.fontSize}"
+                                                              id="ins5" minimum="0" maximum="30" autoSubmit="true"
+                                                              majorIncrement="10" minorIncrement="1"/>
+                                        <af:inputText label="Font Color" value="#{pieGraphFeatures.stringFontColor}"
+                                                      autoSubmit="true" id="it6"/>
+                                        <af:inputText label="Font Name" value="#{pieGraphFeatures.fontName}"
+                                                      autoSubmit="true" id="it7"/>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Animation" id="sdi6">
+                                    <af:panelGroupLayout layout="scroll" id="pfl7">
+                                        <af:selectOneChoice label="Animation On Display" autoSubmit="true"
+                                                            value="#{pieGraphFeatures.animOnDisplay}" id="soc17">
+                                            <af:selectItem label="None" value="none" id="si63"/>
+                                            <af:selectItem label="Auto" value="auto" id="si64"/>
+                                            <af:selectItem label="Alpha Fade" value="alphaFade" id="si65"/>
+                                            <af:selectItem label="Conveyor From Left" value="conveyorFromLeft"
+                                                           id="si66"/>
+                                            <af:selectItem label="Conveyor From Right" value="conveyorFromRight"
+                                                           id="si67"/>
+                                            <af:selectItem label="Cube to Left" value="cubeToLeft" id="si68"/>
+                                            <af:selectItem label="Cube to Right" value="cubeToRight" id="si69"/>
+                                            <af:selectItem label="Flip Left" value="flipLeft" id="si70"/>
+                                            <af:selectItem label="Flip Right" value="flipRight" id="si71"/>
+                                            <af:selectItem label="Slide to Left" value="slideToLeft" id="si72"/>
+                                            <af:selectItem label="Slide to Right" value="slideToRight" id="si73"/>
+                                            <af:selectItem label="Transition to Left" value="transitionToLeft"
+                                                           id="si74"/>
+                                            <af:selectItem label="Transition to Right" value="transitionToRight"
+                                                           id="si75"/>
+                                            <af:selectItem label="Zoom" value="zoom" id="si76"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice label="Animation On Data Change" autoSubmit="true"
+                                                            value="#{pieGraphFeatures.animOnDataChange}" id="soc18">
+                                            <af:selectItem label="None" value="none" id="si77"/>
+                                            <af:selectItem label="Auto" value="auto" id="si78"/>
+                                            <af:selectItem label="Active Data" value="activeData" id="si79"/>
+                                            <af:selectItem label="Alpha Fade" value="alphaFade" id="si80"/>
+                                            <af:selectItem label="Conveyor From Left" value="conveyorFromLeft"
+                                                           id="si81"/>
+                                            <af:selectItem label="Conveyor From Right" value="conveyorFromRight"
+                                                           id="si82"/>
+                                            <af:selectItem label="Cube to Left" value="cubeToLeft" id="si83"/>
+                                            <af:selectItem label="Cube to Right" value="cubeToRight" id="si84"/>
+                                            <af:selectItem label="Flip Left" value="flipLeft" id="si85"/>
+                                            <af:selectItem label="Flip Right" value="flipRight" id="si86"/>
+                                            <af:selectItem label="Slide to Left" value="slideToLeft" id="si87"/>
+                                            <af:selectItem label="Slide to Right" value="slideToRight" id="si88"/>
+                                            <af:selectItem label="Transition to Left" value="transitionToLeft"
+                                                           id="si89"/>
+                                            <af:selectItem label="Transition to Right" value="transitionToRight"
+                                                           id="si90"/>
+                                            <af:selectItem label="Zoom" value="zoom" id="si91"/>
+                                        </af:selectOneChoice>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Interactivity" id="sdi7">
+                                    <af:panelGroupLayout layout="scroll" id="pfl2">
+                                        <af:selectOneChoice label="Hide and Show Behavior" autoSubmit="true"
+                                                            value="#{pieGraphFeatures.hideAndShowBehavior}" id="soc16">
+                                            <af:selectItem label="None" value="none" id="si60"/>
+                                            <af:selectItem label="Hide With Rescale" value="withRescale" id="si61"/>
+                                            <af:selectItem label="Hide Without Rescale" value="withoutRescale"
+                                                           id="si62"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{pieGraphFeatures.selection}" label="Selection"
+                                                            id="soc6" autoSubmit="true">
+                                            <af:selectItem label="None" value="none" id="si21"/>
+                                            <af:selectItem label="Single" value="single" id="si22"/>
+                                            <af:selectItem label="Multiple" value="multiple" id="si23"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{pieGraphFeatures.explodeBehavior}" label="Explode"
+                                                            id="soc7" autoSubmit="true">
+                                            <af:selectItem label="None" value="none" id="si24"/>
+                                            <af:selectItem label="Explode Slice" value="explode" id="si25"/>
+                                            <af:selectItem label="Explode All Slices" value="explodeAll" id="si26"/>
+                                            <af:selectItem label="Explode, Explode All Slices"
+                                                           value="explode explodeAll" id="si27"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice label="Series Rollover Behavior" autoSubmit="true"
+                                                            value="#{pieGraphFeatures.seriesRollover}" id="soc21">
+                                            <af:selectItem label="None" value="RB_NONE" id="si98"/>
+                                            <af:selectItem label="Dim" value="RB_DIM" id="si99"/>
+                                        </af:selectOneChoice>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Tooltips" id="sdi8">
+                                    <af:panelGroupLayout layout="scroll" id="pfl9">
+                                        <af:selectOneChoice value="#{pieGraphFeatures.markerTT}"
+                                                            label="Marker Tooltip Type" id="soc8" autoSubmit="true">
+                                            <af:selectItem label="None" value="MTT_NONE" id="si29"/>
+                                            <af:selectItem label="Percent Values" value="MTT_PERCENT_VAL" id="si30"/>
+                                            <af:selectItem label="Percent Values, Text" value="MTT_PERCENT_VAL_TEXT"
+                                                           id="si31"/>
+                                            <af:selectItem label="Percent Values, Values" value="MTT_PERCENT_VAL_VALUES"
+                                                           id="si32"/>
+                                            <af:selectItem label="Percent Values, Values, Text"
+                                                           value="MTT_PERCENT_VAL_VALUES_TEXT" id="si33"/>
+                                            <af:selectItem label="Text" value="MTT_TEXT" id="si34"/>
+                                            <af:selectItem label="Values" value="MTT_VALUES" id="si35"/>
+                                            <af:selectItem label="Values, Text" value="MTT_VALUES_TEXT" id="si36"/>
+                                        </af:selectOneChoice>
+                                        <af:inputText label="Marker Tooltip Template (Overrides other tooltip features. To use: just add to graph in xml)"
+                                                      value="#{pieGraphFeatures.markerTooltipTemplate}"
+                                                      autoSubmit="true" id="it8"/>
+                                        <af:selectOneChoice value="#{pieGraphFeatures.seriesTT}"
+                                                            label="Series Tooltip Type" id="soc9" autoSubmit="true">
+                                            <af:selectItem label="Dimension Member Labels" value="TLT_DIM_MEMBER"
+                                                           id="si37"/>
+                                            <af:selectItem label="Member Labels" value="TLT_MEMBER" id="si38"/>
+                                            <af:selectItem label="None" value="TLT_NONE" id="si39"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice value="#{pieGraphFeatures.groupTT}"
+                                                            label="Group Tooltip Type" id="soc10" autoSubmit="true">
+                                            <af:selectItem label="Dimension Member Labels" value="TLT_DIM_MEMBER"
+                                                           id="si40"/>
+                                            <af:selectItem label="Member Labels" value="TLT_MEMBER" id="si41"/>
+                                            <af:selectItem label="None" value="TLT_NONE" id="si42"/>
+                                        </af:selectOneChoice>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                                <af:showDetailItem text="Features Set" id="sdi9">
+                                    <af:panelGroupLayout layout="scroll" id="pfl10">
+                                        <af:outputFormatted value="#{pieGraphFeatures.string}"
+                                                            partialTriggers="graph1 graph2" id="of1"/>
+                                    </af:panelGroupLayout>
+                                </af:showDetailItem>
+                            </af:panelTabbed>
+                        </f:facet>
+                    </af:panelSplitter>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2016, Oracle and/or its affiliates. All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:f="http://java.sun.com/jsf/core">
+  <af:componentDef componentVar="comp" var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Streaming content</description>
+        <attribute>
+          <attribute-name>streamingData</attribute-name>
+          <attribute-class>oracle.adfdemo.view.components.rich.StreamingData</attribute-class>
+          <required>true</required>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelGroupLayout id="dc_psl1" layout="vertical" inlineStyle="padding: 2px;">
+      <af:switcher id="dc_s1" defaultFacet="none" facetName="#{attrs.streamingData.index}">
+        <f:facet name="none">
+          <af:outputText value="" id="dc_ot1"/>
+        </f:facet>
+        <f:facet name="0">
+          <af:panelHeader text="Stock Quotes" size="5" id="dc_ph1">
+            <af:panelGroupLayout id="dc_pgl1" styleClass="stocks streamingTable AFStretchWidth">
+              <af:iterator value="#{attrs.streamingData.data}" var="stock" id="dc_i1">
+                <af:panelGroupLayout styleClass="streamingRow" id="dc_pgl9">
+                  <af:outputText value="#{stock.symbol}" shortDesc="#{stock.name}" id="dc_ot2"
+                                 styleClass="streamingCell"/>
+                  <af:outputText value="#{stock.value}" shortDesc="#{stock.name}" id="dc_ot3"
+                                 styleClass="streamingCell end">
+                    <af:convertNumber minFractionDigits="2" maxFractionDigits="2"
+                                      minIntegerDigits="1" type="currency"/>
+                  </af:outputText>
+                </af:panelGroupLayout>
+              </af:iterator>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+        <f:facet name="1">
+          <af:panelHeader text="Top Quarterly Sales" size="5" id="dc_ph2">
+            <af:panelGroupLayout id="dc_pgl2" styleClass="sales streamingTable AFStretchWidth">
+              <af:iterator value="#{attrs.streamingData.data}" var="sales" id="dc_i2">
+                <af:panelGroupLayout styleClass="streamingRow" id="dc_pgl8">
+                  <af:outputText value="#{sales.name}" id="dc_ot4" styleClass="streamingCell"/>
+                  <af:outputText value="#{sales.amount}" id="dc_ot5" styleClass="streamingCell end">
+                    <af:convertNumber minFractionDigits="2" maxFractionDigits="2"
+                                      minIntegerDigits="1" type="currency"/>
+                  </af:outputText>
+                </af:panelGroupLayout>
+              </af:iterator>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+        <f:facet name="2">
+          <af:panelHeader text="Urgent Tasks" size="5" id="dc_ph3">
+            <af:panelGroupLayout id="dc_pgl3">
+              <af:iterator value="#{attrs.streamingData.data}" var="task" id="dc_i3">
+                <af:outputText value="#{task.name}" id="dc_ot6" styleClass="singleRow"/>
+              </af:iterator>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+        <f:facet name="3">
+          <af:panelHeader text="Links" size="5" id="dc_ph4">
+            <af:panelGroupLayout id="dc_pgl4">
+              <af:iterator value="#{attrs.streamingData.data}" var="link" id="dc_i4">
+                <af:goLink text="#{link.name}" id="dc_l1" destination="#{link.url}"
+                           targetFrame="link" styleClass="singleRow"/>
+              </af:iterator>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+        <f:facet name="4">
+          <af:panelHeader text="Upcoming Vacations" size="5" id="dc_ph5">
+            <af:panelGroupLayout id="dc_pgl5" styleClass="streamingTable AFStretchWidth">
+              <af:iterator value="#{attrs.streamingData.data}" var="vacation" id="dc_i5">
+                <af:panelGroupLayout id="dc_pgl6" styleClass="streamingRow">
+                  <af:outputText value="#{vacation.name}" id="dc_ot7" styleClass="streamingCell"/>
+                  <af:panelGroupLayout styleClass="streamingCell end" id="dc_pgl7">
+                    <af:outputText value="#{vacation.startDate}" id="dc_ot8">
+                      <af:convertDateTime type="date"/>
+                    </af:outputText>
+                    <af:outputText value=" - " id="dc_ot9"
+                                   rendered="#{vacation.endDate.time - vacation.startDate.time gt 1000}"/>
+                    <af:outputText value="#{vacation.endDate}" id="dc_ot10"
+                                   rendered="#{vacation.endDate.time - vacation.startDate.time gt 1000}">
+                      <af:convertDateTime type="date"/>
+                    </af:outputText>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:iterator>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+        <f:facet name="5">
+          <af:panelHeader text="Events" size="5" id="dc_ph6">
+            <af:panelGroupLayout id="dc_pgl10" styleClass="streamingTable AFStretchWidth">
+              <af:iterator value="#{attrs.streamingData.data}" var="event" id="dc_i6">
+                <af:panelGroupLayout id="dc_pgl11" styleClass="streamingRow">
+                  <af:outputText value="#{event.name}" id="dc_ot11" styleClass="streamingCell"/>
+                  <af:panelGroupLayout styleClass="streamingCell end" id="dc_pgl12">
+                    <af:outputText value="#{event.date}" id="dc_ot12">
+                      <af:convertDateTime type="both"/>
+                    </af:outputText>
+                  </af:panelGroupLayout>
+                </af:panelGroupLayout>
+              </af:iterator>
+            </af:panelGroupLayout>
+          </af:panelHeader>
+        </f:facet>
+      </af:switcher>
+    </af:panelGroupLayout>
+  </af:componentDef>
+</jsp:root>

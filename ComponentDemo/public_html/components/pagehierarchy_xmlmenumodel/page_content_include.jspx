@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:panelGroupLayout layout="vertical" id="pgl1">
+    <af:commandLink immediate="true" text="Back to index"
+      action="guide.pageHierarchy.xmlMenuModel" id="cl1"/>
+    <af:separator id="s1"/>
+    <af:spacer height="5px" id="s2"/>
+    <af:panelList maxColumns="1" id="pl1">
+      <af:outputText
+        value="Most of the content of the page is in a jsp include, so as you navigate around the content of the pages does not change. This is just for demo purposes, in a real application each page would be defined separately but bind to the same model."
+                     id="ot1"/>
+      <af:panelGroupLayout id="pgl2">
+        <af:outputText
+          value="Each page in this page hierarchy demo uses one of the several "
+                       id="ot2"/>
+        <af:goLink text="sample page templates" destination="../../templates/index.jspx"
+                   id="gl2"/>
+        <af:outputText
+          value=".  To determine which template this particular page is using, click the View Page Source link above and look for the viewId in the af:pageTemplate tag."
+                       id="ot3"/>
+      </af:panelGroupLayout>
+    </af:panelList>
+    <af:panelHeader text="Model Attached to Tree Component" id="ph1">
+      <af:outputText
+        value="The tree below is bound to the same model as the page."
+                     id="ot4"/>
+      <af:tree var="item" value="#{root_menu}"
+        inlineStyle="width: 200px; height: 200px; border: 1px solid gray;"
+               id="t1">
+        <f:facet name="nodeStamp">
+          <af:commandLink text="#{item.label}" action="#{item.doAction}"
+                          id="cl2"/>
+        </f:facet>
+      </af:tree>
+    </af:panelHeader>
+    <af:panelHeader text="Add a New Page" id="ph2">
+      <af:outputText
+        value="You can easily add a new page to this demo by following what's in the .jspx files and faces-config.xml. The steps are:"
+                     id="ot5"/>
+      <af:panelList id="pl2">
+        <af:outputText value="stop the servlet engine" id="ot6"/>
+        <af:outputText value="create a new .jspx page" id="ot7"/>
+        <af:panelGroupLayout id="pgl3">
+          <af:outputText value="In faces-config.xml" id="ot8"/>
+          <af:panelList id="pl3">
+            <af:outputText value="Choose which metadata.xml file you wish to add a node for a new Page"
+                           id="ot9"/>
+            <af:outputText value="Open that file (e.g. a1b1tree_menu.xml) and, in the Structure Pane, add an itemNode for the page"
+                           id="ot10"/>
+            <af:outputText value="Save the file and all the work will be done automatically for you in the faces-config.xml file"
+                           id="ot11"/>
+          </af:panelList>
+        </af:panelGroupLayout>
+      </af:panelList>
+    </af:panelHeader>
+  </af:panelGroupLayout>
+</jsp:root>

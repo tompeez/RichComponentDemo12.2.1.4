@@ -1,0 +1,261 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="selectManyShuttle Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="selectManyShuttle"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a selectManyShuttle is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputText value="This is a test case for the selectManyShuttle component. Select a value from the selectManyShuttle and use use either the partial or full postback command button to push the value of the selectManyShuttle into the underlying model (a bean property).  The outputText will display the submitted value."
+                           id="ot1"/>
+            <af:outputText value="The value attribute in the example below is bound to a List"
+                           id="ot2"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:selectManyShuttle binding="#{editor.component}" id="manyShuttle"
+                                value="#{demoInput.manyListValue1}" leadingHeader="Available Values"
+                                trailingHeader="Selected Values" label="Drinks">
+            <af:selectItem label="coffee" value="bean"
+                           shortDesc="The best coffee ever in the great large world comes from Kona, at least we think that"
+                           id="si1"/>
+            <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                          id="si2"/>
+            <af:selectItem disabled="true" label="orange juice" value="orange"
+                           id="si3"/>
+            <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                          id="si4"/>
+            <af:selectItem label="milk" value="moo" id="si5"/>
+            <f:selectItems value="#{demoInput.selectItems}" id="si6"/>
+          </af:selectManyShuttle>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+              <af:commandButton text="full postback" id="fullPostback"/>
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The submitted value: " id="ot3"/>
+                <af:outputText partialTriggers="richCommand manyShuttle" id="result"
+                               value="#{demoInput.manyListValue1}"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputText value="By choosing a message type, the appropriate message will be added to the selectManyShuttle."
+                             id="ot4"/>
+              <af:selectManyShuttle validator="#{messageTest.validateMultipleValues}"
+                                    autoSubmit="true" leadingHeader="Available Values"
+                                    trailingHeader="Selected Values" label="Messages" simple="true"
+                                    id="manyShuttle2">
+                <af:selectItem label="none" value="none" id="si7"/>
+                <af:selectItem label="fatal" value="fatal" id="si8"/>
+                <af:selectItem label="error" value="error" id="si9"/>
+                <af:selectItem label="warning" value="warning" id="si10"/>
+                <af:selectItem label="confirmation" value="confirmation"
+                               id="si11"/>
+                <af:selectItem label="info" value="info" id="si12"/>
+              </af:selectManyShuttle>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <af:outputText value="This demo shows scroll bars on the shuttle and a very long value."
+                             id="ot5"/>
+              <af:selectManyShuttle id="manyShuttleScroll" value="#{demoInput.manyListValue5}"
+                                    leadingHeader="Available Values" trailingHeader="Selected Values"
+                                    label="Drinks" simple="true">
+                <af:selectItem label="coffee" value="bean" shortDesc="Coffee from Kona"
+                               id="si13"/>
+                <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                              id="si14"/>
+                <af:selectItem disabled="true" label="orange juice" value="orange"
+                               id="si15"/>
+                <f:selectItem itemDisabled="true" itemLabel="grape juice" itemValue="grape"
+                              id="si16"/>
+                <af:selectItem label="milk" value="moo" id="si17"/>
+                <af:selectItem label="cherry soda" value="cherry soda"
+                               id="si18"/>
+                <af:selectItem label="chocolate milk" value="chocolate milk"
+                               id="si19"/>
+                <af:selectItem label="Purified, clarified, carbonated, clear water"
+                               value="special water" id="si20"/>
+                <af:selectItem label="ale" value="ale" id="si21"/>
+                <af:selectItem label="wine" value="wine" id="si22"/>
+                <af:selectItem label="sake" value="sake" id="si23"/>
+                <af:selectItem label="port" value="port" id="si24"/>
+                <af:selectItem label="water" value="water" id="si25"/>
+              </af:selectManyShuttle>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="horizontal" id="pgl6">
+              <af:popup id="popupDialog">
+                <af:dialog title="Which pets do you own?" id="d2">
+                  <af:selectManyShuttle id="manyShuttlePop" value="#{demoInput.manyListValue5}"
+                                        leadingHeader="Select from this list"
+                                        trailingHeader="I own these animals" simple="true"
+                                        label="Pets">
+                    <af:selectItem label="dogs" value="dogs" id="si26"/>
+                    <af:selectItem label="horses" value="horses" id="si27"/>
+                    <af:selectItem label="cats" value="cats" id="si28"/>
+                    <af:selectItem label="lizards" value="lizards" id="si29"/>
+                    <af:selectItem label="birds" value="birds" id="si30"/>
+                  </af:selectManyShuttle>
+                </af:dialog>
+              </af:popup>
+              <af:outputText value="This demo shows the selectManyShuttle inside of a popup."
+                             id="ot6"/>
+              <af:spacer width="5" id="s3"/>
+              <af:commandButton immediate="true" text="Show SelectManyShuttle" clientComponent="true"
+                                id="popupButton">
+                <af:showPopupBehavior popupId="popupDialog" alignId="popupButton" align="afterStart"/>
+              </af:commandButton>
+            </af:panelGroupLayout>
+            <af:group id="gAlign">
+              <af:button id="bAlign" text="Field Alignment" immediate="true">
+                <af:showPopupBehavior popupId="pAlign"/>
+              </af:button>
+              <af:popup id="pAlign">
+                <af:panelWindow id="pwAlign" title="Field Alignment">
+                  <af:panelGroupLayout id="pglAlignV" layout="vertical"
+                    inlineStyle="min-width:435px;min-height:390px;"
+                    partialTriggers="changedSetting disabledSetting helpSetting readOnlySetting requiredSetting verticalSetting">
+                    <af:panelFormLayout id="pflAlign1" maxColumns="3" rows="1">
+                      <af:selectBooleanCheckbox id="changedSetting" label="Changed" text="Changed indicator"
+                                                contentStyle="white-space:nowrap"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.changed}"/>
+                      <af:selectBooleanCheckbox id="disabledSetting" label="Disabled" text="Disabled"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.disabled}"/>
+                      <af:selectBooleanCheckbox id="helpSetting" label="Has help" text="Help"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.hasHelp}"/>
+                      <af:selectBooleanCheckbox id="readOnlySetting" label="Read-only" text="Read-only"
+                                                contentStyle="white-space:nowrap"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.readOnly}"/>
+                      <af:selectBooleanCheckbox id="requiredSetting" label="Required" text="Required"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.required}"/>
+                      <af:selectBooleanCheckbox id="verticalSetting" label="Vertical" text="Vertical"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.vertical}"/>
+                    </af:panelFormLayout>
+                    <af:separator id="sepAlign"/>
+                    <af:spacer id="spAlign1" height="14"/>
+                    <af:outputText id="otAlign1" value="Simple:"/>
+                    <af:selectManyShuttle id="alignEx1" label="Example" simple="true"
+                                          value="#{demoInput.manyListValue1}"
+                                          changed="#{pageFlowScope.changed}"
+                                          disabled="#{pageFlowScope.disabled}"
+                                          helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                          layout="#{pageFlowScope.vertical == true ? 'vertical' : 'horizontal'}"
+                                          readOnly="#{pageFlowScope.readOnly}"
+                                          showRequired="#{pageFlowScope.required}">
+                      <af:selectItem id="siEx1" label="coffee" value="bean"
+                                     shortDesc="The best coffee ever in the great large world comes from Kona, at least we think that"/>
+                      <f:selectItem id="siEx2" itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"/>
+                      <af:selectItem id="siEx3" disabled="true" label="orange juice" value="orange"/>
+                      <f:selectItem id="siEx4" itemDisabled="true" itemLabel="wine" itemValue="grape"/>
+                      <af:selectItem id="siEx5" label="milk" value="moo"/>
+                      <f:selectItems id="siEx6" value="#{demoInput.selectItems}"/>
+                    </af:selectManyShuttle>
+                    <af:spacer id="spAlign2" height="14"/>
+                    <af:outputText id="otAlign2" value="Labelled:"/>
+                    <af:selectManyShuttle id="alignEx2" label="Example"
+                                          value="#{demoInput.manyListValue1}"
+                                          changed="#{pageFlowScope.changed}"
+                                          disabled="#{pageFlowScope.disabled}"
+                                          helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                          layout="#{pageFlowScope.vertical == true ? 'vertical' : 'horizontal'}"
+                                          readOnly="#{pageFlowScope.readOnly}"
+                                          showRequired="#{pageFlowScope.required}">
+                      <af:selectItem id="siEx1b" label="coffee" value="bean"
+                                     shortDesc="The best coffee ever in the great large world comes from Kona, at least we think that"/>
+                      <f:selectItem id="siEx2b" itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"/>
+                      <af:selectItem id="siEx3b" disabled="true" label="orange juice" value="orange"/>
+                      <f:selectItem id="siEx4b" itemDisabled="true" itemLabel="wine" itemValue="grape"/>
+                      <af:selectItem id="siEx5b" label="milk" value="moo"/>
+                      <f:selectItems id="siEx6b" value="#{demoInput.selectItems}"/>
+                    </af:selectManyShuttle>
+                    <af:spacer id="spAlign3" height="14"/>
+                    <af:panelGroupLayout id="formWrap" layout="default">
+                      <af:outputText id="otAlign3" value="Form (labelled and panelLabelAndMessage):"/>
+                      <af:spacer id="formSp1" width="8"/>
+                      <af:selectBooleanCheckbox id="labelAlignSetting" label="Top Labels" text="Top Labels"
+                                                contentStyle="white-space:nowrap"
+                                                autoSubmit="true" simple="true" value="#{pageFlowScope.topLabels}"/>
+                    </af:panelGroupLayout>
+                    <af:panelFormLayout id="pflAlign2" maxColumns="1" partialTriggers="labelAlignSetting"
+                                        labelAlignment="#{pageFlowScope.topLabels ? 'top' : 'start'}">
+                      <af:selectManyShuttle id="alignEx3" label="Example"
+                                            value="#{demoInput.manyListValue1}"
+                                            changed="#{pageFlowScope.changed}"
+                                            disabled="#{pageFlowScope.disabled}"
+                                            helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                            layout="#{pageFlowScope.vertical == true ? 'vertical' : 'horizontal'}"
+                                            readOnly="#{pageFlowScope.readOnly}"
+                                            showRequired="#{pageFlowScope.required}">
+                        <af:selectItem id="siEx1c" label="coffee" value="bean"
+                                       shortDesc="The best coffee ever in the great large world comes from Kona, at least we think that"/>
+                        <f:selectItem id="siEx2c" itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"/>
+                        <af:selectItem id="siEx3c" disabled="true" label="orange juice" value="orange"/>
+                        <f:selectItem id="siEx4c" itemDisabled="true" itemLabel="wine" itemValue="grape"/>
+                        <af:selectItem id="siEx5c" label="milk" value="moo"/>
+                        <f:selectItems id="siEx6c" value="#{demoInput.selectItems}"/>
+                      </af:selectManyShuttle>
+                      <af:panelLabelAndMessage id="plmAlign" label="Example" labelStyle="vertical-align:top"
+                                               changed="#{pageFlowScope.changed}"
+                                               helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                               showRequired="#{pageFlowScope.required and (pageFlowScope.disabled != true) and (pageFlowScope.readOnly != true)}"
+                                               shortDesc="This is a panelLabelAndMessage surrounding a simple field">
+                        <af:selectManyShuttle id="alignEx4" label="Example" simple="true"
+                                              value="#{demoInput.manyListValue1}"
+                                              changed="#{pageFlowScope.changed}"
+                                              disabled="#{pageFlowScope.disabled}"
+                                              helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                              layout="#{pageFlowScope.vertical == true ? 'vertical' : 'horizontal'}"
+                                              readOnly="#{pageFlowScope.readOnly}"
+                                              showRequired="#{pageFlowScope.required}">
+                          <af:selectItem id="siEx1d" label="coffee" value="bean"
+                                         shortDesc="The best coffee ever in the great large world comes from Kona, at least we think that"/>
+                          <f:selectItem id="siEx2d" itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"/>
+                          <af:selectItem id="siEx3d" disabled="true" label="orange juice" value="orange"/>
+                          <f:selectItem id="siEx4d" itemDisabled="true" itemLabel="wine" itemValue="grape"/>
+                          <af:selectItem id="siEx5d" label="milk" value="moo"/>
+                          <f:selectItems id="siEx6d" value="#{demoInput.selectItems}"/>
+                        </af:selectManyShuttle>
+                      </af:panelLabelAndMessage>
+                    </af:panelFormLayout>
+                  </af:panelGroupLayout>
+                </af:panelWindow>
+              </af:popup>
+            </af:group>
+            <af:panelGroupLayout layout="vertical" id="pgl7">
+              <af:outputText value="See also:" id="ot7"/>
+              <af:panelList id="pl1">
+                <af:goLink text="observe selections on selectManyShuttle"
+                           destination="shuttleSelection/selectManyShuttle.jspx"
+                           id="gl1"/>
+                <af:goLink text="observe selections on selectManyShuttle (with a popup)"
+                           destination="shuttleSelection/moreSelectManyShuttle.jspx"
+                           id="gl2"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

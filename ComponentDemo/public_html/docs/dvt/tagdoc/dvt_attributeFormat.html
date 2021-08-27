@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>dvt_attributeFormat</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<div>
+<table class="oac_no_warn" summary="Layout table... probably." width="100%" border="0">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:attributeFormat&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none">attributeFormat attribute format</p>
+<br>
+<p>Graph typically uses categorical attributes ( e.g. product, geography, year, etc. ) on an ordinal axis and for the marker tooltips. To specify how categorical attributes should be formatted, an application needs to specify &lt;dvt:attributeFormat&gt; tag for each categorical attribute to be formatted. The &lt;dvt:attributeFormat&gt; tag needs to identify the categorical attribute that is being formatted by name as well as specify a converter to use when formatting the attribute. For example,</p>
+<pre>
+<code>            &lt;dvt:barGraph id="barGraph1" value="#{bindings.EmpView1.graphModel}" subType="BAR_VERT_CLUST"&gt;
+                      &lt;dvt:attributeFormat id="af1" name="Hiredate"&gt;
+                          &lt;af:convertDateTime pattern = "yyyy-MM-dd hh:mm:ss a"  timeZone="US/Pacific"/&gt;
+                      &lt;/dvt:attributeFormat&gt;
+             &lt;/dvt:barGraph&gt;
+            </code>
+</pre>
+<p>The name of the categorical attribute is the name of the attribute/layer that was added to the Graph DataModel. The Graph model can be set declaratively by updating the pagedef. Here is the associated view pagedef for the above graph:</p>
+<pre>
+<code>             &lt;graph IterBinding="EmpView1Iterator" id="EmpView1"
+                       xmlns="http://xmlns.oracle.com/adfm/dvt" type="BAR_VERT_CLUST"&gt;
+                &lt;graphDataMap leafOnly="true"&gt;
+                    &lt;series&gt;
+                      &lt;data&gt;
+                         &lt;item value="Bonus"/&gt;
+                      &lt;/data&gt;
+                    &lt;/series&gt;
+                    &lt;groups&gt;
+                       &lt;item value="Hiredate"/&gt;
+                    &lt;/groups&gt;
+                &lt;/graphDataMap&gt;
+             &lt;/graph&gt;
+            </code>
+</pre>
+<p><b>Configuring Date Formatting</b></p>
+<p>If there is a single categorical Date attribute being displayed on the O1Axis, then Graph displays a TimeAxis instead of the typical O1 / Ordinal Axis. The TimeAxis will show dates in a hierarchical format as opposed to as a single label on an O1 Axis ( e.g. June 27, 2001 ). To show a single label on the O1 Axis, the TimeAxis should be turned off ( e.g. timeAxisType="TAT_OFF" ) and a &lt;dvt:attributeFormat&gt; should be used to specify the date format.</p>
+<h2>Relationship with other tags</h2>
+<p>This component must be a child of one of the following components:</p>
+<ul>
+<li>graph</li>
+<li>areaGraph</li>
+<li>barGraph</li>
+<li>bubbleGraph</li>
+<li>comboGraph</li>
+<li>dualYBarGraph</li>
+<li>dualYComboGraph</li>
+<li>dualYLineGraph</li>
+<li>funnelGraph</li>
+<li>horizontalBarGraph</li>
+<li>horizontalStackedBarGraph</li>
+<li>pieGraph</li>
+<li>paretoGraph</li>
+<li>lineGraph</li>
+<li>radarGraph</li>
+<li>scatterGraph</li>
+<li>stackedBarGraph</li>
+<li>stockCandleGraph</li>
+<li>stockGraph</li>
+<li>gauge</li>
+</ul>
+<p>The attributeFormat tag can have the following child tags: convertNumber, convertDateTime, convertColor.</p>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="tblId_1_1">Name</th>
+<th align="left" valign="bottom" id="tblId_1_2">Type</th>
+<th align="left" valign="bottom" id="tblId_1_3">Supports EL?</th>
+<th align="left" valign="bottom" id="tblId_1_4">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="tblId_1_1">id</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">no</td>
+<td align="left" headers="tblId_1_4">Specifies the identifier for the component</td>
+</tr>
+<tr>
+<td align="left" headers="tblId_1_1">name</td>
+<td align="left" headers="tblId_1_2">java.lang.String</td>
+<td align="left" headers="tblId_1_3">yes</td>
+<td align="left" headers="tblId_1_4">Specifies the name of the attribute to which the child converter tag is applied. This value should match a layer name defined in the model.</td>
+</tr>
+</table>
+</div>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+<tr>
+<td align="left" width="86%">Generated: Jul 15 2015</td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

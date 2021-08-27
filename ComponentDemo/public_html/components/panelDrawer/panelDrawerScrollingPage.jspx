@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelDrawer in scrolling page"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <af:form>
+        <af:decorativeBox inlineStyle="border: 0px solid blue;padding-top:15px;" id="box">
+          <f:facet name="center">
+            <af:panelGroupLayout layout="scroll" id="layout"
+                                 clientComponent="true"
+                                 inlineStyle="border: 1px solid red;margin-top:20px;">
+              <af:panelDrawer binding="#{editor.component}" height="100%" id="drawer">
+                <af:showDetailItem textAndAccessKey="Ta&amp;b 1"
+                                   icon="/images/icon_library_24X24_ena.png"
+                                   hoverIcon="/images/icon_library_24X24_ovr.png"
+                                   depressedIcon="/images/icon_library_24X24_sel.png"
+                                   disabledIcon="/images/icon_library_24X24_dis.png"
+                                   shortDesc="tab 1 short desc" id="sdi1">
+                  <af:outputText value="Tab 1 First Child"/>
+                  <af:spacer height="1000" width="200"
+                             inlineStyle="border:1px solid red"/>
+                  <af:outputText value="Hello World"/>
+                </af:showDetailItem>
+              </af:panelDrawer>
+              <af:outputText value="In this demo you use the browser scroll bar. Make sure you can read the 'Hello World' at the bottom of the drawer."/>
+              <af:spacer height="2000" width="50"
+                         rendered="#{!requestScope.hideSpacer}"
+                         inlineStyle="border:1px solid blue"/>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:decorativeBox>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

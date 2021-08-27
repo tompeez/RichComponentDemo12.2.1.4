@@ -1,0 +1,968 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Form Visual Design Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+      /**
+       * Refresh the QueryRow PanelGroupLayout on data changes.
+       */
+      function refreshQueryRow(event)
+      {
+        event.cancel();
+        var source = event.getSource();
+        var queryRow = source.getParent();
+        AdfPage.PAGE.addPartialTargets(queryRow);
+      }
+
+      /**
+       * Create custom add event when add item button is pressed.
+       */
+      function addRow(event)
+      {
+        event.cancel();
+        var source = event.getSource();
+        var rowIndex = source.getProperty("statIndex");
+        AdfCustomEvent.queue(event.getSource(), "addRowEvent", {"rowIndex":rowIndex}, true);
+      }
+
+      /**
+       * Create custom remove event when remove item button is pressed.
+       */
+      function removeRow(event)
+      {
+        event.cancel();
+        var source = event.getSource();
+        var rowIndex = source.getProperty("statIndex");
+        AdfCustomEvent.queue(event.getSource(), "removeRowEvent", {"rowIndex":rowIndex}, true);
+      }
+      </af:resource>
+      <af:pageTemplate id="pt" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Form Visual Design"/>
+        <f:attribute name="demoKind" value="visualDesign"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="extraBottomButtons">
+          <af:button id="bSettings" text="Field Settings">
+            <af:showPopupBehavior popupId="pSettings"/>
+          </af:button>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:popup id="pSettings">
+              <af:panelWindow id="pwSettings" title="Field Settings">
+                <af:panelGroupLayout id="pglSettingsV" layout="vertical"
+                  inlineStyle="min-width:245px">
+                  <af:panelFormLayout id="pflSettings" maxColumns="1" rows="1">
+                    <af:selectBooleanCheckbox id="changedSetting" label="Changed" text="Changed indicator"
+                                              contentStyle="white-space:nowrap"
+                                              autoSubmit="true" simple="true" value="#{pageFlowScope.changed}"/>
+                    <af:selectBooleanCheckbox id="compactSetting" label="Compact" text="Compact"
+                                              autoSubmit="true" simple="true" value="#{pageFlowScope.compact}"/>
+                    <af:selectBooleanCheckbox id="disabledSetting" label="Disabled" text="Disabled"
+                                              autoSubmit="true" simple="true" value="#{pageFlowScope.disabled}"/>
+                    <af:selectBooleanCheckbox id="helpSetting" label="Has help" text="Help"
+                                              autoSubmit="true" simple="true" value="#{pageFlowScope.hasHelp}"/>
+                    <af:selectBooleanCheckbox id="readOnlySetting" label="Read-only" text="Read-only"
+                                              autoSubmit="true" simple="true" value="#{pageFlowScope.readOnly}"/>
+                    <af:selectBooleanCheckbox id="requiredSetting" label="Required" text="Required"
+                                              autoSubmit="true" simple="true" value="#{pageFlowScope.required}"/>
+                  </af:panelFormLayout>
+                  <af:separator id="sepSettings"/>
+                  <af:selectOneChoice id="example" label="Example" value="item1"
+                                      changed="#{pageFlowScope.changed}"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                      mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                      readOnly="#{pageFlowScope.readOnly}"
+                                      showRequired="#{pageFlowScope.required}"
+                                      partialTriggers="changedSetting compactSetting disabledSetting helpSetting readOnlySetting requiredSetting">
+                    <af:selectItem id="exSI1" label="Example Item 1" value="item1"/>
+                    <af:selectItem id="exSI2" label="Example Item 2" value="item2"/>
+                    <af:selectItem id="exSI3" label="Example Item 3" value="item3"/>
+                  </af:selectOneChoice>
+                </af:panelGroupLayout>
+              </af:panelWindow>
+            </af:popup>
+            <af:panelGroupLayout id="pglSettings" layout="vertical"
+              partialTriggers="changedSetting compactSetting disabledSetting helpSetting readOnlySetting requiredSetting">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:panelHeader text="Related Links" id="ph1">
+                <af:panelList id="pl1" rows="1" maxColumns="2">
+                  <af:goLink text="Component - commandLink" destination="/components/commandLink.jspx"
+                             id="gl1"/>
+                  <af:goLink text="Component - group" destination="/components/group.jspx"
+                             id="gl2"/>
+                  <af:goLink text="Component - inputText" destination="/components/inputText.jspx"
+                             id="gl3"/>
+                  <af:goLink text="Component - outputLabel" destination="/components/outputLabel.jspx"
+                             id="gl3b"/>
+                  <af:goLink text="Component - panelFormLayout"
+                             destination="/components/panelFormLayout.jspx"
+                             id="gl4"/>
+                  <af:goLink text="Component - panelLabelAndMessage"
+                             destination="/components/panelLabelAndMessage.jspx"
+                             id="gl5"/>
+                  <af:goLink text="Component - selectOneChoice"
+                             destination="/components/selectOneChoice.jspx"
+                             id="gl6"/>
+                  <af:goLink text="Component - selectOneRadio"
+                             destination="/components/selectOneRadio.jspx"
+                             id="gl7"/>
+                  <af:goLink text="Component - selectManyCheckbox"
+                             destination="/components/selectManyCheckbox.jspx"
+                             id="gl8"/>
+                  <af:goLink text="Component - selectManyListbox"
+                             destination="/components/selectManyListbox.jspx"
+                             id="gl9"/>
+                </af:panelList>
+              </af:panelHeader>
+              <af:panelHeader text="One Column" id="ph2">
+                <af:panelFormLayout maxColumns="1" labelWidth="75" id="pfl1">
+                  <af:selectOneChoice label="Prompt" value="option1" id="soc1"
+                                      changed="#{pageFlowScope.changed}"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                      mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                      readOnly="#{pageFlowScope.readOnly}"
+                                      showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Option 1" value="option1" id="si1"/>
+                    <af:selectItem label="Option 2" value="option2" id="si2"/>
+                  </af:selectOneChoice>
+                  <af:panelLabelAndMessage label="Prompt" id="plam1"
+                                           changed="#{pageFlowScope.changed}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           showRequired="#{pageFlowScope.required}">
+                    <af:panelGroupLayout layout="horizontal" id="pgl2">
+                      <af:inputText simple="true" contentStyle="width: 250px;"
+                                    value="c:\Documents and Settings\file.dat" label="inputText"
+                                    id="it1"
+                                    disabled="#{pageFlowScope.disabled}"
+                                    readOnly="#{pageFlowScope.readOnly}"/>
+                      <af:commandButton partialSubmit="true" text="Browse..."
+                                        id="cb1"/>
+                    </af:panelGroupLayout>
+                  </af:panelLabelAndMessage>
+                  <af:selectOneRadio label="Prompt" value="value1" id="sor1"
+                                     changed="#{pageFlowScope.changed}"
+                                     disabled="#{pageFlowScope.disabled}"
+                                     helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                     readOnly="#{pageFlowScope.readOnly}"
+                                     showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Value 1" value="value1" id="si3"/>
+                    <af:selectItem label="Value 2" value="value2" id="si4"/>
+                    <af:selectItem label="Value 3" value="value3" id="si5"/>
+                  </af:selectOneRadio>
+                  <af:panelLabelAndMessage label="Prompt" id="plam2"
+                                           changed="#{pageFlowScope.changed}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           showRequired="#{pageFlowScope.required}">Plain text</af:panelLabelAndMessage>
+                  <af:inputText label="Prompt" value="Value" id="it2"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Two Columns" id="ph3">
+                <af:panelFormLayout rows="3" maxColumns="2" labelWidth="75" fieldWidth="250"
+                                    id="pfl2">
+                  <af:selectManyListbox label="Prompt" contentStyle="width: 100px;"
+                                        id="sml1"
+                                        changed="#{pageFlowScope.changed}"
+                                        disabled="#{pageFlowScope.disabled}"
+                                        helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                        readOnly="#{pageFlowScope.readOnly}"
+                                        showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Option 1" value="option1" id="si6"/>
+                    <af:selectItem label="Option 2" value="option2" id="si7"/>
+                    <af:selectItem label="Option 3" value="option3" id="si8"/>
+                    <af:selectItem label="Option 4" value="option4" id="si9"/>
+                  </af:selectManyListbox>
+                  <af:selectManyCheckbox label="Prompt" layout="horizontal"
+                                         id="smc1"
+                                         changed="#{pageFlowScope.changed}"
+                                         disabled="#{pageFlowScope.disabled}"
+                                         helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                         readOnly="#{pageFlowScope.readOnly}"
+                                         showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Value 1" value="value1" id="si10"/>
+                    <af:selectItem label="Value 2" value="value2" id="si11"/>
+                    <af:selectItem label="Value 3" value="value3" id="si12"/>
+                  </af:selectManyCheckbox>
+                  <af:selectOneChoice label="Prompt" value="option1" id="soc2"
+                                      changed="#{pageFlowScope.changed}"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                      mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                      readOnly="#{pageFlowScope.readOnly}"
+                                      showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Option 1" value="option1" id="si13"/>
+                    <af:selectItem label="Option 2" value="option2" id="si14"/>
+                  </af:selectOneChoice>
+                  <af:panelLabelAndMessage label="Prompt" id="plam3" for="it3"
+                                           changed="#{pageFlowScope.changed}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           showRequired="#{pageFlowScope.required}">
+                    <af:panelGroupLayout layout="horizontal" id="pgl3">
+                      <af:inputText simple="true" contentStyle="width: 100px;" label="inputText"
+                                    id="it3"
+                                    disabled="#{pageFlowScope.disabled}"
+                                    readOnly="#{pageFlowScope.readOnly}"/>
+                      <af:commandButton partialSubmit="true" text="Browse..."
+                                        id="cb2"/>
+                    </af:panelGroupLayout>
+                  </af:panelLabelAndMessage>
+                  <af:inputText label="Prompt" id="it4"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                  <af:panelLabelAndMessage label="Prompt" id="plam4"
+                                           changed="#{pageFlowScope.changed}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           showRequired="#{pageFlowScope.required}">
+                    <af:goLink text="fileName.doc" targetFrame="_blank" destination="/images/pie1.png"
+                               id="gl10"/>
+                  </af:panelLabelAndMessage>
+                  <af:selectOneRadio label="Prompt" value="value1" id="sor2"
+                                     changed="#{pageFlowScope.changed}"
+                                     disabled="#{pageFlowScope.disabled}"
+                                     helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                     readOnly="#{pageFlowScope.readOnly}"
+                                     showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Value 1" value="value1" id="si15"/>
+                    <af:selectItem label="Value 2" value="value2" id="si16"/>
+                    <af:selectItem label="Value 3" value="value3" id="si17"/>
+                  </af:selectOneRadio>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Three Columns" id="ph4">
+                <af:panelFormLayout rows="2" maxColumns="3" labelWidth="75" fieldWidth="250"
+                                    id="pfl3">
+                  <af:selectManyListbox label="Prompt" contentStyle="width: 100px;"
+                                        id="sml2"
+                                        changed="#{pageFlowScope.changed}"
+                                        disabled="#{pageFlowScope.disabled}"
+                                        helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                        readOnly="#{pageFlowScope.readOnly}"
+                                        showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Option 1" value="option1" id="si18"/>
+                    <af:selectItem label="Option 2" value="option2" id="si19"/>
+                    <af:selectItem label="Option 3" value="option3" id="si20"/>
+                    <af:selectItem label="Option 4" value="option4" id="si21"/>
+                  </af:selectManyListbox>
+                  <af:inputText label="Prompt" id="it5"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                  <af:selectManyCheckbox label="Prompt" id="smc2"
+                                         changed="#{pageFlowScope.changed}"
+                                         disabled="#{pageFlowScope.disabled}"
+                                         helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                         readOnly="#{pageFlowScope.readOnly}"
+                                         showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Value 1" value="value1" id="si22"/>
+                    <af:selectItem label="Value 2" value="value2" id="si23"/>
+                    <af:selectItem label="Value 3" value="value3" id="si24"/>
+                  </af:selectManyCheckbox>
+                  <af:selectOneChoice label="Prompt" value="option1" id="soc3"
+                                      changed="#{pageFlowScope.changed}"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                      mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                      readOnly="#{pageFlowScope.readOnly}"
+                                      showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Option 1" value="option1" id="si25"/>
+                    <af:selectItem label="Option 2" value="option2" id="si26"/>
+                  </af:selectOneChoice>
+                  <af:panelLabelAndMessage label="Prompt" id="plam5"
+                                           changed="#{pageFlowScope.changed}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           showRequired="#{pageFlowScope.required}">
+                    <af:goLink text="fileName.doc" targetFrame="_blank" destination="/images/pie1.png"
+                               id="gl11"/>
+                  </af:panelLabelAndMessage>
+                  <af:selectOneRadio label="Prompt" value="value1" id="sor3"
+                                     changed="#{pageFlowScope.changed}"
+                                     disabled="#{pageFlowScope.disabled}"
+                                     helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                     readOnly="#{pageFlowScope.readOnly}"
+                                     showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Value 1" value="value1" id="si27"/>
+                    <af:selectItem label="Value 2" value="value2" id="si28"/>
+                    <af:selectItem label="Value 3" value="value3" id="si29"/>
+                  </af:selectOneRadio>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Groups" id="ph5">
+                <af:panelFormLayout maxColumns="1" labelWidth="75" id="pfl4">
+                  <af:group id="g1">
+                    <af:selectOneChoice label="Prompt" value="option1" id="soc4"
+                                        changed="#{pageFlowScope.changed}"
+                                        disabled="#{pageFlowScope.disabled}"
+                                        helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                        mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                        readOnly="#{pageFlowScope.readOnly}"
+                                        showRequired="#{pageFlowScope.required}">
+                      <af:selectItem label="Option 1" value="option1" id="si30"/>
+                      <af:selectItem label="Option 2" value="option2" id="si31"/>
+                    </af:selectOneChoice>
+                    <af:panelLabelAndMessage label="Prompt" id="plam6" for="it6"
+                                             changed="#{pageFlowScope.changed}"
+                                             helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                             showRequired="#{pageFlowScope.required}">
+                      <af:panelGroupLayout layout="horizontal" id="pgl4">
+                        <af:inputText simple="true" contentStyle="width: 100px;" label="inputText"
+                                      id="it6"
+                                    disabled="#{pageFlowScope.disabled}"
+                                    readOnly="#{pageFlowScope.readOnly}"/>
+                        <af:commandButton partialSubmit="true" text="Browse..."
+                                          id="cb3"/>
+                      </af:panelGroupLayout>
+                    </af:panelLabelAndMessage>
+                    <af:selectOneChoice label="Prompt" value="option1" id="soc5"
+                                        changed="#{pageFlowScope.changed}"
+                                        disabled="#{pageFlowScope.disabled}"
+                                        helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                        mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                        readOnly="#{pageFlowScope.readOnly}"
+                                        showRequired="#{pageFlowScope.required}">
+                      <af:selectItem label="Option 1" value="option1" id="si32"/>
+                      <af:selectItem label="Option 2" value="option2" id="si33"/>
+                    </af:selectOneChoice>
+                  </af:group>
+                  <af:group id="g2" title="Grouped Set of Forms">
+                    <af:selectManyListbox label="Prompt" contentStyle="width: 100px;"
+                                          id="sml3"
+                                          changed="#{pageFlowScope.changed}"
+                                          disabled="#{pageFlowScope.disabled}"
+                                          helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                          readOnly="#{pageFlowScope.readOnly}"
+                                          showRequired="#{pageFlowScope.required}">
+                      <af:selectItem label="Option 1" value="option1" id="si34"/>
+                      <af:selectItem label="Option 2" value="option2" id="si35"/>
+                      <af:selectItem label="Option 3" value="option3" id="si36"/>
+                      <af:selectItem label="Option 4" value="option4" id="si37"/>
+                    </af:selectManyListbox>
+                    <af:selectManyCheckbox label="Prompt" id="smc3"
+                                           changed="#{pageFlowScope.changed}"
+                                           disabled="#{pageFlowScope.disabled}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           readOnly="#{pageFlowScope.readOnly}"
+                                           showRequired="#{pageFlowScope.required}">
+                      <af:selectItem label="Value 1" value="value1" id="si38"/>
+                      <af:selectItem label="Value 2" value="value2" id="si39"/>
+                      <af:selectItem label="Value 3" value="value3" id="si40"/>
+                    </af:selectManyCheckbox>
+                  </af:group>
+                  <af:group id="g3">
+                    <af:panelLabelAndMessage label="Prompt" id="plam7"
+                                             changed="#{pageFlowScope.changed}"
+                                             helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                             showRequired="#{pageFlowScope.required}">
+                      <af:goLink text="fileName.doc" targetFrame="_blank"
+                                 destination="/images/pie1.png" id="gl12"/>
+                    </af:panelLabelAndMessage>
+                    <af:selectOneRadio label="Prompt" value="value1" id="sor4"
+                                       changed="#{pageFlowScope.changed}"
+                                       disabled="#{pageFlowScope.disabled}"
+                                       helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                       readOnly="#{pageFlowScope.readOnly}"
+                                       showRequired="#{pageFlowScope.required}">
+                      <af:selectItem label="Value 1" value="value1" id="si41"/>
+                      <af:selectItem label="Value 2" value="value2" id="si42"/>
+                      <af:selectItem label="Value 3" value="value3" id="si43"/>
+                    </af:selectOneRadio>
+                    <af:inputText label="Prompt" id="it7"
+                                  changed="#{pageFlowScope.changed}"
+                                  disabled="#{pageFlowScope.disabled}"
+                                  helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                  readOnly="#{pageFlowScope.readOnly}"
+                                  showRequired="#{pageFlowScope.required}"/>
+                  </af:group>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Child Group" id="ph6">
+                <af:panelFormLayout maxColumns="1" labelWidth="75" fieldWidth="250"
+                                    id="pfl5">
+                  <af:selectOneChoice label="Prompt" value="option1" id="soc6"
+                                      changed="#{pageFlowScope.changed}"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                      mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                      readOnly="#{pageFlowScope.readOnly}"
+                                      showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Option 1" value="option1" id="si44"/>
+                    <af:selectItem label="Option 2" value="option2" id="si45"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice label="Prompt" value="option1" id="soc7"
+                                      changed="#{pageFlowScope.changed}"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                      mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                      readOnly="#{pageFlowScope.readOnly}"
+                                      showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Option 1" value="option1" id="si46"/>
+                    <af:selectItem label="Option 2" value="option2" id="si47"/>
+                  </af:selectOneChoice>
+                  <af:panelFormLayout id="pfl6">
+                    <af:inputText label="Prompt" id="it8"
+                                  changed="#{pageFlowScope.changed}"
+                                  disabled="#{pageFlowScope.disabled}"
+                                  helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                  readOnly="#{pageFlowScope.readOnly}"
+                                  showRequired="#{pageFlowScope.required}"/>
+                    <af:panelLabelAndMessage label="Prompt" id="plam8"
+                                             changed="#{pageFlowScope.changed}"
+                                             helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                             showRequired="#{pageFlowScope.required}">
+                      <af:goLink text="fileName.doc" targetFrame="_blank"
+                                 destination="/images/pie1.png" id="gl13"/>
+                    </af:panelLabelAndMessage>
+                  </af:panelFormLayout>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Field Group" id="ph7">
+                <af:panelGroupLayout inlineStyle="margin:20px 20px 20px 20px"
+                                     id="pgl5">
+                  <af:outputFormatted value="This is an example of a dynamic field group implementation used to create an incoming email filter pick criteria email filter.                                          &lt;ul> &lt;li> The components displayed in a row are dynamically determined by the criteria (Subject, From, Date, Priority) in the first selectOneChoice component.&lt;/li>                                          &lt;li> This field group allows a minimum of 1 row, maximum of 5 rows.&lt;/li>                                          &lt;/ul>"
+                                      id="of1"/>
+                </af:panelGroupLayout>
+                <af:panelGroupLayout inlineStyle="margin:20px 20px 20px 20px"
+                                     id="pgl6">
+                  <af:panelFormLayout id="pfl7">
+                    <af:panelLabelAndMessage label="Email Message Filter Setup"
+                                             partialTriggers="i:addButton i:removeButton"
+                                             id="QueryLabelAndMessage"
+                                             changed="#{pageFlowScope.changed}"
+                                             helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                             showRequired="#{pageFlowScope.required}">
+                      <af:iterator var="row" varStatus="stat" id="i"
+                                   value="#{demoRepeater.collectionModel}">
+                        <af:panelGroupLayout id="QueryRow" layout="horizontal" clientComponent="true"
+                                             inlineStyle="margin:0 1px 0 1px">
+                          <af:selectOneChoice id="FilterCriteria" simple="true" label="#{row.criteria}"
+                                              inlineStyle="margin:1px" value="#{row.criteria}"
+                                              contentStyle="width:100px"
+                                              disabled="#{pageFlowScope.disabled}"
+                                              mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                              readOnly="#{pageFlowScope.readOnly}">
+                            <af:clientListener type="valueChange" method="refreshQueryRow"/>
+                            <af:selectItem label="Subject" value="Subject"
+                                           id="si48"/>
+                            <af:selectItem label="From" value="From" id="si49"/>
+                            <af:selectItem label="Date" value="Date" id="si50"/>
+                            <af:selectItem label="Priority" value="Priority"
+                                           id="si51"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="FilterTextQualifier"
+                                              visible="#{row.textCriteriaChosen}"
+                                              label="#{row.criteria}" inlineStyle="margin:1px"
+                                              value="#{row.textQualifier}" simple="true"
+                                              contentStyle="width:100px"
+                                              disabled="#{pageFlowScope.disabled}"
+                                              mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                              readOnly="#{pageFlowScope.readOnly}">
+                            <af:clientListener type="valueChange" method="refreshQueryRow"/>
+                            <af:selectItem label="contains" value="contains"
+                                           id="si52"/>
+                            <af:selectItem label="doesn't contain" value="doesn't contain"
+                                           id="si53"/>
+                            <af:selectItem label="is" value="is" id="si54"/>
+                            <af:selectItem label="isn't" value="isn't" id="si55"/>
+                            <af:selectItem label="begins with" value="begins with"
+                                           id="si56"/>
+                            <af:selectItem label="ends with" value="ends with"
+                                           id="si57"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="FilterDateQualifier"
+                                              visible="#{row.dateCriteriaChosen}"
+                                              label="#{row.criteria}" inlineStyle="margin:1px"
+                                              value="#{row.dateQualifier}" simple="true"
+                                              contentStyle="width:100px"
+                                              disabled="#{pageFlowScope.disabled}"
+                                              mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                              readOnly="#{pageFlowScope.readOnly}">
+                            <af:clientListener type="valueChange" method="refreshQueryRow"/>
+                            <af:selectItem label="is" value="is" id="si58"/>
+                            <af:selectItem label="isn't" value="isn't" id="si59"/>
+                            <af:selectItem label="before" value="before"
+                                           id="si60"/>
+                            <af:selectItem label="after" value="after" id="si61"/>
+                            <af:selectItem label="between" value="between"
+                                           id="si62"/>
+                          </af:selectOneChoice>
+                          <af:selectOneChoice id="FilterPriorityQualifier"
+                                              visible="#{row.priorityCriteriaChosen}"
+                                              label="#{row.criteria}" inlineStyle="margin:1px"
+                                              value="#{row.priorityQualifier}" simple="true"
+                                              contentStyle="width:100px"
+                                              disabled="#{pageFlowScope.disabled}"
+                                              mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                              readOnly="#{pageFlowScope.readOnly}">
+                            <af:clientListener type="valueChange" method="refreshQueryRow"/>
+                            <af:selectItem label="is" value="is" id="si63"/>
+                            <af:selectItem label="isn't" value="isn't" id="si64"/>
+                          </af:selectOneChoice>
+                          <af:inputText id="TextEntry" value="#{row.textEntry}" simple="true"
+                                        immediate="true" inlineStyle="margin:1px"
+                                        visible="#{row.textCriteriaChosen}" label="inputText"
+                                        contentStyle="width:200px"
+                                        disabled="#{pageFlowScope.disabled}"
+                                        readOnly="#{pageFlowScope.readOnly}">
+                            <af:clientListener type="valueChange" method="refreshQueryRow"/>
+                          </af:inputText>
+                          <af:selectOneChoice id="PriorityEntry" value="#{row.priorityEntry}"
+                                              simple="true" immediate="true" inlineStyle="margin:2px"
+                                              visible="#{row.priorityCriteriaChosen}"
+                                              label="selectOneChoice" contentStyle="width:207px"
+                                              disabled="#{pageFlowScope.disabled}"
+                                              mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                              readOnly="#{pageFlowScope.readOnly}">
+                            <af:clientListener type="valueChange" method="refreshQueryRow"/>
+                            <af:selectItem label="High" value="High" id="si65"/>
+                            <af:selectItem label="Medium" value="Medium"
+                                           id="si66"/>
+                            <af:selectItem label="Low" value="Low" id="si67"/>
+                          </af:selectOneChoice>
+                          <!-- note: for some reason l/r margin on inputDate causes it to move down vertically on firefox -->
+                          <af:inputDate id="DateEntry1" value="#{row.dateEntry1}" simple="true"
+                                        immediate="true" visible="#{row.dateCriteriaChosen}"
+                                        label="inputDate" inlineStyle="margin:2px"
+                                        contentStyle="width:200px"
+                                        disabled="#{pageFlowScope.disabled}"
+                                        readOnly="#{pageFlowScope.readOnly}">
+                            <af:clientListener type="valueChange" method="refreshQueryRow"/>
+                          </af:inputDate>
+                          <af:outputText id="DateEntryMiddleText" value="and"
+                                         inlineStyle="margin:1px 4px"
+                                         visible="#{row.dateCriteriaAndBetweenQualifierChosen}"/>
+                          <af:inputDate id="DateEntry2" value="#{row.dateEntry2}" simple="true"
+                                        immediate="true"
+                                        visible="#{row.dateCriteriaAndBetweenQualifierChosen}"
+                                        label="inputDate2"
+                                        disabled="#{pageFlowScope.disabled}"
+                                        readOnly="#{pageFlowScope.readOnly}">
+                            <af:clientListener type="valueChange" method="refreshQueryRow"/>
+                          </af:inputDate>
+                          <af:commandImageLink id="addButton" blocking="true" immediate="true"
+                                               shortDesc="Add" disabled="#{!demoRepeater.addAllowed}"
+                                               icon="/images/field_groups_add_ena.png"
+                                               hoverIcon="/images/field_groups_add_ovr.png"
+                                               depressedIcon="/images/field_groups_add_dwn.png"
+                                               disabledIcon="/images/field_groups_add_dis.png">
+                            <af:clientAttribute name="statIndex" value="#{stat.index}"/>
+                            <af:clientListener type="action" method="addRow"/>
+                            <af:serverListener type="addRowEvent" method="#{demoRepeater.addRowEvent}"/>
+                          </af:commandImageLink>
+                          <af:spacer id="sp" width="2"/>
+                          <af:commandImageLink id="removeButton" blocking="true" immediate="true"
+                                               shortDesc="Remove"
+                                               disabled="#{!demoRepeater.removeAllowed}"
+                                               icon="/images/field_groups_remove_ena.png"
+                                               hoverIcon="/images/field_groups_remove_ovr.png"
+                                               depressedIcon="/images/field_groups_remove_dwn.png"
+                                               disabledIcon="/images/field_groups_remove_dis.png">
+                            <af:clientAttribute name="statIndex" value="#{stat.index}"/>
+                            <af:clientListener type="action" method="removeRow"/>
+                            <af:serverListener type="removeRowEvent"
+                                               method="#{demoRepeater.removeRowEvent}"/>
+                          </af:commandImageLink>
+                        </af:panelGroupLayout>
+                      </af:iterator>
+                    </af:panelLabelAndMessage>
+                  </af:panelFormLayout>
+                </af:panelGroupLayout>
+                <af:commandLink actionListener="#{demoRepeater.resetData}" text="resetData"
+                                immediate="true" id="cl1"/>
+              </af:panelHeader>
+              <af:panelHeader text="Tab Traversal with Fields" id="ph8">
+                <af:panelFormLayout rows="2" labelWidth="75" fieldWidth="250"
+                                    id="pfl8">
+                  <af:panelLabelAndMessage label="Prompt" id="plam9"
+                                           changed="#{pageFlowScope.changed}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           showRequired="#{pageFlowScope.required}">
+                    <af:panelGroupLayout layout="horizontal" id="pgl7">
+                      <af:selectOneChoice simple="true" value="option1" label="selectOneChoice"
+                                          id="soc8"
+                                          disabled="#{pageFlowScope.disabled}"
+                                          mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                          readOnly="#{pageFlowScope.readOnly}">
+                        <af:selectItem label="Option 1" value="option1"
+                                       id="si68"/>
+                        <af:selectItem label="Option 2" value="option2"
+                                       id="si69"/>
+                      </af:selectOneChoice>
+                      <af:inputText simple="true" contentStyle="width: 60px;" label="inputText"
+                                    id="it9"
+                                    disabled="#{pageFlowScope.disabled}"
+                                    readOnly="#{pageFlowScope.readOnly}"/>
+                      <af:commandButton partialSubmit="true" text="Button"
+                                        id="cb4"/>
+                    </af:panelGroupLayout>
+                  </af:panelLabelAndMessage>
+                  <af:selectManyCheckbox label="Prompt" id="smc4"
+                                         changed="#{pageFlowScope.changed}"
+                                         disabled="#{pageFlowScope.disabled}"
+                                         helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                         readOnly="#{pageFlowScope.readOnly}"
+                                         showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Value 1" value="value1" id="si70"/>
+                    <af:selectItem label="Value 2" value="value2" id="si71"/>
+                    <af:selectItem label="Value 3" value="value3" id="si72"/>
+                  </af:selectManyCheckbox>
+                  <af:selectOneRadio label="Prompt" id="sor5"
+                                     changed="#{pageFlowScope.changed}"
+                                     disabled="#{pageFlowScope.disabled}"
+                                     helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                     readOnly="#{pageFlowScope.readOnly}"
+                                     showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Value 1" value="value1" id="si73"/>
+                    <af:selectItem label="Value 2" value="value2" id="si74"/>
+                    <af:selectItem label="Value 3" value="value3" id="si75"/>
+                    <af:selectItem label="Value 4" value="value4" id="si76"/>
+                  </af:selectOneRadio>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Tab Traversal with Spanning widget" id="ph9">
+                <af:panelFormLayout rows="4" labelWidth="75" fieldWidth="250"
+                                    id="pfl9">
+                  <af:inputText label="Prompt" id="it10"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                  <af:inputText label="Prompt" id="it11"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                  <af:panelLabelAndMessage label="Prompt" id="plam10"
+                                           changed="#{pageFlowScope.changed}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           showRequired="#{pageFlowScope.required}">
+                    <af:goLink text="fileName.doc" targetFrame="_blank" destination="/images/pie1.png"
+                               id="gl14"/>
+                  </af:panelLabelAndMessage>
+                  <af:selectManyCheckbox label="Prompt" id="smc5"
+                                         changed="#{pageFlowScope.changed}"
+                                         disabled="#{pageFlowScope.disabled}"
+                                         helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                         readOnly="#{pageFlowScope.readOnly}"
+                                         showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Value 1" value="value1" id="si77"/>
+                    <af:selectItem label="Value 2" value="value2" id="si78"/>
+                    <af:selectItem label="Value 3" value="value3" id="si79"/>
+                  </af:selectManyCheckbox>
+                  <af:selectOneRadio label="Prompt" id="sor6"
+                                     changed="#{pageFlowScope.changed}"
+                                     disabled="#{pageFlowScope.disabled}"
+                                     helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                     readOnly="#{pageFlowScope.readOnly}"
+                                     showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Value 1" value="value1" id="si80"/>
+                    <af:selectItem label="Value 2" value="value2" id="si81"/>
+                    <af:selectItem label="Value 3" value="value3" id="si82"/>
+                    <af:selectItem label="Value 4" value="value4" id="si83"/>
+                  </af:selectOneRadio>
+                  <af:inputText label="Prompt" id="it12"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                  <af:panelLabelAndMessage label="Prompt" id="plam11" for="it13"
+                                           changed="#{pageFlowScope.changed}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           showRequired="#{pageFlowScope.required}">
+                    <af:panelGroupLayout layout="horizontal" id="pgl8">
+                      <af:inputText simple="true" contentStyle="width: 90px;" label="inputText"
+                                    id="it13"
+                                    disabled="#{pageFlowScope.disabled}"
+                                    readOnly="#{pageFlowScope.readOnly}"/>
+                      <af:commandButton partialSubmit="true" text="Browse..."
+                                        id="cb5"/>
+                    </af:panelGroupLayout>
+                  </af:panelLabelAndMessage>
+                  <af:selectOneChoice label="Prompt" value="option1" id="soc9"
+                                      changed="#{pageFlowScope.changed}"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                      mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                      readOnly="#{pageFlowScope.readOnly}"
+                                      showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Option 1" value="option1" id="si84"/>
+                    <af:selectItem label="Option 2" value="option2" id="si85"/>
+                  </af:selectOneChoice>
+                  <f:facet name="footer">
+                    <af:inputText label="Prompt" rows="3" contentStyle="width: 500px;"
+                                  id="it14"
+                                  changed="#{pageFlowScope.changed}"
+                                  disabled="#{pageFlowScope.disabled}"
+                                  helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                  readOnly="#{pageFlowScope.readOnly}"
+                                  showRequired="#{pageFlowScope.required}"/>
+                  </f:facet>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Stacking Prompts" id="ph10">
+                <af:panelFormLayout maxColumns="1" labelAlignment="top"
+                                    id="pfl10">
+                  <af:selectManyCheckbox label="Check Box Group" id="smc6"
+                                         changed="#{pageFlowScope.changed}"
+                                         disabled="#{pageFlowScope.disabled}"
+                                         helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                         readOnly="#{pageFlowScope.readOnly}"
+                                         showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Value of the check box 1" value="value1"
+                                   id="si86"/>
+                    <af:selectItem label="Value of the check box 2" value="value2"
+                                   id="si87"/>
+                  </af:selectManyCheckbox>
+                  <af:inputText label="Prompt" value="Text Text" id="it15"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                  <af:inputText label="Prompt" value="Text Text" id="it16"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                  <af:panelLabelAndMessage label="File Uploaded" id="plam12"
+                                           changed="#{pageFlowScope.changed}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           showRequired="#{pageFlowScope.required}">
+                    <af:goLink text="C:\\Folder\Attachment.doc" targetFrame="_blank"
+                               destination="/images/pie1.png" id="gl15"/>
+                  </af:panelLabelAndMessage>
+                  <af:inputText label="Text Area"
+                                value="Text text text text text text text text text text text text text text text"
+                                id="it17"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Wrapping Prompt" id="ph11">
+                <af:panelFormLayout labelWidth="150" id="pfl11">
+                  <af:selectOneChoice label="Prompt Text of a Field that Wraps into Multiple Lines"
+                                      value="option1" id="soc10"
+                                      changed="#{pageFlowScope.changed}"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                      mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                      readOnly="#{pageFlowScope.readOnly}"
+                                      showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Option 1" value="option1" id="si88"/>
+                    <af:selectItem label="Option 2" value="option2" id="si89"/>
+                  </af:selectOneChoice>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Wrapping Prompts where Form Layout is Percent of Browser Size"
+                              id="ph12">
+                <af:panelFormLayout rows="2" maxColumns="2" labelWidth="33%" fieldWidth="66%"
+                                    id="pfl12">
+                  <af:selectOneChoice label="Prompt Text of a Field that Wraps into Multiple Lines"
+                                      value="option1" contentStyle="width: 90%;"
+                                      id="soc11"
+                                      changed="#{pageFlowScope.changed}"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                      mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                      readOnly="#{pageFlowScope.readOnly}"
+                                      showRequired="#{pageFlowScope.required}">
+                    <af:selectItem label="Option 1" value="option1" id="si90"/>
+                    <af:selectItem label="Option 2" value="option2" id="si91"/>
+                  </af:selectOneChoice>
+                  <af:inputText label="Another Prompt Text of a Field that Wraps into Multiple Lines"
+                                value="Sample field" contentStyle="width: 90%;"
+                                id="it18"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                  <af:inputText label="Yet Another Prompt Text of a Field that Wraps into Multiple Lines"
+                                value="Another field text" contentStyle="width: 90%;"
+                                id="it19"
+                                changed="#{pageFlowScope.changed}"
+                                disabled="#{pageFlowScope.disabled}"
+                                helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                readOnly="#{pageFlowScope.readOnly}"
+                                showRequired="#{pageFlowScope.required}"/>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Custom Group" id="ph13">
+                <af:panelFormLayout labelWidth="150" maxColumns="1" id="pfl13">
+                  <af:panelLabelAndMessage label="Radio Button Field Group"
+                                           id="plam13" for="sbr1"
+                                           changed="#{pageFlowScope.changed}"
+                                           helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                           showRequired="#{pageFlowScope.required}">
+                    <af:panelGroupLayout layout="horizontal" id="pgl9">
+                      <af:selectBooleanRadio group="customRadioGroup" simple="true" text="Value"
+                                             selected="true" id="sbr1"
+                                             disabled="#{pageFlowScope.disabled}"
+                                             readOnly="#{pageFlowScope.readOnly}"/>
+                      <af:spacer width="10" id="s2"/>
+                      <af:inputText simple="true" contentStyle="width: 250px;" value="Text Text"
+                                    label="inputText" id="it20"
+                                    disabled="#{pageFlowScope.disabled}"
+                                    readOnly="#{pageFlowScope.readOnly}"/>
+                      <af:commandButton partialSubmit="true" text="Browse..."
+                                        id="cb6"/>
+                    </af:panelGroupLayout>
+                    <af:spacer height="5" id="s4"/>
+                    <af:panelGroupLayout layout="horizontal" id="pgl10">
+                      <af:selectBooleanRadio group="customRadioGroup" simple="true" text="Value"
+                                             id="sbr2"
+                                             disabled="#{pageFlowScope.disabled}"
+                                             readOnly="#{pageFlowScope.readOnly}"/>
+                      <af:spacer width="10" id="s3"/>
+                      <af:selectOneChoice simple="true" value="option1" label="selectOneChoice"
+                                          id="soc12"
+                                          disabled="#{pageFlowScope.disabled}"
+                                          mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                          readOnly="#{pageFlowScope.readOnly}">
+                        <af:selectItem label="Option 1" value="option1"
+                                       id="si92"/>
+                        <af:selectItem label="Option 2" value="option2"
+                                       id="si93"/>
+                      </af:selectOneChoice>
+                      <af:inputText simple="true" contentStyle="width: 250px;" value="Text Text"
+                                    label="inputText" id="it21"
+                                    disabled="#{pageFlowScope.disabled}"
+                                    readOnly="#{pageFlowScope.readOnly}"/>
+                    </af:panelGroupLayout>
+                  </af:panelLabelAndMessage>
+                </af:panelFormLayout>
+              </af:panelHeader>
+              <af:panelHeader text="Trinidad Table Layout (rows and columns; horizontal tabbing order)" id="ph14">
+                <af:outputText id="otTableLayout" value="Note this uses separate outputLabel components and separate simple input components so the two kinds of components can be positioned into their own unique table cells. By doing this, you may need to individually adjust either the top padding of each label or the cell's vertical alignment to help make the labels line up with their corresponding inputs. The following example does not necessarily have good alignment for the text of the labels and the text of the content areas."/>
+                <af:spacer id="sTableLayout" height="8"/>
+                <trh:tableLayout id="tl1">
+                  <trh:rowLayout id="rl1">
+                    <trh:cellFormat id="cf1" valign="top">
+                      <af:outputLabel id="ol1" value="Prompt" for="sml4"
+                                      showRequired="#{pageFlowScope.required}"/>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf2">
+                      <af:selectManyListbox label="Prompt" contentStyle="width: 100px;"
+                                            id="sml4" simple="true"
+                                            disabled="#{pageFlowScope.disabled}"
+                                            readOnly="#{pageFlowScope.readOnly}">
+                        <af:selectItem label="Option 1" value="option1" id="si94"/>
+                        <af:selectItem label="Option 2" value="option2" id="si95"/>
+                        <af:selectItem label="Option 3" value="option3" id="si96"/>
+                        <af:selectItem label="Option 4" value="option4" id="si97"/>
+                      </af:selectManyListbox>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf3" valign="top">
+                      <af:outputLabel id="ol2" value="Prompt" for="it23"
+                                      showRequired="#{pageFlowScope.required}"/>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf4" valign="top">
+                      <af:inputText label="Prompt" id="it23" simple="true"
+                                    disabled="#{pageFlowScope.disabled}"
+                                    readOnly="#{pageFlowScope.readOnly}"/>
+                    </trh:cellFormat>
+                  </trh:rowLayout>
+                  <trh:rowLayout id="rl2">
+                    <trh:cellFormat id="cf5">
+                      <af:outputLabel id="ol3" value="Prompt" for="smc7"
+                                      showRequired="#{pageFlowScope.required}"/>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf6">
+                      <af:selectManyCheckbox label="Prompt" layout="horizontal"
+                                             id="smc7" simple="true"
+                                             disabled="#{pageFlowScope.disabled}"
+                                             readOnly="#{pageFlowScope.readOnly}">
+                        <af:selectItem label="Value 1" value="value1" id="si98"/>
+                        <af:selectItem label="Value 2" value="value2" id="si99"/>
+                        <af:selectItem label="Value 3" value="value3" id="si100"/>
+                      </af:selectManyCheckbox>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf7">
+                      <af:outputLabel id="ol4" value="Prompt" for="gl16"
+                                      showRequired="#{pageFlowScope.required}"/>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf8">
+                      <af:goLink text="fileName.doc" targetFrame="_blank" destination="/images/pie1.png"
+                                 id="gl16"/>
+                    </trh:cellFormat>
+                  </trh:rowLayout>
+                  <trh:rowLayout id="rl3">
+                    <trh:cellFormat id="cf9" valign="top">
+                      <af:outputLabel id="ol5" value="Prompt" for="soc13"
+                                      showRequired="#{pageFlowScope.required}"/>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf10" valign="top">
+                      <af:selectOneChoice label="Prompt" value="option1" id="soc13" simple="true"
+                                          disabled="#{pageFlowScope.disabled}"
+                                          mode="#{pageFlowScope.compact ? 'compact' : 'default'}"
+                                          readOnly="#{pageFlowScope.readOnly}">
+                        <af:selectItem label="Option 1" value="option1" id="si101"/>
+                        <af:selectItem label="Option 2" value="option2" id="si102"/>
+                      </af:selectOneChoice>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf11" valign="top">
+                      <af:outputLabel id="ol6" value="Prompt" for="sor7" 
+                                      inlineStyle="position: relative; top:-3px;"
+                                      showRequired="#{pageFlowScope.required}"/>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf12">
+                      <af:selectOneRadio label="Prompt" value="value1" id="sor7" simple="true"
+                                         disabled="#{pageFlowScope.disabled}"
+                                         readOnly="#{pageFlowScope.readOnly}">
+                        <af:selectItem label="Value 1" value="value1" id="si103"/>
+                        <af:selectItem label="Value 2" value="value2" id="si104"/>
+                        <af:selectItem label="Value 3" value="value3" id="si105"/>
+                      </af:selectOneRadio>
+                    </trh:cellFormat>
+                  </trh:rowLayout>
+                  <trh:rowLayout id="rl4">
+                    <trh:cellFormat id="cf13">
+                      <af:outputLabel id="ol7" value="Prompt" for="it22"
+                                      showRequired="#{pageFlowScope.required}"/>
+                    </trh:cellFormat>
+                    <trh:cellFormat id="cf14">
+                      <af:panelGroupLayout layout="horizontal" id="pgl11">
+                        <af:inputText simple="true" contentStyle="width: 100px;" label="inputText"
+                                      id="it22"
+                                      disabled="#{pageFlowScope.disabled}"
+                                      readOnly="#{pageFlowScope.readOnly}"/>
+                        <af:commandButton partialSubmit="true" text="Browse..." id="cb7"/>
+                      </af:panelGroupLayout>
+                    </trh:cellFormat>
+                  </trh:rowLayout>
+                </trh:tableLayout>
+              </af:panelHeader>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

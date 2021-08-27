@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='utf-8'?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="2.1">
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Dynamic declarative component for the tag editor.</description>
+        <attribute>
+          <description>For purposes of the component demo, if the current page is the document demo
+                       page.</description>
+          <attribute-name>editingDocument</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>For purposes of the component demo, if the current page is the form demo page.</description>
+          <attribute-name>editingForm</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies whether or not to hide the built-in editor.</description>
+          <attribute-name>customEditorPresent</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Specifies the kind of demo the tag represents.</description>
+          <attribute-name>demoKind</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Prefix for tag doc files</description>
+          <attribute-name>tagDocPrefix</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>af</default-value>
+        </attribute>
+        <attribute>
+          <description>Specify "shown" to enable the geometry management capabilities of the tag you are demonstrating in your "center" or "demoTab" facets.  Specify "hidden" if geometry management is not applicable for your tag--do not use "hidden" just because your tag simply doesn't support one or more of the geometry management scenarios (that situation requires you to use the gm*Notes attributes to explain what aspects are supported and warn about future changes in the modes or aspects that are not supported).  Only use "hidden" for the rare case if your tag truly has no meaning for geometry management display within an ancestor.</description>
+          <attribute-name>gmChrome</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>hidden</default-value>
+        </attribute>
+        <attribute>
+          <description>The initial stretching mode for the tag you are demonstrating in the "center" or "demoTab" facets.  The user will be able to toggle modes as long as gmDisabled is not false and gmChrome is not hidden.  Specify "none" for a flowing mode where your tag is inside of a container that has an intrinsic width.  Specify "first" for a stretching mode where your tag is stretched to fill the dimensions of the "center" or "demoTab" facets.  Specify "noneWithZeroWidth" for a flowing mode where your tag is inside of a container that has an intrinsically zero-width container.</description>
+          <attribute-name>gmStretchChildren</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <default-value>#{mobileSettings.dimensionsFromChildren ? 'none' : 'first'}</default-value>
+        </attribute>
+        <attribute>
+          <description>Whether the user is forbidden from switching gmStretchChildren modes, the value you specify in gmDisabledNotes will be shown if this is the case.</description>
+          <attribute-name>gmDisabled</attribute-name>
+          <attribute-class>boolean</attribute-class>
+          <default-value>false</default-value>
+        </attribute>
+        <attribute>
+          <description>Optional notes to display if gmDisabled="true".</description>
+          <attribute-name>gmDisabledNotes</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Optional notes to display if gmStretchChildren="none".  Use this to warn if your tag does not support this geometry management mode or if there are any special circumstances such as attribute value combinations that someone trying to use your tag will need to know.</description>
+          <attribute-name>gmFlowNotes</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Optional notes to display if gmStretchChildren="noneWithZeroWidth".  Use this to warn if your tag does not support this geometry management mode or if there are any special circumstances such as attribute value combinations that someone trying to use your tag will need to know.</description>
+          <attribute-name>gmFlowWithZeroWidthNotes</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>Optional notes to display if gmStretchChildren="first".  Use this to warn if your tag does not support this geometry management mode or if there are any special circumstances such as attribute value combinations that someone trying to use your tag will need to know.</description>
+          <attribute-name>gmStretchNotes</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelAccordion id="paEditor" discloseMany="true"
+                       dimensionsFrom="auto">
+      <af:showDetailItem disclosed="true" id="sdiEditor"
+                         text="Editor" flex="1"
+                         stretchChildren="first">
+        <af:panelGroupLayout layout="scroll" id="ptpgl9">
+          <af:panelGroupLayout layout="vertical"
+                               id="ptpgl9pad"
+                               inlineStyle="padding:4px">
+            <f:subview id="editor" rendered="#{attrs.demoKind!='styles'}">
+              <af:panelGroupLayout id="pglEditor" layout="vertical">
+                <jsp:include
+                  page="/components/${attrs.tagDocPrefix=='dvt'
+                                      ? 'extendedEditor' : 'editor'}.jspx"/>
+              </af:panelGroupLayout>
+            </f:subview>
+            <f:subview id="styleEditor"
+                       rendered="#{attrs.demoKind=='styles'}">
+              <jsp:include page="/components/styles/styleEditor.jspx"/>
+            </f:subview>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </af:showDetailItem>
+      <af:showDetailItem disclosed="true" id="sdiEditorGM"
+                         text="Container Geometry"
+                         stretchChildren="first"
+                         inflexibleHeight="100"
+                         rendered="#{attrs.gmChrome != 'hidden'}">
+        <af:panelGroupLayout id="pglEditorGM" layout="scroll">
+          <af:panelGroupLayout layout="vertical"
+                               id="pglEditorGMpad"
+                               inlineStyle="padding:4px">
+            <af:resource type="javascript">
+              function handleContainerStretchingChange(valueChangeEvent)
+              {
+                var eventSource = valueChangeEvent.getSource();
+                var gmTester = eventSource.findComponent(eventSource.getProperty("searchExpressionA"));
+                if (gmTester == null)
+                  gmTester = eventSource.findComponent(eventSource.getProperty("searchExpressionB"));
+                if (gmTester == null)
+                  gmTester = eventSource.findComponent(eventSource.getProperty("searchExpressionC"));
+                if (gmTester == null)
+                {
+                  alert("Error - unable to locate the testGeometryManagement component.");
+                  return;
+                }
+
+                // Update the tester, not just the editor component inside of it:
+                AdfPage.PAGE.addPartialTargets(gmTester);
+
+                // Update the panelFormLayout so relevant notes are displayed:
+                AdfPage.PAGE.addPartialTargets(eventSource.findComponent(eventSource.getProperty("updateTarget")));
+              }
+            </af:resource>
+            <af:panelFormLayout id="pflEditorGM" maxColumns="1" clientComponent="true">
+              <af:selectOneRadio label="Container"
+                                 value="#{attrs.gmStretchChildren}"
+                                 valuePassThru="true"
+                                 rendered="#{!attrs.gmDisabled}"
+                                 immediate="true"
+                                 clientComponent="true"
+                                 id="gmContainerMode"
+                                 partialTriggers="pflEditorGM">
+                <af:clientListener method="handleContainerStretchingChange" type="valueChange"/>
+                <af:clientAttribute name="searchExpressionA" value="tgmA"/>
+                <af:clientAttribute name="searchExpressionB" value="tgmB"/>
+                <af:clientAttribute name="searchExpressionC" value="tgmC"/>
+                <af:clientAttribute name="updateTarget" value="pflEditorGM"/>
+                <af:selectItem id="gmFirst" label="Stretched" value="first" shortDesc="Displays the component as being stretched by its ancestor"/>
+                <af:selectItem id="gmFlowYW" label="Flowing with width (space to stretch width)" value="none" shortDesc="Displays the component as flowing (not stretched by its ancestor) where the ancestor does have an intrinsic width"/>
+                <af:selectItem id="gmFlowNW" label="Flowing without width (minimum width)" value="noneWithZeroWidth" shortDesc="Displays the component as flowing (not stretched by its ancestor) where the ancestor does not have an intrinsic width"/>
+              </af:selectOneRadio>
+              <af:panelLabelAndMessage id="disNotes"
+                                       label="Notes"
+                                       labelStyle="vertical-align:top"
+                                       rendered="#{attrs.gmDisabledNotes != null}">
+                <af:outputText id="disNotesOT" value="#{attrs.gmDisabledNotes}"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage id="stretchNotes"
+                                       label="Notes"
+                                       labelStyle="vertical-align:top"
+                                       rendered="#{attrs.gmStretchChildren == 'first' and attrs.gmStretchNotes != null}">
+                <af:outputText id="stretchNotesOT" value="#{attrs.gmStretchNotes}"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage id="flowNotes"
+                                       label="Notes"
+                                       labelStyle="vertical-align:top"
+                                       rendered="#{attrs.gmStretchChildren == 'none' and attrs.gmFlowNotes != null}">
+                <af:outputText id="flowNotesOT" value="#{attrs.gmFlowNotes}"/>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage id="flowZWNotes"
+                                       label="Notes"
+                                       labelStyle="vertical-align:top"
+                                       rendered="#{attrs.gmStretchChildren == 'noneWithZeroWidth' and attrs.gmFlowWithZeroWidthNotes != null}">
+                <af:outputText id="flowZWNotesOT" value="#{attrs.gmFlowWithZeroWidthNotes}"/>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </af:showDetailItem>
+    </af:panelAccordion>
+  </af:componentDef>
+</jsp:root>

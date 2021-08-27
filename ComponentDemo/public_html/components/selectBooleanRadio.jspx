@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="selectBooleanRadio Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="selectBooleanRadio"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a selectBooleanRadio is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputText value="These are grouped together by setting the group attribute
+            for all selectBooleanRadios below to the same value, in this case 'xxx'."
+                           id="ot1"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:selectBooleanRadio autoSubmit="true" binding="#{editor.component}" group="xxx"
+                                 id="radio1" label="Age" text="10-18" 
+                                 value="#{demoInput.boolean}"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <af:panelGroupLayout layout="vertical" id="pgl1V">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <f:facet name="separator">
+                  <af:spacer height="10px" id="s2"/>
+                </f:facet>
+                <af:panelFormLayout id="pfl1" labelWidth="3em" fieldWidth="30em">
+                  <af:panelFormLayout id="pfl2" labelWidth="8em">
+                    <af:inputText disabled="#{!demoInput.boolean}" partialTriggers="radio1"
+                                  label="Parent's Name" id="it1"/>
+                    <af:inputText disabled="#{!demoInput.boolean}" partialTriggers="radio1"
+                                  label="Parent's E-Mail" id="it2"/>
+                    <af:inputText disabled="#{!demoInput.boolean}" partialTriggers="radio1"
+                                  label="Parent's Phone" id="it3"/>
+                  </af:panelFormLayout>
+                  <af:selectBooleanRadio autoSubmit="true"  group="xxx" id="radio2" text="19-100"
+                                         value="#{demoInput.boolean2}"/>
+                  <af:panelFormLayout id="pfl3" labelWidth="8em">
+                    <af:inputText disabled="#{!demoInput.boolean2}"
+                                  partialTriggers="radio2" label="ID" id="it4"/>
+                    <af:inputText disabled="#{!demoInput.boolean2}"
+                                  partialTriggers="radio2" label="Password"
+                                  shortDesc="This is secret!" secret="true"
+                                  id="it5"/>
+                  </af:panelFormLayout>
+                </af:panelFormLayout>
+                <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+                <af:commandButton text="full postback" id="fullCommand"/>
+                <af:panelGroupLayout layout="horizontal" id="pgl9">
+                  <af:outputText value="Is (10-18) age group selected ? "
+                                 id="ot2"/>
+                  <af:outputText id="result" inlineStyle="color:red;"
+                                 partialTriggers="richCommand radio1 radio2"
+                                 value="#{demoInput.boolean}"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl10">
+                <af:outputText value="By selecting a radio button other then 'none', a faces message of the appropriate type will automatically be appended to the selected element."
+                               id="ot3"/>
+                <af:selectBooleanRadio text="none" group="xx2"  autoSubmit="true"
+                                       id="selectBooleanRadio1">
+                </af:selectBooleanRadio>
+                <af:selectBooleanRadio text="fatal" group="xx2" 
+                                       validator="#{messageTest.validateBooleanValue}" autoSubmit="true"
+                                       id="selectBooleanRadio2"/>
+                <af:selectBooleanRadio text="error" group="xx2"  
+                                       validator="#{messageTest.validateBooleanValue}" autoSubmit="true"
+                                       id="selectBooleanRadio3"/>
+                <af:selectBooleanRadio text="warning" group="xx2" 
+                                       validator="#{messageTest.validateBooleanValue}" autoSubmit="true"
+                                       id="selectBooleanRadio4"/>
+                <af:selectBooleanRadio text="confirmation" group="xx2"  
+                                       validator="#{messageTest.validateBooleanValue}" autoSubmit="true"
+                                       id="selectBooleanRadio5"/>
+                <af:selectBooleanRadio text="info" group="xx2" 
+                                       validator="#{messageTest.validateBooleanValue}" autoSubmit="true"
+                                       id="selectBooleanRadio6"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="horizontal" id="pgl11">
+                <af:popup id="popupDialog">
+                  <af:dialog title="What's your favorite dog breed?" id="d2">
+                    <af:selectBooleanRadio text="Shiba Inu" group="pop" id="selectBooleanRadio7"/>
+                    <af:selectBooleanRadio text="Italian Greyhound" group="pop"
+                                           id="selectBooleanRadio8"/>
+                    <af:selectBooleanRadio text="Mutt" group="pop" id="selectBooleanRadio9"/>
+                  </af:dialog>
+                </af:popup>
+                <af:outputText value="This demo shows the selectBooleanRadio inside of a popup."
+                               id="ot4"/>
+                <af:spacer width="5" id="s7"/>
+                <af:commandButton immediate="true" text="Show SelectBooleanRadio" clientComponent="true"
+                                  id="popupButton">
+                  <af:showPopupBehavior popupId="popupDialog" alignId="popupButton" align="afterStart"/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+              <af:group id="gAlign">
+                <af:button id="bAlign" text="Field Alignment" immediate="true">
+                  <af:showPopupBehavior popupId="pAlign"/>
+                </af:button>
+                <af:popup id="pAlign">
+                  <af:panelWindow id="pwAlign" title="Field Alignment">
+                    <af:panelGroupLayout id="pglAlignV" layout="vertical"
+                      inlineStyle="min-width:250px;min-height:320px;"
+                      partialTriggers="changedSetting disabledSetting helpSetting readOnlySetting requiredSetting selectedSetting">
+                      <af:panelFormLayout id="pflAlign1" maxColumns="2" rows="1">
+                        <af:selectBooleanCheckbox id="changedSetting" label="Changed" text="Changed indicator"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.changed}"/>
+                        <af:selectBooleanCheckbox id="disabledSetting" label="Disabled" text="Disabled"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.disabled}"/>
+                        <af:selectBooleanCheckbox id="helpSetting" label="Has help" text="Help"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.hasHelp}"/>
+                        <af:selectBooleanCheckbox id="readOnlySetting" label="Read-only" text="Read-only"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.readOnly}"/>
+                        <af:selectBooleanCheckbox id="requiredSetting" label="Required" text="Required"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.required}"/>
+                        <af:selectBooleanCheckbox id="selectedSetting" label="Selected" text="Selected"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.selected}"/>
+                      </af:panelFormLayout>
+                      <af:separator id="sepAlign"/>
+                      <af:spacer id="spAlign1" height="14"/>
+                      <af:outputText id="otAlign1" value="Simple:"/>
+                      <af:selectBooleanRadio id="alignEx1" label="Example" value="item1" text="Text" simple="true"
+                                             changed="#{pageFlowScope.changed}"
+                                             disabled="#{pageFlowScope.disabled}"
+                                             helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                             readOnly="#{pageFlowScope.readOnly}"
+                                             selected="#{pageFlowScope.selected}"
+                                             showRequired="#{pageFlowScope.required}"/>
+                      <af:spacer id="spAlign2" height="14"/>
+                      <af:outputText id="otAlign2" value="Labelled:"/>
+                      <af:selectBooleanRadio id="alignEx2" label="Example" value="item1" text="Text"
+                                             changed="#{pageFlowScope.changed}"
+                                             disabled="#{pageFlowScope.disabled}"
+                                             helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                             readOnly="#{pageFlowScope.readOnly}"
+                                             selected="#{pageFlowScope.selected}"
+                                             showRequired="#{pageFlowScope.required}"/>
+                      <af:spacer id="spAlign3" height="14"/>
+                      <af:panelGroupLayout id="formWrap" layout="default">
+                        <af:outputText id="otAlign3" value="Form (labelled and panelLabelAndMessage):"/>
+                        <af:spacer id="formSp1" width="8"/>
+                        <af:selectBooleanCheckbox id="labelAlignSetting" label="Top Labels" text="Top Labels"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.topLabels}"/>
+                      </af:panelGroupLayout>
+                      <af:panelFormLayout id="pflAlign2" maxColumns="1" partialTriggers="labelAlignSetting"
+                                          labelAlignment="#{pageFlowScope.topLabels ? 'top' : 'start'}">
+                        <af:selectBooleanRadio id="alignEx3" label="Example" value="item1" text="Text"
+                                               changed="#{pageFlowScope.changed}"
+                                               disabled="#{pageFlowScope.disabled}"
+                                               helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                               readOnly="#{pageFlowScope.readOnly}"
+                                               selected="#{pageFlowScope.selected}"
+                                               showRequired="#{pageFlowScope.required}"/>
+                        <af:panelLabelAndMessage id="plmAlign" label="Example"
+                                                 changed="#{pageFlowScope.changed}"
+                                                 helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                 showRequired="#{pageFlowScope.required and (pageFlowScope.disabled != true) and (pageFlowScope.readOnly != true)}"
+                                                 shortDesc="This is a panelLabelAndMessage surrounding a simple field">
+                          <af:selectBooleanRadio id="alignEx4" label="Example" value="item1" text="Text" simple="true"
+                                                 changed="#{pageFlowScope.changed}"
+                                                 disabled="#{pageFlowScope.disabled}"
+                                                 helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                 readOnly="#{pageFlowScope.readOnly}"
+                                                 selected="#{pageFlowScope.selected}"
+                                                 showRequired="#{pageFlowScope.required}"/>
+                        </af:panelLabelAndMessage>
+                      </af:panelFormLayout>
+                    </af:panelGroupLayout>
+                  </af:panelWindow>
+                </af:popup>
+              </af:group>
+              <af:panelGroupLayout layout="vertical" id="pgl12">
+                <af:outputText value="See also:" id="ot5"/>
+                <af:navigationPane hint="list" id="np1">
+                  <af:commandNavigationItem immediate="true" text="editableTable"
+                                            destination="table/editableTable.jspx"
+                                            id="cni1"/>
+                </af:navigationPane>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

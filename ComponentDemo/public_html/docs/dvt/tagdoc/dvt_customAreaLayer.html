@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:customAreaLayer&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:customAreaLayer&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:customAreaLayer customAreaLayer custom area layer</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.thematicMap.UICustomAreaLayer<br>
+<b>Component type:</b> oracle.dss.adf.thematicMap.CustomAreaLayer<br></p>
+<p>The customAreaLayer is a child of the thematicMap which let application developer to create a new area layer from their own region data and insert it into the hierarchy. The newly created layer will always gets added above the 'extendsLayer' in the layer hierarchy, and can be used in the same way as any other areaLayer</p>
+<h4>Model</h4>
+<p>The customAreaLayer uses a model to access the data in the underlying list. The specific model class is oracle.adf.view.rich.model.CollectionModel. You may also use other model instances, e.g., java.util.List, array, and javax.faces.model.DataModel. The customAreaLayer will automatically convert the instance into a CollectionModel.</p>
+<h4>Sample</h4>
+<p>The following sample shows a thematic map where a customAreaLayer called , "cr1", is built by aggregating states from the state layer.</p>
+<pre>
+              &lt;dvt:thematicMap id="thematicMap"
+                               basemap="usa" 
+                               inlineStyle="width:900px;height:600px"&gt;
+                &lt;dvt:customAreaLayer id="crl1"
+                                     value="#{tmapBean.subRegionModel}"
+                                     var="row" varStatus="rowStatus"
+                                     extendsLayer="states"&gt;
+                  &lt;dvt:customArea areaid="O__row_name_" label="#{row.name}"
+                                  areaList="#{row.subRegions}" id="ca1"/&gt;
+                &lt;/dvt:customAreaLayer&gt;
+                &lt;dvt:areaLayer id="states" layer="states"/&gt;
+                &lt;dvt:areaLayer id="custom" layer="crl1"&gt;
+                  &lt;dvt:areaDataLayer contentDelivery="immediate"
+                                     value="#{tmapBean.subRegionModel}"
+                                     var="row" varStatus="rowStatus" id="adl1"&gt;
+                    &lt;dvt:areaLocation name="O__row_name_" id="al1"&gt;
+                      &lt;dvt:area fillColor="#{row.color}"
+                                shortDesc="#{row.subRegions}" id="a1"
+                                value="#{row.name}"&gt;&lt;/dvt:area&gt;
+                    &lt;/dvt:areaLocation&gt;
+                  &lt;/dvt:areaDataLayer&gt;
+                &lt;/dvt:areaLayer&gt;
+              &lt;/dvt:thematicMap&gt;        
+       
+</pre>
+<h4>Relationship with other tags</h4>
+<p>The &lt;dvt:customAreaLayer&gt; tag can have the following children:</p>
+<ul>
+<li><a href="dvt_customArea.html">&lt;dvt:customArea&gt;</a></li>
+</ul>
+<div class="section">
+<h2><a name="Screen_Shots" id="Screen_Shots">Screen Shot(s)</a></h2>
+<div class="screenshot"><br>
+<img src="../images/tmapCustomRegion.png" alt=""><br></div>
+<br></div>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">oracle.adf.view.faces.bi.component.thematicMap.UICustomAreaLayer</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">an EL reference that will store the component instance on a bean. This can be used to give programmatic access to a component from a backing bean, or to move creation of the component to a backing bean.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">extendsLayer</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The name of the layer that this customAreaLayer aggregates</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">The identifier for the component which is also used as the layer value for the associated area layer.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+whether the component is rendered. When set to false, no output will be delivered for this component (the component will not in any way be rendered, and cannot be made visible on the client). If you want to change a component's rendered attribute from false to true using PPR, set the partialTrigger attribute of its parent component so the parent refreshes and in turn will render this component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shortDesc</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The short description for the customAreaLayer</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The data model being used by this customAreaLayer. The specific model class is org.apache.myfaces.trinidad.model.CollectionModel. You may also use other model instances, e.g., java.util.List , array, and javax.faces.model.DataModel. The customAreaLayer will automatically convert the instance into a CollectionModel.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">var</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Name of the EL variable used to reference each element of this Collection. Once this component has completed rendering, this variable is removed (or reverted back to its previous value).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">varStatus</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Name of the EL variable used to reference the varStatus information. Once this component has completed rendering, this variable is removed (or reverted back to its previous value). The VarStatus provides contextual information about the state of the component to EL expressions. For components that iterate, varStatus also provides loop counter information. Please see the this component's documentation for the specific properties on the varStatus. The common properties on varStatus include:
+<ul>
+<li>"model" - returns the CollectionModel for this component</li>
+<li>"index" - returns the zero based row index</li>
+</ul>
+</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

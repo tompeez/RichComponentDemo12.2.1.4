@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2009, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="inputComboboxListOfValues Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="inputComboboxListOfValues"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:popup id="popupId">
+              <af:dialog id="d2">
+                <af:panelGroupLayout id="pgl2">
+                  <af:outputText value="output" id="ot1"/>
+                  <af:outputText value="output" id="ot2"/>
+                </af:panelGroupLayout>
+              </af:dialog>
+            </af:popup>
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputFormatted value="inputComboboxListOfValues provides two ways for users to
+            select and return data:&lt;OL> &lt;LI>Click the down arrow to pop up the drop down
+            panel. Select a value to return.&lt;/LI>
+            &lt;LI>Search...: Click the More... entry at the bottom of the drop down panel to
+            launch the search dialog. Select a value in the popup dialog to return data. &lt;/LI>
+            &lt;/OL>
+            MRU: Select a value from the dropdown like Blake3. Open the dropdown and notice
+            the value chosen, appearing on top of the dropdown panel followed by the matching list
+            of values. Repeat steps picking different values and notice MRU list growing."
+                                id="of1"/>
+            <af:inputComboboxListOfValues label="Ename" id="idInputComboboxLOVWithTable"
+                                          binding="#{editor.component}"
+                                          value="#{demoComboboxLOV.ename}" autoSubmit="true"
+                                          popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name"
+                                          validator="#{demoComboboxLOV.validate}"
+                                          createPopupId="popupId"
+                                          model="#{demoComboboxLOV.listOfValuesModel}"
+                                          returnPopupDataValue="#{demoComboboxLOV.returnPopupDataValue}"
+                                          columns="45"
+                                          returnPopupListener="#{demoComboboxLOV.returnPopupListener}">
+              <f:facet name="searchContent">
+                  <af:table id="t1" value="#{demoComboboxLOV.listModel}" var="row" selectionListener="#{demoComboboxLOV.selected}"
+                            rowSelection="single" binding="#{demoComboboxLOV.table}">
+                      <af:column width="20" headerText="Empno" id="c1">
+                        <af:outputText value="#{row.empno}"/>
+                      </af:column>
+                      <af:column headerText="Ename" id="c2">
+                        <af:outputText value="#{row.ename}"/>
+                      </af:column>
+                      <af:column width="20" headerText="Job" id="c3">
+                        <af:outputText value="#{row.job}"/>
+                      </af:column>
+                      <af:column headerText="Mgr" id="c4">
+                        <af:outputText value="#{row.mgr}"/>
+                      </af:column>
+                      <af:column width="20" headerText="hireDate" id="c5">
+                        <af:outputText value="#{row.hireDate}"/>
+                      </af:column>
+                      <af:column headerText="Sal" id="c6">
+                        <af:outputText value="#{row.sal}"/>
+                      </af:column>
+                      <af:column headerText="Comm" id="c7">
+                        <af:outputText value="#{row.comm}"/>
+                      </af:column>
+                      <af:column headerText="Dept" id="c8">
+                        <af:outputText value="#{row.deptno}" id="ot8"/>
+                      </af:column>
+                  </af:table>
+              </f:facet>
+            </af:inputComboboxListOfValues>
+            
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:commandButton partialSubmit="true" id="richCommand"
+                                text="partial postback"/>
+              <af:commandButton text="full postback" id="coreCommand"/>
+              <af:panelGroupLayout id="pgl4">
+                <af:outputText value="The submitted value was: " id="ot3"/>
+                <af:outputText id="result" value="#{demoComboboxLOV.ename}"
+                               partialTriggers="richCommand idInputComboboxLOVWithTable"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+            
+            <af:panelGroupLayout layout="vertical" id="pgl6">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s3"/>
+              </f:facet>
+              <af:outputFormatted value="This is a demo of inputComboboxListOfValues with
+              InputTextBox in its search content facet. Type-in in the text-filed and click the
+              OK Button. The entered value will be returned."
+                                  id="of3"/>
+  
+              <af:inputComboboxListOfValues label="Ename"
+                                            id="idInputComboboxLOVWithInputText"
+                                            value="#{demoComboboxLOV.ename1}"
+                                            autoSubmit="true"
+                                            popupTitle="Search and Select: Ename"
+                                            searchDesc="Choose a name"
+                                            createPopupId="popupId"
+                                            returnPopupDataValue="#{demoComboboxLOV.returnPopupDataValue1}"
+                                            columns="45"
+                                            returnPopupListener="#{demoComboboxLOV.inputReturnPopupListener}">
+                <f:facet name="searchContent">
+                  <af:group id="g1">
+                    <af:panelGroupLayout id="pgl7"/>
+                    <af:inputText label="Label 1" id="it1" value="#{demoComboboxLOV.returnPopupDataValue1}"/>
+                  </af:group>
+                </f:facet>
+              </af:inputComboboxListOfValues>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pg26">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="p4"/>
+              </f:facet>
+              <af:outputFormatted value="This is a demo of inputComboboxListOfValues with
+              Query component in the search content facet." id="of13"/>
+              <af:inputComboboxListOfValues label="Ename" id="lov" value="#{demoComboboxLOV.ename1}" autoSubmit="true"
+                                            popupTitle="Search and Select: Ename" searchDesc="Choose a name"
+                                            createPopupId="popupId"
+                                            returnPopupDataValue="#{demoComboboxLOV.returnPopupDataValue1}" columns="45"
+                                            returnPopupListener="#{demoComboboxLOV.inputReturnPopupListener}">
+                <f:facet name="searchContent">
+                  <af:panelGroupLayout layout="vertical" id="pg22">
+                    <af:query id="highSalariedClerksQueryId" rows="3" maxColumns="2" type="default" headerText="Search"
+                              disclosed="true" value="#{demoQuery.queryDescriptor}" model="#{demoQuery.queryModel}"
+                              queryListener="#{demoQuery.processQuery}" resultComponentId="::resultTextId"
+                              queryOperationListener="#{demoQuery.queryOperationListener.processQueryOperation}"/>
+                    <af:spacer height="5px" id="s22"/>
+                    <af:outputText id="resultTextId" partialTriggers="highSalariedClerksQueryId"
+                                   value="Query statement is as follows: #{demoQuery.sqlString}"/>
+                  </af:panelGroupLayout>
+                </f:facet>
+              </af:inputComboboxListOfValues>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl8">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s4"/>
+              </f:facet>
+              <af:outputText value="See also demos of inputComboboxListOfValues:"
+                             id="ot4"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem immediate="true"
+                                          text="with custom links (customActions facet)"
+                                          destination="comboLOVWithCustomActions.jspx"
+                                          id="cni1"/>
+                <af:commandNavigationItem immediate="true"
+                                          text="with contextInfo in context facet"
+                                          destination="../contextInfo.jspx"
+                                          id="cni0"/>
+                <af:commandNavigationItem immediate="true"
+                                          text="in click-to-edit treetable"
+                                          destination="../table/clickToEditTreeTable.jspx"
+                                          id="cni2"/>
+                <af:commandNavigationItem immediate="true"
+                                          text="in editable table"
+                                          destination="../table/editableTable.jspx"
+                                          id="cni3"/>
+                <af:commandNavigationItem immediate="true"
+                                          text="in editable treetable"
+                                          destination="../table/editableTreeTable.jspx"
+                                          id="cni4"/>
+                <af:commandNavigationItem immediate="true"
+                                          text="in click-to-edit table"
+                                          destination="../table/clickToEditTable.jspx"
+                                          id="cni5"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+            <af:outputText value="Disclaimer: On this demo page, the search functionality inside the search and select dialog
+            is not completely implemented" id="ot5"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

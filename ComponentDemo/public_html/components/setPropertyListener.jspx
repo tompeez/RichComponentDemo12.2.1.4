@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="setPropertyListener Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="setPropertyListener"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="listener"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+              <af:popup id="iteratorpop" contentDelivery="lazyUncached"
+                        eventContext="launcher">
+                   <af:setPropertyListener from="#{sharedPopup.myCollectionModel.rowData}"
+                                           to="#{sharedPopup.currEmp}"
+                                           type="popupFetch"/>
+                   <af:noteWindow id="nw1">
+                        <af:panelFormLayout id="pfl1">
+                             <af:panelLabelAndMessage label="group" id="plam1">
+                                  <af:outputText value="#{sharedPopup.currEmp.category}"
+                                                 id="ot1"/>
+                             </af:panelLabelAndMessage>
+                             <af:panelLabelAndMessage label="location"
+                                                      id="plam2">
+                                  <af:outputText value="#{sharedPopup.currEmp.location}"
+                                                 id="ot2"/>
+                             </af:panelLabelAndMessage>
+                             <af:panelLabelAndMessage label="grade" id="plam3">
+                                  <af:outputText value="#{sharedPopup.currEmp.grade}"
+                                                 id="ot3"/>
+                             </af:panelLabelAndMessage>
+                        </af:panelFormLayout>
+                   </af:noteWindow>
+              </af:popup>
+              <af:panelBox text="SetPropertyListener to Copy To Session" type="stretch"
+                           id="pb1">
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+
+                <af:commandLink text="Click here to update the text below" immediate="true" partialSubmit="true"
+                                id="refresh" shortDesc="Sample shortDesc text">
+                  <af:setPropertyListener from="#{sessionScope.myNum == null ? 1:(sessionScope.myNum+1)}"
+                                          to="#{sessionScope.myNum}" type="action"/>
+                </af:commandLink>
+                <af:outputText value="You have clicked :#{sessionScope.myNum == null ? 0 : (sessionScope.myNum)} times"
+                               partialTriggers="refresh" id="ot4"/>
+                <!-- The setPropertyListener gets called before the button's actionListener -->              
+                <af:button text="Say Hello" id="b1" actionListener="#{testPostback.sayHello}" immediate="true" partialSubmit="true">
+                  <af:setPropertyListener from="SetPropertyListener!" to="#{sessionScope.name}" type="action"/>
+                </af:button>
+                <af:outputText value="Greetings, #{testPostback.helloName}"
+                               partialTriggers="b1 b2" id="ot4a"/> 
+                <af:button text="Clear Greetings" immediate="true" partialSubmit="true" id="b2"  actionListener="#{testPostback.clearHello}">
+                </af:button>
+              </af:panelGroupLayout>
+            </af:panelBox>
+              <af:separator id="s1"/>
+              <af:panelBox text="Server Side Data Transfer using Iterator"
+                           id="pb2">
+                <af:outputText value="Shows stamped components transferring data to shared popup with the setPropertyListener tag. As you hover over each name below you should se a popup with employee information."
+                               id="ot5"/>
+                <af:panelFormLayout id="pfl2">
+                  <af:iterator value="#{sharedPopup.myCollectionModel}"
+                               var="propertyRow" id="i1">
+                    <af:outputText clientComponent="true"
+                                  value="#{propertyRow.name}" id="ot6">
+                      <af:showPopupBehavior popupId=":dmoTpl:iteratorpop"
+                                            triggerType="mouseHover"/>
+                    </af:outputText>
+                  </af:iterator>
+                </af:panelFormLayout>
+              </af:panelBox>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

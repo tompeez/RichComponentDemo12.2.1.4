@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2014, Oracle and/or its affiliates. All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="masonryLayoutBehavior Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="masonryLayoutBehavior"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:attribute name="centerBottomCollapsed" value="true"/>
+        <f:facet name="center">
+          <af:panelSplitter id="ps1" dimensionsFrom="auto" splitterPosition="110">
+            <f:facet name="first">
+              <af:panelGroupLayout id="pgl4" layout="vertical" binding="#{demoMasonryLayout.insertPgl}">
+                <af:iterator var="row" value="#{demoMasonryLayout.insertData}" 
+                             id="it2" binding="#{demoMasonryLayout.insertIterator}">
+                  <af:link text="Insert #{row.name}" partialSubmit="true" disabled="#{row.rendered}"
+                           id="l1" actionListener="#{demoMasonryLayout.handleInsertAction}">
+                    <f:attribute name="symbol" value="#{row.symbol}"/>
+                    <af:masonryLayoutBehavior for="ml1" operation="insert"
+                                              sizeStyleClass="#{row.expanded ? row.expandedSizeStyleClass : row.sizeStyleClass}"
+                                              index="#{demoMasonryLayout.insertIndex}"/>
+                  </af:link>
+                </af:iterator>
+              </af:panelGroupLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:masonryLayout id="ml1"
+                                deleteListener="#{demoMasonryLayout.handleDelete}"
+                                insertListener="#{demoMasonryLayout.handleInsert}"
+                                reorderListener="#{demoMasonryLayout.handleReorder}"
+                                resizeListener="#{demoMasonryLayout.handleResize}">
+                <af:dropTarget actions="MOVE" dropListener="#{demoMasonryLayout.handleDrop}">
+                  <af:dataFlavor flavorClass="javax.faces.component.UIComponent" discriminant="masonryTile"/>
+                </af:dropTarget>
+                <af:iterator var="row" value="#{demoMasonryLayout.data}" 
+                             id="it1" binding="#{demoMasonryLayout.masonryIterator}">
+                  <af:panelBox id="pb1" text="#{row.symbol}" showDisclosure="false" 
+                               styleClass="#{row.expanded ? row.expandedSizeStyleClass : row.sizeStyleClass}"
+                               rendered="#{row.rendered}">
+                    <af:componentDragSource discriminant="masonryTile"/>
+                    <f:facet name="toolbar">
+                      <af:panelGroupLayout layout="horizontal" id="pgl5">
+                        <f:facet name="separator">
+                          <af:spacer width="2" id="s2"/>
+                        </f:facet>
+                        <af:link id="cil2" shortDesc="Expand" partialSubmit="true" 
+                                 rendered="#{!row.expanded}" icon="/images/field_groups_add_ena.png"
+                                 hoverIcon="/images/field_groups_add_ovr.png" 
+                                 depressedIcon="/images/field_groups_add_dwn.png">
+                          <af:masonryLayoutBehavior operation="resize" sizeStyleClass="#{row.expandedSizeStyleClass}"/>
+                        </af:link>
+                        <af:link id="cil3" shortDesc="Collapse" partialSubmit="true"
+                                 rendered="#{row.expanded}" icon="/images/field_groups_remove_ena.png"
+                                 hoverIcon="/images/field_groups_remove_ovr.png" 
+                                 depressedIcon="/images/field_groups_remove_dwn.png">
+                          <af:masonryLayoutBehavior operation="resize" sizeStyleClass="#{row.sizeStyleClass}"/>
+                        </af:link>
+                        <af:link id="cil1" shortDesc="Delete" partialSubmit="true" icon="/images/delete_ena.png"
+                                 hoverIcon="/images/delete_ovr.png" depressedIcon="/images/delete_dwn.png">
+                          <af:masonryLayoutBehavior operation="delete"/>
+                        </af:link>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <af:panelGroupLayout id="pgl0" layout="vertical">
+                      <af:outputText id="ot1" value="#{row.name}"/>
+                    </af:panelGroupLayout>
+                  </af:panelBox>
+                </af:iterator>
+              </af:masonryLayout>
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+        <f:facet name="centerFooter">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <af:panelGroupLayout layout="vertical" inlineStyle="padding: 4px;" id="pgl2">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:spacer height="5px" id="s2"/>
+              <!-- Other pages of interest -->
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <af:outputFormatted value="&lt;B>See also:&lt;/B>" id="of1"/>
+                <af:goLink text="masonryLayout Tag Demo"
+                           destination="masonryLayout.jspx" id="gl1"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

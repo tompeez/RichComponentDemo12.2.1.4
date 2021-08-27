@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:componentDef var="attrs" definition="private">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>An item in the components gallery dashboard.</description>
+        <facet>
+          <description>content</description>
+          <facet-name>content</facet-name>
+        </facet>
+        <attribute>
+          <description>the title of the item</description>
+          <attribute-name>title</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>the action for the item's link</description>
+          <attribute-name>action</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+        <attribute>
+          <description>the link text for the item</description>
+          <attribute-name>linkText</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:panelGroupLayout layout="horizontal" inlineStyle="display:inline-block;">
+      <af:panelBox text="#{attrs.title}" showDisclosure="false" inlineStyle="width:220px;height:180px;" type="stretch">
+        <f:facet name="toolbar">
+          <af:commandLink text="#{attrs.linkText}" action="#{dvtGallery.actionHelper[attrs.action].action}"/>
+        </f:facet>
+        <af:facetRef facetName="content"/>
+      </af:panelBox>
+      <af:spacer width="4"/>
+    </af:panelGroupLayout>
+  </af:componentDef>
+</jsp:root>

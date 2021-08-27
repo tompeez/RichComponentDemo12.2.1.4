@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <f:loadBundle basename="oracle.adfdemo.view.explorer.rich.resource.FileExplorerBundle"
+                  var="explorerBundle"/>
+    <af:document title="#{explorerBundle['navigator.newfile']}" id="d1">
+      <af:form id="f1">
+        <af:panelGroupLayout layout="vertical" id="pgl1">
+          <f:facet name="separator">
+            <af:spacer width="0" height="5" id="s1"/>
+          </f:facet>
+          <af:showDetailHeader text="#{explorerBundle['global.newfile']}"
+                               size="1" disclosed="false" id="sdh1">
+            <f:facet name="context">
+              <af:image source="/fileExplorer/images/foldernew_ena.png"
+                        shortDesc="#{explorerBundle['global.newfile']}"
+                        id="i1"/>
+            </f:facet>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer width="0" height="5" id="s2"/>
+              </f:facet>
+              <af:outputText value="#{explorerBundle['global.newfileinst1']}"
+                             id="ot1"/>
+              <af:outputText value="#{explorerBundle['global.newfileinst2']} #{newFileItem.currentFilePath}"
+                             id="ot2"/>
+            </af:panelGroupLayout>
+          </af:showDetailHeader>
+          <af:panelFormLayout rows="3" id="pfl1">
+            <af:inputText id="fileName"
+                          label="#{explorerBundle['fileproperties.name']}"
+                          value="#{newFileItem.name}" required="true"/>
+            <af:message for=":fileName" id="m1"></af:message>
+            <af:inputText id="path"
+                          label="#{explorerBundle['fileproperties.currentpath']}"
+                          value="#{newFileItem.currentFilePath}" readOnly="true"
+                          partialTriggers="fileName"/>
+          </af:panelFormLayout>
+          <af:showDetail disclosed="false"
+                         disclosedText="#{explorerBundle['navigator.shownewfileproperties']}"
+                         undisclosedText="#{explorerBundle['navigator.hidenewfileproperties']}"
+                         id="sd1">
+            <af:panelFormLayout id="pfl2">
+              <af:inputNumberSpinbox id="size"
+                                     label="#{explorerBundle['fileproperties.size']}"
+                                     value="#{newFileItem.size}" minimum="0"/>
+              <af:selectBooleanCheckbox id="shared"
+                                        label="#{explorerBundle['fileproperties.shared']}"
+                                        value="#{newFileItem.shared}"/>
+              <af:selectBooleanCheckbox id="readOnly"
+                                        label="#{explorerBundle['fileproperties.readonly']}"
+                                        value="#{newFileItem.readOnly}"/>
+              <af:selectBooleanCheckbox id="hidden"
+                                        label="#{explorerBundle['fileproperties.hidden']}"
+                                        value="#{newFileItem.hidden}"/>
+              <af:inputText id="keywords"
+                            label="#{explorerBundle['fileproperties.keywords']}"
+                            value="#{newFileItem.keywords}"/>
+              <af:inputText id="description"
+                            label="#{explorerBundle['fileproperties.description']}"
+                            value="#{newFileItem.description}" rows="5"/>
+            </af:panelFormLayout>
+          </af:showDetail>
+          <af:separator id="s3"/>
+          <af:panelGroupLayout layout="horizontal" id="pgl3">
+            <f:facet name="separator">
+              <af:spacer width="10" height="0" id="s4"/>
+            </f:facet>
+            <af:commandButton id="saveNewFile"
+                              text="#{explorerBundle['global.save']}"
+                              action="#{newFileItem.saveNewFile}"/>
+            <af:commandButton id="cancelNewFile"
+                              text="#{explorerBundle['global.cancel']}"
+                              immediate="true"
+                              action="#{newFileItem.cancelNewFile}"/>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

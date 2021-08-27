@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:dataCell&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:dataCell&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:dataCell dataCell data cell</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.pivotTable.UIDataCell<br>
+<b>Component type:</b> oracle.dss.adf.pivotTable.DataCell<br></p>
+<p>Each immediate child of a Pivot Table component must either be a <code>&lt;dvt:headerCell&gt;</code> or <code>&lt;dvt:dataCell&gt;</code> component. The Pivot Table should contain at most one headerCell component and at most one dataCell component. These components make it possible to customize the cell content via stamping. For example, each dataCell can contain non-editable content or editable content.</p>
+<h3>Data Cell Features</h3>
+<h4>Stamping</h4>
+<p>Rather than having a separate child component for each cell in the pivot table, the child component of the dataCell component is repeatedly rendered (stamped) once per data cell. Because of this stamping behavior, only certain types of components are supported as children inside a Data Cell. Supported components include all components with no behavior and most components that implement the EditableValueHolder or ActionSource interfaces.</p>
+<p>As the dataCell content is stamped, the data for the current cell is copied into an EL reachable property. The name of this property is defined by the var property on the Pivot Table. Once the Pivot Table has completed rendering, this property is removed (or reverted back to its previous value). In the following example, the data for each cell is placed under the EL property "cellData". Each data cell displays its content by getting further properties from the "cellData" property. See the &lt;dvt:pivotTable&gt; tagdoc for more information.</p>
+<pre>
+        <code>
+                        &lt;dvt:pivotTable id="goodPT" var="cellData"&gt;
+                            &lt;dvt:dataCell id="dc1"&gt;
+                                &lt;af:outputText id="ot1" value="#{cellData.dataValue}" /&gt;
+                            &lt;/dvt:dataCell&gt;                   
+                        &lt;/dvt:pivotTable&gt;
+        </code>
+        
+</pre>
+<h4>Customized Cell Content and Style</h4>
+<p>For customizing data cell content, use DataFormat. DataFormat attribute returns instances of <code>oracle.dss.adf.view.faces.bi.component.pivotTable.CellFormat</code>. CellFormat instances allow specification of the following:</p>
+<ul>
+<li>a converter, <code>javax.faces.convert.Converter</code>, which is used to perform number/date/text formatting of a cell raw value</li>
+<li>a CSS style, which is used to change the CSS style of a cell</li>
+<li>a CSS text style, which is used to change the CSS style of a cell's text</li>
+<li>a new raw value, which is used to change the cell's underlying value that was returned from the data model</li>
+</ul>
+<p>Data Cell content can be specified by using a logical component such as <code>&lt;af:switcher&gt;</code>.</p>
+<p>The following example shows how Data Cell supports alternative cell content using <code>&lt;af:switcher&gt;</code> based on the stamping property. In other words, the stamping content is customized on a cell by cell basis depending on a variable value (<code>"#{richPivotTableModel.stampFacet}"</code>). The example also shows custom CSS styling using <code>inlineStyle</code> and <code>contentStyle</code> attributes of <code>outputText</code> and <code>inputText</code> respectively.</p>
+<pre>
+        <code>
+                &lt;dvt:pivotTable id="goodPT"
+                           value="#{richPivotTableModel.dataModel}"
+                           var="cellData"
+                           varStatus="cellStatus"&gt;           
+        
+                  &lt;dvt:dataCell id="dc1"&gt; 
+                    &lt;af:switcher id="sw1" facetname="O__richPivotTableModel_stampFacet_"&gt;
+                      &lt;f:facet name="outputText"&gt;         
+                        &lt;af:outputText id="ot1" value="#{cellData.dataValue}" inlineStyle="#{myBean.textStyle}"/&gt;    
+                      &lt;/f:facet&gt;  
+                      &lt;f:facet name="inputText"&gt;  
+                        &lt;af:inputText id="ot2" value="#{cellData.dataValue}" contentStyle="#{myBean.textStyle}" /&gt;   
+                      &lt;/f:facet&gt;
+                    &lt;/af:switcher&gt;
+                  &lt;/dvt:dataCell&gt;
+                &lt;/dvt:pivotTable&gt;
+        </code>
+        
+</pre>
+<p>The following example uses <code>&lt;af:switcher&gt;</code> to vary the type of stamped component by measure (i.e. different content for Sales, Weight, etc.). The example also shows different components that can be used as child tag of <code>&lt;dvt:dataCell&gt;</code></p>
+<pre>
+        <code>
+
+          &lt;dvt:pivotTable id="goodPT" var="cellData" varStatus="cellStatus" sizingManager="richPivotTable.sizingManager"&gt;
+            &lt;dvt:dataCell&gt;                    
+              &lt;af:switcher id="sw" facetname="O__cellStatus_members_MeasDim_value_" defaultFacet="Other"&gt;
+                &lt;f:facet name="Sales"&gt;
+                  &lt;af:inputText id="idinputtext1" value="#{cellData.dataValue}"   /&gt;  
+                &lt;/f:facet&gt;
+                &lt;f:facet name="Units"&gt;
+                  &lt;af:inputText id="idinputtext2" value="#{cellData.dataValue}"   &gt;      
+                    &lt;af:validateLength maximum="6" minimum="2" /&gt;
+                  &lt;/af:inputText&gt;
+                &lt;/f:facet&gt;
+                &lt;f:facet name="Weight"&gt;
+                  &lt;af:outputText id="idoutputtext1" value="#{cellData.dataValue}" /&gt;
+                &lt;/f:facet&gt;
+                &lt;f:facet name="Color"&gt;
+                  &lt;af:selectOneChoice id="idselectonechoice"
+                                      value="#{cellData.dataValue}" label="Color"&gt;
+                    &lt;af:selectItem label="red" value="red" shortDesc="shortDesc sample"/&gt;                                
+                    &lt;af:selectItem label="coffee" value="coffee" shortDesc="Sample shortDesc text"/&gt;                            
+                    &lt;af:selectItem label="milk" value="milk" shortDesc="Another shortDesc sample"/&gt;                            
+                  &lt;/af:selectOneChoice&gt;
+                &lt;/f:facet&gt;
+                &lt;f:facet name="Available"&gt;
+                  &lt;af:selectBooleanCheckbox id="idselectbooleancheckbox" label="Availability" text="Item Available"
+                                            autoSubmit="true" value="#{cellData.dataValue}"/&gt;                    
+                &lt;/f:facet&gt;
+                &lt;f:facet name="Supply_Date"&gt;
+                  &lt;af:inputDate id="idinputdate1" value="#{cellData.dataValue}"
+                                 label="Change Date:" simple="true" &gt;                        
+                    &lt;af:validateDateTimeRange maximum="2020-12-31" minimum="1980-12-31" /&gt;
+                  &lt;/af:inputDate&gt;
+                &lt;/f:facet&gt;
+                &lt;f:facet name="Link"&gt;
+                  &lt;af:commandLink text="#{cellData.dataValue}" immediate="true" action="guide" id="idcommandlink"/&gt;
+                &lt;/f:facet&gt;
+                &lt;f:facet name="Size"&gt;
+                  &lt;af:inputComboboxListOfValues label="Size" id="idInputComboboxListOfValues"                                       
+                             value="#{cellData.dataValue}"  searchDesc="Search Size"                                        
+                             model="#{pivotTableEditBean.listOfValuesModel}"                            
+                             columns="3"   /&gt;
+                &lt;/f:facet&gt;
+                &lt;f:facet name="Other"&gt;
+                  &lt;af:outputText id="idoutputtext2" value="#{cellData.dataValue}"   /&gt;  
+                &lt;/f:facet&gt;
+              &lt;/af:switcher&gt;
+            &lt;/dvt:dataCell&gt;
+          &lt;/dvt:pivotTable&gt;
+
+        </code>
+        
+</pre>
+<p>Note that if you use different types of input components in a cell (as in the example above), you should use the SizingManager in Pivot Table to ensure that the height of the cells remains the same when editing from cell to cell. This is because the height of the input components might varies, and switching from one type of component to another would cause the Pivot Table to resize accordingly, and this could have a performance impact if the Pivot Table contains a lot of cells.</p>
+<h3>Supported Child Tags</h3>
+<p>Examples of components that are supported by <code>&lt;dvt:dataCell&gt;</code> include but are not limited to the following:</p>
+<ul>
+<li><code>&lt;af:switcher&gt;</code></li>
+<li><code>&lt;af:outputText&gt;</code></li>
+<li><code>&lt;af:inputText&gt;</code></li>
+<li><code>&lt;af:selectBooleanCheckbox&gt;</code></li>
+<li><code>&lt;af:selectOneChoice&gt;</code></li>
+<li><code>&lt;af:inputDate&gt;</code></li>
+<li><code>&lt;af:commandLink&gt;</code></li>
+<li><code>&lt;af:inputComboboxListOfValues&gt;</code></li>
+<li><code>&lt;af:image&gt;</code></li>
+</ul>
+<p>The dataCell should have only one child component. If multiple children are desired, they should be wrapped in another component. If no layout is desired, &lt;af:group&gt; can be used, which simply renders its children without adding layout, and is consequently lightweight. If layout is desired, a layout component like &lt;af:panelGroupLayout&gt; can be used instead. If multiple children are present without being wrapped, the current behavior is to vertically stack the components, but no guarantees or support are provided for this usage. To achieve vertical stacking, consider &lt;panelGroupLayout layout="vertical"&gt;.</p>
+<h3>Example</h3>
+<p>The following example shows a way to use stamping</p>
+<pre>
+        <code>
+                &lt;dvt:pivotTable 
+                      value="#{pivotTableEdit.dataModel}"                                         
+                      var="cellData"
+                      varStatus="cellStatus"&gt;
+                  &lt;dvt:dataCell id="dc1"&gt;                    
+                    &lt;af:outputText id="ot1" value="#{cellData.dataValue}"   /&gt;  
+                  &lt;/dvt:dataCell&gt;
+                &lt;/dvt:pivotTable&gt;
+        </code>
+        
+</pre>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">Binding reference to store the UIDataCell component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customizationId</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. The 'id' attribute should be used when applying persistent customizations. This attribute will be removed in the next release.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dataAttribute</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. A switcher should be used instead. The data attribute (e.g. Sales, Cost, ... ) that has its data cell content rendered by this DataCell. If not specified or empty(""), then the DataCell is used as the default data cell content.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">the identifier for the component. Every component may be named by a component identifier that must conform to the following rules:
+<ul>
+<li>They must start with a letter (as defined by the Character.isLetter() method) or underscore ( _ ).</li>
+<li>Subsequent characters must be letters (as defined by the Character.isLetter() method), digits as defined by the Character.isDigit() method, dashes ( - ), or underscores ( _ ). To minimize the size of responses generated by JavaServer Faces, it is recommended that component identifiers be as short as possible. If a component has been given an identifier, it must be unique in the namespace of the closest ancestor to that component that is a NamingContainer (if any).</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The inline style of the data cell's DOM element.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered. The default value is true.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component.</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

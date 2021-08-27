@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2010, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{ganttFeatureLinks.schedulingGanttCustomContextMenuTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Scheduling Gantt Custom Context Menus"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Scheduling Gantt Custom Context Menus"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START FEATURE DEMO -->
+        <dvt:schedulingGantt id="schedulingGanttCustomContextMenus"
+                          startTime="2006-12-21 01:00" endTime="2006-12-21 23:00"
+                          value="#{schedulingGanttCustomContextMenus.model}"
+                          var="resourceObj"
+                          summary="Scheduling Gantt Custom Context Menus Demo">
+          <f:facet name="chartPopupMenu">
+              <af:popup id="p1">
+                  <af:menu id="m1">
+                      <af:commandMenuItem text="Custom" disabled="true"
+                                          id="cmi1"/>
+                  </af:menu>
+              </af:popup>
+          </f:facet>
+          <f:facet name="tablePopupMenu">
+              <af:popup id="p2">
+                  <af:menu id="m2">
+                      <af:commandMenuItem text="Custom" disabled="true"
+                                          id="cmi2"/>
+                  </af:menu>
+              </af:popup>
+          </f:facet>
+          <f:facet name="major">
+              <dvt:timeAxis scale="days" id="ta1"/>
+          </f:facet>
+          <f:facet name="minor">
+              <dvt:timeAxis scale="hours" id="ta2"/>
+          </f:facet>
+          <f:facet name="nodeStamp">
+              <af:column headerText="Employee Name" id="c1">                        
+                  <af:outputText value="#{resourceObj.resourceName}" id="ot1"/>
+              </af:column>
+          </f:facet>
+          <af:column headerText="Department" id="c2">                        
+              <af:outputText value="#{resourceObj.department}" id="ot2"/>
+          </af:column>
+        </dvt:schedulingGantt>
+        <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/gantt/ganttFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

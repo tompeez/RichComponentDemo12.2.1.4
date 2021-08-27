@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2011, Oracle and/or its affiliates. All rights reserved. -->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <af:componentDef var="attrs" componentVar="comp">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>Dynamic declarative component for the content associated with the "Chart" tabbed toolbar.</description>
+      </component>
+    </af:xmlContent>
+    <trh:tableLayout id="table" width="100%">
+      <trh:rowLayout id="rowTxt">
+        <trh:cellFormat id="selectTxt" styleClass="MyTabbedToolbarContentText">
+          <af:outputText id="otSelect" value="Select"/>
+        </trh:cellFormat>
+        <trh:cellFormat id="typeTxt" styleClass="MyTabbedToolbarContentText">
+          <af:outputText id="otType" value="Chart Types"/>
+        </trh:cellFormat>
+        <trh:cellFormat id="styleTxt" styleClass="MyTabbedToolbarContentText">
+          <af:outputText id="otStyle" value="Chart Styles"/>
+        </trh:cellFormat>
+        <trh:cellFormat id="effectTxt" styleClass="MyTabbedToolbarContentText">
+          <af:outputText id="otEffect" value="Effect"/>
+        </trh:cellFormat>
+        <trh:cellFormat id="filterTxt" styleClass="MyTabbedToolbarContentText">
+          <af:outputText id="otFilter" value="Filter"/>
+        </trh:cellFormat>
+        <trh:cellFormat id="convertTxt" styleClass="MyTabbedToolbarContentText">
+          <af:outputText id="otconvert" value="Convert"/>
+        </trh:cellFormat>
+        <trh:cellFormat id="gapTxt" width="100%" styleClass="MyTabbedToolbarContentText MyLast">
+          <af:spacer id="spTxt"/>
+        </trh:cellFormat>
+      </trh:rowLayout>
+      <trh:rowLayout id="rowCtrls">
+        <trh:cellFormat id="selectCtrls" styleClass="MyTabbedToolbarContentControls">
+          <trh:tableLayout id="selectTbl" cellPadding="4">
+            <trh:rowLayout id="selectRow">
+              <trh:cellFormat id="cellSelect">
+                <af:commandImageLink id="select" text="Select" icon="/images/selectobject_ena.png"
+                                         disabledIcon="/images/selectobject_dis.png"
+                                         hoverIcon="/images/selectobject_ovr.png"
+                                         depressedIcon="/images/selectobject_dwn.png"/>
+              </trh:cellFormat>
+            </trh:rowLayout>
+            <trh:rowLayout id="deleteRow">
+              <trh:cellFormat id="cellDelete">
+                <af:commandImageLink id="delete" text="Delete" icon="/images/delete_ena.png"
+                                         disabledIcon="/images/delete_dis.png"
+                                         hoverIcon="/images/delete_ovr.png"
+                                         depressedIcon="/images/delete_dwn.png"/>
+              </trh:cellFormat>
+            </trh:rowLayout>
+          </trh:tableLayout>
+        </trh:cellFormat>
+        <trh:cellFormat id="typeCtrls" styleClass="MyTabbedToolbarContentControls">
+          <trh:tableLayout id="typeTbl" cellPadding="4"
+                           partialTriggers="areaChoice:rows:cells:link barChoice:rows:cells:link bubbleChoice:rows:cells:link lineChoice:rows:cells:link pieChoice:rows:cells:link radarChoice:rows:cells:link">
+            <trh:rowLayout id="typeRow1">
+              <trh:cellFormat id="typeACF">
+                <af:commandButton id="typeBtn" text="v" icon="#{tabbedToolbarBean.currentChartType.source}"
+                                  shortDesc="Chart Style - #{tabbedToolbarBean.currentChartType.text}">
+                  <af:showPopupBehavior triggerType="action" popupId="typePopup" align="afterStart"/>
+                </af:commandButton>
+                <af:popup id="typePopup">
+                  <af:panelGroupLayout id="typeMenu" layout="vertical">
+                    <af:panelAccordion id="paTypes" dimensionsFrom="auto" discloseNone="true" discloseMany="false">
+                      <af:showDetailItem id="typeArea" text="Area" icon="/images/areaGraph.png">
+                        <af:declarativeComponent id="areaChoice" viewId="/visualDesigns/tabbedToolbar/selectOneIcon.jsff"
+                                                 namedImages="#{tabbedToolbarBean.chartAreaTypes}"
+                                                 currentSource="#{tabbedToolbarBean.currentChartType.source}"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem id="typeBar" text="Bar" icon="/images/barGraph.png">
+                        <af:declarativeComponent id="barChoice" viewId="/visualDesigns/tabbedToolbar/selectOneIcon.jsff"
+                                                 namedImages="#{tabbedToolbarBean.chartBarTypes}"
+                                                 currentSource="#{tabbedToolbarBean.currentChartType.source}"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem id="typeBubble" text="Bubble" icon="/images/bubbleGraph.png">
+                        <af:declarativeComponent id="bubbleChoice" viewId="/visualDesigns/tabbedToolbar/selectOneIcon.jsff"
+                                                 namedImages="#{tabbedToolbarBean.chartBubbleTypes}"
+                                                 currentSource="#{tabbedToolbarBean.currentChartType.source}"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem id="typeLine" text="Line" icon="/images/lineGraph.png">
+                        <af:declarativeComponent id="lineChoice" viewId="/visualDesigns/tabbedToolbar/selectOneIcon.jsff"
+                                                 namedImages="#{tabbedToolbarBean.chartLineTypes}"
+                                                 currentSource="#{tabbedToolbarBean.currentChartType.source}"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem id="typePie" text="Pie" icon="/images/pieGraph.png">
+                        <af:declarativeComponent id="pieChoice" viewId="/visualDesigns/tabbedToolbar/selectOneIcon.jsff"
+                                                 namedImages="#{tabbedToolbarBean.chartPieTypes}"
+                                                 currentSource="#{tabbedToolbarBean.currentChartType.source}"/>
+                      </af:showDetailItem>
+                      <af:showDetailItem id="typeRadar" text="Radar" icon="/images/radarGraph.png">
+                        <af:declarativeComponent id="radarChoice" viewId="/visualDesigns/tabbedToolbar/selectOneIcon.jsff"
+                                                 namedImages="#{tabbedToolbarBean.chartRadarTypes}"
+                                                 currentSource="#{tabbedToolbarBean.currentChartType.source}"/>
+                      </af:showDetailItem>
+                    </af:panelAccordion>
+                  </af:panelGroupLayout>
+                </af:popup>
+              </trh:cellFormat>
+            </trh:rowLayout>
+          </trh:tableLayout>
+        </trh:cellFormat>
+        <trh:cellFormat id="styleCtrls" styleClass="MyTabbedToolbarContentControls">
+          <trh:tableLayout id="styleTbl" cellPadding="4" partialTriggers="styleChoice:rows:cells:link">
+            <trh:rowLayout id="styleRl">
+              <trh:cellFormat id="styleCf">
+                <af:commandButton id="styleBtn" text="v" icon="#{tabbedToolbarBean.currentChartStyle.source}"
+                                  shortDesc="Chart Style - #{tabbedToolbarBean.currentChartStyle.text}">
+                  <af:showPopupBehavior triggerType="action" popupId="stylePopup" align="afterStart"/>
+                </af:commandButton>
+                <af:popup id="stylePopup">
+                  <af:declarativeComponent id="styleChoice" viewId="/visualDesigns/tabbedToolbar/selectOneIcon.jsff"
+                                           namedImages="#{tabbedToolbarBean.chartStyles}" styles="true"
+                                           currentSource="#{tabbedToolbarBean.currentChartStyle.source}"/>
+                </af:popup>
+              </trh:cellFormat>
+            </trh:rowLayout>
+          </trh:tableLayout>
+        </trh:cellFormat>
+        <trh:cellFormat id="effectCtrls" styleClass="MyTabbedToolbarContentControls">
+          <trh:tableLayout id="effectTbl" cellPadding="4">
+            <trh:rowLayout id="effectRow1">
+              <trh:cellFormat id="effectACF">
+                <af:commandToolbarButton id="effect3D" text="3D Effect" icon="/images/3deffect_ena.png"
+                                         disabledIcon="/images/3deffect_dis.png"
+                                         hoverIcon="/images/3deffect_ovr.png"
+                                         depressedIcon="/images/3deffect_dwn.png"
+                                         type="check" selected="true"/>
+              </trh:cellFormat>
+            </trh:rowLayout>
+          </trh:tableLayout>
+        </trh:cellFormat>
+        <trh:cellFormat id="filterCtrls" styleClass="MyTabbedToolbarContentControls">
+          <trh:tableLayout id="filterTbl" cellPadding="4">
+            <trh:rowLayout id="filterRow1">
+              <trh:cellFormat id="filterACF">
+                <af:commandImageLink id="filter" text="Filter" icon="/images/filter_ena.png"/>
+              </trh:cellFormat>
+            </trh:rowLayout>
+            <trh:rowLayout id="filterRow2">
+              <trh:cellFormat id="filterBCF">
+                <af:commandImageLink id="manFilters" text="Manage Filters" icon="/images/filter_ena.png" disabled="true"
+                                     disabledIcon="/images/filter_dis.png"/>
+              </trh:cellFormat>
+            </trh:rowLayout>
+          </trh:tableLayout>
+        </trh:cellFormat>
+        <trh:cellFormat id="convertCtrls" styleClass="MyTabbedToolbarContentControls">
+          <trh:tableLayout id="convertTbl" cellPadding="4">
+            <trh:rowLayout id="convertRow1">
+              <trh:cellFormat id="convertACF">
+                <af:commandImageLink id="pivotTable" text="Pivot Table" icon="/images/pivottable_qualifier.png"/>
+              </trh:cellFormat>
+            </trh:rowLayout>
+            <trh:rowLayout id="convertRow2">
+              <trh:cellFormat id="convertBCF">
+                <af:commandImageLink id="swSeriesDims" text="Switch Series and Dimensions" icon="/images/switchseriesanddimension_qualifier.png"/>
+              </trh:cellFormat>
+            </trh:rowLayout>
+          </trh:tableLayout>
+        </trh:cellFormat>
+        <trh:cellFormat id="gapCtrls" width="100%" styleClass="MyTabbedToolbarContentControls MyLast">
+          <af:spacer id="spCtrls"/>
+        </trh:cellFormat>
+      </trh:rowLayout>
+    </trh:tableLayout>
+  </af:componentDef>
+</jsp:root>

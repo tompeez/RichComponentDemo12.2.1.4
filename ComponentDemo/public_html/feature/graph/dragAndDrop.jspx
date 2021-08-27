@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Graph Drag and Drop Demo"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Graph Drag and Drop Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Graph Drag and Drop"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:outputText inlineStyle="font-size:large; display:block;"
+                           value="Drag and Drop for Scatter and Bubble Markers"
+                           id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:group id="g1">
+                <af:outputText value="This demo shows drag and drop within the same graph."
+                               id="ot2"/>
+                <af:panelGroupLayout layout="horizontal" id="pgl3">
+                  <dvt:bubbleGraph shortDesc="Graph"
+                                   value="#{dragAndDrop.bubbleDragAndDropModel}"
+                                   id="bubbleGraph" dataSelection="multiple">
+                    <dvt:seriesSet>
+                      <dvt:series index="0" markerShape="MS_HUMAN"/>
+                    </dvt:seriesSet>
+                    <dvt:x1Axis axisMaxValue="80" axisMaxAutoScaled="false"/>
+                    <dvt:y1Axis axisMaxValue="80" axisMaxAutoScaled="false"/>
+                    <af:dragSource actions="MOVE"/>
+                    <af:dropTarget dropListener="#{dragAndDrop.bubbleDropListener}"
+                                   actions="MOVE">
+                      <af:dataFlavor flavorClass="oracle.adf.view.faces.bi.component.graph.GraphSelectionSet"/>
+                    </af:dropTarget>
+                  </dvt:bubbleGraph>
+                  <af:outputFormatted binding="#{dragAndDrop.dropLabel}"
+                                      value="#{dragAndDrop.dropInfo}" id="text1"
+                                      clientComponent="true"
+                                      inlineStyle="font-size:120.0%;"/>
+                </af:panelGroupLayout>
+              </af:group>
+              <af:group id="g2">
+                <af:outputText value="This demo shows drag and drop between graphs.  Drag an employee from the first graph to the second to set the compensation for that employee."
+                               id="ot3"/>
+                <af:panelGroupLayout layout="horizontal" id="pgl4">
+                  <dvt:scatterGraph id="scatterGraph1" shortDesc="Graph" dataSelection="single"
+                                    markerTooltipTemplate="GROUP_LABEL NEW_LINEPerformance: X_VALUE NEW_LINEPotential: Y_VALUE"
+                                    value="#{dragAndDrop.performanceModel}">
+                    <dvt:seriesSet defaultMarkerShape="MS_HUMAN"/>
+                    <dvt:graphTitle text="Employee Performance"/>
+                    <dvt:x1Axis axisMaxValue="100" axisMaxAutoScaled="false"/>
+                    <dvt:y1Axis axisMaxValue="100" axisMaxAutoScaled="false"/>
+                    <dvt:x1Title text="Performance"/>
+                    <dvt:y1Title text="Potential"/>
+                    <dvt:legendArea rendered="false"/>
+                    <af:dragSource actions="COPY" discriminant="betweenGraphs"/>
+                  </dvt:scatterGraph>
+                  <dvt:scatterGraph id="scatterGraph2" shortDesc="Graph"
+                                    markerTooltipTemplate="GROUP_LABEL NEW_LINESalary: X_VALUE NEW_LINEBonus: Y_VALUE"
+                                    value="#{dragAndDrop.salaryModel}"
+                                    dataSelection="single"
+                                    animationOnDataChange="ON">
+                    <dvt:seriesSet defaultMarkerShape="MS_HUMAN"/>
+                    <dvt:graphTitle text="Employee Compensation"/>
+                    <dvt:x1Axis axisMaxValue="100000"
+                                axisMaxAutoScaled="false"/>
+                    <dvt:y1Axis axisMaxValue="50000" axisMaxAutoScaled="false"/>
+                    <dvt:x1Title text="Salary"/>
+                    <dvt:y1Title text="Bonus"/>
+                    <dvt:legendArea rendered="false"/>
+                    <af:dropTarget dropListener="#{dragAndDrop.betweenGraphDropListener}"
+                                   actions="COPY">
+                      <af:dataFlavor flavorClass="oracle.adf.view.faces.bi.component.graph.GraphSelectionSet"
+                                     discriminant="betweenGraphs"/>
+                    </af:dropTarget>
+                  </dvt:scatterGraph>
+                </af:panelGroupLayout>
+              </af:group>
+              <af:group id="g3">
+                <af:outputText value="This demo shows drag and drop between a graph and table.  The COPY, MOVE, and LINK actions are enabled."
+                               id="ot4"/>
+                <af:panelGroupLayout layout="horizontal" id="pgl5" valign="top">
+                  <dvt:bubbleGraph shortDesc="Graph" dataSelection="multiple"
+                                  
+                                   markerTooltipTemplate="GROUP_LABEL NEW_LINEPerformance: X_VALUE NEW_LINESalary: Y_VALUE NEW_LINEExperience: Z_VALUE"
+                                   value="#{dragAndDrop.graphModel}" id="bg1">
+                    <dvt:x1Title text="Performance"/>
+                    <dvt:y1Title text="Salary"/>
+                    <dvt:x1Axis axisMaxValue="120" axisMaxAutoScaled="false"/>
+                    <dvt:y1Axis axisMaxValue="120000"
+                                axisMaxAutoScaled="false"/>
+                    <dvt:legendArea rendered="false"/>
+                    <af:dragSource actions="COPY MOVE LINK" defaultAction="MOVE"
+                                   discriminant="fromGraph"/>
+                    <af:dropTarget actions="COPY MOVE LINK"
+                                   dropListener="#{dragAndDrop.fromTableDropListener}">
+                      <af:dataFlavor flavorClass="org.apache.myfaces.trinidad.model.RowKeySet"
+                                     discriminant="fromTable"/>
+                    </af:dropTarget>
+                  </dvt:bubbleGraph>
+                  <af:table id="table" value="#{dragAndDrop.tableModel}"
+                            var="row" width="430" inlineStyle=" height:300px;"
+                            columnStretching="last">
+                    <af:dragSource actions="COPY MOVE LINK" defaultAction="MOVE"
+                                   discriminant="fromTable"/>
+                     
+                    <af:dropTarget dropListener="#{dragAndDrop.fromGraphDropListener}"
+                                   actions="COPY MOVE LINK">
+                      <af:dataFlavor flavorClass="oracle.adf.view.faces.bi.component.graph.GraphSelectionSet"
+                                     discriminant="fromGraph"/>
+                    </af:dropTarget>
+                    <af:column headerText="Name" id="c1">
+                      <af:outputText value="#{row.name}" id="ot5"/>
+                    </af:column>
+                    <af:column headerText="Performance" id="c2">
+                      <af:outputText value="#{row.performance}" id="ot6"/>
+                    </af:column>
+                    <af:column headerText="Salary" id="c3">
+                      <af:outputText value="#{row.salary}" id="ot7"/>
+                    </af:column>
+                    <af:column headerText="Experience" id="c4">
+                      <af:outputText value="#{row.experience}" id="ot8"/>
+                    </af:column>
+                  </af:table>
+                </af:panelGroupLayout>
+              </af:group>
+            </af:panelGroupLayout>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <!-- START SEE ALSO LINKS -->
+            <af:outputText value="See also:"/>
+            <af:panelList id="pl1">
+                <af:goLink text="Drag And Drop Backing Bean" destination="/resources/sourceCode/feature/rich/graph/DragAndDropSample.javasource" id="gl1"/>
+            </af:panelList>
+            <!-- END SEE ALSO LINKS -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

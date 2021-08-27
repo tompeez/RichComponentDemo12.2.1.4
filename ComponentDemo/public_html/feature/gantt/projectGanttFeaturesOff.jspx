@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2010, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{ganttFeatureLinks.projectGanttFeaturesOffTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Project Gantt Features Off"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Project Gantt Features Off"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START FEATURE DEMO -->
+        <af:panelGroupLayout layout="horizontal" id="pgl1">
+            <af:outputText value="Select the features to turn off:" id="ot1"/>
+            <af:selectManyCheckbox id="features" layout="horizontal">
+                <f:selectItem itemLabel="Clipboard" itemValue="clipboard"
+                              id="si1"/>
+                <f:selectItem itemLabel="Edit" itemValue="edit" id="si2"/>
+                <f:selectItem itemLabel="Indenting" itemValue="indenting"
+                              id="si3"/>
+                <f:selectItem itemLabel="Legend" itemValue="legend" id="si4"/>
+                <f:selectItem itemLabel="Linking" itemValue="linking" id="si5"/>
+                <f:selectItem itemLabel="Print" itemValue="print" id="si6"/>
+                <f:selectItem itemLabel="Split" itemValue="split" id="si7"/>
+                <f:selectItem itemLabel="Undo" itemValue="undo" id="si8"/>
+                <f:selectItem itemLabel="View" itemValue="view" id="si9"/>
+                <f:selectItem itemLabel="Zoom" itemValue="zoom" id="si10"/>
+                <f:selectItem itemLabel="Dependency Lines" itemValue="dependencyLines"
+                              id="si11"/>
+            </af:selectManyCheckbox>
+            <af:commandButton id="update" text="Update" partialSubmit="true" actionListener="#{projectGanttFeaturesOff.updateFeaturesOff}"/>
+        </af:panelGroupLayout>
+        <dvt:projectGantt id="projectGanttFeaturesOff"
+                          inlineStyle="height: 400px;"
+                          startTime="2008-04-01" endTime="2008-09-30"
+                          value="#{projectGanttFeaturesOff.model}"
+                          var="task" partialTriggers="::update"
+                          dataChangeListener="#{projectGanttFeaturesOff.handleDataChanged}"
+                          actionListener="#{projectGanttFeaturesOff.handleGanttAction}"
+                          summary="Project Gantt Features Off Demo">
+          <f:facet name="major">
+            <dvt:timeAxis scale="months" id="ta1"/>
+          </f:facet>
+          <f:facet name="minor">
+            <dvt:timeAxis scale="weeks" id="ta2"/>
+          </f:facet>
+          <f:facet name="nodeStamp">
+            <af:column headerText="Task Name" id="c1">
+              <af:outputText value="#{task.taskName}" id="ot2"/>
+            </af:column>
+          </f:facet>
+          <af:column headerText="Resource" id="c2">
+            <af:outputText value="#{task.resourceName}" id="ot3"/>
+          </af:column>
+          <af:column headerText="Start Date" id="c3">
+            <af:outputText value="#{task.startTime}" id="ot4"/>
+          </af:column>
+          <af:column headerText="End Date" id="c4">
+            <af:outputText value="#{task.endTime}" id="ot5"/>
+          </af:column>
+          <dvt:ganttLegend id="gl1"/>
+        </dvt:projectGantt>
+        <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/gantt/ganttFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>  
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

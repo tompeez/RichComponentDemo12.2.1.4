@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{pivotTableFeatureLinks.headerCellWrappingPivotTableTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- hide default editor -->
+      <f:attribute name="customEditorPresent" value="true"/>      
+
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Pivot Table Header Cell Wrapping"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="Pivot Table Header Cell Wrapping"/>    
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START TAG DEMO -->
+          <af:outputText id="instruct" value="This demo demonstrates the header cell wrapping feature."/>
+          <dvt:pivotTable id="active1"
+                          contentDelivery="lazy"
+                          value="#{pivotTableAdjustable.dataModel}"                                         
+                          inlineStyle="width:300px;"
+                          var="cellData"
+                          binding="#{pivotTableAdjustable.pivotTable}" 
+                          partialTriggers="::cb1" 
+                          summary="pivot table" 
+                          pivotEnabled="false"
+                          headerSortMode="none"
+                          splitMode="enabled"
+                          columnFetchSize="24"
+                          >  
+            <dvt:headerCell whiteSpace="normal">                    
+                <af:outputText id="ot1" value="This is a very very long header cell label"   />  
+            </dvt:headerCell>
+          </dvt:pivotTable>
+          <af:commandButton text="Refresh Pivot Table" id="cb1" partialSubmit="true"/>
+        <!-- END TAG DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">     
+        <f:subview id="links">
+            <jsp:include page="/feature/pivotTable/pivotTableFeatureLinks.jspx" flush="true"/>
+        </f:subview>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

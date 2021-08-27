@@ -1,0 +1,263 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <af:panelStretchLayout id="contentViewStretch" dimensionsFrom="auto">
+    <f:facet name="center">
+      <!-- Show multiple content views using panel tabbed -->
+      <af:panelTabbed id="contentViewTab" position="above" dimensionsFrom="auto"
+                      binding="#{explorer.contentViewManager.contentViewTab}">
+        <!-- content view in table format -->
+        <af:showDetailItem id="contentsTable"
+                           text="#{explorer.contentViewManager.tableContentView.label}"
+                           icon="#{explorer.contentViewManager.tableContentView.icon}"
+                           binding="#{explorer.contentViewManager.tableContentView.showDetailItem}"
+                           disclosed="#{explorer.contentViewManager.tableContentView.disclosed}"
+                           disclosureListener="#{explorer.contentViewManager.tableContentView.discloseContentView}"
+                           stretchChildren="#{mobileSettings.dimensionsFromChildren ? 'none' : 'first'}">
+          <af:panelCollection id="tableCollection" styleClass="AFStretchWidth">
+            <af:table id="folderTable" var="file" autoHeightRows="0"
+                      value="#{explorer.contentViewManager.tableContentView.contentModel}"
+                      binding="#{explorer.contentViewManager.tableContentView.contentTable}"
+                      emptyText="#{explorerBundle['global.no_row']}"
+                      rowSelection="single"
+                      contentDelivery="immediate"
+                      columnStretching="last"
+                      selectionListener="#{explorer.contentViewManager.tableContentView.tableSelectFileItem}"
+                      summary="table data"
+                      rowBandingInterval="0">
+              <f:facet name="contextMenu">
+                <af:popup id="context1">
+                  <af:menu id="m1">
+                    <af:commandMenuItem text="#{explorerBundle['menuitem.properties']}"
+                                        windowWidth="300" windowHeight="300" useWindow="true"
+                                        action="#{explorer.launchProperties}"
+                                        returnListener="#{explorer.returnFromProperties}"
+                                        id="cmi1" windowEmbedStyle="inlineDocument" windowModalityType="modeless">
+                    </af:commandMenuItem>
+                    <af:commandMenuItem text="#{explorerBundle['menuitem.delete']}"
+                                        icon="/fileExplorer/images/delete_ena.png"
+                                        disabled="#{explorer.headerManager.disabledDeleteItem}"
+                                        actionListener="#{explorer.headerManager.deleteItem}"
+                                        id="cmi2"/>
+                    <af:commandMenuItem text="#{explorerBundle['menuitem.copy']}"
+                                        disabled="#{explorer.headerManager.disabledCopyItem}"
+                                        actionListener="#{explorer.headerManager.copySelectedItem}"
+                                        id="cmi3"/>
+                    <af:commandMenuItem text="#{explorerBundle['menuitem.paste']}"
+                                        disabled="#{explorer.headerManager.disabledPasteItem}"
+                                        actionListener="#{explorer.headerManager.pasteItemToCurrentLocation}"
+                                        id="cmi4"/>
+                  </af:menu>
+                </af:popup>
+              </f:facet>
+              <af:dragSource actions="MOVE" discriminant="fileModel"
+                                       dragDropEndListener="#{explorer.contentViewManager.tableContentView.onTableDragDropEnd}"/>
+              <af:collectionDropTarget actions="COPY MOVE" modelName="fileModel"
+                                       dropListener="#{explorer.contentViewManager.tableContentView.onTableDrop}"/>
+              <af:column width="180" sortable="true" sortProperty="name"
+                         id="c1">
+                <f:facet name="header">
+                  <af:outputText value="#{explorerBundle['contents.name']}"
+                                 id="ot1"/>
+                </f:facet>
+                <af:panelGroupLayout id="pgl1">
+                  <af:image source="#{file.icon}"
+                            inlineStyle="margin-right:3px; vertical-align:middle;"
+                            shortDesc="file icon" id="i1"/>
+                  <af:outputText value="#{file.name}" noWrap="true" id="ot2"/>
+                </af:panelGroupLayout>
+              </af:column>
+              <af:column width="70" sortable="true" align="end"
+                         sortProperty="property.size" id="c2">
+                <f:facet name="header">
+                  <af:outputText value="#{explorerBundle['contents.size']}"
+                                 id="ot3"/>
+                </f:facet>
+                <af:outputText value="#{file.property.size}" noWrap="true"
+                               id="ot4"/>
+              </af:column>
+              <af:column width="120" sortable="true" sortProperty="type"
+                         id="c3">
+                <f:facet name="header">
+                  <af:outputText value="#{explorerBundle['contents.type']}"
+                                 id="ot5"/>
+                </f:facet>
+                <af:outputText value="#{file.type}" noWrap="true" id="ot6"/>
+              </af:column>
+              <af:column width="140" noWrap="false" sortable="true"
+                         sortProperty="property.lastModified" id="c4">
+                <f:facet name="header">
+                  <af:outputText value="#{explorerBundle['contents.lastmodified']}"
+                                 id="ot7"/>
+                </f:facet>
+                <af:outputText value="#{file.property.lastModified}" id="ot8"/>
+              </af:column>
+              <af:column width="100" id="c5">
+                <f:facet name="header">
+                  <af:outputText value="#{explorerBundle['global.properties']}"
+                                 id="ot9"/>
+                </f:facet>
+                <af:commandLink text="#{explorerBundle['global.properties']}"
+                                partialSubmit="true"
+                                action="#{explorer.launchProperties}"
+                                returnListener="#{explorer.returnFromProperties}"
+                                windowWidth="300" windowHeight="300"
+                                useWindow="true" id="cl1" 
+                                windowEmbedStyle="inlineDocument" windowModalityType="modeless">
+                </af:commandLink>
+              </af:column>
+            </af:table>
+          </af:panelCollection>
+        </af:showDetailItem>
+        <!-- content view in tree table format with panelCollection -->
+        <af:showDetailItem id="contentsTreeTable"
+                           text="#{explorer.contentViewManager.treeTableContentView.label}"
+                           icon="#{explorer.contentViewManager.treeTableContentView.icon}"
+                           binding="#{explorer.contentViewManager.treeTableContentView.showDetailItem}"
+                           disclosed="#{explorer.contentViewManager.treeTableContentView.disclosed}"
+                           disclosureListener="#{explorer.contentViewManager.treeTableContentView.discloseContentView}"
+                           stretchChildren="#{mobileSettings.dimensionsFromChildren ? 'none' : 'first'}">
+          <af:panelCollection id="treeTableCollection">
+            <af:treeTable id="folderTreeTable" autoHeightRows="0"
+                          var="file"
+                          value="#{explorer.contentViewManager.treeTableContentView.contentModel}"
+                          binding="#{explorer.contentViewManager.treeTableContentView.contentTreeTable}"
+                          emptyText="#{explorerBundle['global.no_row']}"
+                          columnStretching="last"
+                          rowSelection="single"
+                          selectionListener="#{explorer.contentViewManager.treeTableContentView.treeTableSelectFileItem}"
+                          summary="treeTable data"
+                          rowBandingInterval="0">
+              <f:facet name="contextMenu">
+                <af:popup id="context2">
+                  <af:menu id="m2">
+                    <af:commandMenuItem text="#{explorerBundle['menuitem.properties']}"
+                                        windowWidth="300" windowHeight="300" useWindow="true"
+                                        action="#{explorer.launchProperties}"
+                                        returnListener="#{explorer.returnFromProperties}"
+                                        id="cmi5" windowEmbedStyle="inlineDocument" windowModalityType="modeless">
+                    </af:commandMenuItem>
+                    <af:commandMenuItem text="#{explorerBundle['menuitem.delete']}"
+                                        icon="/fileExplorer/images/delete_ena.png"
+                                        disabled="#{explorer.headerManager.disabledDeleteItem}"
+                                        actionListener="#{explorer.headerManager.deleteItem}"
+                                        id="cmi6"/>
+                    <af:commandMenuItem text="#{explorerBundle['menuitem.copy']}"
+                                        disabled="#{explorer.headerManager.disabledCopyItem}"
+                                        actionListener="#{explorer.headerManager.copySelectedItem}"
+                                        id="cmi7"/>
+                    <af:commandMenuItem text="#{explorerBundle['menuitem.paste']}"
+                                        disabled="#{explorer.headerManager.disabledPasteItem}"
+                                        actionListener="#{explorer.headerManager.pasteItemToCurrentLocation}"
+                                        id="cmi8"/>
+                  </af:menu>
+                </af:popup>
+              </f:facet>
+              <f:facet name="nodeStamp">
+                <af:column headerText="#{explorerBundle['contents.name']}"
+                           width="200" sortable="true" sortProperty="name"
+                           id="c6">
+                  <af:panelGroupLayout id="pgl2">
+                    <af:image source="#{file.icon}"
+                              shortDesc="#{file.name}"
+                              inlineStyle="margin-right:3px; vertical-align:middle;"
+                              id="i2"/>
+                    <af:outputText id="nameStamp" value="#{file.name}"/>
+                  </af:panelGroupLayout>
+                </af:column>
+              </f:facet>
+              <f:facet name="pathStamp">
+                <af:panelGroupLayout id="pgl3">
+                  <af:image source="#{file.icon}"
+                            shortDesc="#{file.name}"
+                            inlineStyle="margin-right:3px; vertical-align:middle;"
+                            id="i3"/>
+                  <af:outputText value="#{file.name}" id="ot10"/>
+                </af:panelGroupLayout>
+              </f:facet>
+              <af:column headerText="#{explorerBundle['contents.type']}"
+                         id="c7">
+                <af:outputText id="typeStamp" value="#{file.type}"/>
+              </af:column>
+              <af:column headerText="#{explorerBundle['contents.size']}" align="end"
+                         id="c8">
+                <af:outputText id="sizeStamp" value="#{file.property.size}"/>
+              </af:column>
+              <af:column headerText="#{explorerBundle['contents.lastmodified']}"
+                         width="140" id="c9">
+                <af:outputText id="modifiedStamp"
+                               value="#{file.property.lastModified}"/>
+              </af:column>
+            </af:treeTable>
+          </af:panelCollection>
+        </af:showDetailItem>
+        <!-- content view in list format -->
+        <af:showDetailItem id="contentsListTable"
+                           text="#{explorer.contentViewManager.listTableContentView.label}"
+                           icon="#{explorer.contentViewManager.listTableContentView.icon}"
+                           binding="#{explorer.contentViewManager.listTableContentView.showDetailItem}"
+                           disclosed="#{explorer.contentViewManager.listTableContentView.disclosed}"
+                           disclosureListener="#{explorer.contentViewManager.listTableContentView.discloseContentView}"
+                           stretchChildren="#{mobileSettings.dimensionsFromChildren ? 'none' : 'first'}">
+          <af:table id="folderListTable" autoHeightRows="0"
+                    binding="#{explorer.contentViewManager.listTableContentView.contentTable}"
+                    var="file"
+                    value="#{explorer.contentViewManager.listTableContentView.contentModel}"
+                    emptyText="#{explorerBundle['global.no_row']}"
+                    rowSelection="single"
+                    contentDelivery="immediate" columnStretching="last"
+                    selectionListener="#{explorer.contentViewManager.listTableContentView.tableSelectFileItem}"
+                    summary="detail table"
+                    rowBandingInterval="0">
+            <af:dragSource actions="MOVE" discriminant="fileModel"
+                                     dragDropEndListener="#{explorer.contentViewManager.listTableContentView.onTableDragDropEnd}"/>
+            <af:collectionDropTarget actions="COPY MOVE" modelName="fileModel"
+                                     dropListener="#{explorer.contentViewManager.listTableContentView.onTableDrop}"/>
+            <f:facet name="contextMenu">
+              <af:popup id="context3">
+                <af:menu id="m3">
+                  <af:commandMenuItem text="#{explorerBundle['menuitem.properties']}"
+                                      windowWidth="300" windowHeight="300" useWindow="true"
+                                      action="#{explorer.launchProperties}"
+                                      returnListener="#{explorer.returnFromProperties}"
+                                      id="cmi9" windowEmbedStyle="inlineDocument" windowModalityType="modeless">
+                  </af:commandMenuItem>
+                  <af:commandMenuItem text="#{explorerBundle['menuitem.delete']}"
+                                      icon="/fileExplorer/images/delete_ena.png"
+                                      disabled="#{explorer.headerManager.disabledDeleteItem}"
+                                      actionListener="#{explorer.headerManager.deleteItem}"
+                                      id="cmi10"/>
+                  <af:commandMenuItem text="#{explorerBundle['menuitem.copy']}"
+                                      disabled="#{explorer.headerManager.disabledCopyItem}"
+                                      actionListener="#{explorer.headerManager.copySelectedItem}"
+                                      id="cmi11"/>
+                  <af:commandMenuItem text="#{explorerBundle['menuitem.paste']}"
+                                      disabled="#{explorer.headerManager.disabledPasteItem}"
+                                      actionListener="#{explorer.headerManager.pasteItemToCurrentLocation}"
+                                      id="cmi12"/>
+                </af:menu>
+              </af:popup>
+            </f:facet>
+            <af:column width="180" sortable="true" sortProperty="name" id="c10">
+              <f:facet name="header">
+                <af:outputText value="#{explorerBundle['contents.name']}"
+                               id="ot11"/>
+              </f:facet>
+              <af:panelGroupLayout id="pgl4">
+                <af:image source="#{file.icon}"
+                          shortDesc="#{file.name}"
+                          inlineStyle="margin-right:3px; vertical-align:middle;"
+                          id="i4"/>
+                <af:outputText value="#{file.name}" noWrap="true" id="ot12"/>
+              </af:panelGroupLayout>
+            </af:column>
+          </af:table>
+        </af:showDetailItem>
+      </af:panelTabbed>
+    </f:facet>
+  </af:panelStretchLayout>
+</jsp:root>

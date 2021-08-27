@@ -1,0 +1,216 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Thematic Map Legend Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Thematic Map Legend Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Thematic Map Legend Demo"/>
+                <f:facet name="center">
+                    <af:panelStretchLayout id="psl1" topHeight="auto">
+                        <f:facet name="top">
+                            <af:panelGroupLayout id="pgl1" layout="vertical">
+                                <f:verbatim>                   <b>This demo shows how to customize the marker/label
+                                                                  pairs displayed in a legend section as well as the
+                                                                  different styling options available for the legend.</b>                   <br/>                   <ul>
+                                        <li>
+                                            <b>Region Data</b>
+                                            <ul>
+                                                <li>
+                                                    The most common use case is to select a specific set of attribute
+                                                    types (color, shape, etc.) set by 
+                                                    <i>dvt:attributeGroups</i>
+                                                     tags to display in the legend sections. In this example, the states
+                                                    are colored according to the regions they belong to using a 
+                                                    <i>dvt:attributeGroups</i>
+                                                     tag. The source attribute of the 
+                                                    <i>dvt:legendSection</i>
+                                                     tag is set to the id of this attribute group.
+                                                </li>
+                                                <li>
+                                                    The label attribute of the 
+                                                    <i>dvt:attributeGroups</i>
+                                                     tag can be used to specify the legend marker's label.
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <b>User Data</b>
+                                            <ul>
+                                                <li>
+                                                    Another use case involves setting the source attribute of the 
+                                                    <i>dvt:legendSection</i>
+                                                     tag to the id of a supported stamped component (a 
+                                                    <i>dvt:marker</i>
+                                                     tag in this example). When a stamped component is used as the
+                                                    legend section source, each unique marker/label pair will show up in
+                                                    the legend.
+                                                </li>
+                                                <li>When using this method, the legend section markers reflect all
+                                                    attributes (color, shape, etc.) of the stamped componenent. In this
+                                                    example, color is the only style that differentiates groups,
+                                                    however, the shape (human) of the markers is also shown in the
+                                                    legend.</li>
+                                                <li>
+                                                    Specify the labels used in the legend by adding an 
+                                                    <i>f:attribute</i>
+                                                     tag (with 
+                                                    <i>name="legendLabel"</i>) as a child of the stamped component.
+                                                                             Otherwise, the label defaults to the value
+                                                                             attribute of the stamped component.
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <b>Server Data</b>
+                                            <ul>
+                                                <li>
+                                                    <i>af:image</i>
+                                                     tags can also be set as the source for 
+                                                    <i>dvt:legendSection</i>
+                                                     tags. Since images are stamped components with no stylistic
+                                                    attributes (color, shape, etc.), there is only one marker/label pair
+                                                    in the legend section.
+                                                </li>
+                                                <li>
+                                                    Similar to above, specify the labels used in the legend by adding an 
+                                                    <i>f:attribute</i>
+                                                     tag (with 
+                                                    <i>name="legendLabel"</i>) as a child of the stamped component.
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>                 </f:verbatim>
+                                <br/>
+                            </af:panelGroupLayout>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelSplitter id="ps1" splitterPosition="300" positionedFromEnd="true">
+                                <f:facet name="first">
+                                    <dvt:thematicMap id="tm1" styleClass="AFStretchWidth" summary="Thematic Map Legend"
+                                                     basemap="usa"
+                                                     partialTriggers="::sbc1 ::sbc2 ::sbc3 ::sbc5 ::soc1 ::soc2">
+                                        <af:transition transition="auto" triggerType="display"/>
+                                        <dvt:legend id="leg1" display="#{legendBean.legendDisplay}"
+                                                    maxWidth="#{legendBean.maxWidth}">
+                                            <dvt:legendSection id="ls1" label="Regions" source="al1:adl1:ag1"
+                                                               rendered="#{legendBean.showRegions and !legendBean.nestedLegend}"/>
+                                            <dvt:legendSection id="ls2" label="Daily Users" source="al1:adl1:m1"
+                                                               rendered="#{legendBean.showMarkers and !legendBean.nestedLegend}"/>
+                                            <dvt:showLegendGroup label="Regions"
+                                                                 rendered="#{legendBean.showRegions and legendBean.nestedLegend}">
+                                                <dvt:legendSection id="ls4" source="al1:adl1:ag1"/>
+                                            </dvt:showLegendGroup>
+                                            <dvt:showLegendGroup label="Daily Users"
+                                                                 rendered="#{legendBean.showMarkers and legendBean.nestedLegend}">
+                                                <dvt:legendSection id="ls5" source="al1:adl1:m1"/>
+                                            </dvt:showLegendGroup>
+                                            <dvt:legendSection id="ls3" source="pdl1:img1"
+                                                               rendered="#{legendBean.showImages}"/>
+                                        </dvt:legend>
+                                        <dvt:areaLayer id="al1" layer="states" labelDisplay="off">
+                                            <dvt:areaDataLayer id="adl1" value="#{legendBean.areaDataModel}" var="row"
+                                                               varStatus="rowStatus">
+                                                <dvt:areaLocation id="loc1" name="#{row.id}">
+                                                    <dvt:area id="a1" value="#{row.value}"
+                                                              rendered="#{legendBean.showRegions}">
+                                                        <dvt:attributeGroups id='ag1' type="color"
+                                                                             value="#{row.categories[0]}"
+                                                                             label="#{row.categories[0]}">
+                                                            <dvt:attributeMatchRule id="amr1" group="East">
+                                                                <f:attribute name="color" value="#8561c8"/>
+                                                            </dvt:attributeMatchRule>
+                                                            <dvt:attributeMatchRule id="amr2" group="Central">
+                                                                <f:attribute name="color" value="#267db3"/>
+                                                            </dvt:attributeMatchRule>
+                                                            <dvt:attributeMatchRule id="amr3" group="West">
+                                                                <f:attribute name="color" value="#68c182"/>
+                                                            </dvt:attributeMatchRule>
+                                                        </dvt:attributeGroups>
+                                                    </dvt:area>
+                                                    <dvt:marker id="m1" shortDesc="" value="#{row.value}" shape="human"
+                                                                scaleX="3" scaleY="3"
+                                                                rendered="#{legendBean.showMarkers and row.categories[1] ge 30}">
+                                                        <f:attribute name="legendLabel"
+                                                                     value="#{row.categories[1] ge 200 ? 'More than 10,000' : 'More than 1,000'}"/>
+                                                        <dvt:attributeGroups id='ag2' type="color"
+                                                                             value="#{row.categories[1] ge 200 ? 'high' : 'low'}">
+                                                            <dvt:attributeMatchRule id="amr4" group="low">
+                                                                <f:attribute name="color" value="#fad55c"/>
+                                                            </dvt:attributeMatchRule>
+                                                            <dvt:attributeMatchRule id="amr6" group="high">
+                                                                <f:attribute name="color" value="#ed6647"/>
+                                                            </dvt:attributeMatchRule>
+                                                        </dvt:attributeGroups>
+                                                    </dvt:marker>
+                                                </dvt:areaLocation>
+                                            </dvt:areaDataLayer>
+                                        </dvt:areaLayer>
+                                        <dvt:pointDataLayer id="pdl1" value="#{legendBean.cityDataModel}" var="row"
+                                                            varStatus="rowStatus" rendered="#{legendBean.showImages}">
+                                            <dvt:pointLocation id="loc2" type="pointName" pointName="#{row.id}">
+                                                <af:image id="img1" inlineStyle="width:20px;height:20px;"
+                                                          source="/resources/images/diagram/emicons/database24.png">
+                                                    <f:attribute name="legendLabel" value="Server Locations"/>
+                                                </af:image>
+                                            </dvt:pointLocation>
+                                        </dvt:pointDataLayer>
+                                    </dvt:thematicMap>
+                                </f:facet>
+                                <f:facet name="second">
+                                    <af:panelAccordion discloseMany="true">
+                                        <af:showDetailItem text="Data Options" disclosed="true" partialTriggers="">
+                                            <af:selectBooleanCheckbox id="sbc1" label="Show Region Data"
+                                                                      value="#{legendBean.showRegions}"
+                                                                      autoSubmit="true"/>
+                                            <af:selectBooleanCheckbox id="sbc2" label="Show User Data"
+                                                                      value="#{legendBean.showMarkers}"
+                                                                      autoSubmit="true"/>
+                                            <af:selectBooleanCheckbox id="sbc3" label="Show Server Data"
+                                                                      value="#{legendBean.showImages}"
+                                                                      autoSubmit="true"/>
+                                        </af:showDetailItem>
+                                        <af:showDetailItem text="Styling Options" disclosed="true" partialTriggers="">
+                                            <af:selectBooleanCheckbox id="sbc5" label="Collapsible Groups"
+                                                                      value="#{legendBean.nestedLegend}"
+                                                                      autoSubmit="true"/>
+                                            <af:selectOneChoice label="Legend Display" id="soc1" autoSubmit="true"
+                                                                value="#{legendBean.legendDisplay}">
+                                                <af:selectItem label="Show/Hide" value="showHide"/>
+                                                <af:selectItem label="Fixed" value="fixed"/>
+                                            </af:selectOneChoice>
+                                            <af:selectOneChoice label="Max Width" id="soc2" autoSubmit="true"
+                                                                value="#{legendBean.maxWidth}">
+                                                <af:selectItem label="Default (25%)" value="25%"/>
+                                                <af:selectItem label="15%" value="15%"/>
+                                                <af:selectItem label="35%" value="35%"/>
+                                                <af:selectItem label="150px" value="150px"/>
+                                            </af:selectOneChoice>
+                                        </af:showDetailItem>
+                                    </af:panelAccordion>
+                                </f:facet>
+                            </af:panelSplitter>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                </f:facet>
+                <!-- END FEATURE DEMO -->
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{ganttFeatureLinks.schedulingGanttTimeZoneTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Scheduling Gantt Time Zone"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Scheduling Gantt Time Zone"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+          <!-- START FEATURE DEMO -->
+	  <af:outputText id="ot1" value="This page demonstrates the timeZone attribute. Choose a new Time Zone, and see
+                                  your changes take effect."/>
+          <af:selectOneChoice label="Choose Time Zone: " value="#{schedulingGanttTimeZone.currentTimeZone}"
+                              id="soc1" autoSubmit="true">
+            <af:selectItem label="America/New_York" value="America/New_York" id="si1"/>
+            <af:selectItem label="America/Chicago" value="America/Chicago" id="si2"/>
+            <af:selectItem label="America/Denver" value="America/Denver" id="si3"/>
+            <af:selectItem label="America/Los_Angeles" value="America/Los_Angeles" id="si4"/>
+          </af:selectOneChoice>
+          <dvt:schedulingGantt id="schedulingGanttTimeZone"
+                               inlineStyle="height:400px"
+                               startTime="#{schedulingGanttTimeZone.startTime}"
+                               endTime="#{schedulingGanttTimeZone.endTime}"
+                               value="#{schedulingGanttTimeZone.model}"
+                               var="resourceObj"
+                               partialTriggers="::soc1"
+                               timeZone="#{schedulingGanttTimeZone.timeZone}"
+                               taskbarFormatManager="#{schedulingGanttTimeZone.taskbarFormatManager}"
+                               summary="Scheduling Gantt Time Zone Demo">
+            <f:facet name="major">
+              <dvt:timeAxis scale="days" zoomOrder="threeyears years halfyears quarters months weeks days hours fiveminutes"
+                            id="ta1"/>
+            </f:facet>
+            <f:facet name="minor">
+              <dvt:timeAxis scale="hours" zoomOrder="threeyears years halfyears quarters months weeks days hours fiveminutes"
+                            id="ta2"/>
+            </f:facet>
+            <f:facet name="nodeStamp">
+              <af:column headerText="Employee Name" id="c1">
+                <af:outputText value="#{resourceObj.resourceName}" id="ot2"/>
+              </af:column>
+            </f:facet>
+            <af:column headerText="Department" id="c2">                        
+              <af:outputText value="#{resourceObj.department}" id="ot3"/>
+            </af:column>
+            <dvt:ganttLegend keys="#{schedulingGanttTimeZone.legendKeys}" labels="#{schedulingGanttTimeZone.legendLabels}"
+                             id="gl1"/>
+          </dvt:schedulingGantt>
+          
+          <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/gantt/ganttFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

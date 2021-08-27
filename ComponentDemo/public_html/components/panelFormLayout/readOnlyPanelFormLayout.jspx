@@ -1,0 +1,311 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document title="panelFormLayout with Read Only components Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelFormLayout"/>
+        <f:attribute name="visualDesignName" value="formLayout"/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="If a panelFormLayout component gets stretched by its parent, it will automatically display scroll bars if the panelFormLayout contents do not fit within the allocated dimensions."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="centerHeader">
+          <af:panelGroupLayout layout="vertical" id="pglA">
+            <af:outputFormatted value="&lt;b>This is to show the different components vertical space in panelFormLayout when they are in readonly mode.&lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="s"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">          
+          <af:panelFormLayout binding="#{editor.component}" rows="22"  fieldWidth="66.66%" labelWidth="33.33%"
+                              styleClass="p_AFClickToEdit"  id="panelFormLayout1">
+                              
+            <!-- Below components are readonly enabled -->            
+            <af:inputText readOnly="true" value="my text" label="Input Text" id="it1"/>
+            <af:inputDate readOnly="true" id="df1" value="12/4/2017" label="Input Date"/>
+            <af:inputColor readOnly="true" id="inputColor" value="#{demoColor.colorValue5}" label="Input Color"/>
+            <af:inputSearch readOnly="true"
+                            id="iSearch"
+                            label="Input Search"
+                            valueAttribute="id"
+                            displayAttributes="fName lName id"
+                            value="#{inputSearchDemo.employeesSet}"
+                            selectionConverter="#{inputSearchDemo.selectionConverter}">
+                <af:searchSection type="default"
+                                  dataUrl="/rest/employees?cache=etag&amp;limit=5000" />
+            </af:inputSearch>
+            <af:inputNumberSpinbox readOnly="true" value="#{demoInput.intSpinbox2}" label="Input Number Spinbox"
+                                   minimum="2005" id="idInputNumberSpinbox2"/>
+            <af:inputNumberSlider readOnly="true" id="slider1" label="Input Number Slider"
+                                contentStyle="width: 22em"
+                                value="#{demoInputNumberSlider.numberValue}"/>
+            <af:inputRangeSlider readOnly="true" label="Input Range Slider"
+                               minorIncrement="1" majorIncrement="5" minimumIncrement="1"
+                               minimum="0" maximum="10" id="rangeSlider1"
+                               value="#{demoInputNumberSlider.rangeValue}"/>
+            <af:inputComboboxListOfValues readOnly="true" label="Input ComboboxListOfValues" id="comboLOVwithlistener"
+                                            value="Adam0" autoSubmit="true"
+                                            popupTitle="Search and Select: Ename"
+                                            searchDesc="Choose a name" columns="45"
+                                            launchPopupListener="#{demoComboboxLOV.launchPopupListener.processLaunch}"
+                                            model="#{demoComboboxLOV.listOfValuesModel1}"/>
+            <af:inputListOfValues readOnly="true" label="Input ListOfValues" id="idInputText2" value="Adam0"
+                                          autoSubmit="true" popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name"
+                                          model="#{demoLOV.listOfValuesModel}"/>            
+            <af:selectOneChoice readOnly="true" value="leaf" label="Select One Choice" id="soc1">
+              <af:selectItem label="coffee" value="bean" shortDesc="shortDesc text"
+                                 id="si9"/>
+              <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                                id="si10"/>
+              <af:selectItem label="milk" value="moo" rendered="false"
+                                 id="si11"/>
+              <f:selectItems value="#{demoInput.selectItems}" id="si12"/>
+            </af:selectOneChoice>
+            <af:selectManyChoice readOnly="true" value="coffee" label="Select Many Choice" id="smc1">
+              <af:selectItem label="coffee" value="coffee" shortDesc="shortDesc text"
+                                 id="si13"/>
+              <f:selectItem itemLabel="tea" itemValue="tea" itemDescription="Tea from China"
+                                id="si14"/>
+              <af:selectItem label="milk" value="milk" rendered="false"
+                                 id="si15"/>
+              <f:selectItems value="#{demoInput.selectItems}" id="si16"/>
+            </af:selectManyChoice>            
+            <af:selectBooleanCheckbox readOnly="true" value="true" shortDesc="shortDesc text" label="Select Boolean Checkbox" id="sbc3"/>
+            <af:selectBooleanRadio readOnly="true" value="true" text="18-20" id="rb" group="rbGroup" shortDesc="shortDesc text" label="Select Boolean Radio"/>
+            <af:selectOneRadio readOnly="true" value="starbucks"
+                              id="targetRadio" layout="horizontal" label="Select One Radio">
+              <f:selectItems value="#{demoInput.selectItems}" id="si111"/>
+              <af:selectItem label="coffee" value="starbucks" id="si211"/>
+              <f:selectItem itemDisabled="true" itemLabel="tea" itemValue="tazo"
+                            id="si311"/>
+              <af:selectItem label="milk" value="moo" id="si411"/>
+            </af:selectOneRadio>
+            <af:selectOneListbox readOnly="true" value="option 1" id="sol" label="Select One Listbox" shortDesc="Select One Option">
+              <af:selectItem label="option 1" id="si1"/>
+              <af:selectItem label="option 2" id="si2"/>
+              <af:selectItem label="option 3" id="si3"/>
+              <af:selectItem label="option 4" id="si4"/>
+            </af:selectOneListbox>
+            <af:selectManyListbox readOnly="true" value="option 2" id="rs" label="Select Many Listbox" shortDesc="Select Option">
+              <af:selectItem label="option 1" id="si5"/>
+              <af:selectItem label="option 2" id="si6"/>
+              <af:selectItem label="option 3" id="si7"/>
+              <af:selectItem label="option 4" id="si8"/>
+            </af:selectManyListbox>
+            <af:selectManyShuttle readOnly="true" id="manyShuttle"
+                                value="moo" leadingHeader="Available Values"
+                                trailingHeader="Selected Values" label="Select Many Shuttle">
+              <af:selectItem label="coffee" value="bean"
+                           shortDesc="The best coffee ever in the great large world comes from Kona, at least we think that"
+                           id="si120"/>
+              <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                          id="si220"/>
+              <af:selectItem disabled="true" label="orange juice" value="orange"
+                           id="si320"/>
+              <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                          id="si420"/>
+              <af:selectItem label="milk" value="moo" id="si520"/>
+              <f:selectItems value="#{demoInput.selectItems}" id="si620"/>
+            </af:selectManyShuttle>
+            <af:selectOrderShuttle readOnly="true" id="orderShuttle" value="orange"
+                                 leadingHeader="Available Values" trailingHeader="Selected Values"
+                                 label="Select Order Shuttle">
+             <af:selectItem label="coffee" value="bean" shortDesc="shortDesc text"
+                           id="si130"/>
+             <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                          id="si230"/>
+             <af:selectItem disabled="true" label="orange juice" value="orange"
+                           id="si330"/>
+             <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                          id="si430"/>
+             <af:selectItem label="milk" value="moo" id="si530"/>
+             <f:selectItems value="#{demoInput.selectItems}" id="si630"/>
+            </af:selectOrderShuttle>
+            <af:richTextEditor readOnly="true" id="idRichTextEditor" label="Rich Text Editor" value="#{demoInput.richValue}" />         
+            
+            <!-- Output components-->
+            <af:outputLabel accessKey="a" value="Output Label"
+                          for="ot1" id="_OutputLabel"/>
+            <af:outputText value="This is an outputText with lot of content to test and 
+                                  verify by wrapping into more than one line." id="ot1" inlineStyle="white-space: nowrap"/>
+            <af:outputFormatted value="This is an outputFormatted shows components in &lt;b>readonly&lt;/b> mode" id="oft2"/>                    
+            
+            <!-- Below components are readonly enabled when they are inside PanelLabelAndMessage -->                                
+            <af:panelLabelAndMessage id="plm3" label="PLAM Input Text" labelStyle="vertical-align: middle;white-space: nowrap;">               
+              <af:inputText readOnly="true" id="it2" simple="true" value="my text" label="Input Text1"/>
+            </af:panelLabelAndMessage>            
+            <af:panelLabelAndMessage id="plm4" label="PLAM Input Date">
+              <af:inputDate readOnly="true" simple="true" id="df11" value="12/4/2017" label="Input Date"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm5" label="PLAM Input Color">  
+              <af:inputColor readOnly="true" simple="true" id="inputColor1" value="#{demoColor.colorValue5}" label="Input Color"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm6" label="PLAM Input Search">  
+              <af:inputSearch readOnly="true" simple="true"
+                            id="iSearch1"
+                            label="Input Search"
+                            valueAttribute="id"
+                            displayAttributes="fName lName id"
+                            value="#{inputSearchDemo.employeesSet}"
+                            selectionConverter="#{inputSearchDemo.selectionConverter}">
+                <af:searchSection type="default"
+                                  dataUrl="/rest/employees?cache=etag&amp;limit=5000" />
+              </af:inputSearch>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm7" label="PLAM Input Number Spinbox" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">              
+              <af:inputNumberSpinbox readOnly="true" value="#{demoInput.intSpinbox2}" label="Input Number Spinbox"
+                                   minimum="2005" id="idInputNumberSpinbox21" simple="true"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm8" label="PLAM Input Number Slider" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:inputNumberSlider readOnly="true" id="slider2" label="Input Number Slider"
+                                    contentStyle="width: 22em" simple="true"
+                                    value="#{demoInputNumberSlider.numberValue}"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm9" label="PLAM Input Range Slider" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:inputRangeSlider readOnly="true" label="Input Range Slider" simple="true"
+                                   minorIncrement="1" majorIncrement="5" minimumIncrement="1"
+                                   minimum="0" maximum="10" id="rangeSlider2"
+                                   value="#{demoInputNumberSlider.rangeValue}"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm10" label="PLAM Input ComboboxListOfValues" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:inputComboboxListOfValues readOnly="true" label="Input ComboboxListOfValues" id="comboLOVwithlistener2"
+                                            value="Adam0" autoSubmit="true" simple="true"
+                                            popupTitle="Search and Select: Ename"
+                                            searchDesc="Choose a name" columns="45"
+                                            launchPopupListener="#{demoComboboxLOV.launchPopupListener.processLaunch}"
+                                            model="#{demoComboboxLOV.listOfValuesModel1}"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm11" label="PLAM Input ListOfValues" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:inputListOfValues readOnly="true" label="Input ListOfValues" id="lov1" value="Adam0"
+                                          autoSubmit="true" popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name" simple="true"
+                                          model="#{demoLOV.listOfValuesModel}"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm12" label="PLAM Select One Choice" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:selectOneChoice readOnly="true" simple="true" value="leaf" 
+                                  label="Select One Choice" id="soc12">
+                <af:selectItem label="coffee" value="bean" shortDesc="shortDesc text"
+                                 id="si91"/>
+                <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                                id="si101"/>
+                <af:selectItem label="milk" value="moo" rendered="false"
+                                 id="si1112"/>
+                <f:selectItems value="#{demoInput.selectItems}" id="si121"/>
+              </af:selectOneChoice>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm13" label="PLAM Select Many Choice" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+                <af:selectManyChoice readOnly="true" simple="true" value="coffee" 
+                                     label="Select Many Choice" id="smc12">
+                <af:selectItem label="coffee" value="coffee" shortDesc="shortDesc text"
+                                 id="si132"/>
+                <f:selectItem itemLabel="tea" itemValue="tea" itemDescription="Tea from China"
+                                id="si142"/>
+                <af:selectItem label="milk" value="milk" rendered="false"
+                                 id="si152"/>
+                <f:selectItems value="#{demoInput.selectItems}" id="si162"/>
+              </af:selectManyChoice>  
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm14" label="PLAM Select Boolean Checkbox" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:selectBooleanCheckbox readOnly="true" simple="true" value="true" shortDesc="shortDesc text" 
+                                        label="Select Boolean Checkbox" id="sbc32"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm15" label="PLAM Select Boolean Radio" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:selectBooleanRadio readOnly="true" simple="true" value="true" text="18-20" id="rb2" group="rbGroup" 
+                                     shortDesc="shortDesc text" label="Select Boolean Radio"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm16" label="PLAM Select One Radio" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:selectOneRadio readOnly="true" simple="true" value="starbucks"
+                              id="targetRadio2" layout="horizontal" label="Select One Radio">
+                <f:selectItems value="#{demoInput.selectItems}" id="si11122"/>
+                <af:selectItem label="coffee" value="starbucks" id="si2112"/>
+                <f:selectItem itemDisabled="true" itemLabel="tea" itemValue="tazo"
+                            id="si3112"/>
+                <af:selectItem label="milk" value="moo" id="si4112"/>
+              </af:selectOneRadio>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm17" label="PLAM Select One Listbox" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+                <af:selectOneListbox readOnly="true" simple="true" value="option 1" id="sol2" 
+                                     label="Select One Listbox" shortDesc="Select One Option">
+                <af:selectItem label="option 1" id="si1213"/>
+                <af:selectItem label="option 2" id="si22"/>              
+              </af:selectOneListbox>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm18" label="PLAM Select Many Listbox" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:selectManyListbox readOnly="true" simple="true" value="option 2" id="rs2" 
+                                    label="Select Many Listbox" shortDesc="Select Option">
+                <af:selectItem label="option 1" id="si52"/>
+                <af:selectItem label="option 2" id="si62"/>              
+              </af:selectManyListbox>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm19" label="PLAM Select Many Shuttle" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:selectManyShuttle readOnly="true" id="manyShuttle2" simple="true"
+                                value="moo" leadingHeader="Available Values"
+                                trailingHeader="Selected Values" label="Select Many Shuttle">
+                <af:selectItem label="coffee" value="bean"
+                           shortDesc="The best coffee ever in the great large world comes from Kona, at least we think that"
+                           id="si1250"/>
+                <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                          id="si2250"/>
+                <af:selectItem disabled="true" label="orange juice" value="orange"
+                           id="si3520"/>
+                <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                          id="si4250"/>
+                <af:selectItem label="milk" value="moo" id="si5250"/>
+                <f:selectItems value="#{demoInput.selectItems}" id="si6520"/>
+              </af:selectManyShuttle>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm20" label="PLAM Select Order Shuttle" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:selectOrderShuttle readOnly="true" id="orderShuttle2" value="orange" simple="true"
+                                 leadingHeader="Available Values" trailingHeader="Selected Values"
+                                 label="Select Order Shuttle">
+                <af:selectItem label="coffee" value="bean" shortDesc="shortDesc text"
+                           id="si1530"/>
+                <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                          id="si2530"/>
+                <af:selectItem disabled="true" label="orange juice" value="orange"
+                           id="si3530"/>
+                <f:selectItem itemDisabled="true" itemLabel="wine" itemValue="grape"
+                          id="si4350"/>
+                <af:selectItem label="milk" value="moo" id="si5530"/>
+                <f:selectItems value="#{demoInput.selectItems}" id="si6530"/>
+              </af:selectOrderShuttle>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm21" label="PLAM Rich Text Editor" 
+                                     labelStyle="vertical-align: middle;white-space: nowrap;">
+              <af:richTextEditor readOnly="true" id="idRichTextEditor2" simple="true"
+                                 label="Rich Text Editor" value="#{demoInput.richValue}" />
+            </af:panelLabelAndMessage>
+            
+            <!-- Output components inside PanelLabelAndMessage -->
+            <af:panelLabelAndMessage id="plm1" label="PLAM Output Text" labelStyle="white-space: nowrap;">                
+                <af:outputText value="This is an outputText in panelLabelAndMessage"
+                             id="ot2" inlineStyle="white-space: nowrap" />
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage id="plm2" label="PLAM Output Formatted" labelStyle="white-space: nowrap;">                
+                <af:outputFormatted value="This is an outputFormatted shows components in &lt;b>readonly&lt;/b> mode" id="oft3"/>
+            </af:panelLabelAndMessage>          
+          </af:panelFormLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

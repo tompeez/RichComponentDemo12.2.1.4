@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:panelGroupLayout id="pgl" layout="default">
+    <f:facet name="separator">
+      <af:spacer id="s" width="4px" height="4px"/>
+    </f:facet>
+    <af:panelFormLayout id="pfl1">
+      <af:panelLabelAndMessage label="Recursion Count:" id="plam1">
+        <af:outputText value="#{pageFlowScope.recursionCount}" id="recursionCount"/>
+      </af:panelLabelAndMessage>
+      <af:panelLabelAndMessage label="Make Recursive Call" id="plam2">
+        <af:button text="Call" id="call" action="CALL" immediate="true" />
+      </af:panelLabelAndMessage>
+      <af:panelLabelAndMessage label="Return and Recall" id="plam3">
+        <af:button text="Back" id="return-recall" action="BACK" immediate="true"
+                   disabled="#{pageFlowScope.recursionCount lt 1}"/>
+      </af:panelLabelAndMessage>
+    </af:panelFormLayout>
+  </af:panelGroupLayout>
+</jsp:root>

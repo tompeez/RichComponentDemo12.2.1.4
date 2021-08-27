@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="1.2"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Page Hierarchy Demo" theme="dark" id="d1"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}">
+      <af:pageTemplate viewId="/templates/pageTemplateDefs/tabletTemplate.jspx" id="pt1">
+        <f:attribute name="headerGlobalSize" value="45"/>
+        <f:attribute name="navigation3Size" value="1"/>
+        <f:attribute name="header2Size" value="15"/>
+        <f:attribute name="footer2Size" value="1"/>
+        <f:attribute name="footerGlobalSize" value="1"/>
+        <f:facet name="branding">
+          <af:outputText value="Page Hierarchy Demo" id="ot1"/>
+        </f:facet>
+        <f:facet name="navigationGlobal">
+          <af:navigationPane var="foo" value="#{menuModel.model}"
+            hint="buttons" id="np1">
+            <f:facet name="nodeStamp">
+              <af:commandNavigationItem
+                text="#{foo.label}"
+                action="#{foo.getOutcome}"
+                rendered="true" id="cni1"/>
+            </f:facet>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="navigation2">
+          <af:navigationPane var="foo" value="#{menuModel.model}" level="1"
+                             id="np2">
+            <f:facet name="nodeStamp">
+              <af:commandNavigationItem
+                text="#{foo.label}"
+                action="#{foo.getOutcome}"
+                rendered="true" id="cni2"/>
+            </f:facet>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="search">
+          <af:declarativeComponent id="demoFind" viewId="/templates/pageTemplateDefs/demoFindField.jsff"/>
+        </f:facet>
+        <f:facet name="toolbarGlobal">
+          <af:declarativeComponent id="gTools" viewId="/templates/pageTemplateDefs/globalTools.jsff"
+                                   templateSource="/templates/pageTemplateDefs/tabletTemplate.jspx.source">
+            <f:facet name="location">
+              <af:breadCrumbs var="foo" value="#{menuModel.model}" id="bc1"
+                              inlineStyle="margin:0 6px;display:block">
+                <f:facet name="nodeStamp">
+                  <af:commandNavigationItem text="#{foo.label}"
+                                            action="#{foo.getOutcome}" id="bcCni"/>
+                </f:facet>
+              </af:breadCrumbs>
+            </f:facet>
+          </af:declarativeComponent>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="scrl">
+            <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+            <f:subview id="hierarchy">
+              <jsp:include page="/components/pagehierarchy/pageContent_include.jspx"/>
+            </f:subview>
+            <!-- af:commandButton text="Start Process" action="guide.menuModel_p1"/ -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

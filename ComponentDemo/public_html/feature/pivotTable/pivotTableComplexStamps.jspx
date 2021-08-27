@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{pivotTableFeatureLinks.editablePivotTableTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Pivot Table Complex Editable Stamps"/>
+
+      <!-- Tag Name -->
+      <f:attribute name="tagName" value="Pivot Table Editing"/>    
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+          <!-- START TAG DEMO -->
+          <dvt:pivotTable id="goodPT"
+                          binding="#{editor.component}"
+                          contentDelivery="immediate"
+                          value="#{pivotTableEdit.dataModel}"                                        
+                          inlineStyle="width:700px;height:250px;"
+                          pivotLabelVisible="false"
+                          var="cellData"
+                          varStatus="cellStatus"
+                          sortMode="none"
+                          headerSortMode="none"
+                          summary="pivot table"
+                          sizingManager="#{pivotTableEdit.sizingManager}"
+                          splitMode="enabled"
+                          >              
+            <dvt:dataCell>                    
+              <af:switcher id="sw" facetName="#{cellStatus.members.MeasDim.value}" defaultFacet="Other">
+                <f:facet name="Sales">
+                  <af:panelStretchLayout id="psl1" dimensionsFrom="children">
+                     <f:facet name="start">
+                        <af:outputText id="ot1" value="Facet only"/>
+                     </f:facet>
+                     <f:facet name="center">
+                        <af:inputText  value="#{cellData.dataValue}" id="it1">
+                          <af:validateLength maximum="10" minimum="2" />
+                        </af:inputText>
+                     </f:facet>
+                  </af:panelStretchLayout>
+                </f:facet>
+                <!-- Children only -->
+                <f:facet name="Units">
+                  <af:panelGroupLayout id="pgl1" layout="horizontal">
+                    <af:outputText id="ot2" value="Children only"/>
+                    <af:inputText  value="#{cellData.dataValue}"   id="it2">      
+                      <af:validateLength maximum="6" minimum="2" />
+                    </af:inputText>
+                  </af:panelGroupLayout>
+                </f:facet>
+                <!-- Facets AND children -->
+                <f:facet name="Weight">
+                  <af:panelBorderLayout id="pbl1">
+                    <f:facet name="left">
+                      <af:outputText id="ot3" value="Facets And Children"/>
+                    </f:facet>
+                    <af:inputText  value="#{cellData.dataValue}" id="it3">      
+                      <af:validateLength maximum="6" minimum="1" />
+                    </af:inputText>
+                  </af:panelBorderLayout>
+                </f:facet>
+                <f:facet name="Other">
+                  <af:outputText  value="#{cellData.dataValue}" id="ot8"/>  
+                </f:facet>
+              </af:switcher>
+            </dvt:dataCell>
+          </dvt:pivotTable>
+          <!-- END TAG DEMO -->
+
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/pivotTable/pivotTableFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>   
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

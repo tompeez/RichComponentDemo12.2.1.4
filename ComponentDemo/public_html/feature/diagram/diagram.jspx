@@ -1,0 +1,168 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Diagram Features Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Diagram Features Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Diagram Features"/>
+        <f:facet name="center">
+          <!-- START FEATURE DEMO -->
+          <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="275"
+                            dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelStretchLayout id="psl1">
+                <f:facet name="center">
+                  <dvt:diagram summary="Diagram" id="diagram1" layout="circle" binding="#{diagram.diagram}"
+                               partialTriggers="sor2 ins1 ins2 sor3 sor9 ins3 ins4 soc1 soc2 soc3 soc4 soc5 soc6 it1 sbc1 sbc2"
+                               selection="#{diagram.selectionMode}" contentDelivery="#{diagram.contentDelivery}"
+                               emptyText="#{diagram.emptyText}" minZoom="#{diagram.minZoom}" maxZoom="#{diagram.maxZoom}"
+                               controlPanelBehavior="#{diagram.controlPanelBehavior}" panning="#{diagram.panning}"
+                               panDirection="#{diagram.panDirection}" zooming="#{diagram.zooming}">
+                    <dvt:clientLayout name="circle" method="DemoCircleLayout.circleLayout"
+                                      featureName="DemoCircleLayout"/>
+                    <dvt:diagramNodes id="diagramNodes1" value="#{diagram.nodes}" var="node"
+                                      binding="#{diagram.diagramNodes}"
+                                      highlightBehavior="#{diagram.nodeHighlightBehavior}">                     
+                      <dvt:diagramNode id="node1" nodeId="#{node.id}" shortDesc="Node #{node.id}"
+                                       showNodeActions="false" selectable="#{diagram.nodesSelectable}">
+                        <f:facet name="zoom100">
+                          <dvt:marker id="marker1" shape="circle" fillColor="#{node.color}" borderStyle="solid"
+                                      borderWidth=".5" borderColor="#444444"/>
+                        </f:facet>
+                      </dvt:diagramNode>
+                    </dvt:diagramNodes>
+                    <dvt:diagramLinks id="diagramLinks1" value="#{diagram.links}" var="link"
+                                      binding="#{diagram.diagramLinks}"
+                                      highlightBehavior="#{diagram.linkHighlightBehavior}">
+                      <dvt:diagramLink id="link1" startNode="#{link.start}" endNode="#{link.end}"
+                                       linkColor="#{link.color}" shortDesc="Link #{link.id}" selectable="#{diagram.linksSelectable}"/>
+                    </dvt:diagramLinks>
+                  </dvt:diagram>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+              <af:panelFormLayout id="pfl1" partialTriggers="sor2 ins3 ins4">
+                <af:group>
+                  <af:selectOneChoice label="Data Set" value="#{diagram.dataType}" id="sor2" autoSubmit="true">
+                    <af:selectItem label="Circle" id="si1"/>
+                    <af:selectItem label="Empty Data" id="si3"/>
+                  </af:selectOneChoice>
+                  <af:switcher id="switcher1" facetName="#{diagram.dataType}" defaultFacet="Default">
+                    <f:facet name="Circle">
+                      <af:group>
+                        <af:inputNumberSlider label="Size" id="ins1" minimum="0" maximum="500" value="#{diagram.size}"
+                                              autoSubmit="true" majorIncrement="100" minorIncrement="20"/>
+                      </af:group>
+                    </f:facet>
+                    <f:facet name="Two Color">
+                      <af:group>
+                        <af:inputNumberSlider label="Size" id="ins2" minimum="0" maximum="500" value="#{diagram.size}"
+                                              autoSubmit="true" majorIncrement="100" minorIncrement="20"/>
+                      </af:group>
+                    </f:facet>
+                    <f:facet name="Empty Data">
+                      <af:group>
+                        <af:inputText label="Empty Text" id="it1" value="#{diagram.emptyText}" autoSubmit="true"/>
+                      </af:group>
+                    </f:facet>
+                    <f:facet name="Default"/>
+                  </af:switcher>
+                </af:group>
+                <af:group>
+                  <af:selectOneChoice id="soc1" value="#{diagram.nodeHighlightBehavior}" autoSubmit="true"
+                                      label="Node Highlight Behavior">
+                    <af:selectItem value="none" label="none"/>
+                    <af:selectItem value="node" label="node"/>
+                    <af:selectItem value="nodeAndIncomingLinks" label="nodeAndIncomingLinks"/>
+                    <af:selectItem value="nodeAndOutgoingLinks" label="nodeAndOutgoingLinks"/>
+                    <af:selectItem value="nodeAndLinks" label="nodeAndLinks"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="soc2" value="#{diagram.linkHighlightBehavior}" autoSubmit="true"
+                                      label="Link Highlight Behavior">
+                    <af:selectItem value="none" label="none"/>
+                    <af:selectItem value="link" label="link"/>
+                  </af:selectOneChoice>
+                </af:group>
+                <af:group>
+                  <af:selectOneChoice id="soc3" value="#{diagram.controlPanelBehavior}" autoSubmit="true"
+                                      label="Control Panel Behavior">
+                    <af:selectItem value="initCollapsed" label="initCollapsed"/>
+                    <af:selectItem value="initExpanded" label="initExpanded"/>
+                    <af:selectItem value="hidden" label="hidden"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="soc4" value="#{diagram.panning}" autoSubmit="true"
+                                      label="Panning">
+                    <af:selectItem value="auto" label="auto"/>
+                    <af:selectItem value="none" label="none"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="soc6" value="#{diagram.panDirection}" autoSubmit="true"
+                                      label="PanDirection">
+                    <af:selectItem value="auto" label="auto"/>
+                    <af:selectItem value="x" label="x"/>
+                    <af:selectItem value="y" label="y"/>
+                  </af:selectOneChoice>
+                  <af:selectOneChoice id="soc5" value="#{diagram.zooming}" autoSubmit="true"
+                                      label="Zooming">
+                    <af:selectItem value="auto" label="auto"/>
+                    <af:selectItem value="none" label="none"/>
+                  </af:selectOneChoice>
+                  <af:inputNumberSlider label="Minimum Zoom" id="ins3" minimum="0" maximum="3" value="#{diagram.minZoom}"
+                                        autoSubmit="true" majorIncrement=".5" minorIncrement=".05">
+                    <af:convertNumber maxFractionDigits="2"/>
+                  </af:inputNumberSlider>
+                  <af:inputNumberSlider label="Maximum Zoom" id="ins4" minimum="0" maximum="3" value="#{diagram.maxZoom}"
+                                        autoSubmit="true" majorIncrement=".5" minorIncrement=".05">
+                    <af:convertNumber maxFractionDigits="2"/>
+                  </af:inputNumberSlider>
+                </af:group>
+                <af:group>
+                  <af:selectOneRadio label="Selection" value="#{diagram.selectionMode}" id="sor3" autoSubmit="true">
+                    <af:selectItem label="multiple" id="si8"/>
+                    <af:selectItem label="single" id="si7"/>
+                    <af:selectItem label="none" id="si6"/>
+                  </af:selectOneRadio>
+                  <af:selectBooleanCheckbox label="Nodes" value="#{diagram.nodesSelectable}" id="sbc1" autoSubmit="true"/>
+                  <af:selectBooleanCheckbox label="Links" value="#{diagram.linksSelectable}" id="sbc2" autoSubmit="true"/>
+                </af:group>
+                <af:group>
+                  <af:selectOneRadio label="Content Delivery" value="#{diagram.contentDelivery}" id="sor9"
+                                     autoSubmit="true">
+                    <af:selectItem label="immediate" id="si26"/>
+                    <af:selectItem label="whenAvailable (it's not)" id="si27" value="whenAvailable"/>
+                    <af:selectItem label="lazy" id="si28"/>
+                  </af:selectOneRadio>
+                </af:group>                
+                <af:button id="cb111" text="Show Selection State">
+                  <af:showPopupBehavior popupId="popup1" triggerType="action" alignId="cb111"/>
+                </af:button>
+                <af:popup id="popup1" contentDelivery="lazyUncached">
+                  <af:noteWindow>
+                    <af:outputText value="#{diagram.selectionState}" clientComponent="true"/>
+                  </af:noteWindow>
+                </af:popup>
+              </af:panelFormLayout>
+            </f:facet>
+          </af:panelSplitter>
+          <!-- END FEATURE DEMO -->
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

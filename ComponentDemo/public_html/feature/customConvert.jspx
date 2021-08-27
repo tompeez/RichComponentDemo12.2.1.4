@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Client-side Converters and Validators" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="converters"/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelHeader text="Custom client-side Converters and Validators"
+                            id="ph1">
+              <af:outputText styleClass="AFInstructionText"
+                             value="In the following examples, custom converters and validators are running on the client, avoiding a round trip."
+                             id="ot1"/>
+              <af:spacer height="10" id="s1"/>
+              <af:panelHeader text="Client Converters" id="ph2">
+                <af:panelFormLayout partialTriggers="partial-submit-button"
+                                    id="pfl1">
+                  <af:inputText value="#{validate.ssn}" label="ssn converter"
+                                shortDesc="examples of unconvertable values: 'a' or 'cat'"
+                                id="it1">
+                    <aftest:convertSSN/>
+                  </af:inputText>
+                  <af:inputText value="#{validate.ssn}" label="ssn validator"
+                                shortDesc="examples of unconvertable values: '333-33-3333'"
+                                id="it2">
+                    <aftest:convertSSN/>
+                    <aftest:validateSSN/>
+                  </af:inputText>
+                  <af:commandButton text="Submit" id="cb1"/>
+                  <af:commandButton id="partial-submit-button" text="Partial Submit"
+                                    partialSubmit="true"/>
+                </af:panelFormLayout>
+              </af:panelHeader>
+            </af:panelHeader>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

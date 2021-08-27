@@ -1,0 +1,101 @@
+/** Copyright (c) 2006, 2009 Oracle and/or its affiliates. All rights reserved */
+package oracle.adfdemo.view.components.rich;
+
+import java.util.Map;
+
+import javax.el.ELResolver;
+
+import javax.faces.component.UIComponent;
+
+import javax.faces.component.UIParameter;
+
+import javax.faces.context.FacesContext;
+
+import javax.faces.webapp.UIComponentClassicTagBase;
+
+import oracle.adf.view.rich.component.fragment.UIXPageTemplate;
+import oracle.adf.view.rich.component.rich.RichDocument;
+import oracle.adf.view.rich.component.rich.RichForm;
+
+public class DemoTemplateBindings
+{
+  public void setDocumentComponent(RichDocument documentComponent)
+  {
+    _documentComponent = documentComponent;
+  }
+
+  public RichDocument getDocumentComponent()
+  {
+    return _documentComponent;
+  }  
+
+  public void setFormComponent(RichForm formComponent)
+  {
+    _formComponent = formComponent;
+  }
+
+  public RichForm getFormComponent()
+  {
+    return _formComponent;
+  }
+  
+  public boolean isEditingDocument()
+  {
+    return _isEditing(_documentComponent, "editingDocument");
+  }
+  
+  public boolean isEditingForm()
+  {
+    return _isEditing(_formComponent, "editingForm");
+  }
+  
+  private boolean _isEditing(UIComponent comp, String attrName)
+  {
+    if (comp == null)
+    {
+      return false;
+    }
+    
+    // this is not ideal, but we can use this for the demo.
+    // The "attrs" variable in not available during component
+    // binding time and during the firing of events, so instead
+    // we get the attribute value directly from the parent 
+    // UIXPageTemplate component.
+    Map<String, Object> attrs = comp.getAttributes();
+    Boolean val = (Boolean)attrs.get(attrName);
+    if (val == null)
+    {
+      UIXPageTemplate template = null;
+      for (UIComponent parent = comp.getParent();
+        parent != null; parent = parent.getParent())
+      {
+        if (parent instanceof UIXPageTemplate)
+        {
+          template = (UIXPageTemplate)parent;
+          break;
+        }
+      }
+      
+      if (template != null)
+      {
+        Object obj = template.getAttributes().get(attrName);
+        if (obj instanceof Boolean)
+            val = (Boolean)obj;
+        else if (obj instanceof String)
+            val = Boolean.valueOf(obj.toString());
+        if (val != null)
+        {
+          // store the value so we don't have to do this again
+          attrs.put(attrName, val);
+        }
+      }
+    }
+    
+    return Boolean.TRUE.equals(val);
+  }
+  
+  private RichDocument _documentComponent;
+  private RichForm _formComponent;
+  
+  private final static String EDITING_ATTRIBUTE_NAME = "currentEditComponent";
+}

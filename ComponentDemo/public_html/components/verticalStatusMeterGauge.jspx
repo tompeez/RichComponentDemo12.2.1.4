@@ -1,0 +1,107 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="StatusMeterGauge (Vertical)" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="tagDocPrefix" value="dvt"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="verticalStatusMeterGauge"/>
+        <!-- Tag Name -->
+        <f:attribute name="tagName" value="verticalStatusMeterGauge"/>
+        <f:facet name="top">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <!-- START TAG DEMO -->
+            <af:outputText styleClass="AFInstructionText" value="Use the property editor to modify this gauge."
+                           id="ot1"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" halign="center">
+            <af:panelHeader text="Modify the status meter gauge below using the Attributes panel to the right"/>
+            <af:spacer height="50"/>
+            <dvt:statusMeterGauge shortDesc="Gauge" id="gauge1" binding="#{extEditor.component}" value="30" orientation="vertical"
+                                  inlineStyle="height:200px;width:20px;" plotArea="on"/>
+            <af:spacer height="50"/>
+            <af:showDetailHeader text="Status Meter Gauge Examples" disclosed="true">
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:statusMeterGauge value="25" thresholdDisplay="onIndicator" orientation="vertical"
+                                      inlineStyle="height:200px;width:20px;">
+                  <dvt:gaugeThreshold maximum="33"/>
+                  <dvt:gaugeThreshold maximum="67"/>
+                  <dvt:gaugeThreshold/>
+                </dvt:statusMeterGauge>
+              </af:panelGroupLayout>
+              <af:outputLabel value="thresholdDisplay: onIndicator"/>
+              <af:spacer height="10"/>
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:statusMeterGauge value="40" thresholdDisplay="onIndicator" plotArea="on" orientation="vertical"
+                                      inlineStyle="height:200px;width:20px;">
+                  <dvt:gaugeThreshold maximum="33"/>
+                  <dvt:gaugeThreshold maximum="67"/>
+                  <dvt:gaugeThreshold/>
+                </dvt:statusMeterGauge>
+              </af:panelGroupLayout>
+              <af:outputLabel value="thresholdDisplay: onIndicator, plotArea: on"/>
+              <af:spacer height="10"/>
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:statusMeterGauge value="50" thresholdDisplay="currentOnly" orientation="vertical"
+                                      inlineStyle="height:200px;width:20px;">
+                  <dvt:gaugeThreshold maximum="33"/>
+                  <dvt:gaugeThreshold maximum="67"/>
+                  <dvt:gaugeThreshold/>
+                </dvt:statusMeterGauge>
+              </af:panelGroupLayout>
+              <af:outputLabel value="thresholdDisplay: currentOnly"/>
+              <af:spacer height="10"/>
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:statusMeterGauge value="75" thresholdDisplay="all" indicatorSize="0.6" orientation="vertical"
+                                      inlineStyle="height:200px;width:20px;">
+                  <dvt:gaugeThreshold maximum="33"/>
+                  <dvt:gaugeThreshold maximum="67"/>
+                  <dvt:gaugeThreshold/>
+                </dvt:statusMeterGauge>
+              </af:panelGroupLayout>
+              <af:outputLabel value="thresholdDisplay: all, indicatorSize: 0.6"/>
+              <af:spacer height="10"/>
+              <af:panelGroupLayout layout="horizontal">
+                <dvt:statusMeterGauge value="90" indicatorSize="0.5" plotArea="on" orientation="vertical"
+                                      inlineStyle="height:200px;width:20px;">
+                  <dvt:referenceLine color="#FFFFFF" value="75"/>
+                  <dvt:referenceLine color="#000000" value="95"/>
+                  <dvt:gaugeThreshold maximum="33"/>
+                  <dvt:gaugeThreshold maximum="67"/>
+                  <dvt:gaugeThreshold/>
+                </dvt:statusMeterGauge>
+              </af:panelGroupLayout>
+              <af:outputLabel value="reference lines"/>
+            </af:showDetailHeader>
+          </af:panelGroupLayout>
+          <!-- END TAG DEMO -->
+        </f:facet>
+        <f:facet name="centerBottomCollapsible">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <!-- START SEE ALSO LINKS -->
+            <af:outputText value="See also:" id="ot2"/>
+            <af:panelList id="pl1">
+              <af:goLink text="Gauge Gallery" destination="/feature/gauge/gallery.jspx" id="gl1"/>
+            </af:panelList>
+            <!-- END SEE ALSO LINKS -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,352 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+  <f:view>
+    <af:document title="Chart Gallery" binding="#{templateBindings.documentComponent}" theme="dark" id="d1">
+      <f:facet name="metaContainer">
+        <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+        <f:subview id="meta">
+          <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+        </f:subview>
+      </f:facet>
+      <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="feature"/>
+        <!-- Remove to enable tag inspector -->
+        <f:attribute name="customEditorPresent" value="true"/>
+        <!-- Document Title -->
+        <f:attribute name="documentTitle" value="Chart Gallery Demo"/>
+        <!-- Demo Name -->
+        <f:attribute name="tagName" value="Chart Gallery"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="layout0">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <!-- START FEATURE DEMO -->
+            <af:panelAccordion id="pa1" dimensionsFrom="children" styleClass="AFStretchWidth" discloseMany="true">
+              <af:showDetailItem text="Chart Types" id="sdi1" disclosed="true">
+                <af:panelDashboard columns="3" rowHeight="240px" styleClass="AFStretchWidth" dimensionsFrom="children">
+                  <af:panelBox text="Area Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.areaChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:areaChart>
+                  </af:panelBox>
+                   <af:panelBox text="Area Chart (Polar)" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.areaChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row" coordinateSystem="polar" polarGridShape="polygon">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:areaChart>
+                  </af:panelBox>
+                  <af:panelBox text="Bar Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.barChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                        </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:barChart>
+                  </af:panelBox> 
+                  <af:panelBox text="Bar Chart (Horizontal)" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.horizontalBarChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row" orientation="horizontal">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:barChart>
+                  </af:panelBox>
+                  <af:panelBox text="Bar Chart (Polar)" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.barChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row" coordinateSystem="polar">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:barChart>
+                  </af:panelBox>
+                  <af:panelBox text="Bubble Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.bubbleChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"
+                                           z="#{row.z}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:bubbleChart>
+                  </af:panelBox>
+                  <af:panelBox text="Bubble Chart (Polar)" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.bubbleChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row" coordinateSystem="polar">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"
+                                           z="#{row.z}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:bubbleChart>
+                  </af:panelBox>
+                  <af:panelBox text="Combo Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.comboChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:comboChart value="#{chartDataSource.defaultComboData}" var="row">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:comboChart>
+                  </af:panelBox>
+                  <af:panelBox text="Combo Chart (Polar)" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.comboChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:comboChart value="#{chartDataSource.defaultComboData}" var="row" coordinateSystem="polar">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:comboChart>
+                  </af:panelBox>
+                  <af:panelBox text="Funnel Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.funnelChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:funnelChart value="#{chartDataSource.defaultPieData}"  var="row">
+                      <dvt:funnelDataItem label="#{row.series}" value="#{row.value}"/>
+                    </dvt:funnelChart>
+                  </af:panelBox>
+                  <af:panelBox text="Line Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.lineChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:lineChart>
+                  </af:panelBox>
+                  <af:panelBox text="Line Chart (Polar)" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.lineChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row"  coordinateSystem="polar" polarGridShape="polygon">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:lineChart>
+                  </af:panelBox>
+                  <af:panelBox text="Line with Area Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.lineWithAreaChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:lineChart value="#{chartDataSource.defaultAreaData}" var="row" stack="on">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <f:facet name="seriesStamp">
+                        <dvt:chartSeriesStyle series="#{row.series}" type="lineWithArea" lineType="curved"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:lineChart>
+                  </af:panelBox>
+                  <af:panelBox text="Line with Area Chart (Polar)" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.lineChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:lineChart value="#{chartDataSource.defaultAreaData}" var="row" stack="on" coordinateSystem="polar">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <f:facet name="seriesStamp">
+                        <dvt:chartSeriesStyle series="#{row.series}" type="lineWithArea" lineType="curved"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:lineChart>
+                  </af:panelBox>
+                  <af:panelBox text="Pie Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.pieChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:pieChart value="#{chartDataSource.defaultPieData}" var="row">
+                      <dvt:pieDataItem label="#{row.series}" value="#{row.value}"/>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:pieChart>
+                  </af:panelBox>
+                  <af:panelBox text="Range Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.rangeChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:barChart value="#{chartDataSource.defaultRangeData}" var="row">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" high="#{row.high}" low="#{row.low}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:barChart>
+                  </af:panelBox>
+                  <af:panelBox text="Scatter Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.scatterChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:scatterChart value="#{chartDataSource.defaultScatterData}" var="row">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:scatterChart>
+                  </af:panelBox>
+                  <af:panelBox text="Scatter Chart (Polar)" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.scatterChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:scatterChart value="#{chartDataSource.defaultScatterData}" var="row" coordinateSystem="polar">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:scatterChart>
+                  </af:panelBox>
+                  <af:panelBox text="Stock Chart" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:commandLink action="guide.stockChart" text="Tag Guide"/>
+                    </f:facet>
+                    <dvt:stockChart value="#{chartDataSource.defaultStockData}" var="row">
+                      <dvt:stockDataItem series="#{row.series}" group="#{row.group}" volume ="#{row.volume}" high="#{row.high}" low = "#{row.low}" close="#{row.close}" open="#{row.open}"/>
+                    </dvt:stockChart>
+                  </af:panelBox>
+                </af:panelDashboard>
+              </af:showDetailItem>
+              <af:showDetailItem text="Customization" id="sdi2" disclosed="true">
+                <af:panelDashboard columns="3" rowHeight="240px" styleClass="AFStretchWidth" dimensionsFrom="children">
+                  <af:panelBox text="Data Labels" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:link text="Demo Page" destination="dataLabels.jspx"/>
+                    </f:facet>
+                    <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row" dataLabelPosition="center">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"
+                                           label="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:barChart>
+                  </af:panelBox>
+                  <af:panelBox text="Series Effect" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:link text="Demo Page" destination="seriesEffect.jspx"/>
+                    </f:facet>
+                    <dvt:areaChart value="#{chartDataSource.defaultAreaData}" var="row" seriesEffect="pattern">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:areaChart>
+                  </af:panelBox>
+                  <af:panelBox text="Split Dual-Y" showDisclosure="false">
+                    <dvt:lineChart value="#{chartDataSource.defaultAreaData}" var="row" splitDualY="on"
+                                   splitterPosition="0.8">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <f:facet name="seriesStamp">
+                        <dvt:chartSeriesStyle series="Series 1" assignedToY2="true" />
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:lineChart>
+                  </af:panelBox>
+                </af:panelDashboard>
+              </af:showDetailItem>
+              <af:showDetailItem text="Interactivity" id="sdi3" disclosed="true">
+                <af:panelDashboard columns="3" rowHeight="240px" styleClass="AFStretchWidth" dimensionsFrom="children">
+                  <af:panelBox text="Hide and Show Series" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:link text="Demo Page" destination="hideAndShow.jspx"/>
+                    </f:facet>
+                    <dvt:bubbleChart value="#{chartDataSource.defaultBubbleData}" var="row"
+                                     hideAndShowBehavior="withRescale">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" x="#{row.x}" y="#{row.y}"
+                                           z="#{row.z}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="true"/>
+                    </dvt:bubbleChart>
+                  </af:panelBox>
+                  <af:panelBox text="Layout" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:link text="Demo Page" destination="layout.jspx"/>
+                    </f:facet>
+                    <af:panelSplitter id="ps2">
+                      <f:facet name="first">
+                        <dvt:barChart value="#{chartDataSource.defaultBarData}" var="row">
+                          <f:facet name="dataStamp">
+                            <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                          </f:facet>
+                          <dvt:chartLegend rendered="false"/>
+                        </dvt:barChart>
+                      </f:facet>
+                      <f:facet name="second">
+                        <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row">
+                          <f:facet name="dataStamp">
+                            <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                          </f:facet>
+                          <dvt:chartLegend rendered="false"/>
+                        </dvt:lineChart>
+                      </f:facet>
+                    </af:panelSplitter>
+                  </af:panelBox>
+                  <af:panelBox text="Scrollable Legend" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:link text="Demo Page" destination="scrollableLegend.jspx"/>
+                    </f:facet>
+                    <dvt:barChart value="#{chartDataSource.extendedBarData}" var="row" hoverBehavior="dim">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="true" scrolling="asNeeded"/>
+                    </dvt:barChart>
+                  </af:panelBox>
+                  <af:panelBox text="Zoom and Scroll" showDisclosure="false">
+                    <f:facet name="toolbar">
+                      <af:link text="Demo Page" destination="zoomAndScroll.jspx"/>
+                    </f:facet>
+                    <dvt:lineChart value="#{chartDataSource.defaultLineData}" var="row" zoomAndScroll="live">
+                      <f:facet name="dataStamp">
+                        <dvt:chartDataItem series="#{row.series}" group="#{row.group}" value="#{row.value}"/>
+                      </f:facet>
+                      <dvt:chartLegend rendered="false"/>
+                    </dvt:lineChart>
+                  </af:panelBox>
+                </af:panelDashboard>
+              </af:showDetailItem>
+            </af:panelAccordion>
+            <!-- END FEATURE DEMO -->
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

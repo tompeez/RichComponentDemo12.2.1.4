@@ -1,0 +1,895 @@
+<?xml version = '1.0' encoding = 'ISO-8859-1'?>
+<!-- Copyright (c) 2008, 2019, Oracle and/or its affiliates. 
+All rights reserved.-->
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+  <description>ADF RichClient Demo</description>
+  <context-param>
+    <description>
+      Changes the email output mode that request parameter "org.apache.myfaces.trinidad.agent.email"
+      uses.  Valid values are "inline"  to inline and skin styles directly onto the
+      relevant element's style attribute and "internal" to generate an internal style sheet
+      using a &lt;style> element in the &lt;head> section.
+    </description>
+    <param-name>oracle.adf.view.DEFAULT_EMAIL_MODE</param-name>
+    <param-value>inline</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      This parameter controls if tag execution is skipped during specify requests.
+      Currently this only affects the processing of JSP pages and not facelets.
+      Supported values are:
+        off - Tag execution will occur per each request
+        streaming - Tag execution is skipped during streaming requests (default)
+    </description>
+    <param-name>oracle.adf.view.rich.tag.SKIP_EXECUTION</param-name>
+    <param-value>streaming</param-value>
+  </context-param>
+  <context-param>
+    <description>
+      This parameter can be used to specify what type of Javascript library this application should use.
+      Possible values are:
+      simple - simple optimizations (default)
+      advanced - advanced optimizations
+      advanced-debug - advanced optimizations with code that can be debugged (the compiler applies the same degree of
+      renaming, code inlining, dead code removal, etc., but the names of the variables and functions can be traced to
+      the original names)
+    </description>
+    <param-name>oracle.adf.view.JAVASCRIPT_OPTIMIZATION</param-name>
+    <param-value>#{jsOptimization.current}</param-value>
+  </context-param>
+
+  <!--
+    This parameter provides a hint to Renderers that indicates whether it is
+    okay to suppress id rendering.  Two values are supported:
+
+    1. auto: Renderers may suppress auto-generated ids
+    2. explicit: Renderers may suppress both auto-generated ids as
+                 well as explicitly-specified ids.
+
+    The default value is "explicit".  Note that suppressing explicitly-specified
+    ids may cause problems in cases where components are programatically added
+    as partial targets.  In such cases, possible workarounds include:
+
+      - Setting clientComponent="true" on the partial target component, or...
+      - Disabling explicit id suppression by setting this parameter to "auto"
+
+    Uncomment the following parameter to disable explicit id suppression.
+
+  <context-param>
+    <param-name>oracle.adf.view.rich.SUPPRESS_IDS</param-name>
+    <param-value>auto</param-value>
+  </context-param>
+  -->
+
+
+  <!--
+  <context-param>
+    <description>
+      This parameter controls whether JavaScript library partitioning
+      is enabled.  By default, JavaScript library partitioning is enabled
+      and JavaScript code is served up in partitions.  To disable JavaScript
+      library partitioning and instead serve up JavaScript code in one big
+      library, set this context parameter to true.
+    </description>
+    <param-name>oracle.adf.view.rich.libraryPartitioning.DISABLED</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  -->
+  
+  <!--
+  <context-param>
+    <description>
+       This parameter controls the whether component formatter is used for 
+       ADS Data formatting. Below options used as values for this parameter.
+
+        1. NEVER - Never use the component's converter
+        2. IF_MODEL_DID_NOT_FORMAT - Only use the component's converter if the 
+           new raw and formatted value from the ActiveModel are identical.
+        3. ALWAYS - Always use the component's converter if it implements 
+           FormatterFactory and returns an non-null Formatter.
+    </description>
+    <param-name>oracle.adf.view.rich.ads.USE_COMPONENT_FORMATTER</param-name>
+    <param-value>ALWAYS</param-value>
+  </context-param>
+  -->
+
+  <context-param>
+    <description>
+      This parameter controls the PPR Navigation feature.
+      Possible values are:
+        on - enable PPR Navigation
+        onWithForcePPR - enable PPR Navigation and force partialSubmit="true"
+                         on all action events
+        off - disable PPR Navigation.
+    </description>
+    <param-name>oracle.adf.view.rich.pprNavigation.OPTIONS</param-name>
+    <param-value>onWithForcePPR</param-value>
+  </context-param>
+  <context-param>
+    <description>
+      This parameter controls the framebusting feature. framebusting stops content from
+      running inside frames (meaning a frame or iframe tag).
+
+      This context parameter is ignored and and will behave as if the context
+      parameter is set to 'never' when either:
+           - org.apache.myfaces.trinidad.util.ExternalContextUtils.isPortlet is true
+           - the oracle.adf.view.rich.automation.ENABLED context parameter is set to true
+
+      Possible values are:
+        differentOrigin - only bust frames if the an ancestor window domain and the
+                          frame domain are different. If the ancestor windows and frame are
+                          in the same domain then allow the content to run in a frame.
+                          This is the default.
+        always          - always bust frames, meaning don't allow a page to be embedded in frames
+        never           - never bust frames, meaning always allow a page to be embedded in frames
+        whiteList       - use the value of the oracle.adf.view.ALLOWED_ORIGINS parameter to specify
+                         the origins that are allowed to frame documents in this application
+
+      This parameter also supports EL.  If EL is used, the EL will be evaluated once per
+      user session.
+    </description>
+    <param-name>org.apache.myfaces.trinidad.security.FRAME_BUSTING</param-name>
+    <param-value>whiteList</param-value>
+  </context-param>
+  <context-param>
+    <description>
+      Space-separated list of origins that are still allowed to frame the content when the
+      org.apache.myfaces.trinidad.security.FRAME_BUSTING parameter is set to
+      "whiteList".
+
+      The format of the list is the Content Security Policy source list (http://www.w3.org/TR/CSP2/#source-list),
+      essentially a space-separated list of origins that allows wildcarding of the first segment of the host and port
+      e.g. http://*.oracle.com:*.  The two differences from the frame-ancestors specification are that
+      the value "*" is supported and indicates that any origin may frame the content and that if not
+      specified or if an empty or null List is returned from a ValueExpression, the value will default to
+      'self', indicating that only framing in the same origin is allowed.
+
+      When specifying the list of allowed origins, the current origin is not automatically allowed to frame the
+      the application content.  If the application wants to allow this, it needs to explicitly add 'self' to
+      the list of allowed origins.
+
+      This parameter also supports EL.  The expression should return a Collection of Strings, with each String
+      representing one allowed origin.  the expression is currently  evaluated once per
+      user session, but may be evaluated more often in the future.
+    </description>
+    <param-name>oracle.adf.view.ALLOWED_ORIGINS</param-name>
+    <param-value>'self'</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      This parameter will inhibit the display of the version string.
+
+      Normally ADF Faces adds a comment, potentially containing version information, to the
+      very end of the document. This string makes it possible to see the
+      version of a running server. This version string is very useful in
+      determining if your server is up to date, or if it is equal to or greater
+      than the version of the server which contains a particular enhancement or
+      bug fix that you may be interested in.  Due to worries that disclosing the server version
+      information through web pages could make it easier to target unpatched servers with
+      known security flaws, the version information is not included by default, except
+      during full test automation.
+
+      If you would prefer to display the version string, set this parameter
+      to false. The default value is true, except when full test automation is enabled.
+    </description>
+    <param-name>oracle.adf.view.rich.versionString.HIDDEN</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      This parameter controls the display of user alerts if an unsupported browser is detected.
+      Note that an alert will always be shown if the rich logger level is set to "warning" or more verbose.
+      Supported values are:
+        none - hide none of the unsupported browser mode alerts (the default)
+        IECompatibilityModes - hide unsupported Internet Explorer compatibility mode alerts
+    </description>
+    <param-name>oracle.adf.view.rich.HIDE_UNSUPPORTED_BROWSER_ALERTS</param-name>
+    <param-value>none</param-value>
+  </context-param>
+
+  <!--
+  <context-param>
+    <description>
+      This parameter will control the suppression of the native browser context menu on action
+      links.
+
+      Normally ADF Faces will suppress the native browser context menu for all links that have no
+      destination URL.  An example of an action link is commandLink.  The commandLink component
+      doesn't have a direct relationship to a page URL.  Instead, it invokes code which may not even
+      take you to a new page or it may decide which page to load dynamically based on application
+      state information.  These kinds of links ideally should not allow the browser to display any
+      context menu items that pertain to link destinations (such as the
+      "Open link in new window/tab" menu item since there is no way to replicate the result of a
+      left-click in a new window/tab).
+
+      This parameter allows you to disable this default suppression behavior.  Note that regardless
+      of what this parameter is set to, you will never be able to disable the suppression on links
+      that show an ADF Faces context menu.  If you were able to then the native browser context menu
+      would cover up the ADF Faces context menu.
+
+      If you would prefer not to have all action links suppress their native browser context menu,
+      set this parameter to no.
+    </description>
+    <param-name>oracle.adf.view.rich.ACTION_LINK_BROWSER_CONTEXT_SUPPRESSION</param-name>
+    <param-value>no</param-value>
+  </context-param>
+  -->
+
+<!-- This will add a listener that may log a message when components are added to the tree
+       during rendering. The messages start with
+       "<RenderingAdditionsListener> <processEvent> ".
+
+       The listener is not added when the project stage is production, regardless of the
+       setting in web.xml
+
+       The default is false
+  -->
+  <context-param>
+    <param-name>oracle.adfinternal.view.faces.RENDERING_ADDITIONS_LISTENER</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <description>
+      This parameter notifies ADF Faces that extra plugins will be used in Ckeditor for RichTextEditor.
+      This flag wil be used only when layout of RTE is 'ckeditor'. If this flag is not enabled and 
+      extra plugins are used for ckedtior, error will be thrown by ADF. 
+    </description>
+    <param-name>oracle.adf.view.rich.component.input.RichTextEditor.ENABLE_EXTRA_PLUGINS</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  
+  
+
+  <!--context-param>
+    <description>Set to true to debug background loaded scripts, like popup code</description>
+    <param-name>oracle.adfinternal.view.rich.backgroundScriptLoading.DISABLED</param-name>
+    <param-value>true</param-value>
+  </context-param-->
+
+
+  <context-param>
+    <param-name>javax.faces.PROJECT_STAGE</param-name>
+    <param-value>Development</param-value>
+  </context-param>
+
+
+<!-- to test partial state saving set:
+      1. javax.faces.PARTIAL_STATE_SAVING = true
+      2. org.apache.myfaces.trinidad.CACHE_VIEW_ROOT = false
+      3. org.apache.myfaces.trinidad.CHANGE_PERSISTENCE = org.apache.myfaces.trinidad.change.NullChangeManager
+      4. oracle.adf.view.rich.region.CHILD_CREATION = immediate
+      5. javax.faces.FACELETS_VIEW_MAPPINGS = *.xhtml;*.jspx
+  -->
+
+   <!-- Temporarily disable partial state saving default until we make it work with Trinidad -->
+  <context-param>
+    <param-name>javax.faces.PARTIAL_STATE_SAVING</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      By turning this caching off, you can expose a class of potential bugs
+      where the processSaveState()/processRestoreState() cycle fails
+    </description>
+    <param-name>org.apache.myfaces.trinidad.CACHE_VIEW_ROOT</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      This parameter turns on the session change persistence.
+    </description>
+    <param-name>org.apache.myfaces.trinidad.CHANGE_PERSISTENCE</param-name>
+    <param-value>session</param-value>
+    <!-- to run without using the change manager comment the line above and uncomment the line below-->
+    <!--param-value>org.apache.myfaces.trinidad.change.NullChangeManager</param-value-->
+  </context-param>
+
+  <!--context-param>
+    <description>
+      When partial state saving is enabled then region child creation should be immediate.
+    </description>
+    <param-name>oracle.adf.view.rich.region.CHILD_CREATION </param-name>
+    <param-value>immediate</param-value>
+  </context-param-->
+
+  <context-param>
+    <param-name>javax.faces.FACELETS_VIEW_MAPPINGS</param-name>
+    <param-value>*.xhtml</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>javax.faces.FACELETS_LIBRARIES</param-name>
+    <param-value>/WEB-INF/aftest.taglib.xml</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>javax.faces.FACELETS_DECORATORS</param-name>
+    <param-value>oracle.adfinternal.view.faces.facelets.rich.AdfTagDecorator</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>javax.faces.FACELETS_RESOURCE_RESOLVER</param-name>
+    <param-value>oracle.adfinternal.view.faces.facelets.rich.AdfFaceletsResourceResolver</param-value>
+  </context-param>
+
+
+  <!--
+  <context-param>
+    <description>
+      Enable this flag to turn on super-optimized Facelets state saving mode;
+      note that this will break JSP pages (for now, though it's fixable), and
+      only works with Facelets 1.1
+    </description>
+    <param-name>facelets.BUILD_BEFORE_RESTORE</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  -->
+
+  <!--
+  <context-param>
+    <description>
+      This parameter turns on the automated profiler instrumentation code. This
+      code is generated by parsing the xml file specified in the
+      oracle.adf.view.rich.profiler.ROOT_FILE property or
+      "/WEB-INF/profiler.xml" if the ROOT_FILE property does not exist. Please
+      note that the Profiler classes are ALWAYS included with the RichClient
+      bundle, this just turns on the automatic instrumentation.
+    </description>
+    <param-name>oracle.adf.view.rich.profiler.ENABLED</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  -->
+
+  <!--
+  <context-param>
+    <description>
+      This parameter overrides the default location for the profilers automated
+      instrumentation config file. By default the profiler will look for
+      /WEB-INF/profiler.xml. This property will only be used if
+      oracle.adf.view.rich.profiler.ENABLED is set to true.
+    </description>
+    <param-name>oracle.adf.view.rich.profiler.ROOT_FILE</param-name>
+    <param-value>/WEB-INF/profiler.xml</param-value>
+  </context-param>
+  -->
+
+  <context-param>
+    <description>
+      This parameter turns on resource debug mode. When resource debug mode is
+      enabled, we don't set cache headers for resources such as our JavaScript
+      libraries. After turning on resource debug mode, be sure to clear your
+      browser cache to force the browser to download the latest versions of the
+      resources.
+    </description>
+    <param-name>org.apache.myfaces.trinidad.resource.DEBUG</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+  <context-param>
+    <description>If this parameter is true, there will be an automatic check of the modification date of your JSPs, and saved state will be discarded when JSP's change. It will also automatically check if your skinning css files have changed without you having to restart the server. This makes development easier, but adds overhead. For this reason this parameter should be set to false when your application is deployed.</description>
+    <param-name>org.apache.myfaces.trinidad.CHECK_FILE_MODIFICATION</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      This parameter enables the Asserts within ADF Faces. If set to true,
+      Asserts will be turned on. If set to false, Asserts will be turned off.
+      The default is false - Asserts turned off.
+    </description>
+    <param-name>oracle.adf.view.rich.ASSERT_ENABLED</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+<!--
+  <context-param>
+    <description>
+      This parameter notifies ADF Faces that test automation is being used.
+      Valid values are OFF, SAFE and FULL, with true and false supported for backwards compatibility.
+      When enabled, this will cause the client component
+      attribute of the component to be forced to true.
+    </description>
+    <param-name>oracle.adf.view.rich.automation.ENABLED</param-name>
+    <param-value>FULL</param-value>
+  </context-param>
+-->
+
+  <context-param>
+    <description>
+      This parameter enables the attachment output mode. When set to true the attachment feature
+      can be used by setting the request parameter
+      'org.apache.myfaces.trinidad.outputMode=attachment'. When set to false, the attachment output
+      mode will not work.
+    </description>
+    <param-name>oracle.adfinternal.view.rich.outputMode.attachment.ENABLED</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      This parameter sets the default logging level. The valid values for this
+      parameter are: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST,
+      and ALL. The default value is OFF.
+    </description>
+    <param-name>oracle.adf.view.rich.LOGGER_LEVEL</param-name>
+    <param-value>WARNING</param-value>
+  </context-param>
+
+  <context-param>
+    <description>
+      Faces API parameter - for Portal environments, this should be set to
+      'server', otherwise set to 'client'.
+    </description>
+    <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    <param-value>client</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+    <param-value>.jspx</param-value>
+  </context-param>
+
+  <!--
+  <context-param>
+    <description>
+      This parameter will tell ADF Faces to use a token on the client (this is
+      actually the default; "all" can be used to force all state to be moved to
+      the client).
+    </description>
+    <param-name>org.apache.myfaces.trinidad.CLIENT_STATE_METHOD</param-name>
+    <param-value>all</param-value>
+  </context-param>
+  -->
+
+  <context-param>
+    <description>
+      This parameter enables more efficient partial page rendering, assuming that all of the
+      components in the application support it.  The ADF Faces and DVT components do, so
+      we enable this flag.  If the application was using a component library without this
+      optimization, it would need to set this value to "off".
+    </description>
+    <param-name>org.apache.myfaces.trinidad.PPR_OPTIMIZATION</param-name>
+    <param-value>on</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>org.apache.myfaces.trinidad.DISABLE_CONTENT_COMPRESSION</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>oracle.adf.view.rich.newWindowDetect.OPTIONS</param-name>
+    <param-value>on</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>oracle.adf.view.rich.sessionHandling.WARNING_BEFORE_TIMEOUT</param-name>
+    <param-value>-1</param-value>
+  </context-param>
+
+  <!-- Context Parameter for <af:poll> timeout setting -->
+  <!--context-param>
+    <description>
+      This parameter will tell ADF Faces to stop the polling of a POLL component
+      after a configured time (in ms) of user inactivity (keyboard/mouse). This can be
+      overridden by the timeout property of the actual poll component on the page.
+    </description>
+    <param-name>oracle.adf.view.rich.poll.TIMEOUT</param-name>
+    <param-value>19000</param-value>
+  </context-param-->
+
+  <!-- context-param>
+    <description>
+      Specifies the implementation of SanitizationStrategy to be used with
+      af:sanitized component. The implementation should restrict unsafe
+      HTML tags and attributes and ensure only HTML escaped client variables
+      are permitted
+    </description>
+    <param-name>oracle.adf.view.rich.sanitized.SANITIZATION_STRATEGY</param-name>
+    <param-value>oracle.adfdemo.view.lov.DemoSanitizationStrategy</param-value>
+  </context-param -->
+
+  <!-- Portal Context Parameters for File Download -->
+  <!--context-param>
+    <description>Maximum size in kilobytes that files can be stored in the session via the
+    FileDownloadActionListener. If a file is generated larger than this size, the system will
+    attempt to store the file on the disk. The default value is 100 (100k).</description>
+    <param-name>oracle.adf.view.rich.portal.FILE_DOWNLOAD_MAX_MEM</param-name>
+    <param-value>150</param-value>
+  </context-param>
+
+   <context-param>
+    <description>Maximum size in kilobytes that files can be downloaded via the
+    FileDownloadActionListener. If a file is generated larger than this size, an Exception with be
+    logged and a faces error message generated. The default value is 2000 (2000k/2MB).</description>
+    <param-name>oracle.adf.view.rich.portal.FILE_DOWNLOAD_MAX_DISK_SPACE</param-name>
+    <param-value>3000</param-value>
+  </context-param>
+
+   <context-param>
+    <description>Location where files will be stored on the disk during file download. The default
+    is value of the java System property "java.io.tempDir".</description>
+    <param-name>oracle.adf.view.rich.portal.FILE_DOWNLOAD_TEMP_DIR</param-name>
+    <param-value>/tmp/portal</param-value>
+  </context-param -->
+
+  <!--
+  <context-param>
+    <description>
+      Many of the layout container components in ADF Faces must loop over their
+      children components two or more times in order to produce the desired layout
+      structures. In JSF, it is illegal to change the component tree on the fly
+      during the render phase of the lifecycle. Such illegal changes could be
+      performed by adding components, removing components, changing variables
+      behind EL expressions assigned to the components (e.g. the "rendered"
+      attribute), or using non-thread-safe EL (e.g. a variable shared among
+      multiple users). If the component tree changes between the various passes
+      that a container makes over its children, you may encounter various
+      undesirable results.
+      Common symptoms of such illegal changes include:
+        - IndexOutOfBoundsException messages in the log files
+        - Invalid HTML generated for the browser
+        - Mismatching content displayed in the browser (e.g. top tabs of a
+            panelTabbed not matching bottom tabs)
+      This parameter controls a debugging tool that helps gather more information
+      about these errors in multi-pass container components (e.g. panelGridLayout,
+      panelGroupLayout, menuBar, toolbar, etc.). When enabled, any time a user
+      reproduces the issue, a detailed report will be logged. This report will
+      identify the container component's client ID and the list of rendered child
+      component client IDs that it encountered during each pass. This detailed log
+      report can then be given to the application developer for evaluation. It
+      will tell the application developer which children components are unstable;
+      it will help identify what kind of fix is needed to correct the issue.
+      Supported values are:
+        off - (default) a simplified message will be logged identifying that illegal application code was detected.
+        detailed - a report will be logged identifying additional key details about the illegal application behavior.
+    </description>
+    <param-name>oracle.adf.view.rich.MULTI_PASS_CONTAINER_DEBUG</param-name>
+    <param-value>detailed</param-value>
+  </context-param>
+  -->
+
+  <!--
+  <context-param>
+    <description>
+      This parameter controls whether a loading "splash screen" will be
+      displayed when users first access the application.
+      Supported values are:
+        on - (default) the splash screen is displayed
+        off - the splash screen is not displayed
+    </description>
+    <param-name>oracle.adf.view.rich.SPLASH_SCREEN</param-name>
+    <param-value>off</param-value>
+  </context-param>
+  -->
+
+  <context-param>
+    <description>
+      This parameter controls the default value for component geometry on the page.
+      Supported values are:
+        legacy - component attributes use the default values as specified for the attributes
+                 in the tag documentation (default value)
+        auto   - component attributes use the correct default value given the value of their
+                 parent component. For example, with this setting, the panelStretchLayout
+                 will use "auto" as the default value for its "dimensionsFrom" attribute
+                 instead of "parent".
+    </description>
+    <param-name>oracle.adf.view.rich.geometry.DEFAULT_DIMENSIONS</param-name>
+    <param-value>auto</param-value>
+  </context-param>
+
+  <!--
+  <context-param>
+    <description>
+    This parameter can be used to enable an optimization that improves
+    network performance by only including "dirty" input/select values
+    in ppr postback payloads.  An input/select value is considered to
+    be dirty if it has been modified by the end user (or if it is not
+    recognizable as part of an ADF Faces component).
+    </description>
+    <param-name>oracle.adf.view.rich.POSTBACK_PAYLOAD_TYPE</param-name>
+    <param-value>dirty</param-value>
+  </context-param>
+  -->
+
+  <context-param>
+    <description>
+    This parameter can be used to control the presentation of converter
+    hint tips by the component.
+    Supported values are:
+      auto          - (default) Let the framework decide the presentation mode for
+                    component hint. The default behavior is to show hint as a
+                    note window tip on the component as soon as it receives focus.
+      none          - Turn off hints accross all components in the framework.
+      EL Expression - Any expression returning oracle.adf.view.rich.component.DefaultHintDisplay
+    </description>
+    <param-name>oracle.adf.view.rich.component.DEFAULT_HINT_DISPLAY</param-name>
+    <param-value>#{demoSkin.defaultHintDisplay}</param-value>
+  </context-param>
+  
+  <!-- Faces Filters -->
+  <!--filter>
+    <filter-name>JpsFilter</filter-name>
+    <filter-class>oracle.security.jps.ee.http.JpsFilter</filter-class>
+  </filter-->
+  <filter>
+    <filter-name>demoRedirect</filter-name>
+    <filter-class>oracle.adfdemo.view.webapp.rich.RedirectFilter</filter-class>
+    <init-param>
+      <param-name>faces-servlet-url-pattern</param-name>
+      <param-value>/faces/*</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>adfFaces</filter-name>
+    <filter-class>org.apache.myfaces.trinidad.webapp.TrinidadFilter</filter-class>
+  </filter>
+
+  <!-- Faces Filter Mappings -->
+  <!--filter-mapping>
+    <filter-name>JpsFilter</filter-name>
+    <url-pattern>*.jspx</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>JpsFilter</filter-name>
+    <url-pattern>*.jsp</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping-->
+  <filter-mapping>
+    <filter-name>demoRedirect</filter-name>
+    <url-pattern>*.jspx</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>adfFaces</filter-name>
+    <servlet-name>faces</servlet-name>
+  </filter-mapping>
+
+  <servlet>
+    <servlet-name>faces</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <servlet-name>resources</servlet-name>
+    <servlet-class>org.apache.myfaces.trinidad.webapp.ResourceServlet</servlet-class>
+  </servlet>
+
+  <!-- source code servlet -->
+  <servlet>
+    <servlet-name>source</servlet-name>
+    <servlet-class>oracle.adfdemo.view.webapp.rich.SourceCodeServlet</servlet-class>
+  </servlet>
+
+  <!-- demo find servlet for use with browser toolbar search box requests -->
+  <servlet>
+    <servlet-name>demofind</servlet-name>
+    <servlet-class>oracle.adfdemo.view.webapp.rich.DemoFindServlet</servlet-class>
+  </servlet>
+
+  <!-- servlet to allow for the demo specific download example on the
+    activeCommandToolbarButton.jspx in a portlet environment -->
+  <servlet>
+    <servlet-name>portletdownload</servlet-name>
+    <servlet-class>oracle.adfdemo.view.webapp.rich.PortletDownload</servlet-class>
+  </servlet>
+
+  <!--For ADS on jetty (this is required when container does not support servlet 3.0)-->
+  <servlet>
+    <servlet-name>adw</servlet-name>
+    <servlet-class>oracle.adfinternal.view.faces.activedata.AdsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adw</servlet-name>
+    <url-pattern>/adwwls/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- Mocked REST service faking a service that operating on Employee table
+    from reference HR database.-->
+  <servlet>
+    <servlet-name>empDeptRestService</servlet-name>
+    <servlet-class>oracle.adfdemo.view.inputSearch.Service.EmpDeptRestService</servlet-class>
+  </servlet>
+
+  <!-- Faces Servlet Mappings -->
+
+  <servlet-mapping>
+    <servlet-name>faces</servlet-name>
+    <url-pattern>/faces/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>resources</servlet-name>
+    <url-pattern>/afr/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>resources</servlet-name>
+    <url-pattern>/adf/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>resources</servlet-name>
+    <url-pattern>/adfdemo/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>resources</servlet-name>
+    <url-pattern>/adfdt/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>empDeptRestService</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- DVT Servlet Mappings -->
+  <!-- Please do NOT remove these comments.  The DVT web.xml
+    settings are inserted here in ADE during the nightly deployment
+    of our Demos. Although the DVT code is not checked into SVN,
+    it is necessary for the inclusion of the DVT demo in the
+    RCF demos.
+   -->
+    <!-- This file documents the DVT specific web.xml configurations. 
+       This is not the actual web.xml. -->
+
+  <!-- DVT Faces Configs -->
+  <context-param>
+    <param-name>javax.faces.CONFIG_FILES</param-name>
+        <param-value>
+            /WEB-INF/dvtManagedBeans.xml,
+            /WEB-INF/dvtNavRules.xml
+    </param-value>
+  </context-param>
+  <context-param>
+    <param-name>oracle.adf.view.rich.dvt.DEFAULT_IMAGE_FORMAT</param-name>
+    <param-value>HTML5</param-value>
+  </context-param>
+
+<!--
+  <filter>
+    <filter-name>adfBindings</filter-name>
+    <filter-class>oracle.adf.model.servlet.ADFBindingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>adfBindings</filter-name>
+    <servlet-name>faces</servlet-name>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <listener>
+    <listener-class>oracle.adf.mbean.share.connection.ADFConnectionLifeCycleCallBack</listener-class>
+  </listener>
+ --> 
+  <servlet>
+    <servlet-name>BIGRAPHSERVLET</servlet-name>
+    <servlet-class>oracle.adf.view.faces.bi.webapp.GraphServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>BIGAUGESERVLET</servlet-name>
+    <servlet-class>oracle.adf.view.faces.bi.webapp.GaugeServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>MapProxyServlet</servlet-name>
+    <servlet-class>oracle.adf.view.faces.bi.webapp.MapProxyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BIGRAPHSERVLET</servlet-name>
+    <url-pattern>/servlet/GraphServlet/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BIGAUGESERVLET</servlet-name>
+    <url-pattern>/servlet/GaugeServlet/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MapProxyServlet</servlet-name>
+    <url-pattern>/mapproxy/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>resources</servlet-name>
+    <url-pattern>/bi/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>resources</servlet-name>
+    <url-pattern>/sourceCode/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- GeoMap Connections Config -->
+  <!--<context-param>
+    <param-name>mapConfigs</param-name>
+    <param-value>mapConfig1</param-value>
+  </context-param>
+  <context-param>
+    <param-name>mapConfig1mUrl</param-name>
+    <param-value>mapviewer</param-value>
+  </context-param>
+  <context-param>
+    <param-name>mapConfig1gUrl</param-name>
+    <param-value>geocoder</param-value>
+  </context-param>-->
+
+
+  <!-- Route demo resources through ResourceServlet as well
+       so that cache headers will be set -->
+  <servlet-mapping>
+    <servlet-name>resources</servlet-name>
+    <url-pattern>/jsLibs/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>resources</servlet-name>
+    <url-pattern>/images/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>resources</servlet-name>
+    <url-pattern>/styles/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>source</servlet-name>
+    <url-pattern>*.source</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>demofind</servlet-name>
+    <url-pattern>*.demofind</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>portletdownload</servlet-name>
+    <url-pattern>*.portletdownload</url-pattern>
+  </servlet-mapping>
+
+  <session-config>
+    <session-timeout>35</session-timeout>
+  </session-config>
+
+  <mime-mapping>
+    <extension>html</extension>
+    <mime-type>text/html</mime-type>
+  </mime-mapping>
+
+  <mime-mapping>
+    <extension>txt</extension>
+    <mime-type>text/plain</mime-type>
+  </mime-mapping>
+
+  <mime-mapping>
+    <extension>css</extension>
+    <mime-type>text/css</mime-type>
+  </mime-mapping>
+
+  <!-- Welcome Files -->
+  <welcome-file-list>
+    <welcome-file>index.jspx</welcome-file>
+  </welcome-file-list>
+  <jsp-config>
+    <jsp-property-group>
+      <url-pattern>*.jsff</url-pattern>
+      <is-xml>true</is-xml>
+    </jsp-property-group>
+  </jsp-config>
+
+  <listener>
+    <listener-class>oracle.adfdemo.view.components.rich.StreamingBean</listener-class>
+  </listener>
+</web-app>

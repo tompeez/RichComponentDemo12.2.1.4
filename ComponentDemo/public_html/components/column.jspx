@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="column Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="column"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelSplitter positionedFromEnd="true" splitterPosition="120" orientation="vertical"
+                            dimensionsFrom="auto">
+            <f:facet name="first">
+              <af:panelStretchLayout topHeight="auto" bottomHeight="auto"
+                                     dimensionsFrom="auto">
+                <f:facet name="top">
+                  <af:panelGroupLayout layout="vertical" >
+                    <af:outputFormatted value="&lt;b>Column Demo&lt;/b>"
+                                        />
+                  </af:panelGroupLayout>
+                </f:facet>
+                <f:facet name="center">
+                  <af:table rowSelection="multiple" columnSelection="multiple" columnStretching="last"
+                      var="row" value="#{periodicTable.tableData}" styleClass="AFStretchWidth"
+                      summary="table data" id="t1">
+                    <af:column headerText="Element Name" sortable="true" id="column1" rowHeader="true">
+                      <af:outputText value="#{row.name}" id="ot1"/>
+                    </af:column>
+                    <af:column id="symbolColumn" binding="#{editor.component}" clientComponent="true">
+                      <f:facet name="header">
+                        <af:outputText value="Symbol" id="ot2"/>
+                      </f:facet>
+                      <af:outputText value="#{row.symbol}" id="ot3"/>
+                    </af:column>
+                      <!--
+                        The af:column that we are binding is a tableHeader element, so when the user updates the
+                        editor fields on the side of this page, we need to PPR-replace the af:table
+                        instead. We use the magical "partialTargetParent"
+                        attribute to cause the parent to be used as the partial target.  See
+                        ComponentEditorHandler.update() for more details.
+                      -->
+                      <f:attribute name="partialTargetParent" value="true"/>
+
+                    <af:column headerText="Atomic Number" id="column2">
+                      <af:outputText value="#{row.number}" id="ot4"/>
+                    </af:column>
+                    <af:column headerText="Group" id="column3">
+                      <af:outputText value="#{row.group}" id="ot5"/>
+                    </af:column>
+                  </af:table>
+                </f:facet>
+              </af:panelStretchLayout>
+            </f:facet>
+            <f:facet name="second">
+
+            <af:panelGroupLayout layout="scroll" id="pgl2">
+              <af:outputText value="See also:" id="ot6"/>
+              <af:panelList id="pl1">
+                <af:goLink text="with contextInfo in context facet"
+                                          destination="contextInfo.jspx"
+                                          id="gl0"/>
+                <af:goLink text="table" destination="table.jspx" id="gl1"/>
+                <af:goLink text="tree" destination="tree.jspx" id="gl2"/>
+                <af:goLink text="treeTable" destination="treeTable.jspx"
+                           id="gl3"/>
+                <af:goLink text="Filterable Table (to see usage of &lt;f:facet name=&quot;filter&quot;>" destination="/components/table/filterableTable.jspx"
+                           id="gl4"/>
+                <af:goLink text="ColumnGroup Table" destination="/components/table/columnGroupTable.jspx"
+                           id="gl5"/>
+              </af:panelList>
+            </af:panelGroupLayout>
+
+            </f:facet>
+          </af:panelSplitter>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

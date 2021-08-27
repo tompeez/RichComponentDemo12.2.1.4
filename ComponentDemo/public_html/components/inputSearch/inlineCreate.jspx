@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2016, 2018, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="inlineCreate demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+        function inlineCreateHelper(event)
+        {
+          var inputSearch = event.getSource();
+
+          // Two options here. Always support create feature.
+          // Or support create feature only if autocompletion didn't happen.
+          // Let's implement the latter.
+          if (!event.getAutoCompletedValue())
+          {
+            // Cancelling the event will stop auto-completion step (also validation if auto-completion has failed)
+            event.cancel();
+
+            // If inputSearch.getAutoSubmit() is false, then the following custom event will have to be queued
+            // in the client listener of the button that is submitting the form. Use inputSearch.getDisplayedValue()
+            // to retrieve the submitted value in that usecase.
+            // The following code is to post the new value immediately to the server.
+            AdfCustomEvent.queue(inputSearch, "inputSearchInlineCreate", {"submittedValue": event.getSubmittedValue()}, false);
+          }
+        }
+        function dummyFilterParameters(request, context)
+        {
+          return request;
+        }
+      </af:resource>
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Starts with based suggestions filtering"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <f:facet name="separator">
+                <af:spacer height="25px" id="s3"/>
+              </f:facet>
+              <af:outputFormatted styleUsage="instruction" value="&lt;b>&lt;/b>"
+                                  id="of2"/>
+              <af:panelGroupLayout layout="vertical" id="pgl7">
+                <af:outputFormatted value="This demo shows how inputSearch can be configured to support
+                                           inline create feature by listening to AdfAutoCompletingEvent"
+                                    id="ot4"/>
+                <af:inputSearch id="iSearch"
+                              label="Select a person from the list: "
+                              valueAttribute="id"
+                              displayAttributes="fName lName id"
+                              value="#{inputSearchDemo.employeesSet}"
+                              autoSubmit="true"
+                              selectionConverter="#{inputSearchDemo.selectionConverter}"
+                              partialTriggers="richCommand">
+                  <f:validator validatorId="oracle.adfdemo.InputSearchDemoValidator" />
+                  <f:converter converterId="oracle.adfdemo.InputSearchDemoConverter" />
+                  <af:searchSection type="default" filterParameters="dummyFilterParameters"
+                                    dataUrl="/rest/employees?cache=etag&amp;limit=125000" />
+
+                  <af:clientListener type="autoCompletingEvent" method="inlineCreateHelper" />
+                  <af:serverListener type="inputSearchInlineCreate" method="#{inputSearchDemo.createNewEmployee}" />
+                </af:inputSearch>
+
+                <af:inputText id="required" label="Required field" required="true" />
+              </af:panelGroupLayout>
+
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The submitted value was: " id="ot1"/>
+                <af:outputText partialTriggers="richCommand iSearch" id="result"
+                                value="#{inputSearchDemo.employeesSet}"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

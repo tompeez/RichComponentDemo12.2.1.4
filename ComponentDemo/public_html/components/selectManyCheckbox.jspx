@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2017, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="selectManyCheckbox Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="selectManyCheckbox"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch a selectManyCheckbox is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:attribute name="fakeStretchedStyle" value="width:125px;height:65px;"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputText value="This is a demo for the selectManyCheckbox component. Select a value from the selectManyCheckbox and use either the partial or full postback command button to push the value of the selectManyCheckbox into the underlying model (a bean property).  The outputText will display the submitted value."
+                           id="ot1"/>
+            <af:outputText value="The value attribute in the example below is bound to a List"
+                           id="ot2"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:selectManyCheckbox binding="#{editor.component}" id="targetListbox"
+                                 value="#{demoInput.manyListValue}" label="Drinks">
+            <af:selectItem label="coffee" value="bean" shortDesc="Coffee from Kona"
+                           id="si1"/>
+            <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                          id="si2"/>
+            <af:selectItem disabled="true" label="orange juice" value="orange"
+                           id="si3"/>
+            <f:selectItem itemLabel="wine" itemValue="grape" id="si4"/>
+            <af:selectItem shortDesc="shortDesc" label="milk" value="moo"
+                           id="si5"/>
+            <f:selectItems value="#{demoInput.selectItems}" id="si6"/>
+          </af:selectManyCheckbox>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <af:panelGroupLayout layout="vertical" id="pgl1V" inlineStyle="padding:4px">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <f:facet name="separator">
+                  <af:spacer height="5px" id="s2"/>
+                </f:facet>
+                <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+                <af:commandButton text="full postback" id="fullCommand"/>
+                <af:panelGroupLayout id="pgl3">
+                  <af:outputText value="The submitted value was: " id="ot3"/>
+                  <af:outputText id="result" partialTriggers="richCommand targetListbox"
+                                 value="#{demoInput.manyListString}"/>
+                </af:panelGroupLayout>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl4">
+                <af:outputText value="By choosing a message type, the appropriate message will be added to the selectManyCheckbox."
+                               id="ot4"/>
+                <af:selectManyCheckbox validator="#{messageTest.validateMultipleValues}"
+                                       autoSubmit="true" label="messages"
+                                       id="selectManyCheckbox1">
+                  <af:selectItem label="none" value="none" id="si7"/>
+                  <af:selectItem label="fatal" value="fatal" id="si8"/>
+                  <af:selectItem label="error" value="error" id="si9"/>
+                  <af:selectItem label="warning" value="warning" id="si10"/>
+                  <af:selectItem label="confirmation" value="confirmation"
+                                 id="si11"/>
+                  <af:selectItem label="info" value="info" id="si12"/>
+                </af:selectManyCheckbox>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="horizontal" id="pgl5">
+                <af:popup id="popupDialog">
+                  <af:dialog title="Which dog breeds do you like?" id="d2">
+                    <af:selectManyCheckbox id="pupPop" value="#{demoInput.manyListValue}" label="dogs"
+                                           simple="true">
+                      <af:selectItem label="Shiba Inu" value="Shiba" shortDesc="Dog from Japan"
+                                     id="si13"/>
+                      <f:selectItem itemLabel="Italian Greyhound" itemValue="Monty"
+                                    itemDescription="Dog from Italy" id="si14"/>
+                      <af:selectItem disabled="true" label="Mutt" value="Sasha"
+                                     shortDesc="Dog from a good neighbor hood"
+                                     id="si15"/>
+                      <af:selectItem shortDesc="Dog from Australia"
+                                     label="Australian Cattle Dog" value="Kerry"
+                                     id="si16"/>
+                    </af:selectManyCheckbox>
+                  </af:dialog>
+                </af:popup>
+                <af:outputText value="This demo shows the selectManyCheckbox inside of a popup."
+                               id="ot5"/>
+                <af:spacer width="5" id="s3"/>
+                <af:commandButton immediate="true" text="Show SelectManyCheckbox" clientComponent="true"
+                                  id="popupButton">
+                  <af:showPopupBehavior popupId="popupDialog" alignId="popupButton" align="afterStart"/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+              <af:group id="gAlign">
+                <af:button id="bAlign" text="Field Alignment" immediate="true">
+                  <af:showPopupBehavior popupId="pAlign"/>
+                </af:button>
+                <af:popup id="pAlign">
+                  <af:panelWindow id="pwAlign" title="Field Alignment">
+                    <af:panelGroupLayout id="pglAlignV" layout="vertical"
+                      inlineStyle="min-width:370px;min-height:320px;"
+                      partialTriggers="changedSetting disabledSetting helpSetting horizontalSetting readOnlySetting requiredSetting">
+                      <af:panelFormLayout id="pflAlign1" maxColumns="2" rows="1">
+                        <af:selectBooleanCheckbox id="changedSetting" label="Changed" text="Changed indicator"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.changed}"/>
+                        <af:selectBooleanCheckbox id="disabledSetting" label="Disabled" text="Disabled"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.disabled}"/>
+                        <af:selectBooleanCheckbox id="helpSetting" label="Has help" text="Help"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.hasHelp}"/>
+                        <af:selectBooleanCheckbox id="horizontalSetting" label="Horizontal" text="Horizontal"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.horizontal}"/>
+                        <af:selectBooleanCheckbox id="readOnlySetting" label="Read-only" text="Read-only"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.readOnly}"/>
+                        <af:selectBooleanCheckbox id="requiredSetting" label="Required" text="Required"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.required}"/>
+                      </af:panelFormLayout>
+                      <af:separator id="sepAlign"/>
+                      <af:spacer id="spAlign1" height="14"/>
+                      <af:outputText id="otAlign1" value="Simple:"/>
+                      <af:selectManyCheckbox id="alignEx1" label="Example" simple="true"
+                                             changed="#{pageFlowScope.changed}"
+                                             disabled="#{pageFlowScope.disabled}"
+                                             helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                             layout="#{pageFlowScope.horizontal == true ? 'horizontal' : 'vertical'}"
+                                             readOnly="#{pageFlowScope.readOnly}"
+                                             showRequired="#{pageFlowScope.required}"
+                                             value="#{demoInput.manyListValue}">
+                        <af:selectItem id="exSI1" label="coffee" value="bean" shortDesc="Coffee from Kona"/>
+                        <f:selectItem id="exSI2" itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"/>
+                        <af:selectItem id="exSI3" disabled="true" label="orange juice" value="orange"/>
+                        <f:selectItem id="exSI4" itemLabel="wine" itemValue="grape"/>
+                      </af:selectManyCheckbox>
+                      <af:spacer id="spAlign2" height="14"/>
+                      <af:outputText id="otAlign2" value="Labelled and panelLabelAndMessage:"/>
+                      <af:selectManyCheckbox id="alignEx2" label="Example"
+                                             changed="#{pageFlowScope.changed}"
+                                             disabled="#{pageFlowScope.disabled}"
+                                             helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                             layout="#{pageFlowScope.horizontal == true ? 'horizontal' : 'vertical'}"
+                                             readOnly="#{pageFlowScope.readOnly}"
+                                             showRequired="#{pageFlowScope.required}"
+                                             value="#{demoInput.manyListValue}">
+                        <af:selectItem id="exSI1b" label="coffee" value="bean" shortDesc="Coffee from Kona"/>
+                        <f:selectItem id="exSI2b" itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"/>
+                        <af:selectItem id="exSI3b" disabled="true" label="orange juice" value="orange"/>
+                        <f:selectItem id="exSI4b" itemLabel="wine" itemValue="grape"/>
+                      </af:selectManyCheckbox>
+                      <af:spacer id="spAlign3" height="14"/>
+                      <af:panelLabelAndMessage id="plmAlignEx2a" label="Example" styleClass="AFLabelTopAlign"
+                                                 changed="#{pageFlowScope.changed}"
+                                                 helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                 showRequired="#{pageFlowScope.required and (pageFlowScope.disabled != true) and (pageFlowScope.readOnly != true)}"
+                                                 shortDesc="This is a panelLabelAndMessage surrounding a simple field">
+                       <af:selectManyCheckbox id="alignEx2a" label="Example" simple="true"
+                                               disabled="#{pageFlowScope.disabled}"
+                                               helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                               layout="#{pageFlowScope.horizontal == true ? 'horizontal' : 'vertical'}"
+                                               readOnly="#{pageFlowScope.readOnly}"
+                                               showRequired="#{pageFlowScope.required}"
+                                               value="#{demoInput.manyListValue}">
+                          <af:selectItem id="exSI1ba" label="coffee" value="bean" shortDesc="Coffee from Kona"/>
+                          <f:selectItem id="exSI2ba" itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"/>
+                          <af:selectItem id="exSI3ba" disabled="true" label="orange juice" value="orange"/>
+                          <f:selectItem id="exSI4ba" itemLabel="wine" itemValue="grape"/>
+                        </af:selectManyCheckbox>
+                      </af:panelLabelAndMessage>
+                      <af:spacer id="spAlign3a" height="14"/>
+                      <af:panelGroupLayout id="formWrap" layout="default">
+                        <af:outputText id="otAlign3" value="Form (labelled and panelLabelAndMessage):"/>
+                        <af:spacer id="formSp1" width="8"/>
+                        <af:selectBooleanCheckbox id="labelAlignSetting" label="Top Labels" text="Top Labels"
+                                                  contentStyle="white-space:nowrap"
+                                                  autoSubmit="true" simple="true" value="#{pageFlowScope.topLabels}"/>
+                      </af:panelGroupLayout>
+                      <af:panelFormLayout id="pflAlign2" maxColumns="1" partialTriggers="labelAlignSetting"
+                                          labelAlignment="#{pageFlowScope.topLabels ? 'top' : 'start'}">
+                        <af:selectManyCheckbox id="alignEx3" label="Example"
+                                               changed="#{pageFlowScope.changed}"
+                                               disabled="#{pageFlowScope.disabled}"
+                                               helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                               layout="#{pageFlowScope.horizontal == true ? 'horizontal' : 'vertical'}"
+                                               readOnly="#{pageFlowScope.readOnly}"
+                                               showRequired="#{pageFlowScope.required}"
+                                               value="#{demoInput.manyListValue}">
+                          <af:selectItem id="exSI1c" label="coffee" value="bean" shortDesc="Coffee from Kona"/>
+                          <f:selectItem id="exSI2c" itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"/>
+                          <af:selectItem id="exSI3c" disabled="true" label="orange juice" value="orange"/>
+                          <f:selectItem id="exSI4c" itemLabel="wine" itemValue="grape"/>
+                        </af:selectManyCheckbox>
+                        <af:panelLabelAndMessage id="plmAlign" label="Example" styleClass="AFLabelTopAlign"
+                                                 changed="#{pageFlowScope.changed}"
+                                                 helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                 showRequired="#{pageFlowScope.required and (pageFlowScope.disabled != true) and (pageFlowScope.readOnly != true)}"
+                                                 shortDesc="This is a panelLabelAndMessage surrounding a simple field">
+                          <af:selectManyCheckbox id="alignEx4" label="Example" simple="true"
+                                                 disabled="#{pageFlowScope.disabled}"
+                                                 helpTopicId="#{pageFlowScope.hasHelp ? 'TOPICID_ALL' : ''}"
+                                                 layout="#{pageFlowScope.horizontal == true ? 'horizontal' : 'vertical'}"
+                                                 readOnly="#{pageFlowScope.readOnly}"
+                                                 showRequired="#{pageFlowScope.required}"
+                                                 value="#{demoInput.manyListValue}">
+                            <af:selectItem id="exSI1d" label="coffee" value="bean" shortDesc="Coffee from Kona"/>
+                            <f:selectItem id="exSI2d" itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"/>
+                            <af:selectItem id="exSI3d" disabled="true" label="orange juice" value="orange"/>
+                            <f:selectItem id="exSI4d" itemLabel="wine" itemValue="grape"/>
+                          </af:selectManyCheckbox>
+                        </af:panelLabelAndMessage>
+                      </af:panelFormLayout>
+                    </af:panelGroupLayout>
+                  </af:panelWindow>
+                </af:popup>
+              </af:group>
+              <af:panelGroupLayout layout="vertical" id="pgl6">
+                <af:outputText value="See also:" id="ot6"/>
+                <af:navigationPane hint="list" id="np1">
+                  <af:commandNavigationItem immediate="true" text="editableTable"
+                                            destination="table/editableTable.jspx"
+                                            id="cni1"/>
+                </af:navigationPane>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

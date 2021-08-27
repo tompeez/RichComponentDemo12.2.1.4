@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml" xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Layout Basics" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="css">
+        .MyStrongText
+        {
+          font-weight: bold;
+        }
+      </af:resource>
+      <af:pageTemplate id="tmplt" viewId="#{demoSkin.altaBased ? '/templates/pageTemplateDefs/demoIndexTemplateAlta.jspx' : '/templates/pageTemplateDefs/demoIndexTemplate.jspx'}">
+        <f:attribute name="brandingTitle" value="Layout Basics"/>
+        <f:attribute name="mode" value="feature"/>
+        <f:attribute name="navLevelCount" value="2"/>
+        <f:attribute name="collapsedSettings" value="true"/>
+        <f:facet name="navigation2">
+          <af:navigationPane hint="tabs" id="np1">
+            <af:commandNavigationItem text="Layout Basics" destination="/feature/layoutBasics.jspx"
+                                      id="cni1"/>
+            <af:commandNavigationItem text="Simple Demos" destination="/feature/layoutBasicTest.jspx"
+                                      selected="true" id="cnsd"/>
+            <af:commandNavigationItem text="Branding Bar"
+                                      destination="/feature/layoutBrandingBar.jspx" id="cni2"/>
+            <af:commandNavigationItem text="Form Layout" destination="/feature/layoutForm.jspx"
+                                      id="cni3"/>
+            <af:commandNavigationItem text="Navigation-Master-Detail"
+                                      destination="/feature/layoutNavigationMasterDetail.jspx"
+                                      id="cni4"/>
+            <af:commandNavigationItem text="Stretched Header"
+                                      destination="/feature/layoutStretchedHeader.jspx" id="cni5"/>
+            <af:commandNavigationItem text="Tiled Flowing"
+                                      destination="/feature/layoutTiledFlowing.jspx" id="cni6"/>
+            <af:commandNavigationItem text="Tiled Stretching"
+                                      destination="/feature/layoutTiledStretching.jspx" id="cni7"/>
+          </af:navigationPane>
+        </f:facet>
+        <f:facet name="center2">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <af:outputText value="The demos linked off this page are to help understand how various attributes affect layout and stretching. They do not use the demo page template, instead they are intentionally very simple in order to make it easier to understand the source."/>
+            <af:panelList>
+              <af:panelGroupLayout layout="horizontal">              
+                <af:goLink destination="/faces/feature/layoutCommon.jspx" text="layoutCommon.jspx" targetFrame="_blank"/>
+                <af:outputText value=" - combines a few components and lets you control layout/stretching attributes."/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="horizontal">              
+                <af:goLink destination="/faces/feature/layoutGrid.jspx" text="layoutGrid.jspx"  targetFrame="_blank"/>
+                <af:outputText value=" - lets you control layout/stretching attributes on panelGridLayout/gridRow/gridCell components."/>
+              </af:panelGroupLayout>
+            </af:panelList>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

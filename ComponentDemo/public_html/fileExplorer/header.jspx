@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <!-- By default, every toolbar is placed on a new row -->
+  <af:toolbox id="headerToolbox"
+              binding="#{explorer.headerManager.headerToolbox}">
+    <!-- Begin menubar component -->
+    <af:menuBar id="headerMenuBar">
+      <!-- File menu -->
+      <af:menu id="fileMenu" textAndAccessKey="#{explorerBundle['menu.file']}">
+        <af:menu textAndAccessKey="#{explorerBundle['menu.new']}" id="m1">
+          <af:commandMenuItem textAndAccessKey="#{explorerBundle['menuitem.file']}"
+                              shortDesc="#{explorerBundle['menuitem.file']}"
+                              accelerator="control N" useWindow="true"
+                              windowHeight="300" windowWidth="300"
+                              action="#{explorer.headerManager.createNewFile}"
+                              launchListener="#{explorer.headerManager.addParametersToNewFile}"
+                              returnListener="#{explorer.headerManager.returnFromNewFile}"
+                              id="cmi1"/>
+          <af:commandMenuItem textAndAccessKey="#{explorerBundle['menuitem.folder']}"
+                              shortDesc="#{explorerBundle['menuitem.folder']}"
+                              accelerator="control T"
+                              actionListener="#{explorer.headerManager.createNewDir}"
+                              id="cmi2"/>
+        </af:menu>
+        <af:commandMenuItem text="#{explorerBundle['menuitem.delete']}"
+                            icon="/fileExplorer/images/delete_ena.png"
+                            disabled="#{explorer.headerManager.disabledDeleteItem}"
+                            id="cmi3">
+          <af:showPopupBehavior popupId=":fe:deletePopupDialog"/>
+        </af:commandMenuItem>
+        <af:group id="g1">
+          <af:commandMenuItem action="feature" partialSubmit="false" text="Quit"
+                              id="cmi4"/>
+        </af:group>
+      </af:menu>
+      <!-- Edit menu -->
+      <af:menu id="editMenu" textAndAccessKey="#{explorerBundle['menu.edit']}">
+        <af:group id="g2">
+          <af:commandMenuItem text="#{explorerBundle['menuitem.movetoparent']}"
+                              disabled="#{explorer.headerManager.disabledMoveToParent}"
+                              actionListener="#{explorer.headerManager.moveSelectedItemToParent}"
+                              id="cmi5"/>
+        </af:group>
+        <af:commandMenuItem id="copyFileItemMenu"
+                            text="#{explorerBundle['menuitem.copy']}"
+                            icon="/fileExplorer/images/copy_ena.png"
+                            disabled="#{explorer.headerManager.disabledCopyItem}"
+                            actionListener="#{explorer.headerManager.copySelectedItem}"/>
+        <af:commandMenuItem id="pasteFileItemMenu"
+                            text="#{explorerBundle['menuitem.paste']}"
+                            icon="/fileExplorer/images/paste_ena.png"
+                            disabled="#{explorer.headerManager.disabledPasteItem}"
+                            actionListener="#{explorer.headerManager.pasteItemToCurrentLocation}"
+                            partialTriggers="copyFileItemMenu"/>
+      </af:menu>
+      <!-- View menu -->
+      <af:menu id="viewMenu" textAndAccessKey="#{explorerBundle['menu.view']}">
+        <!-- navigators -->
+        <af:group id="g3">
+          <af:forEach items="#{explorer.navigatorManager.navigators}" var="nav">
+            <af:commandMenuItem type="check" text="#{nav.label}"
+                                selected="#{nav.selected}"
+                                binding="#{nav.commandMenuItem}"
+                                actionListener="#{nav.showNavigator}"
+                                />
+          </af:forEach>
+        </af:group>
+        <!-- content view -->
+        <af:group id="g4">
+          <af:forEach items="#{explorer.contentViewManager.contentViews}"
+                      var="cv">
+            <af:commandMenuItem type="radio" text="#{cv.label}"
+                                selected="#{cv.selected}"
+                                binding="#{cv.commandMenuItem}"
+                                actionListener="#{cv.showContentView}"
+                                />
+          </af:forEach>
+        </af:group>
+        <!-- refresh button -->
+        <af:commandMenuItem text="#{explorerBundle['menuitem.refresh']}"
+                            action="#{explorer.headerManager.doRefreshPage}"
+                            partialSubmit="false" id="cmi8"/>
+      </af:menu>
+      <!-- Help menu -->
+      <af:menu id="helpMenu" textAndAccessKey="#{explorerBundle['menu.help']}">
+        <af:commandMenuItem id="aboutMenuItem"
+                            text="#{explorerBundle['menuitem.about']}"
+                            clientComponent="true">
+          <af:clientListener method="Explorer.showAboutFileExplorerPopup"
+                             type="action"/>
+          <af:clientAttribute name="popupCompId" value="fe:popups:aboutPopup"/>
+        </af:commandMenuItem>
+        <af:commandMenuItem id="feedbackMenuItem"
+                            text="#{explorerBundle['menuitem.feedback']}"
+                            clientComponent="true">
+          <af:clientListener method="Explorer.showHelpFileExplorerPopup"
+                             type="action"/>
+        </af:commandMenuItem>
+      </af:menu>
+    </af:menuBar>
+    <!-- Begin toolbar component -->
+    <af:toolbar id="headerToolbar1" flex="1">
+      <af:group id="g5">
+        <af:commandToolbarButton id="navBack"
+                                 icon="/fileExplorer/images/navigateback_ena.png"
+                                 depressedIcon="/fileExplorer/images/navigateback_dwn.png"
+                                 disabledIcon="/fileExplorer/images/navigateback_dis.png"
+                                 hoverIcon="/fileExplorer/images/navigateback_ovr.png"
+                                 shortDesc="#{explorerBundle['toolbarbutton.navbacktooltip']}"
+                                 disabled="#{explorer.headerManager.disabledNavBack}"
+                                 actionListener="#{explorer.headerManager.handleNavBack}"/>
+        <af:commandToolbarButton id="navForward"
+                                 icon="/fileExplorer/images/navigateforward_ena.png"
+                                 depressedIcon="/fileExplorer/images/navigateforward_dwn.png"
+                                 disabledIcon="/fileExplorer/images/navigateforward_dis.png"
+                                 hoverIcon="/fileExplorer/images/navigateforward_ovr.png"
+                                 shortDesc="#{explorerBundle['toolbarbutton.navfwdtooltip']}"
+                                 disabled="#{explorer.headerManager.disabledNavForward}"
+                                 actionListener="#{explorer.headerManager.handleNavForward}"/>
+        <af:commandToolbarButton id="upOneFolder"
+                                 icon="/fileExplorer/images/uponefolder_ena.png"
+                                 depressedIcon="/fileExplorer/images/uponefolder_dwn.png"
+                                 disabledIcon="/fileExplorer/images/uponefolder_dis.png"
+                                 hoverIcon="/fileExplorer/images/uponefolder_ovr.png"
+                                 shortDesc="#{explorerBundle['toolbarbutton.uptooltip']}"
+                                 disabled="#{explorer.headerManager.disabledUpOneFolder}"
+                                 actionListener="#{explorer.headerManager.handleUpOneFolder}"/>
+      </af:group>
+      <af:group id="g6">
+        <!-- Change current applied layout skin -->
+        <!-- outputLabel is required here because the selectOneChoice doesn't provide any labelStyle
+             attribute to turn off wrapping of its label. -->
+        <af:outputLabel for="skinChooser" inlineStyle="white-space:nowrap"
+                        value="#{explorerBundle['global.skin']}" id="ol1"/>
+        <af:selectOneChoice id="skinChooser" value="#{demoSkin.skinFamily}"
+                            autoSubmit="true" simple="true">
+          <af:selectItem value="simple"
+                         label="#{explorerBundle['skin.simple']}" id="si2"/>
+          <af:selectItem value="richDemo"
+                         label="#{explorerBundle['skin.richdemo']}" id="si3"/>
+          <af:selectItem value="fusion"
+                         label="#{explorerBundle['skin.fusion']}" id="si31"/>
+        </af:selectOneChoice>
+        <af:commandButton text="#{explorerBundle['menuitem.refresh']}"
+                          action="#{explorer.headerManager.doRefreshPage}"
+                          id="cb1"/>
+      </af:group>
+      <!-- Show quick search area -->
+      <af:group id="quickSrch">
+        <af:selectOneChoice autoSubmit="true"
+                            value="#{explorer.headerManager.quickSearchCriteriaType}"
+                            label="criteria item" simple="true" id="soc1">
+          <f:selectItems value="#{explorer.navigatorManager.searchNavigator.searchFileItemTypes}"
+                         id="si4"/>
+        </af:selectOneChoice>
+        <af:inputText simple="true"
+                      value="#{explorer.headerManager.quickSearchInput}"
+                      shortDesc="#{explorerBundle['navigator.search']}" id="it1"/>
+        <af:commandToolbarButton id="quickSearch"
+                                 text="#{explorerBundle['navigator.search']}"
+                                 actionListener="#{explorer.headerManager.executeQuickSearch}"
+                                 shortDesc="#{explorerBundle['navigator.search']}"/>
+      </af:group>
+      <af:goImageLink id="lnkBook" destination="/faces#{facesContext.viewRoot.viewId}"
+                      text="Bookmarkable Link" icon="/images/link-e.png"
+                      hoverIcon="/images/link-h.png" depressedIcon="/images/link-p.png"/>
+    </af:toolbar>
+    <!-- Begin toolbar for current path display -->
+    <af:toolbar id="headerToolbar2" flex="1" stretchId="pathDisplay">
+      <af:outputLabel id="currLocation"
+                      inlineStyle="white-space:nowrap"
+                      for="pathDisplay"
+                      value="#{explorerBundle['menuitem.location']}"/>
+      <af:inputText id="pathDisplay"
+                    simple="true"
+                    inlineStyle="display:block" styleClass="AFStretchWidth"
+                    binding="#{explorer.headerManager.pathDisplay}"
+                    value="#{explorer.headerManager.displayedDirectory}"
+                    autoSubmit="true"
+                    validator="#{explorer.headerManager.validatePathDisplay}"/>
+    </af:toolbar>
+  </af:toolbox>
+</jsp:root>

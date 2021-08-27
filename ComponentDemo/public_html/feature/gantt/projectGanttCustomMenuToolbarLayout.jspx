@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+/* $Header: dsstools/modules/dvt-faces-demo/public_html/feature/gantt/projectGanttCustomMenuToolbarLayout.jspx /bibeans_root/1 2014/08/13 14:37:35 kiancu Exp $ */
+
+/* Copyright (c) 2011, 2014, Oracle and/or its affiliates. 
+All rights reserved.*/
+
+/*
+   DESCRIPTION
+    <short description of this file>
+
+   NOTES
+    <other useful comments, qualifications, etc.>
+
+   MODIFIED    (MM/DD/YY)
+    kiancu      08/05/14 - Creation
+ */
+-->
+
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+
+<jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>  
+  <f:view><af:document title="#{ganttFeatureLinks.projectGanttCustomizeMenusTitle}" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <f:attribute name="customEditorPresent" value="true"/>
+      
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Project Gantt Custom Menu Toolbar"/>
+      
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Project Gantt Custom Menu Toolbar"/>
+      
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+
+        <!-- START FEATURE DEMO -->
+        <af:panelFormLayout id="pgl1">
+            <af:group>
+              <af:outputText value="Use the following input boxes to create custom menus and toolbar. For any of the menus, you can add the string 'menuitem' to add a custom
+              menu item. For the toolbar, you can add 'button' to add a custom item" id="ot1"/>
+            </af:group>
+            <af:outputText value="Allowable values are: all separator edit print undoFilterGroup undoGroup undo redo filter indentGroup indent outdent legend zoomInOutGroup zoomToGroup zoomIn zoomOut zoomTo createTask updateTask delete clipboard cut copy paste indentSplitLinkGroup split linkGroup link unlink" id="toolbarOT"/>
+            <af:inputText id="inputTextToolbarLayout" label="toolbarLayout"/>
+            <af:outputText value="For the menubarLayout attribute, you can use brackets ('[' ']') to create your own subment, for example: 'taskMenu [copy paste]'"/>
+            <af:spacer  width="10" />
+            <af:outputText value="Allowable values are: all separator editMenu viewMenu resourceMenu timeBucketMenu edit print undoGroup undo redo filter indentGroup indent outdent legend properties viewMenu listPaneMenu asList asHier columnsMenu expand expandAllBelow collapseAllBelow expandAll collapseAll goToDate timeScale taskMenu createTask updateTask delete cut copy paste splitGroup split merge linkGroup link unlink taskMenu dependencyLines" id="menuOT"/>
+            <af:inputText id="inputTextMenubarLayout" label="menubarLayout"/>
+            <af:outputText value="Allowable values are: all separator edit indentGroup indent outdent updateTask delete clipboard cut copy paste scrollToTask" id="tablePopupOT"/>
+            <af:inputText id="inputTextTablePopupMenuLayout" label="tablePopupMenuLayout"/>
+            <af:outputText value="Allowable values are: all separator edit properties splitGroup split merge linkGroup link unlink updateTask delete clipboard cut copy paste" id="chartPopupOT"/>
+            <af:inputText id="inputTextChartPopupMenuLayout" label="chartPopupMenuLayout"/>
+            <af:commandButton id="update" text="Update" partialSubmit="true" actionListener="#{projectGanttCustomizeMenus.updateLayout}"/>
+        </af:panelFormLayout>
+        <dvt:projectGantt id="projectGanttCustomMenuToolbarLayout"
+                          inlineStyle="height: 400px;" 
+                          startTime="2008-04-01" endTime="2008-09-30"
+                          value="#{projectGanttCustomizeMenus.model}"
+                          var="task" partialTriggers="::update"
+                          dataChangeListener="#{projectGanttCustomizeMenus.handleDataChanged}"
+                          actionListener="#{projectGanttCustomizeMenus.handleGanttAction}"
+                          summary="Project Gantt Custom Menu Toolbar Layout Demo" >
+          <f:facet name="button">
+                     <af:commandToolbarButton partialSubmit="false"
+                                              text="Button 1"
+                                              id="ctb1a"/>
+          </f:facet>
+          <f:facet name="menuitem">
+            <af:menuBar id="m1">
+              <af:menu id="menu1" text="customMenu1">
+                <af:commandMenuItem id="cmi1" text="customCommandMenuItem"/>
+            </af:menu>
+            </af:menuBar>                          
+          </f:facet>
+          <f:facet name="major">
+            <dvt:timeAxis scale="months" id="ta1"/>
+          </f:facet>
+          <f:facet name="minor">
+            <dvt:timeAxis scale="weeks" id="ta2"/>
+          </f:facet>
+          <f:facet name="nodeStamp">
+            <af:column headerText="Task Name" id="c1">
+              <af:outputText value="#{task.taskName}" id="ot2"/>
+            </af:column>
+          </f:facet>
+          <af:column headerText="Resource" id="c2">
+            <af:outputText value="#{task.resourceName}" id="ot3"/>
+          </af:column>
+          <af:column headerText="Start Date" id="c3">
+            <af:outputText value="#{task.startTime}" id="ot4"/>
+          </af:column>
+          <af:column headerText="End Date" id="c4">
+            <af:outputText value="#{task.endTime}" id="ot5"/>
+          </af:column>
+          <dvt:ganttLegend id="gl1"/>
+        </dvt:projectGantt>
+        <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="centerBottomCollapsible">  
+          <f:subview id="links">
+            <jsp:include page="/feature/gantt/ganttFeatureLinks.jspx" flush="true"/>
+          </f:subview>
+      </f:facet>  
+    </af:pageTemplate>
+  </af:document>
+ </f:view>
+</jsp:root>

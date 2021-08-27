@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2015, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Sunburst Features Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Sunburst Features Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Sunburst Features"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="275"
+                                          dimensionsFrom="children">
+                            <f:facet name="first">
+                                <af:panelGroupLayout clientComponent="true" partialTriggers="sor9 selDisplay ins5">
+                                    <dvt:sunburst id="t1" inlineStyle="width:100%;height:500px;margin:100px;"
+                                                  binding="#{sunburst.sunburst}"
+                                                  partialTriggers="::selDataChange ::sor2 ::plam1 ::ins1 ::ins2 ::ins23 ::it3 ::it1 ::sor3 ::sor11 ::sor47 ::sor5 ::it5 ::cb111"
+                                                  value="#{sunburst.data}" var="row"
+                                                  contentDelivery="#{sunburst.contentDelivery}"
+                                                  displayLevelsChildren="#{sunburst.displayLevelsChildren}"
+                                                  nodeSelection="#{sunburst.selectionMode}"
+                                                  emptyText="#{sunburst.emptyText}"
+                                                  animationDuration="#{sunburst.animationDuration}"
+                                                  animationOnDisplay="#{sunburst.animationOnDisplay}"
+                                                  animationOnDataChange="#{sunburst.animationOnDataChange}"
+                                                  rotation="off" startAngle="#{sunburst.startAngle}"
+                                                  
+                                                  sorting="#{sunburst.sorting}">
+                                        <dvt:sunburstNode id="tn1" value="#{row.size}" fillColor="#{row.color}"
+                                                          label="#{row.text}"
+                                                          shortDesc="#{row.text}&lt;br/>#{row.size}"
+                                                          labelDisplay="#{sunburst.labelDisplay}"
+                                                          labelStyle="#{sunburst.labelStyle}"/>
+                                    </dvt:sunburst>
+                                </af:panelGroupLayout>
+                            </f:facet>
+                            <f:facet name="second">
+                                <af:panelFormLayout id="pfl1" partialTriggers="sor2">
+                                    <af:group>
+                                        <af:selectOneChoice label="Data Set" value="#{sunburst.dataType}" id="sor2"
+                                                            autoSubmit="true">
+                                            <af:selectItem label="Random" id="si4"/>
+                                            <af:selectItem label="Uniform" id="si5"/>
+                                            <af:selectItem label="Census Data" id="si96"/>
+                                            <af:selectItem label="Empty Data" id="si15"/>
+                                        </af:selectOneChoice>
+                                        <af:switcher id="switcher1" facetName="#{sunburst.dataFacet}"
+                                                     defaultFacet="Default">
+                                            <f:facet name="Custom">
+                                                <af:group>
+                                                    <af:panelLabelAndMessage label="# of Nodes" id="plam1">
+                                                        <af:outputText value="#{sunburst.status}" id="ot2"
+                                                                       partialTriggers="ins1 ins2"/>
+                                                    </af:panelLabelAndMessage>
+                                                    <af:inputNumberSlider label="Depth" id="ins1" minimum="1"
+                                                                          maximum="3" value="#{sunburst.depth}"
+                                                                          autoSubmit="true"/>
+                                                    <af:inputNumberSlider label="Breadth" id="ins2" minimum="1"
+                                                                          maximum="15" value="#{sunburst.breadth}"
+                                                                          autoSubmit="true" majorIncrement="5"
+                                                                          minimumIncrement="1" minorIncrement="1"/>
+                                                    <af:inputNumberSpinbox label="Seed" id="it3"
+                                                                           value="#{sunburst.seed}" autoSubmit="true">
+                                                        <af:validateLongRange/>
+                                                    </af:inputNumberSpinbox>
+                                                </af:group>
+                                            </f:facet>
+                                            <f:facet name="Census Data">
+                                                <af:group>
+                                                    <af:selectOneRadio label="Root Node" value="#{sunburst.censusRoot}"
+                                                                       id="sor11" autoSubmit="true">
+                                                        <af:selectItem label="United States" id="si30"/>
+                                                        <af:selectItem label="West Region" id="si31"/>
+                                                        <af:selectItem label="Pacific Division" id="si32"/>
+                                                    </af:selectOneRadio>
+                                                </af:group>
+                                            </f:facet>
+                                            <f:facet name="Empty Data">
+                                                <af:group>
+                                                    <af:inputText label="Empty Text" id="it1"
+                                                                  value="#{sunburst.emptyText}" autoSubmit="true"/>
+                                                </af:group>
+                                            </f:facet>
+                                            <f:facet name="Default"/>
+                                        </af:switcher>
+                                    </af:group>
+                                    <af:group>
+                                        <af:inputNumberSlider label="Animation Duration" id="ins5" autoSubmit="true"
+                                                              value="#{sunburst.animationDuration}" maximum="2000"
+                                                              minimumIncrement="100" majorIncrement="500"
+                                                              minorIncrement="100"/>
+                                        <af:selectOneChoice id="selDisplay" autoSubmit="true" label="Initial Animation"
+                                                            value="#{sunburst.animationOnDisplay}">
+                                            <af:selectItem label="none"/>
+                                            <af:selectItem label="alphaFade"/>
+                                            <af:selectItem label="fan"/>
+                                            <af:selectItem label="zoom"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneChoice id="selDataChange" autoSubmit="true"
+                                                            label="Data Change Animation"
+                                                            value="#{sunburst.animationOnDataChange}">
+                                            <af:selectItem label="none"/>
+                                            <af:selectItem label="auto"/>
+                                            <af:selectItem label="alphaFade"/>
+                                            <af:selectItem label="flipLeft"/>
+                                            <af:selectItem label="flipRight"/>
+                                            <af:selectItem label="slideToLeft"/>
+                                            <af:selectItem label="slideToRight"/>
+                                            <af:selectItem label="transitionToLeft"/>
+                                            <af:selectItem label="transitionToRight"/>
+                                            <af:selectItem label="zoom"/>
+                                        </af:selectOneChoice>
+                                        <af:selectOneRadio label="Content Delivery" value="#{sunburst.contentDelivery}"
+                                                           id="sor9" autoSubmit="true">
+                                            <af:selectItem label="immediate" id="si26"/>
+                                            <af:selectItem label="whenAvailable (it's not)" id="si27"
+                                                           value="whenAvailable"/>
+                                            <af:selectItem label="lazy" id="si28"/>
+                                        </af:selectOneRadio>
+                                        <af:selectOneRadio label="Selection" value="#{sunburst.selectionMode}" id="sor3"
+                                                           autoSubmit="true">
+                                            <af:selectItem label="multiple" id="si8"/>
+                                            <af:selectItem label="single" id="si7"/>
+                                            <af:selectItem label="none" id="si6"/>
+                                        </af:selectOneRadio>
+                                        <af:selectOneRadio label="Sorting" id="sor47" value="#{sunburst.sorting}" autoSubmit="true">
+                                          <af:selectItem label="on" id="si2412"/>
+                                          <af:selectItem label="off" id="si3429"/>
+                                        </af:selectOneRadio>
+                                        <af:inputNumberSlider label="Start Angle" id="ins23" minimum="0"
+                                                                          maximum="360" value="#{sunburst.startAngle}"
+                                                                          autoSubmit="true" majorIncrement="90"
+                                                                          minimumIncrement="30" minorIncrement="30"/>
+                                    </af:group>
+                                    <af:group>
+                                        <af:selectOneRadio label="Label Display" value="#{sunburst.labelDisplay}"
+                                                           id="sor5" autoSubmit="true">
+                                            <af:selectItem label="auto" id="si1321"/>
+                                            <af:selectItem label="horizontal" id="si1322"/>
+                                            <af:selectItem label="rotated" id="si13"/>
+                                            <af:selectItem label="off" id="si14"/>
+                                        </af:selectOneRadio>
+                                        <af:inputText label="Label Style" id="it5" value="#{sunburst.labelStyle}"
+                                                      autoSubmit="true"/>
+                                    </af:group>
+                                    <af:commandButton id="cb111" text="Show Selection State">
+                                        <af:showPopupBehavior popupId="popup1" triggerType="action" alignId="cb111"/>
+                                    </af:commandButton>
+                                    <af:popup id="popup1" contentDelivery="lazyUncached">
+                                        <af:noteWindow>
+                                            <af:outputText partialTriggers="t1" value="#{sunburst.selectionState}"
+                                                           clientComponent="true"/>
+                                        </af:noteWindow>
+                                    </af:popup>
+                                </af:panelFormLayout>
+                            </f:facet>
+                        </af:panelSplitter>
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

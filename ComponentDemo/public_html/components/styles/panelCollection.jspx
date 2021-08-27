@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="panelCollection Style Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="panelCollection"/>
+        <f:attribute name="visualDesignName" value="table"/>
+        <f:attribute name="demoKind" value="styles"/>
+        <f:attribute name="editorSize" value="350"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="10" id="s1"/>
+            </f:facet>
+            <af:outputText styleClass="AFInstructionText"
+                           value="This page demos the effect various contentStyle and inlineStyle parameters have on this component."
+                           id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <af:panelCollection id="panelCollection" binding="#{styleChanger.components['panelCollection1']}"
+                                  inlineStyle="width: 90%">
+                <f:facet name="menus">
+                  <af:menu text="Actions" id="m1">
+                    <af:commandMenuItem text="Add..." id="cmi1"/>
+                    <af:commandMenuItem text="Create.." id="cmi2"/>
+                    <af:commandMenuItem text="Update..." disabled="true"
+                                        id="cmi3"/>
+                    <af:commandMenuItem text="Copy" id="cmi4"/>
+                    <!-- todo: add af:group -->
+                    <af:commandMenuItem text="Delete" id="cmi5"/>
+                    <af:commandMenuItem text="Remove" accelerator="control A"
+                                        id="cmi6"/>
+                    <af:commandMenuItem text="Preferences" id="cmi7"/>
+                  </af:menu>
+                </f:facet>
+                <f:facet name="toolbar">
+                  <af:toolbar id="t1">
+                    <af:commandToolbarButton shortDesc="Create" icon="/images/new_ena.png"
+                                             id="ctb1"></af:commandToolbarButton>
+                    <af:commandToolbarButton shortDesc="Edit" icon="/images/update_ena.png"
+                                             id="ctb2"></af:commandToolbarButton>
+                    <af:commandToolbarButton shortDesc="Delete" icon="/images/delete_ena.png"
+                                             id="ctb3"></af:commandToolbarButton>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="secondaryToolbar">
+                  <af:toolbar id="t2">
+                    <af:commandLink immediate="true" text="ComponentGuide" action="guide"
+                                    id="cl1"/>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="statusbar">
+                  <af:toolbar id="t3">
+                    <af:outputText id="statusText" inlineStyle="margin-left:5px; white-space:nowrap"
+                                   value="Custom Statusbar Message"/>
+                  </af:toolbar>
+                </f:facet>
+                <af:table rowSelection="multiple"
+                          columnSelection="multiple" queryListener="#{tableFilter.processTableFilter}"
+                          filterModel="#{tableFilter.queryDescriptor}" filterVisible="true"
+                          varStatus="vs" var="test1" value="#{tableFilter.data}" id="table"
+                          summary="table data">
+                  <af:column width="20" rowHeader="true" headerText=" "
+                             id="c1"/>
+                  <af:column displayIndex="3" headerText="Employee Number" filterable="true"
+                             sortProperty="Empno" id="c2">
+                    <af:outputText value="#{test1.empno}" id="ot2"/>
+                  </af:column>
+                  <af:column displayIndex="1" headerText="Emp Name" filterable="true"
+                             sortProperty="Ename" sortable="true" id="c3">
+                    <af:outputText inlineStyle="margin-left:8px" value="#{test1.ename}"
+                                   id="ot3"/>
+                  </af:column>
+                  <af:column filterable="true" sortProperty="Salary" headerText="Salary"
+                             displayIndex="2" id="c4">
+                    <af:outputText value="#{test1.salary}" id="ot4"/>
+                  </af:column>
+                  <af:column headerText="Hire Date" id="c5">
+                    <f:facet name="filter">
+                      <af:inputDate value="#{vs.filterCriteria.Hiredate}" label="date" simple="true"
+                                    id="id1"/>
+                    </f:facet>
+                    <af:outputText value="#{test1.hireDate}" id="ot5"/>
+                  </af:column>
+                  <af:column filterable="true" sortProperty="Manager" headerText="Manager"
+                             id="c6">
+                    <af:outputText value="#{test1.manager}" id="ot6"/>
+                  </af:column>
+                  <af:column sortProperty="Deptno" filterable="true" headerText="Dept Number"
+                             align="center" id="c7">
+                    <af:outputText value="#{test1.deptno}" id="ot7"/>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+              <af:separator id="s2"/>
+              <af:panelCollection binding="#{styleChanger.components['panelCollection2']}" id="panelCollectionTree"
+                                  inlineStyle="width: 700px">
+                <f:facet name="menus">
+                  <af:menu text="Actions" id="m2">
+                    <af:commandMenuItem text="Add..." id="cmi8"/>
+                    <af:commandMenuItem text="Create.." id="cmi9"/>
+                    <af:commandMenuItem text="Update..." disabled="true"
+                                        id="cmi10"/>
+                    <af:commandMenuItem text="Copy" id="cmi11"/>
+                    <af:group id="g1">
+                      <af:commandMenuItem text="Delete" id="cmi12"/>
+                      <af:commandMenuItem text="Remove" accelerator="control R"
+                                          id="cmi13"/>
+                      <af:commandMenuItem text="Preferences" id="cmi14"/>
+                    </af:group>
+                  </af:menu>
+                </f:facet>
+                <f:facet name="toolbar">
+                  <af:toolbar id="t4">
+                    <af:commandToolbarButton shortDesc="Create" icon="/images/new_ena.png"
+                                             id="ctb4"></af:commandToolbarButton>
+                    <af:commandToolbarButton shortDesc="Edit" icon="/images/update_ena.png"
+                                             id="ctb5"></af:commandToolbarButton>
+                    <af:commandToolbarButton shortDesc="Delete" icon="/images/delete_ena.png"
+                                             id="ctb6"></af:commandToolbarButton>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="secondaryToolbar">
+                  <af:toolbar id="t5">
+                    <af:commandLink immediate="true" text="ComponentGuide" action="guide"
+                                    id="cl2"/>
+                    <af:goLink inlineStyle="white-space:nowrap" text="Component Tag Documentation"
+                               destination="/docs/tagdoc/af_panelCollection.html"
+                               id="gl1"/>
+                    <af:goLink inlineStyle="white-space:nowrap" text="view page source"
+                               destination="#{facesContext.viewRoot.viewId}.source"
+                               id="gl2"/>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="statusbar">
+                  <af:toolbar id="t6">
+                    <af:outputText id="statusText2" inlineStyle="margin-left:5px; white-space:nowrap"
+                                   value="Custom Statusbar Message"/>
+                  </af:toolbar>
+                </f:facet>
+                <af:treeTable id="folderTree" focusRowKey="#{fs.defaultFocusRowKey}" var="directory"
+                              rowSelection="multiple" columnSelection="multiple"
+                              columnStretching="last" value="#{fs.treeModel}"
+                              binding="#{editor.component}"
+                              rowDisclosureListener="#{fs.toggle}" summary="treeTable data">
+                  <af:column width="20" rowHeader="true" headerText="Row"
+                             id="c8"/>
+                  <f:facet name="nodeStamp">
+                    <af:column headerText="Directory Name" width="200" id="c9">
+                      <af:panelGroupLayout id="pgl3">
+                        <af:image source="#{directory.icon}"
+                                  inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                                  shortDesc="directory icon" id="i1"/>
+                        <af:outputText id="directoryStamp" value="#{directory.name}"/>
+                      </af:panelGroupLayout>
+                    </af:column>
+                  </f:facet>
+                  <f:facet name="pathStamp">
+                    <af:panelGroupLayout id="pgl4">
+                      <af:image source="#{directory.icon}" inlineStyle="vertical-align:middle;"
+                                shortDesc="directory icon" id="i2"/>
+                      <af:outputFormatted value="&lt;b> #{directory.name} &lt;/b>"
+                                          id="of1"/>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <af:column headerText="Icon" id="c10">
+                    <af:outputText id="iconStamp" value="#{directory.icon}"/>
+                  </af:column>
+                  <af:column headerText="Last Modified" width="300" id="c11">
+                    <af:outputText id="modifiedStamp" value="#{directory.lastModified}"/>
+                  </af:column>
+                </af:treeTable>
+              </af:panelCollection>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

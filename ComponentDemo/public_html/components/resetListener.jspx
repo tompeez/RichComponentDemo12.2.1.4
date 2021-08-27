@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="resetListener Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="resetListener"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="behavior"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <f:verbatim>
+              <p>This is a demo page for resetListener. The resetListener tag resets any editable value holder components within 
+              the nearest area that defines the event's process root.  Process root is the nearest owning form, subform, 
+              region or popup.</p>  
+
+              There are two examples shown below:
+              <ul>
+               <li>The "commandLink with resetListener" will reset all editable value holders in the owning form for the associated 
+                   "action" event.</li>
+               <li>The "show popupdialog" shows a popup dialog.  The reset listener is invoked on the content of the popup for the 
+                   "popupCanceled" event (close button, cancel icon in the title bar, or Esc key). 
+                   Also see the "resetEditableValues" af:popup property.</li>
+              </ul>
+            </f:verbatim>
+            <af:panelGroupLayout layout="vertical" id="pgl3">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:inputText id="it1" label="Always-incorrect Value" value="#{demoInput.value}" 
+                  autoSubmit="true" validator="#{demoInput.obstinateValidator}"/>
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pg14">
+              <af:popup id="popupDialog" contentDelivery="lazyUncached" 
+                        popupCanceledListener="#{demoInput.resetPopupClosed}">
+                 <af:dialog title="Enter an Incorrect Value">
+                   <p>Enter something in the field below. Only "cancel" dismissal 
+                      will reset the submitted value.</p>
+                   <af:inputText id="it2" label="Always-incorrect Value" value="#{demoInput.value}"
+                       validator="#{demoInput.obstinateValidator}"/>
+                 </af:dialog>
+                 <af:resetListener type="popupCanceled"/>
+              </af:popup>
+              <af:commandLink text="commandLink with resetListener" id="cl1" 
+                   immediate="true" actionListener="#{demoInput.resetForm}">
+                <af:resetListener type="action"/>
+              </af:commandLink>
+              <af:commandLink text="show popup dialog" id="cl2" immediate="true">
+                <af:showPopupBehavior popupId="popupDialog"/>
+              </af:commandLink>
+
+            </af:panelGroupLayout>
+            <af:panelGroupLayout layout="vertical" id="pgl5">
+              <af:outputText value="See also:" id="ot4"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem immediate="true" text="ResetButton Demo"
+                  action="guide.resetButton" id="cni6"/>
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

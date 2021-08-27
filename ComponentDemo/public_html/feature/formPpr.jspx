@@ -1,0 +1,175 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Autosubmit and PPR" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Autosubmit and PPR"/>
+        <f:attribute name="demoKind" value="feature"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:spacer height="15px" id="s1"/>
+            </f:facet>
+            <af:outputText value="In the demos on this page we show how to use autosubmit and partialTriggers to respond to user entered values."
+                           id="ot1"/>
+            <af:panelHeader text="Disabled" id="ph1">
+              <af:panelGroupLayout layout="vertical" id="pgl2">
+                <af:subform id="s2">
+                  <af:panelList id="pl1">
+                    <af:outputText value="Explanation: In the demo below, note that the 'collate' checkbox is being enabled and disabled based on the number of copies. If the number of copies is 1, it's disabled, but if the number of copies is more than 1, it's enabled. "
+                                   id="ot2"/>
+                    <af:outputText value="Implementation: This is achieved by setting a combination of autoSubmit,  partialTriggers, and EL binding the disabled attribute. To view the jspx source hit the 'View Page Source' link in the top corner."
+                                   id="ot3"/>
+                  </af:panelList>
+                  <af:panelGroupLayout layout="horizontal" id="pgl3">
+                    <af:inputNumberSpinbox minimum="1" label="Number of copies" id="copies"
+                                           autoSubmit="true" value="#{testPostback.copies}"/>
+                    <af:selectBooleanCheckbox partialTriggers="copies"
+                                              disabled="#{testPostback.collateDisabled}"
+                                              text="collate" id="sbc1"/>
+                  </af:panelGroupLayout>
+                </af:subform>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="Rendered" id="ph2">
+              <af:panelGroupLayout layout="vertical" id="pgl4">
+                <af:subform id="s3">
+                  <af:panelList id="pl2">
+                    <af:outputText value="Explanation: In the demo below, note that the 'collate' checkbox is being hidden and shown based on the number of copies. If the number of copies is 1, it's hidden, but if the number of copies is more than 1, it's shown. "
+                                   id="ot4"/>
+                    <af:outputText value="Implementation: This is achieved by setting a combination of autoSubmit,  partialTriggers, and EL binding the rendered attribute. In this case the partialTrigger is on the parent of the component where rendered is being toggled. This is because PPR can change content in a page by reference to a piece of the HTML's DOM and an 'id' in that HTML. When you set rendered to false, there is no DOM at all rendered for that component - so no way to find the 'id' and the location to insert the new content when you set rendered back to 'true'. To work around this limitation, instead of updating the component itself, update the parent. To view the jspx source hit the 'View Page Source' link in the top corner."
+                                   id="ot5"/>
+                  </af:panelList>
+                  <af:panelGroupLayout layout="horizontal" id="pgl5">
+                    <af:inputNumberSpinbox minimum="1" label="Number of copies" id="copies2"
+                                           autoSubmit="true" value="#{testPostback.copies2}"/>
+                    <af:panelGroupLayout partialTriggers="copies2" id="pgl6">
+                      <af:selectBooleanCheckbox rendered="#{testPostback.collateRendered}"
+                                                text="collate" id="sbc2"/>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:subform>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="Switcher" id="ph3">
+              <af:panelGroupLayout layout="vertical" id="pgl7">
+                <af:subform id="s4">
+                  <af:panelList id="pl3">
+                    <af:outputText value="Explanation: In the demo below, note that the the search fields change depending on which 'Media Type' radio is selected."
+                                   id="ot6"/>
+                    <af:outputText value="Implementation: This is achieved by setting a combination of autoSubmit,  partialTriggers, and EL binding the 'facetName' attribute of a switcher. The facet rendered by the switcher is determined by the radio's selection. In this case the partialTrigger is on the parent of the switcher. This is because PPR can change content in a page by reference to a piece of the HTML's DOM and an 'id' in that HTML. However there is no DOM at all rendered for a switcher - so no way to find the 'id' and the location to insert the new content. To work around this limitation, instead of updating the component itself, update the parent. To view the jspx source hit the 'View Page Source' link in the top corner."
+                                   id="ot7"/>
+                  </af:panelList>
+                  <af:panelGroupLayout layout="veritcal" id="pgl8">
+                    <af:selectOneRadio id="mediaType" autoSubmit="true" label="Media Type"
+                                       value="#{testPostback.mediaType}">
+                      <af:selectItem label="Books" value="book" id="si1"/>
+                      <af:selectItem label="Music" value="music" id="si2"/>
+                    </af:selectOneRadio>
+                    <af:panelGroupLayout partialTriggers="mediaType" id="pgl9">
+                      <af:switcher facetName="#{testPostback.mediaType}"
+                                   id="s5">
+                        <f:facet name="book">
+                          <af:panelFormLayout labelWidth="15%" id="pfl1">
+                            <af:inputText label="Keywords" id="it1"/>
+                            <af:inputText label="Book Author" id="it2"/>
+                            <af:inputText label="Book Title" id="it3"/>
+                            <af:selectOneChoice label="Condition" value="all"
+                                                id="soc1">
+                              <af:selectItem value="all" label="Any condition"
+                                             id="si3"/>
+                              <af:selectItem value="New" label="New" id="si4"/>
+                              <af:selectItem value="Used" label="Used"
+                                             id="si5"/>
+                              <af:selectItem value="Collectible" label="Collectible"
+                                             id="si6"/>
+                            </af:selectOneChoice>
+                            <af:selectOneChoice label="Reader Age" value="all"
+                                                id="soc2">
+                              <af:selectItem value="all" label="All ages"
+                                             id="si7"/>
+                              <af:selectItem value="baby" label="0-3" id="si8"/>
+                              <af:selectItem value="child" label="4-8"
+                                             id="si9"/>
+                              <af:selectItem value="tween" label="9-12"
+                                             id="si10"/>
+                              <af:selectItem value="teen" label="13-17"
+                                             id="si11"/>
+                              <af:selectItem value="adult" label="Adult"
+                                             id="si12"/>
+                            </af:selectOneChoice>
+                          </af:panelFormLayout>
+                        </f:facet>
+                        <f:facet name="music">
+                          <af:panelFormLayout labelWidth="15%" id="pfl2">
+                            <af:inputText label="Keywords" id="it4"/>
+                            <af:inputText label="Artist" id="it5"/>
+                            <af:inputText label="Album Title" id="it6"/>
+                            <af:selectOneChoice label="Format" value="CD"
+                                                id="soc3">
+                              <af:selectItem value="CD" label="CD" id="si13"/>
+                              <af:selectItem value="Cassette" label="Cassette"
+                                             id="si14"/>
+                              <af:selectItem value="DVD" label="DVD Audio"
+                                             id="si15"/>
+                              <af:selectItem value="Vinyl" label="Vinyl"
+                                             id="si16"/>
+                            </af:selectOneChoice>
+                          </af:panelFormLayout>
+                        </f:facet>
+                      </af:switcher>
+                    </af:panelGroupLayout>
+                  </af:panelGroupLayout>
+                </af:subform>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelHeader text="Data Switch" id="ph4">
+              <af:panelGroupLayout layout="vertical" id="pgl10">
+                <af:subform id="s6">
+                  <af:panelList id="pl4">
+                    <af:outputText value="Explanation: In the demo below, note that picking a state switches the list of cities."
+                                   id="ot8"/>
+                    <af:outputText value="Implementation: This is achieved by setting a combination of autoSubmit,  partialTriggers, and EL binding the value attribute of a f:selectItems component. The list of cites returned to the f:selectItems component depends on the selected state. To view the jspx source hit the 'View Page Source' link in the top corner."
+                                   id="ot9"/>
+                  </af:panelList>
+                  <af:panelFormLayout id="pfl3">
+                    <af:selectOneRadio id="state" autoSubmit="true" label="State"
+                                       value="#{testPostback.state}">
+                      <af:selectItem label="California" value="CA" id="si17"/>
+                      <af:selectItem label="New York" value="NY" id="si18"/>
+                    </af:selectOneRadio>
+                    <af:selectOneRadio partialTriggers="state" label="City"
+                                       value="#{testPostback.mediaType}"
+                                       id="sor1">
+                      <f:selectItems value="#{testPostback.cityList}"
+                                     id="si19"/>
+                    </af:selectOneRadio>
+                  </af:panelFormLayout>
+                </af:subform>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+            <af:panelGroupLayout layout="vertical" id="pgl11">
+              <af:outputText value="See also:" id="ot10"/>
+              <af:panelList id="pl5">
+                <af:panelGroupLayout id="pgl12">
+                  <af:goLink destination="autoSubmit.jspx" text="Optimized Lifecycle Demo"
+                             id="gl1"/>
+                  <af:outputText value=" - demo of autoSubmit and validation"
+                                 id="ot11"/>
+                </af:panelGroupLayout>
+              </af:panelList>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

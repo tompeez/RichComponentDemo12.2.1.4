@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Data Visualization Overview" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Data Visualization Overview"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Data Visualization"/>
+                <f:facet name="center">
+                    <af:panelGroupLayout layout="scroll" id="layout0">
+                        <f:facet name="separator">
+                            <af:separator id="s1"/>
+                        </f:facet>
+                        <!-- START FEATURE DEMO -->
+                        <!-- This CSS will center the image and allow for adjustment using left and top. -->
+                        <af:resource type="css">
+                            img.centerImage {
+                                display: block;
+                                margin-left: auto;
+                                margin-right: auto;
+                                position: relative;
+                            }
+                        </af:resource>
+                        <f:subview id="thumbs">
+                            <jsp:include page="gallery/overviewThumbs.jsff"/>
+                        </f:subview>
+                        <af:spacer height="10"/>
+                        <f:subview id="summary">
+                            <jsp:include page="gallery/overviewSummary.jsff"/>
+                        </f:subview>
+                        <af:panelHeader text="What's New">
+                            <!-- Note: This section must remain initially visible on iPad in horizontal orientation. -->
+                            <f:subview id="whatsNew">
+                                <jsp:include page="gallery/overviewNew.jsff"/>
+                            </f:subview>
+                        </af:panelHeader>
+                    </af:panelGroupLayout>
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

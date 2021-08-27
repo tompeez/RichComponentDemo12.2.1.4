@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2019, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          version="1.2" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:jsp="http://java.sun.com/JSP/Page">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="chooseDate Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="chooseDate"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="gmChrome" value="shown"/>
+        <f:attribute name="gmStretchNotes" value="Warning: attempting to stretch an chooseDate is currently unsupported and the result may change in the future."/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        <f:facet name="seriesAbove">
+          <af:panelGroupLayout layout="vertical" id="pglV">
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This is a demo for the chooseDate component.
+                                Use the editor to the right to adjust the attributes for this demo. &lt;/b>"
+                                id="of1"/>
+            <af:spacer height="5px" id="sp"/>
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesComponent">
+          <af:chooseDate id="theChooser" binding="#{editor.component}"/>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl1">
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:separator id="s1"/>
+              </f:facet>
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <f:facet name="separator">
+                  <af:spacer height="5px" id="s2"/>
+                </f:facet>
+                <af:inputDate chooseId="theChooser" value="#{demoInput.date}"
+                              label="Date: " id="id1"/>
+                <af:panelGroupLayout id="pgl4">
+                  <af:panelLabelAndMessage label="The submitted value was: "
+                                           id="plam1">
+                    <af:outputText partialTriggers="richCommand" value="#{demoInput.date}"
+                                   id="ot1">
+                      <af:convertDateTime dateStyle="long"/>
+                    </af:outputText>
+                  </af:panelLabelAndMessage>
+                </af:panelGroupLayout>
+                <af:inputDate chooseId="theChooser" label="Date 2"
+                              value="#{demoInput.date2}" id="id2">
+                  <af:convertDateTime dateStyle="long"/>
+                </af:inputDate>
+                <af:panelGroupLayout id="pgl5">
+                  <af:panelLabelAndMessage label="The submitted value was: "
+                                           id="plam2">
+                    <af:outputText partialTriggers="richCommand" value="#{demoInput.date2}"
+                                   id="ot2">
+                      <af:convertDateTime dateStyle="full"/>
+                    </af:outputText>
+                  </af:panelLabelAndMessage>
+                </af:panelGroupLayout>
+                <af:commandButton partialSubmit="true" id="richCommand" text="partial postback"/>
+                <af:commandButton text="full postback" id="cb1"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl6">
+                <f:facet name="separator">
+                  <af:spacer height="5px" id="s3"/>
+                </f:facet>
+                <af:outputFormatted styleUsage="instruction"
+                                    value="&lt;b>This demo shows the chooseDate calendar with weekends and some holidays disabled.&lt;/b>"
+                                    id="of2"/>
+                <af:chooseDate id="chooser2" disabledDaysOfWeek="sun sat" layout="navigator compactDate"
+                               disabledDays="#{demoDate}"/>
+                <af:inputDate chooseId="chooser2" label="Date: " id="id3"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl7">
+                <f:facet name="separator">
+                  <af:spacer height="5px" id="s4"/>
+                </f:facet>
+                <af:outputFormatted styleUsage="instruction"
+                                    value="&lt;b>This demo shows the chooseDate calendar with drop down year and month selectors and February, March disabled.&lt;/b>"
+                                    id="of3"/>
+                <af:chooseDate id="chooser3" disabledMonths="feb mar" layout="compactNavigator date"/>
+                <af:inputDate chooseId="chooser3" label="Date: " id="id4"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="vertical" id="pgl8">
+                <f:facet name="separator">
+                  <af:spacer height="5px" id="s5"/>
+                </f:facet>
+                <af:outputFormatted styleUsage="instruction"
+                                    value="&lt;b>This demo shows the chooseDate calendar with minValue set to a year before today and maxValue set to a year after today.&lt;/b>"
+                                    id="of4"/>
+                <af:chooseDate id="chooser4" minValue="#{demoInput.minDate}"
+                               maxValue="#{demoInput.maxDate}"/>
+                <af:inputDate chooseId="chooser4" label="Date: " id="id5"/>
+              </af:panelGroupLayout>
+              <af:panelGroupLayout layout="horizontal" id="pgl9">
+                <af:popup id="popupDialog">
+                  <af:dialog title="Pick Your Birthday" id="d2">
+                    <af:inputDate chooseId="chooseMe" label="Date: " value="#{demoInput.date}"
+                                  id="id6"/>
+                    <af:chooseDate id="chooseMe"/>
+                  </af:dialog>
+                </af:popup>
+                <af:outputText value="This demo shows the chooseDate inside of a popup."
+                               id="ot3"/>
+                <af:spacer width="5" id="s6"/>
+                <af:commandButton immediate="true" text="Show ChooseDate" clientComponent="true"
+                                  id="popupButton">
+                  <af:showPopupBehavior popupId="popupDialog" alignId="popupButton"
+                                        align="afterStart"/>
+                </af:commandButton>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+                    <af:resource type="javascript">
+         <![CDATA[
+        /**
+         * Shows a popup from an "action" type event.
+         * @param {AdfActionEvent} actionEvent the event being handled
+         */
+        var dates = []
+        var minDate ;
+        var maxDate ;
+        function dateSelectionEventHandler(event)
+        {
+          var eventSource = event.getSource();
+          var selectedDate = event.getSelectedDate();
+          var modifier = event.getModifiers();
+
+          if (modifier.indexOf(AdfRichChooseDate.MULTI_SELECTION ) != -1 )
+          {
+            dates.push(selectedDate);
+          }
+          else if (modifier.indexOf(AdfRichChooseDate.RANGE_SELECTION) != -1)
+          {
+             if ( !minDate || ( minDate.getTime() > selectedDate.getTime()))
+             {
+               minDate = selectedDate;
+             }
+             if (!maxDate || ( maxDate.getTime() < selectedDate.getTime() ))
+             {
+               maxDate = selectedDate;
+              }
+              var timeDiff = Math.abs(maxDate.getTime() - minDate.getTime());
+              var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) +1;
+              dates = []
+              for (var i = 0; i < diffDays; i++)
+              {
+                var selDate = new Date(minDate.getFullYear(),minDate.getMonth(), minDate.getDate() + i, 0,0,0,0 );
+                if (!eventSource.isDisabled(selDate))
+                dates.push(selDate)
+              }
+          }
+          else if (modifier.indexOf(AdfRichChooseDate.SINGLE_SELECTION ) != -1 )
+          {
+            minDate = null;
+            maxDate = null;
+            dates = []
+            dates.push(selectedDate)
+          }
+          eventSource.setSelectedDates(dates);
+        }
+
+        function chooseDateLoadEventHandler(event)
+        {
+          var eventSource = event.getSource();
+          eventSource.setSelectedDates(dates);
+        }
+         ]]>
+        </af:resource>
+            <af:panelGroupLayout layout="vertical" id="pg20">
+                <f:facet name="separator7">
+                  <af:spacer height="5px" id="s7"/>
+                </f:facet>
+                <af:outputFormatted styleUsage="instruction"
+                                    value="&lt;b>This demo shows the chooseDate calendar with multi selection feature.&lt;/b>"
+                                    id="of7"/>
+                <af:chooseDate id="chooser7" disabledDaysOfWeek="sun sat" months="3" >
+                    <af:clientListener type="dateSelection" method="dateSelectionEventHandler"/>
+                    <af:clientListener type="load" method="chooseDateLoadEventHandler"/>
+                </af:chooseDate>
+              </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

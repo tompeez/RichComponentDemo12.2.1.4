@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <af:pageTemplate viewId="componentsTemplate.jspx">
+    <f:attribute name="sectionTitle" value="Maps"/>
+    <f:facet name="dashboard">
+      <af:panelGroupLayout>
+        <af:declarativeComponent viewId="componentsItem.jsff" title="Geographic Map" action="guide.geoMapMultipleThemes"
+                                 linkText="Tag Guide">
+          <f:facet name="content">
+            <af:panelGroupLayout>
+              <af:image source="/resources/images/dataVisualization/components/map.png" styleClass="centerImage"
+                        inlineStyle="height:150px;"/>
+            </af:panelGroupLayout>
+          </f:facet>
+        </af:declarativeComponent>
+        <af:declarativeComponent viewId="componentsItem.jsff" title="Thematic Map" action="guide.thematicMap"
+                                 linkText="Tag Guide">
+          <f:facet name="content">
+            <dvt:thematicMap controlPanelBehavior="hidden" panning="none" zooming="none" basemap="usa"
+                             inlineStyle="border:none;">
+              <dvt:areaLayer layer="states" labelDisplay="off">
+                <dvt:areaDataLayer value="#{tmapFeatures.areaDataModel}" var="row" varStatus="rowStatus">
+                  <dvt:areaLocation id="loc1" name="#{row.id}">
+                    <dvt:area labelDisplay="off">
+                      <dvt:attributeGroups type="color" value="#{row.categories[0]}"/>
+                    </dvt:area>
+                  </dvt:areaLocation>
+                </dvt:areaDataLayer>
+              </dvt:areaLayer>
+            </dvt:thematicMap>
+          </f:facet>
+        </af:declarativeComponent>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

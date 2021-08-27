@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="selectItem Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl"
+                       viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="selectItem"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="This is a demo for the selectItem component. Select a value and use either the partial or full postback command button to push the value of the selectOneRadio into the underlying model (a bean property).  The outputText will display the submitted value."
+                           id="ot1"/>
+            <af:selectOneRadio id="targetRadio" value="#{demoInput.selectItemValue}"
+                               label="Drinks">
+              <af:selectItem binding="#{editor.component}" label="coffee" value="bean"
+                             shortDesc="Sample shortDesc text" id="si1"/>
+              <f:selectItem itemLabel="tea" itemValue="leaf" itemDescription="Tea from China"
+                            id="si2"/>
+              <af:selectItem label="milk" value="moo" rendered="false"
+                             id="si3"/>
+              <f:selectItems value="#{demoInput.selectItems}" id="si4"/>
+            </af:selectOneRadio>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>
+              <af:commandButton id="richCommand" text="partial postback" partialSubmit="true"/>
+              <af:commandButton text="full postback" id="cb1"/>
+              <af:panelGroupLayout id="pgl3">
+                <af:outputText value="The submitted value was: " id="ot2"/>
+                <af:outputText id="result" partialTriggers="richCommand targetRadio"
+                               value="#{demoInput.selectItemValue}"/>
+              </af:panelGroupLayout>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

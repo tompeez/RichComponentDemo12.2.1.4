@@ -1,0 +1,694 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-US">
+<head>
+<title>&lt;dvt:gauge&gt;</title>
+<meta name="topic_id" content="ale1">
+<meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+<link rel="stylesheet" type="text/css" href="../css/blafdoc.css">
+<meta name="generator" content="Oracle ST-Doc Jadey 2.3">
+</head>
+<body>
+<table class="oac_no_warn" width="100%" border="0" summary="Title layout table">
+<tr>
+<td align="right" valign="top" rowspan="3"><em><b>Oracle Fusion Middleware Data Visualization Tools Tag Reference for Oracle ADF Faces<br>
+12c (12.2.1)</b><br>
+E52773-01</em></td>
+</tr>
+</table>
+<h1>&lt;dvt:gauge&gt;</h1>
+<!-- this line forces these terms to be indexed -->
+<p style="display:none"></p>
+<p>dvt:gauge gauge gauge</p>
+<p><b>UIComponent class:</b> oracle.adf.view.faces.bi.component.gauge.UIGauge<br>
+<b>Component type:</b> oracle.dss.adf.gauge.Gauge<br></p>
+<h4>Overview</h4>
+<p>The gauge tag is deprecated. Use the dialGauge, ledGauge, ratingGauge, or statusMeterGauge tag instead.<br></p>
+<p>Use the gauge tag to create an ADF gauge. The attributes on this tag are sufficient to produce a gauge but you can also specify custom settings for many components by including any of the gauge child tags.</p>
+<p>The Gauge is a measuring instrument for indicating a quantity such as temperature, pressure, speed etc. It shows a metric value and threshold ranges using graphical representation. Inside a Gauge, there is an Indicator. The Indicator represents the metric value of the Gauge. A single Gauge shows a single metric value. If a grid of values is applied to the Gauge, the Gauge becomes a Gauge set that contains multiple Gauges and each of them represents a value in the grid.</p>
+<p>There are four types of Gauges: Dial Gauge, Status Meter, Vertical Status Meter and LED Gauge. All Gauges consist of five major parts: Top Label, Bottom Label, Metric Label, Plot Area and Legend Area with an exception that LED Gauge does not have a Plot Area. Some other parts of the Gauge like Indicator, Tick Labels, Tick Mark and Gauge Frame may be inside the Plot Area as well.</p>
+<h4>Data Model</h4>
+<p>Single Value - The simplest data model for a Gauge is a single metric value, which can be specified by the value attribute. In addition, the threshold, minimum and maximum values can also be specified by Threshold tag, and the minValue and maxValue attributes respectively. The following JSPX xml generates a single Gauge.</p>
+<p><code>&lt;dvt:gauge value = "10" minValue = "0" maxValue = "100"&gt; &lt;dvt:thresholdSet&gt; &lt;dvt:threshold thresholdMaxValue = "30"/&gt; &lt;dvt:threshold thresholdMaxValue = "60"/&gt; &lt;dvt:threshold/&gt; &lt;/dvt:thresholdSet&gt; &lt;/dvt:gauge&gt;</code></p>
+<p>Data Grid - Alternatively, the data binding dialogs can be used to bind the Gauge to a data control, which is typically based on a rowset. Another common way to provide data for the Gauge is to use the tabularData attribute to create a grid of data. This requires use of a backing or managed bean.</p>
+<p>If a grid of values is specified, the Gauge becomes a Gauge set. Each Gauge in the Gauge set represents a value in the grid. The number of Gauges depends on the number of rows and columns in the grid by default. Users may customize the number of column in the Gauge set by using gaugeSetColumnCount attribute.</p>
+<p>Data Specification - A Data Specification can be used to specify columns or rows of data to be used as the metric value, and threshold, minimum and maximum values. The following example shows how to use a Data Specification for a set of tabular data. This tabular data contains 5 columns and 2 rows. If Data Specification is not used, the following table will generate 10 Gauges that there will be a gauge for each value. Each column has its desired data specification as shown. Sales is assigned to be metric value, Quota is assigned to be the first threshold, etc. This will generate 2 Gauges, one for Boston and one for Chicago, both with metric, minimum, maximum and threshold values specified.</p>
+<table class="oac_no_warn" summary="Layout table... probably.">
+<tr>
+<td>Desired Spec.</td>
+<td>Metric</td>
+<td>Minimum</td>
+<td>Maximum</td>
+<td>Threshold 1</td>
+<td>Threshold 2</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Sales</td>
+<td>Min</td>
+<td>Inventory</td>
+<td>Quota</td>
+<td>Target</td>
+</tr>
+<tr>
+<td>Boston</td>
+<td>40</td>
+<td>0</td>
+<td>100</td>
+<td>30</td>
+<td>50</td>
+</tr>
+<tr>
+<td>Chicago</td>
+<td>60</td>
+<td>0</td>
+<td>80</td>
+<td>35</td>
+<td>70</td>
+</tr>
+</table>
+<p><code><code>CommonGauge gauge = new CommonGauge(); Object[] specs = { DataSpecification.METRIC, DataSpecification.MINIMUM, DataSpecification.MAXIMUM, DataSpecification.THRESHOLD, DataSpecification.THRESHOLD }; String[] colLabels = new String[] { "Sales", "Min", "Max", "Quota", "Target" }; String[] rowLabels = new String[] { "Boston", "Chicago" }; double[][] values = new double[][] { {40, 60}, {0,0}, {100,80}, {30,35}, {50,70} }; List gaugeData = new ArrayList(); for (int c = 0; c &lt; colLabels.length; c++) { for (int r = 0; r &lt; rowLabels.length; r++) { gaugeData.add(new Object[] { colLabels[c], rowLabels[r], new Double(values[c][r]) }); } } gauge.setTabularData(specs, gaugeData);</code></code></p>
+<h4>Number Formatting</h4>
+<p>DVT gauge supports number formatting on its metricLabel and tickLabel. Users can customize the number formatting by adding &lt;af:convertNumber&gt; to the &lt;dvt:metricLabel&gt; and &lt;dvt:tickLabel&gt; tags. The following is an example of how to configure these tags:</p>
+<p><code><code>&lt;dvt:gauge value="#{binding.dataModel}"&gt; &lt;dvt:metricLabel&gt; &lt;af:convertNumber pattern="#{appPrefs.metricLabelPattern}" /&gt; &lt;/dvt:metricLabel&gt; &lt;/dvt:tickLabel&gt; &lt;af:convertNumber pattern="#{appPrefs.tickLabelPattern}" /&gt; &lt;/dvt:tickLabel&gt; &lt;/dvt:gauge&gt;</code></code></p>
+<p><b>Automatic Scaling and Precision</b></p>
+<p>Gauge automatically determines the scale ( e.g. 4K ) and precision ( e.g. show 2 decimal points - 0.25 ) based on the values that are being displayed. This automatic formatting still occurs when &lt;af:convertNumber&gt; is specified. The gauge tags that support &lt;af:convertNumber&gt; child tags ( &lt;dvt:metricLabel&gt; and &lt;dvt:tickLabel&gt;) also have scaling and autoPrecision attributes that can be used to control graph's automatic number formatting. By default, scaling="auto" means gauge will auto-calculate the scale. For example, 40,000 will be formatted as "40K". By default, autoPrecision="on" means that graph will auto-calculate the precision of the number. For example, 0.230546 will be displayed as "0.23". If the autoPrecision is 'on' then all of the &lt;af:convertNumber&gt; fraction digit settings ( e.g. min/maxFractionDigits or pattern) are ignored.</p>
+<p><b>Formatting Percent values</b></p>
+<p>When number type is set to percent (valid value are NT_NUMBER and NT_PERCENT), the formatting engine will use the label format and will automatically force the convertNumber type to percent. When &lt;af:convertNumber&gt; is forced to percent, gauge clears &lt;af:convertNumber&gt; pattern, since the pattern will prevent type=percent if specified. This means that patterns are ignored when gauge forces percent formatting.</p>
+<h4>Plot Area and Gauge Frame</h4>
+<p>The <a href="dvt_gaugePlotArea.html">Plot Area</a> contains a graphical representation of the metric value for the Gauge. Different gauge types have different plot areas. Indicator, Thresholds and Tick Marks are generally inside the Plot Area.</p>
+<p>The <a href="dvt_gaugeFrame.html">Gauge Frame</a> is a decorative frame that encloses the whole plot area on Dial Gauges. Users may choose the fill color and the border color of the Gauge Frame.</p>
+<p>The Plot Area appears differently in different types of gauge.</p>
+<p>The Dial Gauge Plot Area consists of a dial and a needle. It looks like a speedometer. The dial has tick marks showing the values at specific angles. Users may change the angular extent of the dial using the angleExtent attribute.</p>
+<p>The Vertical Status Meter and Status Meter are meters with a rectangular indicator placed in a bounding box. It looks like a mercury barometer. The bounding box has tick marks showing the values at certain locations within the box.</p>
+<p>The LED Gauge does not have a Plot Area. See the Indicator section below for details on LED Gauge.</p>
+<h4>Indicator</h4>
+<p>The <a href="dvt_indicator.html">Indicator</a> shows the metric value of the Gauge. There are three types of indicators for Dial Gauges: Line, Needle and Fill. Line and Needle are rotating pointers to show the metric value by pointing to certain angle on the dial. The Needle indicator is thicker than the Line indicator. Fill is a slice or section of the dial that fills from the minimum value up to the metric value. Users may specify the indicator fill color and border color.</p>
+<p>In a Status Meter, the indicator is rectangular. Its length is proportional to the metric value. Use the &lt;dvt:indicatorBar&gt; tag to specify the fill color and border color of the indicator.</p>
+<p>The LED Gauge indicates its value mainly by its color. It changes its color to match the threshold range into which the metric value falls. Therefore, one or more thresholds must be present for LED Gauges. Users may change the style of the LED by attribute ledStyle. The shape of the LED gauge can be changed to circular (LS_DOT), an arrow shape (LS_ARROW), triangular (LS_TRIANGLE), or customizable shape (LS_CUSTOM).</p>
+<p>In order to make the customizable shape is functional, both ledStyleCallback attribute and its callback class have to be implemented. The callback class extends the LedStyleCallback class, which users need to implement the getLEDImage method to return the desired image for every threshold range. See the JavaDoc for the LedStyleCallback class for more information.</p>
+<h4>Thresholds</h4>
+<p>A Threshold represents a significant value range like quota, target or limit value etc. When the indicator falls into one of the threshold ranges, it means certain criteria have been met or not. Different threshold ranges in gauges may have different colors, which you may customize.</p>
+<p>Specify the threshold ranges by using <a href="dvt_thresholdSet.html">&lt;dvt:thresholdSet&gt;</a> tag and <a href="dvt_threshold.html">&lt;dvt:threshold&gt;</a> tag. The thresholdMaxValue attribute is used to indicate the breakpoint of the ranges. For examples, if thresholdMaxValue of two threshold tags are specified, there will be three threshold ranges, starting from minimum value to first thresholdMaxValue, first thresholdMaxValue to second thresholdMaxValue and second thresholdMaxValue to maximum value. The threshold ranges can also be specified through the data bindings.</p>
+<p>A Gauge Legend can be added to show the colors, ranges and descriptions of the Thresholds.</p>
+<p>The style of threshold representation can be changed for Dial Gauges. Threshold colors can fill the entire plot area, form a solid or segmented ring around the Plot Area.</p>
+<h4>Tick Marks and Tick Labels</h4>
+<p>Dial Gauges and Status Meters have <a href="dvt_tickMark.html">Tick Marks</a> and <a href="dvt_tickLabel.html">Tick Labels</a> to show the incremental, minimum and maximum values for a specific rotational angle or a location on the Plot Area. Users may specify where the tick marks occur within a Gauge, such as increments, minimum, maximum, metric, threshold values etc. If increment is specified, user may decide the number of ticks to be displayed in a gauge. Tick Labels may show actual value or percentage value. The Tick Labels can be positioned inside or outside of the Plot Area.</p>
+<h4>Labels</h4>
+<p>There are three labels in a gauge: Top Label, Bottom Label and Metric Label.</p>
+<p>The <a href="dvt_topLabel.html">Top Label</a> shows the title of the Gauge. It can be positioned above the Gauge or inside the Gauge. The data grid column label is the default Top Label in Gauge Sets.</p>
+<p>The <a href="dvt_bottomLabel.html">Bottom Label</a> further describes the value. It can be positioned below the Gauge or inside the Gauge. The data grid row label is the default Bottom Label in Gauge Sets.</p>
+<p>The <a href="dvt_metricLabel.html">Metric Label</a> shows the numerical value of the metric. It can be positioned below or with the bottom label, or inside the Gauge. The Metric Label may show the percentage value instead of numerical value.</p>
+<p>If top, bottom, and metric labels are placed inside a Gauge, they are positioned at the center horizontally. When two or more labels are placed inside the Gauge, they are ordered vertically (from top, bottom and then metric label) within the Gauge Plot Area.</p>
+<p>The <a href="dvt_upperLabelFrame.html">Upper Label Frame</a> is a decorative frame that encloses the Top Label, and the <a href="dvt_lowerLabelFrame.html">Lower Label Frame</a> is the one that encloses the Bottom and Metric Labels. The fill color and border color of those frames can be modified.</p>
+<h4>Legend</h4>
+<p>The Legend of the Gauge shows a description of the thresholds. It shows the color and the name or range of each threshold. It can be positioned above, below, or to the left or right of the Gauge Plot Area using the position attribute of the <a href="dvt_gaugeLegendArea.html">&lt;dvt:gaugeLegendArea&gt;</a> tag.</p>
+<p>Note: Only one legend exists in either a single Gauge or a Gauge Set. For a Gauge Set, the threshold ranges or values showing in the legend is according to the first Gauge in the Gauge Set. Therefore, the usage of different threshold ranges for Gauges in a Gauge Set is not recommended.</p>
+<p>The Legend Title and texts can be customized by the <a href="dvt_gaugeLegendTitle.html">&lt;dvt:gaugeLegendTitle&gt;</a> tag and <a href="dvt_gaugeLegendText.html">&lt;dvt:gaugeLegendText&gt;</a> tag respectively.</p>
+<h4>Gauge Size</h4>
+<p>The default Gauge size is 200 pixels tall by 200 pixels wide. The "inlineStyle" attribute can be used to change the size. Set inlineStyle = "width: 500px; height: 350px;", for instance, to change the Gauge size to 350 pixels tall by 500 pixels wide. The width and the height can also be specified in percent. Use percent for height only when the Gauge is added to an explicitly sized container or one that manages layout, otherwise gauge will behave differently for different browsers. Use the "dynamicResize" attribute to resize the Gauge based on its container size. Note that the specified size applies to the collection of all of the Gauges in a Gauge set, rather than to each individual Gauge.</p>
+<h4>Animation</h4>
+<p>Gauges support animation. Animate the gauge during initial rendering using the attribute "animationOnDisplay". The Gauge can also be animated when the data changes using the attribute "animationOnDataChange". Use the attribute "animationDuration" to specify the animation duration. Animation is not supported in Gauge Sets.</p>
+<h4>Context Menus</h4>
+<p>Context menus can be defined by using any of the context menu facets that are defined on the gauge. Context Menus are currently only supported in Flash.</p>
+<p>Due to technical limitations when using the Flash rendering format, the context menu contents are currently displayed using the Flash Player's context menu. This imposes several limitations defined by the Flash Player:</p>
+<ul>
+<li>Flash does not allow for submenus in its context menu.</li>
+<li>Flash only allows a maximum of 15 custom menu items. The component's built in menu items, such as the ones for interactiveSliceBehavior, also count towards this limit.</li>
+<li>Flash only allows for text-only menu items. Icons or other controls possible in ADF Faces menus are not possible in Flash.</li>
+<li>Each caption must contain at least one visible character.</li>
+<li>Control characters, newlines, and other white space characters are ignored.</li>
+<li>No caption can be more than 100 characters long.</li>
+<li>Captions that are identical to another custom item are ignored, whether the matching item is visible or not. Menu captions are compared to built-in captions or existing custom captions without regard to case, punctuation, or white space.</li>
+<li>The following captions are not allowed, but the words may be used in conjunction with other words to form a custom caption: "Save","Zoom In", "Zoom Out", "100%", "Show All", "Quality", "Play", "Loop", "Rewind", "Forward", "Back", "Movie not loaded", "About", "Print", "Show Redraw Regions", "Debugger", "Undo", "Cut", "Copy", "Paste", "Delete", "Select All", "Open", "Open in new window", "Copy link"</li>
+<li>None of the following words can appear in a custom caption on their own or in conjunction with other words: "Adobe", "Macromedia", "Flash Player", "Settings"</li>
+</ul>
+<p>Additionally, since Flash's request for context menu items is a synchronous call, so a server request to evaluate EL is not possible when the context menu is invoked. To provide context menus that vary by selected object, the menus will be pre-fetched if the context menu popup uses contentDelivery="lazyUncached". For context menus that may vary by state, this means that any EL expressions within the menu definition will be called repeatedly at render time, with different selection and currency states. When using these context menus that are pre-fetched, the application must be aware of the following:</p>
+<ul>
+<li>Long running or slow code should not be executed in any EL that may be used to determine how the context menu is displayed. This does not apply to af:commandMenuItem attributes that are called after a menu item is selected, such as "actionListener".</li>
+<li>In the future, if the Flash limitations are solved, the ADF context menu may be displayed in place of the Flash context menu. To ensure upgrade compatibility, applications developers should code such that their EL will function both in cases where the menu is pre-fetched, and also if the EL is evaluated when the menu is invoked. It is highly recommended that the only component state that applications rely on are selection and currency.</li>
+</ul>
+<h4>Tooltips</h4>
+<p>Tooltips are useful to display identification and or detail information of the metric value. While the indicator shows the ballpark value of the metric value, tooltip can be very useful to show the exact value.</p>
+<h4>Font</h4>
+<p>The <a href="dvt_gaugeLegendText.html">&lt;dvt:gaugeFont&gt;</a> tag is used for font formatting. Text color, style, size, and font name can be specified using this tag. This tag is used as a child tag for any of the Gauge's text component tags. Text components for the gauge are topLabel, bottomLabel, metricLabel, gaugeLegendText, gaugeLegendTitle and tickLabel.</p>
+<h4>Interactivity</h4>
+<p>Use the shapeAttributes tag to specify interactivity on an individual Gauge set component. A backing or managed bean may be required to use certain functionality of this feature. Please look at &lt;dvt:shapeAttributes&gt; tag for more information.</p>
+<p>Here is an example of the interactivity on indicator and metric label. Here is a Dial Gauge. The tooltip of the indicator and the metric label become "Indicator" and "MetricLabel" respectively. When the indicator is clicked, the window title becomes "Indicator is clicked".</p>
+<p><code>&lt;dvt:gauge gaugeType="DIAL"&gt; &lt;dvt:shapeAttributesSet&gt; &lt;dvt:shapeAttributes component="GAUGE_INDICATOR" alt="Indicator" onClick="document.title="Indicator is clicked";"/&gt; &lt;dvt:shapeAttributes component="GAUGE_METRICLABEL" alt="MetricLabel"/&gt; &lt;/dvt:shapeAttributesSet&gt; &lt;/dvt:gauge&gt;</code></p>
+<h4>Relationship with other tags</h4>
+<p>The gauge can have the following child tags:</p>
+<ul>
+<li>&lt;dvt:attributeFormat&gt;</li>
+<li>&lt;dvt:bottomLabel&gt;</li>
+<li>&lt;dvt:gaugeBackground&gt;</li>
+<li>&lt;dvt:gaugeFrame&gt;</li>
+<li>&lt;dvt:gaugeLegendArea&gt;</li>
+<li>&lt;dvt:gaugeLegendText&gt;</li>
+<li>&lt;dvt:gaugeLegendTitle&gt;</li>
+<li>&lt;dvt:gaugePlotArea&gt;</li>
+<li>&lt;dvt:gaugeSetBackground&gt;</li>
+<li>&lt;dvt:indicator&gt;</li>
+<li>&lt;dvt:indicatorBar&gt;</li>
+<li>&lt;dvt:indicatorBase&gt;</li>
+<li>&lt;dvt:lowerLabelFrame&gt;</li>
+<li>&lt;dvt:metricLabel&gt;</li>
+<li>&lt;dvt:shapeAttributesSet&gt;</li>
+<li>&lt;dvt:thresholdSet&gt;</li>
+<li>&lt;dvt:tickLabel&gt;</li>
+<li>&lt;dvt:tickMark&gt;</li>
+<li>&lt;dvt:topLabel&gt;</li>
+<li>&lt;dvt:upperLabelFrame&gt;</li>
+</ul>
+<h4>Example</h4>
+<p>The following example shows XML for a gauge tag.<br>
+<code>&lt;dvt:gauge id="foo2" value ="#{sampleGauge.gaugeDataModel}"<br>
+gaugeType="STATUSMETER" imageFormat="FLASH"<br>
+inlineStyle = "width:350px; height:250px;"<br>
+gaugeSetAlignment="GSA_RIGHT" gaugeSetColumnCount="2"<br>
+gaugeSetDirection="GSD_ACROSS"<br>
+partialTriggers="gaugeTypes2" partialSubmit="true"&gt;<br>
+&lt;/dvt:gauge&gt;<br></code></p>
+<h4>Geometry Management</h4>
+<ul>
+<li>This component can be stretched by a parent layout component that stretches its children, e.g. panelStretchLayout, panelSplitter, if dynamicResize="DYNAMIC_SIZE" is set.</li>
+<li>This component does stretch to fill up the browser's viewport when it is the "sole visual root component" in the component tree, if dynamicResize="DYNAMIC_SIZE" is set.</li>
+<li>When NOT stretched, this component will be displayed in its default dimensions which are provided by the skin. This can be modified by applying a dimension using the inlineStyle or styleClass attributes.</li>
+<li>This component does not stretch its children.</li>
+</ul>
+<h4>Attachment Mode</h4>
+<p>In attachment mode, the gauge will be displayed in HTML5 or PNG, depending on the browser being used. Limited client interactivity, such as tooltips, is available. The clickListener feature is not supported in attachment mode.</p>
+<div class="section">
+<h2><a name="Screen_Shots" id="Screen_Shots">Screen Shot(s)</a></h2>
+<div class="screenshot"><br>
+<img src="../images/gauge.png" alt="Gauge screenshot"><br></div>
+<br></div>
+<h2>Events</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="34%" align="left" valign="bottom" id="evType">Type</th>
+<th width="29%" align="left" valign="bottom" id="evPhase">Phases</th>
+<th width="37%" align="left" valign="bottom" id="evDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="evType">org.apache.myfaces.trinidad.event.AttributeChangeEvent</td>
+<td align="left" headers="evPhase" nowrap="nowrap">Invoke Application,<br>
+Apply Request Values</td>
+<td align="left" headers="evDesc">Event delivered to describe an attribute change. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change event might include the width of a column that supported client-side resizing.</td>
+</tr>
+</table>
+<h2>Supported Facets</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th width="27%" align="left" valign="bottom" id="fcName">Name</th>
+<th width="73%" align="left" valign="bottom" id="fcDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="fcName">bodyContextMenu</td>
+<td align="left" headers="fcDesc">popup component containing the context menu that will be shown on right click on any non-selectable object within the component. The af:popup must contain an af:menu to display the context menu. This facet supports only a single child component.</td>
+</tr>
+</table>
+<h2>Attributes</h2>
+<table class="oac_no_warn" summary="Layout table... probably." rules="all" border="1" width="100%" cellpadding="3" cellspacing="0">
+<thead>
+<tr>
+<th align="left" valign="bottom" id="attrName">Name</th>
+<th align="left" valign="bottom" id="attrType">Type</th>
+<th align="left" valign="bottom" id="attrEL">Supports EL?</th>
+<th align="left" valign="bottom" id="attrDesc">Description</th>
+</tr>
+</thead>
+<tr>
+<td align="left" headers="attrName">angleExtent</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the angular extent of the dial gauge. Valid value is:
+<ul>
+<li>Integer between 0 - 360</li>
+<li>0 - generate a dial gauge with no angular extent</li>
+<li>220 - The default value</li>
+<li>360 - generate a dial gauge with circular extent</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationDownColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the color used to indicate that a data value has decreased. Enter values in RGB hexadecimal. Does not apply in this release.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationDuration</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 1000<br>
+<br>
+Specifies the animation duration in milliseconds. The default value is 1000.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationIndicators</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> NONE, ALL<br>
+<strong>Default Value:</strong> ALL<br>
+<br>
+<p>Specifies the type of data change indicators to show. Valid values are:</p>
+<ul>
+<li>NONE - Show no data change indicators</li>
+<li>ALL - (Default) Show all data change indicators</li>
+</ul>
+<p>Does not apply in this release</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnDataChange</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, activeData, auto<br>
+<strong>Default Value:</strong> activeData<br>
+<br>
+<p>Specifies the type of data change animation to apply. Valid values are:</p>
+<ul>
+<li>none - Apply no data change animation effects</li>
+<li>activeData - (Default) Apply Active Data Service (ADS) data change animation events.</li>
+<li>auto - Apply Partial Page Refresh (PPR) data change animation events. It also does ADS animations.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationOnDisplay</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> none, auto<br>
+<strong>Default Value:</strong> none<br>
+<br>
+<p>Specifies the type of initial rendering effect to apply. Valid values are:</p>
+<ul>
+<li>none - (Default) Do not show any initial rendering effect</li>
+<li>auto - Apply an initial rendering effect automatically chosen base on gauge type</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">animationUpColor</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the color used to indicate that a data value has increased. Enter values in RGB hexadecimal. Does not apply in this release.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">attributeChangeListener</td>
+<td align="left" headers="attrType">javax.el.MethodExpression</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">a method reference to an attribute change listener. Attribute change events are not delivered for any programmatic change to a property. They are only delivered when a renderer changes a property without the application's specific request. An example of an attribute change events might include the width of a column that supported client-side resizing.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">binding</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Only EL</td>
+<td align="left" headers="attrDesc">Specifies a binding reference to store an instance of the component. This component must be of type UIGauge. For example, to store an instance of the gauge component from the SampleGauge class, use the following code: binding="#{sampleGaugeBean.gauge}"</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">clickAction</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Refers to a backing bean method that performs navigation processing for the graph and returns an outcome String. Or a static outcome String can be specified. The JSF NavigationHandler selects the page to display next by matching the outcome String against the navigation rules in the application configuration resource file. The application writes the Navigation rules.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">clickListener</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The listener interface for receiving click events on the gauge components. Here is an example of clickListener implementation that displays a component name on a click action - <code><code>public void clickListener (ClickEvent event){ ComponentHandle handle = event.getComponentHandle(); System.out.println(handle.getName()+" is clicked."); }</code></code></td>
+</tr>
+<tr>
+<td align="left" headers="attrName">contentDelivery</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> whenAvailable, lazy, immediate<br>
+<strong>Default Value:</strong> whenAvailable<br>
+<br>
+<p>Specifies whether data is fetched with page load or after page load. Valid values are:</p>
+<ul>
+<li>lazy - (Default) Data is fetched after the initial page load.</li>
+<li>immediate - Data is fetched immediately.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customLayout</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">
+<p>Specifies custom layout information when the graph automatically places and sizes its components. Valid values are:</p>
+<ul>
+<li>CL_NONE - Do not use any of the other custom layout attribute values</li>
+<li>CL_TITLE_SEPARATOR - (Default) Display title separator under the topLabel</li>
+<li>CL_OUTER_FRAME - Display the outer frame with shadow effect around the entire gauge.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customShapesPath</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the path to the Custom Shapes definition file.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">customizationId</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">This attribute is deprecated. The 'id' attribute should be used when applying persistent customizations. This attribute will be removed in the next release.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">drillingEnabled</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> false<br>
+<br>
+Specifies whether drilling is enabled in a gauge. This attribute is always set to "false" because drilling is not yet supported in the gauge.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">dynamicResize</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> FIXED_SIZE, DYNAMIC_SIZE<br>
+<strong>Default Value:</strong> FIXED_SIZE<br>
+<br>
+<p>Specifies whether to resize the component based on its container size. Valid values are:</p>
+<ul>
+<li>FIXED_SIZE - (Default) No resize.</li>
+<li>DYNAMIC_RESIZE - Performs resizing.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">flashDefaultFontLoading</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> FLASH_DEFAULT_FONT_LOADING_ALL<br>
+<br>
+Specifies whether default fonts are loaded in FLASH from the middle tier. Valid values are:
+<ul>
+<li>FLASH_DEFAULT_FONT_LOADING_ALL - (Default) use the embedded font.</li>
+<li>FLASH_DEFAULT_FONT_LOADING_NONE - do not use the embedded font.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">fontURLMap</td>
+<td align="left" headers="attrType">java.util.Map</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Provides a mapping of font names and font swf file URLs in the form of a java.util.Map object. This map should have the font names as the keys, and the font URLs as the values.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">gaugeSetAlignment</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> GSA_NONE, GSA_CENTER, GSA_TOPLEFT, GSA_TOP, GSA_TOPRIGHT, GSA_RIGHT, GSA_BOTTOMRIGHT, GSA_BOTTOM, GSA_BOTTOMLEFT, GSA_LEFT<br>
+<strong>Default Value:</strong> GSA_NONE<br>
+<br>
+Determines where gauges appear within a gauge set. Valid values are as follows:
+<ul>
+<li>GSA_BOTTOM - Calculates available space and optimal gauge size to allow for alignment to the bottom of the gauge set.</li>
+<li>GSA_BOTTOMLEFT - Calculates available space and optimal gauge size to allow for alignment to the bottom left corner of the gauge set.</li>
+<li>GSA_BOTTOMRIGHT - Calculates available space and optimal gauge size to allow for alignment to the bottom right corner of the gauge set.</li>
+<li>GSA_CENTER - Calculates available space and optimal gauge size to allow for alignment in the center of the gauge set.</li>
+<li>GSA_LEFT - Calculates available space and optimal gauge size to allow for alignment to the left side of the gauge set.</li>
+<li>GSA_NONE - (Default) Divides available space in the gauge set among all the gauges equally.</li>
+<li>GSA_RIGHT - Calculates available space and optimal gauge size to allow for alignment to the right side of the gauge set.</li>
+<li>GSA_TOPLEFT - Calculates available space and optimal gauge size to allow for alignment to the top left corner of the gauge set.</li>
+<li>GSA_TOP - Calculates available space and optimal gauge size to allow for alignment to the top of the gauge set.</li>
+<li>GSA_TOPRIGHT - Calculates available space and optimal gauge size to allow for alignment to the top right corner of the gauge set.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">gaugeSetColumnCount</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the number of columns to display in a gauge set. Valid values are:
+<ul>
+<li>0 - All gauges appear in a single row. This setting produces as many columns as there are gauges.</li>
+<li>Integer greater than 0 - The number of columns in which gauges are to be displayed. For example, the value "3" causes gauges to be displayed in 3 columns.</li>
+<li>Default - If no value is specified, the gauge will lay out the columns automatically.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">gaugeSetDirection</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> GSD_ACROSS, GSD_DOWN<br>
+<strong>Default Value:</strong> GSD_ACROSS<br>
+<br>
+Direction for processing the gauges in a gauge set. Valid values are:
+<ul>
+<li>GSD_ACROSS - (Default) Specifies that the layout of the gauges is from left to right, then top to bottom.</li>
+<li>GSD_DOWN - Specifies that the layout of the gauges is from top to bottom, then left to right.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">gaugeType</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> DIAL, STATUSMETER, VERTICALSTATUSMETER, LED<br>
+<strong>Default Value:</strong> DIAL<br>
+<br>
+Specifies the type of gauge. Valid values are:
+<ul>
+<li>DIAL - (Default) Depicts an N-degree circular shaped gauge. N is specified by the angleExtent attribute.</li>
+<li>LED - Graphically depicts a key measurement as defined by a key performance indicator (KPI). Also gives a quick assessment of any metric by generalizing the metric to a specific value range.</li>
+<li>STATUSMETER - A horizontal bar which indicates the progress of a task or the level of some measurement.</li>
+<li>VERTICALSTATUSMETER - A vertical bar which indicates the progress of a task or the level of some measurement.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">graphicAntialiasing</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether or not antialiasing will be used to smooth outlines of graphic areas. Valid values are true (Default) or false.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">id</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">No</td>
+<td align="left" headers="attrDesc">Unique identifier of the component.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">imageFormat</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> HTML5, FLASH, PNG, PNG_STAMPED, AUTO<br>
+<br>
+This attribute is deprecated. Use the oracle.adf.view.rich.dvt.DEFAULT_IMAGE_FORMAT context parameter instead. The component will use the specified default if possible, falling back to alternate output formats as needed based on the client browser.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">imageHeight</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 200<br>
+<br>
+This attribute is deprecated. Use inlineStyle attribute to specify the image width and height instead. For examples: inlineStyle = "width:500px; height:350px;".
+<p>The default height is 200 pixels.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">imageSource</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the URI for an image file that was generated by the application. For example, an application might have exported to PNG and stored the image on the server previously. This provides a base from which to load the image.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">imageWidth</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 200<br>
+<br>
+This attribute is deprecated. Use inlineStyle attribute to specify the image width and height instead. For examples: inlineStyle = "width:500px; height:350px;".
+<p>The default width is 200 pixels.</p>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">inlineStyle</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Style of the outer element of the component</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">ledStyle</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> LS_DOT, LS_ARROW, LS_RECTANGLE, LS_TRIANGLE, LS_CUSTOM<br>
+<strong>Default Value:</strong> LS_DOT<br>
+<br>
+Specifies the kind of LED gauge. Valid values are:
+<ul>
+<li>LS_DOT - (Default) A circle with a fill or gradient equal to that of the threshold section in which the metric falls.</li>
+<li>LS_ARROW - General shape indicating good (up arrow), fair (right-pointing arrow), and poor (down arrow). Arrow color defers to defined threshold colors or their defaults.</li>
+<li>LS_TRIANGLE - General shape indicating good (up triangle), fair (right-pointing triangle), and poor (down triangle). Triangle color defers to defined threshold colors or their defaults.</li>
+<li>LS_RECTANGLE - Rectangular shape that fills according to the threshold section in which the metric falls.</li>
+<li>LS_CUSTOM - Lets developers use their own images when displaying LED gauges. Requires the setting of the gauge's ledStyleCallback attribute to specify the desired custom image.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">ledStyleCallback</td>
+<td align="left" headers="attrType">oracle.dss.gauge.LEDStyleCallback</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies code that defines a custom LED style. Code for the callback is usually stored in a backing bean for the gauge. For example: ledStyleCallback="{sampleGauge.myStyleCallback}"</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">maxValue</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 100<br>
+<br>
+Specifies the greatest value on the gauge scale/axis. This will be calculated automatically if it is not specified.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">minValue</td>
+<td align="left" headers="attrType">double</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> 0<br>
+<br>
+Specifies the lowest value on the gauge scale/axis. This will be calculated automatically if it is not specified.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">otherProperties</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies settings for other properties in the form on an XML string. For example, this attribute could be used to set SFX properties such as gradientDirection.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialSubmit</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether an action should be performed through a partial page submit. Valid values are "true" (Default) and "false".</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">partialTriggers</td>
+<td align="left" headers="attrType">String[]</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Specifies the IDs of the components that should trigger a partial update. This component will listen on the trigger components. If one of the trigger components receives an event that will cause it to update in some way, this component will request to be updated too.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">renderImagemap</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether an image map (PNG) should be rendered. Valid values are "true" (Default) or "false".</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">rendered</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether the component is rendered.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">shortDesc</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Short description of the gauge. Useful in the screen reader mode.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">specularHighlight</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> SH_ON, SH_OFF<br>
+<strong>Default Value:</strong> SH_ON<br>
+<br>
+Specifies whether the crescent shaped highlight is displayed for LS_DOT LED gauges. Valid values are: SH_ON - (Default) Display the crescent shaped highlight. SH_OFF - Do not display the crescent shaped highlight.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">styleClass</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Sets a CSS style class to use for this component. Note that width and height should be set using the inlineStyle property.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">svgFontEmbedding</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> SVG_FONT_EMBEDDING_ALL, SVG_FONT_EMBEDDING_NONE<br>
+<strong>Default Value:</strong> SVG_FONT_EMBEDDING_ALL<br>
+<br>
+Note: SVG is only supported as a printing format, so this attribute should no longer be used. Indicates whether fonts should be embedded directly in the generated SVG. This attribute offers one way to avoid inconsistencies between fonts available on the middle tier and fonts available on the client. Valid values are:
+<ul>
+<li>SVG_FONT_EMBEDDING_NONE - Do not embed fonts in the generated SVG.</li>
+<li>SVG_FONT_EMBEDDING_ALL - (Default) Embed all fonts in the generated SVG. This option requires additional processing and significantly increases the size of the SVG file.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">tabularData</td>
+<td align="left" headers="attrType">java.util.List</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">Provides a tabular data set to a gauge in the form of a java.util.List object.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">textAntialiasing</td>
+<td align="left" headers="attrType">boolean</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Default Value:</strong> true<br>
+<br>
+Specifies whether or not antialiasing will be used to smooth text characters. Valid values are true or false (Default).</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">thresholdDialStyle</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> TDS_PIE_FILL, TDS_RING_FILL, TDS_SEGMENTS<br>
+<strong>Default Value:</strong> TDS_SEGMENTS<br>
+<br>
+The style for threshold dial gauges. Valid values are:
+<ul>
+<li>TDS_PIE_FILL - Fills the entire plot area of a dial gauge.</li>
+<li>TDS_RING_FILL - Fills only the ring portion of a dial gauge.</li>
+<li>TDS_SEGMENTS - (Default) Fills the outer portion of a dial gauge in segments.</li>
+</ul>
+</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">value</td>
+<td align="left" headers="attrType">String</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc">The gauge data model, which must be an instance of DataModel. Alternatively this attribute can take a number (represented as either a Java.lang.Number object or a String) which will be set as the metric value.</td>
+</tr>
+<tr>
+<td align="left" headers="attrName">visualEffects</td>
+<td align="left" headers="attrType">int</td>
+<td align="left" headers="attrEL">Yes</td>
+<td align="left" headers="attrDesc"><strong>Valid Values:</strong> NONE, AUTO<br>
+<strong>Default Value:</strong> AUTO<br>
+<br>
+<p>Specifies the type or types of visualEffect to apply. Valid values are:</p>
+<ul>
+<li>NONE - Apply no visual effects</li>
+<li>AUTO - (Default) Apply visual effects automatically based on gauge type. Visual effect includes shadow, bevel and glow effect.</li>
+</ul>
+</td>
+</tr>
+</table>
+<!-- Start Footer -->
+<!-- class="ind" -->
+<div class="footer">
+<table class="oac_no_warn" summary="Layout table... probably." class="simple oac_no_warn" cellspacing="0" cellpadding="0" width="100%">
+<tr>
+<td align="left" width="86%"><a href="topicid:help_legalnotices_html"><span class="copyrightlogo">Copyright&nbsp;&copy;&nbsp;2015,&nbsp;Oracle.&nbsp;All&nbsp;rights&nbsp;reserved.</span></a></td>
+</tr>
+</table>
+</div>
+<!-- class="footer" -->
+</body>
+</html>

@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <f:view>
+        <af:document title="Hierarchy Viewer Zooming Demo"
+                     binding="#{templateBindings.documentComponent}"
+                     theme="dark" id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demoTemplate"
+                             viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="customEditorPresent" value="true"/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- MOD TAG TEMPLATE -->
+                <!-- Document Title -->
+                <f:attribute name="documentTitle"
+                             value="Hierarchy Viewer Zooming Demo"/>
+                <!-- Tag Name -->
+                <f:attribute name="tagName"
+                             value="Hierarchy Viewer Zooming"/>
+                <f:facet name="center">
+                  <af:panelStretchLayout topHeight="auto" id="psl1">
+                  <f:facet name="top">
+                    <!-- START TAG DEMO -->
+                    <af:panelGroupLayout layout="horizontal" id="pgl13">
+                      <af:spacer width="10px" id="s8"/>
+                      <af:panelGroupLayout id="pgl14">
+                        <f:verbatim>
+                          <b>Demonstrates Zoom Facets</b>
+                          <ul>
+                            <li>Zoom in and out to see the text change.</li>
+                          </ul>
+                        </f:verbatim>
+                      </af:panelGroupLayout>
+                    </af:panelGroupLayout>
+                  </f:facet>
+                  <f:facet name="center">
+                  
+                    <af:panelSplitter orientation="horizontal" dimensionsFrom="auto"
+                                      splitterPosition="300" positionedFromEnd="true"
+                                      styleClass="AFStretchWidth" id="ps1">
+                      <f:facet name="first">
+                        <dvt:hierarchyViewer id="hv1" binding="#{hvZooming.hvComponent}"
+                                             styleClass="AFStretchWidth"
+                                             detailWindow="none"
+                                             var="node"
+                                             value="#{hvZooming.hvModel}"                        
+                                             contentDelivery="immediate">
+                          <dvt:link id="l1"/>
+                          <dvt:node width="275" height="130"
+                                    rendered="true"
+                                    showExpandChildren="#{node.hasChildren}"
+                                    shortDesc="#{node.firstName}"
+                                    id="n1">
+                            <f:facet name="zoom100">                                                              
+                              <af:panelGroupLayout layout="vertical"
+                                                      id="pgl16">
+                                <af:outputText value="#{node.firstName} #{node.lastName}"
+                                                 styleClass="AFHVNodeTitleTextStyle"
+                                                 id="ot10"/>
+                                <af:outputText value="#{node.title}"
+                                                 styleClass="AFHVNodeSubtitleTextStyle"
+                                                 id="ot12"/>
+                                <af:outputText value="Zoom100"
+                                                 styleClass="AFHVNodeSubtitleTextStyle"
+                                                 id="ot9"/>                                                                            
+                              </af:panelGroupLayout>
+                            </f:facet>
+                            <f:facet name="zoom75">                                                                                            
+                              <af:panelGroupLayout layout="vertical"
+                                                    id="pgl161">
+                                <af:outputText value="#{node.firstName} #{node.lastName}"
+                                                 styleClass="AFHVNodeTitleTextStyle"
+                                                 id="ot101"/>
+                                <af:outputText value="#{node.title}"
+                                                 styleClass="AFHVNodeSubtitleTextStyle"
+                                                 id="ot121"/>
+                                <af:outputText value="Zoom75"
+                                                 styleClass="AFHVNodeSubtitleTextStyle"
+                                                 id="ot91"/>                                               
+                              </af:panelGroupLayout>
+                            </f:facet>  
+                            <f:facet name="zoom50">                                                                                  
+                              <af:panelGroupLayout layout="vertical"
+                                                       id="pgl162">
+                                <af:outputText value="#{node.firstName} #{node.lastName}"
+                                                 styleClass="AFHVNodeTitleTextStyle"
+                                                 id="ot102"/>
+                                <af:outputText value="#{node.title}"
+                                                 styleClass="AFHVNodeSubtitleTextStyle"
+                                                 id="ot122"/>
+                                <af:outputText value="Zoom50"
+                                                 styleClass="AFHVNodeSubtitleTextStyle"
+                                                 id="ot92"/>                                                                               
+                              </af:panelGroupLayout>
+                            </f:facet>  
+                            <f:facet name="zoom25">                                                                                                                       
+                              <af:panelGroupLayout layout="vertical"
+                                                       id="pgl163">
+                                <af:outputText value="Zoom25"
+                                                 styleClass="AFHVNodeTitleTextStyle"
+                                                 id="ot93"/>                                               
+                              </af:panelGroupLayout>
+                            </f:facet>  
+                          </dvt:node>                                    
+                        </dvt:hierarchyViewer>
+                      </f:facet>
+                    </af:panelSplitter>
+                  </f:facet>
+                    <!-- END TAG DEMO -->
+                </af:panelStretchLayout>
+              </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

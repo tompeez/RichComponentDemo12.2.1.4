@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="clientListener Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:resource type="javascript">
+/**
+ * Shows a popup from an "action" type event.
+ * @param {AdfActionEvent} actionEvent the event being handled
+ */
+function showPopupFromAction(actionEvent)
+{
+  actionEvent.cancel();
+  var eventSource = actionEvent.getSource();
+  var popup = eventSource.findComponent("popup");
+  popup.show({align:AdfRichPopup.ALIGN_AFTER_START, alignId:eventSource.getClientId()});
+}
+
+/**
+ * Shows a popup from a "contextMenu" type event.
+ * @param {AdfUIInputEvent} uiInputEvent the event being handled
+ */
+function showPopupFromContextMenu(uiInputEvent)
+{
+  uiInputEvent.cancel();
+  var eventSource = uiInputEvent.getSource();
+  var popup = eventSource.findComponent("contextPopup");
+  popup.show({align:AdfRichPopup.ALIGN_END_BEFORE, alignId:eventSource.getClientId()});
+}
+      </af:resource>
+      <af:pageTemplate
+        id="dmoTpl"
+        viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="clientListener"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="listener"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+
+            <af:popup id="popup" contentDelivery="immediate">
+              <af:panelGroupLayout layout="vertical" inlineStyle="width: 300px;"
+                                   id="pgl2">
+                <af:outputText value="The clientListener is a declarative way to register a
+                                      client-side listener script to be executed when a specific event
+                                      type is fired. This tag will be ignored for any server-rendered
+                                      components, as it is only supported by rich client
+                                      components." id="ot1"/>
+              </af:panelGroupLayout>
+            </af:popup>
+
+            <af:popup id="contextPopup" contentDelivery="immediate">
+              <af:menu id="m1">
+                <af:commandMenuItem text="Go to the Tag Guide" action="guide"
+                                    id="cmi1"/>
+                <af:commandMenuItem text="Go to the File Explorer" action="fileExplorer"
+                                    id="cmi2"/>
+                <af:commandMenuItem text="Go to the Feature Demos" action="feature"
+                                    id="cmi3"/>
+              </af:menu>
+            </af:popup>
+
+            <af:commandButton text="Press me..." id="button">
+              <af:clientListener type="action" method="showPopupFromAction"/>
+              <af:clientListener type="contextMenu" method="showPopupFromContextMenu"/>
+            </af:commandButton>
+
+            <af:spacer height="1em" id="s1"/>
+
+            <af:panelHeader text="About this Demo" id="ph1">
+              <af:panelGroupLayout layout="vertical" id="pgl3">
+                <af:outputText value="The above button has two clientListener children:"
+                               id="ot2"/>
+                <af:panelList listStyle="list-style-type: decimal;" id="pl1">
+                  <af:outputText value="An 'action' event type clientListener that is configured to
+                                        show a popup panel when the button is clicked"
+                                 id="ot3"/>
+                  <af:outputText value="A 'contextMenu' event type clientListener that is configured
+                                        to show a popup menu when the button is right-clicked"
+                                 id="ot4"/>
+                </af:panelList>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+
+            <af:spacer height="1em" id="s2"/>
+
+            <af:panelHeader text="Tip" id="ph2">
+              <af:panelGroupLayout layout="vertical" id="pgl4">
+                <af:outputText value="Before using the clientListener tag, be sure to look for any
+                                      existing behavior tags which might eliminate the need for
+                                      scripts." id="ot5"/>
+                <af:group id="g1">
+                  <af:outputText value="For example, the " id="ot6"/>
+                  <af:goLink destination="showPopupBehavior.jspx" text="af:showPopupBehavior"
+                             id="gl1"/>
+                  <af:outputText value=" tag simplifies what it takes to display a popup."
+                                 id="ot7"/>
+                </af:group>
+              </af:panelGroupLayout>
+            </af:panelHeader>
+
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

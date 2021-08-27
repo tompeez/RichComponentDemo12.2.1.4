@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2007, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<!--
+PageMetaData:
+name: Initial Render for tree
+categories: tableAndTree
+tags: tree
+-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html"
+          xmlns:aftest="http://xmlns.oracle.com/adf/faces/rich/test" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="tree visual Tests" id="d1">
+      <af:form id="f1">
+        <af:messages id="m1"/>
+        <af:panelGroupLayout layout="vertical" inlineStyle="margin:0 10px 0 10px"
+                             id="pgl1">
+          <af:goLink text="back to Tests index" destination="../../index.jspx"
+                     id="gl1"/>
+          <af:goLink text="back to Test Initial Render of Components index" destination="index.jspx"
+                     id="gl2"/>
+          <af:commandNavigationItem text="View Page Source"
+                                    destination="#{facesContext.viewRoot.viewId}.source"
+                                    id="cni1"/>
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <af:panelGroupLayout layout="vertical" id="pgl2">
+            <f:facet name="separator">
+              <af:spacer height="5px" id="s2"/>
+            </f:facet>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This demo shows the tree with contentDelivery='immediate'.&lt;/b>"
+                                id="of1"/>
+            <af:tree 
+                     inlineStyle="height:150px; border: 1px solid #00359A;"
+                     value="#{fs.treeModel}" 
+                     rowDisclosureListener="#{fs.toggle}"
+                     rowSelection="multiple" 
+                     contentDelivery="immediate"
+                     var="node" id="t1">
+              <f:facet name="nodeStamp">
+                <af:panelGroupLayout id="pgl3">
+                  <af:image source="#{node.icon}"
+                            inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                            id="i1"/>
+                  <af:outputText value="#{node.name}" id="ot1"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:tree>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout layout="vertical" id="pgl4">
+            <f:facet name="separator">
+              <af:spacer height="5px" id="s3"/>
+            </f:facet>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This demo shows the tree with context menu.&lt;/b>"
+                                id="of2"/>
+            <af:tree 
+                     inlineStyle="height:150px; border: 1px solid #00359A;"
+                     value="#{fs.treeModel}" 
+                     rowDisclosureListener="#{fs.toggle}"
+                     rowSelection="multiple"
+                     var="node" id="t2">
+              <f:facet name="contextMenu">
+                <af:popup id="myPopup">
+                  <af:menu id="m2">
+                    <af:commandMenuItem text="Context Menu Item 1" id="cmi1"/>
+                    <af:commandMenuItem text="Context Menu Item 2" id="cmi2"/>
+                    <af:commandMenuItem text="Context Menu Item 3" id="cmi3"/>
+                  </af:menu>
+                </af:popup>
+              </f:facet>
+              <f:facet name="nodeStamp">
+                <af:panelGroupLayout id="pgl5">
+                  <af:image source="#{node.icon}"
+                            inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                            id="i2"/>
+                  <af:outputText value="#{node.name}" id="ot2"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:tree>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout layout="vertical" id="pgl6">
+            <f:facet name="separator">
+              <af:spacer height="5px" id="s4"/>
+            </f:facet>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This demo shows the tree with single row selection. Note: Other tree in this page have multiple row selection.&lt;/b>"
+                                id="of3"/>
+            <af:tree 
+                     inlineStyle="height:150px; border: 1px solid #00359A;"
+                     value="#{fs.treeModel}" 
+                     rowDisclosureListener="#{fs.toggle}"
+                     rowSelection="single"
+                     var="node" id="t3">
+              <f:facet name="nodeStamp">
+                <af:panelGroupLayout id="pgl7">
+                  <af:image source="#{node.icon}"
+                            inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                            id="i3"/>
+                  <af:outputText value="#{node.name}" id="ot3"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:tree>          
+          </af:panelGroupLayout>
+          <af:panelGroupLayout layout="vertical" id="pgl8">
+            <f:facet name="separator">
+              <af:spacer height="5px" id="s5"/>
+            </f:facet>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This demo shows the tree with no row selection.&lt;/b>"
+                                id="of4"/>
+            <af:tree 
+                     inlineStyle="height:150px; border: 1px solid #00359A;"
+                     value="#{fs.treeModel}" 
+                     rowDisclosureListener="#{fs.toggle}"
+                     rowSelection="none"
+                     var="node" id="t4">
+              <f:facet name="nodeStamp">
+                <af:panelGroupLayout id="pgl9">
+                  <af:image source="#{node.icon}"
+                            inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                            id="i4"/>
+                  <af:outputText value="#{node.name}" id="ot4"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:tree>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout layout="vertical" id="pgl10">
+            <f:facet name="separator">
+              <af:spacer height="5px" id="s6"/>
+            </f:facet>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This demo shows the tree with fetchSize='5'.&lt;/b>"
+                                id="of5"/>
+            <af:tree 
+                     inlineStyle="height:150px; border: 1px solid #00359A;"
+                     value="#{fs.treeModel}" 
+                     rowDisclosureListener="#{fs.toggle}"
+                     rowSelection="multiple"
+                     fetchSize="5"
+                     var="node" id="t5">
+              <f:facet name="nodeStamp">
+                <af:panelGroupLayout id="pgl11">
+                  <af:image source="#{node.icon}"
+                            inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                            id="i5"/>
+                  <af:outputText value="#{node.name}" id="ot5"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:tree>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout layout="vertical" id="pgl12">
+            <f:facet name="separator">
+              <af:spacer height="5px" id="s7"/>
+            </f:facet>
+            <af:outputFormatted styleUsage="instruction"
+                                value="&lt;b>This demo shows the tree with focusRowKey (right click on a node to make it the root).&lt;/b>"
+                                id="of6"/>
+            <af:tree 
+                     inlineStyle="height:150px; border: 1px solid #00359A;"
+                     value="#{fs.treeModel}" 
+                     rowDisclosureListener="#{fs.toggle}"
+                     rowSelection="single"
+                     focusRowKey="#{fs.defaultFocusRowKey}" 
+                     var="node" id="t6">
+              <f:facet name="nodeStamp">
+                <af:panelGroupLayout id="pgl13">
+                  <af:image source="#{node.icon}"
+                            inlineStyle="margin-right:3px; vertical-align:middle; height:14px; width:16px;"
+                            id="i6"/>
+                  <af:outputText value="#{node.name}" id="ot6"/>
+                </af:panelGroupLayout>
+              </f:facet>
+              <f:facet name="pathStamp">
+                <af:panelGroupLayout id="pgl14">
+                  <af:image source="#{node.icon}" inlineStyle="vertical-align:middle;"
+                            id="i7"/>
+                  <af:outputFormatted value="&lt;b> #{node.name} &lt;/b>"
+                                      id="of7"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:tree>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

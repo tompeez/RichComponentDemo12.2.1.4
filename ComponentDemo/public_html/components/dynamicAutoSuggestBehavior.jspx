@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2016, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="Dynamic AutoSuggestBehavior Demo"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}"
+                 binding="#{templateBindings.documentComponent}" theme="dark"
+                 id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="Dynamic AutoSuggestBehavior"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="centerMode" value="series"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:attribute name="gmStretchChildren" value="none"/>
+        
+        <f:facet name="seriesComponent">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText value="This is dynamically added auto suggest behavior on ListOfValues components. Enter a value 
+                                  in the input field and the suggestedItems will popup based on the input value." id="ot1"/>
+            <af:panelGroupLayout layout="vertical" id="pgl2">
+              <f:facet name="separator">
+                <af:spacer height="5px" id="s2"/>
+              </f:facet>            
+              <af:outputText value="autoSuggest with smartList enabled inputListOfValues component with minChars=2 and 
+                                    maxSuggestedItems=6" id="ot2"/>
+              <af:inputListOfValues label="InputListOfValues" id="lov"
+                                      value="#{demoLOV.ename}"
+                                      popupTitle="Search and Select: Ename" searchDesc="Choose a name"
+                                      model="#{demoLOV.dynamicLOVModel}"
+                                      validator="#{demoLOV.validate}" autoSubmit="true">                
+              </af:inputListOfValues>
+              <af:spacer height="5px"/>
+              <af:separator/>
+              <af:outputText value="autoSuggest with smartList enabled inputComboboxListOfValues component with minChars=2 
+                                    and maxSuggestedItems=6" id="ot3"/>
+              <af:inputComboboxListOfValues label="InputComboboxListOfValues" id="idInputComboboxListOfValues"
+                                          value="#{demoComboboxLOV.ename}"
+                                          popupTitle="Search and Select: Ename"
+                                          searchDesc="Choose a name"
+                                          validator="#{demoLOV.validate}"
+                                          model="#{demoLOV.dynamicLOVModel}"
+                                          columns="45" autoSubmit="true">
+              </af:inputComboboxListOfValues>
+            </af:panelGroupLayout>
+            
+          </af:panelGroupLayout>
+        </f:facet>
+        <f:facet name="seriesBelow">
+          <af:panelGroupLayout layout="vertical" id="pgl3">
+            <f:facet name="separator">
+              <af:separator id="s3"/>
+            </f:facet>
+            <af:spacer height="5px"/>
+            <af:panelGroupLayout layout="vertical" id="pgl4">
+              <af:outputText value="See also:" id="ot5"/>
+              <af:navigationPane hint="list" id="np1">
+                <af:commandNavigationItem text="Demo that handles auto suggest behavior with tag."
+                                          destination="/components/autoSuggestBehavior.jspx"
+                                          id="cni1"/>  
+              </af:navigationPane>
+            </af:panelGroupLayout>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>

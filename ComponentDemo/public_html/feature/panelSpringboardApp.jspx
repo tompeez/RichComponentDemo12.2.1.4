@@ -1,0 +1,353 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1" title="panelSpringboard demo"
+                 maximized="true">
+      <f:facet name="metaContainer">
+        <af:resource type="css"
+                     source="/feature/springboardResources/springboardCss.css"/>
+        <af:resource type="javascript"
+                     source="/feature/springboardResources/springboardScript.js"/>
+      </f:facet>
+      <af:form id="f1" usesUpload="false">
+        <af:decorativeBox theme="#{springboardBean.theme}" dimensionsFrom="parent"
+                        partialTriggers="theme1 theme2 theme3 theme4 immediateT immediateF">
+          <f:facet name="center">
+            <af:panelGridLayout id="pgl1">
+              <af:gridRow id="gr1">
+                <af:gridCell id="gc1" width="50%"/>
+                <af:gridCell id="gc2"
+                             styleClass="application-container-size application-container watermark">
+                  <af:panelStretchLayout id="application-container"
+                                         styleClass="application-container-size"
+                                         topHeight="auto"
+                                         dimensionsFrom="children"
+                                         startWidth="50%" endWidth="50%">
+                    <f:facet name="center">
+                      <af:panelGroupLayout layout="horizontal">
+                        <!-- we start out with announcements-grid-mode-size styleclass, and we swap it with announcements-strip-mode-size when we change to strip mode -->
+                        <af:panelStretchLayout styleClass="#{springboardBean.appDisplayMode == 'strip' ? 'announcements-strip-mode-size' : 'announcements-grid-mode-size'} ease-in-out-250ms"
+                                               dimensionsFrom="parent"
+                                               id="announcements-container">
+                          <f:facet name="center">
+                            <af:panelGroupLayout styleClass="fuse-box black fuse-side-panel background-color"
+                                                 inlineStyle="height:500px;margin:auto 20px;">
+                              <af:outputText value="Announcements. 
+                          This demo uses side-by-side panelStretchLayout components. In the first one is this announcement. In the second is the panelSpringboard.
+                          This announcement will animate out of the way when we go into strip mode (click on an item in the grid and the springboard will spring into strip mode). It will come back when we go back to grid mode (hint: click on the Oracle logo)"
+                                             escape="false"/>
+                            </af:panelGroupLayout>
+                          </f:facet>
+                        </af:panelStretchLayout>
+                        <af:panelStretchLayout id="navigation-container"
+                                               dimensionsFrom="parent"
+                                               styleClass="#{springboardBean.appStyleClass} ease-in-out-250ms">
+                          <f:facet name="center">
+                            <af:panelSpringboard id="object-navigator" inlineStyle="background-color: #eeeeee"
+                                                 childCreation="lazyUncached"
+                                                 displayMode="grid" immediate="#{springboardBean.immediate}"
+                                                 springboardChangeListener="#{springboardBean.springboardChangeListener}">
+                              <af:clientListener type="propertyChange"
+                                                 method="objectNavigatorPropertyChangeListener"/>
+                              <af:showDetailItem styleClass="showDetailItemBG"
+                                                 id="item1" text="Home"
+                                                 shortDesc="Home"
+                                                 badge="3050"
+                                                 icon="/images/alta_v1/buildapplications_48.png"
+                                                 disclosureListener="#{springboardBean.disclosureListener}">
+                                    <af:panelDrawer position="end" height="100%" id="drawer1" width="#{drawer.width}" >
+                                      <af:showDetailItem textAndAccessKey="Calendar"
+                                                         stretchChildren="first"
+                                                         icon="/images/icon_library_24X24_ena.png"
+                                                         hoverIcon="/images/icon_library_24X24_ovr.png"
+                                                         depressedIcon="/images/icon_library_24X24_sel.png"
+                                                         disabledIcon="/images/icon_library_24X24_dis.png"
+                                                         shortDesc="Calendar short desc"
+                                                         id="sdi1"
+                                                         disclosureListener="#{drawer.widthListener}">
+                                        <af:panelStretchLayout dimensionsFrom="parent">
+                                          <f:facet name="center">
+                                            <af:calendar id="cal" inlineStyle="margin:5px"
+                                                         value="#{calendarBean.calendarModel}"/>
+                                          </f:facet>
+                                        </af:panelStretchLayout>
+                                      </af:showDetailItem>
+                                      <af:showDetailItem text="Tab 2" 
+                                                         icon="/images/icon_chat_24X24_ena.png"
+                                                         hoverIcon="/images/icon_chat_24X24_ovr.png"
+                                                         depressedIcon="/images/icon_chat_24X24_sel.png" 
+                                                         disabledIcon="/images/icon_chat_24X24_dis.png" 
+                                                         shortDesc="tab 2 short desc" id="sdi2a"
+                                                         disclosureListener="#{drawer.widthListener}">
+                                        <af:outputText value="Tab 2 First Child"/>
+                                        <af:outputText value="Tab 2 Second Child"/>
+                                      </af:showDetailItem>
+                                    </af:panelDrawer>
+                                <af:outputText value="Item 1 First Child. Zippety Doo Dah, Zippety Yay. My Oh My what a wonderful day! Plenty of sunshine coming my way."
+                                               id="ot1Item1"/>
+                                <af:outputText value="Tab 1 Second Child"
+                                               id="ot2Item1"/>
+                                <af:spacer height="200px"/>
+                              </af:showDetailItem>
+                              <af:showDetailItem styleClass="showDetailItemBG"
+                                                 id="item2" text="Dashboard"
+                                                 shortDesc="Response is Intentionally Slow"
+                                                 icon="/images/alta_v1/intergration_48.png"
+                                                 disclosureListener="#{springboardBean.wait}">
+                                <af:outputText value="Item 2 First Child. Mister Bluebird's on my shoulder. It's the truth!"
+                                               id="ot1Item2"/>
+                                <af:outputText value="Item 2 Second Child"
+                                               id="ot2Item2"/>
+                                <af:commandButton id="cbTab2"
+                                                  partialSubmit="true"
+                                                  text="Cause Partial Submit"/>
+                                <af:spacer height="180px"/>
+                              </af:showDetailItem>
+                              <af:showDetailItem styleClass="showDetailItemBG"
+                                                 id="item3"
+                                                 textAndAccessKey="&amp;Customers"
+                                                 shortDesc="Tasks"
+                                                  icon="/images/alta_v1/hranalytics_48.png"
+                                                 disclosureListener="#{springboardBean.disclosureListener}">
+                                <af:outputText value="Item 3 Only Child. It's actual. Everything is satisfactual."
+                                               id="ot1Item3"/>
+                                <af:spacer height="150px"/>
+                              </af:showDetailItem>
+                              <af:showDetailItem styleClass="showDetailItemBG"
+                                                 id="item4"
+                                                 text="Wiki"
+                                                 shortDesc="Wiki"
+                                                 icon="/images/alta_v1/qual_actionlink_48.png"
+                                                 disclosureListener="#{springboardBean.disclosureListener}">
+                                <af:outputText value="Item 4 First Child. Zippety Doo Dah, Zippety Yay. Wonderful feeling, wonderful day"
+                                               id="ot1Item4"/>
+                                <af:outputText value="Item 4 Second Child"
+                                               id="ot2Item4"/>
+                                <af:commandButton id="cbItem4"
+                                                  partialSubmit="true"
+                                                  text="Cause Partial Submit"/>
+                                <af:spacer height="180px"/>
+                              </af:showDetailItem>
+                              <af:showDetailItem styleClass="showDetailItemBG"
+                                                 id="item5" text="Source"
+                                                 shortDesc="Source"
+                                                 icon="/images/alta_v1/webapplication_48.png"
+                                                 disclosureListener="#{springboardBean.disclosureListener}">
+                                <af:decorativeBox theme="default"
+                                                  topHeight="2em"
+                                                  inlineStyle="width: 175px; height: 90px;"
+                                                  id="db4">
+                                  <f:facet name="top">
+                                    <af:panelGroupLayout layout="scroll"
+                                                         id="pgl11">
+                                      <af:outputText value="Default theme (top facet)"
+                                                     id="ot9"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                  <f:facet name="center">
+                                    <af:panelGroupLayout layout="scroll"
+                                                         id="pgl12">
+                                      <af:outputText value="Default theme contents"
+                                                     id="ot10"/>
+                                    </af:panelGroupLayout>
+                                  </f:facet>
+                                </af:decorativeBox>
+                              </af:showDetailItem>
+                              <af:showDetailItem id="item6" text="Team"
+                                                 stretchChildren="first"
+                                                 shortDesc="Team"
+                                                 icon="/images/alta_v1/webapplication_48.png"
+                                                 disclosureListener="#{springboardBean.disclosureListener}">
+                                <af:panelTabbed partialTriggers="sor2 sor3 sor4 sor5"
+                                                position="start"
+                                                dimensionsFrom="parent"
+                                                id="binky">
+                                  <af:showDetailItem styleClass="showDetailItemBG"
+                                                     textAndAccessKey="Disabled tab &amp;3"
+                                                     disabled="true"
+                                                     icon="/images/icon_stats24X24_ena.png"
+                                                     hoverIcon="/images/icon_stats24X24_ovr.png"
+                                                     depressedIcon="/images/icon_stats24X24_sel.png"
+                                                     disabledIcon="/images/icon_stats24X24_dis.png">
+                                    <af:outputText value="Tab 3 Only Child"/>
+                                    <af:spacer height="250px"/>
+                                  </af:showDetailItem>
+                                  <af:showDetailItem styleClass="showDetailItemBG"
+                                                     text="Tab 4"
+                                                     icon="/images/alta_v1/webapplication_48.png">
+                                    <af:panelDrawer position="end" height="100%" id="drawer" width="#{drawer.width}" >
+                                      <af:showDetailItem textAndAccessKey="Calendar"
+                                                         stretchChildren="first"
+                                                         icon="/images/icon_library_24X24_ena.png"
+                                                         hoverIcon="/images/icon_library_24X24_ovr.png"
+                                                         depressedIcon="/images/icon_library_24X24_sel.png"
+                                                         disabledIcon="/images/icon_library_24X24_dis.png"
+                                                         shortDesc="Calendar short desc"
+                                                         id="sdi1"
+                                                         disclosureListener="#{drawer.widthListener}">
+                                        <af:panelStretchLayout dimensionsFrom="parent">
+                                          <f:facet name="center">
+                                            <af:calendar id="cal" inlineStyle="margin:5px"
+                                                         value="#{calendarBean.calendarModel}"/>
+                                          </f:facet>
+                                        </af:panelStretchLayout>
+                                      </af:showDetailItem>
+                                      <af:showDetailItem text="Tab 2" 
+                                                         icon="/images/icon_chat_24X24_ena.png"
+                                                         hoverIcon="/images/icon_chat_24X24_ovr.png"
+                                                         depressedIcon="/images/icon_chat_24X24_sel.png" 
+                                                         disabledIcon="/images/icon_chat_24X24_dis.png" 
+                                                         shortDesc="tab 2 short desc" id="sdi2a"
+                                                         disclosureListener="#{drawer.widthListener}">
+                                        <af:outputText value="Tab 2 First Child"/>
+                                        <af:outputText value="Tab 2 Second Child"/>
+                                      </af:showDetailItem>
+                                    </af:panelDrawer>
+                                     <af:outputText value="Tab 4 First Child"/>
+                                    <af:outputText value="Tab 4 Second Child"/>
+                                    <af:commandButton partialSubmit="true"
+                                                      text="Cause Partial Submit"/>
+                                    <af:showDetail disclosed="false">
+                                      <af:inputText required="true"
+                                                    label="inside 1"
+                                                    id="drawerIt1"/>
+                                      <af:inputText required="true"
+                                                    label="inside 2"
+                                                    id="drawerIt2"/>
+                                      <af:inputText id="drawerIt3"
+                                                    validator="#{demoInput.validateServerOnly}"
+                                                    label="inside 3"/>
+                                      <af:inputText id="drawerIt4"
+                                                    validator="#{demoInput.validateServerOnly}"
+                                                    label="inside 4"/>
+                                    </af:showDetail>
+                                    <af:spacer height="280px"/>
+                                  </af:showDetailItem>
+                                  <af:showDetailItem styleClass="showDetailItemBG"
+                                                     textAndAccessKey="Ta&amp;b 1"
+                                                     icon="/images/icon_pie_24X24_ena.png"
+                                                     hoverIcon="/images/icon_pie_24X24_ovr.png"
+                                                     depressedIcon="/images/icon_pie_24X24_sel.png"
+                                                     disabledIcon="/images/icon_pie_24X24_dis.png">
+                                    <af:outputText value="Tab 1 First Child"/>
+                                    <af:outputText value="Tab 1 Second Child"/>
+                                    <af:spacer height="300px"/>
+                                  </af:showDetailItem>
+                                </af:panelTabbed>
+                              </af:showDetailItem>
+                              <af:showDetailItem styleClass="showDetailItemBG"
+                                                 id="item7" text="Deployments"
+                                                 shortDesc="Deployments"
+                                                 icon="/images/alta_v1/qual_adfskinfile_48.png"
+                                                 disclosureListener="#{springboardBean.disclosureListener}">
+                                <af:popup id="testPop">
+                                  <af:dialog modal="false">
+                                    <af:outputText value="Popup Child"/>
+                                  </af:dialog>
+                                </af:popup>
+                                <af:commandButton text="click me">
+                                  <af:showPopupBehavior popupId="testPop"
+                                                        triggerType="action"/>
+                                </af:commandButton>
+                                <af:outputText value="Open the popup and then change to another springboard item. The springboard should close the popup before animating."/>
+                              </af:showDetailItem>
+                              <af:showDetailItem styleClass="showDetailItemBG"
+                                                 id="item8" text="Lists"
+                                                 shortDesc="Lists"
+                                                 icon="/images/alta_v1/webapplication_48.png"
+                                                 disclosureListener="#{springboardBean.disclosureListener}">
+                                <af:outputText value="Lists content"/>
+                              </af:showDetailItem>
+                              <af:showDetailItem styleClass="showDetailItemBG"
+                                                 id="item9"
+                                                 text="Network"
+                                                 shortDesc="Network"
+                                                 icon="/images/alta_v1/webapplication_48.png"
+                                                 disclosureListener="#{springboardBean.disclosureListener}">
+                                <af:outputText value="Network content"/>
+                              </af:showDetailItem>
+                              <af:showDetailItem styleClass="showDetailItemBG"
+                                                 id="item10" text="Personal"
+                                                 badge="5" shortDesc="Personal"
+                                                 disclosed="true"
+                                                 icon="/images/alta_v1/webapplication_48.png"
+                                                 disclosureListener="#{springboardBean.disclosureListener}">
+                                <af:outputText value="Personal content"/>
+                              </af:showDetailItem>
+                            </af:panelSpringboard>
+                          </f:facet>
+                        </af:panelStretchLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                    <f:facet name="top">
+                      <af:panelGroupLayout layout="horizontal" valign="middle"
+                                           styleClass="application-container-width">
+                        <af:goImageLink text="" id="logo"
+                                             icon="/images/brand-oracle-red.png"
+                                             styleClass="#{springboardBean.appDisplayMode == 'strip' ? 'logo-strip-mode-size' : 'logo-grid-mode-size'} ease-in-out-250ms">
+                          <af:clientListener type="click"
+                                             method="setObjectNavigatorMode_Springboard"/>
+                        </af:goImageLink>
+                        <af:spacer width="5px"/>
+                        <!--af:outputText value="Fuse Application Demo" id="ot1"
+                                       styleClass="application-title"
+                                noWrap="true"/-->
+                        <af:panelGroupLayout halign="end" layout="horizontal">
+                          <!--<af:commandImageLink icon="/skins/images/icons/fuse-icon-producttour.png">
+                    
+                    </af:commandImageLink>-->
+                          <af:menuBar id="menuBar">
+                            <af:declarativeComponent id="skins"
+                                                     viewId="/templates/pageTemplateDefs/skinMenu.jsff"></af:declarativeComponent>
+                            <af:menu text="Theme" id="ptm1">
+                              <!-- TODO helpTopicId="DEMOHELP_SKIN" -->
+                              <af:commandMenuItem text="light" type="radio"
+                                                  actionListener="#{springboardBean.themeMenuAction}"
+                                                  selected="#{springboardBean.theme=='light'}"
+                                                  id="theme1"/>
+                              <af:commandMenuItem text="medium" type="radio"
+                                                  actionListener="#{springboardBean.themeMenuAction}"
+                                                  selected="#{springboardBean.theme=='medium'}"
+                                                  id="theme2"/>
+                              <af:commandMenuItem text="dark" type="radio"
+                                                  actionListener="#{springboardBean.themeMenuAction}"
+                                                  selected="#{springboardBean.theme=='dark'}"
+                                                  id="theme3"/>
+                              <af:commandMenuItem text="contentBody"
+                                                  type="radio"
+                                                  actionListener="#{springboardBean.themeMenuAction}"
+                                                  selected="#{springboardBean.theme=='contentBody'}"
+                                                  id="theme4"/>
+                            </af:menu>
+                            <af:menu text="Immediate" id="ptm2" shortDesc="Controls the immediate attribute on the springboard">
+                              <!-- TODO helpTopicId="DEMOHELP_SKIN" -->
+                              <af:commandMenuItem text="true" type="radio"
+                                                  actionListener="#{springboardBean.immediateMenuAction}"
+                                                  selected="#{springboardBean.immediate== true}"
+                                                  id="immediateT"
+                                                  immediate="true"/>
+                              <af:commandMenuItem text="false" type="radio"
+                                                  actionListener="#{springboardBean.immediateMenuAction}"
+                                                  selected="#{springboardBean.immediate== false}"
+                                                  id="immediateF"
+                                                  immediate="true"/>
+                            </af:menu>
+                          </af:menuBar>
+                        </af:panelGroupLayout>
+                      </af:panelGroupLayout>
+                    </f:facet>
+                  </af:panelStretchLayout>
+                </af:gridCell>
+                <af:gridCell id="gc3" width="50%"/>
+              </af:gridRow>
+            </af:panelGridLayout>
+          </f:facet>
+        </af:decorativeBox>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

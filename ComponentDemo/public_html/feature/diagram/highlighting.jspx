@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"></jsp:directive.page>
+    <f:view>
+        <af:document title="Diagram Highlighting Demo" binding="#{templateBindings.documentComponent}" theme="dark"
+                     id="d1">
+            <f:facet name="metaContainer">
+                <!-- following jsf best practice of wrapping jsp include in a subview naming container -->
+                <f:subview id="meta">
+                    <jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/>
+                </f:subview>
+            </f:facet>
+            <af:pageTemplate id="demo" viewId="#{templates.componentTemplate}">
+                <f:attribute name="visualDesignName" value=""/>
+                <f:attribute name="demoKind" value="feature"/>
+                <!-- Remove to enable tag inspector -->
+                <f:attribute name="customEditorPresent" value="true"/>
+                <!-- Document Title -->
+                <f:attribute name="documentTitle" value="Diagram Highlighting Demo"/>
+                <!-- Demo Name -->
+                <f:attribute name="tagName" value="Diagram Highlighting"/>
+                <f:facet name="center">
+                    <!-- START FEATURE DEMO -->
+                    <af:panelStretchLayout dimensionsFrom="auto" topHeight="auto">
+                        <f:facet name="top">
+                            <af:outputText value="Right click on nodes and links to modify highlightedRowKeys.  Specifying highlightedRowKeys will disable the interactive highlight behavior on hover."
+                                           inlineStyle="font-size:medium;"/>
+                        </f:facet>
+                        <f:facet name="center">
+                            <af:panelSplitter orientation="horizontal" positionedFromEnd="true" splitterPosition="300"
+                                              dimensionsFrom="auto">
+                                <f:facet name="first">
+                                    <dvt:diagram summary="Diagram" id="diagram1" layout="grid" selection="single"
+                                                 partialTriggers="soc1 soc2 b1" panning="none" zooming="none"
+                                                 controlPanelBehavior="hidden">
+                                        <dvt:clientLayout name="grid" method="DemoGridLayout.gridLayout"
+                                                          featureName="DemoGridLayout"/>
+                                        <dvt:diagramNodes id="diagramNodes1" value="#{diagramHighlighting.nodes}"
+                                                          var="node"
+                                                          highlightBehavior="#{diagramHighlighting.nodeHighlightBehavior}"
+                                                          highlightedRowKeys="#{diagramHighlighting.highlightedNodes}"
+                                                          binding="#{diagramHighlighting.diagramNodes}">
+                                            <dvt:diagramNode id="node1" nodeId="#{node.id}" shortDesc="Node #{node.id}"
+                                                             showNodeActions="false">
+                                                <f:facet name="zoom100">
+                                                    <dvt:marker width="25" height="25" shape="circle"
+                                                                fillColor="#{node.color}" borderStyle="solid"
+                                                                borderWidth="1" borderColor="#444444"/>
+                                                </f:facet>
+                                            </dvt:diagramNode>
+                                        </dvt:diagramNodes>
+                                        <dvt:diagramLinks id="diagramLinks1" value="#{diagramHighlighting.links}"
+                                                          var="link"
+                                                          highlightBehavior="#{diagramHighlighting.linkHighlightBehavior}"
+                                                          highlightedRowKeys="#{diagramHighlighting.highlightedLinks}"
+                                                          binding="#{diagramHighlighting.diagramLinks}">
+                                            <dvt:diagramLink id="link1" linkColor="#{link.color}"
+                                                             startNode="#{link.start}" endNode="#{link.end}"
+                                                             endConnectorType="arrowOpen"/>
+                                        </dvt:diagramLinks>
+                                        <f:facet name="contextMenu">
+                                            <af:popup contentDelivery="lazyUncached" id="nodeMenu">
+                                                <af:menu id="m1">
+                                                    <af:commandMenuItem text="#{diagramHighlighting.nodeHighlighted ? 'Remove from' : 'Add to'} Highlighted Set"
+                                                                        actionListener="#{diagramHighlighting.toggleNodeHighlight}"
+                                                                        id="cmi1"/>
+                                                </af:menu>
+                                            </af:popup>
+                                        </f:facet>
+                                        <f:facet name="linkContextMenu">
+                                            <af:popup contentDelivery="lazyUncached" id="linkMenu">
+                                                <af:menu id="m2">
+                                                    <af:commandMenuItem text="#{diagramHighlighting.linkHighlighted ? 'Remove from' : 'Add to'} Highlighted Set"
+                                                                        actionListener="#{diagramHighlighting.toggleLinkHighlight}"
+                                                                        id="cmi2"/>
+                                                </af:menu>
+                                            </af:popup>
+                                        </f:facet>
+                                    </dvt:diagram>
+                                </f:facet>
+                                <f:facet name="second">
+                                    <af:panelFormLayout>
+                                        <af:group>
+                                            <af:selectOneChoice id="soc1"
+                                                                value="#{diagramHighlighting.nodeHighlightBehavior}"
+                                                                autoSubmit="true" label="Node Highlight Behavior">
+                                                <af:selectItem value="none" label="none"/>
+                                                <af:selectItem value="node" label="node"/>
+                                                <af:selectItem value="nodeAndIncomingLinks"
+                                                               label="nodeAndIncomingLinks"/>
+                                                <af:selectItem value="nodeAndOutgoingLinks"
+                                                               label="nodeAndOutgoingLinks"/>
+                                                <af:selectItem value="nodeAndLinks" label="nodeAndLinks"/>
+                                            </af:selectOneChoice>
+                                            <af:selectOneChoice id="soc2"
+                                                                value="#{diagramHighlighting.linkHighlightBehavior}"
+                                                                autoSubmit="true" label="Link Highlight Behavior">
+                                                <af:selectItem value="none" label="none"/>
+                                                <af:selectItem value="link" label="link"/>
+                                            </af:selectOneChoice>
+                                        </af:group>
+                                        <af:button id="b1" text="Clear highlightedRowKeys"
+                                                   actionListener="#{diagramHighlighting.clearHighlighted}"/>
+                                    </af:panelFormLayout>
+                                </f:facet>
+                            </af:panelSplitter>
+                        </f:facet>
+                    </af:panelStretchLayout>
+                    <!-- END FEATURE DEMO -->
+                </f:facet>
+            </af:pageTemplate>
+        </af:document>
+    </f:view>
+</jsp:root>

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2012, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:f="http://java.sun.com/jsf/core" xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:dvt="http://xmlns.oracle.com/dss/adf/faces">
+  <jsp:directive.page contentType="text/html;charset=utf-8"></jsp:directive.page>
+  <f:view locale="ar"><af:document title="Graph BIDI Demo" binding="#{templateBindings.documentComponent}" theme="dark" id="d1"><f:facet name="metaContainer"><!-- following jsf best practice of wrapping jsp include in a subview naming container --><f:subview id="meta"><jsp:include page="/templates/pageTemplateDefs/tagDemoMetaContainer.jsff"/></f:subview></f:facet>
+    <af:pageTemplate id="demo"
+                     viewId="#{templates.componentTemplate}">
+      <f:attribute name="visualDesignName" value=""/>
+      <f:attribute name="demoKind" value="feature"/>
+      <!-- Remove to enable tag inspector -->
+      <f:attribute name="customEditorPresent" value="true"/>
+      <!-- Document Title -->
+      <f:attribute name="documentTitle" value="Graph BIDI Demo"/>
+      <!-- Demo Name -->
+      <f:attribute name="tagName" value="Graph BIDI Support"/>
+      <f:facet name="center">
+        <af:panelGroupLayout layout="scroll" id="layout0">
+          <f:facet name="separator">
+            <af:separator id="s1"/>
+          </f:facet>
+          <!-- START FEATURE DEMO -->
+          <af:outputText  value="The following graphs show our current BIDI support. This page will be updated as we start supporting more features"
+                         id="ot1"/>
+          <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <dvt:lineGraph id="graph6" subType="LINE_VERT_ABS" value="#{graphData.rows[7].cols[5].colLabels['Group %d'].random}">
+                  <dvt:graphTitle rendered="true" text="Line Graph with multi-section legend"/>
+                  <dvt:o1Title rendered="true" text="O1Title"/>
+                  <dvt:y1Title rendered="true" text="Y1Title"/>
+                  <dvt:y2Title rendered="true" text="Y2Title"/>
+                  <dvt:legendArea position="LAP_BOTTOM"/>
+                  <dvt:seriesSet defaultLineWidth="2"/>
+                  <dvt:referenceObjectSet>
+                    <dvt:referenceObject lineValue="10" displayedInLegend="true" text="line1"/>
+                    <dvt:referenceObject lineValue="40" displayedInLegend="true" text="line2"/>
+                  </dvt:referenceObjectSet>
+              </dvt:lineGraph>
+              <dvt:pieGraph shortDesc="Graph" id="graph3" subType="PIE_MULTI" value="#{graphData.rows[8].cols[5].colLabels['Group %d'].random}">
+                <dvt:graphTitle rendered="true" text="MultiPie with Legend on the bottom containing multiple rows"/>
+                <dvt:sliceLabel rendered="false"/>
+                <dvt:legendArea position="LAP_BOTTOM"/>
+              </dvt:pieGraph>
+              <dvt:barGraph shortDesc="Graph" id="graph1" subType="BAR_VERT_CLUST2Y">
+                  <dvt:graphTitle rendered="true" text="Title"/>
+                  <dvt:graphSubtitle rendered="true" text="Subtitle"/>
+                  <dvt:o1Title rendered="true" text="O1Title"/>
+                  <dvt:y1Title rendered="true" text="Y1Title"/>
+                  <dvt:y2Title rendered="true" text="Y2Title"/>
+              </dvt:barGraph>
+           </af:panelGroupLayout>
+            <af:panelGroupLayout layout="horizontal" id="pgl1">
+               <dvt:pieGraph shortDesc="Graph" id="graph4" subType="PIE_MULTI" inlineStyle="height:250px">
+                <dvt:graphTitle rendered="true" text="MultiPie : FLASH"/>
+                </dvt:pieGraph>
+               <dvt:pieGraph shortDesc="Graph" id="graph8" subType="PIE_MULTI" imageFormat="PNG" inlineStyle="height:250px">
+                <dvt:graphTitle rendered="true" text="MultiPie : PNG"/>
+                </dvt:pieGraph>
+          </af:panelGroupLayout>
+          <af:outputText value="Note: The BIDI mixed text is not displayed correctly for FLASH imageFormat. This issue will be addressed during FLash10 support work"
+                         id="ot2"/>
+           <!-- END FEATURE DEMO -->
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:pageTemplate>
+  </af:document></f:view>
+</jsp:root>

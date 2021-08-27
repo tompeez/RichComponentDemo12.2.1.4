@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Copyright (c) 2008, 2013, Oracle and/or its affiliates. 
+All rights reserved. -->
+<jsp:root
+  version="2.1"
+  xmlns:jsp="http://java.sun.com/JSP/Page"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <description>
+        This component displays a sample header legend.
+        </description>
+        <attribute>
+          <description>
+            Specifies the type of page stamp (userStamp or taskStamp) to
+            include in the panelHeader legend facet.
+          </description>
+          <attribute-name>pageStampType</attribute-name>
+          <attribute-class>java.lang.String</attribute-class>
+          <required>true</required>
+        </attribute>
+      </component>
+    </af:xmlContent>
+    <af:group id="ptg1">
+      <af:resource
+        source="/visualDesigns/headerLegend/style.css"
+        type="css" />
+
+      <!-- User Stamp (Horizontal) Display -->
+      <af:panelGroupLayout valign="top" layout="horizontal" styleClass="AFStampContainer"
+        rendered="#{attrs.pageStampType eq 'userStamp'}" id="ptpgl1">
+        <f:facet name="separator">
+          <af:outputText
+            value="|"
+            styleClass="AFUserStampSeparator" id="ptot1"/>
+        </f:facet>
+        <af:panelGroupLayout
+          layout="horizontal" id="ptpgl2">
+          <af:outputText
+            value="User Name"
+            styleClass="AFUserStampTextLabel" id="ptot2"/>
+          <af:outputText
+            value="Marsha Briggs"
+            styleClass="AFUserStampTextValue" id="ptot3"/>
+        </af:panelGroupLayout>
+        <af:panelGroupLayout layout="horizontal" id="ptpgl3">
+          <af:outputText
+            value="Logged In As"
+            styleClass="AFUserStampTextLabel" id="ptot4"/>
+          <af:outputText
+            value="mbriggs"
+            styleClass="AFUserStampTextValue" id="ptot5"/>
+        </af:panelGroupLayout>
+        <!-- Add stuff here for testing user stamp wrapping -->
+        <af:panelGroupLayout layout="horizontal" id="ptpgl4"> <!-- last item has the switcher (navPane choice) -->
+          <af:outputText
+            value="Connected As"
+            styleClass="AFUserStampTextLabel" id="ptot6"/>
+          <af:outputText
+            value="SYS"
+            styleClass="AFUserStampTextValue" id="ptot7"/>
+
+          <af:selectOneChoice mode="compact" simple="true" label="a" styleClass="AFUserStampSwitcher" >
+            <af:selectItem label="item 1" value="a" />
+            <af:selectItem label="item 2" value="b" />
+            <af:selectItem label="item 3" value="b" />
+          </af:selectOneChoice>
+
+<!-- This could also be implemented using a navPance choice -->
+<!--
+          <af:navigationPane hint="choice" styleClass="AFUserStampSwitcher" id="ptnp1">
+            <af:commandNavigationItem text="item 1" partialSubmit="true" id="ptcni1"/>
+            <af:commandNavigationItem text="item 2" partialSubmit="true" id="ptcni2"/>
+            <af:commandNavigationItem text="item 3" partialSubmit="true" id="ptcni3"/>
+          </af:navigationPane>
+-->
+
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>  
+
+      <!-- Task Stamp (Vertical) Display -->
+      <af:panelGroupLayout
+        layout="vertical"
+        valign="top"
+        rendered="#{attrs.pageStampType == 'taskStamp'}"
+        styleClass="AFStampContainer" id="ptpgl5">
+        <af:panelGroupLayout
+          layout="horizontal"
+          halign="end" id="ptpgl6" styleClass="AFStretchWidth">
+          <af:outputText
+            value="Last Updated"
+            styleClass="AFTaskStampTextLabel" id="ptot8"/>
+          <af:outputText
+            value="08-Nov-2007"
+            styleClass="AFTaskStampTextValue" id="ptot9"/>
+        </af:panelGroupLayout>
+        <af:spacer id="sp1" rendered="#{demoSkin.altaBased}" height="9"/>
+        <af:panelGroupLayout
+          layout="horizontal"
+          valign="top"
+          halign="right" id="ptpgl7">
+          <af:outputText
+            value="Budget Remaining"
+            styleClass="AFTaskStampTextLabel" id="ptot10"/>
+          <af:outputText
+            value="$20,000.00"
+            styleClass="AFTaskStampTextValue" id="ptot11"/>
+        </af:panelGroupLayout>
+      </af:panelGroupLayout>
+    </af:group>
+  </af:pageTemplateDef>
+</jsp:root>

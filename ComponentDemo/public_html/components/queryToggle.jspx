@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (c) 2008, 2014, Oracle and/or its affiliates. 
+All rights reserved.-->
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich" version="1.2">
+  <jsp:directive.page contentType="text/html;charset=utf-8"/>
+  <f:view>
+    <af:document title="query Toggle Demo" binding="#{templateBindings.documentComponent}"
+                 smallIconSource="#{aboutBean.smallIconSource}"
+                 largeIconSource="#{aboutBean.largeIconSource}" theme="dark" id="d1">
+      <af:pageTemplate id="dmoTpl" viewId="#{templates.componentTemplate}">
+        <f:attribute name="tagName" value="query"/>
+        <f:attribute name="visualDesignName" value=""/>
+        <f:attribute name="demoKind" value="component"/>
+        <f:attribute name="customEditorPresent" value="true"/>
+        <f:facet name="center">
+          <af:panelGroupLayout layout="scroll" id="pgl1">
+            <f:facet name="separator">
+              <af:separator id="s1"/>
+            </f:facet>
+            <af:outputText inlineStyle="font-weight: bold" value="This page demonstrate the ability to toggle between query
+                              and quickQuery component." id="ot1"/>
+            <af:switcher facetName="#{demoQueryToggle.visibleComponent}" defaultFacet="quick"
+                         id="s3">
+              <f:facet name="advanced">
+                <af:panelGroupLayout layout="vertical" id="pgl2">
+                  <af:goLink text="back to query demo" destination="/components/query.jspx"
+                             id="back1"/>
+                  <af:outputText value='Please click on "Quick" button to toggle to quickQuery component.'
+                                 id="ot2"/>
+                </af:panelGroupLayout>
+              </f:facet>
+              <f:facet name="quick">
+                <af:panelGroupLayout layout="vertical" id="pgl3">
+                  <af:goLink text="back to quickQuery demo" destination="/components/quickQuery.jspx"
+                             id="back2"/>
+                  <af:outputText value='Please click on "Advanced" link to toggle to query component.'
+                                 id="ot3"/>
+                </af:panelGroupLayout>
+              </f:facet>
+            </af:switcher>
+            <af:quickQuery label="Search" id="search" searchDesc="search"
+                           queryListener="#{demoQuickQuery.processQuery}"
+                           value="#{demoQuickQuery.queryDescriptor}"
+                           rendered="#{demoQueryToggle.quickQueryVisible}">
+              <f:facet name="end">
+                <af:commandLink text="Advanced" actionListener="#{demoQueryToggle.quick2Advanced}"
+                                id="advanced"/>
+              </f:facet>
+            </af:quickQuery>
+            <af:panelHeader text="Employees" rendered="#{demoQueryToggle.queryVisible}"
+                            id="ph1">
+              <af:outputText value="Please search based on search criterias"
+                             id="ot4"/>
+              <af:query id="empquery" disclosed="true" rows="3" maxColumns="2" headerText="Search"
+                        resultComponentId="::resultTextId"
+                        value="#{demoQuery.queryDescriptor}" model="#{demoQuery.queryModel}"
+                        queryListener="#{demoQuery.processQuery}" modeChangeVisible="false"
+                        rendered="#{demoQueryToggle.queryVisible}">
+                <f:facet name="toolbar">
+                  <af:commandButton text="Quick" actionListener="#{demoQueryToggle.advanced2Quick}"
+                                    id="quick"/>
+                </f:facet>
+              </af:query>
+            </af:panelHeader>
+            <af:switcher facetName="#{demoQueryToggle.visibleComponent}" defaultFacet="quick"
+                         id="s4">
+              <f:facet name="advanced">
+                <af:outputText id="resultTextId"
+                               value="Query statement is as folows: #{demoQuery.sqlString}"/>
+              </f:facet>
+              <f:facet name="quick">
+                <af:outputText value="#{demoQuickQuery.sqlString}" partialTriggers="search"
+                               id="ot5"/>
+              </f:facet>
+            </af:switcher>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:pageTemplate>
+    </af:document>
+  </f:view>
+</jsp:root>
